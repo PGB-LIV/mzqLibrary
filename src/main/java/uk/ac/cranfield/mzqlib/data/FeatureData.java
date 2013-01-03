@@ -30,6 +30,10 @@ public class FeatureData extends QuantitationLevel{
         this.peptideID = peptideID;
     }
     
+    public String getId(){
+        return feature.getId();
+    }
+    
     @Override
     public int getCount(){
         return 1;

@@ -14,11 +14,11 @@ public class ProteinData extends QuantitationLevel{
     /**
      * the list of peptides
      */
-    private ArrayList<PeptideData> peptides;
+    private ArrayList<String> peptides;
 
     public ProteinData(Protein pro) {
         protein = pro;
-        peptides = new ArrayList<PeptideData>();
+        peptides = new ArrayList<String>();
     }
     /**
      * Get the protein mzQuantML element
@@ -42,7 +42,7 @@ public class ProteinData extends QuantitationLevel{
      * Get all peptids
      * @return 
      */
-    public ArrayList<PeptideData> getPeptides() {
+    public ArrayList<String> getPeptides() {
         return peptides;
     }
     

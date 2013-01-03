@@ -35,16 +35,23 @@ public class MzqLib {
         switch(type){
             case CSV:
                 converter = new CsvConverter(mzqFile);
+                data.setNeedAutoAssignment(false);
                 break;
             case MZTAB:
                 converter = new MztabConverter(mzqFile);
+                data.setNeedAutoAssignment(false);
                 break;
             case HTML:
                 converter = new HtmlConverter(mzqFile);
                 break;
             default:
         }
+        autoAssign();
         converter.convert();
+    }
+    
+    private void autoAssign(){
+        if(!data.needAutoAssignment()) return;
     }
     
     private void parseMzq(String mzqFile){
@@ -59,17 +66,24 @@ public class MzqLib {
             System.exit(1);
         }
         System.out.println("Validation successful for the file "+mzqFile);
+        //for merge purpose
+//        int index = data.addMzqFiles(mzqFile);
+//        if(index<0){
+//            System.out.println("There is a file with name"+mzqFile+" which has already been processed");
+//            return;
+//        }
+        
         MzQuantMLUnmarshaller unmarshaller = new MzQuantMLUnmarshaller(mzqFile);
         MzQuantML mzq = unmarshaller.unmarshall();
         
         data.addAssays(mzq.getAssayList());
         data.addStudyVariables(mzq.getStudyVariableList());
         data.addRatios(mzq.getRatioList());
-        data.addProteins(mzq.getProteinList());
-        
+
+        data.addFeatures(mzq.getFeatureList());
         final PeptideConsensusList finalResultPcList = getFinalResult(mzq.getPeptideConsensusList());
         if(finalResultPcList!=null) data.addPeptides(finalResultPcList);
-//        data.addProteins(mzq.getProteinList());
+        data.addProteins(mzq.getProteinList());
     }
 
     private PeptideConsensusList getFinalResult(List<PeptideConsensusList> peptideConsensusLists) {
@@ -91,7 +105,7 @@ public class MzqLib {
     }
 
     public static void main( String[] args ) {
-        batch();
+//        batch();
         int argsLen = args.length;
         MzqLib lib;
         switch(argsLen){

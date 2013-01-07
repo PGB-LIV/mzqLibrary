@@ -1,6 +1,7 @@
 package uk.ac.cranfield.mzqlib.data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import uk.ac.liv.jmzqml.model.mzqml.Protein;
 /**
  * The Protein class
@@ -14,11 +15,11 @@ public class ProteinData extends QuantitationLevel{
     /**
      * the list of peptides
      */
-    private ArrayList<String> peptides;
+    private HashMap<String,PeptideSequenceData> peptides;
 
     public ProteinData(Protein pro) {
         protein = pro;
-        peptides = new ArrayList<String>();
+        peptides = new HashMap<String, PeptideSequenceData>();
     }
     /**
      * Get the protein mzQuantML element
@@ -42,9 +43,9 @@ public class ProteinData extends QuantitationLevel{
      * Get all peptids
      * @return 
      */
-    public ArrayList<String> getPeptides() {
-        return peptides;
-    }
+//    public ArrayList<String> getPeptides() {
+//        return peptides;
+//    }
     
     @Override
     public boolean equals(Object obj){
@@ -65,5 +66,23 @@ public class ProteinData extends QuantitationLevel{
     @Override
     public int getCount(){
         return peptides.size();
+    }
+
+    public ArrayList<PeptideData> getPeptides(){
+        ArrayList<PeptideData> result = new ArrayList<PeptideData>();
+        for(PeptideSequenceData psData: peptides.values()){
+            result.addAll(psData.getPeptides());
+        }
+        return result;
+    }
+    
+    void addPeptide(PeptideData peptide) {
+        String seq = peptide.getSeq();
+        if(!peptides.containsKey(seq)){
+            PeptideSequenceData psData = new PeptideSequenceData(seq);
+            peptides.put(seq, psData);
+        }
+        PeptideSequenceData psData = peptides.get(seq);
+        psData.addPeptideData(peptide);
     }
 }

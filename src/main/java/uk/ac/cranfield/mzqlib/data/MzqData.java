@@ -7,10 +7,12 @@ package uk.ac.cranfield.mzqlib.data;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import uk.ac.liv.jmzqml.model.mzqml.Assay;
 import uk.ac.liv.jmzqml.model.mzqml.AssayList;
 import uk.ac.liv.jmzqml.model.mzqml.CvParam;
+import uk.ac.liv.jmzqml.model.mzqml.EvidenceRef;
 import uk.ac.liv.jmzqml.model.mzqml.Feature;
 import uk.ac.liv.jmzqml.model.mzqml.FeatureList;
 import uk.ac.liv.jmzqml.model.mzqml.Modification;
@@ -74,7 +76,8 @@ public class MzqData {
      * 2)guess process according to the id strings, if not found, assign to the ARTIFICIAL protein
      * after loading one mzq file, this structure will be empty
      */
-    private HashMap<String,PeptideData> unsolvedPeptides = new HashMap<String, PeptideData>();
+    private HashMap<String,PeptideData> peptides = new HashMap<String, PeptideData>();
+    private HashSet<String> unsolvedPeptides = new HashSet<String>();
     
     private HashMap<String,FeatureData> unsolvedFeatures = new HashMap<String, FeatureData>();
     private boolean needAutoAssignment = true;
@@ -110,7 +113,8 @@ public class MzqData {
     public void addPeptides(PeptideConsensusList pcList) {
         for(PeptideConsensus pc:pcList.getPeptideConsensus()){
             PeptideData peptide = new PeptideData(pc);
-            unsolvedPeptides.put(pc.getId(), peptide);
+            peptides.put(pc.getId(), peptide);
+            unsolvedPeptides.add(pc.getId());
         }
         for(QuantLayer ql:pcList.getAssayQuantLayer()){
 //            parseQuantLayer(ql,ASSAY,PROTEIN,localMapping);
@@ -177,7 +181,7 @@ public class MzqData {
                 break;
             case PEPTIDE:
                 PeptideConsensus pc = (PeptideConsensus)row.getObjectRef();
-                quantObj = unsolvedPeptides.get(pc.getId());
+                quantObj = peptides.get(pc.getId());
                 break;
             case FEATURE:
                 Feature feature = (Feature)row.getObjectRef();
@@ -315,19 +319,14 @@ public class MzqData {
     }
 
     public ArrayList<PeptideData> getPeptides() {
-        //temp solution before protein assignment function is implemented
         ArrayList<PeptideData> values = new ArrayList<PeptideData>();
-        if(needAutoAssignment){//when 
-            
-        }else{
-            ArrayList<String> idList = new ArrayList<String>();
-            for (String id : unsolvedPeptides.keySet()) {
-                idList.add(id);
-            }
-            Collections.sort(idList);
-            for (String id : idList) {
-                values.add(unsolvedPeptides.get(id));
-            }
+        ArrayList<String> idList = new ArrayList<String>();
+        for (String id : peptides.keySet()) {
+            idList.add(id);
+        }
+        Collections.sort(idList);
+        for (String id : idList) {
+            values.add(peptides.get(id));
         }
         return values;
     }
@@ -355,5 +354,51 @@ public class MzqData {
 
     public void setNeedAutoAssignment(boolean needAutoAssignment) {
         this.needAutoAssignment = needAutoAssignment;
+    }
+
+    public void autoAssign() {
+//        if(!needAutoAssignment) return;
+        for (PeptideData peptide: peptides.values()){
+            for(EvidenceRef evidence:peptide.getEvidences()){
+                String id = ((Feature)evidence.getFeatureRef()).getId();
+                FeatureData feature = unsolvedFeatures.get(id);
+                unsolvedFeatures.remove(id);
+                peptide.addFeature(feature);
+            }
+        }
+        for(ProteinData protein:proteins.values()){
+            for(Object obj:protein.getProtein().getPeptideConsensusRefs()){
+                String id = ((PeptideConsensus)obj).getId();
+                PeptideData peptide = peptides.get(id);
+                unsolvedPeptides.remove(id);
+                //TODO not sure whether one peptide related to multiple proteins case will cause bug here
+                peptide.setAssignedByPeptideRef(true);
+                protein.addPeptide(peptide);
+            }
+        }
+        //un-linked peptides according to the peptideconsensus_refs in protein
+        for(String peptideID: unsolvedPeptides){
+            boolean guessed = false;
+            for(ProteinData protein:proteins.values()){
+                if(peptideID.contains(protein.getId())||peptideID.contains(protein.getAccession())){
+                    guessed = true;
+                    PeptideData peptide = peptides.get(peptideID);
+                    protein.addPeptide(peptide);
+                }
+            }
+            if(!guessed){
+                if (!proteins.containsKey(ARTIFICIAL)) {
+                    Protein protein = new Protein();
+                    protein.setId(ARTIFICIAL);
+                    protein.setAccession(ARTIFICIAL);
+                    ProteinData proteinData = new ProteinData(protein);
+                    proteins.put(protein.getId(), proteinData);
+                    proteinIds.add(protein.getId());
+                }
+                ProteinData protein = proteins.get(ARTIFICIAL);
+                PeptideData peptide = peptides.get(peptideID);
+                protein.addPeptide(peptide);
+            }
+        }
     }
 }

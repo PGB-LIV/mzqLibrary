@@ -46,12 +46,8 @@ public class MzqLib {
                 break;
             default:
         }
-        autoAssign();
+        data.autoAssign();
         converter.convert();
-    }
-    
-    private void autoAssign(){
-        if(!data.needAutoAssignment()) return;
     }
     
     private void parseMzq(String mzqFile){
@@ -105,6 +101,10 @@ public class MzqLib {
     }
 
     public static void main( String[] args ) {
+//        new MzqLib("csv","maxquant-silac.mzq");
+//        new MzqLib("html","maxquant-silac.mzq");
+        new MzqLib("html","iTraq3standards.mzq");
+        System.exit(0);
 //        batch();
         int argsLen = args.length;
         MzqLib lib;

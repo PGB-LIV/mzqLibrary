@@ -1,0 +1,91 @@
+#MAIN_HEADER
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".protein").click(function(){
+		$(this).next("table").slideToggle();
+		if ($(this).children(".span").text() == "+"){
+			$(this).children(".span").text("-")
+		}else {
+			$(this).children(".span").text("+")
+		}
+	});
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".peptide").click(function(){
+		$(this).next("table").slideToggle();
+		if ($(this).children(".span").text() == "+"){
+			$(this).children(".span").text("-")
+		}else {
+			$(this).children(".span").text("+")
+		}
+	});
+});
+</script>
+<style type="text/css"> 
+body {
+	margin: 20px auto;
+	font: 12px Verdana,Arial, Helvetica, sans-serif;
+}
+.protein {
+	margin: 0;
+	padding: 0;
+	background-color:#c30;
+	cursor: pointer;
+}
+p { 
+	padding: 5px 0;
+}
+</style> 
+
+</head> 
+<body> 
+
+
+#MAIN_FOOTER
+</body> 
+</html>
+
+#PROTEIN_START
+<div class="protein"><span class="span">+</span>
+
+#PROTEIN_END
+</div>
+<table style="display:none">
+
+
+#PROTEIN_FINISH
+</table>
+
+
+#PEPTIDE_START
+	<tr>
+		<td>
+			<div class="peptide"><span class="span">+</span>
+
+#PEPTIDE_END
+</div>
+			<table style="display:none">
+
+
+#PEPTIDE_FINISH
+			</table>
+		</td>
+	</tr>
+
+
+#FEATURE_START
+				<tr>
+					<td>
+
+#FEATURE_END
+</td>
+				</tr>
+
+

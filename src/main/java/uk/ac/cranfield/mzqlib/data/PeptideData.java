@@ -2,9 +2,9 @@ package uk.ac.cranfield.mzqlib.data;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.List;
 import uk.ac.cranfield.mzqlib.MzqLib;
+import uk.ac.liv.jmzqml.model.mzqml.EvidenceRef;
 import uk.ac.liv.jmzqml.model.mzqml.Modification;
 import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensus;
 
@@ -20,7 +20,8 @@ public class PeptideData extends QuantitationLevel {
      * features are rawFilesGroup specific, which is corresponding to msrun 
      * so suitable for a hash map: keys are msrun id and values are the list of features
      */
-    private HashMap<String,ArrayList<FeatureData>> features;
+//    private HashMap<String,ArrayList<FeatureData>> features;
+    private ArrayList<FeatureData> features = new ArrayList<FeatureData>();
     private boolean assignedByPeptideRef = false;
 
     public boolean isAssignedByPeptideRef() {
@@ -55,31 +56,57 @@ public class PeptideData extends QuantitationLevel {
     public String getId(){
         return peptide.getId();
     }
-    /**
-     * Get all features for a specific msrun
-     * @param msrun
-     * @return 
-     */
-    public ArrayList<FeatureData> getFeatures(String msrun) {
-        if(features.containsKey(msrun)){
-            return features.get(msrun);
-        }
-        return null;
+    
+    public PeptideConsensus getPeptide(){
+        return peptide;
     }
-    /**
-     * Get all features from all runs
-     * @return 
-     */
-    public ArrayList<FeatureData> getAllFeatures(){
-        ArrayList<FeatureData> ret = new ArrayList<FeatureData>();
-        for(ArrayList<FeatureData> one:features.values()){
-            ret.addAll(one);
-        }
-        return ret;
+
+    public ArrayList<FeatureData> getFeatures() {
+        return features;
     }
+    
+    public void mergeAnotherPeptideData(PeptideData another){
+        this.features.addAll(another.getFeatures());
+        if(!assignedByPeptideRef) setAssignedByPeptideRef(another.isAssignedByPeptideRef());
+        this.peptide.getEvidenceRef().addAll(another.getPeptide().getEvidenceRef());
+        //TODO more things need to be added here when merging two or more mzq files, e.g. searchDatabaseRef
+    }
+    
+    public String getModString() {
+        return modStr;
+    }
+    
+    
+//    /**
+//     * Get all features for a specific msrun
+//     * @param msrun
+//     * @return 
+//     */
+//    public ArrayList<FeatureData> getFeatures(String msrun) {
+//        if(features.containsKey(msrun)){
+//            return features.get(msrun);
+//        }
+//        return null;
+//    }
+//    /**
+//     * Get all features from all runs
+//     * @return 
+//     */
+//    public ArrayList<FeatureData> getAllFeatures(){
+//        ArrayList<FeatureData> ret = new ArrayList<FeatureData>();
+//        for(ArrayList<FeatureData> one:features.values()){
+//            ret.addAll(one);
+//        }
+//        return ret;
+//    }
 
     @Override
     public int getCount(){
-        return getAllFeatures().size();
+//        return getAllFeatures().size();
+        return features.size();
+    }
+
+    void addFeature(FeatureData feature) {
+        features.add(feature);
     }
 }

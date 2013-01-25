@@ -359,7 +359,7 @@ public class MzqData {
     public void autoAssign() {
 //        if(!needAutoAssignment) return;
         for (PeptideData peptide: peptides.values()){
-            for(EvidenceRef evidence:peptide.getEvidences()){
+            for(EvidenceRef evidence:peptide.getPeptide().getEvidenceRef()){
                 String id = ((Feature)evidence.getFeatureRef()).getId();
                 FeatureData feature = unsolvedFeatures.get(id);
                 unsolvedFeatures.remove(id);

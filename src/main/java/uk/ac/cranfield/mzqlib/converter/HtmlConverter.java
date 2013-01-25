@@ -63,11 +63,31 @@ public class HtmlConverter extends GenericConverter{
             sb.append(templates.get("PROTEIN_END"));
             for(PeptideData peptide:protein.getPeptides()){
                 sb.append(templates.get("PEPTIDE_START"));
-                sb.append(peptide.getId());
-                sb.append(templates.get("PEPTIDE_END"));
+                sb.append(peptide.getSeq());
+                sb.append("</td><td>");
+                sb.append(peptide.getPeptide().getModification().size());
+                sb.append(templates.get("PEPTIDE_END_1"));
+                for (String quantityName : MzqLib.data.getQuantitationNames()) {
+                    for (String assayID : MzqLib.data.getAssays()) {
+                        sb.append("<th>");
+                        sb.append(quantityName);
+                        sb.append("_");
+                        sb.append(assayID);
+                        sb.append("</th>");
+                    }
+                }
+                sb.append(templates.get("PEPTIDE_END_2"));
                 for(FeatureData feature:peptide.getFeatures()){
                     sb.append(templates.get("FEATURE_START"));
-                    sb.append(feature.getId());
+                    sb.append(feature.getFeature().getCharge());
+                    sb.append("</td><td>");
+                    sb.append(feature.getFeature().getMz());
+                    for(String quantityName : MzqLib.data.getQuantitationNames()) {
+                        for (String assayID : MzqLib.data.getAssays()) {
+                            sb.append("</td><td>");
+                            sb.append(feature.getQuantity(quantityName, assayID));
+                        }
+                    }
                     sb.append(templates.get("FEATURE_END"));
                 }
                 sb.append(templates.get("PEPTIDE_FINISH"));

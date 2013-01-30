@@ -1,5 +1,5 @@
 Proteins
-MaxQuant:feature intensity,ass_0,ass_1,ass_2,ass_3,ass_4,ass_5,ass_6,ass_7,SV_config_2,SV_config_1,SV_config_1_L,SV_config_2_H,SV_config_2_L,SV_config_1_H
+Entity,MaxQuant:feature intensity_ass_0,MaxQuant:feature intensity_ass_1,MaxQuant:feature intensity_ass_2,MaxQuant:feature intensity_ass_3,MaxQuant:feature intensity_ass_4,MaxQuant:feature intensity_ass_5,MaxQuant:feature intensity_ass_6,MaxQuant:feature intensity_ass_7,MaxQuant:feature intensity_SV_config_2,MaxQuant:feature intensity_SV_config_1,MaxQuant:feature intensity_SV_config_1_L,MaxQuant:feature intensity_SV_config_2_H,MaxQuant:feature intensity_SV_config_2_L,MaxQuant:feature intensity_SV_config_1_H
 prot_1,Null,Null,Null,Null,Null,Null,Null,Null,Null,Null,3644300.0,2138600.0,2720000.0,3039000.0
 prot_4,Null,Null,Null,Null,Null,Null,Null,Null,Null,Null,8188100.0,5627000.0,6527000.0,5934000.0
 prot_7,Null,Null,Null,Null,Null,Null,Null,Null,Null,Null,787560.0,1013200.0,1301900.0,721270.0
@@ -873,7 +873,7 @@ Ratios,Ratio_H_L_config_1,Ratio_H_L_config_2
 
 
 Peptides
-MaxQuant:feature intensity,ass_0,ass_1,ass_2,ass_3,ass_4,ass_5,ass_6,ass_7,SV_config_2,SV_config_1,SV_config_1_L,SV_config_2_H,SV_config_2_L,SV_config_1_H
+Entity,MaxQuant:feature intensity_ass_0,MaxQuant:feature intensity_ass_1,MaxQuant:feature intensity_ass_2,MaxQuant:feature intensity_ass_3,MaxQuant:feature intensity_ass_4,MaxQuant:feature intensity_ass_5,MaxQuant:feature intensity_ass_6,MaxQuant:feature intensity_ass_7,MaxQuant:feature intensity_SV_config_2,MaxQuant:feature intensity_SV_config_1,MaxQuant:feature intensity_SV_config_1_L,MaxQuant:feature intensity_SV_config_2_H,MaxQuant:feature intensity_SV_config_2_L,MaxQuant:feature intensity_SV_config_1_H
 pep_AAAAAAPGGGGGEPR,282190.0,282190.0,193230.0,193230.0,116310.0,116310.0,101540.0,101540.0,Null,Null,Null,Null,Null,Null
 pep_AAAAAEQQQFYLLLGNLLSPDNVVR,1048000.0,1048000.0,907930.0,907930.0,244560.0,244560.0,217670.0,217670.0,Null,Null,Null,Null,Null,Null
 pep_AAAAVVEFQR,9773900.0,9773900.0,6988200.0,6988200.0,4186500.0,4186500.0,3655600.0,3655600.0,Null,Null,Null,Null,Null,Null
@@ -6794,7 +6794,7 @@ pep_YYQSLFSLSDLK,0.81152,0.80285
 pep_YYVTIIDAPGHR,0.74945,0.81959
 
 Features
-MaxQuant:feature intensity,ass_0,ass_1,ass_2,ass_3,ass_4,ass_5,ass_6,ass_7,SV_config_2,SV_config_1,SV_config_1_L,SV_config_2_H,SV_config_2_L,SV_config_1_H
+Entity,MaxQuant:feature intensity_ass_0,MaxQuant:feature intensity_ass_1,MaxQuant:feature intensity_ass_2,MaxQuant:feature intensity_ass_3,MaxQuant:feature intensity_ass_4,MaxQuant:feature intensity_ass_5,MaxQuant:feature intensity_ass_6,MaxQuant:feature intensity_ass_7,MaxQuant:feature intensity_SV_config_2,MaxQuant:feature intensity_SV_config_1,MaxQuant:feature intensity_SV_config_1_L,MaxQuant:feature intensity_SV_config_2_H,MaxQuant:feature intensity_SV_config_2_L,MaxQuant:feature intensity_SV_config_1_H
 
 Ratios,Ratio_H_L_config_1,Ratio_H_L_config_2
 

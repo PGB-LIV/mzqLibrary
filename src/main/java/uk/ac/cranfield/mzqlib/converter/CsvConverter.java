@@ -15,6 +15,7 @@ import uk.ac.cranfield.mzqlib.data.ProteinData;
  * @author Jun Fan@cranfield
  */
 public class CsvConverter extends GenericConverter {
+    final static String SEPERATOR = ",";
 
     public CsvConverter(String filename) {
         super(filename);
@@ -34,14 +35,8 @@ public class CsvConverter extends GenericConverter {
                 for (ProteinData protein : proteins) {
                     if(protein.hasQuantitation(quantityName)||protein.hasSV(quantityName)){
                         sb.append(protein.getId());
-                        for (String assayID : MzqLib.data.getAssays()) {
-                            sb.append(",");
-                            sb.append(protein.getQuantity(quantityName, assayID));
-                        }
-                        for (String sv : MzqLib.data.getSvs()) {
-                            sb.append(",");
-                            sb.append(protein.getStudyVariableQuantity(quantityName, sv));
-                        }
+                        addAssayValue(sb, protein, SEPERATOR, quantityName);
+                        addSvValue(sb, protein, SEPERATOR, quantityName);
                         sb.append("\n");
                     }
                 }
@@ -50,18 +45,12 @@ public class CsvConverter extends GenericConverter {
             ArrayList<String> ratios = MzqLib.data.getRatios();
             if (!ratios.isEmpty()) {
                 sb.append("Ratios");
-                for (String ratioID : ratios) {
-                    sb.append(",");
-                    sb.append(ratioID);
-                }
+                addRatioHeader(sb, SEPERATOR, "");
                 sb.append("\n");
                 for (ProteinData protein : proteins) {
                     if(protein.hasRatio()){
                         sb.append(protein.getId());
-                        for (String ratioID : ratios) {
-                            sb.append(",");
-                            sb.append(protein.getRatio(ratioID));
-                        }
+                        addRatioValue(sb, protein, SEPERATOR);
                         sb.append("\n");
                     }
                 }
@@ -78,14 +67,8 @@ public class CsvConverter extends GenericConverter {
                 for (PeptideData peptide : peptides) {
                     if(peptide.hasQuantitation(quantityName)||peptide.hasSV(quantityName)){
                         sb.append(peptide.getId());
-                        for (String assayID : MzqLib.data.getAssays()) {
-                            sb.append(",");
-                            sb.append(peptide.getQuantity(quantityName, assayID));
-                        }
-                        for (String sv : MzqLib.data.getSvs()) {
-                            sb.append(",");
-                            sb.append(peptide.getStudyVariableQuantity(quantityName, sv));
-                        }
+                        addAssayValue(sb, peptide, SEPERATOR, quantityName);
+                        addSvValue(sb, peptide, SEPERATOR, quantityName);
                         sb.append("\n");
                     }
                 }
@@ -94,18 +77,12 @@ public class CsvConverter extends GenericConverter {
             ArrayList<String> ratios = MzqLib.data.getRatios();
             if (!ratios.isEmpty()) {
                 sb.append("Ratios");
-                for (String ratioID : ratios) {
-                    sb.append(",");
-                    sb.append(ratioID);
-                }
+                addRatioHeader(sb, SEPERATOR, "");
                 sb.append("\n");
                 for (PeptideData peptide : peptides) {
                     if(peptide.hasRatio()){
                         sb.append(peptide.getId());
-                        for (String ratioID : ratios) {
-                            sb.append(",");
-                            sb.append(peptide.getRatio(ratioID));
-                        }
+                        addRatioValue(sb, peptide, SEPERATOR);
                         sb.append("\n");
                     }
                 }
@@ -121,14 +98,8 @@ public class CsvConverter extends GenericConverter {
                 for (FeatureData feature : features) {
                     if(feature.hasQuantitation(quantityName)||feature.hasSV(quantityName)){
                         sb.append(feature.getId());
-                        for (String assayID : MzqLib.data.getAssays()) {
-                            sb.append(",");
-                            sb.append(feature.getQuantity(quantityName, assayID));
-                        }
-                        for (String sv : MzqLib.data.getSvs()) {
-                            sb.append(",");
-                            sb.append(feature.getStudyVariableQuantity(quantityName, sv));
-                        }
+                        addAssayValue(sb, feature, SEPERATOR, quantityName);
+                        addSvValue(sb, feature, SEPERATOR, quantityName);
                         sb.append("\n");
                     }
                 }
@@ -137,18 +108,12 @@ public class CsvConverter extends GenericConverter {
             ArrayList<String> ratios = MzqLib.data.getRatios();
             if (!ratios.isEmpty()) {
                 sb.append("Ratios");
-                for (String ratioID : ratios) {
-                    sb.append(",");
-                    sb.append(ratioID);
-                }
+                addRatioHeader(sb, SEPERATOR, "");
                 sb.append("\n");
                 for (FeatureData feature : features) {
                     if(feature.hasRatio()){
                         sb.append(feature.getId());
-                        for (String ratioID : ratios) {
-                            sb.append(",");
-                            sb.append(feature.getRatio(ratioID));
-                        }
+                        addRatioValue(sb, feature, SEPERATOR);
                         sb.append("\n");
                     }
                 }
@@ -166,15 +131,9 @@ public class CsvConverter extends GenericConverter {
     }
 
     private void addHeaderLine(StringBuilder sb, String quantityName) {
-        sb.append(quantityName);
-        for (String assayID : MzqLib.data.getAssays()) {
-            sb.append(",");
-            sb.append(assayID);
-        }
-        for (String sv : MzqLib.data.getSvs()) {
-            sb.append(",");
-            sb.append(sv);
-        }
+        sb.append("Entity");
+        addAssayHeader(sb, quantityName, SEPERATOR, "");
+        addSvHeader(sb, quantityName, SEPERATOR, "");
         sb.append("\n");
     }
 }

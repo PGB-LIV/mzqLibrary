@@ -8,4 +8,8 @@ public class MztabConverter extends GenericConverter{
     public MztabConverter(String filename){
         super(filename);
     }
+    
+    public void convert(){
+        
+    }
 }

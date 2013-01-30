@@ -149,7 +149,7 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$(".protein").click(function(){
-				$(this).next("table").slideToggle();
+				$(this).next().slideToggle();
 				if ($(this).children(".span").text() == "+"){
 					$(this).children(".span").text("-")
 				}else {
@@ -183,7 +183,7 @@
 		.protein {
 			margin: 0;
 			padding: 0;
-			background-color:#c30;
+			//background-color:#c30;
 			cursor: pointer;
 		}
 		p { 
@@ -193,68 +193,96 @@
 
 </head> 
 <body> 
+<table id="protein" class = "grid tablesorter">
+<thead>
+	<tr>
+		<th class="" style="padding: 0; margin: 0;"></th>
+		<th>Accession</th>
 
 
 #MAIN_FOOTER
+</tbody>
+</table>
 </body> 
 </html>
 
-#PROTEIN_START
-<div class="protein"><span class="span">+</span>
-
-#PROTEIN_END
-</div>
-<table style="display:none" class = "grid tablesorter">
-<thead>
-	<tr>
-           	<th class="" style="padding: 0; margin: 0;"></th>
-		<th>Sequence</th>
-		<th>Modification</th>
+#PROTEIN_HEADER
 	</tr>
 </thead>
 <tbody>
 
 
-#PROTEIN_FINISH
-</tbody>
-</table>
-
-
-#PEPTIDE_START
+#PROTEIN_START
 	<tr>
 		<td rowspan="2" class="collapsible"><a href="#" class="collapsed"></a></td>
-            	<td rowspan="2" class="collapsible_alt">
+         	<td rowspan="2" class="collapsible_alt">
 
-#PEPTIDE_END_1
+#PROTEIN_END_1
 </td>
 	</tr>
-       	<tr class="expand-child">
-		<td style="display: none;border: 2px" colspan="2">
-			<table class = "sorter">
-			<thead>
-				<tr>
-					<th>charge</th>
-					<th>mz value</th>
+ 	<tr class="expand-child">
+		<td style="display: none;border: 2px" colspan="
 
-#PEPTIDE_END_2
-				</tr>
-			</thead>
-			<tbody>
+#PROTEIN_END_2
+">
+			<table class = "grid tablesorter">
+				<thead>
+					<tr>
+           					<th class="" style="padding: 0; margin: 0;"></th>
+						<th>Sequence</th>
+						<th>Modification</th>
+							
+#PROTEIN_END_3
+					</tr>
+				</thead>
+				<tbody>
 
 
-#PEPTIDE_FINISH
-			</tbody>
+#PROTEIN_FINISH
+				</tbody>
 			</table>
 		</td>
 	</tr>
 
 
+#PEPTIDE_START
+					<tr>
+						<td rowspan="2" class="collapsible"><a href="#" class="collapsed"></a></td>
+            					<td rowspan="2" class="collapsible_alt">
+
+#PEPTIDE_END_1
+</td>
+					</tr>
+       					<tr class="expand-child">
+						<td style="display: none;border: 2px" colspan="
+
+#PEPTIDE_END_2
+">
+							<table class = "sorter">
+								<thead>
+									<tr>
+										<th>charge</th>
+										<th>mz value</th>
+
+#PEPTIDE_END_3
+									</tr>
+								</thead>
+								<tbody>
+
+
+#PEPTIDE_FINISH
+								</tbody>
+							</table>
+						</td>
+					</tr>
+
+
 #FEATURE_START
-				<tr>
-					<td>
+									<tr>
+										<td>
 
 #FEATURE_END
 </td>
-				</tr>
+									</tr>
 
 

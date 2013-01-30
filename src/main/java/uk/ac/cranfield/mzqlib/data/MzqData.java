@@ -357,7 +357,7 @@ public class MzqData {
     }
 
     public void autoAssign() {
-//        if(!needAutoAssignment) return;
+        if(!needAutoAssignment) return;
         for (PeptideData peptide: peptides.values()){
             for(EvidenceRef evidence:peptide.getPeptide().getEvidenceRef()){
                 String id = ((Feature)evidence.getFeatureRef()).getId();

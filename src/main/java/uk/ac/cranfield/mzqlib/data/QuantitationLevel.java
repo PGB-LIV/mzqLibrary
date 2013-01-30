@@ -3,7 +3,6 @@ package uk.ac.cranfield.mzqlib.data;
 import java.util.HashMap;
 import java.lang.reflect.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;

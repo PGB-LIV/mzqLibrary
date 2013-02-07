@@ -192,7 +192,10 @@
 	</style> 
 
 </head> 
-<body> 
+<body>
+
+
+#PROTEIN_HEADER_START
 <table id="protein" class = "grid tablesorter">
 <thead>
 	<tr>
@@ -206,7 +209,7 @@
 </body> 
 </html>
 
-#PROTEIN_HEADER
+#PROTEIN_HEADER_END
 	</tr>
 </thead>
 <tbody>

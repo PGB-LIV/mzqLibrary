@@ -15,7 +15,9 @@ import uk.ac.liv.jmzqml.model.mzqml.CvParam;
 import uk.ac.liv.jmzqml.model.mzqml.EvidenceRef;
 import uk.ac.liv.jmzqml.model.mzqml.Feature;
 import uk.ac.liv.jmzqml.model.mzqml.FeatureList;
+import uk.ac.liv.jmzqml.model.mzqml.InputFiles;
 import uk.ac.liv.jmzqml.model.mzqml.Modification;
+import uk.ac.liv.jmzqml.model.mzqml.ParamList;
 import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensus;
 import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensusList;
 import uk.ac.liv.jmzqml.model.mzqml.Protein;
@@ -25,6 +27,7 @@ import uk.ac.liv.jmzqml.model.mzqml.Ratio;
 import uk.ac.liv.jmzqml.model.mzqml.RatioList;
 import uk.ac.liv.jmzqml.model.mzqml.RatioQuantLayer;
 import uk.ac.liv.jmzqml.model.mzqml.Row;
+import uk.ac.liv.jmzqml.model.mzqml.SoftwareList;
 import uk.ac.liv.jmzqml.model.mzqml.StudyVariable;
 import uk.ac.liv.jmzqml.model.mzqml.StudyVariableList;
 
@@ -80,12 +83,44 @@ public class MzqData {
     private HashSet<String> unsolvedPeptides = new HashSet<String>();
     
     private HashMap<String,FeatureData> unsolvedFeatures = new HashMap<String, FeatureData>();
+    
+    private SoftwareList softwareList;
+    private ParamList analysisSummary;
+    private InputFiles inputFiles;
+
     private boolean needAutoAssignment = true;
-    private final int ASSAY = 1;
-    private final int SV = 2;
-    private final int PROTEIN = 11;
-    private final int PEPTIDE = 12;
-    private final int FEATURE = 13;
+    public static final int ASSAY = 1;
+    public static final int SV = 2;
+    public static final int RATIO = 3;
+    public static final int GLOBAL = 4;
+    public static final int PROTEIN = 11;
+    public static final int PEPTIDE = 12;
+    public static final int FEATURE = 13;
+    public MzqDataControl control = new MzqDataControl();
+    
+    public InputFiles getInputFiles() {
+        return inputFiles;
+    }
+
+    public void setInputFiles(InputFiles inputFiles) {
+        this.inputFiles = inputFiles;
+    }
+
+    public ParamList getAnalysisSummary() {
+        return analysisSummary;
+    }
+
+    public void setAnalysisSummary(ParamList analysisSummary) {
+        this.analysisSummary = analysisSummary;
+    }
+
+    public SoftwareList getSoftwareList() {
+        return softwareList;
+    }
+
+    public void setSoftwareList(SoftwareList softwareList) {
+        this.softwareList = softwareList;
+    }
     
     public int addMzqFiles(String mzqFile){
         if(mzqFiles.contains(mzqFile)) return -1;
@@ -203,9 +238,13 @@ public class MzqData {
         ArrayList<String> assayIDs = new ArrayList<String>();
         for(Object obj:ql.getColumnIndex()){
             if(obj instanceof Assay){
-                assayIDs.add(((Assay)obj).getId());
+                Assay assay = (Assay)obj;
+                assayIDs.add(assay.getId());
+                control.addElement(level, type, assay);
             }else if(obj instanceof StudyVariable){
-                assayIDs.add(((StudyVariable)obj).getId());
+                StudyVariable sv = (StudyVariable)obj;
+                assayIDs.add(sv.getId());
+                control.addElement(level, type, sv);
             }else{
                 System.out.println("In the protein list, the quant layer "+ql.getId()+" has an unrecognised assay/sv id "+obj.toString());
                 System.exit(1);
@@ -234,6 +273,7 @@ public class MzqData {
         for(Object obj:rql.getColumnIndex()){
             Ratio ratio = (Ratio)obj;
             ratioIDs.add(ratio.getId());
+            control.addElement(level, RATIO, ratio);
         }
         for(Row row:rql.getDataMatrix().getRow()){
 //            QuantitationLevel quantObj = determineQuantObj(level, row, localMapping);

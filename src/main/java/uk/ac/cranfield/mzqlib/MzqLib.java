@@ -80,6 +80,10 @@ public class MzqLib {
         final PeptideConsensusList finalResultPcList = getFinalResult(mzq.getPeptideConsensusList());
         if(finalResultPcList!=null) data.addPeptides(finalResultPcList);
         data.addProteins(mzq.getProteinList());
+        
+        data.setSoftwareList(mzq.getSoftwareList());
+        data.setAnalysisSummary(mzq.getAnalysisSummary());
+//        System.out.println("parseMzq finish");
     }
 
     private PeptideConsensusList getFinalResult(List<PeptideConsensusList> peptideConsensusLists) {
@@ -95,18 +99,20 @@ public class MzqLib {
             if(file.getAbsolutePath().endsWith(".mzq")){
                 System.out.println(file.getAbsolutePath());
                 MzqLib lib = new MzqLib("csv",file.getAbsolutePath());
+                lib = new MzqLib("html",file.getAbsolutePath());
             }
         }
         System.exit(0);
     }
 
     public static void main( String[] args ) {
-        new MzqLib("csv","maxquant-silac.mzq");
-        new MzqLib("html","maxquant-silac.mzq");
-        new MzqLib("html","iTraq3standards.mzq");
-        new MzqLib("csv","iTraq3standards.mzq");
-        System.exit(0);
-//        batch();
+//        new MzqLib("csv","maxquant-silac.mzq");
+//        new MzqLib("html","maxquant-silac.mzq");
+//        new MzqLib("html","iTraq3standards.mzq");
+//        new MzqLib("csv","iTraq3standards.mzq");
+//        new MzqLib("csv","CPTAC-Progenesis-small-example.mzq");
+//        System.exit(0);
+        batch();
         int argsLen = args.length;
         MzqLib lib;
         switch(argsLen){

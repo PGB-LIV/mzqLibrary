@@ -31,26 +31,27 @@ public class CsvConverter extends GenericConverter {
         if (proteins.size() > 1 || !proteins.get(0).getAccession().equals(MzqData.ARTIFICIAL)) {
             sb.append("Proteins\n");
             for (String quantityName : MzqLib.data.getQuantitationNames()) {
-                addHeaderLine(sb, quantityName);
+                addHeaderLine(MzqData.PROTEIN, sb, quantityName);
                 for (ProteinData protein : proteins) {
                     if(protein.hasQuantitation(quantityName)||protein.hasSV(quantityName)){
                         sb.append(protein.getId());
-                        addAssayValue(sb, protein, SEPERATOR, quantityName);
-                        addSvValue(sb, protein, SEPERATOR, quantityName);
+                        addAssayValue(MzqData.PROTEIN, sb, protein, SEPERATOR, quantityName);
+                        addSvValue(MzqData.PROTEIN, sb, protein, SEPERATOR, quantityName);
                         sb.append("\n");
                     }
                 }
                 sb.append("\n");
             }
-            ArrayList<String> ratios = MzqLib.data.getRatios();
-            if (!ratios.isEmpty()) {
+//            ArrayList<String> ratios = MzqLib.data.getRatios();
+//            if (!ratios.isEmpty()) {
+            if (MzqLib.data.control.isRequired(MzqData.PROTEIN, MzqData.RATIO)) {
                 sb.append("Ratios");
-                addRatioHeader(sb, SEPERATOR, "");
+                addRatioHeader(MzqData.PROTEIN, sb, SEPERATOR, "");
                 sb.append("\n");
                 for (ProteinData protein : proteins) {
                     if(protein.hasRatio()){
                         sb.append(protein.getId());
-                        addRatioValue(sb, protein, SEPERATOR);
+                        addRatioValue(MzqData.PROTEIN, sb, protein, SEPERATOR);
                         sb.append("\n");
                     }
                 }
@@ -63,26 +64,27 @@ public class CsvConverter extends GenericConverter {
         if (peptides.size() > 1 ) {
             sb.append("Peptides\n");
             for (String quantityName : MzqLib.data.getQuantitationNames()) {
-                addHeaderLine(sb, quantityName);
+                addHeaderLine(MzqData.PEPTIDE, sb, quantityName);
                 for (PeptideData peptide : peptides) {
                     if(peptide.hasQuantitation(quantityName)||peptide.hasSV(quantityName)){
                         sb.append(peptide.getId());
-                        addAssayValue(sb, peptide, SEPERATOR, quantityName);
-                        addSvValue(sb, peptide, SEPERATOR, quantityName);
+                        addAssayValue(MzqData.PEPTIDE, sb, peptide, SEPERATOR, quantityName);
+                        addSvValue(MzqData.PEPTIDE, sb, peptide, SEPERATOR, quantityName);
                         sb.append("\n");
                     }
                 }
                 sb.append("\n");
             }
-            ArrayList<String> ratios = MzqLib.data.getRatios();
-            if (!ratios.isEmpty()) {
+//            ArrayList<String> ratios = MzqLib.data.getRatios();
+//            if (!ratios.isEmpty()) {
+            if (MzqLib.data.control.isRequired(MzqData.PEPTIDE, MzqData.RATIO)) {
                 sb.append("Ratios");
-                addRatioHeader(sb, SEPERATOR, "");
+                addRatioHeader(MzqData.PEPTIDE, sb, SEPERATOR, "");
                 sb.append("\n");
                 for (PeptideData peptide : peptides) {
                     if(peptide.hasRatio()){
                         sb.append(peptide.getId());
-                        addRatioValue(sb, peptide, SEPERATOR);
+                        addRatioValue(MzqData.PEPTIDE, sb, peptide, SEPERATOR);
                         sb.append("\n");
                     }
                 }
@@ -94,26 +96,27 @@ public class CsvConverter extends GenericConverter {
         if (features.size() > 1 ) {
             sb.append("Features\n");
             for (String quantityName : MzqLib.data.getQuantitationNames()) {
-                addHeaderLine(sb, quantityName);
+                addHeaderLine(MzqData.FEATURE, sb, quantityName);
                 for (FeatureData feature : features) {
                     if(feature.hasQuantitation(quantityName)||feature.hasSV(quantityName)){
                         sb.append(feature.getId());
-                        addAssayValue(sb, feature, SEPERATOR, quantityName);
-                        addSvValue(sb, feature, SEPERATOR, quantityName);
+                        addAssayValue(MzqData.FEATURE, sb, feature, SEPERATOR, quantityName);
+                        addSvValue(MzqData.FEATURE, sb, feature, SEPERATOR, quantityName);
                         sb.append("\n");
                     }
                 }
                 sb.append("\n");
             }
-            ArrayList<String> ratios = MzqLib.data.getRatios();
-            if (!ratios.isEmpty()) {
+//            ArrayList<String> ratios = MzqLib.data.getRatios();
+//            if (!ratios.isEmpty()) {
+            if (MzqLib.data.control.isRequired(MzqData.FEATURE, MzqData.RATIO)) {
                 sb.append("Ratios");
-                addRatioHeader(sb, SEPERATOR, "");
+                addRatioHeader(MzqData.FEATURE, sb, SEPERATOR, "");
                 sb.append("\n");
                 for (FeatureData feature : features) {
                     if(feature.hasRatio()){
                         sb.append(feature.getId());
-                        addRatioValue(sb, feature, SEPERATOR);
+                        addRatioValue(MzqData.FEATURE, sb, feature, SEPERATOR);
                         sb.append("\n");
                     }
                 }
@@ -130,10 +133,10 @@ public class CsvConverter extends GenericConverter {
         }
     }
 
-    private void addHeaderLine(StringBuilder sb, String quantityName) {
+    private void addHeaderLine(int level, StringBuilder sb, String quantityName) {
         sb.append("Entity");
-        addAssayHeader(sb, quantityName, SEPERATOR, "");
-        addSvHeader(sb, quantityName, SEPERATOR, "");
+        addAssayHeader(level, sb, quantityName, SEPERATOR, "");
+        addSvHeader(level, sb, quantityName, SEPERATOR, "");
         sb.append("\n");
     }
 }

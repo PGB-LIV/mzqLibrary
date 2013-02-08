@@ -11,10 +11,12 @@ import java.util.HashSet;
 import java.util.List;
 import uk.ac.liv.jmzqml.model.mzqml.Assay;
 import uk.ac.liv.jmzqml.model.mzqml.AssayList;
+import uk.ac.liv.jmzqml.model.mzqml.Column;
 import uk.ac.liv.jmzqml.model.mzqml.CvParam;
 import uk.ac.liv.jmzqml.model.mzqml.EvidenceRef;
 import uk.ac.liv.jmzqml.model.mzqml.Feature;
 import uk.ac.liv.jmzqml.model.mzqml.FeatureList;
+import uk.ac.liv.jmzqml.model.mzqml.GlobalQuantLayer;
 import uk.ac.liv.jmzqml.model.mzqml.InputFiles;
 import uk.ac.liv.jmzqml.model.mzqml.Modification;
 import uk.ac.liv.jmzqml.model.mzqml.ParamList;
@@ -37,6 +39,7 @@ import uk.ac.liv.jmzqml.model.mzqml.StudyVariableList;
  */
 public class MzqData {
     public static final String ARTIFICIAL = "artificial";
+    public static final String RATIO_STRING = "Ratio";
     /**
      * The list of mzq files loaded, not useful at all now as currently focused on one file only
      */
@@ -141,7 +144,9 @@ public class MzqData {
                 parseQuantLayer(ql, SV, FEATURE);
             }
             if(featureList.getMS2RatioQuantLayer()!=null) parseRatioQuantLayer(featureList.getMS2RatioQuantLayer(), FEATURE);
-            //TODO  featureList.getFeatureQuantLayer();
+            for(GlobalQuantLayer gql:featureList.getFeatureQuantLayer()){
+                parseGlobalQuantLayer(gql, FEATURE);
+            }
         }
     }
 
@@ -161,7 +166,9 @@ public class MzqData {
         }
 //        if(proteinList.getRatioQuantLayer()!=null) parseRatioQuantLayer(proteinList.getRatioQuantLayer(),PROTEIN,localMapping);
         if(pcList.getRatioQuantLayer()!=null) parseRatioQuantLayer(pcList.getRatioQuantLayer(),PEPTIDE);
-        //TODO pcList.getGlobalQuantLayer()
+        for(GlobalQuantLayer gql:pcList.getGlobalQuantLayer()){
+            parseGlobalQuantLayer(gql, PEPTIDE);
+        }
     }
 
     public void addProteins(ProteinList proteinList) {
@@ -202,7 +209,9 @@ public class MzqData {
         }
 //        if(proteinList.getRatioQuantLayer()!=null) parseRatioQuantLayer(proteinList.getRatioQuantLayer(),PROTEIN,localMapping);
         if(proteinList.getRatioQuantLayer()!=null) parseRatioQuantLayer(proteinList.getRatioQuantLayer(),PROTEIN);
-        //TODO proteinList.getGlobalQuantLayer()
+        for(GlobalQuantLayer gql:proteinList.getGlobalQuantLayer()){
+            parseGlobalQuantLayer(gql, PROTEIN);
+        }
     }
     
     private QuantitationLevel determineQuantObj(int level, Row row) {
@@ -240,11 +249,11 @@ public class MzqData {
             if(obj instanceof Assay){
                 Assay assay = (Assay)obj;
                 assayIDs.add(assay.getId());
-                control.addElement(level, type, assay);
+                control.addElement(level, type, quantityName);
             }else if(obj instanceof StudyVariable){
                 StudyVariable sv = (StudyVariable)obj;
                 assayIDs.add(sv.getId());
-                control.addElement(level, type, sv);
+                control.addElement(level, type, quantityName);
             }else{
                 System.out.println("In the protein list, the quant layer "+ql.getId()+" has an unrecognised assay/sv id "+obj.toString());
                 System.exit(1);
@@ -273,7 +282,7 @@ public class MzqData {
         for(Object obj:rql.getColumnIndex()){
             Ratio ratio = (Ratio)obj;
             ratioIDs.add(ratio.getId());
-            control.addElement(level, RATIO, ratio);
+            control.addElement(level, RATIO, RATIO_STRING);
         }
         for(Row row:rql.getDataMatrix().getRow()){
 //            QuantitationLevel quantObj = determineQuantObj(level, row, localMapping);
@@ -286,6 +295,23 @@ public class MzqData {
         }
     }
 
+    private void parseGlobalQuantLayer(GlobalQuantLayer gql, int level) {
+        ArrayList<String> columnIDs = new ArrayList<String>();
+        for(Column column:gql.getColumnDefinition().getColumn()){
+            String name = column.getDataType().getCvParam().getName();
+            columnIDs.add(name);
+            control.addElement(level, GLOBAL, name);
+        }
+        for(Row row:gql.getDataMatrix().getRow()){
+            QuantitationLevel quantObj = determineQuantObj(level, row);
+            for (int i = 0; i < columnIDs.size(); i++) {
+                String columnID = columnIDs.get(i);
+                double value = Double.parseDouble(row.getValue().get(i));
+                quantObj.setGlobal(columnID, value);
+            }
+        }
+    }
+    
     public void addAssays(AssayList assayList) {
         for(Assay assay:assayList.getAssay()){
             assays.add(assay.getId());

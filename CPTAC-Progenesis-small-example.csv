@@ -1,7 +1,5 @@
 Proteins
-Entity,Progenesis:peptide normalised abundance_ass_0,Progenesis:peptide normalised abundance_ass_1,Progenesis:peptide normalised abundance_ass_2,Progenesis:peptide normalised abundance_ass_3,Progenesis:peptide normalised abundance_ass_4,Progenesis:peptide normalised abundance_ass_5,Progenesis:peptide normalised abundance_ass_6,Progenesis:peptide normalised abundance_ass_7,Progenesis:peptide normalised abundance_ass_8,Progenesis:peptide normalised abundance_ass_9,Progenesis:peptide normalised abundance_ass_10,Progenesis:peptide normalised abundance_ass_11
 
-Entity,Progenesis:peptide raw abundance_ass_0,Progenesis:peptide raw abundance_ass_1,Progenesis:peptide raw abundance_ass_2,Progenesis:peptide raw abundance_ass_3,Progenesis:peptide raw abundance_ass_4,Progenesis:peptide raw abundance_ass_5,Progenesis:peptide raw abundance_ass_6,Progenesis:peptide raw abundance_ass_7,Progenesis:peptide raw abundance_ass_8,Progenesis:peptide raw abundance_ass_9,Progenesis:peptide raw abundance_ass_10,Progenesis:peptide raw abundance_ass_11
 
 Entity,Progenesis:protein normalised abundance_ass_0,Progenesis:protein normalised abundance_ass_1,Progenesis:protein normalised abundance_ass_2,Progenesis:protein normalised abundance_ass_3,Progenesis:protein normalised abundance_ass_4,Progenesis:protein normalised abundance_ass_5,Progenesis:protein normalised abundance_ass_6,Progenesis:protein normalised abundance_ass_7,Progenesis:protein normalised abundance_ass_8,Progenesis:protein normalised abundance_ass_9,Progenesis:protein normalised abundance_ass_10,Progenesis:protein normalised abundance_ass_11
 prot_0,4803.127,4360.538,5238.612,4943.084,3288.852,5658.842,4137.024,5308.045,4797.989,3401.676,4031.681,3428.823
@@ -139,16 +137,56 @@ pep_VTPQMMQQAQQK_2_23154,2743.755,2187.528,2845.244,2817.21,2788.204,3239.247,97
 pep_VVEATPEDGTASSQK_2_33389,3115.96,0.0,2185.487,3421.664,307.555,1059.785,1900.951,0.0,0.0,2836.783,2542.491,1949.921
 pep_YDYAVAEQCPVK_2_15289,4445.933,5482.374,5032.723,4761.744,5359.492,4517.695,2780.764,6674.639,2947.514,4300.527,8198.402,5448.468
 
-Entity,Progenesis:protein normalised abundance_ass_0,Progenesis:protein normalised abundance_ass_1,Progenesis:protein normalised abundance_ass_2,Progenesis:protein normalised abundance_ass_3,Progenesis:protein normalised abundance_ass_4,Progenesis:protein normalised abundance_ass_5,Progenesis:protein normalised abundance_ass_6,Progenesis:protein normalised abundance_ass_7,Progenesis:protein normalised abundance_ass_8,Progenesis:protein normalised abundance_ass_9,Progenesis:protein normalised abundance_ass_10,Progenesis:protein normalised abundance_ass_11
 
-Entity,Progenesis:protein raw abundance_ass_0,Progenesis:protein raw abundance_ass_1,Progenesis:protein raw abundance_ass_2,Progenesis:protein raw abundance_ass_3,Progenesis:protein raw abundance_ass_4,Progenesis:protein raw abundance_ass_5,Progenesis:protein raw abundance_ass_6,Progenesis:protein raw abundance_ass_7,Progenesis:protein raw abundance_ass_8,Progenesis:protein raw abundance_ass_9,Progenesis:protein raw abundance_ass_10,Progenesis:protein raw abundance_ass_11
+
+Global,Mascot:score
+pep_ADLVAVLK_2_6855,50.11
+pep_AEEILER_2_375,54.39
+pep_AETDDGADVIR_2_10786,70.46
+pep_AGYQDDPQYADFK_2_6365,57.17
+pep_ATAGNWVASQTVK_2_10657,95.41
+pep_ATNDVEPSTYDSK_2_6989,82.19
+pep_DAENEWNVEK_2_12691,53.74
+pep_EDTVSWFK_2_1509,41.8
+pep_EVFEAATR_2_3958,41.49
+pep_FIDTEAGGSQAR_2_10125,91.75
+pep_FSPVSTASYR_2_7384,48.93
+pep_FVDIEEQQQQK_2_35126,42.09
+pep_FVQESLGTVSDISK_2_21254,60.19
+pep_GAPEIDVLEGETDTK_2_21711,83.67
+pep_GGGADVDWSSAR_2_10114,82.97
+pep_GLGNPLLYDGVER_2_13819,61.16
+pep_GSNFQGDGREDAPDLDWGAAR_3_12185,41.57
+pep_GSNVISNDVYDQINK_2_29124,54.96
+pep_GSSVQTLYEQAAAR_2_19156,64.63
+pep_IGLVPLK_2_10519,48.18
+pep_KTPTQEEGCNCATDSGK_3_29728,49.01
+pep_LDPALGGGSSDR_2_8265,53.05
+pep_LFAGMSPEMAK_2_5761,46.82
+pep_LNPSDNYQDMAR_2_10909,40.71
+pep_LQEQSGNMDQNLLPAEK_2_19846,59.09
+pep_LVIVGDGACGK_2_5628,44.57
+pep_NAVQNESVSSPIELNFDAVK_2_31018,71.38
+pep_NDPQTIEQLR_2_5279,62.48
+pep_NSSWSCPICNSR_2_24976,40.24
+pep_QKYDADVLDK_3_2006,47.59
+pep_QSTTFADCPVVPADPDILLAK_2_48178,52.13
+pep_RIPSTPIDYMAIR_3_12620,47.3
+pep_SDANSNVVPVGCLYTPLK_2_21557,47.49
+pep_SQEVEYVDPTVNR_2_17934,70.16
+pep_SQLIDAENSSSAVK_2_27287,78.86
+pep_STPQDTNVNSQSR_2_19360,42.13
+pep_VAIGEVPFTFGVR_2_7857,45.89
+pep_VGQTLQVTEGTIK_2_30063,61.91
+pep_VLEQLSGQTPVQSK_2_443,95.97
+pep_VPNYEVSEK_2_12321,58.52
+pep_VTNTTSTDFPGFSK_2_9038,79.12
+pep_VTPQMMQQAQQK_2_23154,45.0
+pep_VVEATPEDGTASSQK_2_33389,40.03
+pep_YDYAVAEQCPVK_2_15289,47.57
 
 Features
-Entity
 
-Entity
 
-Entity
 
-Entity
 

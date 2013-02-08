@@ -4,9 +4,8 @@
  */
 package uk.ac.cranfield.mzqlib.data;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import uk.ac.liv.jmzqml.model.MzQuantMLObject;
+import java.util.HashSet;
 
 /**
  *
@@ -18,19 +17,17 @@ public class MzqDataControl {
     private HashMap<Integer,MzqDataControlElement> peptideLevel = new HashMap<Integer, MzqDataControlElement>();
     private HashMap<Integer,MzqDataControlElement> featureLevel = new HashMap<Integer, MzqDataControlElement>();
     
-    public void addElement(int level, int type, MzQuantMLObject element){
-        MzqDataControlElement controlElement = getControlElement(level, type);
-        controlElement.addElement(element);
+    public void addElement(int level, int type, String element){
+        getControlElement(level, type).addElement(element);
     }
     
-    public boolean isRequired(int level, int type){
-        return getControlElement(level, type).isRequired();
+    public boolean isRequired(int level, int type, String quantityName){
+        return getControlElement(level, type).isRequired(quantityName);
     }
 
-    //have not fully decided yet, the difficulty comes from the multiple quantity properties
-//    public ArrayList<MzQuantMLObject> getElements(int level, int type){
-//        return getControlElement(level,type).getElements();
-//    }
+    public HashSet<String> getElements(int level, int type){
+        return getControlElement(level,type).getElements();
+    }
             
     private MzqDataControlElement getControlElement(int level, int type){
         HashMap<Integer,MzqDataControlElement> map = null;
@@ -59,17 +56,18 @@ public class MzqDataControl {
 }
 
 class MzqDataControlElement{
-    private ArrayList<MzQuantMLObject> elements = new ArrayList<MzQuantMLObject>();
-    boolean isRequired(){
+    private HashSet<String> elements = new HashSet<String>();
+    boolean isRequired(String quantityName){
         if (elements.isEmpty()) return false;
-        return true;
+        if (elements.contains(quantityName)) return true;
+        return false;
     }
     
-    ArrayList<MzQuantMLObject> getElements(){
+    HashSet<String> getElements(){
         return elements;
     }
     
-    void addElement(MzQuantMLObject element){
+    void addElement(String element){
         elements.add(element);
     }
 }

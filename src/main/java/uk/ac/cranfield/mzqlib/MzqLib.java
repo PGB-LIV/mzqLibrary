@@ -111,6 +111,7 @@ public class MzqLib {
 //        new MzqLib("html","iTraq3standards.mzq");
 //        new MzqLib("csv","iTraq3standards.mzq");
 //        new MzqLib("csv","CPTAC-Progenesis-small-example.mzq");
+//        new MzqLib("html","CPTAC-Progenesis-small-example.mzq");
 //        System.exit(0);
         batch();
         int argsLen = args.length;

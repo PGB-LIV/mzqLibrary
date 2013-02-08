@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.HashSet;
 import uk.ac.cranfield.mzqlib.MzqLib;
 import uk.ac.cranfield.mzqlib.data.FeatureData;
 import uk.ac.cranfield.mzqlib.data.MzqData;
@@ -59,8 +60,8 @@ public class HtmlConverter extends GenericConverter{
             }
         }
 
-        int assaySize = MzqLib.data.getAssays().size()*MzqLib.data.getQuantitationNames().size();
-        int svSize = MzqLib.data.getSvs().size()*MzqLib.data.getQuantitationNames().size();
+//        int assaySize = MzqLib.data.getAssays().size()*MzqLib.data.getQuantitationNames().size();
+//        int svSize = MzqLib.data.getSvs().size()*MzqLib.data.getQuantitationNames().size();
         
         StringBuilder sb = new StringBuilder();
         sb.append(templates.get("MAIN_HEADER"));
@@ -94,6 +95,27 @@ public class HtmlConverter extends GenericConverter{
         sb.append(templates.get("PROTEIN_HEADER_START"));
         addHeader(MzqData.PROTEIN, sb);
         sb.append(templates.get("PROTEIN_HEADER_END"));
+        
+        HashSet<String> proteinGlobalNames = MzqLib.data.control.getElements(MzqData.PROTEIN, MzqData.GLOBAL);
+        HashSet<String> peptideGlobalNames = MzqLib.data.control.getElements(MzqData.PEPTIDE, MzqData.GLOBAL);
+        HashSet<String> featureGlobalNames = MzqLib.data.control.getElements(MzqData.FEATURE, MzqData.GLOBAL);
+        int proteinAssaySize = MzqLib.data.control.getElements(MzqData.PROTEIN, MzqData.ASSAY).size() * MzqLib.data.getAssays().size();
+        int proteinSvSize = MzqLib.data.control.getElements(MzqData.PROTEIN, MzqData.SV).size() * MzqLib.data.getSvs().size();
+        int proteinRatioSize = 0;
+        if (MzqLib.data.control.isRequired(MzqData.PROTEIN, MzqData.RATIO, MzqData.RATIO_STRING)){
+            proteinRatioSize = MzqLib.data.getRatios().size();
+        }
+        //start from the first quantitation/sv column
+        final int proteinTotalSize = proteinAssaySize + proteinSvSize + proteinRatioSize + proteinGlobalNames.size();
+        int peptideAssaySize = MzqLib.data.control.getElements(MzqData.PEPTIDE, MzqData.ASSAY).size() * MzqLib.data.getAssays().size();
+        int peptideSvSize = MzqLib.data.control.getElements(MzqData.PEPTIDE, MzqData.SV).size() * MzqLib.data.getSvs().size();
+        int peptideRatioSize = 0;
+        if (MzqLib.data.control.isRequired(MzqData.PEPTIDE, MzqData.RATIO, MzqData.RATIO_STRING)){
+            peptideRatioSize = MzqLib.data.getRatios().size();
+        }
+        //start from modification column
+        final int peptideTotalSize = peptideAssaySize + peptideSvSize + peptideRatioSize + peptideGlobalNames.size() + 1;
+        
         for(ProteinData protein:MzqLib.data.getProteins()){
             sb.append(templates.get("PROTEIN_START"));
             sb.append(protein.getAccession());
@@ -101,8 +123,10 @@ public class HtmlConverter extends GenericConverter{
                 addAssayValue(MzqData.PROTEIN, sb, protein, SEPERATOR, quantityName);
                 addSvValue(MzqData.PROTEIN, sb, protein, SEPERATOR, quantityName);
             }
+            addRatioValue(MzqData.PROTEIN, sb, protein, SEPERATOR);
+            addGlobalValue(MzqData.PROTEIN, sb, protein, SEPERATOR, proteinGlobalNames);
             sb.append(templates.get("PROTEIN_END_1"));
-            sb.append(assaySize + svSize + 1);
+            sb.append(proteinTotalSize);
             sb.append(templates.get("PROTEIN_END_2"));
             addHeader(MzqData.PEPTIDE, sb);
             sb.append(templates.get("PROTEIN_END_3"));
@@ -115,8 +139,10 @@ public class HtmlConverter extends GenericConverter{
                     addAssayValue(MzqData.PEPTIDE, sb, peptide, SEPERATOR, quantityName);
                     addSvValue(MzqData.PEPTIDE, sb, peptide, SEPERATOR, quantityName);
                 }
+                addRatioValue(MzqData.PEPTIDE, sb, peptide, SEPERATOR);
+                addGlobalValue(MzqData.PEPTIDE, sb, peptide, SEPERATOR, peptideGlobalNames);
                 sb.append(templates.get("PEPTIDE_END_1"));
-                sb.append(assaySize+svSize+1);
+                sb.append(peptideTotalSize);
                 sb.append(templates.get("PEPTIDE_END_2"));
                 addHeader(MzqData.FEATURE, sb);
                 sb.append(templates.get("PEPTIDE_END_3"));
@@ -129,6 +155,8 @@ public class HtmlConverter extends GenericConverter{
                         addAssayValue(MzqData.FEATURE, sb, feature, SEPERATOR, quantityName);
                         addSvValue(MzqData.FEATURE, sb, feature, SEPERATOR, quantityName);
                     }
+                    addRatioValue(MzqData.FEATURE, sb, feature, SEPERATOR);
+                    addGlobalValue(MzqData.FEATURE, sb, feature, SEPERATOR, featureGlobalNames);
                     sb.append(templates.get("FEATURE_END"));
                 }
                 sb.append(templates.get("PEPTIDE_FINISH"));
@@ -152,6 +180,11 @@ public class HtmlConverter extends GenericConverter{
             addAssayHeader(level, sb, quantityName, "<th>", "</th>");
             addSvHeader(level, sb, quantityName, "<th>", "</th>");
         }
-        sb.append("\n");
+        addRatioHeader(level, sb, "<th>", "</th>");
+        HashSet<String> names = MzqLib.data.control.getElements(level, MzqData.GLOBAL);
+        if (names.size()>0){
+            addGlobalHeader(sb,"<th>", "</th>", names);
+            sb.append("\n");
+        }
     }
 }

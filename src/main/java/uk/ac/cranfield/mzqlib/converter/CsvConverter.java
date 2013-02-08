@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import uk.ac.cranfield.mzqlib.MzqLib;
 import uk.ac.cranfield.mzqlib.data.FeatureData;
 import uk.ac.cranfield.mzqlib.data.MzqData;
@@ -44,7 +45,7 @@ public class CsvConverter extends GenericConverter {
             }
 //            ArrayList<String> ratios = MzqLib.data.getRatios();
 //            if (!ratios.isEmpty()) {
-            if (MzqLib.data.control.isRequired(MzqData.PROTEIN, MzqData.RATIO)) {
+            if (MzqLib.data.control.isRequired(MzqData.PROTEIN, MzqData.RATIO, MzqData.RATIO_STRING)) {
                 sb.append("Ratios");
                 addRatioHeader(MzqData.PROTEIN, sb, SEPERATOR, "");
                 sb.append("\n");
@@ -52,6 +53,20 @@ public class CsvConverter extends GenericConverter {
                     if(protein.hasRatio()){
                         sb.append(protein.getId());
                         addRatioValue(MzqData.PROTEIN, sb, protein, SEPERATOR);
+                        sb.append("\n");
+                    }
+                }
+                sb.append("\n");
+            }
+            HashSet<String> globals = MzqLib.data.control.getElements(MzqData.PROTEIN, MzqData.GLOBAL);
+            if(globals.size()>0){
+                sb.append("Global");
+                addGlobalHeader(sb, SEPERATOR, "", globals);
+                sb.append("\n");
+                for (ProteinData protein : proteins) {
+                    if(protein.hasGlobal()){
+                        sb.append(protein.getId());
+                        addGlobalValue(MzqData.PROTEIN, sb, protein, SEPERATOR, globals);
                         sb.append("\n");
                     }
                 }
@@ -77,7 +92,7 @@ public class CsvConverter extends GenericConverter {
             }
 //            ArrayList<String> ratios = MzqLib.data.getRatios();
 //            if (!ratios.isEmpty()) {
-            if (MzqLib.data.control.isRequired(MzqData.PEPTIDE, MzqData.RATIO)) {
+            if (MzqLib.data.control.isRequired(MzqData.PEPTIDE, MzqData.RATIO, MzqData.RATIO_STRING)) {
                 sb.append("Ratios");
                 addRatioHeader(MzqData.PEPTIDE, sb, SEPERATOR, "");
                 sb.append("\n");
@@ -85,6 +100,20 @@ public class CsvConverter extends GenericConverter {
                     if(peptide.hasRatio()){
                         sb.append(peptide.getId());
                         addRatioValue(MzqData.PEPTIDE, sb, peptide, SEPERATOR);
+                        sb.append("\n");
+                    }
+                }
+                sb.append("\n");
+            }
+            HashSet<String> globals = MzqLib.data.control.getElements(MzqData.PEPTIDE, MzqData.GLOBAL);
+            if(globals.size()>0){
+                sb.append("Global");
+                addGlobalHeader(sb, SEPERATOR, "", globals);
+                sb.append("\n");
+                for (PeptideData peptide : peptides) {
+                    if(peptide.hasGlobal()){
+                        sb.append(peptide.getId());
+                        addGlobalValue(MzqData.PEPTIDE, sb, peptide, SEPERATOR, globals);
                         sb.append("\n");
                     }
                 }
@@ -109,7 +138,7 @@ public class CsvConverter extends GenericConverter {
             }
 //            ArrayList<String> ratios = MzqLib.data.getRatios();
 //            if (!ratios.isEmpty()) {
-            if (MzqLib.data.control.isRequired(MzqData.FEATURE, MzqData.RATIO)) {
+            if (MzqLib.data.control.isRequired(MzqData.FEATURE, MzqData.RATIO, MzqData.RATIO_STRING)) {
                 sb.append("Ratios");
                 addRatioHeader(MzqData.FEATURE, sb, SEPERATOR, "");
                 sb.append("\n");
@@ -117,6 +146,20 @@ public class CsvConverter extends GenericConverter {
                     if(feature.hasRatio()){
                         sb.append(feature.getId());
                         addRatioValue(MzqData.FEATURE, sb, feature, SEPERATOR);
+                        sb.append("\n");
+                    }
+                }
+                sb.append("\n");
+            }
+            HashSet<String> globals = MzqLib.data.control.getElements(MzqData.FEATURE, MzqData.GLOBAL);
+            if(globals.size()>0){
+                sb.append("Global");
+                addGlobalHeader(sb, SEPERATOR, "", globals);
+                sb.append("\n");
+                for (FeatureData feature : features) {
+                    if(feature.hasGlobal()){
+                        sb.append(feature.getId());
+                        addGlobalValue(MzqData.FEATURE, sb, feature, SEPERATOR, globals);
                         sb.append("\n");
                     }
                 }
@@ -134,9 +177,11 @@ public class CsvConverter extends GenericConverter {
     }
 
     private void addHeaderLine(int level, StringBuilder sb, String quantityName) {
-        sb.append("Entity");
-        addAssayHeader(level, sb, quantityName, SEPERATOR, "");
-        addSvHeader(level, sb, quantityName, SEPERATOR, "");
-        sb.append("\n");
+        if (MzqLib.data.control.isRequired(level, MzqData.ASSAY, quantityName)||MzqLib.data.control.isRequired(level, MzqData.SV, quantityName)) {
+            sb.append("Entity");
+            addAssayHeader(level, sb, quantityName, SEPERATOR, "");
+            addSvHeader(level, sb, quantityName, SEPERATOR, "");
+            sb.append("\n");
+        }
     }
 }

@@ -19,9 +19,11 @@ public class QuantitationLevel {
     private HashMap<String,HashMap<String,Double>> quantities = new HashMap<String, HashMap<String, Double>>();
     private HashMap<String,HashMap<String,Double>> studyVariables = new HashMap<String, HashMap<String, Double>>();
     private HashMap<String,Double> ratios = new HashMap<String, Double>();
+    private HashMap<String,Double> globals = new HashMap<String, Double>();
 //    private HashSet<String> quantitationFlags = new HashSet<String>();
 //    private HashSet<String> svFlags = new HashSet<String>();
     private boolean hasRatio = false;
+    private boolean hasGlobal = false;
     
     static private QuantitationMisc misc = new QuantitationMisc();
     public static final int SUM = 0;
@@ -55,7 +57,11 @@ public class QuantitationLevel {
         if(ratios.containsKey(name)) return ratios.get(name);
         return null;
     }
-    
+
+    public Double getGlobal(String name){
+        if(globals.containsKey(name)) return globals.get(name);
+        return null;
+    }
 
     public void setQuantities(String name,HashMap<String, Double> quantitions) {
         quantities.put(name, quantitions);
@@ -68,6 +74,11 @@ public class QuantitationLevel {
     public void setRatios(String name,Double ratio) {
         ratios.put(name, ratio);
         hasRatio = true;
+    }
+
+    public void setGlobal(String name,Double ratio) {
+        globals.put(name, ratio);
+        hasGlobal = true;
     }
     
     public boolean hasQuantitation(String quantitationName){
@@ -82,6 +93,10 @@ public class QuantitationLevel {
 
     public boolean hasRatio(){
         return hasRatio;
+    }
+    
+    public boolean hasGlobal(){
+        return hasGlobal;
     }
     
     public void calculateQuantitation(Set<String> quantitationNames,ArrayList<String> assayIDs,int type){

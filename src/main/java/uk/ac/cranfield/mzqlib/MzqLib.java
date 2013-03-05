@@ -108,18 +108,19 @@ public class MzqLib {
     public static void main( String[] args ) {
 //        new MzqLib("csv","maxquant-silac.mzq");
 //        new MzqLib("html","maxquant-silac.mzq");
-//        new MzqLib("html","iTraq3standards.mzq");
+//        new MzqLib("html","iTraq_4plex_example_from_xTracker.mzq");
 //        new MzqLib("csv","iTraq3standards.mzq");
+        new MzqLib("html","iTraq3standards.mzq");
 //        new MzqLib("csv","CPTAC-Progenesis-small-example.mzq");
 //        new MzqLib("html","CPTAC-Progenesis-small-example.mzq");
-//        System.exit(0);
-        batch();
+        System.exit(0);
+//        batch();
         int argsLen = args.length;
         MzqLib lib;
         switch(argsLen){
-            case 0://GUI
-                lib = new MzqLib();
-                break;
+//            case 0://GUI
+//                lib = new MzqLib();
+//                break;
             case 2://command line converter
                 lib = new MzqLib(args[0].toLowerCase(),args[1]);
                 break;
@@ -129,17 +130,18 @@ public class MzqLib {
     }
     
     private static void printUsage(){
-        System.out.println("Usage: java -jar mzqlib.jar [converter type] [mzQuantML file]");
-        System.out.println("There are two ways of using mzqlib jar file:");
-        System.out.println("1. without options: it will present a GUI");
-        System.out.println("2. with options: the first option must be the type of the output file type, now supports csv,mztab and html, the second option is the mzquantml file which needs to be converted");
+        System.out.println("Usage: java -jar mzqlib.jar <converter type> <mzQuantML file>");
+//        System.out.println("There are two ways of using mzqlib jar file:");
+//        System.out.println("1. without options: it will present a GUI");
+//        System.out.println("2. with options: the first option must be the type of the output file type, now supports csv,mztab and html, the second option is the mzquantml file which needs to be converted");
+        System.out.println("The first parameter specifies the type of the output file type, now supports csv and html.\nThe second parameter is the mzquantml file which needs to be converted");
         System.out.println("For example java -jar mzqlib.jar html example.mzq");
         System.exit(0);
     }
     
     private void initialize(){
         converterTypeMap.put("html", HTML);
-        converterTypeMap.put("mztab", MZTAB);
+//        converterTypeMap.put("mztab", MZTAB);
         converterTypeMap.put("csv", CSV);
         data = new MzqData();
     }

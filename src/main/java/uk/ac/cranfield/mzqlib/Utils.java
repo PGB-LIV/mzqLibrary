@@ -25,12 +25,12 @@ import org.xml.sax.SAXException;
  * @author Jun Fan@cranfield
  */
 public class Utils {
-    private static final String MZQ_XSD = "mzQuantML_1_0_0-rc3.xsd";
-    private static final String MZID_XSD = "mzQuantML_1_0_0-rc3.xsd";
+    private static final String MZQ_XSD = "mzQuantML_1_0_0.xsd";
+//    private static final String MZID_XSD = "mzQuantML_1_0_0-rc3.xsd";
     
-    public static boolean validateMzIdFile(String mzidFile){
-        return validate(mzidFile,MZID_XSD);
-    }
+//    public static boolean validateMzIdFile(String mzidFile){
+//        return validate(mzidFile,MZID_XSD);
+//    }
     
     public static boolean validateMzqFile(String mzqFile){
         return validate(mzqFile,MZQ_XSD);

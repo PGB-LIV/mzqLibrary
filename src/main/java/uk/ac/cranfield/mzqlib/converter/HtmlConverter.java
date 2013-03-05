@@ -106,7 +106,7 @@ public class HtmlConverter extends GenericConverter{
             proteinRatioSize = MzqLib.data.getRatios().size();
         }
         //start from the first quantitation/sv column
-        final int proteinTotalSize = proteinAssaySize + proteinSvSize + proteinRatioSize + proteinGlobalNames.size();
+        final int proteinTotalSize = proteinAssaySize + proteinSvSize + proteinRatioSize + proteinGlobalNames.size()+1; //+1 for the protein accession column
         int peptideAssaySize = MzqLib.data.control.getElements(MzqData.PEPTIDE, MzqData.ASSAY).size() * MzqLib.data.getAssays().size();
         int peptideSvSize = MzqLib.data.control.getElements(MzqData.PEPTIDE, MzqData.SV).size() * MzqLib.data.getSvs().size();
         int peptideRatioSize = 0;
@@ -114,10 +114,14 @@ public class HtmlConverter extends GenericConverter{
             peptideRatioSize = MzqLib.data.getRatios().size();
         }
         //start from modification column
-        final int peptideTotalSize = peptideAssaySize + peptideSvSize + peptideRatioSize + peptideGlobalNames.size() + 1;
+        final int peptideTotalSize = peptideAssaySize + peptideSvSize + peptideRatioSize + peptideGlobalNames.size() + 2; //+2 for the peptide sequence and modification columns
         
         for(ProteinData protein:MzqLib.data.getProteins()){
-            sb.append(templates.get("PROTEIN_START"));
+            //it seems html does not like . which is fine in NCName
+            String proteinID = protein.getAccession().replace(".", "_");
+            sb.append(templates.get("PROTEIN_START_1"));
+            sb.append(proteinID);
+            sb.append(templates.get("PROTEIN_START_2"));
             sb.append(protein.getAccession());
             for (String quantityName : MzqLib.data.getQuantitationNames()) {
                 addAssayValue(MzqData.PROTEIN, sb, protein, SEPERATOR, quantityName);
@@ -126,12 +130,21 @@ public class HtmlConverter extends GenericConverter{
             addRatioValue(MzqData.PROTEIN, sb, protein, SEPERATOR);
             addGlobalValue(MzqData.PROTEIN, sb, protein, SEPERATOR, proteinGlobalNames);
             sb.append(templates.get("PROTEIN_END_1"));
-            sb.append(proteinTotalSize);
+            sb.append(proteinID);
+            sb.append("-detail");
             sb.append(templates.get("PROTEIN_END_2"));
-            addHeader(MzqData.PEPTIDE, sb);
+            sb.append("child-of-");
+            sb.append(proteinID);
             sb.append(templates.get("PROTEIN_END_3"));
+            sb.append(proteinTotalSize);
+            sb.append(templates.get("PROTEIN_END_4"));
+            addHeader(MzqData.PEPTIDE, sb);
+            sb.append(templates.get("PROTEIN_END_5"));
             for(PeptideData peptide:protein.getPeptides()){
-                sb.append(templates.get("PEPTIDE_START"));
+                String peptideID = proteinID +"-"+peptide.getSeq()+"-"+peptide.getPeptide().getModification().size();
+                sb.append(templates.get("PEPTIDE_START_1"));
+                sb.append(peptideID);
+                sb.append(templates.get("PEPTIDE_START_2"));
                 sb.append(peptide.getSeq());
                 sb.append(SEPERATOR);
                 sb.append(peptide.getPeptide().getModification().size());
@@ -142,10 +155,16 @@ public class HtmlConverter extends GenericConverter{
                 addRatioValue(MzqData.PEPTIDE, sb, peptide, SEPERATOR);
                 addGlobalValue(MzqData.PEPTIDE, sb, peptide, SEPERATOR, peptideGlobalNames);
                 sb.append(templates.get("PEPTIDE_END_1"));
-                sb.append(peptideTotalSize);
+                sb.append(peptideID);
+                sb.append("-detail");
                 sb.append(templates.get("PEPTIDE_END_2"));
-                addHeader(MzqData.FEATURE, sb);
+                sb.append("child-of-");
+                sb.append(peptideID);
                 sb.append(templates.get("PEPTIDE_END_3"));
+                sb.append(peptideTotalSize);
+                sb.append(templates.get("PEPTIDE_END_4"));
+                addHeader(MzqData.FEATURE, sb);
+                sb.append(templates.get("PEPTIDE_END_5"));
                 for(FeatureData feature:peptide.getFeatures()){
                     sb.append(templates.get("FEATURE_START"));
                     sb.append(feature.getFeature().getCharge());

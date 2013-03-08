@@ -17,14 +17,17 @@ import uk.ac.cranfield.mzqlib.data.ProteinData;
  */
 public class CsvConverter extends GenericConverter {
     final static String SEPERATOR = ",";
+    
 
-    public CsvConverter(String filename) {
-        super(filename);
+    public CsvConverter(String filename,String outputFile) {
+        super(filename,outputFile);
     }
 
     @Override
     public void convert() {
-        String outfile = getBaseFilename() + ".csv";
+        if(outfile.length()==0){
+            outfile = getBaseFilename() + ".csv";
+        }
         StringBuilder sb = new StringBuilder();
         //deal with proteins
         ArrayList<ProteinData> proteins = MzqLib.data.getProteins();

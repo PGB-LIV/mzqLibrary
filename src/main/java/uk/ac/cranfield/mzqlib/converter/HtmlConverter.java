@@ -24,13 +24,15 @@ public class HtmlConverter extends GenericConverter{
     final private String TEMPLATE = "htmlTemplate.txt";
     static private HashMap<String,String> templates = new HashMap<String, String>();
     
-    public HtmlConverter(String filename){
-        super(filename);
+    public HtmlConverter(String filename,String outputFile){
+        super(filename,outputFile);
     }
 
     @Override
     public void convert() {
-        String outfile = getBaseFilename() + ".html";
+        if(outfile.length()==0){
+            outfile = getBaseFilename() + ".html";
+        }
         if(templates.isEmpty()){
             try{
                 BufferedReader reader = new BufferedReader(new InputStreamReader(HtmlConverter.class.getClassLoader().getResourceAsStream(TEMPLATE)));
@@ -64,7 +66,9 @@ public class HtmlConverter extends GenericConverter{
 //        int svSize = MzqLib.data.getSvs().size()*MzqLib.data.getQuantitationNames().size();
         
         StringBuilder sb = new StringBuilder();
-        sb.append(templates.get("MAIN_HEADER"));
+        sb.append(templates.get("MAIN_HEADER_1"));
+        sb.append(getBaseFilename());
+        sb.append(templates.get("MAIN_HEADER_2"));
         //add metadata
         //analysis summary
         sb.append("<h3>Analysis Summary</h3>\n<ul>\n");
@@ -116,11 +120,16 @@ public class HtmlConverter extends GenericConverter{
         //start from modification column
         final int peptideTotalSize = peptideAssaySize + peptideSvSize + peptideRatioSize + peptideGlobalNames.size() + 2; //+2 for the peptide sequence and modification columns
         
-        for(ProteinData protein:MzqLib.data.getProteins()){
+//        for(ProteinData protein:MzqLib.data.getProteins()){
+        for (int proIdx = 0; proIdx < MzqLib.data.getProteins().size(); proIdx++) {
+            ProteinData protein = MzqLib.data.getProteins().get(proIdx);
             //it seems html does not like . which is fine in NCName
             String proteinID = protein.getAccession().replace(".", "_");
             sb.append(templates.get("PROTEIN_START_1"));
             sb.append(proteinID);
+            if(proIdx%2==1){
+                sb.append("\" class=\"pro-alternate");
+            }
             sb.append(templates.get("PROTEIN_START_2"));
             sb.append(protein.getAccession());
             for (String quantityName : MzqLib.data.getQuantitationNames()) {
@@ -140,10 +149,15 @@ public class HtmlConverter extends GenericConverter{
             sb.append(templates.get("PROTEIN_END_4"));
             addHeader(MzqData.PEPTIDE, sb);
             sb.append(templates.get("PROTEIN_END_5"));
-            for(PeptideData peptide:protein.getPeptides()){
+//            for(PeptideData peptide:protein.getPeptides()){
+            for (int pepIdx = 0; pepIdx < protein.getPeptides().size(); pepIdx++) {
+                PeptideData peptide = protein.getPeptides().get(pepIdx);
                 String peptideID = proteinID +"-"+peptide.getSeq()+"-"+peptide.getPeptide().getModification().size();
                 sb.append(templates.get("PEPTIDE_START_1"));
                 sb.append(peptideID);
+                if(pepIdx%2==1){
+                    sb.append("\" class=\"pep-alternate");
+                }
                 sb.append(templates.get("PEPTIDE_START_2"));
                 sb.append(peptide.getSeq());
                 sb.append(SEPERATOR);
@@ -196,13 +210,27 @@ public class HtmlConverter extends GenericConverter{
 
     private void addHeader(int level, StringBuilder sb) {
         for (String quantityName : MzqLib.data.getQuantitationNames()) {
-            addAssayHeader(level, sb, quantityName, "<th>", "</th>");
-            addSvHeader(level, sb, quantityName, "<th>", "</th>");
+            if(level == MzqData.FEATURE){
+                addAssayHeader(level, sb, quantityName, "<th class=\"table-sortable:numeric\">", "</th>");
+                addSvHeader(level, sb, quantityName, "<th class=\"table-sortable:numeric\">", "</th>");
+            }else{
+                addAssayHeader(level, sb, quantityName, "<th>", "</th>");
+                addSvHeader(level, sb, quantityName, "<th>", "</th>");
+                
+            }
         }
-        addRatioHeader(level, sb, "<th>", "</th>");
+        if(level == MzqData.FEATURE){        
+            addRatioHeader(level, sb, "<th class=\"table-sortable:numeric\">", "</th>");
+        }else{
+            addRatioHeader(level, sb, "<th>", "</th>");
+        }
         HashSet<String> names = MzqLib.data.control.getElements(level, MzqData.GLOBAL);
         if (names.size()>0){
-            addGlobalHeader(sb,"<th>", "</th>", names);
+            if(level == MzqData.FEATURE){        
+                addGlobalHeader(sb,"<th class=\"table-sortable:numeric\">", "</th>", names);
+            }else{
+                addGlobalHeader(sb,"<th>", "</th>", names);
+            }
             sb.append("\n");
         }
     }

@@ -1,4 +1,4 @@
-#MAIN_HEADER
+#MAIN_HEADER_1
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,17 +11,75 @@
 		.bold {
 			font-weight: bold !important;
 		}
-		/* use the below style below to hide the collapsed rows via CSS, you must also set the showCollapsed setting to true */		
-/*
-		table.grid tr.expand-child td {
-			display: none;
+                
+                table.protein >thead{
+                        background-color: violet;
+/*                        background-color: thistle;*/
+                }
+                
+                table.peptide >thead{
+                        background-color: lawngreen;
+/*                        background-color: #aaffaa;*/
+                }
+
+                table.feature thead{
+                    background-color: tomato;
+                }
+                
+                /* Striping */
+		table.feature tr.alternate {
+                    background-color: #ffac99;
 		}
-*/
+
+		tr.pep-alternate {
+                    background-color: #aaffaa;
+		}
+
+		tr.pro-alternate {
+                    background-color: thistle;
+		}
+
+		/* Sorting */
+		table.feature th.table-sortable {
+			cursor:pointer;
+			background-image:url("http://www.javascripttoolbox.com/lib/table/sortable.gif");
+			background-position:center left;
+			background-repeat:no-repeat;
+			padding-left:12px;
+		}
+		
+		table.feature th.table-sorted-asc {
+			background-image:url("http://www.javascripttoolbox.com/lib/table/sorted_down.gif");
+			background-position:center left;
+			background-repeat:no-repeat;
+		}
+		
+		table.feature th.table-sorted-desc {
+			background-image:url("http://www.javascripttoolbox.com/lib/table/sorted_up.gif");
+			background-position:center left;
+			background-repeat:no-repeat;
+		}
+		
+                table.protein {
+                        margin: 0;
+                        padding: 0;
+                        padding-left: 10px;
+                        border-collapse: separate;
+                        border-spacing: 0;
+                        width: 100%;
+                }
+               
+                table.protein * {
+                        font: 11px Arial, Helvetica, sans-serif;
+                        vertical-align: top;
+                        text-align: left;
+                }
 	</style>
 
 	<link href="http://ludo.cubicphuse.nl/jquery-plugins/treeTable/src/stylesheets/jquery.treeTable.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<script type="text/javascript" src="http://ludo.cubicphuse.nl/jquery-plugins/treeTable/src/javascripts/jquery.treeTable.js"></script>
+	<script type="text/javascript" src="http://www.javascripttoolbox.com/libsource.php/table/source/table.js"></script>
 	
 	<script type="text/javascript">
 		$(document).ready(function (){
@@ -29,6 +87,10 @@
 			$(".peptide").treeTable();
 		});
 	</script>
+	<title>
+
+#MAIN_HEADER_2
+</title>
 </head> 
 <body>
 
@@ -114,11 +176,11 @@
 
 #PEPTIDE_END_4
 ">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th>
 
 #PEPTIDE_END_5
 

@@ -16,6 +16,7 @@ public class MzqLib {
     private final int CSV = 1;
     private final int MZTAB = 2;
     private final int HTML = 3;
+    private final int XLS = 4;
     public static MzqData data = new MzqData();
     private HashMap<String,Integer> converterTypeMap = new HashMap<String, Integer>();
     //call the GUI
@@ -23,7 +24,7 @@ public class MzqLib {
         
     }
     //call the converter
-    public MzqLib(String typeStr,String mzqFile){
+    public MzqLib(String typeStr,String mzqFile, String outputFile){
         initialize();
         int type = getType(typeStr);
         if (type==0) {
@@ -34,15 +35,15 @@ public class MzqLib {
         GenericConverter converter = null;
         switch(type){
             case CSV:
-                converter = new CsvConverter(mzqFile);
+                converter = new CsvConverter(mzqFile,outputFile);
                 data.setNeedAutoAssignment(false);
                 break;
             case MZTAB:
-                converter = new MztabConverter(mzqFile);
+                converter = new MztabConverter(mzqFile,outputFile);
                 data.setNeedAutoAssignment(false);
                 break;
             case HTML:
-                converter = new HtmlConverter(mzqFile);
+                converter = new HtmlConverter(mzqFile,outputFile);
                 break;
             default:
         }
@@ -98,8 +99,8 @@ public class MzqLib {
         for(File file:dir.listFiles()){
             if(file.getAbsolutePath().endsWith(".mzq")){
                 System.out.println(file.getAbsolutePath());
-                MzqLib lib = new MzqLib("csv",file.getAbsolutePath());
-                lib = new MzqLib("html",file.getAbsolutePath());
+                MzqLib lib = new MzqLib("csv",file.getAbsolutePath(),"");
+                lib = new MzqLib("html",file.getAbsolutePath(),"");
             }
         }
         System.exit(0);
@@ -110,10 +111,10 @@ public class MzqLib {
 //        new MzqLib("html","maxquant-silac.mzq");
 //        new MzqLib("html","iTraq_4plex_example_from_xTracker.mzq");
 //        new MzqLib("csv","iTraq3standards.mzq");
-        new MzqLib("html","iTraq3standards.mzq");
+//        new MzqLib("html","iTraq3standards.mzq","test1.html");
 //        new MzqLib("csv","CPTAC-Progenesis-small-example.mzq");
 //        new MzqLib("html","CPTAC-Progenesis-small-example.mzq");
-        System.exit(0);
+//        System.exit(0);
 //        batch();
         int argsLen = args.length;
         MzqLib lib;
@@ -122,7 +123,10 @@ public class MzqLib {
 //                lib = new MzqLib();
 //                break;
             case 2://command line converter
-                lib = new MzqLib(args[0].toLowerCase(),args[1]);
+                lib = new MzqLib(args[0].toLowerCase(),args[1],"");
+                break;
+            case 3://command line converter
+                lib = new MzqLib(args[0].toLowerCase(),args[1],args[2]);
                 break;
             default:
                 printUsage();

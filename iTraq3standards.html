@@ -10,17 +10,75 @@
 		.bold {
 			font-weight: bold !important;
 		}
-		/* use the below style below to hide the collapsed rows via CSS, you must also set the showCollapsed setting to true */		
-/*
-		table.grid tr.expand-child td {
-			display: none;
+                
+                table.protein >thead{
+                        background-color: violet;
+/*                        background-color: thistle;*/
+                }
+                
+                table.peptide >thead{
+                        background-color: lawngreen;
+/*                        background-color: #aaffaa;*/
+                }
+
+                table.feature thead{
+                    background-color: tomato;
+                }
+                
+                /* Striping */
+		table.feature tr.alternate {
+                    background-color: #ffac99;
 		}
-*/
+
+		tr.pep-alternate {
+                    background-color: #aaffaa;
+		}
+
+		tr.pro-alternate {
+                    background-color: thistle;
+		}
+
+		/* Sorting */
+		table.feature th.table-sortable {
+			cursor:pointer;
+			background-image:url("http://www.javascripttoolbox.com/lib/table/sortable.gif");
+			background-position:center left;
+			background-repeat:no-repeat;
+			padding-left:12px;
+		}
+		
+		table.feature th.table-sorted-asc {
+			background-image:url("http://www.javascripttoolbox.com/lib/table/sorted_down.gif");
+			background-position:center left;
+			background-repeat:no-repeat;
+		}
+		
+		table.feature th.table-sorted-desc {
+			background-image:url("http://www.javascripttoolbox.com/lib/table/sorted_up.gif");
+			background-position:center left;
+			background-repeat:no-repeat;
+		}
+		
+                table.protein {
+                        margin: 0;
+                        padding: 0;
+                        padding-left: 10px;
+                        border-collapse: separate;
+                        border-spacing: 0;
+                        width: 100%;
+                }
+               
+                table.protein * {
+                        font: 11px Arial, Helvetica, sans-serif;
+                        vertical-align: top;
+                        text-align: left;
+                }
 	</style>
 
 	<link href="http://ludo.cubicphuse.nl/jquery-plugins/treeTable/src/stylesheets/jquery.treeTable.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<script type="text/javascript" src="http://ludo.cubicphuse.nl/jquery-plugins/treeTable/src/javascripts/jquery.treeTable.js"></script>
+	<script type="text/javascript" src="http://www.javascripttoolbox.com/libsource.php/table/source/table.js"></script>
 	
 	<script type="text/javascript">
 		$(document).ready(function (){
@@ -28,6 +86,7 @@
 			$(".peptide").treeTable();
 		});
 	</script>
+	<title>E:\mzq-lib\trunk\.\iTraq3standards</title>
 </head> 
 <body>
 <h3>Analysis Summary</h3>
@@ -68,11 +127,11 @@
 						</tr>
        						<tr id="sp_P00924_ENO1_YEAST-SIVPSGASTGVHEALEMR-1-detail" class="child-of-sp_P00924_ENO1_YEAST-SIVPSGASTGVHEALEMR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -110,16 +169,16 @@
 								</table>
 							</td>
 						</tr>
-						<tr id="sp_P00924_ENO1_YEAST-SIVPSGASTGVHEALEMR-2">
+						<tr id="sp_P00924_ENO1_YEAST-SIVPSGASTGVHEALEMR-2" class="pep-alternate">
 							<td>SIVPSGASTGVHEALEMR</td><td>2</td><td>2.116486599918493</td><td>2.1891974337859947</td><td>1.1114144866133313</td><td>1.1556246219357296</td><td>null</td><td>1.0343544976237042</td><td>0.5251223828471828</td><td>0.5460108379520254</td>
 						</tr>
        						<tr id="sp_P00924_ENO1_YEAST-SIVPSGASTGVHEALEMR-2-detail" class="child-of-sp_P00924_ENO1_YEAST-SIVPSGASTGVHEALEMR-2">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -135,11 +194,11 @@
 						</tr>
        						<tr id="sp_P00924_ENO1_YEAST-LNQLLR-1-detail" class="child-of-sp_P00924_ENO1_YEAST-LNQLLR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -165,16 +224,16 @@
 								</table>
 							</td>
 						</tr>
-						<tr id="sp_P00924_ENO1_YEAST-AAQDSFAAGWGVMVSHR-2">
+						<tr id="sp_P00924_ENO1_YEAST-AAQDSFAAGWGVMVSHR-2" class="pep-alternate">
 							<td>AAQDSFAAGWGVMVSHR</td><td>2</td><td>0.03120481867248869</td><td>0.050536172662900426</td><td>0.04874481349677766</td><td>0.0516839255627512</td><td>null</td><td>1.6194990008852372</td><td>1.5620925091211273</td><td>1.6562802721336638</td>
 						</tr>
        						<tr id="sp_P00924_ENO1_YEAST-AAQDSFAAGWGVMVSHR-2-detail" class="child-of-sp_P00924_ENO1_YEAST-AAQDSFAAGWGVMVSHR-2">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -190,11 +249,11 @@
 						</tr>
        						<tr id="sp_P00924_ENO1_YEAST-AAQDSFAAGWGVMVSHR-1-detail" class="child-of-sp_P00924_ENO1_YEAST-AAQDSFAAGWGVMVSHR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -247,16 +306,16 @@
 								</table>
 							</td>
 						</tr>
-						<tr id="sp_P00924_ENO1_YEAST-VNQIGTLSESIK-1">
+						<tr id="sp_P00924_ENO1_YEAST-VNQIGTLSESIK-1" class="pep-alternate">
 							<td>VNQIGTLSESIK</td><td>1</td><td>2.7748787752352757</td><td>2.606880890321422</td><td>1.9448503883562291</td><td>1.7855788437593596</td><td>null</td><td>0.9394575768811343</td><td>0.700877604352763</td><td>0.6434799457529328</td>
 						</tr>
        						<tr id="sp_P00924_ENO1_YEAST-VNQIGTLSESIK-1-detail" class="child-of-sp_P00924_ENO1_YEAST-VNQIGTLSESIK-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -272,11 +331,11 @@
 						</tr>
        						<tr id="sp_P00924_ENO1_YEAST-TFAEALR-1-detail" class="child-of-sp_P00924_ENO1_YEAST-TFAEALR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -293,16 +352,16 @@
 								</table>
 							</td>
 						</tr>
-						<tr id="sp_P00924_ENO1_YEAST-LGANAILGVSLAASR-1">
+						<tr id="sp_P00924_ENO1_YEAST-LGANAILGVSLAASR-1" class="pep-alternate">
 							<td>LGANAILGVSLAASR</td><td>1</td><td>2.4916792597123183</td><td>2.15219904182005</td><td>1.4351291310641494</td><td>1.2427162119016586</td><td>null</td><td>0.8637544472993431</td><td>0.5759686466346575</td><td>0.49874646066811135</td>
 						</tr>
        						<tr id="sp_P00924_ENO1_YEAST-LGANAILGVSLAASR-1-detail" class="child-of-sp_P00924_ENO1_YEAST-LGANAILGVSLAASR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -369,11 +428,11 @@
 						</tr>
        						<tr id="sp_P00924_ENO1_YEAST-SVYDSR-1-detail" class="child-of-sp_P00924_ENO1_YEAST-SVYDSR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -388,7 +447,7 @@
 				</table>
 			</td>
 		</tr>
-		<tr id="sp_P02769_ALBU_BOVIN">
+		<tr id="sp_P02769_ALBU_BOVIN" class="pro-alternate">
 			<td>sp_P02769_ALBU_BOVIN</td><td>2.635015977485411</td><td>4.679770533071071</td><td>5.6689691787883145</td><td>8.038383784005902</td><td>7.314786510556482</td><td>13.707352962794216</td><td>0.533639611558188</td><td>1.6288166536635666</td><td>1.9181070399106477</td><td>2.8238352619946046</td>
 		</tr>
  		<tr id="sp_P02769_ALBU_BOVIN-detail" class="child-of-sp_P02769_ALBU_BOVIN">
@@ -407,11 +466,11 @@
 						</tr>
        						<tr id="sp_P02769_ALBU_BOVIN-DAFLGSFLYEYSR-1-detail" class="child-of-sp_P02769_ALBU_BOVIN-DAFLGSFLYEYSR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -446,16 +505,16 @@
 								</table>
 							</td>
 						</tr>
-						<tr id="sp_P02769_ALBU_BOVIN-HPEYAVSVLLR-1">
+						<tr id="sp_P02769_ALBU_BOVIN-HPEYAVSVLLR-1" class="pep-alternate">
 							<td>HPEYAVSVLLR</td><td>1</td><td>0.7326600349773991</td><td>0.9679413752998074</td><td>1.051437603156498</td><td>1.8200404399162964</td><td>null</td><td>1.321133034545369</td><td>1.4350961605117885</td><td>2.484154113814111</td>
 						</tr>
        						<tr id="sp_P02769_ALBU_BOVIN-HPEYAVSVLLR-1-detail" class="child-of-sp_P02769_ALBU_BOVIN-HPEYAVSVLLR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -471,11 +530,11 @@
 						</tr>
        						<tr id="sp_P02769_ALBU_BOVIN-DLGEEHFK-1-detail" class="child-of-sp_P02769_ALBU_BOVIN-DLGEEHFK-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -486,16 +545,16 @@
 								</table>
 							</td>
 						</tr>
-						<tr id="sp_P02769_ALBU_BOVIN-RHPEYAVSVLLR-1">
+						<tr id="sp_P02769_ALBU_BOVIN-RHPEYAVSVLLR-1" class="pep-alternate">
 							<td>RHPEYAVSVLLR</td><td>1</td><td>0.1259365037962303</td><td>0.15024939866510253</td><td>0.12408656397880234</td><td>0.16695438876871083</td><td>null</td><td>1.1930567717538938</td><td>0.9853105353756586</td><td>1.3257029037335266</td>
 						</tr>
        						<tr id="sp_P02769_ALBU_BOVIN-RHPEYAVSVLLR-1-detail" class="child-of-sp_P02769_ALBU_BOVIN-RHPEYAVSVLLR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -511,11 +570,11 @@
 						</tr>
        						<tr id="sp_P02769_ALBU_BOVIN-KVPQVSTPTLVEVSR-1-detail" class="child-of-sp_P02769_ALBU_BOVIN-KVPQVSTPTLVEVSR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -526,16 +585,16 @@
 								</table>
 							</td>
 						</tr>
-						<tr id="sp_P02769_ALBU_BOVIN-VPQVSTPTLVEVSR-1">
+						<tr id="sp_P02769_ALBU_BOVIN-VPQVSTPTLVEVSR-1" class="pep-alternate">
 							<td>VPQVSTPTLVEVSR</td><td>1</td><td>1.3060722038327044</td><td>2.8329461319708793</td><td>3.755635994159337</td><td>5.463380339968462</td><td>null</td><td>2.1690578236467495</td><td>2.8755194262142023</td><td>4.183061490732308</td>
 						</tr>
        						<tr id="sp_P02769_ALBU_BOVIN-VPQVSTPTLVEVSR-1-detail" class="child-of-sp_P02769_ALBU_BOVIN-VPQVSTPTLVEVSR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -551,11 +610,11 @@
 						</tr>
        						<tr id="sp_P02769_ALBU_BOVIN-LGEYGFQNALIVR-1-detail" class="child-of-sp_P02769_ALBU_BOVIN-LGEYGFQNALIVR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -626,16 +685,16 @@
 								</table>
 							</td>
 						</tr>
-						<tr id="sp_P02769_ALBU_BOVIN-LVVSTQTALA-1">
+						<tr id="sp_P02769_ALBU_BOVIN-LVVSTQTALA-1" class="pep-alternate">
 							<td>LVVSTQTALA</td><td>1</td><td>0.46031987566432775</td><td>0.6181417753919762</td><td>0.7151714678757448</td><td>0.8411246127383112</td><td>null</td><td>1.3428526728286105</td><td>1.5536402090907295</td><td>1.827261122549642</td>
 						</tr>
        						<tr id="sp_P02769_ALBU_BOVIN-LVVSTQTALA-1-detail" class="child-of-sp_P02769_ALBU_BOVIN-LVVSTQTALA-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -651,11 +710,11 @@
 						</tr>
        						<tr id="sp_P02769_ALBU_BOVIN-AEFVEVTK-1-detail" class="child-of-sp_P02769_ALBU_BOVIN-AEFVEVTK-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -666,16 +725,16 @@
 								</table>
 							</td>
 						</tr>
-						<tr id="sp_P02769_ALBU_BOVIN-YLYEIAR-1">
+						<tr id="sp_P02769_ALBU_BOVIN-YLYEIAR-1" class="pep-alternate">
 							<td>YLYEIAR</td><td>1</td><td>16.28013669746927</td><td>29.620983735885563</td><td>32.8508208732439</td><td>47.112653762952526</td><td>null</td><td>1.8194554681159472</td><td>2.0178467468489085</td><td>2.893873352444033</td>
 						</tr>
        						<tr id="sp_P02769_ALBU_BOVIN-YLYEIAR-1-detail" class="child-of-sp_P02769_ALBU_BOVIN-YLYEIAR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -715,11 +774,11 @@
 						</tr>
        						<tr id="sp_P62894_2_CYC_BOVIN-EDLIAYLK-1-detail" class="child-of-sp_P62894_2_CYC_BOVIN-EDLIAYLK-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -730,16 +789,16 @@
 								</table>
 							</td>
 						</tr>
-						<tr id="sp_P62894_2_CYC_BOVIN-GITWGEETLMEYLENPKK-2">
+						<tr id="sp_P62894_2_CYC_BOVIN-GITWGEETLMEYLENPKK-2" class="pep-alternate">
 							<td>GITWGEETLMEYLENPKK</td><td>2</td><td>0.6385488893104269</td><td>0.7394040915306725</td><td>0.6989466986206798</td><td>0.8872380892538297</td><td>null</td><td>1.1579443702880132</td><td>1.0945860376884797</td><td>1.3894599209341105</td>
 						</tr>
        						<tr id="sp_P62894_2_CYC_BOVIN-GITWGEETLMEYLENPKK-2-detail" class="child-of-sp_P62894_2_CYC_BOVIN-GITWGEETLMEYLENPKK-2">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -767,11 +826,11 @@
 						</tr>
        						<tr id="sp_P62894_2_CYC_BOVIN-TGPNLHGLFGR-1-detail" class="child-of-sp_P62894_2_CYC_BOVIN-TGPNLHGLFGR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -828,7 +887,7 @@
 				</table>
 			</td>
 		</tr>
-		<tr id="sp_P00489_PYGM_RABIT">
+		<tr id="sp_P00489_PYGM_RABIT" class="pro-alternate">
 			<td>sp_P00489_PYGM_RABIT</td><td>4.591944182146474</td><td>4.934610293250441</td><td>4.549147187135052</td><td>5.580598374688987</td><td>9.526554475396914</td><td>10.129745561824038</td><td>0.9404534810133465</td><td>1.099880188336868</td><td>1.0193601079613397</td><td>1.2766021817677453</td>
 		</tr>
  		<tr id="sp_P00489_PYGM_RABIT-detail" class="child-of-sp_P00489_PYGM_RABIT">
@@ -847,11 +906,11 @@
 						</tr>
        						<tr id="sp_P00489_PYGM_RABIT-WVDTQVVLAMPYDTPVPGYR-1-detail" class="child-of-sp_P00489_PYGM_RABIT-WVDTQVVLAMPYDTPVPGYR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -895,16 +954,16 @@
 								</table>
 							</td>
 						</tr>
-						<tr id="sp_P00489_PYGM_RABIT-WVDTQVVLAMPYDTPVPGYR-2">
+						<tr id="sp_P00489_PYGM_RABIT-WVDTQVVLAMPYDTPVPGYR-2" class="pep-alternate">
 							<td>WVDTQVVLAMPYDTPVPGYR</td><td>2</td><td>0.4906341524305476</td><td>0.7100436196010638</td><td>0.5001328825911234</td><td>0.678337637082033</td><td>null</td><td>1.4471956672473487</td><td>1.0193601079613397</td><td>1.3825732141181428</td>
 						</tr>
        						<tr id="sp_P00489_PYGM_RABIT-WVDTQVVLAMPYDTPVPGYR-2-detail" class="child-of-sp_P00489_PYGM_RABIT-WVDTQVVLAMPYDTPVPGYR-2">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -920,11 +979,11 @@
 						</tr>
        						<tr id="sp_P00489_PYGM_RABIT-TIAQYAR-1-detail" class="child-of-sp_P00489_PYGM_RABIT-TIAQYAR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -935,16 +994,16 @@
 								</table>
 							</td>
 						</tr>
-						<tr id="sp_P00489_PYGM_RABIT-VAAAFPGDVDR-1">
+						<tr id="sp_P00489_PYGM_RABIT-VAAAFPGDVDR-1" class="pep-alternate">
 							<td>VAAAFPGDVDR</td><td>1</td><td>20.221232137813104</td><td>21.723767198581307</td><td>19.595581922230053</td><td>23.04272191158124</td><td>null</td><td>1.0743048223040033</td><td>0.9690597382336014</td><td>1.1395310510526226</td>
 						</tr>
        						<tr id="sp_P00489_PYGM_RABIT-VAAAFPGDVDR-1-detail" class="child-of-sp_P00489_PYGM_RABIT-VAAAFPGDVDR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -963,11 +1022,11 @@
 						</tr>
        						<tr id="sp_P00489_PYGM_RABIT-LITAIGDVVNHDPVVGDR-1-detail" class="child-of-sp_P00489_PYGM_RABIT-LITAIGDVVNHDPVVGDR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -1044,16 +1103,16 @@
 								</table>
 							</td>
 						</tr>
-						<tr id="sp_P00489_PYGM_RABIT-IGEEYISDLDQLR-1">
+						<tr id="sp_P00489_PYGM_RABIT-IGEEYISDLDQLR-1" class="pep-alternate">
 							<td>IGEEYISDLDQLR</td><td>1</td><td>18.95703232415061</td><td>19.820848543204058</td><td>17.929554648472664</td><td>21.50524804358823</td><td>null</td><td>1.0455670594575595</td><td>0.9457996558686574</td><td>1.1344206031759139</td>
 						</tr>
        						<tr id="sp_P00489_PYGM_RABIT-IGEEYISDLDQLR-1-detail" class="child-of-sp_P00489_PYGM_RABIT-IGEEYISDLDQLR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -1078,11 +1137,11 @@
 						</tr>
        						<tr id="sp_P00489_PYGM_RABIT-FAAYLER-1-detail" class="child-of-sp_P00489_PYGM_RABIT-FAAYLER-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -1102,16 +1161,16 @@
 								</table>
 							</td>
 						</tr>
-						<tr id="sp_P00489_PYGM_RABIT-VAIQLNDTHPSLAIPELMR-1">
+						<tr id="sp_P00489_PYGM_RABIT-VAIQLNDTHPSLAIPELMR-1" class="pep-alternate">
 							<td>VAIQLNDTHPSLAIPELMR</td><td>1</td><td>1.8094430398881793</td><td>1.895815241638506</td><td>1.6682778573415062</td><td>2.245945782900667</td><td>null</td><td>1.047734136884278</td><td>0.9219841799742993</td><td>1.2412359678586304</td>
 						</tr>
        						<tr id="sp_P00489_PYGM_RABIT-VAIQLNDTHPSLAIPELMR-1-detail" class="child-of-sp_P00489_PYGM_RABIT-VAIQLNDTHPSLAIPELMR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -1151,11 +1210,11 @@
 						</tr>
        						<tr id="sp_P00489_PYGM_RABIT-VAIQLNDTHPSLAIPELMR-2-detail" class="child-of-sp_P00489_PYGM_RABIT-VAIQLNDTHPSLAIPELMR-2">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -1166,16 +1225,16 @@
 								</table>
 							</td>
 						</tr>
-						<tr id="sp_P00489_PYGM_RABIT-VEDVDR-1">
+						<tr id="sp_P00489_PYGM_RABIT-VEDVDR-1" class="pep-alternate">
 							<td>VEDVDR</td><td>1</td><td>0.9596447179702341</td><td>0.9245028502826228</td><td>0.9647995732158867</td><td>1.1208436324188338</td><td>null</td><td>0.9633803354204453</td><td>1.0053716288425532</td><td>1.167977701986997</td>
 						</tr>
        						<tr id="sp_P00489_PYGM_RABIT-VEDVDR-1-detail" class="child-of-sp_P00489_PYGM_RABIT-VEDVDR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -1191,11 +1250,11 @@
 						</tr>
        						<tr id="sp_P00489_PYGM_RABIT-ARPEFTLPVHFYGR-1-detail" class="child-of-sp_P00489_PYGM_RABIT-ARPEFTLPVHFYGR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -1242,16 +1301,16 @@
 								</table>
 							</td>
 						</tr>
-						<tr id="sp_P00489_PYGM_RABIT-DFNVGGYIQAVLDR-1">
+						<tr id="sp_P00489_PYGM_RABIT-DFNVGGYIQAVLDR-1" class="pep-alternate">
 							<td>DFNVGGYIQAVLDR</td><td>1</td><td>0.18927472684964422</td><td>0.20818893783402467</td><td>0.21381590498207867</td><td>0.2599243456038663</td><td>null</td><td>1.0999299341184916</td><td>1.1296590334108865</td><td>1.3732649357372715</td>
 						</tr>
        						<tr id="sp_P00489_PYGM_RABIT-DFNVGGYIQAVLDR-1-detail" class="child-of-sp_P00489_PYGM_RABIT-DFNVGGYIQAVLDR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -1267,11 +1326,11 @@
 						</tr>
        						<tr id="sp_P00489_PYGM_RABIT-LLSYVDDEAFIR-1-detail" class="child-of-sp_P00489_PYGM_RABIT-LLSYVDDEAFIR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -1327,16 +1386,16 @@
 								</table>
 							</td>
 						</tr>
-						<tr id="sp_P00489_PYGM_RABIT-NLAENISR-1">
+						<tr id="sp_P00489_PYGM_RABIT-NLAENISR-1" class="pep-alternate">
 							<td>NLAENISR</td><td>1</td><td>9.931675918624805</td><td>10.923653579877788</td><td>10.62153121473889</td><td>12.852930131771508</td><td>null</td><td>1.099880188336868</td><td>1.0694601094282994</td><td>1.2941350721753309</td>
 						</tr>
        						<tr id="sp_P00489_PYGM_RABIT-NLAENISR-1-detail" class="child-of-sp_P00489_PYGM_RABIT-NLAENISR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -1355,11 +1414,11 @@
 						</tr>
        						<tr id="sp_P00489_PYGM_RABIT-GYNAQEYYDR-1-detail" class="child-of-sp_P00489_PYGM_RABIT-GYNAQEYYDR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -1376,16 +1435,16 @@
 								</table>
 							</td>
 						</tr>
-						<tr id="sp_P00489_PYGM_RABIT-DIVNMLMHHDR-1">
+						<tr id="sp_P00489_PYGM_RABIT-DIVNMLMHHDR-1" class="pep-alternate">
 							<td>DIVNMLMHHDR</td><td>1</td><td>0.5302490783095775</td><td>0.5957760678789923</td><td>0.5334358669235716</td><td>0.5998832492885128</td><td>null</td><td>1.1235777528898558</td><td>1.0060099842590082</td><td>1.1313235115861542</td>
 						</tr>
        						<tr id="sp_P00489_PYGM_RABIT-DIVNMLMHHDR-1-detail" class="child-of-sp_P00489_PYGM_RABIT-DIVNMLMHHDR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -1425,11 +1484,11 @@
 						</tr>
        						<tr id="sp_P00489_PYGM_RABIT-DIVNMLMHHDR-2-detail" class="child-of-sp_P00489_PYGM_RABIT-DIVNMLMHHDR-2">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -1443,16 +1502,16 @@
 								</table>
 							</td>
 						</tr>
-						<tr id="sp_P00489_PYGM_RABIT-EIWGVEPSR-1">
+						<tr id="sp_P00489_PYGM_RABIT-EIWGVEPSR-1" class="pep-alternate">
 							<td>EIWGVEPSR</td><td>1</td><td>14.598654502348518</td><td>15.725831699244614</td><td>16.362244888316788</td><td>19.53604597582233</td><td>null</td><td>1.0772110331616358</td><td>1.120804995123664</td><td>1.3382086666055095</td>
 						</tr>
        						<tr id="sp_P00489_PYGM_RABIT-EIWGVEPSR-1-detail" class="child-of-sp_P00489_PYGM_RABIT-EIWGVEPSR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -1474,11 +1533,11 @@
 						</tr>
        						<tr id="sp_P00489_PYGM_RABIT-VIFLENYR-1-detail" class="child-of-sp_P00489_PYGM_RABIT-VIFLENYR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -1504,16 +1563,16 @@
 								</table>
 							</td>
 						</tr>
-						<tr id="sp_P00489_PYGM_RABIT-HLQIIYEINQR-1">
+						<tr id="sp_P00489_PYGM_RABIT-HLQIIYEINQR-1" class="pep-alternate">
 							<td>HLQIIYEINQR</td><td>1</td><td>2.256394702133383</td><td>2.8154660859043665</td><td>3.2249257304018633</td><td>3.949743372344168</td><td>null</td><td>1.2477719803376561</td><td>1.429238300973119</td><td>1.7504665157251758</td>
 						</tr>
        						<tr id="sp_P00489_PYGM_RABIT-HLQIIYEINQR-1-detail" class="child-of-sp_P00489_PYGM_RABIT-HLQIIYEINQR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -1538,11 +1597,11 @@
 						</tr>
        						<tr id="sp_P00489_PYGM_RABIT-VEDVDRLDQR-1-detail" class="child-of-sp_P00489_PYGM_RABIT-VEDVDRLDQR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -1553,16 +1612,16 @@
 								</table>
 							</td>
 						</tr>
-						<tr id="sp_P00489_PYGM_RABIT-DYYFALAHTVR-1">
+						<tr id="sp_P00489_PYGM_RABIT-DYYFALAHTVR-1" class="pep-alternate">
 							<td>DYYFALAHTVR</td><td>1</td><td>1.9001977605269882</td><td>2.0691473568547347</td><td>1.8561069477697287</td><td>2.3821133188962924</td><td>null</td><td>1.088911585855617</td><td>0.9767967241762081</td><td>1.2536133703450176</td>
 						</tr>
        						<tr id="sp_P00489_PYGM_RABIT-DYYFALAHTVR-1-detail" class="child-of-sp_P00489_PYGM_RABIT-DYYFALAHTVR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -1584,11 +1643,11 @@
 						</tr>
        						<tr id="sp_P00489_PYGM_RABIT-GYNAQEYYDRIPELR-1-detail" class="child-of-sp_P00489_PYGM_RABIT-GYNAQEYYDRIPELR-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -1599,16 +1658,16 @@
 								</table>
 							</td>
 						</tr>
-						<tr id="sp_P00489_PYGM_RABIT-VLVDLER-1">
+						<tr id="sp_P00489_PYGM_RABIT-VLVDLER-1" class="pep-alternate">
 							<td>VLVDLER</td><td>1</td><td>19.86464786398542</td><td>20.787106717877197</td><td>18.465911674749325</td><td>24.17559184839654</td><td>null</td><td>1.0464372114828269</td><td>0.9295866607445882</td><td>1.217015877347962</td>
 						</tr>
        						<tr id="sp_P00489_PYGM_RABIT-VLVDLER-1-detail" class="child-of-sp_P00489_PYGM_RABIT-VLVDLER-1">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -1630,11 +1689,11 @@
 						</tr>
        						<tr id="sp_P00489_PYGM_RABIT-NNVVNTMR-2-detail" class="child-of-sp_P00489_PYGM_RABIT-NNVVNTMR-2">
 							<td colspan="10">
-								<table class = "feature">
+								<table class = "feature table-autosort table-stripeclass:alternate table-autostripe">
 									<thead>
 										<tr>
-											<th>charge</th>
-											<th>mz value</th><th>reporter ion intensity__114</th><th>reporter ion intensity__115</th><th>reporter ion intensity__116</th><th>reporter ion intensity__117</th>
+											<th class="table-sortable:numeric">charge</th>
+											<th class="table-sortable:numeric">mz value</th><th class="table-sortable:numeric">reporter ion intensity__114</th><th class="table-sortable:numeric">reporter ion intensity__115</th><th class="table-sortable:numeric">reporter ion intensity__116</th><th class="table-sortable:numeric">reporter ion intensity__117</th>
 										</tr>
 									</thead>
 									<tbody>

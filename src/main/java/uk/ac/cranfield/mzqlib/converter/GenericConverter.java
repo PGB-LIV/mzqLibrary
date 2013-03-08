@@ -11,8 +11,11 @@ import uk.ac.cranfield.mzqlib.data.QuantitationLevel;
  */
 abstract public class GenericConverter {
     String filename;
-    public GenericConverter(String filename){
+    String outfile;
+    
+    public GenericConverter(String filename,String outputFile){
         this.filename = filename;
+        this.outfile = outputFile;
     }
     
     String getBaseFilename(){

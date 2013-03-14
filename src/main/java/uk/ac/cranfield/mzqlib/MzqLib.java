@@ -7,6 +7,7 @@ import uk.ac.cranfield.mzqlib.converter.CsvConverter;
 import uk.ac.cranfield.mzqlib.converter.GenericConverter;
 import uk.ac.cranfield.mzqlib.converter.HtmlConverter;
 import uk.ac.cranfield.mzqlib.converter.MztabConverter;
+import uk.ac.cranfield.mzqlib.converter.XlsConverter;
 import uk.ac.cranfield.mzqlib.data.MzqData;
 import uk.ac.liv.jmzqml.model.mzqml.MzQuantML;
 import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensusList;
@@ -44,6 +45,10 @@ public class MzqLib {
                 break;
             case HTML:
                 converter = new HtmlConverter(mzqFile,outputFile);
+                break;
+            case XLS:
+                converter = new XlsConverter(mzqFile,outputFile);
+                data.setNeedAutoAssignment(false);
                 break;
             default:
         }
@@ -99,8 +104,9 @@ public class MzqLib {
         for(File file:dir.listFiles()){
             if(file.getAbsolutePath().endsWith(".mzq")){
                 System.out.println(file.getAbsolutePath());
-                MzqLib lib = new MzqLib("csv",file.getAbsolutePath(),"");
-                lib = new MzqLib("html",file.getAbsolutePath(),"");
+                MzqLib lib = new MzqLib("xls",file.getAbsolutePath(),"");
+//                MzqLib lib = new MzqLib("csv",file.getAbsolutePath(),"");
+//                lib = new MzqLib("html",file.getAbsolutePath(),"");
             }
         }
         System.exit(0);
@@ -110,6 +116,7 @@ public class MzqLib {
 //        new MzqLib("csv","maxquant-silac.mzq");
 //        new MzqLib("html","maxquant-silac.mzq");
 //        new MzqLib("html","iTraq_4plex_example_from_xTracker.mzq");
+//        new MzqLib("xls","iTraq3standards.mzq","");
 //        new MzqLib("csv","iTraq3standards.mzq");
 //        new MzqLib("html","iTraq3standards.mzq","test1.html");
 //        new MzqLib("csv","CPTAC-Progenesis-small-example.mzq");
@@ -147,6 +154,7 @@ public class MzqLib {
         converterTypeMap.put("html", HTML);
 //        converterTypeMap.put("mztab", MZTAB);
         converterTypeMap.put("csv", CSV);
+        converterTypeMap.put("xls", XLS);
         data = new MzqData();
     }
     

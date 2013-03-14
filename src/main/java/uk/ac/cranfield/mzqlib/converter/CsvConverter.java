@@ -79,7 +79,7 @@ public class CsvConverter extends GenericConverter {
         sb.append("\n");
         //deal with peptide
         ArrayList<PeptideData> peptides = MzqLib.data.getPeptides();
-        if (peptides.size() > 1 ) {
+        if (peptides.size() > 0 ) {
             sb.append("Peptides\n");
             for (String quantityName : MzqLib.data.getQuantitationNames()) {
                 addHeaderLine(MzqData.PEPTIDE, sb, quantityName);

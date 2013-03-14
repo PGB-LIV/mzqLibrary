@@ -2,9 +2,7 @@ package uk.ac.cranfield.mzqlib.data;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import uk.ac.cranfield.mzqlib.MzqLib;
-import uk.ac.liv.jmzqml.model.mzqml.EvidenceRef;
 import uk.ac.liv.jmzqml.model.mzqml.Modification;
 import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensus;
 

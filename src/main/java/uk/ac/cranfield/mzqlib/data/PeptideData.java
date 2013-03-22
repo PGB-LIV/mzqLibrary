@@ -63,6 +63,17 @@ public class PeptideData extends QuantitationLevel {
         return features;
     }
     
+    public ArrayList<FeatureData> getFeaturesWithCharge(int charge){
+        ArrayList<FeatureData> values = new ArrayList<FeatureData>();
+        for(FeatureData feature:features){
+            String value = feature.getFeature().getCharge();//<xsd:attribute name="charge" type="integerOrNullType" use="required">
+            if(value!=null && !value.equalsIgnoreCase("null")){
+                if(charge == Integer.parseInt(value)) values.add(feature);
+            }
+        }
+        return values;
+    }
+    
     public void mergeAnotherPeptideData(PeptideData another){
         this.features.addAll(another.getFeatures());
         if(!assignedByPeptideRef) setAssignedByPeptideRef(another.isAssignedByPeptideRef());
@@ -74,6 +85,13 @@ public class PeptideData extends QuantitationLevel {
         return modStr;
     }
     
+    public int[] getCharges(){
+        int[] charges = new int[peptide.getCharge().size()];
+        for(int i=0;i<peptide.getCharge().size();i++){
+            charges[i]=Integer.parseInt(peptide.getCharge().get(i));
+        }
+        return charges;
+    }
     
 //    /**
 //     * Get all features for a specific msrun

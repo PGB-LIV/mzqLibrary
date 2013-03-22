@@ -2,7 +2,9 @@ package uk.ac.cranfield.mzqlib.data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import uk.ac.liv.jmzqml.model.mzqml.Param;
 import uk.ac.liv.jmzqml.model.mzqml.Protein;
+import uk.ac.liv.jmzqml.model.mzqml.SearchDatabase;
 /**
  * The Protein class
  * @author Jun Fan@cranfield
@@ -38,6 +40,19 @@ public class ProteinData extends QuantitationLevel{
     
     public String getId(){
         return protein.getId();
+    }
+    
+    public String getSearchDatabase(){
+        Param databaseName = ((SearchDatabase)protein.getSearchDatabaseRef()).getDatabaseName();
+        if(databaseName.getCvParam()!=null){
+            return databaseName.getCvParam().getName();
+        }else{
+            return databaseName.getUserParam().getName();
+        }
+    }
+    
+    public String getSearchDatabaseVersion(){
+        return ((SearchDatabase)protein.getSearchDatabaseRef()).getVersion();
     }
     /**
      * Get all peptids

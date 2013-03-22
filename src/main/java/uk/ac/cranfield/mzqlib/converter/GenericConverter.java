@@ -10,23 +10,24 @@ import uk.ac.cranfield.mzqlib.data.QuantitationLevel;
  * @author Jun Fan@cranfield
  */
 abstract public class GenericConverter {
+
     String filename;
     String outfile;
-    
-    public GenericConverter(String filename,String outputFile){
+
+    public GenericConverter(String filename, String outputFile) {
         this.filename = filename;
         this.outfile = outputFile;
     }
-    
-    String getBaseFilename(){
+
+    String getBaseFilename() {
         int idx = filename.lastIndexOf(".");
-        return filename.substring(0,idx);
+        return filename.substring(0, idx);
     }
-    
+
     abstract public void convert();
-    
+
     protected void addSvHeader(int level, StringBuilder sb, String quantitationName, String prefix, String suffix) {
-        if(MzqLib.data.control.isRequired(level, MzqData.SV, quantitationName)){
+        if (MzqLib.data.control.isRequired(level, MzqData.SV, quantitationName)) {
             for (String sv : MzqLib.data.getSvs()) {
                 sb.append(prefix);
                 sb.append(quantitationName);
@@ -38,7 +39,7 @@ abstract public class GenericConverter {
     }
 
     protected void addAssayHeader(int level, StringBuilder sb, String quantitationName, String prefix, String suffix) {
-        if(MzqLib.data.control.isRequired(level, MzqData.ASSAY, quantitationName)){
+        if (MzqLib.data.control.isRequired(level, MzqData.ASSAY, quantitationName)) {
             for (String assayID : MzqLib.data.getAssays()) {
                 sb.append(prefix);
                 sb.append(quantitationName);
@@ -48,9 +49,9 @@ abstract public class GenericConverter {
             }
         }
     }
-    
+
     protected void addRatioHeader(int level, StringBuilder sb, String prefix, String suffix) {
-        if(MzqLib.data.control.isRequired(level, MzqData.RATIO, MzqData.RATIO_STRING)){
+        if (MzqLib.data.control.isRequired(level, MzqData.RATIO, MzqData.RATIO_STRING)) {
             for (String ratioID : MzqLib.data.getRatios()) {
                 sb.append(prefix);
                 sb.append(ratioID);
@@ -66,38 +67,53 @@ abstract public class GenericConverter {
             sb.append(suffix);
         }
     }
-    
-    protected void addSvValue(int level, StringBuilder sb, QuantitationLevel obj, String seperator, String quantityName){
-        if(MzqLib.data.control.isRequired(level, MzqData.SV, quantityName)){
+
+//    private void appendValue(StringBuilder sb,Double value){
+//        
+//    }
+    protected void addSvValue(int level, StringBuilder sb, QuantitationLevel obj, String seperator, String quantityName) {
+        if (MzqLib.data.control.isRequired(level, MzqData.SV, quantityName)) {
             for (String sv : MzqLib.data.getSvs()) {
                 sb.append(seperator);
-                sb.append(obj.getStudyVariableQuantity(quantityName, sv));
+                Double value = obj.getStudyVariableQuantity(quantityName, sv);
+                appendValue(sb, value);
             }
         }
     }
 
-    protected void addAssayValue(int level, StringBuilder sb, QuantitationLevel obj, String seperator, String quantityName){
-        if(MzqLib.data.control.isRequired(level, MzqData.ASSAY, quantityName)){
+    protected void addAssayValue(int level, StringBuilder sb, QuantitationLevel obj, String seperator, String quantityName) {
+        if (MzqLib.data.control.isRequired(level, MzqData.ASSAY, quantityName)) {
             for (String assayID : MzqLib.data.getAssays()) {
                 sb.append(seperator);
-                sb.append(obj.getQuantity(quantityName, assayID));
+                Double value = obj.getQuantity(quantityName, assayID);
+                appendValue(sb, value);
             }
         }
     }
 
-    protected void addRatioValue(int level, StringBuilder sb, QuantitationLevel obj, String seperator){
-        if(MzqLib.data.control.isRequired(level, MzqData.RATIO, MzqData.RATIO_STRING)){
+    private void appendValue(StringBuilder sb, Double value) {
+        if (value == null) {
+            sb.append("null");
+        } else {
+            sb.append(value.toString());
+        }
+    }
+
+    protected void addRatioValue(int level, StringBuilder sb, QuantitationLevel obj, String seperator) {
+        if (MzqLib.data.control.isRequired(level, MzqData.RATIO, MzqData.RATIO_STRING)) {
             for (String ratioID : MzqLib.data.getRatios()) {
                 sb.append(seperator);
-                sb.append(obj.getRatio(ratioID));
+                Double value = obj.getRatio(ratioID);
+                appendValue(sb, value);
             }
         }
     }
 
-    protected void addGlobalValue(int level, StringBuilder sb, QuantitationLevel obj, String seperator, HashSet<String> names){
+    protected void addGlobalValue(int level, StringBuilder sb, QuantitationLevel obj, String seperator, HashSet<String> names) {
         for (String columnID : names) {
             sb.append(seperator);
-            sb.append(obj.getGlobal(columnID));
+            Double value = obj.getGlobal(columnID);
+            appendValue(sb, value);
         }
     }
 }

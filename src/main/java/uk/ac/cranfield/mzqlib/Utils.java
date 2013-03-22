@@ -7,6 +7,8 @@ package uk.ac.cranfield.mzqlib;
 import java.io.File;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.xml.XMLConstants;
@@ -20,6 +22,10 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
+import uk.ac.ebi.pride.jmztab.MzTabParsingException;
+import uk.ac.ebi.pride.jmztab.model.Param;
+import uk.ac.liv.jmzqml.model.mzqml.Cv;
+import uk.ac.liv.jmzqml.model.mzqml.CvParam;
 /**
  *
  * @author Jun Fan@cranfield
@@ -31,6 +37,15 @@ public class Utils {
 //    public static boolean validateMzIdFile(String mzidFile){
 //        return validate(mzidFile,MZID_XSD);
 //    }
+    
+    public static Param convertMztabParam(CvParam qParam){
+        try {
+            return new Param(((Cv)qParam.getCvRef()).getId(), qParam.getAccession(), qParam.getName(), qParam.getValue());
+        } catch (MzTabParsingException ex) {
+            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
     
     public static boolean validateMzqFile(String mzqFile){
         return validate(mzqFile,MZQ_XSD);

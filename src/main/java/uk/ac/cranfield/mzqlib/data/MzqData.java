@@ -43,7 +43,7 @@ public class MzqData {
     /**
      * The list of mzq files loaded, not useful at all now as currently focused on one file only
      */
-    private ArrayList<String> mzqFiles = new ArrayList<String>();
+//    private ArrayList<String> mzqFiles = new ArrayList<String>();
     /**
      * the map between protein id and the corresponding protein data
      */
@@ -90,6 +90,8 @@ public class MzqData {
     private SoftwareList softwareList;
     private ParamList analysisSummary;
     private InputFiles inputFiles;
+    private String mzqID;
+    private String mzqName;
 
     private boolean needAutoAssignment = true;
     public static final int ASSAY = 1;
@@ -100,6 +102,22 @@ public class MzqData {
     public static final int PEPTIDE = 12;
     public static final int FEATURE = 13;
     public MzqDataControl control = new MzqDataControl();
+
+    public String getMzqName() {
+        return mzqName;
+    }
+
+    public void setMzqName(String mzqName) {
+        this.mzqName = mzqName;
+    }
+
+    public String getMzqID() {
+        return mzqID;
+    }
+
+    public void setMzqID(String mzqID) {
+        this.mzqID = mzqID;
+    }
     
     public InputFiles getInputFiles() {
         return inputFiles;
@@ -125,11 +143,11 @@ public class MzqData {
         this.softwareList = softwareList;
     }
     
-    public int addMzqFiles(String mzqFile){
-        if(mzqFiles.contains(mzqFile)) return -1;
-        mzqFiles.add(mzqFile);
-        return mzqFiles.size()-1;
-    }
+//    public int addMzqFiles(String mzqFile){
+//        if(mzqFiles.contains(mzqFile)) return -1;
+//        mzqFiles.add(mzqFile);
+//        return mzqFiles.size()-1;
+//    }
     
     public void addFeatures(List<FeatureList> featureLists) {
         for(FeatureList featureList:featureLists){
@@ -240,7 +258,9 @@ public class MzqData {
         CvParam cvTerm = ql.getDataType().getCvParam();
         String quantityName = cvTerm.getName();
         
-        if(!cvParams.containsKey(quantityName)){
+        if(cvParams.containsKey(quantityName)){
+            if(!quantitationNames.contains(quantityName)) quantitationNames.add(quantityName);//this could happen when the quantitation name is parsed in a global quant layer
+        }else{
             cvParams.put(quantityName, cvTerm);
             quantitationNames.add(quantityName);
         }
@@ -298,9 +318,11 @@ public class MzqData {
     private void parseGlobalQuantLayer(GlobalQuantLayer gql, int level) {
         ArrayList<String> columnIDs = new ArrayList<String>();
         for(Column column:gql.getColumnDefinition().getColumn()){
-            String name = column.getDataType().getCvParam().getName();
+            final CvParam cvParam = column.getDataType().getCvParam();
+            String name = cvParam.getName();
             columnIDs.add(name);
             control.addElement(level, GLOBAL, name);
+            cvParams.put(name, cvParam);
         }
         for(Row row:gql.getDataMatrix().getRow()){
             QuantitationLevel quantObj = determineQuantObj(level, row);
@@ -361,6 +383,13 @@ public class MzqData {
         return quantitationNames;
     }
 
+    public CvParam getQuantitationCvParam(String name){
+        if (cvParams.containsKey(name)){
+            return cvParams.get(name);
+        }
+        return null;
+    }
+    
     public ArrayList<String> getAssays() {
         return assays;
     }

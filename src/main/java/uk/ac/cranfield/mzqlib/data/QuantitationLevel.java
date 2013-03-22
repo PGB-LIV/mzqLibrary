@@ -31,11 +31,11 @@ public class QuantitationLevel {
     public static final int MEDIAN = 2;
     public static final int WEIGHTED_AVERAGE = 3;
     
-    public String getQuantity(String name,String assayID){
+    public Double getQuantity(String name,String assayID){
         if (quantities.containsKey(name) && quantities.get(name).containsKey(assayID)){
-            return String.valueOf(quantities.get(name).get(assayID));
+            return quantities.get(name).get(assayID);
         }
-        return "Null";
+        return null;
     }
 
     public HashMap<String, Double> getQuantities(String name){
@@ -46,11 +46,11 @@ public class QuantitationLevel {
         return studyVariables.get(name);
     }
     
-    public String getStudyVariableQuantity(String name, String sv){
+    public Double getStudyVariableQuantity(String name, String sv){
         if (studyVariables.containsKey(name)&& studyVariables.get(name).containsKey(sv)){
-            return String.valueOf(studyVariables.get(name).get(sv));
+            return studyVariables.get(name).get(sv);
         }
-        return "Null";
+        return null;
     }
     
     public Double getRatio(String name){

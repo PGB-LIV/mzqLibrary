@@ -47,14 +47,13 @@ public class XlsConverter extends GenericConverter {
         if (outfile.length() == 0) {
             outfile = getBaseFilename() + ".xls";
         }
-        System.out.println("Here:" + outfile);
 
         try {
             WritableWorkbook wb = Workbook.createWorkbook(new File(outfile));
-            wb.createSheet("metadata", 1);
+//            wb.createSheet("metadata", 1);
             wb.createSheet("proteins", 0);
-            wb.createSheet("peptides", 2);
-            wb.createSheet("features", 3);
+            wb.createSheet("peptides", 1);
+            wb.createSheet("features", 2);
 
             WritableSheet proteinSheet = wb.getSheet("proteins");
 //            ArrayList<ProteinData> proteins = MzqLib.data.getProteins();
@@ -144,14 +143,14 @@ public class XlsConverter extends GenericConverter {
                     printQuantitationLevel(level, sheet, rowCount, obj);
                     if (MzqLib.data.control.isRequired(level, MzqData.ASSAY, quantityName)) {
                         for (String assayID : MzqLib.data.getAssays()) {
-                            String value = obj.getQuantity(quantityName, assayID);
+                            Double value = obj.getQuantity(quantityName, assayID);
                             printValue(value, sheet, colCount, rowCount);
                             colCount++;
                         }
                     }
                     if (MzqLib.data.control.isRequired(level, MzqData.SV, quantityName)) {
                         for (String sv : MzqLib.data.getSvs()) {
-                            String value = obj.getStudyVariableQuantity(quantityName, sv);
+                            Double value = obj.getStudyVariableQuantity(quantityName, sv);
                             printValue(value, sheet, colCount, rowCount);
                             colCount++;
                         }
@@ -165,11 +164,11 @@ public class XlsConverter extends GenericConverter {
         return rowCount;
     }
 
-    private void printValue(String value, WritableSheet sheet, int colCount, int rowCount) throws WriteException, NumberFormatException {
-        if (value == null || value.equalsIgnoreCase("null")) {
-            sheet.addCell(new Label(colCount, rowCount, value, normalFormat));
+    private void printValue(Double value, WritableSheet sheet, int colCount, int rowCount) throws WriteException, NumberFormatException {
+        if (value == null) {
+            sheet.addCell(new Label(colCount, rowCount, "null", normalFormat));
         } else {
-            sheet.addCell(new Number(colCount, rowCount, Double.parseDouble(value), normalFormat));
+            sheet.addCell(new Number(colCount, rowCount, value, normalFormat));
         }
     }
 
@@ -201,7 +200,7 @@ public class XlsConverter extends GenericConverter {
             if (object.hasRatio()) {
                 printQuantitationLevel(level, sheet, rowCount, object);
                 for (String ratioID : MzqLib.data.getRatios()) {
-                    String value = String.valueOf(object.getRatio(ratioID));
+                    Double value = object.getRatio(ratioID);
                     printValue(value, sheet, colCount, rowCount);
                     colCount++;
                 }
@@ -225,7 +224,7 @@ public class XlsConverter extends GenericConverter {
             if (object.hasGlobal()) {
                 printQuantitationLevel(level, sheet, rowCount, object);
                 for (String columnID : MzqLib.data.control.getElements(level, MzqData.GLOBAL)) {
-                    String value = String.valueOf(object.getGlobal(columnID));
+                    Double value = object.getGlobal(columnID);
                     printValue(value, sheet, colCount, rowCount);
                     colCount++;
                 }

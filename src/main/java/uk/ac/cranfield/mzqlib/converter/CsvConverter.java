@@ -10,166 +10,71 @@ import uk.ac.cranfield.mzqlib.data.FeatureData;
 import uk.ac.cranfield.mzqlib.data.MzqData;
 import uk.ac.cranfield.mzqlib.data.PeptideData;
 import uk.ac.cranfield.mzqlib.data.ProteinData;
+import uk.ac.cranfield.mzqlib.data.QuantitationLevel;
 
 /**
  *
  * @author Jun Fan@cranfield
  */
 public class CsvConverter extends GenericConverter {
-    final static String SEPERATOR = ",";
-    
 
-    public CsvConverter(String filename,String outputFile) {
-        super(filename,outputFile);
+    final static String SEPERATOR = ",";
+
+    public CsvConverter(String filename, String outputFile) {
+        super(filename, outputFile);
     }
 
     @Override
     public void convert() {
-        if(outfile.length()==0){
+        if (outfile.length() == 0) {
             outfile = getBaseFilename() + ".csv";
         }
         StringBuilder sb = new StringBuilder();
         //deal with proteins
-        ArrayList<ProteinData> proteins = MzqLib.data.getProteins();
-        //not just the protein artificially created
-        if (proteins.size() > 1 || !proteins.get(0).getAccession().equals(MzqData.ARTIFICIAL)) {
-            sb.append("Proteins\n");
-            for (String quantityName : MzqLib.data.getQuantitationNames()) {
-                addHeaderLine(MzqData.PROTEIN, sb, quantityName);
-                for (ProteinData protein : proteins) {
-                    if(protein.hasQuantitation(quantityName)||protein.hasSV(quantityName)){
-                        sb.append(protein.getId());
-                        addAssayValue(MzqData.PROTEIN, sb, protein, SEPERATOR, quantityName);
-                        addSvValue(MzqData.PROTEIN, sb, protein, SEPERATOR, quantityName);
-                        sb.append("\n");
-                    }
-                }
-                sb.append("\n");
-            }
-//            ArrayList<String> ratios = MzqLib.data.getRatios();
-//            if (!ratios.isEmpty()) {
+        ArrayList<QuantitationLevel> proteins = new ArrayList<QuantitationLevel>();
+        for (ProteinData protein : MzqLib.data.getProteins()) {
+            proteins.add(protein);
+        }
+        //not just the obj artificially created
+        if (proteins.size() > 1 || !MzqLib.data.getProteins().get(0).getAccession().equals(MzqData.ARTIFICIAL)) {
+            outputAssayAndSV(sb, MzqData.PROTEIN, proteins);
             if (MzqLib.data.control.isRequired(MzqData.PROTEIN, MzqData.RATIO, MzqData.RATIO_STRING)) {
-                sb.append("Ratios");
-                addRatioHeader(MzqData.PROTEIN, sb, SEPERATOR, "");
-                sb.append("\n");
-                for (ProteinData protein : proteins) {
-                    if(protein.hasRatio()){
-                        sb.append(protein.getId());
-                        addRatioValue(MzqData.PROTEIN, sb, protein, SEPERATOR);
-                        sb.append("\n");
-                    }
-                }
-                sb.append("\n");
+                outputRatio(sb, MzqData.PROTEIN, proteins);
             }
-            HashSet<String> globals = MzqLib.data.control.getElements(MzqData.PROTEIN, MzqData.GLOBAL);
-            if(globals.size()>0){
-                sb.append("Global");
-                addGlobalHeader(sb, SEPERATOR, "", globals);
-                sb.append("\n");
-                for (ProteinData protein : proteins) {
-                    if(protein.hasGlobal()){
-                        sb.append(protein.getId());
-                        addGlobalValue(MzqData.PROTEIN, sb, protein, SEPERATOR, globals);
-                        sb.append("\n");
-                    }
-                }
-                sb.append("\n");
+            if (!MzqLib.data.control.getElements(MzqData.PROTEIN, MzqData.GLOBAL).isEmpty()) {
+                outputGlobal(sb, MzqData.PROTEIN, proteins);
             }
         }
         sb.append("\n");
         //deal with peptide
-        ArrayList<PeptideData> peptides = MzqLib.data.getPeptides();
-        if (peptides.size() > 0 ) {
-            sb.append("Peptides\n");
-            for (String quantityName : MzqLib.data.getQuantitationNames()) {
-                addHeaderLine(MzqData.PEPTIDE, sb, quantityName);
-                for (PeptideData peptide : peptides) {
-                    if(peptide.hasQuantitation(quantityName)||peptide.hasSV(quantityName)){
-                        sb.append(peptide.getId());
-                        addAssayValue(MzqData.PEPTIDE, sb, peptide, SEPERATOR, quantityName);
-                        addSvValue(MzqData.PEPTIDE, sb, peptide, SEPERATOR, quantityName);
-                        sb.append("\n");
-                    }
-                }
-                sb.append("\n");
-            }
-//            ArrayList<String> ratios = MzqLib.data.getRatios();
-//            if (!ratios.isEmpty()) {
+        ArrayList<QuantitationLevel> peptides = new ArrayList<QuantitationLevel>();
+        for (PeptideData peptide : MzqLib.data.getPeptides()) {
+            peptides.add(peptide);
+        }
+        if (!peptides.isEmpty()) {
+            outputAssayAndSV(sb, MzqData.PEPTIDE, peptides);
             if (MzqLib.data.control.isRequired(MzqData.PEPTIDE, MzqData.RATIO, MzqData.RATIO_STRING)) {
-                sb.append("Ratios");
-                addRatioHeader(MzqData.PEPTIDE, sb, SEPERATOR, "");
-                sb.append("\n");
-                for (PeptideData peptide : peptides) {
-                    if(peptide.hasRatio()){
-                        sb.append(peptide.getId());
-                        addRatioValue(MzqData.PEPTIDE, sb, peptide, SEPERATOR);
-                        sb.append("\n");
-                    }
-                }
-                sb.append("\n");
+                outputRatio(sb, MzqData.PEPTIDE, peptides);
             }
-            HashSet<String> globals = MzqLib.data.control.getElements(MzqData.PEPTIDE, MzqData.GLOBAL);
-            if(globals.size()>0){
-                sb.append("Global");
-                addGlobalHeader(sb, SEPERATOR, "", globals);
-                sb.append("\n");
-                for (PeptideData peptide : peptides) {
-                    if(peptide.hasGlobal()){
-                        sb.append(peptide.getId());
-                        addGlobalValue(MzqData.PEPTIDE, sb, peptide, SEPERATOR, globals);
-                        sb.append("\n");
-                    }
-                }
-                sb.append("\n");
+            if (!MzqLib.data.control.getElements(MzqData.PEPTIDE, MzqData.GLOBAL).isEmpty()) {
+                outputGlobal(sb, MzqData.PEPTIDE, peptides);
             }
         }
         //deal with features
-        ArrayList<FeatureData> features = MzqLib.data.getFeatures();
-        if (features.size() > 1 ) {
-            sb.append("Features\n");
-            for (String quantityName : MzqLib.data.getQuantitationNames()) {
-                addHeaderLine(MzqData.FEATURE, sb, quantityName);
-                for (FeatureData feature : features) {
-                    if(feature.hasQuantitation(quantityName)||feature.hasSV(quantityName)){
-                        sb.append(feature.getId());
-                        addAssayValue(MzqData.FEATURE, sb, feature, SEPERATOR, quantityName);
-                        addSvValue(MzqData.FEATURE, sb, feature, SEPERATOR, quantityName);
-                        sb.append("\n");
-                    }
-                }
-                sb.append("\n");
-            }
-//            ArrayList<String> ratios = MzqLib.data.getRatios();
-//            if (!ratios.isEmpty()) {
+        ArrayList<QuantitationLevel> features = new ArrayList<QuantitationLevel>();
+        for (FeatureData feature : MzqLib.data.getFeatures()) {
+            features.add(feature);
+        }
+        if (!features.isEmpty()) {
+            outputAssayAndSV(sb, MzqData.FEATURE, features);
             if (MzqLib.data.control.isRequired(MzqData.FEATURE, MzqData.RATIO, MzqData.RATIO_STRING)) {
-                sb.append("Ratios");
-                addRatioHeader(MzqData.FEATURE, sb, SEPERATOR, "");
-                sb.append("\n");
-                for (FeatureData feature : features) {
-                    if(feature.hasRatio()){
-                        sb.append(feature.getId());
-                        addRatioValue(MzqData.FEATURE, sb, feature, SEPERATOR);
-                        sb.append("\n");
-                    }
-                }
-                sb.append("\n");
+                outputRatio(sb, MzqData.FEATURE, features);
             }
-            HashSet<String> globals = MzqLib.data.control.getElements(MzqData.FEATURE, MzqData.GLOBAL);
-            if(globals.size()>0){
-                sb.append("Global");
-                addGlobalHeader(sb, SEPERATOR, "", globals);
-                sb.append("\n");
-                for (FeatureData feature : features) {
-                    if(feature.hasGlobal()){
-                        sb.append(feature.getId());
-                        addGlobalValue(MzqData.FEATURE, sb, feature, SEPERATOR, globals);
-                        sb.append("\n");
-                    }
-                }
-                sb.append("\n");
+            if (!MzqLib.data.control.getElements(MzqData.FEATURE, MzqData.GLOBAL).isEmpty()) {
+                outputGlobal(sb, MzqData.FEATURE, features);
             }
         }
-//        System.out.println(sb.toString());
+
         try {
             BufferedWriter out = new BufferedWriter(new FileWriter(outfile));
             out.append(sb.toString());
@@ -180,11 +85,87 @@ public class CsvConverter extends GenericConverter {
     }
 
     private void addHeaderLine(int level, StringBuilder sb, String quantityName) {
-        if (MzqLib.data.control.isRequired(level, MzqData.ASSAY, quantityName)||MzqLib.data.control.isRequired(level, MzqData.SV, quantityName)) {
+        if (MzqLib.data.control.isRequired(level, MzqData.ASSAY, quantityName) || MzqLib.data.control.isRequired(level, MzqData.SV, quantityName)) {
             sb.append("Entity");
             addAssayHeader(level, sb, quantityName, SEPERATOR, "");
             addSvHeader(level, sb, quantityName, SEPERATOR, "");
             sb.append("\n");
         }
+    }
+
+    private void outputAssayAndSV(StringBuilder sb, int level, ArrayList<QuantitationLevel> objects) {
+        printQuantitationLevelHeader(sb, level);
+        for (String quantityName : MzqLib.data.getQuantitationNames()) {
+            addHeaderLine(level, sb, quantityName);
+            for (QuantitationLevel obj : objects) {
+                if (obj.hasQuantitation(quantityName) || obj.hasSV(quantityName)) {
+                    printQuantitationLevel(sb, level, obj);
+                    addAssayValue(level, sb, obj, SEPERATOR, quantityName);
+                    addSvValue(level, sb, obj, SEPERATOR, quantityName);
+                    sb.append("\n");
+                }
+            }
+            sb.append("\n");
+        }
+    }
+
+    private void outputRatio(StringBuilder sb, int level, ArrayList<QuantitationLevel> objects) {
+        sb.append("Ratios");
+        addRatioHeader(level, sb, SEPERATOR, "");
+        sb.append("\n");
+        for (QuantitationLevel obj : objects) {
+            if (obj.hasRatio()) {
+                printQuantitationLevel(sb, level, obj);
+                addRatioValue(level, sb, obj, SEPERATOR);
+                sb.append("\n");
+            }
+        }
+        sb.append("\n");
+    }
+
+    private void outputGlobal(StringBuilder sb, int level, ArrayList<QuantitationLevel> objects) {
+        HashSet<String> globals = MzqLib.data.control.getElements(level, MzqData.GLOBAL);
+        if (globals.size() > 0) {
+            sb.append("Global");
+            addGlobalHeader(sb, SEPERATOR, "", globals);
+            sb.append("\n");
+            for (QuantitationLevel obj : objects) {
+                if (obj.hasGlobal()) {
+                    printQuantitationLevel(sb, level, obj);
+                    addGlobalValue(level, sb, obj, SEPERATOR, globals);
+                    sb.append("\n");
+                }
+            }
+            sb.append("\n");
+        }
+    }
+
+    private void printQuantitationLevel(StringBuilder sb, int level, QuantitationLevel obj) {
+        switch (level) {
+            case MzqData.PROTEIN:
+                sb.append(((ProteinData) obj).getId());
+                break;
+            case MzqData.PEPTIDE:
+                sb.append(((PeptideData) obj).getId());
+                break;
+            case MzqData.FEATURE:
+                sb.append(((FeatureData) obj).getId());
+                break;
+        }
+    }
+
+    private void printQuantitationLevelHeader(StringBuilder sb, int level) {
+        switch (level) {
+            case MzqData.PROTEIN:
+                sb.append("Proteins");
+                break;
+            case MzqData.PEPTIDE:
+                sb.append("Peptides");
+                break;
+            case MzqData.FEATURE:
+                sb.append("Features");
+                break;
+        }
+        sb.append("\n");
     }
 }

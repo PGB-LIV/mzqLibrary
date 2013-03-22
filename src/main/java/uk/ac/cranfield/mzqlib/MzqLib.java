@@ -41,10 +41,11 @@ public class MzqLib {
                 break;
             case MZTAB:
                 converter = new MztabConverter(mzqFile,outputFile);
-                data.setNeedAutoAssignment(false);
+                data.setNeedAutoAssignment(true);//feature_ref is needed to get m/z and rt for peptide from features
                 break;
             case HTML:
                 converter = new HtmlConverter(mzqFile,outputFile);
+                data.setNeedAutoAssignment(true);
                 break;
             case XLS:
                 converter = new XlsConverter(mzqFile,outputFile);
@@ -68,12 +69,6 @@ public class MzqLib {
             System.exit(1);
         }
         System.out.println("Validation successful for the file "+mzqFile);
-        //for merge purpose
-//        int index = data.addMzqFiles(mzqFile);
-//        if(index<0){
-//            System.out.println("There is a file with name"+mzqFile+" which has already been processed");
-//            return;
-//        }
         
         MzQuantMLUnmarshaller unmarshaller = new MzQuantMLUnmarshaller(mzqFile);
         MzQuantML mzq = unmarshaller.unmarshall();
@@ -89,7 +84,8 @@ public class MzqLib {
         
         data.setSoftwareList(mzq.getSoftwareList());
         data.setAnalysisSummary(mzq.getAnalysisSummary());
-//        System.out.println("parseMzq finish");
+        data.setMzqID(mzq.getId());
+        data.setMzqName(mzq.getName());
     }
 
     private PeptideConsensusList getFinalResult(List<PeptideConsensusList> peptideConsensusLists) {
@@ -105,22 +101,18 @@ public class MzqLib {
             if(file.getAbsolutePath().endsWith(".mzq")){
                 System.out.println(file.getAbsolutePath());
                 MzqLib lib = new MzqLib("xls",file.getAbsolutePath(),"");
-//                MzqLib lib = new MzqLib("csv",file.getAbsolutePath(),"");
-//                lib = new MzqLib("html",file.getAbsolutePath(),"");
+                lib = new MzqLib("csv",file.getAbsolutePath(),"");
+                lib = new MzqLib("html",file.getAbsolutePath(),"");
+                lib = new MzqLib("mztab",file.getAbsolutePath(),"");
             }
         }
         System.exit(0);
     }
 
     public static void main( String[] args ) {
-//        new MzqLib("csv","maxquant-silac.mzq");
-//        new MzqLib("html","maxquant-silac.mzq");
-//        new MzqLib("html","iTraq_4plex_example_from_xTracker.mzq");
-//        new MzqLib("xls","iTraq3standards.mzq","");
-//        new MzqLib("csv","iTraq3standards.mzq");
-//        new MzqLib("html","iTraq3standards.mzq","test1.html");
-//        new MzqLib("csv","CPTAC-Progenesis-small-example.mzq");
-//        new MzqLib("html","CPTAC-Progenesis-small-example.mzq");
+//        new MzqLib("csv","maxquant-silac.mzq","");
+//        new MzqLib("mztab","iTraq3standards.mzq","");
+//        new MzqLib("mztab","CPTAC-Progenesis-small-example.mzq","");
 //        System.exit(0);
 //        batch();
         int argsLen = args.length;
@@ -141,18 +133,18 @@ public class MzqLib {
     }
     
     private static void printUsage(){
-        System.out.println("Usage: java -jar mzqlib.jar <converter type> <mzQuantML file>");
+        System.out.println("Usage: java -jar mzqlib.jar <converter type> <mzQuantML file> [output file]");
 //        System.out.println("There are two ways of using mzqlib jar file:");
 //        System.out.println("1. without options: it will present a GUI");
-//        System.out.println("2. with options: the first option must be the type of the output file type, now supports csv,mztab and html, the second option is the mzquantml file which needs to be converted");
-        System.out.println("The first parameter specifies the type of the output file type, now supports csv and html.\nThe second parameter is the mzquantml file which needs to be converted");
+//        System.out.println("2. with options: the first option must be the type of the output file type, now supports csv, mztab,html and xls\n\tthe second option is the mzquantml file which needs to be converted\n\tThe third option is optional, which defines the name of the output file");
+        System.out.println("The first parameter specifies the type of the output file type, now supports csv, mztab,html and xls.\nThe second parameter is the mzquantml file which needs to be converted\nThe third parameter is optional, which defines the name of the output file");
         System.out.println("For example java -jar mzqlib.jar html example.mzq");
         System.exit(0);
     }
     
     private void initialize(){
         converterTypeMap.put("html", HTML);
-//        converterTypeMap.put("mztab", MZTAB);
+        converterTypeMap.put("mztab", MZTAB);
         converterTypeMap.put("csv", CSV);
         converterTypeMap.put("xls", XLS);
         data = new MzqData();

@@ -12,6 +12,7 @@ import uk.ac.cranfield.mzqlib.data.FeatureData;
 import uk.ac.cranfield.mzqlib.data.MzqData;
 import uk.ac.cranfield.mzqlib.data.PeptideData;
 import uk.ac.cranfield.mzqlib.data.ProteinData;
+import uk.ac.liv.jmzqml.model.mzqml.Assay;
 import uk.ac.liv.jmzqml.model.mzqml.CvParam;
 import uk.ac.liv.jmzqml.model.mzqml.Software;
 
@@ -33,6 +34,7 @@ public class HtmlConverter extends GenericConverter{
         if(outfile.length()==0){
             outfile = getBaseFilename() + ".html";
         }
+        //read in the template from the local file and saved in the hash
         if(templates.isEmpty()){
             try{
                 BufferedReader reader = new BufferedReader(new InputStreamReader(HtmlConverter.class.getClassLoader().getResourceAsStream(TEMPLATE)));
@@ -62,9 +64,6 @@ public class HtmlConverter extends GenericConverter{
             }
         }
 
-//        int assaySize = MzqLib.data.getAssays().size()*MzqLib.data.getQuantitationNames().size();
-//        int svSize = MzqLib.data.getSvs().size()*MzqLib.data.getQuantitationNames().size();
-        
         StringBuilder sb = new StringBuilder();
         sb.append(templates.get("MAIN_HEADER_1"));
         sb.append(getBaseFilename());
@@ -76,7 +75,7 @@ public class HtmlConverter extends GenericConverter{
             sb.append("<li><b>");
             sb.append(cv.getName());
             if(cv.getValue()!=null && cv.getValue().length()>1 && (!cv.getValue().equalsIgnoreCase("null"))){
-                sb.append(":</b>");
+                sb.append(":</b> ");
                 sb.append(cv.getValue());
             }else{
                 sb.append("</b>");
@@ -84,7 +83,6 @@ public class HtmlConverter extends GenericConverter{
             sb.append("</li>\n");
         }
         sb.append("</ul>\n"); 
-        
         //software
         sb.append("<h3>Software List</h3>\n<ul>\n");
         for (Software software:MzqLib.data.getSoftwareList().getSoftware()){
@@ -95,6 +93,16 @@ public class HtmlConverter extends GenericConverter{
             sb.append(")</li>\n");
         }
         sb.append("</ul>\n"); 
+        //Assays
+        sb.append("<h3>Assays</h3>\n<ul>\n");
+        for (Assay  assay:MzqLib.data.getAssays()){
+            sb.append("<li><b> ");
+            sb.append(assay.getId());
+            sb.append(":</b>");
+            sb.append(assay.getName());
+            sb.append("</li>\n");
+        }
+        sb.append("</ul>\n"); 
         //start the protein table
         sb.append(templates.get("PROTEIN_HEADER_START"));
         addHeader(MzqData.PROTEIN, sb);
@@ -103,7 +111,7 @@ public class HtmlConverter extends GenericConverter{
         HashSet<String> proteinGlobalNames = MzqLib.data.control.getElements(MzqData.PROTEIN, MzqData.GLOBAL);
         HashSet<String> peptideGlobalNames = MzqLib.data.control.getElements(MzqData.PEPTIDE, MzqData.GLOBAL);
         HashSet<String> featureGlobalNames = MzqLib.data.control.getElements(MzqData.FEATURE, MzqData.GLOBAL);
-        int proteinAssaySize = MzqLib.data.control.getElements(MzqData.PROTEIN, MzqData.ASSAY).size() * MzqLib.data.getAssays().size();
+        int proteinAssaySize = MzqLib.data.control.getElements(MzqData.PROTEIN, MzqData.ASSAY).size() * MzqLib.data.getAssayIDs().size();
         int proteinSvSize = MzqLib.data.control.getElements(MzqData.PROTEIN, MzqData.SV).size() * MzqLib.data.getSvs().size();
         int proteinRatioSize = 0;
         if (MzqLib.data.control.isRequired(MzqData.PROTEIN, MzqData.RATIO, MzqData.RATIO_STRING)){
@@ -111,7 +119,7 @@ public class HtmlConverter extends GenericConverter{
         }
         //start from the first quantitation/sv column
         final int proteinTotalSize = proteinAssaySize + proteinSvSize + proteinRatioSize + proteinGlobalNames.size()+1; //+1 for the protein accession column
-        int peptideAssaySize = MzqLib.data.control.getElements(MzqData.PEPTIDE, MzqData.ASSAY).size() * MzqLib.data.getAssays().size();
+        int peptideAssaySize = MzqLib.data.control.getElements(MzqData.PEPTIDE, MzqData.ASSAY).size() * MzqLib.data.getAssayIDs().size();
         int peptideSvSize = MzqLib.data.control.getElements(MzqData.PEPTIDE, MzqData.SV).size() * MzqLib.data.getSvs().size();
         int peptideRatioSize = 0;
         if (MzqLib.data.control.isRequired(MzqData.PEPTIDE, MzqData.RATIO, MzqData.RATIO_STRING)){

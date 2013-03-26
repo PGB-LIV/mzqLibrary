@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import uk.ac.cranfield.mzqlib.MzqLib;
@@ -14,11 +15,13 @@ import uk.ac.cranfield.mzqlib.data.PeptideData;
 import uk.ac.cranfield.mzqlib.data.ProteinData;
 import uk.ac.ebi.pride.jmztab.MzTabFile;
 import uk.ac.ebi.pride.jmztab.MzTabParsingException;
+import uk.ac.ebi.pride.jmztab.model.Modification;
 import uk.ac.ebi.pride.jmztab.model.Param;
 import uk.ac.ebi.pride.jmztab.model.Peptide;
 import uk.ac.ebi.pride.jmztab.model.Protein;
 import uk.ac.ebi.pride.jmztab.model.Subsample;
 import uk.ac.ebi.pride.jmztab.model.Unit;
+import uk.ac.liv.jmzqml.model.mzqml.Assay;
 import uk.ac.liv.jmzqml.model.mzqml.Cv;
 import uk.ac.liv.jmzqml.model.mzqml.CvParam;
 import uk.ac.liv.jmzqml.model.mzqml.ParamList;
@@ -46,11 +49,12 @@ public class MztabConverter extends GenericConverter {
             String unitID = MzqLib.data.getMzqID().replace("-", "_");
             unit.setUnitId(unitID);
             unit.setDescription(MzqLib.data.getMzqName());
-            final ArrayList<String> assays = MzqLib.data.getAssays();
+            final ArrayList<Assay> assays = MzqLib.data.getAssays();
+//            final ArrayList<String> assays = MzqLib.data.getAssayIDs();
             for (int i = 0; i < assays.size(); i++) {
-                String assay = assays.get(i);
+                Assay assay = assays.get(i);
                 Subsample sub = new Subsample(unitID, i + 1);
-                sub.setDescription(assay);
+                sub.setDescription(assay.getName());
                 unit.setSubsample(sub);
             }
             ArrayList<Param> softwares = new ArrayList<Param>();
@@ -96,7 +100,7 @@ public class MztabConverter extends GenericConverter {
                 tabProt.setDatabaseVersion(searchDatabaseVersion);
                 if (proCvParam != null) {
                     for (int i = 0; i < assays.size(); i++) {
-                        String assay = assays.get(i);
+                        String assay = assays.get(i).getId();
                         tabProt.setAbundance(i + 1, protein.getQuantity(proCvParam.getName(), assay), Double.NaN, Double.NaN);
                     }
                 }
@@ -114,6 +118,17 @@ public class MztabConverter extends GenericConverter {
                             uk.ac.ebi.pride.jmztab.model.ParamList paramList = new uk.ac.ebi.pride.jmztab.model.ParamList();
                             paramList.add(new Param(cvID, searchEngineScoreAccession, searchEngineScoreName, String.valueOf(peptide.getGlobal(searchEngineScoreName))));
                             tabPep.setSearchEngineScore(paramList);
+                        }
+                        final List<uk.ac.liv.jmzqml.model.mzqml.Modification> modifications = peptide.getPeptide().getModification();
+                        if(!modifications.isEmpty()){
+                            ArrayList<Modification> mods = new ArrayList<Modification>();
+                            for (int i = 0; i < modifications.size(); i++) {
+                                uk.ac.liv.jmzqml.model.mzqml.Modification modification = modifications.get(i);
+                                //<xsd:element name="cvParam" type="CVParamType" minOccurs="1"
+                                Modification mod = new Modification(modification.getCvParam().get(0).getAccession(), modification.getLocation());
+                                mods.add(mod);
+                            }
+                            tabPep.setModification(mods);
                         }
                         tabPep.setCharge(charge);
                         ArrayList<Double> mzs = new ArrayList<Double>();
@@ -134,9 +149,8 @@ public class MztabConverter extends GenericConverter {
                         tabPep.setRetentionTime(rts);
                         if (pepCvParam != null) {
                             for (int i = 0; i < assays.size(); i++) {
-                                String assay = assays.get(i);
+                                String assay = assays.get(i).getId();
                                 tabPep.setAbundance(i + 1, peptide.getQuantity(pepCvParam.getName(), assay), Double.NaN, Double.NaN);
-
                             }
                         }
                         mztab.addPeptide(tabPep);

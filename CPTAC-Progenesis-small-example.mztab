@@ -2,18 +2,18 @@ MTD	Progenesis_Label_Free_26112012-software[1]	[PSI-MS,MS:1001830,Progenesis LC-
 MTD	Progenesis_Label_Free_26112012-quantification_method	[PSI-MS,MS:1001834,LC-MS label-free quantitation analysis,]
 MTD	Progenesis_Label_Free_26112012-protein-quantification_unit	[PSI-MS,MS:1001890,Progenesis:protein normalised abundance,]
 MTD	Progenesis_Label_Free_26112012-peptide-quantification_unit	[PSI-MS,MS:1001891,Progenesis:peptide normalised abundance,]
-MTD	Progenesis_Label_Free_26112012-sub[1]-description	ass_0
-MTD	Progenesis_Label_Free_26112012-sub[2]-description	ass_1
-MTD	Progenesis_Label_Free_26112012-sub[3]-description	ass_2
-MTD	Progenesis_Label_Free_26112012-sub[4]-description	ass_3
-MTD	Progenesis_Label_Free_26112012-sub[5]-description	ass_4
-MTD	Progenesis_Label_Free_26112012-sub[6]-description	ass_5
-MTD	Progenesis_Label_Free_26112012-sub[7]-description	ass_6
-MTD	Progenesis_Label_Free_26112012-sub[8]-description	ass_7
-MTD	Progenesis_Label_Free_26112012-sub[9]-description	ass_8
-MTD	Progenesis_Label_Free_26112012-sub[10]-description	ass_9
-MTD	Progenesis_Label_Free_26112012-sub[11]-description	ass_10
-MTD	Progenesis_Label_Free_26112012-sub[12]-description	ass_11
+MTD	Progenesis_Label_Free_26112012-sub[1]-description	mam_042408o_CPTAC_study6_6B011
+MTD	Progenesis_Label_Free_26112012-sub[2]-description	mam_050108o_CPTAC_study6_6B011
+MTD	Progenesis_Label_Free_26112012-sub[3]-description	mam_050108o_CPTAC_study6_6B011_080504231912
+MTD	Progenesis_Label_Free_26112012-sub[4]-description	mam_042408o_CPTAC_study6_6C008
+MTD	Progenesis_Label_Free_26112012-sub[5]-description	mam_050108o_CPTAC_study6_6C008
+MTD	Progenesis_Label_Free_26112012-sub[6]-description	mam_050108o_CPTAC_study6_6C008_080505040419
+MTD	Progenesis_Label_Free_26112012-sub[7]-description	mam_042408o_CPTAC_study6_6D004
+MTD	Progenesis_Label_Free_26112012-sub[8]-description	mam_050108o_CPTAC_study6_6D004
+MTD	Progenesis_Label_Free_26112012-sub[9]-description	mam_050108o_CPTAC_study6_6D004_080505084927
+MTD	Progenesis_Label_Free_26112012-sub[10]-description	mam_042408o_CPTAC_study6_6E004
+MTD	Progenesis_Label_Free_26112012-sub[11]-description	mam_050108o_CPTAC_study6_6E004
+MTD	Progenesis_Label_Free_26112012-sub[12]-description	mam_050108o_CPTAC_study6_6E004_080505133441
 
 PRH	accession	unit_id	description	taxid	species	database	database_version	search_engine	search_engine_score	reliability	num_peptides	num_peptides_distinct	num_peptides_unambiguous	ambiguity_members	modifications	uri	go_terms	protein_coverage	protein_abundance_sub[1]	protein_abundance_stdev_sub[1]	protein_abundance_std_error_sub[1]	protein_abundance_sub[2]	protein_abundance_stdev_sub[2]	protein_abundance_std_error_sub[2]	protein_abundance_sub[3]	protein_abundance_stdev_sub[3]	protein_abundance_std_error_sub[3]	protein_abundance_sub[4]	protein_abundance_stdev_sub[4]	protein_abundance_std_error_sub[4]	protein_abundance_sub[5]	protein_abundance_stdev_sub[5]	protein_abundance_std_error_sub[5]	protein_abundance_sub[6]	protein_abundance_stdev_sub[6]	protein_abundance_std_error_sub[6]	protein_abundance_sub[7]	protein_abundance_stdev_sub[7]	protein_abundance_std_error_sub[7]	protein_abundance_sub[8]	protein_abundance_stdev_sub[8]	protein_abundance_std_error_sub[8]	protein_abundance_sub[9]	protein_abundance_stdev_sub[9]	protein_abundance_std_error_sub[9]	protein_abundance_sub[10]	protein_abundance_stdev_sub[10]	protein_abundance_std_error_sub[10]	protein_abundance_sub[11]	protein_abundance_stdev_sub[11]	protein_abundance_std_error_sub[11]	protein_abundance_sub[12]	protein_abundance_stdev_sub[12]	protein_abundance_std_error_sub[12]
 PRT	YPR110C	Progenesis_Label_Free_26112012	null	null	null	sgd_orfs_plus_ups_prots.fasta	null	null	null	null	null	null	null	null	null	null	null	null	56708.12	NaN	NaN	44516.145	NaN	NaN	43744.144	NaN	NaN	54405.062	NaN	NaN	46129.091	NaN	NaN	48294.783	NaN	NaN	35837.098	NaN	NaN	43463.679	NaN	NaN	22844.143	NaN	NaN	29817.536	NaN	NaN	27971.371	NaN	NaN	23143.567	NaN	NaN

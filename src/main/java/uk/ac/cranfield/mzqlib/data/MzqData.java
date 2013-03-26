@@ -53,9 +53,13 @@ public class MzqData {
      */
     private ArrayList<String> proteinIds = new ArrayList<String>();
     /**
-     * the list of assays
+     * the list of assayIDs
      */
-    private ArrayList<String> assays = new ArrayList<String>();
+    private ArrayList<String> assayIDs = new ArrayList<String>();
+    /**
+     * the list of assayIDs
+     */
+    private ArrayList<Assay> assays = new ArrayList<Assay>();
     /**
      * the list of study variables
      */
@@ -336,7 +340,8 @@ public class MzqData {
     
     public void addAssays(AssayList assayList) {
         for(Assay assay:assayList.getAssay()){
-            assays.add(assay.getId());
+            assays.add(assay);
+            assayIDs.add(assay.getId());
         }
     }
 
@@ -389,9 +394,13 @@ public class MzqData {
         }
         return null;
     }
-    
-    public ArrayList<String> getAssays() {
+
+    public ArrayList<Assay> getAssays() {
         return assays;
+    }
+    
+    public ArrayList<String> getAssayIDs() {
+        return assayIDs;
     }
 
     public ArrayList<String> getSvs() {

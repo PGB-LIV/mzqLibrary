@@ -23,6 +23,9 @@ import uk.ac.cranfield.mzqlib.data.MzqData;
 import uk.ac.cranfield.mzqlib.data.PeptideData;
 import uk.ac.cranfield.mzqlib.data.ProteinData;
 import uk.ac.cranfield.mzqlib.data.QuantitationLevel;
+import uk.ac.liv.jmzqml.model.mzqml.Assay;
+import uk.ac.liv.jmzqml.model.mzqml.CvParam;
+import uk.ac.liv.jmzqml.model.mzqml.Software;
 
 /**
  *
@@ -50,11 +53,13 @@ public class XlsConverter extends GenericConverter {
 
         try {
             WritableWorkbook wb = Workbook.createWorkbook(new File(outfile));
-//            wb.createSheet("metadata", 1);
-            wb.createSheet("proteins", 0);
-            wb.createSheet("peptides", 1);
-            wb.createSheet("features", 2);
+            wb.createSheet("metadata", 0);
+            wb.createSheet("proteins", 1);
+            wb.createSheet("peptides", 2);
+            wb.createSheet("features", 3);
 
+            WritableSheet metaSheet = wb.getSheet("metadata");
+            outputMetadata(metaSheet);
             WritableSheet proteinSheet = wb.getSheet("proteins");
 //            ArrayList<ProteinData> proteins = MzqLib.data.getProteins();
             ArrayList<QuantitationLevel> proteins = new ArrayList<QuantitationLevel>();
@@ -124,7 +129,7 @@ public class XlsConverter extends GenericConverter {
             if (MzqLib.data.control.isRequired(level, MzqData.ASSAY, quantityName) || MzqLib.data.control.isRequired(level, MzqData.SV, quantityName)) {
                 sheet.addCell(new Label(0, rowCount, quantityName, boldFormat));
                 if (MzqLib.data.control.isRequired(level, MzqData.ASSAY, quantityName)) {
-                    for (String assayID : MzqLib.data.getAssays()) {
+                    for (String assayID : MzqLib.data.getAssayIDs()) {
                         sheet.addCell(new Label(colCount, rowCount, assayID, boldFormat));
                         colCount++;
                     }
@@ -142,7 +147,7 @@ public class XlsConverter extends GenericConverter {
                 if (obj.hasQuantitation(quantityName) || obj.hasSV(quantityName)) {
                     printQuantitationLevel(level, sheet, rowCount, obj);
                     if (MzqLib.data.control.isRequired(level, MzqData.ASSAY, quantityName)) {
-                        for (String assayID : MzqLib.data.getAssays()) {
+                        for (String assayID : MzqLib.data.getAssayIDs()) {
                             Double value = obj.getQuantity(quantityName, assayID);
                             printValue(value, sheet, colCount, rowCount);
                             colCount++;
@@ -232,5 +237,42 @@ public class XlsConverter extends GenericConverter {
                 colCount = 1;
             }
         }
+    }
+
+    private void outputMetadata(WritableSheet metaSheet) throws NumberFormatException, WriteException {
+        int rowCount = 0;
+        //analysis summary
+        metaSheet.addCell(new Label(0, rowCount, "Analysis Summary", boldFormat));
+        rowCount++;
+        for (CvParam cv : MzqLib.data.getAnalysisSummary().getCvParam()) {
+            metaSheet.addCell(new Label(0, rowCount, cv.getName(), boldFormat));
+            if (cv.getValue() != null && cv.getValue().length() > 1 && (!cv.getValue().equalsIgnoreCase("null"))) {
+                metaSheet.addCell(new Label(1, rowCount, cv.getValue(), normalFormat));
+            }
+            rowCount++;
+        }
+        rowCount++;
+        //software
+        metaSheet.addCell(new Label(0, rowCount, "Software List", boldFormat));
+        rowCount++;
+        for (Software software : MzqLib.data.getSoftwareList().getSoftware()) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(software.getId());
+            sb.append(" (Version: ");
+            sb.append(software.getVersion());
+            sb.append(")");
+            metaSheet.addCell(new Label(0, rowCount, sb.toString(), normalFormat));
+            rowCount++;
+        }
+        rowCount++;
+        //Assays
+        metaSheet.addCell(new Label(0, rowCount, "Assays", boldFormat));
+        rowCount++;
+        for (Assay assay : MzqLib.data.getAssays()) {
+            metaSheet.addCell(new Label(0, rowCount, assay.getId(), boldFormat));
+            metaSheet.addCell(new Label(1, rowCount, assay.getName(), normalFormat));
+            rowCount++;
+        }
+        rowCount++;
     }
 }

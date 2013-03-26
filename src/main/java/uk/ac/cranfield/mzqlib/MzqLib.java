@@ -82,6 +82,7 @@ public class MzqLib {
         if(finalResultPcList!=null) data.addPeptides(finalResultPcList);
         data.addProteins(mzq.getProteinList());
         
+//        data.setSoftwareList((SoftwareList)unmarshaller.unmarshal(MzQuantMLElement.SoftwareList));
         data.setSoftwareList(mzq.getSoftwareList());
         data.setAnalysisSummary(mzq.getAnalysisSummary());
         data.setMzqID(mzq.getId());
@@ -101,9 +102,9 @@ public class MzqLib {
             if(file.getAbsolutePath().endsWith(".mzq")){
                 System.out.println(file.getAbsolutePath());
                 MzqLib lib = new MzqLib("xls",file.getAbsolutePath(),"");
-                lib = new MzqLib("csv",file.getAbsolutePath(),"");
-                lib = new MzqLib("html",file.getAbsolutePath(),"");
-                lib = new MzqLib("mztab",file.getAbsolutePath(),"");
+                MzqLib lib2 = new MzqLib("csv",file.getAbsolutePath(),"");
+                MzqLib lib3 = new MzqLib("html",file.getAbsolutePath(),"");
+                MzqLib lib4 = new MzqLib("mztab",file.getAbsolutePath(),"");
             }
         }
         System.exit(0);
@@ -114,7 +115,7 @@ public class MzqLib {
 //        new MzqLib("mztab","iTraq3standards.mzq","");
 //        new MzqLib("mztab","CPTAC-Progenesis-small-example.mzq","");
 //        System.exit(0);
-//        batch();
+        batch();
         int argsLen = args.length;
         MzqLib lib;
         switch(argsLen){

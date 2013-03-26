@@ -40,7 +40,7 @@ abstract public class GenericConverter {
 
     protected void addAssayHeader(int level, StringBuilder sb, String quantitationName, String prefix, String suffix) {
         if (MzqLib.data.control.isRequired(level, MzqData.ASSAY, quantitationName)) {
-            for (String assayID : MzqLib.data.getAssays()) {
+            for (String assayID : MzqLib.data.getAssayIDs()) {
                 sb.append(prefix);
                 sb.append(quantitationName);
                 sb.append("_");
@@ -83,7 +83,7 @@ abstract public class GenericConverter {
 
     protected void addAssayValue(int level, StringBuilder sb, QuantitationLevel obj, String seperator, String quantityName) {
         if (MzqLib.data.control.isRequired(level, MzqData.ASSAY, quantityName)) {
-            for (String assayID : MzqLib.data.getAssays()) {
+            for (String assayID : MzqLib.data.getAssayIDs()) {
                 sb.append(seperator);
                 Double value = obj.getQuantity(quantityName, assayID);
                 appendValue(sb, value);

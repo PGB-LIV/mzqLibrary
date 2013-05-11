@@ -21,10 +21,10 @@ import uk.ac.ebi.pride.jmztab.model.Peptide;
 import uk.ac.ebi.pride.jmztab.model.Protein;
 import uk.ac.ebi.pride.jmztab.model.Subsample;
 import uk.ac.ebi.pride.jmztab.model.Unit;
+import uk.ac.liv.jmzqml.model.mzqml.AnalysisSummary;
 import uk.ac.liv.jmzqml.model.mzqml.Assay;
 import uk.ac.liv.jmzqml.model.mzqml.Cv;
 import uk.ac.liv.jmzqml.model.mzqml.CvParam;
-import uk.ac.liv.jmzqml.model.mzqml.ParamList;
 import uk.ac.liv.jmzqml.model.mzqml.Software;
 
 /**
@@ -178,7 +178,7 @@ public class MztabConverter extends GenericConverter {
         return null;
     }
 
-    private Param determineQuantitationMethod(ParamList analysisSummary) {
+    private Param determineQuantitationMethod(AnalysisSummary analysisSummary) {
         for (CvParam cvParam : analysisSummary.getCvParam()) {
             String accession = cvParam.getAccession();
             if (accession.contains("MS:1001834")
@@ -195,7 +195,9 @@ public class MztabConverter extends GenericConverter {
     private String getSearchEngineString() {
         for (String name : MzqLib.data.control.getElements(MzqData.PEPTIDE, MzqData.GLOBAL)) {
             CvParam param = MzqLib.data.getQuantitationCvParam(name);
-            String value = ((Cv) param.getCvRef()).getId();
+//            String value = ((Cv) param.getCvRef()).getId();
+//            String value = ((Cv) param.getCv()).getId();
+            String value = param.getCvRef();
             if (param != null) {
                 String accession = param.getAccession();
                 if (accession.contains("MS:1001171")) {

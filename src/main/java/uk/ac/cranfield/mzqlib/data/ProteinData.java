@@ -43,7 +43,8 @@ public class ProteinData extends QuantitationLevel{
     }
     
     public String getSearchDatabase(){
-        Param databaseName = ((SearchDatabase)protein.getSearchDatabaseRef()).getDatabaseName();
+//        Param databaseName = ((SearchDatabase)protein.getSearchDatabaseRef()).getDatabaseName();
+        Param databaseName = ((SearchDatabase)protein.getSearchDatabase()).getDatabaseName();
         if(databaseName.getCvParam()!=null){
             return databaseName.getCvParam().getName();
         }else{
@@ -52,7 +53,7 @@ public class ProteinData extends QuantitationLevel{
     }
     
     public String getSearchDatabaseVersion(){
-        return ((SearchDatabase)protein.getSearchDatabaseRef()).getVersion();
+        return ((SearchDatabase)protein.getSearchDatabase()).getVersion();
     }
     /**
      * Get all peptids

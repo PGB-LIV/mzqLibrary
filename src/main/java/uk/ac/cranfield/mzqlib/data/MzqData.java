@@ -19,7 +19,6 @@ import uk.ac.liv.jmzqml.model.mzqml.FeatureList;
 import uk.ac.liv.jmzqml.model.mzqml.GlobalQuantLayer;
 import uk.ac.liv.jmzqml.model.mzqml.InputFiles;
 import uk.ac.liv.jmzqml.model.mzqml.Modification;
-import uk.ac.liv.jmzqml.model.mzqml.ParamList;
 import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensus;
 import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensusList;
 import uk.ac.liv.jmzqml.model.mzqml.Protein;
@@ -32,6 +31,7 @@ import uk.ac.liv.jmzqml.model.mzqml.Row;
 import uk.ac.liv.jmzqml.model.mzqml.SoftwareList;
 import uk.ac.liv.jmzqml.model.mzqml.StudyVariable;
 import uk.ac.liv.jmzqml.model.mzqml.StudyVariableList;
+import uk.ac.liv.jmzqml.model.mzqml.AnalysisSummary;
 
 /**
  *
@@ -92,7 +92,7 @@ public class MzqData {
     private HashMap<String,FeatureData> unsolvedFeatures = new HashMap<String, FeatureData>();
     
     private SoftwareList softwareList;
-    private ParamList analysisSummary;
+    private AnalysisSummary analysisSummary;
     private InputFiles inputFiles;
     private String mzqID;
     private String mzqName;
@@ -131,11 +131,11 @@ public class MzqData {
         this.inputFiles = inputFiles;
     }
 
-    public ParamList getAnalysisSummary() {
+    public AnalysisSummary getAnalysisSummary() {
         return analysisSummary;
     }
 
-    public void setAnalysisSummary(ParamList analysisSummary) {
+    public void setAnalysisSummary(AnalysisSummary analysisSummary) {
         this.analysisSummary = analysisSummary;
     }
 
@@ -241,17 +241,24 @@ public class MzqData {
         QuantitationLevel quantObj = null;
         switch(level){
             case PROTEIN:
-                Protein protein = (Protein)row.getObjectRef();
+//                Protein protein = (Protein)row.getObjectRef();
+//                Protein protein = (Protein)row.getObject();
 //                quantObj = proteins.get(localMapping.get(protein.getId()));
-                quantObj = proteins.get(protein.getId());
+//                quantObj = proteins.get(protein.getId());
+//                quantObj = proteins.get(row.getObject().getId());
+                quantObj = proteins.get(row.getObjectRef());
                 break;
             case PEPTIDE:
-                PeptideConsensus pc = (PeptideConsensus)row.getObjectRef();
-                quantObj = peptides.get(pc.getId());
+//                PeptideConsensus pc = (PeptideConsensus)row.getObjectRef();
+//                PeptideConsensus pc = (PeptideConsensus)row.getObject();
+//                quantObj = peptides.get(pc.getId());
+                quantObj = peptides.get(row.getObjectRef());
                 break;
             case FEATURE:
-                Feature feature = (Feature)row.getObjectRef();
-                quantObj = unsolvedFeatures.get(feature.getId());
+//                Feature feature = (Feature)row.getObjectRef();
+//                Feature feature = (Feature)row.getObject();
+//                quantObj = unsolvedFeatures.get(feature.getId());
+                quantObj = unsolvedFeatures.get(row.getObjectRef());
                 break;
         }
         return quantObj;
@@ -268,27 +275,28 @@ public class MzqData {
             cvParams.put(quantityName, cvTerm);
             quantitationNames.add(quantityName);
         }
-        ArrayList<String> assayIDs = new ArrayList<String>();
-        for(Object obj:ql.getColumnIndex()){
-            if(obj instanceof Assay){
-                Assay assay = (Assay)obj;
-                assayIDs.add(assay.getId());
-                control.addElement(level, type, quantityName);
-            }else if(obj instanceof StudyVariable){
-                StudyVariable sv = (StudyVariable)obj;
-                assayIDs.add(sv.getId());
-                control.addElement(level, type, quantityName);
-            }else{
-                System.out.println("In the protein list, the quant layer "+ql.getId()+" has an unrecognised assay/sv id "+obj.toString());
-                System.exit(1);
-            }
-        }
+        List<String> ids = ql.getColumnIndex();
+        control.addElement(level, type, quantityName);
+//        for(Object obj:ql.getColumnIndex()){
+//            if(obj instanceof Assay){
+//                Assay assay = (Assay)obj;
+//                assayIDs.add(assay.getId());
+//                control.addElement(level, type, quantityName);
+//            }else if(obj instanceof StudyVariable){
+//                StudyVariable sv = (StudyVariable)obj;
+//                assayIDs.add(sv.getId());
+//                control.addElement(level, type, quantityName);
+//            }else{
+//                System.out.println("The quant layer "+ql.getId()+" has an unrecognised assay/sv id "+obj.toString());
+//                System.exit(1);
+//            }
+//        }
         for(Row row:ql.getDataMatrix().getRow()){
             HashMap<String,Double> quantities = new HashMap<String, Double>();
 //            QuantitationLevel quantObj = determineQuantObj(level, row, localMapping);
             QuantitationLevel quantObj = determineQuantObj(level, row);
-            for (int i = 0; i < assayIDs.size(); i++) {
-                String assayID = assayIDs.get(i);
+            for (int i = 0; i < ids.size(); i++) {
+                String assayID = ids.get(i);
                 double value = Double.parseDouble(row.getValue().get(i));
                 quantities.put(assayID, value);
             }
@@ -303,9 +311,10 @@ public class MzqData {
 //    private void parseRatioQuantLayer(RatioQuantLayer rql, int level, HashMap<String,String> localMapping) {
     private void parseRatioQuantLayer(RatioQuantLayer rql, int level) {
         ArrayList<String> ratioIDs = new ArrayList<String>();
-        for(Object obj:rql.getColumnIndex()){
-            Ratio ratio = (Ratio)obj;
-            ratioIDs.add(ratio.getId());
+//        for(Object obj:rql.getColumnIndex()){
+        for(String ratioID:rql.getColumnIndex()){
+//            Ratio ratio = (Ratio)obj;
+            ratioIDs.add(ratioID);
             control.addElement(level, RATIO, RATIO_STRING);
         }
         for(Row row:rql.getDataMatrix().getRow()){
@@ -464,15 +473,17 @@ public class MzqData {
         if(!needAutoAssignment) return;
         for (PeptideData peptide: peptides.values()){
             for(EvidenceRef evidence:peptide.getPeptide().getEvidenceRef()){
-                String id = ((Feature)evidence.getFeatureRef()).getId();
-                FeatureData feature = unsolvedFeatures.get(id);
-                unsolvedFeatures.remove(id);
+//                String id = ((Feature)evidence.getFeatureRef()).getId();
+//                String id = ((Feature)evidence.getFeature()).getId();
+//                FeatureData feature = unsolvedFeatures.get(id);
+                FeatureData feature = unsolvedFeatures.get(evidence.getFeatureRef());
+                unsolvedFeatures.remove(evidence.getFeatureRef());
                 peptide.addFeature(feature);
             }
         }
         for(ProteinData protein:proteins.values()){
-            for(Object obj:protein.getProtein().getPeptideConsensusRefs()){
-                String id = ((PeptideConsensus)obj).getId();
+            for(String id:protein.getProtein().getPeptideConsensusRefs()){
+//                String id = ((PeptideConsensus)obj).getId();
                 PeptideData peptide = peptides.get(id);
                 unsolvedPeptides.remove(id);
                 //TODO not sure whether one peptide related to multiple proteins case will cause bug here

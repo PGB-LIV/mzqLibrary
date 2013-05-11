@@ -40,7 +40,8 @@ public class Utils {
     
     public static Param convertMztabParam(CvParam qParam){
         try {
-            return new Param(((Cv)qParam.getCvRef()).getId(), qParam.getAccession(), qParam.getName(), qParam.getValue());
+//            return new Param(((Cv)qParam.getCvRef()).getId(), qParam.getAccession(), qParam.getName(), qParam.getValue());
+            return new Param(qParam.getCvRef(), qParam.getAccession(), qParam.getName(), qParam.getValue());
         } catch (MzTabParsingException ex) {
             Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
         }

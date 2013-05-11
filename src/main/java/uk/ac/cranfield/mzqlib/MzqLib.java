@@ -1,7 +1,9 @@
 package uk.ac.cranfield.mzqlib;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import uk.ac.cranfield.mzqlib.converter.CsvConverter;
 import uk.ac.cranfield.mzqlib.converter.GenericConverter;
@@ -9,8 +11,15 @@ import uk.ac.cranfield.mzqlib.converter.HtmlConverter;
 import uk.ac.cranfield.mzqlib.converter.MztabConverter;
 import uk.ac.cranfield.mzqlib.converter.XlsConverter;
 import uk.ac.cranfield.mzqlib.data.MzqData;
-import uk.ac.liv.jmzqml.model.mzqml.MzQuantML;
+import uk.ac.liv.jmzqml.MzQuantMLElement;
+import uk.ac.liv.jmzqml.model.mzqml.AssayList;
+import uk.ac.liv.jmzqml.model.mzqml.StudyVariableList;
+import uk.ac.liv.jmzqml.model.mzqml.RatioList;
+import uk.ac.liv.jmzqml.model.mzqml.FeatureList;
 import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensusList;
+import uk.ac.liv.jmzqml.model.mzqml.ProteinList;
+import uk.ac.liv.jmzqml.model.mzqml.SoftwareList;
+import uk.ac.liv.jmzqml.model.mzqml.AnalysisSummary;
 import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;
 
 public class MzqLib {
@@ -70,32 +79,44 @@ public class MzqLib {
         }
         System.out.println("Validation successful for the file "+mzqFile);
         
-        MzQuantMLUnmarshaller unmarshaller = new MzQuantMLUnmarshaller(mzqFile);
-        MzQuantML mzq = unmarshaller.unmarshall();
+        MzQuantMLUnmarshaller unmarshaller = new MzQuantMLUnmarshaller(file);
+//        MzQuantML mzq = unmarshaller.unmarshall();
         
-        data.addAssays(mzq.getAssayList());
-        data.addStudyVariables(mzq.getStudyVariableList());
-        data.addRatios(mzq.getRatioList());
+        ;
+        data.addAssays(unmarshaller.unmarshal(AssayList.class));
+        data.addStudyVariables(unmarshaller.unmarshal(StudyVariableList.class));
+        data.addRatios(unmarshaller.unmarshal(RatioList.class));
+//        data.addAssays(mzq.getAssayList());
+//        data.addStudyVariables(mzq.getStudyVariableList());
+//        data.addRatios(mzq.getRatioList());
 
-        data.addFeatures(mzq.getFeatureList());
-        final PeptideConsensusList finalResultPcList = getFinalResult(mzq.getPeptideConsensusList());
-        if(finalResultPcList!=null) data.addPeptides(finalResultPcList);
-        data.addProteins(mzq.getProteinList());
-        
-//        data.setSoftwareList((SoftwareList)unmarshaller.unmarshal(MzQuantMLElement.SoftwareList));
-        data.setSoftwareList(mzq.getSoftwareList());
-        data.setAnalysisSummary(mzq.getAnalysisSummary());
-        data.setMzqID(mzq.getId());
-        data.setMzqName(mzq.getName());
-    }
-
-    private PeptideConsensusList getFinalResult(List<PeptideConsensusList> peptideConsensusLists) {
-        for (PeptideConsensusList pcList:peptideConsensusLists){
-            if (pcList.isFinalResult()) return pcList;
+//        data.addFeatures(mzq.getFeatureList());
+        List<FeatureList> features = new ArrayList<FeatureList>();
+        Iterator<FeatureList> featureIterator = unmarshaller.unmarshalCollectionFromXpath(MzQuantMLElement.FeatureList);
+        while(featureIterator.hasNext()){
+            features.add(featureIterator.next());
         }
-        return null;
+        data.addFeatures(features);
+        
+        Iterator<PeptideConsensusList> peptideConsensusLists = unmarshaller.unmarshalCollectionFromXpath(MzQuantMLElement.PeptideConsensusList);
+        while (peptideConsensusLists.hasNext()){
+            PeptideConsensusList pcList = peptideConsensusLists.next();
+            if (pcList.isFinalResult()) {
+                data.addPeptides(pcList);
+                break;
+            }
+        }
+
+        ProteinList proteinList = unmarshaller.unmarshal(MzQuantMLElement.ProteinList);
+        data.addProteins(proteinList);
+        
+        data.setSoftwareList(unmarshaller.unmarshal(SoftwareList.class));
+//        data.setSoftwareList(mzq.getSoftwareList());
+        data.setAnalysisSummary(unmarshaller.unmarshal(AnalysisSummary.class));
+        data.setMzqID(unmarshaller.getMzQuantMLId());
+        data.setMzqName(unmarshaller.getMzQuantMLName());
     }
-    
+
     private static void batch(){
         File dir = new File(".");
         for(File file:dir.listFiles()){

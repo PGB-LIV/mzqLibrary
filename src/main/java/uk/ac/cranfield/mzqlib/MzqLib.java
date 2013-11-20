@@ -12,14 +12,16 @@ import uk.ac.cranfield.mzqlib.converter.MztabConverter;
 import uk.ac.cranfield.mzqlib.converter.XlsConverter;
 import uk.ac.cranfield.mzqlib.data.MzqData;
 import uk.ac.liv.jmzqml.MzQuantMLElement;
+import uk.ac.liv.jmzqml.model.mzqml.AnalysisSummary;
 import uk.ac.liv.jmzqml.model.mzqml.AssayList;
+import uk.ac.liv.jmzqml.model.mzqml.CvList;
 import uk.ac.liv.jmzqml.model.mzqml.StudyVariableList;
 import uk.ac.liv.jmzqml.model.mzqml.RatioList;
 import uk.ac.liv.jmzqml.model.mzqml.FeatureList;
+import uk.ac.liv.jmzqml.model.mzqml.InputFiles;
 import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensusList;
 import uk.ac.liv.jmzqml.model.mzqml.ProteinList;
 import uk.ac.liv.jmzqml.model.mzqml.SoftwareList;
-import uk.ac.liv.jmzqml.model.mzqml.AnalysisSummary;
 import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;
 
 public class MzqLib {
@@ -82,7 +84,6 @@ public class MzqLib {
         MzQuantMLUnmarshaller unmarshaller = new MzQuantMLUnmarshaller(file);
 //        MzQuantML mzq = unmarshaller.unmarshall();
         
-        ;
         data.addAssays(unmarshaller.unmarshal(AssayList.class));
         data.addStudyVariables(unmarshaller.unmarshal(StudyVariableList.class));
         data.addRatios(unmarshaller.unmarshal(RatioList.class));
@@ -109,12 +110,14 @@ public class MzqLib {
 
         ProteinList proteinList = unmarshaller.unmarshal(MzQuantMLElement.ProteinList);
         data.addProteins(proteinList);
-        
+
         data.setSoftwareList(unmarshaller.unmarshal(SoftwareList.class));
 //        data.setSoftwareList(mzq.getSoftwareList());
         data.setAnalysisSummary(unmarshaller.unmarshal(AnalysisSummary.class));
         data.setMzqID(unmarshaller.getMzQuantMLId());
         data.setMzqName(unmarshaller.getMzQuantMLName());
+        data.setInputFiles(unmarshaller.unmarshal(InputFiles.class));
+        data.setCvList(unmarshaller.unmarshal(CvList.class));
     }
 
     private static void batch(){
@@ -133,10 +136,10 @@ public class MzqLib {
 
     public static void main( String[] args ) {
 //        new MzqLib("csv","maxquant-silac.mzq","");
-//        new MzqLib("mztab","iTraq3standards.mzq","");
+        new MzqLib("mztab","iTraq3standards.mzq","");
 //        new MzqLib("mztab","CPTAC-Progenesis-small-example.mzq","");
-//        System.exit(0);
-        batch();
+        System.exit(0);
+//        batch();
         int argsLen = args.length;
         MzqLib lib;
         switch(argsLen){

@@ -4,6 +4,7 @@ import java.util.HashSet;
 import uk.ac.cranfield.mzqlib.MzqLib;
 import uk.ac.cranfield.mzqlib.data.MzqData;
 import uk.ac.cranfield.mzqlib.data.QuantitationLevel;
+import uk.ac.liv.jmzqml.model.mzqml.StudyVariable;
 
 /**
  *
@@ -28,11 +29,11 @@ abstract public class GenericConverter {
 
     protected void addSvHeader(int level, StringBuilder sb, String quantitationName, String prefix, String suffix) {
         if (MzqLib.data.control.isRequired(level, MzqData.SV, quantitationName)) {
-            for (String sv : MzqLib.data.getSvs()) {
+            for (StudyVariable sv : MzqLib.data.getSvs()) {
                 sb.append(prefix);
                 sb.append(quantitationName);
                 sb.append("_");
-                sb.append(sv);
+                sb.append(sv.getId());
                 sb.append(suffix);
             }
         }
@@ -73,9 +74,9 @@ abstract public class GenericConverter {
 //    }
     protected void addSvValue(int level, StringBuilder sb, QuantitationLevel obj, String seperator, String quantityName) {
         if (MzqLib.data.control.isRequired(level, MzqData.SV, quantityName)) {
-            for (String sv : MzqLib.data.getSvs()) {
+            for (StudyVariable sv : MzqLib.data.getSvs()) {
                 sb.append(seperator);
-                Double value = obj.getStudyVariableQuantity(quantityName, sv);
+                Double value = obj.getStudyVariableQuantity(quantityName, sv.getId());
                 appendValue(sb, value);
             }
         }

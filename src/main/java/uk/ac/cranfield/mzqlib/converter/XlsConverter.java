@@ -26,6 +26,7 @@ import uk.ac.cranfield.mzqlib.data.QuantitationLevel;
 import uk.ac.liv.jmzqml.model.mzqml.Assay;
 import uk.ac.liv.jmzqml.model.mzqml.CvParam;
 import uk.ac.liv.jmzqml.model.mzqml.Software;
+import uk.ac.liv.jmzqml.model.mzqml.StudyVariable;
 
 /**
  *
@@ -135,8 +136,8 @@ public class XlsConverter extends GenericConverter {
                     }
                 }
                 if (MzqLib.data.control.isRequired(level, MzqData.SV, quantityName)) {
-                    for (String sv : MzqLib.data.getSvs()) {
-                        sheet.addCell(new Label(colCount, rowCount, sv, boldFormat));
+                    for (StudyVariable sv : MzqLib.data.getSvs()) {
+                        sheet.addCell(new Label(colCount, rowCount, sv.getId(), boldFormat));
                         colCount++;
                     }
                 }
@@ -154,8 +155,8 @@ public class XlsConverter extends GenericConverter {
                         }
                     }
                     if (MzqLib.data.control.isRequired(level, MzqData.SV, quantityName)) {
-                        for (String sv : MzqLib.data.getSvs()) {
-                            Double value = obj.getStudyVariableQuantity(quantityName, sv);
+                        for (StudyVariable sv : MzqLib.data.getSvs()) {
+                            Double value = obj.getStudyVariableQuantity(quantityName, sv.getId());
                             printValue(value, sheet, colCount, rowCount);
                             colCount++;
                         }

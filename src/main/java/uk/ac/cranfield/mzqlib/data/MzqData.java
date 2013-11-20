@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package uk.ac.cranfield.mzqlib.data;
 
 import java.util.ArrayList;
@@ -12,6 +8,8 @@ import java.util.List;
 import uk.ac.liv.jmzqml.model.mzqml.Assay;
 import uk.ac.liv.jmzqml.model.mzqml.AssayList;
 import uk.ac.liv.jmzqml.model.mzqml.Column;
+import uk.ac.liv.jmzqml.model.mzqml.Cv;
+import uk.ac.liv.jmzqml.model.mzqml.CvList;
 import uk.ac.liv.jmzqml.model.mzqml.CvParam;
 import uk.ac.liv.jmzqml.model.mzqml.EvidenceRef;
 import uk.ac.liv.jmzqml.model.mzqml.Feature;
@@ -32,12 +30,12 @@ import uk.ac.liv.jmzqml.model.mzqml.SoftwareList;
 import uk.ac.liv.jmzqml.model.mzqml.StudyVariable;
 import uk.ac.liv.jmzqml.model.mzqml.StudyVariableList;
 import uk.ac.liv.jmzqml.model.mzqml.AnalysisSummary;
-
 /**
  *
- * @author Jun Fan@cranfield
+ * @author Jun Fan@qmul
  */
 public class MzqData {
+
     public static final String ARTIFICIAL = "artificial";
     public static final String RATIO_STRING = "Ratio";
     /**
@@ -63,39 +61,40 @@ public class MzqData {
     /**
      * the list of study variables
      */
-    private ArrayList<String> svs = new ArrayList<String>();
+    private List<StudyVariable> svs = new ArrayList<StudyVariable>();
     /**
      * the list of ratios
      */
     private ArrayList<String> ratios = new ArrayList<String>();
 //    private HashMap<String, PeptideData> peptides = new HashMap<String, PeptideData>();
     //the map between the name of the quantitation value (e.g. intensity, peak area) and the corresponding CV terms 
-    private HashMap<String,CvParam> cvParams = new HashMap<String, CvParam>();
+    private HashMap<String, CvParam> cvParams = new HashMap<String, CvParam>();
     //the list of quantitation names
     private ArrayList<String> quantitationNames = new ArrayList<String>();
 //    private HashMap<String,Character> modificationIndice = new HashMap<String, Character>(); 
 //    private ArrayList<Modification> modifications = new ArrayList<Modification>();
     /**
-     * the list of modification names. Ideally should be list of Modification objects, due to lack of equal function in the class, use this alternative
+     * the list of modification names. Ideally should be list of Modification
+     * objects, due to lack of equal function in the class, use this alternative
      */
     private ArrayList<String> modifications = new ArrayList<String>();
     /**
-     * populate when reading the peptide consensus list to contain all peptide consensus elements
-     * the entry will be removed when assigned to the protein which has 2 scenarios 
-     * 1)read in the protein list while peptide_refs is available
-     * 2)guess process according to the id strings, if not found, assign to the ARTIFICIAL protein
-     * after loading one mzq file, this structure will be empty
+     * populate when reading the peptide consensus list to contain all peptide
+     * consensus elements the entry will be removed when assigned to the protein
+     * which has 2 scenarios 1)read in the protein list while peptide_refs is
+     * available 2)guess process according to the id strings, if not found,
+     * assign to the ARTIFICIAL protein after loading one mzq file, this
+     * structure will be empty
      */
-    private HashMap<String,PeptideData> peptides = new HashMap<String, PeptideData>();
+    private HashMap<String, PeptideData> peptides = new HashMap<String, PeptideData>();
     private HashSet<String> unsolvedPeptides = new HashSet<String>();
-    
-    private HashMap<String,FeatureData> unsolvedFeatures = new HashMap<String, FeatureData>();
-    
+    private HashMap<String, FeatureData> unsolvedFeatures = new HashMap<String, FeatureData>();
     private SoftwareList softwareList;
     private AnalysisSummary analysisSummary;
     private InputFiles inputFiles;
     private String mzqID;
     private String mzqName;
+    private List<Cv> cvs;
 
     private boolean needAutoAssignment = true;
     public static final int ASSAY = 1;
@@ -122,7 +121,7 @@ public class MzqData {
     public void setMzqID(String mzqID) {
         this.mzqID = mzqID;
     }
-    
+
     public InputFiles getInputFiles() {
         return inputFiles;
     }
@@ -146,49 +145,44 @@ public class MzqData {
     public void setSoftwareList(SoftwareList softwareList) {
         this.softwareList = softwareList;
     }
-    
-//    public int addMzqFiles(String mzqFile){
-//        if(mzqFiles.contains(mzqFile)) return -1;
-//        mzqFiles.add(mzqFile);
-//        return mzqFiles.size()-1;
-//    }
-    
+
     public void addFeatures(List<FeatureList> featureLists) {
-        for(FeatureList featureList:featureLists){
-            for(Feature feature:featureList.getFeature()){
+        for (FeatureList featureList : featureLists) {
+            for (Feature feature : featureList.getFeature()) {
                 FeatureData featureData = new FeatureData(feature);
                 unsolvedFeatures.put(feature.getId(), featureData);
             }
-            for(QuantLayer ql:featureList.getMS2AssayQuantLayer()){
+            for (QuantLayer ql : featureList.getMS2AssayQuantLayer()) {
                 parseQuantLayer(ql, ASSAY, FEATURE);
             }
-            for(QuantLayer ql:featureList.getMS2StudyVariableQuantLayer()){
+            for (QuantLayer ql : featureList.getMS2StudyVariableQuantLayer()) {
                 parseQuantLayer(ql, SV, FEATURE);
             }
-            if(featureList.getMS2RatioQuantLayer()!=null) parseRatioQuantLayer(featureList.getMS2RatioQuantLayer(), FEATURE);
-            for(GlobalQuantLayer gql:featureList.getFeatureQuantLayer()){
+            if (featureList.getMS2RatioQuantLayer() != null) {
+                parseRatioQuantLayer(featureList.getMS2RatioQuantLayer(), FEATURE);
+            }
+            for (GlobalQuantLayer gql : featureList.getFeatureQuantLayer()) {
                 parseGlobalQuantLayer(gql, FEATURE);
             }
         }
     }
 
     public void addPeptides(PeptideConsensusList pcList) {
-        for(PeptideConsensus pc:pcList.getPeptideConsensus()){
+        for (PeptideConsensus pc : pcList.getPeptideConsensus()) {
             PeptideData peptide = new PeptideData(pc);
             peptides.put(pc.getId(), peptide);
             unsolvedPeptides.add(pc.getId());
         }
-        for(QuantLayer ql:pcList.getAssayQuantLayer()){
-//            parseQuantLayer(ql,ASSAY,PROTEIN,localMapping);
-            parseQuantLayer(ql,ASSAY,PEPTIDE);
+        for (QuantLayer ql : pcList.getAssayQuantLayer()) {
+            parseQuantLayer(ql, ASSAY, PEPTIDE);
         }
-        for(QuantLayer ql:pcList.getStudyVariableQuantLayer()){
-//            parseQuantLayer(ql,SV,PROTEIN,localMapping);
-            parseQuantLayer(ql,SV,PEPTIDE);
+        for (QuantLayer ql : pcList.getStudyVariableQuantLayer()) {
+            parseQuantLayer(ql, SV, PEPTIDE);
         }
-//        if(proteinList.getRatioQuantLayer()!=null) parseRatioQuantLayer(proteinList.getRatioQuantLayer(),PROTEIN,localMapping);
-        if(pcList.getRatioQuantLayer()!=null) parseRatioQuantLayer(pcList.getRatioQuantLayer(),PEPTIDE);
-        for(GlobalQuantLayer gql:pcList.getGlobalQuantLayer()){
+        if (pcList.getRatioQuantLayer() != null) {
+            parseRatioQuantLayer(pcList.getRatioQuantLayer(), PEPTIDE);
+        }
+        for (GlobalQuantLayer gql : pcList.getGlobalQuantLayer()) {
             parseGlobalQuantLayer(gql, PEPTIDE);
         }
     }
@@ -199,8 +193,8 @@ public class MzqData {
         //this will be used to assign quantitation values etc.
 //        HashMap<String,String> localMapping = new HashMap<String, String>();
         //if the protein list is empty, create an artificial protein 
-        if(proteinList == null){
-            if(!proteins.containsKey(ARTIFICIAL)){
+        if (proteinList == null) {
+            if (!proteins.containsKey(ARTIFICIAL)) {
                 Protein protein = new Protein();
                 protein.setId(ARTIFICIAL);
                 protein.setAccession(ARTIFICIAL);
@@ -210,115 +204,84 @@ public class MzqData {
             }
             return;
         }
-        for(Protein qprotein:proteinList.getProtein()){
+
+        for (Protein qprotein : proteinList.getProtein()) {
             //check whether this protein has been processed before (more likely from the previous mzq file)
             String id = existing(qprotein);
-            if(id==null){//not matched to the existing proteins
+            if (id == null) {//not matched to the existing proteins
                 id = qprotein.getId();
                 ProteinData newProtein = new ProteinData(qprotein);
                 proteins.put(id, newProtein);
                 proteinIds.add(id);
             }
-//            localMapping.put(qprotein.getId(), id);
         }
-        for(QuantLayer ql:proteinList.getAssayQuantLayer()){
-//            parseQuantLayer(ql,ASSAY,PROTEIN,localMapping);
-            parseQuantLayer(ql,ASSAY,PROTEIN);
+        for (QuantLayer ql : proteinList.getAssayQuantLayer()) {
+            parseQuantLayer(ql, ASSAY, PROTEIN);
         }
-        for(QuantLayer ql:proteinList.getStudyVariableQuantLayer()){
-//            parseQuantLayer(ql,SV,PROTEIN,localMapping);
-            parseQuantLayer(ql,SV,PROTEIN);
+        for (QuantLayer ql : proteinList.getStudyVariableQuantLayer()) {
+            parseQuantLayer(ql, SV, PROTEIN);
         }
-//        if(proteinList.getRatioQuantLayer()!=null) parseRatioQuantLayer(proteinList.getRatioQuantLayer(),PROTEIN,localMapping);
-        if(proteinList.getRatioQuantLayer()!=null) parseRatioQuantLayer(proteinList.getRatioQuantLayer(),PROTEIN);
-        for(GlobalQuantLayer gql:proteinList.getGlobalQuantLayer()){
+        if (proteinList.getRatioQuantLayer() != null) {
+            parseRatioQuantLayer(proteinList.getRatioQuantLayer(), PROTEIN);
+        }
+        for (GlobalQuantLayer gql : proteinList.getGlobalQuantLayer()) {
             parseGlobalQuantLayer(gql, PROTEIN);
         }
     }
-    
+
     private QuantitationLevel determineQuantObj(int level, Row row) {
-//    private QuantitationLevel determineQuantObj(int level, Row row, HashMap<String, String> localMapping) {
         QuantitationLevel quantObj = null;
-        switch(level){
+        switch (level) {
             case PROTEIN:
-//                Protein protein = (Protein)row.getObjectRef();
-//                Protein protein = (Protein)row.getObject();
-//                quantObj = proteins.get(localMapping.get(protein.getId()));
-//                quantObj = proteins.get(protein.getId());
-//                quantObj = proteins.get(row.getObject().getId());
                 quantObj = proteins.get(row.getObjectRef());
                 break;
             case PEPTIDE:
-//                PeptideConsensus pc = (PeptideConsensus)row.getObjectRef();
-//                PeptideConsensus pc = (PeptideConsensus)row.getObject();
-//                quantObj = peptides.get(pc.getId());
                 quantObj = peptides.get(row.getObjectRef());
                 break;
             case FEATURE:
-//                Feature feature = (Feature)row.getObjectRef();
-//                Feature feature = (Feature)row.getObject();
-//                quantObj = unsolvedFeatures.get(feature.getId());
                 quantObj = unsolvedFeatures.get(row.getObjectRef());
                 break;
         }
         return quantObj;
     }
 
-//    private void parseQuantLayer(QuantLayer ql, int type, int level, HashMap<String, String> localMapping){
-    private void parseQuantLayer(QuantLayer ql, int type, int level){
+    private void parseQuantLayer(QuantLayer ql, int type, int level) {
         CvParam cvTerm = ql.getDataType().getCvParam();
         String quantityName = cvTerm.getName();
-        
-        if(cvParams.containsKey(quantityName)){
-            if(!quantitationNames.contains(quantityName)) quantitationNames.add(quantityName);//this could happen when the quantitation name is parsed in a global quant layer
-        }else{
+
+        if (cvParams.containsKey(quantityName)) {
+            if (!quantitationNames.contains(quantityName)) {
+                quantitationNames.add(quantityName);//this could happen when the quantitation name is parsed in a global quant layer
+            }
+        } else {
             cvParams.put(quantityName, cvTerm);
             quantitationNames.add(quantityName);
         }
         List<String> ids = ql.getColumnIndex();
         control.addElement(level, type, quantityName);
-//        for(Object obj:ql.getColumnIndex()){
-//            if(obj instanceof Assay){
-//                Assay assay = (Assay)obj;
-//                assayIDs.add(assay.getId());
-//                control.addElement(level, type, quantityName);
-//            }else if(obj instanceof StudyVariable){
-//                StudyVariable sv = (StudyVariable)obj;
-//                assayIDs.add(sv.getId());
-//                control.addElement(level, type, quantityName);
-//            }else{
-//                System.out.println("The quant layer "+ql.getId()+" has an unrecognised assay/sv id "+obj.toString());
-//                System.exit(1);
-//            }
-//        }
-        for(Row row:ql.getDataMatrix().getRow()){
-            HashMap<String,Double> quantities = new HashMap<String, Double>();
-//            QuantitationLevel quantObj = determineQuantObj(level, row, localMapping);
+        for (Row row : ql.getDataMatrix().getRow()) {
+            HashMap<String, Double> quantities = new HashMap<String, Double>();
             QuantitationLevel quantObj = determineQuantObj(level, row);
             for (int i = 0; i < ids.size(); i++) {
                 String assayID = ids.get(i);
                 double value = Double.parseDouble(row.getValue().get(i));
                 quantities.put(assayID, value);
             }
-            if(type == ASSAY){
+            if (type == ASSAY) {
                 quantObj.setQuantities(quantityName, quantities);
-            }else{
+            } else {
                 quantObj.setStudyVariables(quantityName, quantities);
             }
         }
     }
 
-//    private void parseRatioQuantLayer(RatioQuantLayer rql, int level, HashMap<String,String> localMapping) {
     private void parseRatioQuantLayer(RatioQuantLayer rql, int level) {
         ArrayList<String> ratioIDs = new ArrayList<String>();
-//        for(Object obj:rql.getColumnIndex()){
-        for(String ratioID:rql.getColumnIndex()){
-//            Ratio ratio = (Ratio)obj;
+        for (String ratioID : rql.getColumnIndex()) {
             ratioIDs.add(ratioID);
             control.addElement(level, RATIO, RATIO_STRING);
         }
-        for(Row row:rql.getDataMatrix().getRow()){
-//            QuantitationLevel quantObj = determineQuantObj(level, row, localMapping);
+        for (Row row : rql.getDataMatrix().getRow()) {
             QuantitationLevel quantObj = determineQuantObj(level, row);
             for (int i = 0; i < ratioIDs.size(); i++) {
                 String ratioID = ratioIDs.get(i);
@@ -330,14 +293,14 @@ public class MzqData {
 
     private void parseGlobalQuantLayer(GlobalQuantLayer gql, int level) {
         ArrayList<String> columnIDs = new ArrayList<String>();
-        for(Column column:gql.getColumnDefinition().getColumn()){
+        for (Column column : gql.getColumnDefinition().getColumn()) {
             final CvParam cvParam = column.getDataType().getCvParam();
             String name = cvParam.getName();
             columnIDs.add(name);
             control.addElement(level, GLOBAL, name);
             cvParams.put(name, cvParam);
         }
-        for(Row row:gql.getDataMatrix().getRow()){
+        for (Row row : gql.getDataMatrix().getRow()) {
             QuantitationLevel quantObj = determineQuantObj(level, row);
             for (int i = 0; i < columnIDs.size(); i++) {
                 String columnID = columnIDs.get(i);
@@ -346,40 +309,39 @@ public class MzqData {
             }
         }
     }
-    
+
     public void addAssays(AssayList assayList) {
-        for(Assay assay:assayList.getAssay()){
+        for (Assay assay : assayList.getAssay()) {
             assays.add(assay);
             assayIDs.add(assay.getId());
         }
     }
 
     public void addStudyVariables(StudyVariableList studyVariableList) {
-        if(studyVariableList == null) return;
-        for(StudyVariable sv:studyVariableList.getStudyVariable()){
-            svs.add(sv.getId());
-        }
+        if (studyVariableList == null) return;
+        svs.addAll(studyVariableList.getStudyVariable());
     }
 
     public void addRatios(RatioList ratioList) {
-        if(ratioList == null) return;
-        for(Ratio ratio:ratioList.getRatio()){
+        if (ratioList == null) return;
+        for (Ratio ratio : ratioList.getRatio()) {
             ratios.add(ratio.getId());
         }
     }
 
     public int getModificationIndex(Modification mod) {
         String modStr = getModificationString(mod);
-        if(modifications.contains(modStr)){
+        if (modifications.contains(modStr)) {
             return modifications.indexOf(modStr);
         }
         modifications.add(modStr);
         return modifications.size();
     }
+    
     //for modification in PeptideConsensus, not modification in Label which is of ModParamType type
-    private String getModificationString(Modification mod){
+    private String getModificationString(Modification mod) {
 //        <xsd:element name="cvParam" type="CVParamType" minOccurs="1" maxOccurs="unbounded">
-        for(CvParam cv:mod.getCvParam()){
+        for (CvParam cv : mod.getCvParam()) {
             return cv.getName();
         }
         return null;
@@ -387,7 +349,7 @@ public class MzqData {
 
     public ArrayList<ProteinData> getProteins() {
         ArrayList<ProteinData> values = new ArrayList<ProteinData>();
-        for(String id:proteinIds){
+        for (String id : proteinIds) {
             values.add(proteins.get(id));
         }
         return values;
@@ -397,8 +359,8 @@ public class MzqData {
         return quantitationNames;
     }
 
-    public CvParam getQuantitationCvParam(String name){
-        if (cvParams.containsKey(name)){
+    public CvParam getQuantitationCvParam(String name) {
+        if (cvParams.containsKey(name)) {
             return cvParams.get(name);
         }
         return null;
@@ -407,25 +369,27 @@ public class MzqData {
     public ArrayList<Assay> getAssays() {
         return assays;
     }
-    
+
     public ArrayList<String> getAssayIDs() {
         return assayIDs;
     }
 
-    public ArrayList<String> getSvs() {
+    public List<StudyVariable> getSvs() {
         return svs;
     }
 
     public ArrayList<String> getRatios() {
         return ratios;
     }
-    
-    private String existing(Protein protein){
+
+    private String existing(Protein protein) {
         //first search by id
-        if(proteins.containsKey(protein.getId())) return protein.getId();
+        if (proteins.containsKey(protein.getId())) return protein.getId();
         //then by accession number
-        for(ProteinData proteinData:proteins.values()){
-            if(protein.getAccession().equalsIgnoreCase(proteinData.getAccession())) return proteinData.getProtein().getId();
+        for (ProteinData proteinData : proteins.values()) {
+            if (protein.getAccession().equalsIgnoreCase(proteinData.getAccession())) {
+                return proteinData.getProtein().getId();
+            }
         }
         //still not found
         return null;
@@ -446,9 +410,8 @@ public class MzqData {
 
     public ArrayList<FeatureData> getFeatures() {
         ArrayList<FeatureData> values = new ArrayList<FeatureData>();
-        if(needAutoAssignment){
-            
-        }else{
+        if (needAutoAssignment) {
+        } else {
             ArrayList<String> idList = new ArrayList<String>();
             for (String id : unsolvedFeatures.keySet()) {
                 idList.add(id);
@@ -470,20 +433,16 @@ public class MzqData {
     }
 
     public void autoAssign() {
-        if(!needAutoAssignment) return;
-        for (PeptideData peptide: peptides.values()){
-            for(EvidenceRef evidence:peptide.getPeptide().getEvidenceRef()){
-//                String id = ((Feature)evidence.getFeatureRef()).getId();
-//                String id = ((Feature)evidence.getFeature()).getId();
-//                FeatureData feature = unsolvedFeatures.get(id);
+        if (!needAutoAssignment) return;
+        for (PeptideData peptide : peptides.values()) {
+            for (EvidenceRef evidence : peptide.getPeptide().getEvidenceRef()) {
                 FeatureData feature = unsolvedFeatures.get(evidence.getFeatureRef());
                 unsolvedFeatures.remove(evidence.getFeatureRef());
                 peptide.addFeature(feature);
             }
         }
-        for(ProteinData protein:proteins.values()){
+        for (ProteinData protein : proteins.values()) {
             for(String id:protein.getProtein().getPeptideConsensusRefs()){
-//                String id = ((PeptideConsensus)obj).getId();
                 PeptideData peptide = peptides.get(id);
                 unsolvedPeptides.remove(id);
                 //TODO not sure whether one peptide related to multiple proteins case will cause bug here
@@ -492,16 +451,16 @@ public class MzqData {
             }
         }
         //un-linked peptides according to the peptideconsensus_refs in protein
-        for(String peptideID: unsolvedPeptides){
+        for (String peptideID : unsolvedPeptides) {
             boolean guessed = false;
-            for(ProteinData protein:proteins.values()){
-                if(peptideID.contains(protein.getId())||peptideID.contains(protein.getAccession())){
+            for (ProteinData protein : proteins.values()) {
+                if (peptideID.contains(protein.getId()) || peptideID.contains(protein.getAccession())) {
                     guessed = true;
                     PeptideData peptide = peptides.get(peptideID);
                     protein.addPeptide(peptide);
                 }
             }
-            if(!guessed){
+            if (!guessed) {
                 if (!proteins.containsKey(ARTIFICIAL)) {
                     Protein protein = new Protein();
                     protein.setId(ARTIFICIAL);
@@ -515,5 +474,13 @@ public class MzqData {
                 protein.addPeptide(peptide);
             }
         }
+    }
+
+    public void setCvList(CvList cvList) {
+        cvs = cvList.getCv();
+    }
+
+    public List<Cv> getCvList() {
+        return cvs;
     }
 }

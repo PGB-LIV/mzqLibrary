@@ -1,14 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package uk.ac.cranfield.mzqlib;
 
 import java.io.File;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.xml.XMLConstants;
@@ -22,37 +16,26 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
-import uk.ac.ebi.pride.jmztab.MzTabParsingException;
 import uk.ac.ebi.pride.jmztab.model.Param;
-import uk.ac.liv.jmzqml.model.mzqml.Cv;
 import uk.ac.liv.jmzqml.model.mzqml.CvParam;
+
 /**
  *
- * @author Jun Fan@cranfield
+ * @author Jun Fan@qmul
  */
 public class Utils {
+
     private static final String MZQ_XSD = "mzQuantML_1_0_0.xsd";
-//    private static final String MZID_XSD = "mzQuantML_1_0_0-rc3.xsd";
-    
-//    public static boolean validateMzIdFile(String mzidFile){
-//        return validate(mzidFile,MZID_XSD);
-//    }
-    
-    public static Param convertMztabParam(CvParam qParam){
-        try {
-//            return new Param(((Cv)qParam.getCvRef()).getId(), qParam.getAccession(), qParam.getName(), qParam.getValue());
-            return new Param(qParam.getCvRef(), qParam.getAccession(), qParam.getName(), qParam.getValue());
-        } catch (MzTabParsingException ex) {
-            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+
+    public static Param convertMztabParam(CvParam qParam) {
+        return new uk.ac.ebi.pride.jmztab.model.CVParam(qParam.getCvRef(), qParam.getAccession(), qParam.getName(), qParam.getValue());
     }
-    
-    public static boolean validateMzqFile(String mzqFile){
-        return validate(mzqFile,MZQ_XSD);
+
+    public static boolean validateMzqFile(String mzqFile) {
+        return validate(mzqFile, MZQ_XSD);
     }
-    
-    private static boolean validate(String xmlFile,String xsdFile){
+
+    private static boolean validate(String xmlFile, String xsdFile) {
         try {
             System.out.println(Utils.class.getClassLoader().getResource(xsdFile));
             Source schemaFile = new StreamSource(Utils.class.getClassLoader().getResourceAsStream(xsdFile));
@@ -77,7 +60,7 @@ public class Utils {
         }
         return true;
     }
-    
+
     public static double mean(List<Double> list){
         if(list.isEmpty()) return Double.NaN;
         return sum(list)/list.size();
@@ -97,17 +80,19 @@ public class Utils {
             return (list.get(middle - 1) + list.get(middle)) / 2.0;
         }
     }
-    
+
     public static double sum(List<Double> list) {
         double ret = 0;
-        for(double d:list){
+        for (double d : list) {
             ret += d;
         }
         return ret;
     }
+
     /**
      * Get the extension of a file.
-     * @param f The file to get the extension from 
+     *
+     * @param f The file to get the extension from
      */
     public static String getExtension(File f) {
         String ext = null;
@@ -121,12 +106,14 @@ public class Utils {
     }
 
     /**
-     * a static method to return @return a file chooser starting from @param path which would require 
-     * a confirmation when overwriting an existing file
+     * a static method to return
+     *
+     * @return a file chooser starting from
+     * @param path which would require a confirmation when overwriting an
+     * existing file
      */
     public static FileChooserWithGenericFileFilter createOverwriteFileChooser(String path) {
         return new FileChooserWithGenericFileFilter(path) {
-
             @Override
             public void approveSelection() {
                 File f = getSelectedFile();

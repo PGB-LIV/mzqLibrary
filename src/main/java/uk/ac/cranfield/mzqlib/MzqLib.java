@@ -136,10 +136,10 @@ public class MzqLib {
 
     public static void main( String[] args ) {
 //        new MzqLib("csv","maxquant-silac.mzq","");
-        new MzqLib("mztab","iTraq3standards.mzq","");
+//        new MzqLib("mztab","iTraq3standards.mzq","");
 //        new MzqLib("mztab","CPTAC-Progenesis-small-example.mzq","");
-        System.exit(0);
-//        batch();
+//        System.exit(0);
+        batch();
         int argsLen = args.length;
         MzqLib lib;
         switch(argsLen){

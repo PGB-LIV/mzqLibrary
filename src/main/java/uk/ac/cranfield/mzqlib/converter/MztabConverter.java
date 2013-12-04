@@ -24,7 +24,9 @@ import uk.ac.ebi.pride.jmztab.model.Modification.Type;
 import uk.ac.ebi.pride.jmztab.model.MsRun;
 import uk.ac.ebi.pride.jmztab.model.Param;
 import uk.ac.ebi.pride.jmztab.model.Peptide;
+import uk.ac.ebi.pride.jmztab.model.PeptideColumn;
 import uk.ac.ebi.pride.jmztab.model.Protein;
+import uk.ac.ebi.pride.jmztab.model.ProteinColumn;
 import uk.ac.ebi.pride.jmztab.model.Section;
 import uk.ac.ebi.pride.jmztab.model.SplitList;
 import uk.ac.liv.jmzqml.model.mzqml.AnalysisSummary;
@@ -127,56 +129,68 @@ public class MztabConverter extends GenericConverter {
             //study variables
             final List<StudyVariable> svs = MzqLib.data.getSvs();
             ArrayList<uk.ac.ebi.pride.jmztab.model.StudyVariable> tabSvs = new ArrayList<uk.ac.ebi.pride.jmztab.model.StudyVariable>();
-            for (int i = 0; i < svs.size(); i++) {
-                StudyVariable studyVariable = svs.get(i);
-                uk.ac.ebi.pride.jmztab.model.StudyVariable tabSv = new uk.ac.ebi.pride.jmztab.model.StudyVariable(i + 1);
-                tabSv.setDescription(studyVariable.getName());
-                for (Assay assay : studyVariable.getAssays()) {
+            if (svs.isEmpty()){
+                for (int i = 0; i < assays.size(); i++) {
+                    Assay assay = assays.get(i);
+                    uk.ac.ebi.pride.jmztab.model.StudyVariable tabSv = new uk.ac.ebi.pride.jmztab.model.StudyVariable(i+1);
+                    tabSv.setDescription("manually created study variable for assay "+assay.getId());
                     tabSv.addAssay(assayMap.get(assay.getId()));
+                    mtd.addStudyVariable(tabSv);
+                    tabSvs.add(tabSv);
                 }
-                mtd.addStudyVariable(tabSv);
-                tabSvs.add(tabSv);
+            }else{
+                for (int i = 0; i < svs.size(); i++) {
+                    StudyVariable studyVariable = svs.get(i);
+                    uk.ac.ebi.pride.jmztab.model.StudyVariable tabSv = new uk.ac.ebi.pride.jmztab.model.StudyVariable(i + 1);
+                    tabSv.setDescription(studyVariable.getName());
+                    for (Assay assay : studyVariable.getAssays()) {
+                        tabSv.addAssay(assayMap.get(assay.getId()));
+                    }
+                    mtd.addStudyVariable(tabSv);
+                    tabSvs.add(tabSv);
+                }
             }
 //            System.out.println(mtd.toString());
             out.append(mtd.toString());
             
-            String searchEngineStr = getSearchEngineString();
-            Param searchEngine = null;
-            String searchEngineScoreAccession = null;
-            String searchEngineScoreName = null;
-            String cvID = null;
-            if (searchEngineStr != null) {
-                String[] elements = searchEngineStr.split(";");
-                cvID = elements[0];
-                searchEngine = new uk.ac.ebi.pride.jmztab.model.CVParam(cvID, elements[3], elements[4], null);
-                searchEngineScoreAccession = elements[1];
-                searchEngineScoreName = elements[2];
-            }
+//            String searchEngineStr = getSearchEngineString();
+//            Param searchEngine = null;
+//            String searchEngineScoreAccession = null;
+//            String searchEngineScoreName = null;
+//            String cvID = null;
+//            if (searchEngineStr != null) {
+//                String[] elements = searchEngineStr.split(";");
+//                cvID = elements[0];
+//                searchEngine = new uk.ac.ebi.pride.jmztab.model.CVParam(cvID, elements[3], elements[4], null);
+//                searchEngineScoreAccession = elements[1];
+//                searchEngineScoreName = elements[2];
+//            }
+            //add mandatory columns in the complete and quantitation combination
+            //see https://code.google.com/p/mztab/wiki/jmzTab2_column table 1 and 2
             MZTabColumnFactory proFactory = MZTabColumnFactory.getInstance(Section.Protein);
-            if (proCvParam != null) {
-                for (uk.ac.ebi.pride.jmztab.model.Assay tabAssay : tabAssays) {
-                    proFactory.addAbundanceOptionalColumn(tabAssay);
-                }
-                for (uk.ac.ebi.pride.jmztab.model.StudyVariable sv : tabSvs) {
-                    proFactory.addAbundanceOptionalColumn(sv);
-                }
+            //assay and sv are mandatory 
+            for (uk.ac.ebi.pride.jmztab.model.Assay tabAssay : tabAssays) {
+                proFactory.addAbundanceOptionalColumn(tabAssay);
             }
-//            System.out.println(proFactory);
-
-            MZTabColumnFactory pepFactory = MZTabColumnFactory.getInstance(Section.Peptide);
-            if (pepCvParam != null) {
-                if (MzqLib.data.control.isRequired(MzqData.PEPTIDE, MzqData.ASSAY, pepCvParam.getName())) {
-                    for (uk.ac.ebi.pride.jmztab.model.Assay tabAssay : tabAssays) {
-                        pepFactory.addAbundanceOptionalColumn(tabAssay);
-                    }
-                }
-                if (MzqLib.data.control.isRequired(MzqData.PEPTIDE, MzqData.SV, pepCvParam.getName())) {
-                    for (uk.ac.ebi.pride.jmztab.model.StudyVariable sv : tabSvs) {
-                        pepFactory.addAbundanceOptionalColumn(sv);
-                    }
-                }
+            for (uk.ac.ebi.pride.jmztab.model.StudyVariable sv : tabSvs) {
+                proFactory.addAbundanceOptionalColumn(sv);
             }
             
+            MZTabColumnFactory pepFactory = MZTabColumnFactory.getInstance(Section.Peptide);
+            for (uk.ac.ebi.pride.jmztab.model.Assay tabAssay : tabAssays) {
+                pepFactory.addAbundanceOptionalColumn(tabAssay);
+            }
+            for (uk.ac.ebi.pride.jmztab.model.StudyVariable sv : tabSvs) {
+                pepFactory.addAbundanceOptionalColumn(sv);
+            }
+            
+            for(MsRun msrun:mtd.getMsRunMap().values()){
+                proFactory.addOptionalColumn(ProteinColumn.SEARCH_ENGINE_SCORE, msrun);
+                proFactory.addOptionalColumn(ProteinColumn.NUM_PEPTIDES_DISTINCT, msrun);
+                proFactory.addOptionalColumn(ProteinColumn.NUM_PEPTIDES_UNIQUE, msrun);
+                pepFactory.addOptionalColumn(PeptideColumn.SEARCH_ENGINE_SCORE, msrun);
+            }
+
             StringBuilder proSb = new StringBuilder();
             proSb.append(proFactory.toString());
             proSb.append("\n");
@@ -192,14 +206,20 @@ public class MztabConverter extends GenericConverter {
                 final String searchDatabaseVersion = protein.getSearchDatabaseVersion();
                 tabProt.setDatabaseVersion(searchDatabaseVersion);
                 if (proCvParam != null) {
-                    for (int i = 0; i < assays.size(); i++) {
-                        String assay = assays.get(i).getId();
-                        tabProt.setAbundanceColumn(assayMap.get(assay), protein.getQuantity(proCvParam.getName(), assay));
+                    if (MzqLib.data.control.isRequired(MzqData.PROTEIN, MzqData.ASSAY, proCvParam.getName())) {
+                        for (int i = 0; i < assays.size(); i++) {
+                            String assay = assays.get(i).getId();
+                            final Double value = protein.getQuantity(proCvParam.getName(), assay);
+                            if (value!=null) tabProt.setAbundanceColumn(assayMap.get(assay), value);
+                        }
                     }
 
-                    for (int i = 0; i < svs.size(); i++) {
-                        StudyVariable sv = svs.get(i);
-                        tabProt.setAbundanceColumn(tabSvs.get(i), protein.getStudyVariableQuantity(proCvParam.getName(), sv.getId()));
+                    if (MzqLib.data.control.isRequired(MzqData.PROTEIN, MzqData.SV, proCvParam.getName())) {
+                        for (int i = 0; i < svs.size(); i++) {
+                            StudyVariable sv = svs.get(i);
+                            final Double value = protein.getStudyVariableQuantity(proCvParam.getName(), sv.getId());
+                            if (value!=null) tabProt.setAbundanceColumn(tabSvs.get(i), value);
+                        }
                     }
                 }
 //                System.out.println(tabProt);
@@ -259,13 +279,15 @@ public class MztabConverter extends GenericConverter {
                             if (MzqLib.data.control.isRequired(MzqData.PEPTIDE, MzqData.ASSAY, pepCvParam.getName())) {
                                 for (int i = 0; i < assays.size(); i++) {
                                     String assay = assays.get(i).getId();
-                                    tabPep.setAbundanceColumn(assayMap.get(assay), peptide.getQuantity(pepCvParam.getName(), assay));
+                                    final Double value = peptide.getQuantity(pepCvParam.getName(), assay);
+                                    if(value!=null) tabPep.setAbundanceColumn(assayMap.get(assay), value);
                                 }
                             }
                             if (MzqLib.data.control.isRequired(MzqData.PEPTIDE, MzqData.SV, pepCvParam.getName())) {
                                 for (int i = 0; i < svs.size(); i++) {
                                     StudyVariable sv = svs.get(i);
-                                    tabPep.setAbundanceColumn(tabSvs.get(i), peptide.getStudyVariableQuantity(pepCvParam.getName(), sv.getId()));
+                                    final Double value = peptide.getStudyVariableQuantity(pepCvParam.getName(), sv.getId());
+                                    if(value!=null) tabPep.setAbundanceColumn(tabSvs.get(i), value);
                                 }
                             }
                         }

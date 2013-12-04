@@ -82,16 +82,13 @@ public class MzqLib {
         System.out.println("Validation successful for the file "+mzqFile);
         
         MzQuantMLUnmarshaller unmarshaller = new MzQuantMLUnmarshaller(file);
-//        MzQuantML mzq = unmarshaller.unmarshall();
         
+//	<xsd:element name="AssayList" type="AssayListType" minOccurs="1" maxOccurs="1"/>
         data.addAssays(unmarshaller.unmarshal(AssayList.class));
+//	<xsd:element name="StudyVariableList" type="StudyVariableListType" minOccurs="0" maxOccurs="1"/>
         data.addStudyVariables(unmarshaller.unmarshal(StudyVariableList.class));
         data.addRatios(unmarshaller.unmarshal(RatioList.class));
-//        data.addAssays(mzq.getAssayList());
-//        data.addStudyVariables(mzq.getStudyVariableList());
-//        data.addRatios(mzq.getRatioList());
 
-//        data.addFeatures(mzq.getFeatureList());
         List<FeatureList> features = new ArrayList<FeatureList>();
         Iterator<FeatureList> featureIterator = unmarshaller.unmarshalCollectionFromXpath(MzQuantMLElement.FeatureList);
         while(featureIterator.hasNext()){
@@ -111,13 +108,16 @@ public class MzqLib {
         ProteinList proteinList = unmarshaller.unmarshal(MzQuantMLElement.ProteinList);
         data.addProteins(proteinList);
 
+//	<xsd:element name="SoftwareList" type="SoftwareListType" minOccurs="1" maxOccurs="1"/>
         data.setSoftwareList(unmarshaller.unmarshal(SoftwareList.class));
-//        data.setSoftwareList(mzq.getSoftwareList());
+//	<xsd:element name="AnalysisSummary" type="ParamListType" minOccurs="1" maxOccurs="1">
         data.setAnalysisSummary(unmarshaller.unmarshal(AnalysisSummary.class));
+//	<xsd:element name="InputFiles" type="InputFilesType" minOccurs="1" maxOccurs="1"/>
+        data.setInputFiles(unmarshaller.unmarshal(InputFiles.class));
+//	<xsd:element name="CvList" type="CvListType" minOccurs="1" maxOccurs="1"/>
+        data.setCvList(unmarshaller.unmarshal(CvList.class));
         data.setMzqID(unmarshaller.getMzQuantMLId());
         data.setMzqName(unmarshaller.getMzQuantMLName());
-        data.setInputFiles(unmarshaller.unmarshal(InputFiles.class));
-        data.setCvList(unmarshaller.unmarshal(CvList.class));
     }
 
     private static void batch(){
@@ -136,9 +136,9 @@ public class MzqLib {
 
     public static void main( String[] args ) {
 //        new MzqLib("csv","maxquant-silac.mzq","");
-//        new MzqLib("mztab","iTraq3standards.mzq","");
+        new MzqLib("mztab","iTraq3standards.mzq","");
 //        new MzqLib("mztab","CPTAC-Progenesis-small-example.mzq","");
-//        System.exit(0);
+        System.exit(0);
         batch();
         int argsLen = args.length;
         MzqLib lib;

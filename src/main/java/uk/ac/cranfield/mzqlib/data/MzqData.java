@@ -251,7 +251,7 @@ public class MzqData {
 
         if (cvParams.containsKey(quantityName)) {
             if (!quantitationNames.contains(quantityName)) {
-                quantitationNames.add(quantityName);//this could happen when the quantitation name is parsed in a global quant layer
+                quantitationNames.add(quantityName);//this could happen when the quantitation name is parsed in a global quant layer which only puts the cvParam into cvParams
             }
         } else {
             cvParams.put(quantityName, cvTerm);

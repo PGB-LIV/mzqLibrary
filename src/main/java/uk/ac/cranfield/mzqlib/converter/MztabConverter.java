@@ -57,10 +57,24 @@ public class MztabConverter extends GenericConverter {
             }
             BufferedWriter out = new BufferedWriter(new FileWriter(outfile));
 
-            MZTabDescription tabDesc = new MZTabDescription(MZTabDescription.Mode.Complete, MZTabDescription.Type.Quantification);
+            //quantitation name retrieved from QuantLayer and GlobalQuantLayer
+            ArrayList<String> names = MzqLib.data.getQuantitationNames();
+            CvParam proCvParam = determineQuantitationUnit(MzqData.PROTEIN, names);
+            CvParam pepCvParam = determineQuantitationUnit(MzqData.PEPTIDE, names);
+            ArrayList<String> ratioIDs = MzqLib.data.getRatios();
+            MZTabDescription tabDesc;
+            if(proCvParam == null || pepCvParam == null){
+                tabDesc = new MZTabDescription(MZTabDescription.Mode.Summary, MZTabDescription.Type.Identification);
+            }else{
+                tabDesc = new MZTabDescription(MZTabDescription.Mode.Complete, MZTabDescription.Type.Quantification);
+            }
             tabDesc.setId(MzqLib.data.getMzqID().replace("-", "_"));
             Metadata mtd = new Metadata(tabDesc);
-            mtd.setDescription(MzqLib.data.getMzqName());
+            if(MzqLib.data.getMzqName()==null){
+                mtd.setDescription("Artificial name created by mzq-lib");
+            }else{
+                mtd.setDescription(MzqLib.data.getMzqName());
+            }
             //software
             int swCount = 1;
             for (Software software : MzqLib.data.getSoftwareList().getSoftware()) {
@@ -103,10 +117,7 @@ public class MztabConverter extends GenericConverter {
                 tabAssays.add(tabAssay);
                 assayMap.put(assay.getId(), tabAssay);
             }
-            //quantitation name retrieved from QuantLayer and GlobalQuantLayer
-            ArrayList<String> names = MzqLib.data.getQuantitationNames();
-            CvParam proCvParam = determineQuantitationUnit(MzqData.PROTEIN, names);
-            CvParam pepCvParam = determineQuantitationUnit(MzqData.PEPTIDE, names);
+
             if (proCvParam != null) {
                 mtd.setProteinQuantificationUnit(Utils.convertMztabParam(proCvParam));
             }
@@ -200,6 +211,11 @@ public class MztabConverter extends GenericConverter {
                         }
                     }
                 }
+                if(MzqLib.data.control.isRequired(MzqData.PROTEIN, MzqData.RATIO, MzqData.RATIO_STRING)){
+                    for(String ratioID:ratioIDs){
+                        proFactory.addOptionalColumn(ratioID, String.class);
+                    }
+                }
             }
             
             MZTabColumnFactory pepFactory = MZTabColumnFactory.getInstance(Section.Peptide);
@@ -222,6 +238,11 @@ public class MztabConverter extends GenericConverter {
                         for (uk.ac.ebi.pride.jmztab.model.StudyVariable sv : tabSvs) {
                             pepFactory.addOptionalColumn(sv, quantName, String.class);
                         }
+                    }
+                }
+                if(MzqLib.data.control.isRequired(MzqData.PEPTIDE, MzqData.RATIO, MzqData.RATIO_STRING)){
+                    for(String ratioID:ratioIDs){
+                        pepFactory.addOptionalColumn(ratioID, String.class);
                     }
                 }
             }
@@ -252,7 +273,7 @@ public class MztabConverter extends GenericConverter {
                         for (int i = 0; i < assays.size(); i++) {
                             String assay = assays.get(i).getId();
                             final Double value = protein.getQuantity(proCvParam.getName(), assay);
-                            if (value!=null) tabProt.setAbundanceColumn(assayMap.get(assay), value);
+                            if (value!=null) tabProt.setAbundanceColumnValue(assayMap.get(assay), value);
                         }
                     }
 
@@ -260,7 +281,7 @@ public class MztabConverter extends GenericConverter {
                         for (int i = 0; i < svs.size(); i++) {
                             StudyVariable sv = svs.get(i);
                             final Double value = protein.getStudyVariableQuantity(proCvParam.getName(), sv.getId());
-                            if (value!=null) tabProt.setAbundanceColumn(tabSvs.get(i), value);
+                            if (value!=null) tabProt.setAbundanceColumnValue(tabSvs.get(i), value);
                         }
                     }
                     String proCvName = proCvParam.getName();
@@ -271,7 +292,7 @@ public class MztabConverter extends GenericConverter {
                                 String assayID = assays.get(i).getId();
                                 final Double value = protein.getQuantity(quantName, assayID);
                                 if (value!=null) {
-                                    tabProt.setOptionColumn(tabAssays.get(i), quantName, String.valueOf(value));
+                                    tabProt.setOptionColumnValue(tabAssays.get(i), quantName, String.valueOf(value));
                                 }
                             }
                         }
@@ -280,9 +301,15 @@ public class MztabConverter extends GenericConverter {
                                 StudyVariable sv = svs.get(i);
                                 final Double value = protein.getStudyVariableQuantity(quantName, sv.getId());
                                 if (value!=null) {
-                                    tabProt.setOptionColumn(tabSvs.get(i), quantName, String.valueOf(value));
+                                    tabProt.setOptionColumnValue(tabSvs.get(i), quantName, String.valueOf(value));
                                 }
                             }
+                        }
+                    }
+                    if (MzqLib.data.control.isRequired(MzqData.PROTEIN, MzqData.RATIO, MzqData.RATIO_STRING)) {
+                        for (String ratioID : ratioIDs) {
+                            final Double ratio = protein.getRatio(ratioID);
+                            tabProt.setOptionColumnValue(ratioID, String.valueOf(ratio));
                         }
                     }
                 }
@@ -344,14 +371,14 @@ public class MztabConverter extends GenericConverter {
                                 for (int i = 0; i < assays.size(); i++) {
                                     String assay = assays.get(i).getId();
                                     final Double value = peptide.getQuantity(pepCvParam.getName(), assay);
-                                    if(value!=null) tabPep.setAbundanceColumn(assayMap.get(assay), value);
+                                    if(value!=null) tabPep.setAbundanceColumnValue(assayMap.get(assay), value);
                                 }
                             }
                             if (MzqLib.data.control.isRequired(MzqData.PEPTIDE, MzqData.SV, pepCvParam.getName())) {
                                 for (int i = 0; i < svs.size(); i++) {
                                     StudyVariable sv = svs.get(i);
                                     final Double value = peptide.getStudyVariableQuantity(pepCvParam.getName(), sv.getId());
-                                    if(value!=null) tabPep.setAbundanceColumn(tabSvs.get(i), value);
+                                    if(value!=null) tabPep.setAbundanceColumnValue(tabSvs.get(i), value);
                                 }
                             }
                             String pepCvName = pepCvParam.getName();
@@ -362,7 +389,7 @@ public class MztabConverter extends GenericConverter {
                                         String assayID = assays.get(i).getId();
                                         final Double value = peptide.getQuantity(quantName, assayID);
                                         if (value!=null) {
-                                            tabPep.setOptionColumn(tabAssays.get(i), quantName, String.valueOf(value));
+                                            tabPep.setOptionColumnValue(tabAssays.get(i), quantName, String.valueOf(value));
                                         }
                                     }
                                 }
@@ -371,9 +398,15 @@ public class MztabConverter extends GenericConverter {
                                         StudyVariable sv = svs.get(i);
                                         final Double value = peptide.getStudyVariableQuantity(quantName, sv.getId());
                                         if (value!=null) {
-                                            tabPep.setOptionColumn(tabSvs.get(i), quantName, String.valueOf(value));
+                                            tabPep.setOptionColumnValue(tabSvs.get(i), quantName, String.valueOf(value));
                                         }
                                     }
+                                }
+                            }
+                            if (MzqLib.data.control.isRequired(MzqData.PEPTIDE, MzqData.RATIO, MzqData.RATIO_STRING)) {
+                                for (String ratioID : ratioIDs) {
+                                    final Double ratio = peptide.getRatio(ratioID);
+                                    tabPep.setOptionColumnValue(ratioID, String.valueOf(ratio));
                                 }
                             }
                         }
@@ -394,7 +427,11 @@ public class MztabConverter extends GenericConverter {
             Logger.getLogger(MztabConverter.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    /*
+     * Determine the quantitation unit for protein or peptide
+     * No need to check for ratio list as the numerator and denominator must be referenced 
+     * in either assay or study variable
+     */
     private CvParam determineQuantitationUnit(int level, ArrayList<String> names) {
         for (String name : names) {
             if (MzqLib.data.control.isRequired(level, MzqData.ASSAY, name)) {

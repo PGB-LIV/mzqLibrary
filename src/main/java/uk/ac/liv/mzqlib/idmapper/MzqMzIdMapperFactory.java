@@ -106,6 +106,8 @@ public class MzqMzIdMapperFactory {
 
             int idFileCount = 0;
 
+            searchDB = this.mzqProc.getSearchDatabase();
+
             while (itPepConList.hasNext()) {
                 PeptideConsensusList pepConList = itPepConList.next();
                 List<PeptideConsensus> pepCons = pepConList.getPeptideConsensus();
@@ -184,6 +186,9 @@ public class MzqMzIdMapperFactory {
                         //assign new sequence to pepCon
                         pepCon.setPeptideSequence(peptide.getPeptideSequence());
 
+                        // set SearchDatabase
+                        pepCon.setSearchDatabase(searchDB);
+
                         // assign new Id to pepCon
                         String pepConIdNew = "pepCon_" + pepIdCount;
                         pepCon.setId(pepConIdNew);
@@ -238,7 +243,6 @@ public class MzqMzIdMapperFactory {
                             }
                         }
 
-
                         // build pepConId to protein accessions map
                         List<PeptideEvidenceRef> pepEvdRefs = siiData.getPeptideEvidenceRef();
                         List<String> protAccs = pepConNewIdToProtAccsMap.get(pepConIdNew);
@@ -263,7 +267,8 @@ public class MzqMzIdMapperFactory {
                         pepConOldIdToNewIdMap.put(pepConIdOld, pepConIdNew);
                         pepIdCount++;
 
-                        //pepCon.setPeptideSequence("");
+                        // set SearchDatabase
+                        pepCon.setSearchDatabase(searchDB);
 
                         // handle EvidenceRef
                         // remove previous idRefs as no consensus exist for this peptide
@@ -423,6 +428,8 @@ public class MzqMzIdMapperFactory {
                     writer.write("\n");
                 }
                 if (inputFiles != null) {
+                    inputFiles.getSearchDatabase().clear();
+                    inputFiles.getSearchDatabase().add(searchDB);
                     m.marshall(inputFiles, writer);
                     writer.write("\n");
                 }
@@ -458,6 +465,7 @@ public class MzqMzIdMapperFactory {
                 int protCount = 0;
                 for (String protAcc : protAccToPepConNewIdsMap.keySet()) {
                     Protein protein = new Protein();
+                    protein.setSearchDatabase(searchDB);
                     String protId = "prot_" + protCount;
                     protein.setId(protId);
                     protCount++;

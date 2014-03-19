@@ -5,13 +5,16 @@
 
 package uk.ac.liv.mzqlib.utils;
 
+import com.sun.accessibility.internal.resources.accessibility;
 import java.util.ArrayList;
 import java.util.List;
 import uk.ac.liv.jmzqml.model.mzqml.Cv;
 import uk.ac.liv.jmzqml.model.mzqml.CvParam;
 import uk.ac.liv.jmzqml.model.mzqml.FileFormat;
 import uk.ac.liv.jmzqml.model.mzqml.Modification;
+import uk.ac.liv.jmzqml.model.mzqml.Param;
 import uk.ac.liv.jmzqml.model.mzqml.SearchDatabase;
+import uk.ac.liv.jmzqml.model.mzqml.UserParam;
 
 /**
  *
@@ -76,6 +79,30 @@ public class MzidToMzqElementConvertor {
         return mzqCp;
     }
 
+    public static UserParam convertMzidUserParamToMzqUserParam(
+            uk.ac.ebi.jmzidml.model.mzidml.UserParam mzidUp) {
+        UserParam mzqUp = new UserParam();
+
+        if (mzidUp.getName() != null) {
+            mzqUp.setName(mzidUp.getName());
+        }
+
+        if (mzidUp.getUnitCv() != null) {
+            Cv mzqUnitCv = convertMzidCvToMzqCv(mzidUp.getUnitCv());
+            mzqUp.setUnitCv(mzqUnitCv);
+        }
+
+        if (mzidUp.getUnitAccession() != null) {
+            mzqUp.setUnitAccession(mzidUp.getUnitAccession());
+        }
+
+        if (mzidUp.getUnitName() != null) {
+            mzqUp.setUnitName(mzidUp.getUnitName());
+        }
+
+        return mzqUp;
+    }
+
     public static Cv convertMzidCvToMzqCv(
             uk.ac.ebi.jmzidml.model.mzidml.Cv mzidCv) {
         Cv mzqCv = new Cv();
@@ -123,6 +150,32 @@ public class MzidToMzqElementConvertor {
 
         if (searchDatabase.getNumDatabaseSequences() != null) {
             sDB.setNumDatabaseEntries(searchDatabase.getNumDatabaseSequences());
+        }
+
+        if (searchDatabase.getLocation() != null) {
+            sDB.setLocation(searchDatabase.getLocation());
+        }
+
+        if (searchDatabase.getVersion() != null) {
+            sDB.setVersion(searchDatabase.getVersion());
+        }
+
+        uk.ac.ebi.jmzidml.model.mzidml.Param mzidDBNameParam = searchDatabase.getDatabaseName();
+        if (mzidDBNameParam != null) {
+            Param mzqDBNameParam = new Param();
+            if (mzidDBNameParam.getCvParam() != null) {
+                mzqDBNameParam.setParam(convertMzidCvParamToMzqCvParam(mzidDBNameParam.getCvParam()));
+            }
+            if (mzidDBNameParam.getUserParam() != null) {
+                mzqDBNameParam.setParam(convertMzidUserParamToMzqUserParam(mzidDBNameParam.getUserParam()));
+            }
+            sDB.setDatabaseName(mzqDBNameParam);
+        }
+
+        if (searchDatabase.getCvParam() != null && !searchDatabase.getCvParam().isEmpty()) {
+            for (uk.ac.ebi.jmzidml.model.mzidml.CvParam cp : searchDatabase.getCvParam()) {
+                sDB.getCvParam().add(convertMzidCvParamToMzqCvParam(cp));
+            }
         }
 
         // convert FileFormat

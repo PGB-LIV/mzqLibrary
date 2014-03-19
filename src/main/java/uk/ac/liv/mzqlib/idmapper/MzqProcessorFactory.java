@@ -144,7 +144,7 @@ public class MzqProcessorFactory {
                         if (combSIIsList == null) {
                             combSIIsList = new ArrayList();
                             combinedPepModStringToSIIsMap.put(pepModString, combSIIsList);
-                            //Deliberately bring this inside the loop to reduce memory usage
+                            //TODO: Deliberately bring this inside the loop to reduce memory usage
                             combSIIsList.addAll(pepModStringToSIIsMap.get(pepModString));
                         }
                         //combSIIsList.addAll(pepModStringToSIIsMap.get(pepModString));

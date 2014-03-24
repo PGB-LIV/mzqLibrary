@@ -1,9 +1,12 @@
 This routine is to normalise the abundance of peptide / protein group.The proposed algorithm is based on 
 median absolute deviation (MAD). An optimised process is applied to reduce the effect of outliers.
 
-It's constructor can be called from other Java routines.
+It's constructor can be called from other Java routines. Just using the following caller:
 
-The main parameters used are as follows:
+PepProtAbundanceNormalisation(String input, String output, String level, String outputCvName, 
+        String assQuantLayerID, String inputDataTypeCvAcc, String outputCvAcc, String QuantLayerType, String refNo)
+
+The parameters used are as follows:
 
 (1) input file: mqz format
 (2) output file: mqz format
@@ -15,4 +18,5 @@ The main parameters used are as follows:
 (8) quant layer type: AssayQuantLayer / RatioQuantLayer / StudyVariableQuantLayer (current version: AssayQuantLayer only)
 (9) reference number: the assay number is used to be as a reference.
 
+In additioin, for the execution in command line, args[0] to args[8] correspond to the above parameters.
 

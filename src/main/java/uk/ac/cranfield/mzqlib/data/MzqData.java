@@ -264,7 +264,7 @@ public class MzqData {
             QuantitationLevel quantObj = determineQuantObj(level, row);
             for (int i = 0; i < ids.size(); i++) {
                 String assayID = ids.get(i);
-                double value = Double.parseDouble(row.getValue().get(i));
+                Double value = parseDoubleValue(row.getValue().get(i));
                 quantities.put(assayID, value);
             }
             if (type == ASSAY) {
@@ -285,7 +285,7 @@ public class MzqData {
             QuantitationLevel quantObj = determineQuantObj(level, row);
             for (int i = 0; i < ratioIDs.size(); i++) {
                 String ratioID = ratioIDs.get(i);
-                double value = Double.parseDouble(row.getValue().get(i));
+                double value = parseDoubleValue(row.getValue().get(i));
                 quantObj.setRatios(ratioID, value);
             }
         }
@@ -304,7 +304,7 @@ public class MzqData {
             QuantitationLevel quantObj = determineQuantObj(level, row);
             for (int i = 0; i < columnIDs.size(); i++) {
                 String columnID = columnIDs.get(i);
-                double value = Double.parseDouble(row.getValue().get(i));
+                double value = parseDoubleValue(row.getValue().get(i));
                 quantObj.setGlobal(columnID, value);
             }
         }
@@ -482,5 +482,18 @@ public class MzqData {
 
     public List<Cv> getCvList() {
         return cvs;
+    }
+
+    private Double parseDoubleValue(String str) {
+        if(str == null || str.equals("null")){
+            return null;
+        }
+        try{
+            Double value = Double.parseDouble(str);
+            return value;
+        }catch(NumberFormatException nfe){
+            System.out.println("Unrecognized double value: "+str);
+            return null;
+        }
     }
 }

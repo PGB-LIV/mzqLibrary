@@ -15,13 +15,13 @@ import uk.ac.liv.jmzqml.MzQuantMLElement;
 import uk.ac.liv.jmzqml.model.mzqml.AnalysisSummary;
 import uk.ac.liv.jmzqml.model.mzqml.AssayList;
 import uk.ac.liv.jmzqml.model.mzqml.CvList;
-import uk.ac.liv.jmzqml.model.mzqml.StudyVariableList;
-import uk.ac.liv.jmzqml.model.mzqml.RatioList;
 import uk.ac.liv.jmzqml.model.mzqml.FeatureList;
 import uk.ac.liv.jmzqml.model.mzqml.InputFiles;
 import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensusList;
 import uk.ac.liv.jmzqml.model.mzqml.ProteinList;
+import uk.ac.liv.jmzqml.model.mzqml.RatioList;
 import uk.ac.liv.jmzqml.model.mzqml.SoftwareList;
+import uk.ac.liv.jmzqml.model.mzqml.StudyVariableList;
 import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;
 
 public class MzqLib {
@@ -30,7 +30,7 @@ public class MzqLib {
     private final int HTML = 3;
     private final int XLS = 4;
     public static MzqData data = new MzqData();
-    private HashMap<String,Integer> converterTypeMap = new HashMap<String, Integer>();
+    private HashMap<String,Integer> converterTypeMap = new HashMap<>();
     //call the GUI
     public MzqLib(){
         
@@ -89,7 +89,7 @@ public class MzqLib {
         data.addStudyVariables(unmarshaller.unmarshal(StudyVariableList.class));
         data.addRatios(unmarshaller.unmarshal(RatioList.class));
 
-        List<FeatureList> features = new ArrayList<FeatureList>();
+        List<FeatureList> features = new ArrayList<>();
         Iterator<FeatureList> featureIterator = unmarshaller.unmarshalCollectionFromXpath(MzQuantMLElement.FeatureList);
         while(featureIterator.hasNext()){
             features.add(featureIterator.next());
@@ -176,7 +176,9 @@ public class MzqLib {
     }
     
     private int getType(String type){
-        if(converterTypeMap.containsKey(type)) return converterTypeMap.get(type);
+        if(converterTypeMap.containsKey(type)) {
+            return converterTypeMap.get(type);
+        }
         return 0;
     }
 }

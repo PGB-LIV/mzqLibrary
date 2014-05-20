@@ -85,7 +85,7 @@ public class MztabConverter extends GenericConverter {
             }
             //input files
             final List<RawFilesGroup> rfgs = MzqLib.data.getInputFiles().getRawFilesGroup();
-            HashMap<String, Integer> msruns = new HashMap<String, Integer>();
+            HashMap<String, Integer> msruns = new HashMap<>();
             for (int i = 0; i < rfgs.size(); i++) {
                 RawFilesGroup rfg = rfgs.get(i);
                 MsRun msrun = new MsRun(i + 1);
@@ -138,7 +138,7 @@ public class MztabConverter extends GenericConverter {
             }
             //study variables
             final List<StudyVariable> svs = MzqLib.data.getSvs();
-            ArrayList<uk.ac.ebi.pride.jmztab.model.StudyVariable> tabSvs = new ArrayList<uk.ac.ebi.pride.jmztab.model.StudyVariable>();
+            ArrayList<uk.ac.ebi.pride.jmztab.model.StudyVariable> tabSvs = new ArrayList<>();
             if (svs.isEmpty()){//no study variable found in the mzq file, create the study variable
                 //one for all assays
                 uk.ac.ebi.pride.jmztab.model.StudyVariable tabSv = new uk.ac.ebi.pride.jmztab.model.StudyVariable(1);
@@ -332,7 +332,7 @@ public class MztabConverter extends GenericConverter {
 //                        }
                         final List<uk.ac.liv.jmzqml.model.mzqml.Modification> modifications = peptide.getPeptide().getModification();
                         if (!modifications.isEmpty()) {
-                            SplitList<Modification> mods = new SplitList<Modification>('|');
+                            SplitList<Modification> mods = new SplitList<>('|');
                             for (int i = 0; i < modifications.size(); i++) {
                                 uk.ac.liv.jmzqml.model.mzqml.Modification modification = modifications.get(i);
 //                                //<xsd:element name="cvParam" type="CVParamType" minOccurs="1"
@@ -347,11 +347,11 @@ public class MztabConverter extends GenericConverter {
                                 Modification mod = new Modification(Section.Peptide, type, param.getAccession());
                                 mods.add(mod);
                             }
-                            tabPep.setModifications(mods);;
+                            tabPep.setModifications(mods);
                         }
                         tabPep.setCharge(charge);
-                        ArrayList<Double> mzs = new ArrayList<Double>();
-                        SplitList<Double> rts = new SplitList<Double>('|');
+                        ArrayList<Double> mzs = new ArrayList<>();
+                        SplitList<Double> rts = new SplitList<>('|');
                         for (FeatureData feature : peptide.getFeaturesWithCharge(charge)) {
                             //<xsd:attribute name="mz" type="xsd:double" use="required">
                             mzs.add(feature.getFeature().getMz());

@@ -23,7 +23,7 @@ import uk.ac.liv.jmzqml.model.mzqml.Software;
 public class HtmlConverter extends GenericConverter{
     private static final String SEPERATOR = "</td><td>";
     final private String TEMPLATE = "htmlTemplate.txt";
-    static private HashMap<String,String> templates = new HashMap<String, String>();
+    static private HashMap<String,String> templates = new HashMap<>();
     
     public HtmlConverter(String filename,String outputFile){
         super(filename,outputFile);

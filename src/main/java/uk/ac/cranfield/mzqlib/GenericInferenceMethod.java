@@ -29,9 +29,9 @@ public class GenericInferenceMethod {
      * initialize the middle data structure, keys are assay IDs and values are the list of related values
      */
     private static HashMap<String, ArrayList<Double>> initializeMiddleStructure(ArrayList<String> assayIDs) {
-        HashMap<String,ArrayList<Double>> tmp = new HashMap<String, ArrayList<Double>>();
+        HashMap<String,ArrayList<Double>> tmp = new HashMap<>();
         for(String assayID:assayIDs){
-            ArrayList<Double> value = new ArrayList<Double>();
+            ArrayList<Double> value = new ArrayList<>();
             tmp.put(assayID, value);
         }
         return tmp;
@@ -41,7 +41,7 @@ public class GenericInferenceMethod {
      * initialize the ret value
      */
     private static HashMap<String,Double> initializeRet(ArrayList<String> names){
-        HashMap<String,Double> ret = new HashMap<String, Double>();
+        HashMap<String,Double> ret = new HashMap<>();
         for(String name:names){
             ret.put(name, 0d);
         }
@@ -120,7 +120,9 @@ public class GenericInferenceMethod {
         for(String assayID:assayIDs){
             ArrayList<Double> list = tmp.get(assayID);
             int len = list.size();
-            if(len == 0) continue;
+            if(len == 0) {
+                continue;
+            }
             double sum = 0;
             for (Double value:list) {
                 sum += value;

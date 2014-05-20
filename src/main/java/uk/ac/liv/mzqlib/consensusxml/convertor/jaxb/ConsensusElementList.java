@@ -70,7 +70,7 @@ public class ConsensusElementList {
      */
     public List<ConsensusElement> getConsensusElement() {
         if (consensusElement == null) {
-            consensusElement = new ArrayList<ConsensusElement>();
+            consensusElement = new ArrayList<>();
         }
         return this.consensusElement;
     }

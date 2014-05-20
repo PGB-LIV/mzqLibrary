@@ -13,9 +13,9 @@ import java.util.HashSet;
  */
 public class MzqDataControl {
     
-    private HashMap<Integer,MzqDataControlElement> proteinLevel = new HashMap<Integer, MzqDataControlElement>();
-    private HashMap<Integer,MzqDataControlElement> peptideLevel = new HashMap<Integer, MzqDataControlElement>();
-    private HashMap<Integer,MzqDataControlElement> featureLevel = new HashMap<Integer, MzqDataControlElement>();
+    private HashMap<Integer,MzqDataControlElement> proteinLevel = new HashMap<>();
+    private HashMap<Integer,MzqDataControlElement> peptideLevel = new HashMap<>();
+    private HashMap<Integer,MzqDataControlElement> featureLevel = new HashMap<>();
     
     public void addElement(int level, int type, String element){
         getControlElement(level, type).addElement(element);
@@ -56,10 +56,14 @@ public class MzqDataControl {
 }
 
 class MzqDataControlElement{
-    private HashSet<String> elements = new HashSet<String>();
+    private HashSet<String> elements = new HashSet<>();
     boolean isRequired(String quantityName){
-        if (elements.isEmpty()) return false;
-        if (elements.contains(quantityName)) return true;
+        if (elements.isEmpty()) {
+            return false;
+        }
+        if (elements.contains(quantityName)) {
+            return true;
+        }
         return false;
     }
     

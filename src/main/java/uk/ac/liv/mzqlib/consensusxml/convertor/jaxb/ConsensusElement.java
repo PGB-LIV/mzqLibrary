@@ -196,7 +196,7 @@ public class ConsensusElement {
      */
     public List<ConsensusElement.PeptideIdentification> getPeptideIdentification() {
         if (peptideIdentification == null) {
-            peptideIdentification = new ArrayList<ConsensusElement.PeptideIdentification>();
+            peptideIdentification = new ArrayList<>();
         }
         return this.peptideIdentification;
     }
@@ -225,7 +225,7 @@ public class ConsensusElement {
      */
     public List<UserParam> getUserParam() {
         if (userParam == null) {
-            userParam = new ArrayList<UserParam>();
+            userParam = new ArrayList<>();
         }
         return this.userParam;
     }
@@ -412,7 +412,7 @@ public class ConsensusElement {
          */
         public List<ConsensusElement.PeptideIdentification.PeptideHit> getPeptideHit() {
             if (peptideHit == null) {
-                peptideHit = new ArrayList<ConsensusElement.PeptideIdentification.PeptideHit>();
+                peptideHit = new ArrayList<>();
             }
             return this.peptideHit;
         }
@@ -441,7 +441,7 @@ public class ConsensusElement {
          */
         public List<UserParam> getUserParam() {
             if (userParam == null) {
-                userParam = new ArrayList<UserParam>();
+                userParam = new ArrayList<>();
             }
             return this.userParam;
         }
@@ -692,7 +692,7 @@ public class ConsensusElement {
              */
             public List<UserParam> getUserParam() {
                 if (userParam == null) {
-                    userParam = new ArrayList<UserParam>();
+                    userParam = new ArrayList<>();
                 }
                 return this.userParam;
             }
@@ -833,7 +833,7 @@ public class ConsensusElement {
              */
             public List<Object> getProteinRefs() {
                 if (proteinRefs == null) {
-                    proteinRefs = new ArrayList<Object>();
+                    proteinRefs = new ArrayList<>();
                 }
                 return this.proteinRefs;
             }

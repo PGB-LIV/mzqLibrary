@@ -63,7 +63,7 @@ public class XlsConverter extends GenericConverter {
             outputMetadata(metaSheet);
             WritableSheet proteinSheet = wb.getSheet("proteins");
 //            ArrayList<ProteinData> proteins = MzqLib.data.getProteins();
-            ArrayList<QuantitationLevel> proteins = new ArrayList<QuantitationLevel>();
+            ArrayList<QuantitationLevel> proteins = new ArrayList<>();
             for (ProteinData protein : MzqLib.data.getProteins()) {
                 proteins.add(protein);
             }
@@ -80,7 +80,7 @@ public class XlsConverter extends GenericConverter {
             }
 
             WritableSheet peptideSheet = wb.getSheet("peptides");
-            ArrayList<QuantitationLevel> peptides = new ArrayList<QuantitationLevel>();
+            ArrayList<QuantitationLevel> peptides = new ArrayList<>();
             for (PeptideData peptide : MzqLib.data.getPeptides()) {
                 peptides.add(peptide);
             }
@@ -96,7 +96,7 @@ public class XlsConverter extends GenericConverter {
             }
 
             WritableSheet featureSheet = wb.getSheet("features");
-            ArrayList<QuantitationLevel> features = new ArrayList<QuantitationLevel>();
+            ArrayList<QuantitationLevel> features = new ArrayList<>();
             for (FeatureData feature : MzqLib.data.getFeatures()) {
                 features.add(feature);
             }
@@ -113,9 +113,7 @@ public class XlsConverter extends GenericConverter {
 
             wb.write();
             wb.close();
-        } catch (WriteException ex) {
-            Logger.getLogger(XlsConverter.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (WriteException | IOException ex) {
             Logger.getLogger(XlsConverter.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

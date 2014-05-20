@@ -18,9 +18,9 @@ import java.util.Map;
  */
 public class ProteinGrouping {
 
-    private static final Map<String, HashSet<String>> sameSetGr = new HashMap<String, HashSet<String>>();
-    private static final Map<String, HashSet<String>> subSetGr = new HashMap<String, HashSet<String>>();
-    private static final Map<String, HashSet<String>> uniSetGr = new HashMap<String, HashSet<String>>();
+    private static final Map<String, HashSet<String>> sameSetGr = new HashMap<>();
+    private static final Map<String, HashSet<String>> subSetGr = new HashMap<>();
+    private static final Map<String, HashSet<String>> uniSetGr = new HashMap<>();
 
     /**
      * set the protein groups in order in terms of the grouping results
@@ -29,7 +29,7 @@ public class ProteinGrouping {
      * @return the ordered groups
      */
     public static Map<String, String> GroupInOrder(Map<String, List<String>> pa) {
-        Map<String, String> groupIO = new HashMap<String, String>();
+        Map<String, String> groupIO = new HashMap<>();
 
         int no = 0;
         String num;
@@ -192,7 +192,7 @@ public class ProteinGrouping {
             Iterator<String> proTmpItr = proTmp.iterator();
             HashSet<String> pepSetTmp = protToPep.get(proTmpItr.next());
 
-            HashSet<String> uniSetTmpJoined = new HashSet<String>();
+            HashSet<String> uniSetTmpJoined = new HashSet<>();
 //            System.out.println("Pro Temp: " + proTmp);
 //            System.out.println("Pep Temp: " + pepSetTmp);
             for (String pepTmp1 : pepSetTmp) {
@@ -226,7 +226,7 @@ public class ProteinGrouping {
      * @return a hashSet for unique peptides
      */
     private static HashSet<String> GetUniquePeptides(Map<String, HashSet<String>> pepToPro) {
-        HashSet<String> uniquePeptides = new HashSet<String>();
+        HashSet<String> uniquePeptides = new HashSet<>();
 
         for (Map.Entry<String, HashSet<String>> entry : pepToPro.entrySet()) {
             if (entry.getValue().size() == 1) {
@@ -245,13 +245,13 @@ public class ProteinGrouping {
      */
     private static HashSet<String> GetSameSetPeptides(Map<String, HashSet<String>> pepToPro,
             Map<String, HashSet<String>> proToPep) {
-        HashSet<String> sameSet = new HashSet<String>();
+        HashSet<String> sameSet = new HashSet<>();
         for (Map.Entry<String, HashSet<String>> entry : pepToPro.entrySet()) {
             if (entry.getValue().size() == 1) {
                 continue;
             }
 
-            HashSet<String> peptides = new HashSet<String>();
+            HashSet<String> peptides = new HashSet<>();
             for (String protein : entry.getValue()) {
                 for (String peptide : proToPep.get(protein)) {
                     peptides.add(peptide);
@@ -284,12 +284,12 @@ public class ProteinGrouping {
      */
     private static HashSet<String> GetSubsetPeptides(Map<String, HashSet<String>> pepToPro,
             Map<String, HashSet<String>> proToPep) {
-        HashSet<String> subSet = new HashSet<String>();
+        HashSet<String> subSet = new HashSet<>();
         for (Map.Entry<String, HashSet<String>> entry : pepToPro.entrySet()) {
 //            List<String> listProtein = (List<String>) entry.getValue();
             String largestProtein = entry.getValue().iterator().next().toString();
-            HashSet<String> peptides = new HashSet<String>();
-            HashSet<String> proteins = new HashSet<String>();
+            HashSet<String> peptides = new HashSet<>();
+            HashSet<String> proteins = new HashSet<>();
             proteins.add(largestProtein);
             int peptideCount = 0;
             int proteinCount = 0;

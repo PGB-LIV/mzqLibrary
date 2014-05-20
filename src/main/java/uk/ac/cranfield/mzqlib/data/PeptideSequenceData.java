@@ -26,7 +26,7 @@ public class PeptideSequenceData {
 
     public PeptideSequenceData(String sequence) {
         this.sequence = sequence;
-        peptides = new HashMap<String, PeptideData>();
+        peptides = new HashMap<>();
     }
 
     public String getSequence() {

@@ -16,10 +16,10 @@ public class QuantitationLevel {
      * The first map: keys are quantitation name
      * The second map: keys are assay names and the values are the actual values (quantities, study variables or ratios)
      */
-    private HashMap<String,HashMap<String,Double>> quantities = new HashMap<String, HashMap<String, Double>>();
-    private HashMap<String,HashMap<String,Double>> studyVariables = new HashMap<String, HashMap<String, Double>>();
-    private HashMap<String,Double> ratios = new HashMap<String, Double>();
-    private HashMap<String,Double> globals = new HashMap<String, Double>();
+    private HashMap<String,HashMap<String,Double>> quantities = new HashMap<>();
+    private HashMap<String,HashMap<String,Double>> studyVariables = new HashMap<>();
+    private HashMap<String,Double> ratios = new HashMap<>();
+    private HashMap<String,Double> globals = new HashMap<>();
 //    private HashSet<String> quantitationFlags = new HashSet<String>();
 //    private HashSet<String> svFlags = new HashSet<String>();
     private boolean hasRatio = false;
@@ -54,12 +54,16 @@ public class QuantitationLevel {
     }
     
     public Double getRatio(String name){
-        if(ratios.containsKey(name)) return ratios.get(name);
+        if(ratios.containsKey(name)) {
+            return ratios.get(name);
+        }
         return null;
     }
 
     public Double getGlobal(String name){
-        if(globals.containsKey(name)) return globals.get(name);
+        if(globals.containsKey(name)) {
+            return globals.get(name);
+        }
         return null;
     }
 
@@ -82,12 +86,16 @@ public class QuantitationLevel {
     }
     
     public boolean hasQuantitation(String quantitationName){
-        if(quantities.containsKey(quantitationName)) return true;
+        if(quantities.containsKey(quantitationName)) {
+            return true;
+        }
         return false;
     }
     
     public boolean hasSV(String quantitationName){
-        if(studyVariables.containsKey(quantitationName)) return true;
+        if(studyVariables.containsKey(quantitationName)) {
+            return true;
+        }
         return false;
     }
 
@@ -103,11 +111,13 @@ public class QuantitationLevel {
         try {
             Method m = this.getClass().getDeclaredMethod(misc.getMethodName(this.getClass()), new Class[0]);
             ArrayList<QuantitationLevel> results = (ArrayList<QuantitationLevel>)m.invoke(this, new Object[0]);
-            ArrayList<Integer> count = new ArrayList<Integer>();
+            ArrayList<Integer> count = new ArrayList<>();
             for(String name:quantitationNames){
-                ArrayList<HashMap<String, Double>> lowerLevelQuant = new ArrayList<HashMap<String, Double>>();
+                ArrayList<HashMap<String, Double>> lowerLevelQuant = new ArrayList<>();
                 for(QuantitationLevel one: results){
-                    if(type==WEIGHTED_AVERAGE) count.add(one.getCount());
+                    if(type==WEIGHTED_AVERAGE) {
+                        count.add(one.getCount());
+                    }
                     lowerLevelQuant.add(one.getQuantities(name));
                 }
                 HashMap<String,Double> quan = null;
@@ -130,15 +140,7 @@ public class QuantitationLevel {
                 }
                 this.setQuantities(name, quan);
             }
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(QuantitationLevel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalArgumentException ex) {
-            Logger.getLogger(QuantitationLevel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InvocationTargetException ex) {
-            Logger.getLogger(QuantitationLevel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchMethodException ex) {
-            Logger.getLogger(QuantitationLevel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SecurityException ex) {
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException ex) {
             Logger.getLogger(QuantitationLevel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -240,7 +242,7 @@ public class QuantitationLevel {
 }
 
 class QuantitationMisc{
-    private HashMap<Class,String> methods = new HashMap<Class, String>();
+    private HashMap<Class,String> methods = new HashMap<>();
 
     public QuantitationMisc() {
         methods.put(ProteinData.class, "getPeptides");

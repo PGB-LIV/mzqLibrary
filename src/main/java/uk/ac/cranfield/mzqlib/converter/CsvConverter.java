@@ -31,7 +31,7 @@ public class CsvConverter extends GenericConverter {
         }
         StringBuilder sb = new StringBuilder();
         //deal with proteins
-        ArrayList<QuantitationLevel> proteins = new ArrayList<QuantitationLevel>();
+        ArrayList<QuantitationLevel> proteins = new ArrayList<>();
         for (ProteinData protein : MzqLib.data.getProteins()) {
             proteins.add(protein);
         }
@@ -47,7 +47,7 @@ public class CsvConverter extends GenericConverter {
         }
         sb.append("\n");
         //deal with peptide
-        ArrayList<QuantitationLevel> peptides = new ArrayList<QuantitationLevel>();
+        ArrayList<QuantitationLevel> peptides = new ArrayList<>();
         for (PeptideData peptide : MzqLib.data.getPeptides()) {
             peptides.add(peptide);
         }
@@ -61,7 +61,7 @@ public class CsvConverter extends GenericConverter {
             }
         }
         //deal with features
-        ArrayList<QuantitationLevel> features = new ArrayList<QuantitationLevel>();
+        ArrayList<QuantitationLevel> features = new ArrayList<>();
         for (FeatureData feature : MzqLib.data.getFeatures()) {
             features.add(feature);
         }

@@ -303,7 +303,7 @@ public class ConsensusXML {
      */
     public List<uk.ac.liv.mzqlib.consensusxml.convertor.jaxb.UserParam> getUserParam() {
         if (userParam == null) {
-            userParam = new ArrayList<uk.ac.liv.mzqlib.consensusxml.convertor.jaxb.UserParam>();
+            userParam = new ArrayList<>();
         }
         return this.userParam;
     }
@@ -332,7 +332,7 @@ public class ConsensusXML {
      */
     public List<ConsensusXML.DataProcessing> getDataProcessing() {
         if (dataProcessing == null) {
-            dataProcessing = new ArrayList<ConsensusXML.DataProcessing>();
+            dataProcessing = new ArrayList<>();
         }
         return this.dataProcessing;
     }
@@ -361,7 +361,7 @@ public class ConsensusXML {
      */
     public List<ConsensusXML.IdentificationRun> getIdentificationRun() {
         if (identificationRun == null) {
-            identificationRun = new ArrayList<ConsensusXML.IdentificationRun>();
+            identificationRun = new ArrayList<>();
         }
         return this.identificationRun;
     }
@@ -390,7 +390,7 @@ public class ConsensusXML {
      */
     public List<ConsensusXML.UnassignedPeptideIdentification> getUnassignedPeptideIdentification() {
         if (unassignedPeptideIdentification == null) {
-            unassignedPeptideIdentification = new ArrayList<ConsensusXML.UnassignedPeptideIdentification>();
+            unassignedPeptideIdentification = new ArrayList<>();
         }
         return this.unassignedPeptideIdentification;
     }
@@ -650,7 +650,7 @@ public class ConsensusXML {
          */
         public List<ConsensusXML.DataProcessing.ProcessingAction> getProcessingAction() {
             if (processingAction == null) {
-                processingAction = new ArrayList<ConsensusXML.DataProcessing.ProcessingAction>();
+                processingAction = new ArrayList<>();
             }
             return this.processingAction;
         }
@@ -679,7 +679,7 @@ public class ConsensusXML {
          */
         public List<ConsensusXML.DataProcessing.UserParam> getUserParam() {
             if (userParam == null) {
-                userParam = new ArrayList<ConsensusXML.DataProcessing.UserParam>();
+                userParam = new ArrayList<>();
             }
             return this.userParam;
         }
@@ -1220,7 +1220,7 @@ public class ConsensusXML {
              */
             public List<ConsensusXML.IdentificationRun.ProteinIdentification.ProteinHit> getProteinHit() {
                 if (proteinHit == null) {
-                    proteinHit = new ArrayList<ConsensusXML.IdentificationRun.ProteinIdentification.ProteinHit>();
+                    proteinHit = new ArrayList<>();
                 }
                 return this.proteinHit;
             }
@@ -1249,7 +1249,7 @@ public class ConsensusXML {
              */
             public List<uk.ac.liv.mzqlib.consensusxml.convertor.jaxb.UserParam> getUserParam() {
                 if (userParam == null) {
-                    userParam = new ArrayList<uk.ac.liv.mzqlib.consensusxml.convertor.jaxb.UserParam>();
+                    userParam = new ArrayList<>();
                 }
                 return this.userParam;
             }
@@ -1385,7 +1385,7 @@ public class ConsensusXML {
                  */
                 public List<uk.ac.liv.mzqlib.consensusxml.convertor.jaxb.UserParam> getUserParam() {
                     if (userParam == null) {
-                        userParam = new ArrayList<uk.ac.liv.mzqlib.consensusxml.convertor.jaxb.UserParam>();
+                        userParam = new ArrayList<>();
                     }
                     return this.userParam;
                 }
@@ -1604,7 +1604,7 @@ public class ConsensusXML {
              */
             public List<ConsensusXML.IdentificationRun.SearchParameters.FixedModification> getFixedModification() {
                 if (fixedModification == null) {
-                    fixedModification = new ArrayList<ConsensusXML.IdentificationRun.SearchParameters.FixedModification>();
+                    fixedModification = new ArrayList<>();
                 }
                 return this.fixedModification;
             }
@@ -1633,7 +1633,7 @@ public class ConsensusXML {
              */
             public List<ConsensusXML.IdentificationRun.SearchParameters.VariableModification> getVariableModification() {
                 if (variableModification == null) {
-                    variableModification = new ArrayList<ConsensusXML.IdentificationRun.SearchParameters.VariableModification>();
+                    variableModification = new ArrayList<>();
                 }
                 return this.variableModification;
             }
@@ -1662,7 +1662,7 @@ public class ConsensusXML {
              */
             public List<uk.ac.liv.mzqlib.consensusxml.convertor.jaxb.UserParam> getUserParam() {
                 if (userParam == null) {
-                    userParam = new ArrayList<uk.ac.liv.mzqlib.consensusxml.convertor.jaxb.UserParam>();
+                    userParam = new ArrayList<>();
                 }
                 return this.userParam;
             }
@@ -1928,7 +1928,7 @@ public class ConsensusXML {
                  */
                 public List<uk.ac.liv.mzqlib.consensusxml.convertor.jaxb.UserParam> getUserParam() {
                     if (userParam == null) {
-                        userParam = new ArrayList<uk.ac.liv.mzqlib.consensusxml.convertor.jaxb.UserParam>();
+                        userParam = new ArrayList<>();
                     }
                     return this.userParam;
                 }
@@ -2020,7 +2020,7 @@ public class ConsensusXML {
                  */
                 public List<uk.ac.liv.mzqlib.consensusxml.convertor.jaxb.UserParam> getUserParam() {
                     if (userParam == null) {
-                        userParam = new ArrayList<uk.ac.liv.mzqlib.consensusxml.convertor.jaxb.UserParam>();
+                        userParam = new ArrayList<>();
                     }
                     return this.userParam;
                 }
@@ -2165,7 +2165,7 @@ public class ConsensusXML {
          */
         public List<ConsensusXML.UnassignedPeptideIdentification.PeptideHit> getPeptideHit() {
             if (peptideHit == null) {
-                peptideHit = new ArrayList<ConsensusXML.UnassignedPeptideIdentification.PeptideHit>();
+                peptideHit = new ArrayList<>();
             }
             return this.peptideHit;
         }
@@ -2194,7 +2194,7 @@ public class ConsensusXML {
          */
         public List<uk.ac.liv.mzqlib.consensusxml.convertor.jaxb.UserParam> getUserParam() {
             if (userParam == null) {
-                userParam = new ArrayList<uk.ac.liv.mzqlib.consensusxml.convertor.jaxb.UserParam>();
+                userParam = new ArrayList<>();
             }
             return this.userParam;
         }
@@ -2445,7 +2445,7 @@ public class ConsensusXML {
              */
             public List<uk.ac.liv.mzqlib.consensusxml.convertor.jaxb.UserParam> getUserParam() {
                 if (userParam == null) {
-                    userParam = new ArrayList<uk.ac.liv.mzqlib.consensusxml.convertor.jaxb.UserParam>();
+                    userParam = new ArrayList<>();
                 }
                 return this.userParam;
             }
@@ -2586,7 +2586,7 @@ public class ConsensusXML {
              */
             public List<Object> getProteinRefs() {
                 if (proteinRefs == null) {
-                    proteinRefs = new ArrayList<Object>();
+                    proteinRefs = new ArrayList<>();
                 }
                 return this.proteinRefs;
             }

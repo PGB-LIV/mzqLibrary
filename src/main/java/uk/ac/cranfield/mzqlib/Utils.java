@@ -62,7 +62,9 @@ public class Utils {
     }
 
     public static double mean(List<Double> list){
-        if(list.isEmpty()) return Double.NaN;
+        if(list.isEmpty()) {
+            return Double.NaN;
+        }
         return sum(list)/list.size();
     }
 

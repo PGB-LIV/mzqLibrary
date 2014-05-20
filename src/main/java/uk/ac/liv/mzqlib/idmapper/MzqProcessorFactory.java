@@ -16,7 +16,6 @@ import javax.xml.bind.JAXBException;
 import uk.ac.liv.jmzqml.MzQuantMLElement;
 import uk.ac.liv.jmzqml.model.mzqml.Feature;
 import uk.ac.liv.jmzqml.model.mzqml.FeatureList;
-import uk.ac.liv.jmzqml.model.mzqml.FileFormat;
 import uk.ac.liv.jmzqml.model.mzqml.RawFilesGroup;
 import uk.ac.liv.jmzqml.model.mzqml.SearchDatabase;
 import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;

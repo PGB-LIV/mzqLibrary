@@ -5,7 +5,6 @@
 
 package uk.ac.liv.mzqlib.utils;
 
-import com.sun.accessibility.internal.resources.accessibility;
 import java.util.ArrayList;
 import java.util.List;
 import uk.ac.liv.jmzqml.model.mzqml.Cv;

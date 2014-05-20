@@ -87,7 +87,7 @@ public class Map {
      */
     public List<UserParam> getUserParam() {
         if (userParam == null) {
-            userParam = new ArrayList<UserParam>();
+            userParam = new ArrayList<>();
         }
         return this.userParam;
     }

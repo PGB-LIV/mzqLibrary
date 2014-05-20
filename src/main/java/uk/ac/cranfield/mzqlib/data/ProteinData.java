@@ -21,7 +21,7 @@ public class ProteinData extends QuantitationLevel{
 
     public ProteinData(Protein pro) {
         protein = pro;
-        peptides = new HashMap<String, PeptideSequenceData>();
+        peptides = new HashMap<>();
     }
     /**
      * Get the protein mzQuantML element
@@ -65,10 +65,16 @@ public class ProteinData extends QuantitationLevel{
     
     @Override
     public boolean equals(Object obj){
-        if(this == obj) return true;
-        if(!(obj instanceof ProteinData)) return false;
+        if(this == obj) {
+            return true;
+        }
+        if(!(obj instanceof ProteinData)) {
+            return false;
+        }
         ProteinData pro = (ProteinData)obj;
-        if(this.getAccession().endsWith(pro.getAccession())) return true;
+        if(this.getAccession().endsWith(pro.getAccession())) {
+            return true;
+        }
         return false;
     }
 
@@ -85,7 +91,7 @@ public class ProteinData extends QuantitationLevel{
     }
 
     public ArrayList<PeptideData> getPeptides(){
-        ArrayList<PeptideData> result = new ArrayList<PeptideData>();
+        ArrayList<PeptideData> result = new ArrayList<>();
         for(PeptideSequenceData psData: peptides.values()){
             result.addAll(psData.getPeptides());
         }

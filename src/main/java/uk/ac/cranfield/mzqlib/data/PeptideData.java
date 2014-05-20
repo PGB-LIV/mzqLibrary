@@ -19,7 +19,7 @@ public class PeptideData extends QuantitationLevel {
      * so suitable for a hash map: keys are msrun id and values are the list of features
      */
 //    private HashMap<String,ArrayList<FeatureData>> features;
-    private ArrayList<FeatureData> features = new ArrayList<FeatureData>();
+    private ArrayList<FeatureData> features = new ArrayList<>();
     private boolean assignedByPeptideRef = false;
 
     public boolean isAssignedByPeptideRef() {
@@ -33,7 +33,7 @@ public class PeptideData extends QuantitationLevel {
     public PeptideData(PeptideConsensus pc) {
         peptide = pc;
 //        ArrayList<Character> modIndice = new ArrayList<Character>();
-        ArrayList<Integer> modIndice = new ArrayList<Integer>();
+        ArrayList<Integer> modIndice = new ArrayList<>();
         for (Modification mod:pc.getModification()){
             int index = MzqLib.data.getModificationIndex(mod);
             modIndice.add(index);
@@ -64,11 +64,13 @@ public class PeptideData extends QuantitationLevel {
     }
     
     public ArrayList<FeatureData> getFeaturesWithCharge(int charge){
-        ArrayList<FeatureData> values = new ArrayList<FeatureData>();
+        ArrayList<FeatureData> values = new ArrayList<>();
         for(FeatureData feature:features){
             String value = feature.getFeature().getCharge();//<xsd:attribute name="charge" type="integerOrNullType" use="required">
             if(value!=null && !value.equalsIgnoreCase("null")){
-                if(charge == Integer.parseInt(value)) values.add(feature);
+                if(charge == Integer.parseInt(value)) {
+                    values.add(feature);
+                }
             }
         }
         return values;
@@ -76,7 +78,9 @@ public class PeptideData extends QuantitationLevel {
     
     public void mergeAnotherPeptideData(PeptideData another){
         this.features.addAll(another.getFeatures());
-        if(!assignedByPeptideRef) setAssignedByPeptideRef(another.isAssignedByPeptideRef());
+        if(!assignedByPeptideRef) {
+            setAssignedByPeptideRef(another.isAssignedByPeptideRef());
+        }
         this.peptide.getEvidenceRef().addAll(another.getPeptide().getEvidenceRef());
         //TODO more things need to be added here when merging two or more mzq files, e.g. searchDatabaseRef
     }

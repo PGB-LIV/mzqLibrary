@@ -51,7 +51,11 @@ public class Utils {
             doc.getDocumentElement().normalize();
             validator.validate(new DOMSource(doc));
         } catch (SAXException ex) {
-            System.out.println("ERROR: Can not find the specified xsd file " + xsdFile + " to validate the XML file");
+            if(ex.getMessage().contains("schema_reference")){
+                System.out.println("ERROR: Can not find the specified xsd file " + xsdFile + " to validate the XML file");
+            }else{
+                System.out.println(ex.getMessage());
+            }
             System.exit(1);
         } catch (Exception e) {
             System.out.println("Exception while validating \n" + e);

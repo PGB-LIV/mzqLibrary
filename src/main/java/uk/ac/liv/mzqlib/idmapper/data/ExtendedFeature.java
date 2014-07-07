@@ -27,10 +27,19 @@ public class ExtendedFeature extends Feature {
         feature = ft;
         List<Double> massT = feature.getMassTrace();
 
-        brt = massT.get(0);
-        lmz = massT.get(1);
-        urt = massT.get(2);
-        rmz = massT.get(3);
+        if (massT == null || massT.isEmpty()) {
+            brt = (Double.valueOf(ft.getRt()) - 10.0) / 60.0;
+            //brt = Double.valueOf(ft.getRt()) - 10;
+            lmz = ft.getMz() - 0.05;
+            urt = (Double.valueOf(ft.getRt()) + 10.0) / 60.0;
+            //urt = Double.valueOf(ft.getRt()) + 10;
+            rmz = ft.getMz() + 0.05;
+        } else {
+            brt = massT.get(0);
+            lmz = massT.get(1);
+            urt = massT.get(2);
+            rmz = massT.get(3);
+        }
     }
 
     public double getLMZ() {

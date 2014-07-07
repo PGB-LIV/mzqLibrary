@@ -384,7 +384,8 @@ public class MzqMzIdMapperFactory {
                 IdentificationFile idFile = new IdentificationFile();
                 idFile.setFileFormat(ff);
                 //String id = "idfile_" + count;
-                idFile.setId(mzidFnToFileIdMap.get(mzidFn));
+                String fileName = new File(mzidFn).getName();
+                idFile.setId(mzidFnToFileIdMap.get(fileName));
                 //count++;
                 File f = new File(mzidFn);
                 idFile.setLocation(f.getAbsolutePath());
@@ -461,7 +462,12 @@ public class MzqMzIdMapperFactory {
 
                 // new ProteinList
                 ProteinList newProtList = new ProteinList();
-                newProtList.setId(protList.getId());
+                if (protList == null) {
+                    newProtList.setId("ProteinList1");
+                } else {
+                    newProtList.setId(protList.getId());
+                }
+                
                 int protCount = 0;
                 for (String protAcc : protAccToPepConNewIdsMap.keySet()) {
                     Protein protein = new Protein();
@@ -479,8 +485,11 @@ public class MzqMzIdMapperFactory {
                     }
                     newProtList.getProtein().add(protein);
                 }
-                m.marshall(newProtList, writer);
-                writer.write("\n");
+                
+                if (!protAccToPepConNewIdsMap.isEmpty()) {
+                    m.marshall(newProtList, writer);
+                    writer.write("\n");
+                }
 
                 for (PeptideConsensusList pepConList : this.pepConLists) {
                     m.marshall(pepConList, writer);

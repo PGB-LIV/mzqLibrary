@@ -75,6 +75,11 @@ public class MzqProcessorFactory {
                 FeatureList ftList = itFeatureList.next();
                 RawFilesGroup rg = (RawFilesGroup) this.mzqUm.unmarshal(uk.ac.liv.jmzqml.model.mzqml.RawFilesGroup.class, ftList.getRawFilesGroupRef());
                 String rawFn = rg.getRawFile().get(0).getName();
+                if (rawFn == null) {
+                    rawFn = rg.getRawFile().get(0).getLocation();
+                }
+
+                rawFn = rawFn.replaceAll(".featureXML", ".mzML").replaceAll("_FFC", "").replaceAll("_MAPC", "");
                 String mzidFileName = rawToMzidMap.get(rawFn);
 
                 // corresponding mzIdentML processor 
@@ -92,33 +97,8 @@ public class MzqProcessorFactory {
 
                     ExtendedFeature exFt = new ExtendedFeature(ft);
 
-                    // try up RT first 
-                    int upperRt = (int) exFt.getURT();
-
-                    List<SIIData> siiDataList = rtToSIIsMap.get(upperRt);
-
-                    if (siiDataList != null) {
-                        for (SIIData sd : siiDataList) {
-                            double siiExpMz = sd.getExperimentalMassToCharge();
-                            double siiRt = sd.getRetentionTime();
-                            // determine if rt and mz of the SIIData is in the mass trace of the feature
-                            if (isInRange(siiExpMz, exFt.getLMZ(), exFt.getRMZ()) && isInRange(siiRt, exFt.getBRT(), exFt.getURT())) {
-                                if (ftSIIDataList == null) {
-                                    ftSIIDataList = new ArrayList();
-                                    featureToSIIsMap.put(ft.getId(), ftSIIDataList);
-                                }
-                                ftSIIDataList.add(sd);
-                            }
-                        }
-                    }
-
-                    // try bottom RT second if different from up RT
-                    // for example: (35.433-36.112) will give both 35 and 36 a try
-                    //              (35.022-35.913) will only give 35 a try
-                    int bottomRt = (int) exFt.getBRT();
-                    if (bottomRt != upperRt) {
-                        siiDataList = rtToSIIsMap.get(bottomRt);
-
+                    for (int i = (int) exFt.getBRT(); i <= (int) exFt.getURT(); i++) {
+                        List<SIIData> siiDataList = rtToSIIsMap.get(i);
                         if (siiDataList != null) {
                             for (SIIData sd : siiDataList) {
                                 double siiExpMz = sd.getExperimentalMassToCharge();
@@ -126,14 +106,14 @@ public class MzqProcessorFactory {
                                 // determine if rt and mz of the SIIData is in the mass trace of the feature
                                 if (isInRange(siiExpMz, exFt.getLMZ(), exFt.getRMZ()) && isInRange(siiRt, exFt.getBRT(), exFt.getURT())) {
                                     if (ftSIIDataList == null) {
-                                        ftSIIDataList = new ArrayList();
+                                        ftSIIDataList = new ArrayList<>();
                                         featureToSIIsMap.put(ft.getId(), ftSIIDataList);
                                     }
                                     ftSIIDataList.add(sd);
                                 }
                             }
                         }
-                    }
+                    }  
 
                     // build combinedPepModStringToSIIsMap;
                     Map<String, List<SIIData>> pepModStringToSIIsMap = mzidProc.getPeptideModStringToSIIsMap();

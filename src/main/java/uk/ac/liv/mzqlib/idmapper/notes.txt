@@ -1,0 +1,5 @@
+possible conflicting peptide identification cases:
+Case 1: In a SpectrumIdentificationResult element, it could has two SpectrumIdentificationItem(s) with same rank="1" and passThreshold="true". This is rare but could happen when peptides have same scores because they contain Leucine and Isoleucine.  
+Solution: Assign one sequence to peptideConsensus, annotate the rest sequences in userParam.
+
+Case 2: 

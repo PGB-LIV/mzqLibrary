@@ -16,7 +16,7 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
-import uk.ac.ebi.pride.jmztab.model.Param;
+//import uk.ac.ebi.pride.jmztab.model.Param;
 import uk.ac.liv.jmzqml.model.mzqml.CvParam;
 
 /**
@@ -27,9 +27,9 @@ public class Utils {
 
     private static final String MZQ_XSD = "mzQuantML_1_0_0.xsd";
 
-    public static Param convertMztabParam(CvParam qParam) {
-        return new uk.ac.ebi.pride.jmztab.model.CVParam(qParam.getCvRef(), qParam.getAccession(), qParam.getName(), qParam.getValue());
-    }
+//    public static Param convertMztabParam(CvParam qParam) {
+//        return new uk.ac.ebi.pride.jmztab.model.CVParam(qParam.getCvRef(), qParam.getAccession(), qParam.getName(), qParam.getValue());
+//    }
 
     public static boolean validateMzqFile(String mzqFile) {
         return validate(mzqFile, MZQ_XSD);

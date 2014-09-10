@@ -302,7 +302,7 @@ public final class ProteinAbundanceInference {
         PeptideToProtein(proteinToPeptide);
 
         if (quantLayerType.equals("AssayQuantLayer")) {
-            List<QuantLayer> assayQLs = AssayQLs(infile_um);
+            List<QuantLayer<IdOnly>> assayQLs = AssayQLs(infile_um);
             
             String assayQuantLayerId_pep = AssayQuantLayerId(infile_um, inputPepDTCA);
             assayQuantLayerId = "PGL_" + assayQuantLayerId_pep;
@@ -332,7 +332,7 @@ public final class ProteinAbundanceInference {
 
         } else if (quantLayerType.equals("StudyVariableQuantLayer")) {
 
-            List<QuantLayer> studyVariableQLs = StudyVariableQLs(infile_um);
+            List<QuantLayer<IdOnly>> studyVariableQLs = StudyVariableQLs(infile_um);
             String assayQuantLayerId_pep = AssayQuantLayerId(infile_um, inputPepDTCA);
             assayQuantLayerId = "PGL_" + assayQuantLayerId_pep;
 
@@ -392,7 +392,7 @@ public final class ProteinAbundanceInference {
 //        File mzqFile = new File(in_file);
 //        MzQuantMLUnmarshaller um = new MzQuantMLUnmarshaller(mzqFile);
         PeptideConsensusList pepConList = in_file_um.unmarshal(MzQuantMLElement.PeptideConsensusList);
-        List<QuantLayer> assayQLs = pepConList.getAssayQuantLayer();
+        List<QuantLayer<IdOnly>> assayQLs = pepConList.getAssayQuantLayer();
         for (QuantLayer assayQL : assayQLs) {
             if ((assayQL.getDataType().getCvParam().getAccession()).equalsIgnoreCase(inputPeptideDTCA)) {
 
@@ -513,10 +513,10 @@ public final class ProteinAbundanceInference {
      * @param in_file_um
      * @return
      */
-    private List<QuantLayer> AssayQLs(MzQuantMLUnmarshaller in_file_um) {
+    private List<QuantLayer<IdOnly>> AssayQLs(MzQuantMLUnmarshaller in_file_um) {
 
         PeptideConsensusList pepConList = in_file_um.unmarshal(MzQuantMLElement.PeptideConsensusList);
-        List<QuantLayer> assayQLs = pepConList.getAssayQuantLayer();
+        List<QuantLayer<IdOnly>> assayQLs = pepConList.getAssayQuantLayer();
         return assayQLs;
     }
 
@@ -525,10 +525,10 @@ public final class ProteinAbundanceInference {
      * @param in_file_um
      * @return 
      */
-    private List<QuantLayer> StudyVariableQLs(MzQuantMLUnmarshaller in_file_um) {
+    private List<QuantLayer<IdOnly>> StudyVariableQLs(MzQuantMLUnmarshaller in_file_um) {
 
         PeptideConsensusList pepConList = in_file_um.unmarshal(MzQuantMLElement.PeptideConsensusList);
-        List<QuantLayer> sVQLs = pepConList.getStudyVariableQuantLayer();
+        List<QuantLayer<IdOnly>> sVQLs = pepConList.getStudyVariableQuantLayer();
         return sVQLs;
     }
 
@@ -563,7 +563,7 @@ public final class ProteinAbundanceInference {
         String assayQLID = null;
         PeptideConsensusList pepConList = in_file_um.unmarshal(MzQuantMLElement.PeptideConsensusList);
 
-        List<QuantLayer> assayQLs = pepConList.getAssayQuantLayer();
+        List<QuantLayer<IdOnly>> assayQLs = pepConList.getAssayQuantLayer();
 
         for (QuantLayer assayQL : assayQLs) {
             if ((assayQL.getDataType().getCvParam().getAccession()).equalsIgnoreCase(inputPeptideDTCA)) {
@@ -591,7 +591,7 @@ public final class ProteinAbundanceInference {
      * @return a boolean value for checking whether the output of MZQ format is
      * valid
      */
-    private boolean MzqOutput(MzQuantML mzq, List<QuantLayer> assayQLs, String operation,
+    private boolean MzqOutput(MzQuantML mzq, List<QuantLayer<IdOnly>> assayQLs, String operation,
             Map<String, HashSet<String>> uniSetGr, Map<String, HashSet<String>> sameSetGr,
             Map<String, HashSet<String>> subSetGr, String assayQlId, String inputPeptideDTCA, String outFile) {
 
@@ -1145,10 +1145,10 @@ public final class ProteinAbundanceInference {
      * @return a boolean value for checking whether the layers of assay quant
      * are created correctly
      */
-    private boolean AssayQuantLayers(ProteinGroupList protGroList, List<QuantLayer> aQLs, String assayQI,
+    private boolean AssayQuantLayers(ProteinGroupList protGroList, List<QuantLayer<IdOnly>> aQLs, String assayQI,
             String inputPepDTCA, Map<String, List<String>> protAbun, Map<String, String> groupInOrd) {
         boolean first_layer = false;
-        List<QuantLayer> assayQuantLayers = protGroList.getAssayQuantLayer();
+        List<QuantLayer<IdOnly>> assayQuantLayers = protGroList.getAssayQuantLayer();
         QuantLayer assayQuantLayer = new QuantLayer();
         assayQuantLayer.setId(assayQI);
 

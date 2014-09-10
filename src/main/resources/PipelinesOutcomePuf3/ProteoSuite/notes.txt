@@ -1,0 +1,2 @@
+The two files are the results of protein inference, which is based on feature normalization.
+Also, the feature filtering is applied with psm qvalue=0.01 & 0.05 respectively.

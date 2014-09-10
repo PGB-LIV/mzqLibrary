@@ -17,6 +17,7 @@ import uk.ac.liv.jmzqml.model.mzqml.Cv;
 import uk.ac.liv.jmzqml.model.mzqml.CvParam;
 import uk.ac.liv.jmzqml.model.mzqml.CvParamRef;
 import uk.ac.liv.jmzqml.model.mzqml.DataMatrix;
+import uk.ac.liv.jmzqml.model.mzqml.IdOnly;
 import uk.ac.liv.jmzqml.model.mzqml.MzQuantML;
 import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensusList;
 import uk.ac.liv.jmzqml.model.mzqml.ProteinGroupList;
@@ -325,7 +326,7 @@ public class PepProtAbundanceNormalisation {
     private boolean PeptideAssayValue(MzQuantMLUnmarshaller in_file_um, String inputPeptideDTCA) {
         boolean first_list = false;
         PeptideConsensusList pepConList = in_file_um.unmarshal(MzQuantMLElement.PeptideConsensusList);
-        List<QuantLayer> assayQLs = pepConList.getAssayQuantLayer();
+        List<QuantLayer<IdOnly>> assayQLs = pepConList.getAssayQuantLayer();
         for (QuantLayer assayQL : assayQLs) {
             if ((assayQL.getDataType().getCvParam().getAccession()).equalsIgnoreCase(inputPeptideDTCA)) {
 
@@ -361,7 +362,7 @@ public class PepProtAbundanceNormalisation {
     private boolean ProteinAssayValue(MzQuantMLUnmarshaller in_file_um, String assayID) {
         boolean first_list = false;
         ProteinGroupList proGroupList = in_file_um.unmarshal(MzQuantMLElement.ProteinGroupList);
-        List<QuantLayer> assayQLs = proGroupList.getAssayQuantLayer();
+        List<QuantLayer<IdOnly>> assayQLs = proGroupList.getAssayQuantLayer();
         for (QuantLayer assayQL : assayQLs) {
 //            System.out.println("Assay Quant Layer ID: " + assayQL.getId());
 //            if ((assayQL.getDataType().getCvParam().getAccession()).equalsIgnoreCase(inputProteinDTCA)) {
@@ -574,7 +575,7 @@ public class PepProtAbundanceNormalisation {
 
         if (flag == true) {
             PeptideConsensusList pepConList = infile_um.unmarshal(MzQuantMLElement.PeptideConsensusList);
-            List<QuantLayer> assayQLs = pepConList.getAssayQuantLayer();
+            List<QuantLayer<IdOnly>> assayQLs = pepConList.getAssayQuantLayer();
             normalisedPepAssayVal = NormalisedAssayValue(refAssay, peptideAssayValues);
 
             if (quantLT.equals("AssayQuantLayer")) {
@@ -678,7 +679,7 @@ public class PepProtAbundanceNormalisation {
 
         if (flag == true) {
             ProteinGroupList proGroList = infile_um.unmarshal(MzQuantMLElement.ProteinGroupList);
-            List<QuantLayer> assayQLs = proGroList.getAssayQuantLayer();
+            List<QuantLayer<IdOnly>> assayQLs = proGroList.getAssayQuantLayer();
             normalisedProAssayVal = NormalisedAssayValue(refAssay, proteinAssayValues);
 
             if (quantLT.equals("AssayQuantLayer")) {

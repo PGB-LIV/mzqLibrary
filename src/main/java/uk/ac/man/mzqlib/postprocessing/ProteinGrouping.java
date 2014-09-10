@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * implement the relevant methods in protein grouping
@@ -18,9 +19,9 @@ import java.util.Map;
  */
 public class ProteinGrouping {
 
-    private static final Map<String, HashSet<String>> sameSetGr = new HashMap<>();
-    private static final Map<String, HashSet<String>> subSetGr = new HashMap<>();
-    private static final Map<String, HashSet<String>> uniSetGr = new HashMap<>();
+    private static final Map<String, HashSet<String>> sameSetGr = new HashMap<String, HashSet<String>>();
+    private static final Map<String, HashSet<String>> subSetGr = new HashMap<String, HashSet<String>>();
+    private static final Map<String, HashSet<String>> uniSetGr = new HashMap<String, HashSet<String>>();
 
     /**
      * set the protein groups in order in terms of the grouping results
@@ -29,7 +30,7 @@ public class ProteinGrouping {
      * @return the ordered groups
      */
     public static Map<String, String> GroupInOrder(Map<String, List<String>> pa) {
-        Map<String, String> groupIO = new HashMap<>();
+        Map<String, String> groupIO = new HashMap<String, String>();
 
         int no = 0;
         String num;
@@ -89,13 +90,12 @@ public class ProteinGrouping {
             sameSetGroupNo++;
             String pepTmpSel = sameSetTmp.iterator().next().toString();
             HashSet<String> proSetTmp = pepToProt.get(pepTmpSel);
-            
+
 //            System.out.println("protein set tmp: " + proSetTmp);
             String proTmpSel = proSetTmp.iterator().next().toString();
             HashSet<String> pepSetTmp = protToPep.get(proTmpSel);
 
 //            System.out.println("peptide set tmp: " + pepSetTmp);
-            
             sameSetGr.put("SameSetGroup" + sameSetGroupNo, pepSetTmp);
 
             Iterator<String> sameSetTmpItr = sameSetTmp.iterator();
@@ -119,8 +119,10 @@ public class ProteinGrouping {
     public static Map<String, HashSet<String>> SubSetGrouping(Map<String, HashSet<String>> pepToProt,
             Map<String, HashSet<String>> protToPep) {
         HashSet<String> subSetTmp = GetSubsetPeptides(pepToProt, protToPep);
-        System.out.println("Sub Set Tmp: " + subSetTmp);
-        
+//        System.out.println("Sub Set Tmp: " + subSetTmp);
+
+//        HashSet<String> pepSetTmp = new HashSet<String>();
+
 //        proteinToPeptideTmp = proteinToPeptide;
 //        peptideToProteinTmp = peptideToProtein;
         int subSetGroupNo = 0;
@@ -134,12 +136,22 @@ public class ProteinGrouping {
 //                    break;
 //                }
 //            }
-            
+             HashSet<String> pepSetTmp = new HashSet<String>();
             pepTmpSel = subSetTmp.iterator().next().toString();
 
             HashSet<String> proSetTmp = pepToProt.get(pepTmpSel);
-            String proTmpSel = proSetTmp.iterator().next().toString();
-            HashSet<String> pepSetTmp = protToPep.get(proTmpSel);
+
+            Iterator<String> proteinsPepSel = proSetTmp.iterator();
+            
+            while (proteinsPepSel.hasNext()) {
+
+                String proteinPepSel = proteinsPepSel.next();
+                HashSet<String> pepSetTmp0 = protToPep.get(proteinPepSel);
+                pepSetTmp.addAll(pepSetTmp0);
+
+            }
+//            String proTmpSel = proSetTmp.iterator().next().toString();
+//            HashSet<String> pepSetTmp = protToPep.get(proTmpSel);
 
             subSetGr.put("SubSetGroup" + subSetGroupNo, pepSetTmp);
 
@@ -152,6 +164,7 @@ public class ProteinGrouping {
                 String pep = subSetTmpItr.next();
                 if (pepSetTmp.contains(pep)) {
                     subSetTmpItr.remove();
+//                    pepSetTmp.remove(pep);
                 }
             }
         }
@@ -192,7 +205,7 @@ public class ProteinGrouping {
             Iterator<String> proTmpItr = proTmp.iterator();
             HashSet<String> pepSetTmp = protToPep.get(proTmpItr.next());
 
-            HashSet<String> uniSetTmpJoined = new HashSet<>();
+            HashSet<String> uniSetTmpJoined = new HashSet<String>();
 //            System.out.println("Pro Temp: " + proTmp);
 //            System.out.println("Pep Temp: " + pepSetTmp);
             for (String pepTmp1 : pepSetTmp) {
@@ -226,7 +239,7 @@ public class ProteinGrouping {
      * @return a hashSet for unique peptides
      */
     private static HashSet<String> GetUniquePeptides(Map<String, HashSet<String>> pepToPro) {
-        HashSet<String> uniquePeptides = new HashSet<>();
+        HashSet<String> uniquePeptides = new HashSet<String>();
 
         for (Map.Entry<String, HashSet<String>> entry : pepToPro.entrySet()) {
             if (entry.getValue().size() == 1) {
@@ -245,13 +258,13 @@ public class ProteinGrouping {
      */
     private static HashSet<String> GetSameSetPeptides(Map<String, HashSet<String>> pepToPro,
             Map<String, HashSet<String>> proToPep) {
-        HashSet<String> sameSet = new HashSet<>();
+        HashSet<String> sameSet = new HashSet<String>();
         for (Map.Entry<String, HashSet<String>> entry : pepToPro.entrySet()) {
             if (entry.getValue().size() == 1) {
                 continue;
             }
 
-            HashSet<String> peptides = new HashSet<>();
+            HashSet<String> peptides = new HashSet<String>();
             for (String protein : entry.getValue()) {
                 for (String peptide : proToPep.get(protein)) {
                     peptides.add(peptide);
@@ -284,12 +297,12 @@ public class ProteinGrouping {
      */
     private static HashSet<String> GetSubsetPeptides(Map<String, HashSet<String>> pepToPro,
             Map<String, HashSet<String>> proToPep) {
-        HashSet<String> subSet = new HashSet<>();
+        HashSet<String> subSet = new HashSet<String>();
         for (Map.Entry<String, HashSet<String>> entry : pepToPro.entrySet()) {
 //            List<String> listProtein = (List<String>) entry.getValue();
             String largestProtein = entry.getValue().iterator().next().toString();
-            HashSet<String> peptides = new HashSet<>();
-            HashSet<String> proteins = new HashSet<>();
+            HashSet<String> peptides = new HashSet<String>();
+            HashSet<String> proteins = new HashSet<String>();
             proteins.add(largestProtein);
             int peptideCount = 0;
             int proteinCount = 0;

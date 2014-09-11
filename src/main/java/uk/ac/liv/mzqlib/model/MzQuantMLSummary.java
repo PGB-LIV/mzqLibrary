@@ -10,12 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import uk.ac.liv.jmzqml.MzQuantMLElement;
-import uk.ac.liv.jmzqml.model.mzqml.AnalysisSummary;
-import uk.ac.liv.jmzqml.model.mzqml.CvParam;
-import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;
 
 /**
  *
@@ -31,33 +26,17 @@ public class MzQuantMLSummary {
     private final IntegerProperty peptideListNumber;
     private final IntegerProperty featureListNumber;
 
-    public MzQuantMLSummary(MzQuantMLUnmarshaller um) {
-        // Set techniquesUsed
-        AnalysisSummary analySum = um.unmarshal(MzQuantMLElement.AnalysisSummary);
-        List<CvParam> cvParams = analySum.getCvParam();
+    public MzQuantMLSummary() {
+        this.proteinGroupListNumber = new SimpleIntegerProperty();
         this.techniquesUsed = new ArrayList<>();
-        for (CvParam cp : cvParams) {
-            if (!cp.getName().contains("level")) {
-                this.techniquesUsed.add(new SimpleStringProperty(cp.getName()));
-            }
-        }
+        this.proteinListNumber = new SimpleIntegerProperty();
+        this.peptideListNumber = new SimpleIntegerProperty();
+        this.featureListNumber = new SimpleIntegerProperty();
+    }
 
-        int listNumber = 0;
-        // Set numbers of protein group list   
-        listNumber = um.getObjectCountForXpath("/MzQuantML/ProteinGroupList");
-        this.proteinGroupListNumber = new SimpleIntegerProperty(listNumber == -1 ? 0 : listNumber);
-
-        // Set numbers of protein list
-        listNumber = um.getObjectCountForXpath("/MzQuantML/ProteinList");
-        this.proteinListNumber = new SimpleIntegerProperty(listNumber == -1 ? 0 : listNumber);
-
-        // Set numbers of peptide list
-        listNumber = um.getObjectCountForXpath("/MzQuantML/PeptideConsensusList");
-        this.peptideListNumber = new SimpleIntegerProperty(listNumber == -1 ? 0 : listNumber);
-
-        // Set numbers of feature list
-        listNumber = um.getObjectCountForXpath("/MzQuantML/FeatureList");
-        this.featureListNumber = new SimpleIntegerProperty(listNumber == -1 ? 0 : listNumber);
+    public void setTechniquesUsed(List<StringProperty> techList) {
+        this.techniquesUsed.clear();
+        this.techniquesUsed.addAll(techList);
     }
 
     public IntegerProperty proteinGroupListNumber() {
@@ -68,12 +47,20 @@ public class MzQuantMLSummary {
         return proteinGroupListNumber.get();
     }
 
+    public void setProteinGroupListNumber(int num) {
+        this.proteinGroupListNumber.set(num);
+    }
+
     public IntegerProperty proteinListNumber() {
         return proteinListNumber;
     }
 
     public int getProteinListNumber() {
         return proteinListNumber.get();
+    }
+
+    public void setProteinListNumber(int num) {
+        this.proteinListNumber.set(num);
     }
 
     public IntegerProperty peptideListNumber() {
@@ -84,12 +71,20 @@ public class MzQuantMLSummary {
         return peptideListNumber.get();
     }
 
+    public void setPeptideListNumber(int num) {
+        this.peptideListNumber.set(num);
+    }
+
     public IntegerProperty featureListNumber() {
         return featureListNumber;
     }
 
     public int getFeatureListNumber() {
         return featureListNumber.get();
+    }
+
+    public void setFeatureListNumber(int num) {
+        this.featureListNumber.set(num);
     }
 
 }

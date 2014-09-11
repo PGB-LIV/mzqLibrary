@@ -60,8 +60,8 @@ public class RootLayoutController {
         file = fileChooser.showOpenDialog(mainApp.getPrimaryStage());
 
         if (file != null) {
+
             mainApp.loadMzqFile(file);
-            mainApp.showMzqInfo();
             mainApp.setLastFilePath(file);
         }
     }
@@ -80,14 +80,14 @@ public class RootLayoutController {
     private void handleHeatMapPdf() {
         mainApp.showHeatMapPdfWindow();
     }
-    
+
     @FXML
-    private void handlePCA(){
+    private void handlePCA() {
         mainApp.showPCAPlot();
     }
-    
+
     @FXML
-    private void handleCurve(){
+    private void handleCurve() {
         mainApp.showCurve();
     }
 

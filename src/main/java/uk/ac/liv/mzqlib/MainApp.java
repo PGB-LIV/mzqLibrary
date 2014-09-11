@@ -4,8 +4,6 @@ package uk.ac.liv.mzqlib;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,34 +11,22 @@ import java.util.prefs.Preferences;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
-import javafx.scene.control.TableView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.scene.chart.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.stage.*;
+import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialogs;
 import org.rosuda.JRI.Rengine;
-import uk.ac.liv.jmzqml.MzQuantMLElement;
-import uk.ac.liv.jmzqml.model.mzqml.FeatureList;
-import uk.ac.liv.jmzqml.model.mzqml.IdOnly;
-import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensusList;
-import uk.ac.liv.jmzqml.model.mzqml.ProteinGroupList;
-import uk.ac.liv.jmzqml.model.mzqml.ProteinList;
-import uk.ac.liv.jmzqml.model.mzqml.QuantLayer;
-import uk.ac.liv.jmzqml.model.mzqml.SmallMoleculeList;
 import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;
-import uk.ac.liv.mzqlib.model.MzqAssayQuantLayer;
-import uk.ac.liv.mzqlib.model.MzqDataMatrixRow;
-import uk.ac.liv.mzqlib.view.HeatMapPdfController;
-import uk.ac.liv.mzqlib.view.MzqInfoController;
-import uk.ac.liv.mzqlib.view.RootLayoutController;
+import uk.ac.liv.mzqlib.model.*;
+import uk.ac.liv.mzqlib.task.*;
+import uk.ac.liv.mzqlib.view.*;
 
 public class MainApp extends Application {
 
@@ -48,7 +34,6 @@ public class MainApp extends Application {
     private Stage newStage; // for heat map pdf setting window
     private BorderPane rootLayout;
     private AnchorPane mzqInfo;
-    private MzQuantMLUnmarshaller mzqUm;
     private MzqInfoController mzqInfoController;
     private static Rengine re;
     private RootLayoutController rootLayoutController;
@@ -56,26 +41,31 @@ public class MainApp extends Application {
     private double min; // for heat map
     private double max; // for heat map
 
-    private final ObservableList<MzqAssayQuantLayer> assayQuantLayerData = FXCollections.observableArrayList();
+    private MzQuantMLData mzqData = new MzQuantMLData();
 
-//    static {
-//        try {
-//            System.load("jri.dll");
-//        }
-//        catch (UnsatisfiedLinkError e) {
-//            System.err.println("Native code library failed to load.\n" + e);
-//            System.exit(1);
-//        }
-//    }
     public ObservableList<MzqAssayQuantLayer> getMzqAssayQuantLayerData() {
-        return assayQuantLayerData;
+        return mzqData.getMzqAssayQuantLayerList();
+    }
+
+    public MzQuantMLSummary getMzQuantMLSummary() {
+        return mzqData.getMzQuantMLSummary();
     }
 
     @Override
     public void start(Stage primaryStage) {
+        //re = new Rengine(new String[]{" ", " "}, false, null);
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("mzQuantML library");
         initRootLayout();
+
+        InitialREngineTask iniR = new InitialREngineTask();
+        iniR.setOnSucceeded((WorkerStateEvent t) -> {
+            re = iniR.getValue();
+        });
+
+        Thread iniRTh = new Thread(iniR);
+        iniRTh.setDaemon(true);
+        iniRTh.start();
     }
 
     /**
@@ -100,6 +90,7 @@ public class MainApp extends Application {
         catch (IOException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     /**
@@ -116,35 +107,72 @@ public class MainApp extends Application {
     }
 
     public void loadMzqFile(File mzqFile) {
-        mzqUm = new MzQuantMLUnmarshaller(mzqFile);
-        this.primaryStage.setTitle("mzQuantML library - " + mzqFile.getAbsolutePath());
 
-        // Build assayQuantLayerData
-        assayQuantLayerData.clear();
-        assayQuantLayerData.addAll(getAssayQuantLayerList(mzqUm));
+        closeMzqInfo();
+
+        // Status bar
+        HBox hb = new HBox();
+        hb.setSpacing(20);
+        Label label = new Label();
+        // Set tooltip message for message label
+        label.setTooltip(new Tooltip("For file size over 100MB, unmarshalling process could take over 10 minutes"));
+
+        ProgressBar pb = new ProgressBar(-1);
+        hb.getChildren().addAll(label, pb);
+        rootLayout.setBottom(hb);
+        // set the status bar to the bottom right
+        BorderPane.setAlignment(hb, Pos.BOTTOM_RIGHT);
+
+        LoadMzQuantMLDataTask loadMzqDataTask = new LoadMzQuantMLDataTask(mzqFile);
+
+        pb.progressProperty().unbind();
+        pb.progressProperty().bind(loadMzqDataTask.progressProperty());
+        label.textProperty().unbind();
+        label.textProperty().bind(loadMzqDataTask.messageProperty());
+
+        loadMzqDataTask.setOnSucceeded((WorkerStateEvent t) -> {
+            mzqData = loadMzqDataTask.getValue();
+
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(MainApp.class.getClassLoader().getResource("MzqInfo.fxml"));
+                mzqInfo = (AnchorPane) loader.load();
+
+                rootLayout.setCenter(mzqInfo);
+
+                // Give the controller access to the main app
+                mzqInfoController = loader.getController();
+                mzqInfoController.showMzqSummary(mzqData.getMzQuantMLSummary());
+                mzqInfoController.setMainApp(this);
+                rootLayoutController.enableHeatMap();
+            }
+            catch (IOException ex) {
+                Logger.getLogger(RootLayoutController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            this.primaryStage.setTitle("mzQuantML library - " + mzqFile.getAbsolutePath());
+        });
+
+        loadMzqDataTask.setOnFailed((WorkerStateEvent t) -> {
+            pb.progressProperty().unbind();
+            label.textProperty().unbind();
+            pb.setProgress(1);
+            label.setText("File Error");
+            Action response = Dialogs.create()
+                    .title("File Error")
+                    .message("The input file is not a valid mzQuantML file")
+                    .showError();
+        });
+
+        Thread loadMzqDataTh = new Thread(loadMzqDataTask);
+        loadMzqDataTh.setName("Loading MzQuantMLData");
+        loadMzqDataTh.setDaemon(true);
+        loadMzqDataTh.start();
+
     }
 
     public MzQuantMLUnmarshaller getUnmarshaller() {
-        return mzqUm;
-    }
-
-    public void showMzqInfo() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getClassLoader().getResource("MzqInfo.fxml"));
-            mzqInfo = (AnchorPane) loader.load();
-
-            rootLayout.setCenter(mzqInfo);
-
-            // Give the controller access to the main app
-            mzqInfoController = loader.getController();
-            mzqInfoController.showMzqInfo(mzqUm);
-            mzqInfoController.setMainApp(this);
-            rootLayoutController.enableHeatMap();
-        }
-        catch (IOException ex) {
-            Logger.getLogger(RootLayoutController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        return mzqData.getMzQuantMLUnmarshaller();
     }
 
     public void closeMzqInfo() {
@@ -304,7 +332,7 @@ public class MainApp extends Application {
         re.eval(setHeatmap);
         re.eval("dev.off()");
         newStage.close();
-        
+
         // open the saved pdf file after generation
         if (Desktop.isDesktopSupported()) {
             try {
@@ -386,74 +414,8 @@ public class MainApp extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        re = new Rengine(args, false, null);
+
         launch(args);
-    }
-
-    /**
-     * Get all the existing AssayQuantLayer(s) from the given
-     * MzQuantMLUnmarshaller
-     *
-     * @param mzqUm the MzQuantMLUnmarshaller
-     *
-     * @return a list of MzqAssayQuantLayer objects
-     */
-    private List<MzqAssayQuantLayer> getAssayQuantLayerList(
-            MzQuantMLUnmarshaller mzqUm) {
-        List<MzqAssayQuantLayer> assayQuantLayers = new ArrayList<>();
-
-        // Process protein group list
-        ProteinGroupList protGrpList = mzqUm.unmarshal(MzQuantMLElement.ProteinGroupList);
-        if (protGrpList != null) {
-            List<QuantLayer<IdOnly>> protGrpAssQLs = protGrpList.getAssayQuantLayer();
-            for (QuantLayer assQL : protGrpAssQLs) {
-                assayQuantLayers.add(new MzqAssayQuantLayer(mzqUm, protGrpList.getId(), assQL, "ProteinGroup"));
-            }
-        }
-
-        // Process protein list
-        ProteinList protList = mzqUm.unmarshal(MzQuantMLElement.ProteinList);
-        if (protList != null) {
-            List<QuantLayer<IdOnly>> protAssQLs = protList.getAssayQuantLayer();
-            for (QuantLayer assQL : protAssQLs) {
-                assayQuantLayers.add(new MzqAssayQuantLayer(mzqUm, protList.getId(), assQL, "Protein"));
-            }
-        }
-
-        // Process peptide list
-        Iterator<PeptideConsensusList> peptideListIter = mzqUm.unmarshalCollectionFromXpath(MzQuantMLElement.PeptideConsensusList);
-        if (peptideListIter != null) {
-            while (peptideListIter.hasNext()) {
-                PeptideConsensusList peptideList = peptideListIter.next();
-                List<QuantLayer<IdOnly>> pepAssQLs = peptideList.getAssayQuantLayer();
-                for (QuantLayer assQL : pepAssQLs) {
-                    assayQuantLayers.add(new MzqAssayQuantLayer(mzqUm, peptideList.getId(), assQL, "PeptideConsensus"));
-                }
-            }
-        }
-
-        // Process feature list
-        Iterator<FeatureList> featureListIter = mzqUm.unmarshalCollectionFromXpath(MzQuantMLElement.FeatureList);
-        if (featureListIter != null) {
-            while (featureListIter.hasNext()) {
-                FeatureList featureList = featureListIter.next();
-                List<QuantLayer<IdOnly>> ftAssQLs = featureList.getMS2AssayQuantLayer();
-                for (QuantLayer assQL : ftAssQLs) {
-                    assayQuantLayers.add(new MzqAssayQuantLayer(mzqUm, featureList.getId(), assQL, "Feature"));
-                }
-            }
-        }
-
-        // Process small molecule list
-        SmallMoleculeList smallMolList = mzqUm.unmarshal(MzQuantMLElement.SmallMoleculeList);
-        if (smallMolList != null) {
-            List<QuantLayer<IdOnly>> smallMolAssQLs = smallMolList.getAssayQuantLayer();
-            for (QuantLayer assQL : smallMolAssQLs) {
-                assayQuantLayers.add(new MzqAssayQuantLayer(mzqUm, smallMolList.getId(), assQL, "SmallMolecule"));
-            }
-        }
-
-        return assayQuantLayers;
     }
 
     public void showCurve() {

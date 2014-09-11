@@ -9,6 +9,7 @@ package uk.ac.liv.mzqlib.view;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,8 +27,8 @@ import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensus;
 import uk.ac.liv.jmzqml.model.mzqml.Protein;
 import uk.ac.liv.jmzqml.model.mzqml.QuantLayer;
 import uk.ac.liv.jmzqml.model.mzqml.Row;
-import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;
 import uk.ac.liv.mzqlib.MainApp;
+import uk.ac.liv.mzqlib.model.MzQuantMLData;
 import uk.ac.liv.mzqlib.model.MzQuantMLSummary;
 import uk.ac.liv.mzqlib.model.MzqAssayQuantLayer;
 import uk.ac.liv.mzqlib.model.MzqDataMatrixRow;
@@ -77,10 +78,10 @@ public class MzqInfoController {
         // Clear person details.
         showAssayQLDetails(null);
 
-        // Listen for selection changes and show the person details when changed.
+// Listen for selection changes and show the person details when changed.
         assayQuantLayerTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showAssayQLDetails(newValue));
-
+              
     }
 
     public void setMainApp(MainApp mainApp) {
@@ -88,12 +89,13 @@ public class MzqInfoController {
         assayQuantLayerTable.setItems(mainApp.getMzqAssayQuantLayerData());
     }
 
-    public void showMzqInfo(MzQuantMLUnmarshaller mzqUm) {
-        MzQuantMLSummary mzqSum = new MzQuantMLSummary(mzqUm);
-        numberProteinGroupList.setText(Integer.toString(mzqSum.getProteinGroupListNumber()));
-        numberProteinList.setText(Integer.toString(mzqSum.getProteinListNumber()));
-        numberPeptideList.setText(Integer.toString(mzqSum.getPeptideListNumber()));
-        numberFeatureList.setText(Integer.toString(mzqSum.getFeatureListNumber()));
+    public void showMzqSummary(MzQuantMLSummary sum) {
+
+        numberProteinGroupList.textProperty().bind(Bindings.format("%d", sum.proteinGroupListNumber()));
+        numberProteinList.textProperty().bind(Bindings.format("%d", sum.proteinListNumber()));
+        numberPeptideList.textProperty().bind(Bindings.format("%d", sum.peptideListNumber()));
+        numberFeatureList.textProperty().bind(Bindings.format("%d", sum.featureListNumber()));
+
     }
 
     private void showAssayQLDetails(MzqAssayQuantLayer assayQL) {
@@ -131,7 +133,8 @@ public class MzqInfoController {
             }
             DataMatrix dm = ql.getDataMatrix();
 
-            for (Row row : dm.getRow()) {
+            List<Row> rowList = dm.getRow();
+            for (Row row : rowList) {
                 try {
                     ObservableList<String> values = FXCollections.observableArrayList();
                     MzqDataMatrixRow qlRow = new MzqDataMatrixRow();

@@ -14,12 +14,14 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.*;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialogs;
 import org.rosuda.JRI.Rengine;
@@ -37,9 +39,9 @@ public class MainApp extends Application {
     private MzqInfoController mzqInfoController;
     private static Rengine re;
     private RootLayoutController rootLayoutController;
-    private int rowNumber; // for heat map
-    private double min; // for heat map
-    private double max; // for heat map
+    private HBox hb;
+    private Label statusLabel;
+    private ProgressBar statusPb;
 
     private MzQuantMLData mzqData = new MzQuantMLData();
 
@@ -53,7 +55,7 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        //re = new Rengine(new String[]{" ", " "}, false, null);
+
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("mzQuantML library");
         initRootLayout();
@@ -85,6 +87,21 @@ public class MainApp extends Application {
             rootLayoutController = loader.getController();
             rootLayoutController.setMainApp(this);
             rootLayoutController.disbbleHeatMap();
+
+            //Set status bar
+            // Status bar
+            hb = new HBox();
+            hb.setSpacing(20);
+            hb.setPadding(new Insets(0, 10, 0, 10));
+            statusLabel = new Label("Welcome to use mzq library");
+            // Set tooltip message for message label
+            statusLabel.setTooltip(new Tooltip("For file size over 100MB, unmarshalling process could take over 10 minutes"));
+
+            statusPb = new ProgressBar(0);
+            statusLabel.setGraphic(statusPb);
+            hb.getChildren().addAll(statusLabel);
+            rootLayout.setBottom(hb);
+
             primaryStage.show();
         }
         catch (IOException ex) {
@@ -110,25 +127,12 @@ public class MainApp extends Application {
 
         closeMzqInfo();
 
-        // Status bar
-        HBox hb = new HBox();
-        hb.setSpacing(20);
-        Label label = new Label();
-        // Set tooltip message for message label
-        label.setTooltip(new Tooltip("For file size over 100MB, unmarshalling process could take over 10 minutes"));
-
-        ProgressBar pb = new ProgressBar(-1);
-        hb.getChildren().addAll(label, pb);
-        rootLayout.setBottom(hb);
-        // set the status bar to the bottom right
-        BorderPane.setAlignment(hb, Pos.BOTTOM_RIGHT);
-
         LoadMzQuantMLDataTask loadMzqDataTask = new LoadMzQuantMLDataTask(mzqFile);
 
-        pb.progressProperty().unbind();
-        pb.progressProperty().bind(loadMzqDataTask.progressProperty());
-        label.textProperty().unbind();
-        label.textProperty().bind(loadMzqDataTask.messageProperty());
+        statusPb.progressProperty().unbind();
+        statusPb.progressProperty().bind(loadMzqDataTask.progressProperty());
+        statusLabel.textProperty().unbind();
+        statusLabel.textProperty().bind(loadMzqDataTask.messageProperty());
 
         loadMzqDataTask.setOnSucceeded((WorkerStateEvent t) -> {
             mzqData = loadMzqDataTask.getValue();
@@ -154,10 +158,10 @@ public class MainApp extends Application {
         });
 
         loadMzqDataTask.setOnFailed((WorkerStateEvent t) -> {
-            pb.progressProperty().unbind();
-            label.textProperty().unbind();
-            pb.setProgress(1);
-            label.setText("File Error");
+            statusPb.progressProperty().unbind();
+            statusLabel.textProperty().unbind();
+            statusPb.setProgress(1);
+            statusLabel.setText("File Error");
             Action response = Dialogs.create()
                     .title("File Error")
                     .message("The input file is not a valid mzQuantML file")
@@ -168,7 +172,6 @@ public class MainApp extends Application {
         loadMzqDataTh.setName("Loading MzQuantMLData");
         loadMzqDataTh.setDaemon(true);
         loadMzqDataTh.start();
-
     }
 
     public MzQuantMLUnmarshaller getUnmarshaller() {
@@ -226,43 +229,26 @@ public class MainApp extends Application {
         }
     }
 
-    private String createMatrixForR() {
+    public void showPCAPlot() {
         TableView<MzqDataMatrixRow> dataMatrixTable = mzqInfoController.getDataMatrixTable();
         ObservableList<MzqDataMatrixRow> rowList = dataMatrixTable.getItems();
-        rowNumber = rowList.size();
-        String x = "";
+        CreateRMatrixTask rmTask = new CreateRMatrixTask(rowList);
 
-        // The minimum value of the values
-        min = 0;
+        statusPb.progressProperty().unbind();
+        statusPb.progressProperty().bind(rmTask.progressProperty());
+        statusLabel.textProperty().unbind();
+        statusLabel.textProperty().bind(rmTask.messageProperty());
 
-        // The maximum value of the values
-        max = 0;
+        rmTask.setOnSucceeded((WorkerStateEvent t) -> {
+            String setMatrix = "X = matrix(c(" + rmTask.getValue().getMatrix() + "), nrow=" + rmTask.getValue().getRowNumber() + ",byrow = TRUE)";
+            re.eval(setMatrix);
+            re.eval("require(graphics)");
+            re.eval("biplot(princomp(X))");
+        });
 
-        for (MzqDataMatrixRow row : rowList) {
-            List<StringProperty> values = row.Values();
-            for (StringProperty value : values) {
-                x = x + value.get() + ",";
-                if (Double.parseDouble(value.get()) < min) {
-                    min = Double.parseDouble(value.get());
-                }
-                if (Double.parseDouble(value.get()) > max) {
-                    max = Double.parseDouble(value.get());
-                }
-            }
-        }
-        x = x.substring(0, x.lastIndexOf(","));
-
-        return x;
-    }
-
-    public void showPCAPlot() {
-        String x = createMatrixForR();
-
-        // Set x matrix
-        String setMatrix = "X = matrix(c(" + x + "), nrow=" + rowNumber + ",byrow = TRUE)";
-        re.eval(setMatrix);
-        re.eval("require(graphics)");
-        re.eval("biplot(princomp(X))");
+        Thread pcaTh = new Thread(rmTask);
+        pcaTh.setDaemon(true);
+        pcaTh.start();
     }
 
     public void saveHeatMapPdf(File pdfFile, double pdfHValue, double pdfWValue) {
@@ -277,72 +263,85 @@ public class MainApp extends Application {
         // Load heatmap.2 library
         re.eval("library(\"gplots\")");
 
-        String x = createMatrixForR();
+        TableView<MzqDataMatrixRow> dataMatrixTable = mzqInfoController.getDataMatrixTable();
+        ObservableList<MzqDataMatrixRow> rowList = dataMatrixTable.getItems();
+        CreateRMatrixTask rmTask = new CreateRMatrixTask(rowList);
 
-        String pdfCmd = "pdf(file='" + pdfFile.getAbsolutePath().replace('\\', '/')
-                + "', height=" + pdfHValue + ", width=" + pdfWValue
-                + ", onefile=TRUE, family='Helvetica', pointsize=20)";
-        System.out.println(pdfCmd);
-        re.eval(pdfCmd);
-        //re.eval("pdf(file='D:/test.pdf', height=50, width=20, onefile=TRUE, family='Helvetica', pointsize=20)");
-//        pdf(file='D:\\HLA Epitopes\\r_epi_workspace\\derek_hms\\AB_epitopes_euro_heatmap.pdf', 
-//        height=50, width=20, onefile=TRUE, family='Helvetica', pointsize=20)
-        re.eval("if (!require(\"RColorBrewer\")) {\n"
-                + "install.packages(\"RColorBrewer\")\n"
-                + "}");
+        statusPb.progressProperty().unbind();
+        statusPb.progressProperty().bind(rmTask.progressProperty());
+        statusLabel.textProperty().unbind();
+        statusLabel.textProperty().bind(rmTask.messageProperty());
 
-        // Require package gplots      
-        re.eval("if (!require(\"gplots\")) {\n"
-                + "install.packages(\"gplots\", dependencies = TRUE)\n"
-                + "}");
-        // Load heatmap.2 library
-        re.eval("library(\"gplots\")");
+        rmTask.setOnSucceeded((WorkerStateEvent t) -> {
+            String pdfCmd = "pdf(file='" + pdfFile.getAbsolutePath().replace('\\', '/')
+                    + "', height=" + pdfHValue + ", width=" + pdfWValue
+                    + ", onefile=TRUE, family='Helvetica', pointsize=20)";
+            System.out.println(pdfCmd);
+            re.eval(pdfCmd);
 
-        re.eval("breaks <- seq(from = "
-                + String.valueOf(min)
-                + ", to = "
-                + String.valueOf(max)
-                + ", length = 200)");
+            re.eval("if (!require(\"RColorBrewer\")) {\n"
+                    + "install.packages(\"RColorBrewer\")\n"
+                    + "}");
 
-        // Set color palette
-        re.eval("color.palette  <- colorRampPalette(c(\"#000000\", \"#DC2121\", \"#E9A915\"))");
+            // Require package gplots      
+            re.eval("if (!require(\"gplots\")) {\n"
+                    + "install.packages(\"gplots\", dependencies = TRUE)\n"
+                    + "}");
+            // Load heatmap.2 library
+            re.eval("library(\"gplots\")");
 
-        // Set x matrix
-        String setMatrix = "X = matrix(c(" + x + "), nrow=" + rowNumber + ",byrow = TRUE)";
-        re.eval(setMatrix);
+            re.eval("breaks <- seq(from = "
+                    + String.valueOf(rmTask.getValue().getMin())
+                    + ", to = "
+                    + String.valueOf(rmTask.getValue().getMax())
+                    + ", length = 200)");
 
-        // Set heatmap
-        String setHeatmap = "heatmap.2(X,\n"
-                + "Rowv=TRUE,\n"
-                + "Colv=TRUE,\n"
-                + "na.rm=FALSE,\n"
-                + "distfun = dist,\n"
-                + "hclustfun = hclust,\n"
-                + "key=TRUE,\n"
-                + "keysize=1,\n"
-                + "trace=\"none\",\n"
-                + "scale=\"none\",\n"
-                + "density.info=c(\"none\"),\n"
-                + "#margins=c(18, 8),\n"
-                + "col=color.palette,\n"
-                + "breaks = breaks,\n"
-                + "lhei=c(0.4,4),\n"
-                + "main=\"Heatmap of\"\n"
-                + ")";
-        re.eval(setHeatmap);
-        re.eval("dev.off()");
-        newStage.close();
+            // Set color palette
+            re.eval("color.palette  <- colorRampPalette(c(\"#000000\", \"#DC2121\", \"#E9A915\"))");
 
-        // open the saved pdf file after generation
-        if (Desktop.isDesktopSupported()) {
-            try {
+            // Set x matrix
+            String setMatrix = "X = matrix(c(" + rmTask.getValue().getMatrix() + "), nrow=" + rmTask.getValue().getRowNumber() + ",byrow = TRUE)";
+            re.eval(setMatrix);
 
-                Desktop.getDesktop().open(pdfFile);
+            // Set heatmap
+            String setHeatmap = "heatmap.2(X,\n"
+                    + "Rowv=TRUE,\n"
+                    + "Colv=TRUE,\n"
+                    + "na.rm=FALSE,\n"
+                    + "distfun = dist,\n"
+                    + "hclustfun = hclust,\n"
+                    + "key=TRUE,\n"
+                    + "keysize=1,\n"
+                    + "trace=\"none\",\n"
+                    + "scale=\"none\",\n"
+                    + "density.info=c(\"none\"),\n"
+                    + "#margins=c(18, 8),\n"
+                    + "col=color.palette,\n"
+                    + "breaks = breaks,\n"
+                    + "lhei=c(0.4,4),\n"
+                    + "main=\"Heatmap of\"\n"
+                    + ")";
+            re.eval(setHeatmap);
+            re.eval("dev.off()");
+
+            newStage.close();
+
+            // open the saved pdf file after generation
+            if (Desktop.isDesktopSupported()) {
+                try {
+
+                    Desktop.getDesktop().open(pdfFile);
+                }
+                catch (IOException ex) {
+                    // no application registered for PDFs
+                }
             }
-            catch (IOException ex) {
-                // no application registered for PDFs
-            }
-        }
+        });
+
+        Thread saveHeatMapTh = new Thread(rmTask);
+        saveHeatMapTh.setDaemon(true);
+        saveHeatMapTh.start();
+
     }
 
     public void showHeatMapinR() {
@@ -352,8 +351,6 @@ public class MainApp extends Application {
             System.err.println("** Version mismatch - Java files don't match library version.");
             //System.exit(1);
         }
-
-        String x = createMatrixForR();
 
         // Start R heatamp process
         //re.eval("source(\"http://www.bioconductor.org/biocLite.R\")");
@@ -370,52 +367,54 @@ public class MainApp extends Application {
         // Load heatmap.2 library
         re.eval("library(\"gplots\")");
 
-        re.eval("breaks <- seq(from = "
-                + String.valueOf(min)
-                + ", to = "
-                + String.valueOf(max)
-                + ", length = 200)");
+        TableView<MzqDataMatrixRow> dataMatrixTable = mzqInfoController.getDataMatrixTable();
+        ObservableList<MzqDataMatrixRow> rowList = dataMatrixTable.getItems();
+        CreateRMatrixTask rmTask = new CreateRMatrixTask(rowList);
 
-        // Set color palette
-        re.eval("color.palette  <- colorRampPalette(c(\"#000000\", \"#DC2121\", \"#E9A915\"))");
+        statusPb.progressProperty().unbind();
+        statusPb.progressProperty().bind(rmTask.progressProperty());
+        statusLabel.textProperty().unbind();
+        statusLabel.textProperty().bind(rmTask.messageProperty());
 
-        // Set x matrix
-        String setMatrix = "X = matrix(c(" + x + "), nrow=" + rowNumber + ",byrow = TRUE)";
-        re.eval(setMatrix);
+        rmTask.setOnSucceeded((WorkerStateEvent t) -> {
+            re.eval("breaks <- seq(from = "
+                    + String.valueOf(rmTask.getValue().getMin())
+                    + ", to = "
+                    + String.valueOf(rmTask.getValue().getMax())
+                    + ", length = 200)");
 
-        // Set heatmap
-        String setHeatmap = "heatmap.2(X,\n"
-                + "Rowv=TRUE,\n"
-                + "Colv=TRUE,\n"
-                + "na.rm=FALSE,\n"
-                + "distfun = dist,\n"
-                + "hclustfun = hclust,\n"
-                + "key=TRUE,\n"
-                + "keysize=1,\n"
-                + "trace=\"none\",\n"
-                + "scale=\"none\",\n"
-                + "density.info=c(\"none\"),\n"
-                + "#margins=c(18, 8),\n"
-                + "col=color.palette,\n"
-                + "breaks = breaks,\n"
-                + "lhei=c(0.4,4),\n"
-                + "main=\"Heatmap of\"\n"
-                + ")";
-        re.eval(setHeatmap);
+            // Set color palette
+            re.eval("color.palette  <- colorRampPalette(c(\"#000000\", \"#DC2121\", \"#E9A915\"))");
 
-    }
+            // Set x matrix
+            String setMatrix = "X = matrix(c(" + rmTask.getValue().getMatrix() + "), nrow=" + rmTask.getValue().getRowNumber() + ",byrow = TRUE)";
+            re.eval(setMatrix);
 
-    /**
-     * The main() method is ignored in correctly deployed JavaFX application.
-     * main() serves only as fallback in case the application can not be
-     * launched through deployment artifacts, e.g., in IDEs with limited FX
-     * support. NetBeans ignores main().
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
+            // Set heatmap
+            String setHeatmap = "heatmap.2(X,\n"
+                    + "Rowv=TRUE,\n"
+                    + "Colv=TRUE,\n"
+                    + "na.rm=FALSE,\n"
+                    + "distfun = dist,\n"
+                    + "hclustfun = hclust,\n"
+                    + "key=TRUE,\n"
+                    + "keysize=1,\n"
+                    + "trace=\"none\",\n"
+                    + "scale=\"none\",\n"
+                    + "density.info=c(\"none\"),\n"
+                    + "#margins=c(18, 8),\n"
+                    + "col=color.palette,\n"
+                    + "breaks = breaks,\n"
+                    + "lhei=c(0.4,4),\n"
+                    + "main=\"Heatmap of\"\n"
+                    + ")";
+            re.eval(setHeatmap);
+        });
 
-        launch(args);
+        Thread showHeatMapTh = new Thread(rmTask);
+        showHeatMapTh.setDaemon(true);
+        showHeatMapTh.start();
+
     }
 
     public void showCurve() {
@@ -432,7 +431,6 @@ public class MainApp extends Application {
 
         TableView<MzqDataMatrixRow> dataMatrixTable = mzqInfoController.getDataMatrixTable();
         ObservableList<MzqDataMatrixRow> rowList = dataMatrixTable.getSelectionModel().getSelectedItems();
-        rowNumber = rowList.size();
 
         for (MzqDataMatrixRow row : rowList) {
             XYChart.Series series = new XYChart.Series();
@@ -441,7 +439,12 @@ public class MainApp extends Application {
             List<StringProperty> values = row.Values();
             int i = 1;
             for (StringProperty value : values) {
-                series.getData().add(new XYChart.Data(dataMatrixTable.getColumns().get(i).getText(), Double.parseDouble(value.get())));
+                if (NumberUtils.isNumber(value.get())) {
+                    series.getData().add(new XYChart.Data(dataMatrixTable.getColumns().get(i).getText(), Double.parseDouble(value.get())));
+                }
+                else {
+                    series.getData().add(new XYChart.Data(dataMatrixTable.getColumns().get(i).getText(), -1));
+                }
                 i++;
             }
 
@@ -496,6 +499,19 @@ public class MainApp extends Application {
 
         curveStage.setScene(scene);
         curveStage.show();
+    }
+
+    /**
+     * The main() method is ignored in correctly deployed JavaFX application.
+     * main() serves only as fallback in case the application can not be
+     * launched through deployment artifacts, e.g., in IDEs with limited FX
+     * support. NetBeans ignores main().
+     *
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+
+        launch(args);
     }
 
 }

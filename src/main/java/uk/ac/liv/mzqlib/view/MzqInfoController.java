@@ -13,6 +13,8 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -28,7 +30,6 @@ import uk.ac.liv.jmzqml.model.mzqml.Protein;
 import uk.ac.liv.jmzqml.model.mzqml.QuantLayer;
 import uk.ac.liv.jmzqml.model.mzqml.Row;
 import uk.ac.liv.mzqlib.MainApp;
-import uk.ac.liv.mzqlib.model.MzQuantMLData;
 import uk.ac.liv.mzqlib.model.MzQuantMLSummary;
 import uk.ac.liv.mzqlib.model.MzqAssayQuantLayer;
 import uk.ac.liv.mzqlib.model.MzqDataMatrixRow;
@@ -81,7 +82,7 @@ public class MzqInfoController {
 // Listen for selection changes and show the person details when changed.
         assayQuantLayerTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showAssayQLDetails(newValue));
-              
+
     }
 
     public void setMainApp(MainApp mainApp) {
@@ -104,9 +105,20 @@ public class MzqInfoController {
             dataMatrixTable.getColumns().clear();
             dataMatrixTable.getItems().clear();
 
-            ContextMenu addMenu = new ContextMenu();
-            addMenu.getItems().add(new MenuItem("test"));
-            dataMatrixTable.setContextMenu(addMenu);
+            ContextMenu popupMenu = new ContextMenu();
+            MenuItem curveMenuItem = new MenuItem("Curves");
+
+            popupMenu.getItems().add(curveMenuItem);
+            dataMatrixTable.setContextMenu(popupMenu);
+
+            curveMenuItem.setOnAction(new EventHandler() {
+
+                @Override
+                public void handle(Event event) {
+                    mainApp.showCurve();
+                }
+
+            });
 
             // Set table column resizable policy
             dataMatrixTable.setColumnResizePolicy(CONSTRAINED_RESIZE_POLICY);

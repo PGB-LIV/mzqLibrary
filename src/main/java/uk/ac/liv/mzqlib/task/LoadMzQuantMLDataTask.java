@@ -45,7 +45,7 @@ public class LoadMzQuantMLDataTask extends Task<MzQuantMLData> {
 
         MzQuantMLData mzqData = new MzQuantMLData();
 
-        //
+            //
         // unmarshalling mzq file
         //
         updateMessage("Unmarshalling mzq file");
@@ -54,7 +54,7 @@ public class LoadMzQuantMLDataTask extends Task<MzQuantMLData> {
 
         mzqData.setMzQuantMLUnmarshaller(mzqUm);
 
-        //
+            //
         // construct MzQuantMLSummary object
         //
         updateMessage("Loading file summary");
@@ -98,7 +98,7 @@ public class LoadMzQuantMLDataTask extends Task<MzQuantMLData> {
 
         mzqData.setMzQuantMLSummary(mzqSum);
 
-        //
+            //
         // Construct a list of MzqAssayQuantLayer
         //          
         ObservableList<MzqAssayQuantLayer> assayQuantLayerList = FXCollections.observableArrayList();

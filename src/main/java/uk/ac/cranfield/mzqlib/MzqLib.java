@@ -74,12 +74,12 @@ public class MzqLib {
             System.out.println("Can not find the specified file:"+file.getAbsolutePath());
             System.exit(1);
         }
-        boolean validFlag = Utils.validateMzqFile(mzqFile);
-        if(!validFlag){
-            System.out.println("The mzQuantML validation went wrong, program terminated");
-            System.exit(1);
-        }
-        System.out.println("Validation successful for the file "+mzqFile);
+        //boolean validFlag = Utils.validateMzqFile(mzqFile);
+//        if(!validFlag){
+//            System.out.println("The mzQuantML validation went wrong, program terminated");
+//            System.exit(1);
+//        }
+//        System.out.println("Validation successful for the file "+mzqFile);
         
         MzQuantMLUnmarshaller unmarshaller = new MzQuantMLUnmarshaller(file);
         

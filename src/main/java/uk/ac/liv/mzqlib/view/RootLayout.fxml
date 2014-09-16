@@ -35,6 +35,11 @@
                   <MenuItem mnemonicParsing="false" onAction="#handlePCA" text="Principle Component Analysis" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Command Line GUI">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#showGui" text="Run GUI" />
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
               <MenuItem mnemonicParsing="false" text="About" />

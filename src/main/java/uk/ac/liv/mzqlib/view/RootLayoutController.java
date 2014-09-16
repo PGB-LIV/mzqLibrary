@@ -106,5 +106,10 @@ public class RootLayoutController {
     public void disbbleHeatMap() {
         heatmap.setDisable(true);
     }
+    
+    @FXML
+    private void showGui(){
+        mainApp.showGui();
+    }
 
 }

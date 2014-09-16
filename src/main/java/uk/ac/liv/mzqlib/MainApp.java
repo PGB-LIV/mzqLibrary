@@ -1,4 +1,3 @@
-
 package uk.ac.liv.mzqlib;
 
 import java.awt.Desktop;
@@ -9,18 +8,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import javafx.application.Application;
-import static javafx.application.Application.launch;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.*;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialogs;
@@ -499,6 +499,26 @@ public class MainApp extends Application {
 
         curveStage.setScene(scene);
         curveStage.show();
+    }
+
+    public void showGui() {
+
+        SwingUtilities.invokeLater(() -> {
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                CommandLineGui gui = new CommandLineGui();
+                gui.setTitle("Mzq library command line GUI");
+                gui.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                gui.setVisible(true);
+            }
+            catch (ClassNotFoundException ex) {
+                Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            catch (InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+                ex.printStackTrace();
+            }
+        });
+
     }
 
     /**

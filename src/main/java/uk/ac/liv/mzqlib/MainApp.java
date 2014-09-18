@@ -39,9 +39,12 @@ public class MainApp extends Application {
     private MzqInfoController mzqInfoController;
     private static Rengine re;
     private RootLayoutController rootLayoutController;
-    private HBox hb;
-    private Label statusLabel;
-    private ProgressBar statusPb;
+
+    private static final String VERSION = "1.0";
+    private static final String INCEPTION_YEAR = "2014";
+//    private HBox hb;
+//    private Label statusLabel;
+//    private ProgressBar statusPb;
 
     private MzQuantMLData mzqData = new MzQuantMLData();
 
@@ -86,22 +89,21 @@ public class MainApp extends Application {
             // Give the controller access to the main app.
             rootLayoutController = loader.getController();
             rootLayoutController.setMainApp(this);
-            rootLayoutController.disbbleHeatMap();
+            rootLayoutController.disbbleMenus();
 
             //Set status bar
             // Status bar
-            hb = new HBox();
-            hb.setSpacing(20);
-            hb.setPadding(new Insets(0, 10, 0, 10));
-            statusLabel = new Label("Welcome to use mzq library");
-            // Set tooltip message for message label
-            statusLabel.setTooltip(new Tooltip("For file size over 100MB, unmarshalling process could take over 10 minutes"));
-
-            statusPb = new ProgressBar(0);
-            statusLabel.setGraphic(statusPb);
-            hb.getChildren().addAll(statusLabel);
-            rootLayout.setBottom(hb);
-
+//            hb = new HBox();
+//            hb.setSpacing(20);
+//            hb.setPadding(new Insets(0, 10, 0, 10));
+//            statusLabel = new Label("Welcome to use mzq library");
+//            // Set tooltip message for message label
+//            statusLabel.setTooltip(new Tooltip("For file size over 100MB, unmarshalling process could take over 10 minutes"));
+//
+//            statusPb = new ProgressBar(0);
+//            statusLabel.setGraphic(statusPb);
+//            hb.getChildren().addAll(statusLabel);
+//            rootLayout.setBottom(hb);
             primaryStage.show();
         }
         catch (IOException ex) {
@@ -129,11 +131,15 @@ public class MainApp extends Application {
 
         LoadMzQuantMLDataTask loadMzqDataTask = new LoadMzQuantMLDataTask(mzqFile);
 
-        statusPb.progressProperty().unbind();
-        statusPb.progressProperty().bind(loadMzqDataTask.progressProperty());
-        statusLabel.textProperty().unbind();
-        statusLabel.textProperty().bind(loadMzqDataTask.messageProperty());
+        Dialogs.create()
+                .title("Loading file")
+                .masthead("For file size over 100MB, unmarshalling process could take over 10 minutes.")
+                .showWorkerProgress(loadMzqDataTask);
 
+//        statusPb.progressProperty().unbind();
+//        statusPb.progressProperty().bind(loadMzqDataTask.progressProperty());
+//        statusLabel.textProperty().unbind();
+//        statusLabel.textProperty().bind(loadMzqDataTask.messageProperty());
         loadMzqDataTask.setOnSucceeded((WorkerStateEvent t) -> {
             mzqData = loadMzqDataTask.getValue();
 
@@ -148,7 +154,7 @@ public class MainApp extends Application {
                 mzqInfoController = loader.getController();
                 mzqInfoController.showMzqSummary(mzqData.getMzQuantMLSummary());
                 mzqInfoController.setMainApp(this);
-                rootLayoutController.enableHeatMap();
+                rootLayoutController.enableMenus();
             }
             catch (IOException ex) {
                 Logger.getLogger(RootLayoutController.class.getName()).log(Level.SEVERE, null, ex);
@@ -158,10 +164,10 @@ public class MainApp extends Application {
         });
 
         loadMzqDataTask.setOnFailed((WorkerStateEvent t) -> {
-            statusPb.progressProperty().unbind();
-            statusLabel.textProperty().unbind();
-            statusPb.setProgress(1);
-            statusLabel.setText("File Error");
+//            statusPb.progressProperty().unbind();
+//            statusLabel.textProperty().unbind();
+//            statusPb.setProgress(1);
+//            statusLabel.setText("File Error");
             Action response = Dialogs.create()
                     .title("File Error")
                     .message("The input file is not a valid mzQuantML file")
@@ -180,7 +186,7 @@ public class MainApp extends Application {
 
     public void closeMzqInfo() {
         rootLayout.setCenter(null);
-        rootLayoutController.disbbleHeatMap();
+        rootLayoutController.disbbleMenus();
         primaryStage.setTitle("mzQuantML library");
     }
 
@@ -234,11 +240,10 @@ public class MainApp extends Application {
         ObservableList<MzqDataMatrixRow> rowList = dataMatrixTable.getItems();
         CreateRMatrixTask rmTask = new CreateRMatrixTask(rowList);
 
-        statusPb.progressProperty().unbind();
-        statusPb.progressProperty().bind(rmTask.progressProperty());
-        statusLabel.textProperty().unbind();
-        statusLabel.textProperty().bind(rmTask.messageProperty());
-
+//        statusPb.progressProperty().unbind();
+//        statusPb.progressProperty().bind(rmTask.progressProperty());
+//        statusLabel.textProperty().unbind();
+//        statusLabel.textProperty().bind(rmTask.messageProperty());
         rmTask.setOnSucceeded((WorkerStateEvent t) -> {
             String setMatrix = "X = matrix(c(" + rmTask.getValue().getMatrix() + "), nrow=" + rmTask.getValue().getRowNumber() + ",byrow = TRUE)";
             re.eval(setMatrix);
@@ -267,11 +272,10 @@ public class MainApp extends Application {
         ObservableList<MzqDataMatrixRow> rowList = dataMatrixTable.getItems();
         CreateRMatrixTask rmTask = new CreateRMatrixTask(rowList);
 
-        statusPb.progressProperty().unbind();
-        statusPb.progressProperty().bind(rmTask.progressProperty());
-        statusLabel.textProperty().unbind();
-        statusLabel.textProperty().bind(rmTask.messageProperty());
-
+//        statusPb.progressProperty().unbind();
+//        statusPb.progressProperty().bind(rmTask.progressProperty());
+//        statusLabel.textProperty().unbind();
+//        statusLabel.textProperty().bind(rmTask.messageProperty());
         rmTask.setOnSucceeded((WorkerStateEvent t) -> {
             String pdfCmd = "pdf(file='" + pdfFile.getAbsolutePath().replace('\\', '/')
                     + "', height=" + pdfHValue + ", width=" + pdfWValue
@@ -371,11 +375,14 @@ public class MainApp extends Application {
         ObservableList<MzqDataMatrixRow> rowList = dataMatrixTable.getItems();
         CreateRMatrixTask rmTask = new CreateRMatrixTask(rowList);
 
-        statusPb.progressProperty().unbind();
-        statusPb.progressProperty().bind(rmTask.progressProperty());
-        statusLabel.textProperty().unbind();
-        statusLabel.textProperty().bind(rmTask.messageProperty());
+        Dialogs.create()
+                .title("Generating heat map by R")
+                .showWorkerProgress(rmTask);
 
+//        statusPb.progressProperty().unbind();
+//        statusPb.progressProperty().bind(rmTask.progressProperty());
+//        statusLabel.textProperty().unbind();
+//        statusLabel.textProperty().bind(rmTask.messageProperty());
         rmTask.setOnSucceeded((WorkerStateEvent t) -> {
             re.eval("breaks <- seq(from = "
                     + String.valueOf(rmTask.getValue().getMin())
@@ -519,6 +526,14 @@ public class MainApp extends Application {
             }
         });
 
+    }
+
+    public void showAbout() {
+        Dialogs.create()
+                .title("About")
+                .masthead("Mzq Library ver " + VERSION)
+                .message("Mzq library is a toolset for post-processing MzQuantML file. For more information, please visit http://code.google.com/p/mzq-lib/.")
+                .showInformation();
     }
 
     /**

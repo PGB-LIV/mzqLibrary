@@ -1,13 +1,14 @@
 package uk.ac.liv.mzqlib.model;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import javax.xml.bind.JAXBException;
 import uk.ac.cranfield.mzqlib.MzqLib;
-import uk.ac.cranfield.mzqlib.converter.CsvConverter;
 import uk.ac.cranfield.mzqlib.data.MzqData;
 import uk.ac.liv.jmzqml.MzQuantMLElement;
 import uk.ac.liv.jmzqml.model.mzqml.AnalysisSummary;
@@ -21,6 +22,8 @@ import uk.ac.liv.jmzqml.model.mzqml.RatioList;
 import uk.ac.liv.jmzqml.model.mzqml.SoftwareList;
 import uk.ac.liv.jmzqml.model.mzqml.StudyVariableList;
 import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;
+import uk.ac.liv.mzqlib.consensusxml.convertor.ConsensusXMLProcessor;
+import uk.ac.liv.mzqlib.consensusxml.convertor.ConsensusXMLProcessorFactory;
 
 import uk.ac.liv.mzqlib.util.Utils;
 import uk.ac.liv.mzqlib.utils.Gzipper;
@@ -31,10 +34,21 @@ import uk.ac.liv.mzqlib.utils.Gzipper;
  */
 public class MzQuantMLLib {
 
-    public static String csvConvertorParams = "No options needed (Params)";
-    public static String csvConvertorUsageExample = "No options needed (Usage Example)";
-    public static String csvConvertorToolDescription = "No options needed (Tool Description)";
-    public static String csvConvertorUsage = "No options needed (Usage)";
+    public static String csvConvertorParams = "-compress true|false";
+    public static String csvConvertorUsageExample = "-compress false";
+    public static String csvConvertorToolDescription = "";
+    public static String csvConvertorUsage = "CsvConvertor input.mzq output.csv " + csvConvertorParams + " \n\nDescription:\n" + csvConvertorToolDescription;
+
+    public static String htmlConvertorParams = "-compress true|false";
+    public static String htmlConvertorUsageExample = "-compress false";
+    public static String htmlConvertorToolDescription = "";
+    public static String htmlConvertorUsage = "HtmlConvertor input.mzq output.html " + htmlConvertorParams + " \n\nDescription:\n" + htmlConvertorToolDescription;
+
+    public static String consensusXMLConvertorParams = "-compress true|false";
+    public static String consensusXMLConvertorUsageExample = "-compress false";
+    public static String consensusXMLConvertorToolDescription = "";
+    public static String consensusXMLConvertorUsage = "ConsensusXMLConvertor input.consensusXML output.mzq " + consensusXMLConvertorParams
+            + " \n\nDescription:\n" + consensusXMLConvertorToolDescription;
 
     public static String fdrParams = "-decoyRegex decoyRegex -decoyValue decoyToTargetRatio -cvTerm cvTerm -betterScoresAreLower true|false [-compress true|false]";
     public static String fdrUsageExample = " -decoyRegex Rev_ -decoyValue 1 -cvTerm MS:1001172 -betterScoresAreLower true -compress true";
@@ -159,33 +173,36 @@ public class MzQuantMLLib {
     public MzQuantMLLib() {
         allFunctions = new HashMap<>();
         allFunctions.put("CsvConvertor", csvConvertorParams + ";@;" + csvConvertorUsage + ";@;" + csvConvertorUsageExample);
-        allFunctions.put("FalseDiscoveryRate", fdrParams + ";@;" + fdrUsage + ";@;" + fdrUsageExample);
-        allFunctions.put("FalseDiscoveryRateGlobal", fdrGlobalParams + ";@;" + fdrGlobalUsage + ";@;" + fdrGlobalUsageExample);
+        allFunctions.put("HtmlConvertor", htmlConvertorParams + ";@;" + htmlConvertorUsage + ";@;" + htmlConvertorUsageExample);
+        allFunctions.put("ConsensusXMLConvertor", consensusXMLConvertorParams + ";@;" + consensusXMLConvertorUsage + ";@;" + consensusXMLConvertorUsageExample);
 
-        allFunctions.put("Omssa2mzid", omssa2mzidparams + ";@;" + omssa2mzidUsage + ";@;" + omssa2mzidUsageExample);
-        allFunctions.put("Tandem2mzid", tandem2mzidParams + ";@;" + tandem2mzidUsage + ";@;" + tandem2mzidUsageExample);
-        allFunctions.put("Csv2mzid", csv2mzidParams + ";@;" + csv2mzidUsage + ";@;" + csv2mzidUsageExample);
-        allFunctions.put("Mzid2Csv", mzid2CsvParams + ";@;" + mzid2CsvUsage + ";@;" + mzid2CsvUsageExample);
-
-        allFunctions.put("ProteoGrouper", proteogrouperParams + ";@;" + proteogrouperUsage + ";@;" + proteogrouperUsageExample);
-        allFunctions.put("Threshold", thresholdParams + ";@;" + thresholdUsage + ";@;" + thresholdUsageExample);
-        allFunctions.put("InsertMetaDataFromFasta", insertMetaDataParams + ";@;" + insertMetaDataUsage + ";@;" + insertMetaDataUsageExample);
-        allFunctions.put("AddEmpaiToMzid", emPAIParams + ";@;" + emPAIUsage + ";@;" + emPAIUsageExample);
-        allFunctions.put("CombineSearchEngines", combinedSearchParams + ";@;" + combinedSearchUsage + ";@;" + combinedSearchUsageExample);
-        allFunctions.put("CreateRestrictedFASTADatabase", createRestrictedFASTADatabaseParams + ";@;" + createRestrictedFASTADatabaseUsage + ";@;" + createRestrictedFASTADatabaseUsageExample);
-        allFunctions.put("MzIdentMLToMzTab", mzIdentMLToMzTabParams + ";@;" + mzIdentMLToMzTabUsage + ";@;" + mzIdentMLToMzTabUsageExample);
-        allFunctions.put("RescoreMods", rescoreModsParams + ";@;" + rescoreModsUsage + ";@;" + rescoreModsUsageExample);
-
-        allFunctions.put("CombinePSMMzidFiles", combinePSMMzidFilesParams + ";@;" + combinePSMMzidFilesUsage + ";@;" + combinePSMMzidFilesUsageExample);
-
-        allFunctions.put("GenericFasta", genericFastaParams + ";@;" + genericFastaUsage + ";@;" + genericFastaUsageExample);
-        allFunctions.put("AddGenomeCoordinatesForPeptides", addGenomeCoordinatesForPeptidesParams + ";@;" + addGenomeCoordinatesForPeptidesUsage + ";@;" + addGenomeCoordinatesForPeptidesUsageExample);
-
-        allFunctions.put("XtandemPercolator", xtandemPercolatorParams + ";@;" + xtandemPercolatorUsage + ";@;" + xtandemPercolatorExample);
-        allFunctions.put("OmssaPercolator", omssaPercolatorParams + ";@;" + omssaPercolatorUsage + ";@;" + omssaPercolatorExample);
-        allFunctions.put("MsgfPercolator", msgfPercolatorParams + ";@;" + msgfPercolatorUsage + ";@;" + msgfPercolatorExample);
-        allFunctions.put("AddRetentionTimeToMzid", addRetentionTimeToMzidParams + ";@;" + addRetentionTimeToMzidUsage + ";@;" + addRetentionTimeToMzidExample);
-        allFunctions.put("CombineFastaFiles", combineFastaFilesParams + ";@;" + combineFastaFilesUsage + ";@;" + combineFastaFilesExample);
+//        allFunctions.put("FalseDiscoveryRate", fdrParams + ";@;" + fdrUsage + ";@;" + fdrUsageExample);
+//        allFunctions.put("FalseDiscoveryRateGlobal", fdrGlobalParams + ";@;" + fdrGlobalUsage + ";@;" + fdrGlobalUsageExample);
+//
+//        allFunctions.put("Omssa2mzid", omssa2mzidparams + ";@;" + omssa2mzidUsage + ";@;" + omssa2mzidUsageExample);
+//        allFunctions.put("Tandem2mzid", tandem2mzidParams + ";@;" + tandem2mzidUsage + ";@;" + tandem2mzidUsageExample);
+//        allFunctions.put("Csv2mzid", csv2mzidParams + ";@;" + csv2mzidUsage + ";@;" + csv2mzidUsageExample);
+//        allFunctions.put("Mzid2Csv", mzid2CsvParams + ";@;" + mzid2CsvUsage + ";@;" + mzid2CsvUsageExample);
+//
+//        allFunctions.put("ProteoGrouper", proteogrouperParams + ";@;" + proteogrouperUsage + ";@;" + proteogrouperUsageExample);
+//        allFunctions.put("Threshold", thresholdParams + ";@;" + thresholdUsage + ";@;" + thresholdUsageExample);
+//        allFunctions.put("InsertMetaDataFromFasta", insertMetaDataParams + ";@;" + insertMetaDataUsage + ";@;" + insertMetaDataUsageExample);
+//        allFunctions.put("AddEmpaiToMzid", emPAIParams + ";@;" + emPAIUsage + ";@;" + emPAIUsageExample);
+//        allFunctions.put("CombineSearchEngines", combinedSearchParams + ";@;" + combinedSearchUsage + ";@;" + combinedSearchUsageExample);
+//        allFunctions.put("CreateRestrictedFASTADatabase", createRestrictedFASTADatabaseParams + ";@;" + createRestrictedFASTADatabaseUsage + ";@;" + createRestrictedFASTADatabaseUsageExample);
+//        allFunctions.put("MzIdentMLToMzTab", mzIdentMLToMzTabParams + ";@;" + mzIdentMLToMzTabUsage + ";@;" + mzIdentMLToMzTabUsageExample);
+//        allFunctions.put("RescoreMods", rescoreModsParams + ";@;" + rescoreModsUsage + ";@;" + rescoreModsUsageExample);
+//
+//        allFunctions.put("CombinePSMMzidFiles", combinePSMMzidFilesParams + ";@;" + combinePSMMzidFilesUsage + ";@;" + combinePSMMzidFilesUsageExample);
+//
+//        allFunctions.put("GenericFasta", genericFastaParams + ";@;" + genericFastaUsage + ";@;" + genericFastaUsageExample);
+//        allFunctions.put("AddGenomeCoordinatesForPeptides", addGenomeCoordinatesForPeptidesParams + ";@;" + addGenomeCoordinatesForPeptidesUsage + ";@;" + addGenomeCoordinatesForPeptidesUsageExample);
+//
+//        allFunctions.put("XtandemPercolator", xtandemPercolatorParams + ";@;" + xtandemPercolatorUsage + ";@;" + xtandemPercolatorExample);
+//        allFunctions.put("OmssaPercolator", omssaPercolatorParams + ";@;" + omssaPercolatorUsage + ";@;" + omssaPercolatorExample);
+//        allFunctions.put("MsgfPercolator", msgfPercolatorParams + ";@;" + msgfPercolatorUsage + ";@;" + msgfPercolatorExample);
+//        allFunctions.put("AddRetentionTimeToMzid", addRetentionTimeToMzidParams + ";@;" + addRetentionTimeToMzidUsage + ";@;" + addRetentionTimeToMzidExample);
+//        allFunctions.put("CombineFastaFiles", combineFastaFilesParams + ";@;" + combineFastaFilesUsage + ";@;" + combineFastaFilesExample);
     }
 
     /**
@@ -268,11 +285,28 @@ public class MzQuantMLLib {
 
                 if (args[0].equals("CsvConvertor")) {
                     if (inputFileName != null && outputFileName != null) {
-
                         MzqLib mzqlib = new MzqLib("csv", inputFileName, outputFileName);
                     }
                     else {
                         guiFeedback = "Error, usage: " + csvConvertorUsage;
+                    }
+                }
+                else if (args[0].equals("HtmlConvertor")) {
+                    if (inputFileName != null && outputFileName != null) {
+                        MzqLib mzqlib = new MzqLib("html", inputFileName, outputFileName);
+                    }
+                }
+                else if (args[0].equals("ConsensusXMLConvertor")) {
+
+                    try {
+                        ConsensusXMLProcessor conProc = ConsensusXMLProcessorFactory.getInstance().buildConsensusXMLProcessor(new File(inputFileName));
+                        conProc.convert(outputFileName);
+                    }
+                    catch (JAXBException | IOException ex) {
+                        System.out.println("Error running ConsensusXMLConvertor: " + userFeedback + consensusXMLConvertorUsage);
+                        guiFeedback = "Error running ConsensusXMLConvertor: " + consensusXMLConvertorUsage + "\n"
+                                + ex.getMessage();
+
                     }
                 }
 //                else if (args[0].equals("MzIdentMLToMzTab")) {

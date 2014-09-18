@@ -13,19 +13,19 @@
           <Menu mnemonicParsing="false" text="File">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#handleOpen" text="Open file" />
-                  <Menu mnemonicParsing="false" text="Export to">
+                  <Menu fx:id="exportTo" mnemonicParsing="false" text="Export to">
                     <items>
                       <MenuItem mnemonicParsing="false" text="CSV file" />
                         <MenuItem mnemonicParsing="false" text="HTML file" />
                     </items>
                   </Menu>
-                  <MenuItem mnemonicParsing="false" onAction="#handleClose" text="Close file" />
+                  <MenuItem fx:id="closeFile" mnemonicParsing="false" onAction="#handleClose" text="Close file" />
                   <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Statistics">
+          <Menu fx:id="statistics" mnemonicParsing="false" text="Statistics">
             <items>
-                  <Menu fx:id="heatmap" mnemonicParsing="false" text="Heatmap">
+                  <Menu mnemonicParsing="false" text="Heatmap">
                      <items>
                     <MenuItem mnemonicParsing="false" onAction="#handleHeatMapinR" text="Plot in R console" />
                         <MenuItem mnemonicParsing="false" onAction="#handleHeatMapPdf" text="Save as pdf" />
@@ -42,7 +42,7 @@
             </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" onAction="#showAbout" text="About" />
             </items>
           </Menu>
         </menus>

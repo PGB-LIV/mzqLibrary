@@ -9,6 +9,7 @@ package uk.ac.liv.mzqlib.view;
 import java.io.File;
 import javafx.fxml.FXML;
 import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -28,7 +29,13 @@ public class RootLayoutController {
     private File file; //mzq file
 
     @FXML
-    private Menu heatmap;
+    private Menu statistics;
+    
+    @FXML
+    private Menu exportTo;
+    
+    @FXML
+    private MenuItem closeFile;
 
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
@@ -99,12 +106,16 @@ public class RootLayoutController {
         System.exit(0);
     }
 
-    public void enableHeatMap() {
-        heatmap.setDisable(false);
+    public void enableMenus() {
+        statistics.setDisable(false);
+        exportTo.setDisable(false);
+        closeFile.setDisable(false);
     }
 
-    public void disbbleHeatMap() {
-        heatmap.setDisable(true);
+    public void disbbleMenus() {
+        statistics.setDisable(true);
+        exportTo.setDisable(true);
+        closeFile.setDisable(true);
     }
     
     @FXML
@@ -112,4 +123,8 @@ public class RootLayoutController {
         mainApp.showGui();
     }
 
+    @FXML
+    private void showAbout(){
+        mainApp.showAbout();
+    }
 }

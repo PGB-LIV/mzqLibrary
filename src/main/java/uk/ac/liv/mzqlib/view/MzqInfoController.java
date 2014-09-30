@@ -1,18 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package uk.ac.liv.mzqlib.view;
 
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.beans.property.StringProperty;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -23,12 +12,6 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import static javafx.scene.control.TableView.CONSTRAINED_RESIZE_POLICY;
-import javax.xml.bind.JAXBException;
-import uk.ac.liv.jmzqml.model.mzqml.DataMatrix;
-import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensus;
-import uk.ac.liv.jmzqml.model.mzqml.Protein;
-import uk.ac.liv.jmzqml.model.mzqml.QuantLayer;
-import uk.ac.liv.jmzqml.model.mzqml.Row;
 import uk.ac.liv.mzqlib.MainApp;
 import uk.ac.liv.mzqlib.model.MzQuantMLSummary;
 import uk.ac.liv.mzqlib.model.MzqAssayQuantLayer;
@@ -50,7 +33,9 @@ public class MzqInfoController {
     @FXML
     private TableColumn<MzqAssayQuantLayer, String> parentListId;
     @FXML
-    private TableView dataMatrixTable;
+    private TableColumn<MzqAssayQuantLayer, String> dataType;
+    @FXML
+    private TableView<MzqDataMatrixRow> dataMatrixTable;
     @FXML
     private Label techniqueUsed;
     @FXML
@@ -75,11 +60,11 @@ public class MzqInfoController {
     private void initialize() {
         assayQLId.setCellValueFactory(cellData -> cellData.getValue().quantLayerId());
         parentListId.setCellValueFactory(cellData -> cellData.getValue().listId());
+        dataType.setCellValueFactory(cellData -> cellData.getValue().getDataType());
 
         // Clear person details.
         showAssayQLDetails(null);
-
-// Listen for selection changes and show the person details when changed.
+        // Listen for selection changes and show the person details when changed.
         assayQuantLayerTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showAssayQLDetails(newValue));
 
@@ -96,7 +81,7 @@ public class MzqInfoController {
         numberProteinList.textProperty().bind(Bindings.format("%d", sum.proteinListNumber()));
         numberPeptideList.textProperty().bind(Bindings.format("%d", sum.peptideListNumber()));
         numberFeatureList.textProperty().bind(Bindings.format("%d", sum.featureListNumber()));
-
+        software.textProperty().bind(sum.getSoftware());
     }
 
     private void showAssayQLDetails(MzqAssayQuantLayer assayQL) {
@@ -106,7 +91,7 @@ public class MzqInfoController {
             dataMatrixTable.getItems().clear();
 
             ContextMenu popupMenu = new ContextMenu();
-            MenuItem curveMenuItem = new MenuItem("Curves");
+            MenuItem curveMenuItem = new MenuItem("Line plot");
 
             popupMenu.getItems().add(curveMenuItem);
             dataMatrixTable.setContextMenu(popupMenu);
@@ -126,9 +111,6 @@ public class MzqInfoController {
             // Set selection mode to  multiple
             dataMatrixTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-            QuantLayer ql = assayQL.getQuantLayer();
-            List<String> columnNames = ql.getColumnIndex();
-
             // The first column
             TableColumn<MzqDataMatrixRow, String> idCol = new TableColumn("Id");
             idCol.setCellValueFactory(cellData -> cellData.getValue().ObjectId());
@@ -136,53 +118,17 @@ public class MzqInfoController {
             dataMatrixTable.getColumns().add(idCol);
 
             int i = 0;
-            for (String colName : columnNames) {
+            for (StringProperty colName : assayQL.getColumnNames()) {
                 final int j = i;
-                TableColumn<MzqDataMatrixRow, String> col = new TableColumn(colName);
+                TableColumn<MzqDataMatrixRow, String> col = new TableColumn(colName.getValue());
                 col.setCellValueFactory(cellData -> cellData.getValue().Value(j));
                 i++;
                 dataMatrixTable.getColumns().add(col);
             }
-            DataMatrix dm = ql.getDataMatrix();
-
-            List<Row> rowList = dm.getRow();
-            for (Row row : rowList) {
-                try {
-                    ObservableList<String> values = FXCollections.observableArrayList();
-                    MzqDataMatrixRow qlRow = new MzqDataMatrixRow();
-
-                    // get object reference
-                    String objectId = row.getObjectRef();
-                    String objectType = assayQL.getRowObjectType();
-                    switch (objectType) {
-                        case "Protein":
-                            Protein prot = mainApp.getUnmarshaller().unmarshal(uk.ac.liv.jmzqml.model.mzqml.Protein.class, objectId);
-                            qlRow.setObjectId(new SimpleStringProperty(prot.getAccession()));
-                            break;
-                        case "PeptideConsensus":
-                            PeptideConsensus pep = mainApp.getUnmarshaller().unmarshal(uk.ac.liv.jmzqml.model.mzqml.PeptideConsensus.class, objectId);
-                            qlRow.setObjectId(new SimpleStringProperty(pep.getPeptideSequence()));
-                            break;
-                        default:
-                            qlRow.setObjectId(new SimpleStringProperty(objectId));
-                            break;
-                    }
-
-                    // get value of each row
-                    values.addAll(row.getValue());
-                    qlRow.setValues(values);
-                    dataMatrixTable.getItems().add(qlRow);
-                }
-                catch (JAXBException ex) {
-                    Logger.getLogger(MzqInfoController.class.getName()).log(Level.SEVERE, null, ex);
-                    System.out.println("Unmarshall exception: " + ex.getMessage());
-                }
-            }
-
+            dataMatrixTable.getItems().addAll(assayQL.getDmRows());
         }
         else {
-            // Person is null, remove all the text.
-
+            //remove all the text.
         }
     }
 

@@ -79,7 +79,7 @@ public class CommandLineGui extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MzIdentML Library");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("MzIdentML Library"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Mzq Library"));
 
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

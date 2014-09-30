@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package uk.ac.liv.mzqlib.model;
 
 import java.util.ArrayList;
 import java.util.List;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
@@ -25,6 +25,7 @@ public class MzQuantMLSummary {
     private final IntegerProperty proteinGroupListNumber;
     private final IntegerProperty peptideListNumber;
     private final IntegerProperty featureListNumber;
+    private StringProperty software;
 
     public MzQuantMLSummary() {
         this.proteinGroupListNumber = new SimpleIntegerProperty();
@@ -32,6 +33,7 @@ public class MzQuantMLSummary {
         this.proteinListNumber = new SimpleIntegerProperty();
         this.peptideListNumber = new SimpleIntegerProperty();
         this.featureListNumber = new SimpleIntegerProperty();
+        this.software = new SimpleStringProperty();
     }
 
     public void setTechniquesUsed(List<StringProperty> techList) {
@@ -85,6 +87,20 @@ public class MzQuantMLSummary {
 
     public void setFeatureListNumber(int num) {
         this.featureListNumber.set(num);
+    }
+
+    /**
+     * @return the software
+     */
+    public StringProperty getSoftware() {
+        return software;
+    }
+
+    /**
+     * @param software the software to set
+     */
+    public void setSoftware(StringProperty software) {
+        this.software = software;
     }
 
 }

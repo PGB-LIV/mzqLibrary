@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package uk.ac.liv.mzqlib.view;
 
 import java.io.File;
@@ -25,24 +19,24 @@ public class HeatMapPdfController {
     //Reference to the main application
     private MainApp mainApp;
     private RootLayoutController rootController;
-    
+
     @FXML
     TextField pdfH;
-    
+
     @FXML
     TextField pdfW;
-    
+
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
-    
+
     public void setCaller(RootLayoutController c) {
         this.rootController = c;
     }
-    
+
     @FXML
     private void handleHeatMapinR() {
-        
+
         if (NumberUtils.isNumber(pdfH.getText()) && NumberUtils.isNumber(pdfW.getText())
                 && !pdfH.getText().trim().equals("0") && !pdfW.getText().trim().equals("0")) {
             //mainApp.showHeatMapinR(Double.parseDouble(pdfH.getText()),
@@ -50,6 +44,13 @@ public class HeatMapPdfController {
 
             // show file chooser
             FileChooser fileChooser = new FileChooser();
+
+            if (mainApp.getLastFilePath() != null) {
+                fileChooser.setInitialDirectory(mainApp.getLastFilePath());
+            }
+            else {
+                fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+            }
             // Set extension filter
             FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF (*.pdf)", "*.pdf");
             fileChooser.getExtensionFilters().add(extFilter);
@@ -59,10 +60,12 @@ public class HeatMapPdfController {
 
             // Show open file dialog
             File pdfFile = fileChooser.showSaveDialog(mainApp.getNewStage());
-            
-            double pdfHValue = Double.parseDouble(pdfH.getText().trim());
-            double pdfWValue = Double.parseDouble(pdfW.getText().trim());
-            mainApp.saveHeatMapPdf(pdfFile, pdfHValue, pdfWValue);
+
+            if (pdfFile != null) {
+                double pdfHValue = Double.parseDouble(pdfH.getText().trim());
+                double pdfWValue = Double.parseDouble(pdfW.getText().trim());
+                mainApp.saveHeatMapPdf(pdfFile, pdfHValue, pdfWValue);
+            }
         }
         else {
             Action response = Dialogs.create()
@@ -73,5 +76,5 @@ public class HeatMapPdfController {
 
         //mainApp.getNewStage().close();
     }
-    
+
 }

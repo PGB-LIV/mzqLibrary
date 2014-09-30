@@ -1,4 +1,3 @@
-
 package uk.ac.liv.mzqlib.task;
 
 import java.io.File;
@@ -15,15 +14,25 @@ import uk.ac.liv.jmzqml.model.mzqml.AnalysisSummary;
 import uk.ac.liv.jmzqml.model.mzqml.CvParam;
 import uk.ac.liv.jmzqml.model.mzqml.FeatureList;
 import uk.ac.liv.jmzqml.model.mzqml.IdOnly;
+import uk.ac.liv.jmzqml.model.mzqml.Modification;
+import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensus;
 import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensusList;
+import uk.ac.liv.jmzqml.model.mzqml.Protein;
+import uk.ac.liv.jmzqml.model.mzqml.ProteinGroup;
 import uk.ac.liv.jmzqml.model.mzqml.ProteinGroupList;
 import uk.ac.liv.jmzqml.model.mzqml.ProteinList;
+import uk.ac.liv.jmzqml.model.mzqml.ProteinRef;
 import uk.ac.liv.jmzqml.model.mzqml.QuantLayer;
+import uk.ac.liv.jmzqml.model.mzqml.Row;
 import uk.ac.liv.jmzqml.model.mzqml.SmallMoleculeList;
+import uk.ac.liv.jmzqml.model.mzqml.Software;
+import uk.ac.liv.jmzqml.model.mzqml.SoftwareList;
+import uk.ac.liv.jmzqml.model.mzqml.UserParam;
 import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;
 import uk.ac.liv.mzqlib.model.MzQuantMLData;
 import uk.ac.liv.mzqlib.model.MzQuantMLSummary;
 import uk.ac.liv.mzqlib.model.MzqAssayQuantLayer;
+import uk.ac.liv.mzqlib.model.MzqDataMatrixRow;
 
 /**
  *
@@ -32,39 +41,39 @@ import uk.ac.liv.mzqlib.model.MzqAssayQuantLayer;
  * @time 09-Sep-2014 17:57:19
  */
 public class LoadMzQuantMLDataTask extends Task<MzQuantMLData> {
-
+    
     private final File mzqFile;
-
+    
     public LoadMzQuantMLDataTask(File f) {
         mzqFile = f;
     }
-
+    
     @Override
     protected MzQuantMLData call()
             throws Exception {
-
+        
         MzQuantMLData mzqData = new MzQuantMLData();
 
-            //
+        //
         // unmarshalling mzq file
         //
         updateMessage("Unmarshalling mzq file");
-
+        
         MzQuantMLUnmarshaller mzqUm = new MzQuantMLUnmarshaller(mzqFile);
-
+        
         mzqData.setMzQuantMLUnmarshaller(mzqUm);
 
-            //
+        //
         // construct MzQuantMLSummary object
         //
         updateMessage("Loading file summary");
-
+        
         MzQuantMLSummary mzqSum = new MzQuantMLSummary();
 
         // Set techniquesUsed
         AnalysisSummary analySum = mzqUm.unmarshal(MzQuantMLElement.AnalysisSummary);
         List<CvParam> cvParams = analySum.getCvParam();
-
+        
         List<StringProperty> techList = new ArrayList<>();
 
         //parallel computing
@@ -76,9 +85,9 @@ public class LoadMzQuantMLDataTask extends Task<MzQuantMLData> {
 //            }
             techList.add(new SimpleStringProperty(cp.getName()));
         });
-
+        
         mzqSum.setTechniquesUsed(techList);
-
+        
         int listNumber = 0;
         // Set numbers of protein group list   
         listNumber = mzqUm.getObjectCountForXpath("/MzQuantML/ProteinGroupList");
@@ -96,9 +105,27 @@ public class LoadMzQuantMLDataTask extends Task<MzQuantMLData> {
         listNumber = mzqUm.getObjectCountForXpath("/MzQuantML/FeatureList");
         mzqSum.setFeatureListNumber(listNumber == -1 ? 0 : listNumber);
 
+        // Set software
+        SoftwareList softwareList = mzqUm.unmarshal(MzQuantMLElement.SoftwareList);
+        StringBuilder softwareString = new StringBuilder();
+        for (Software software : softwareList.getSoftware()) {
+            
+            for (CvParam cp : software.getCvParam()) {
+                softwareString.append(cp.getName()).append(", ");
+            }
+            
+            for (UserParam up : software.getUserParam()) {
+                softwareString.append(up.getName()).append(", ");
+            }
+            
+            softwareString.append("version ").append(software.getVersion());
+        }
+        
+        mzqSum.setSoftware(new SimpleStringProperty(softwareString.toString()));
+        
         mzqData.setMzQuantMLSummary(mzqSum);
 
-            //
+        //
         // Construct a list of MzqAssayQuantLayer
         //          
         ObservableList<MzqAssayQuantLayer> assayQuantLayerList = FXCollections.observableArrayList();
@@ -106,7 +133,7 @@ public class LoadMzQuantMLDataTask extends Task<MzQuantMLData> {
         // Process protein group list
         ProteinGroupList protGrpList = mzqUm.unmarshal(MzQuantMLElement.ProteinGroupList);
         if (protGrpList != null) {
-
+            
             updateMessage("Processing protein group list");//update message
 
             List<QuantLayer<IdOnly>> protGrpAssQLs = protGrpList.getAssayQuantLayer();
@@ -115,32 +142,64 @@ public class LoadMzQuantMLDataTask extends Task<MzQuantMLData> {
                     updateMessage("Cancelled");
                     break;
                 }
-                assayQuantLayerList.add(new MzqAssayQuantLayer(mzqUm, protGrpList.getId(), assQL, "ProteinGroup"));
+                String dataType = assQL.getDataType().getCvParam().getName();
+                
+                MzqAssayQuantLayer mzqAQL = new MzqAssayQuantLayer(mzqUm, protGrpList.getId(), assQL, "ProteinGroup", dataType);
+                //set list of MzqDataMatrixRow
+                List<Row> rows = assQL.getDataMatrix().getRow();
+                
+                for (Row row : rows) {
+                    MzqDataMatrixRow mzqDMRow = new MzqDataMatrixRow();
+                    ProteinGroup protGrp = mzqUm.unmarshal(uk.ac.liv.jmzqml.model.mzqml.ProteinGroup.class, row.getObjectRef()); //get ProteinGrouop object from objectRef
+                    List<ProteinRef> protRefs = protGrp.getProteinRef();
+                    //represent each row with accessions
+                    StringBuilder proteinGroupAccession = new StringBuilder();
+                    for (ProteinRef protRef : protRefs) {
+                        Protein protein = mzqUm.unmarshal(uk.ac.liv.jmzqml.model.mzqml.Protein.class, protRef.getProteinRef());
+                        proteinGroupAccession.append(protein.getAccession()).append(";");
+                    }
+                    mzqDMRow.setObjectId(new SimpleStringProperty(proteinGroupAccession.substring(0, proteinGroupAccession.length() - 2)));
+                    mzqDMRow.setValues(row.getValue());
+                    mzqAQL.getDmRows().add(mzqDMRow);
+                }
+                assayQuantLayerList.add(mzqAQL);
             }
         }
 
         // Process protein list
         ProteinList protList = mzqUm.unmarshal(MzQuantMLElement.ProteinList);
         if (protList != null) {
-
+            
             updateMessage("Processing protein list");
-
+            
             List<QuantLayer<IdOnly>> protAssQLs = protList.getAssayQuantLayer();
             for (QuantLayer assQL : protAssQLs) {
                 if (isCancelled()) {
                     updateMessage("Cancelled");
                     break;
                 }
-                assayQuantLayerList.add(new MzqAssayQuantLayer(mzqUm, protList.getId(), assQL, "Protein"));
+                String dataType = assQL.getDataType().getCvParam().getName();
+                
+                MzqAssayQuantLayer mzqAQL = new MzqAssayQuantLayer(mzqUm, protList.getId(), assQL, "Protein", dataType);
+                // set list of MzqDataMatrix
+                List<Row> rows = assQL.getDataMatrix().getRow();
+                for (Row row : rows) {
+                    MzqDataMatrixRow mzqDMRow = new MzqDataMatrixRow();
+                    Protein protein = mzqUm.unmarshal(uk.ac.liv.jmzqml.model.mzqml.Protein.class, row.getObjectRef());
+                    mzqDMRow.setObjectId(new SimpleStringProperty(protein.getAccession()));
+                    mzqDMRow.setValues(row.getValue());
+                    mzqAQL.getDmRows().add(mzqDMRow);
+                }
+                assayQuantLayerList.add(mzqAQL);
             }
         }
 
         // Process peptide list
         Iterator<PeptideConsensusList> peptideListIter = mzqUm.unmarshalCollectionFromXpath(MzQuantMLElement.PeptideConsensusList);
         if (peptideListIter != null) {
-
+            
             updateMessage("Processing peptide list");
-
+            
             while (peptideListIter.hasNext()) {
                 if (isCancelled()) {
                     updateMessage("Cancelled");
@@ -153,7 +212,33 @@ public class LoadMzQuantMLDataTask extends Task<MzQuantMLData> {
                         updateMessage("Cancelled");
                         break;
                     }
-                    assayQuantLayerList.add(new MzqAssayQuantLayer(mzqUm, peptideList.getId(), assQL, "PeptideConsensus"));
+                    String dataType = assQL.getDataType().getCvParam().getName();
+                    
+                    MzqAssayQuantLayer mzqAQL = new MzqAssayQuantLayer(mzqUm, peptideList.getId(), assQL, "PeptideConsensus", dataType);
+                    // set list of MzqDataMatrix for peptide assay quant layer
+                    List<Row> rows = assQL.getDataMatrix().getRow();
+                    for (Row row : rows) {
+                        MzqDataMatrixRow mzqDMRow = new MzqDataMatrixRow();
+                        PeptideConsensus peptide = mzqUm.unmarshal(uk.ac.liv.jmzqml.model.mzqml.PeptideConsensus.class, row.getObjectRef());
+                        StringBuilder peptideString = new StringBuilder();
+                        peptideString.append(peptide.getPeptideSequence());
+                        if (!peptide.getModification().isEmpty()) {
+                            peptideString.append(":");
+                            for (Modification mod : peptide.getModification()) {
+                                for (CvParam cp : mod.getCvParam()) {
+                                    peptideString.append(cp.getName()).append(" ");
+                                }
+                                peptideString.append("@").append(mod.getLocation().toString()).append(" ;");
+                            }
+                            mzqDMRow.setObjectId(new SimpleStringProperty(peptideString.substring(0, peptideString.length() - 2)));
+                        }
+                        else {
+                            mzqDMRow.setObjectId(new SimpleStringProperty(peptideString.toString()));
+                        }
+                        mzqDMRow.setValues(row.getValue());
+                        mzqAQL.getDmRows().add(mzqDMRow);
+                    }
+                    assayQuantLayerList.add(mzqAQL);
                 }
             }
         }
@@ -161,9 +246,9 @@ public class LoadMzQuantMLDataTask extends Task<MzQuantMLData> {
         // Process feature list
         Iterator<FeatureList> featureListIter = mzqUm.unmarshalCollectionFromXpath(MzQuantMLElement.FeatureList);
         if (featureListIter != null) {
-
+            
             updateMessage("Processing feature list");
-
+            
             while (featureListIter.hasNext()) {
                 if (isCancelled()) {
                     updateMessage("Cancelled");
@@ -176,7 +261,20 @@ public class LoadMzQuantMLDataTask extends Task<MzQuantMLData> {
                         updateMessage("Cancelled");
                         break;
                     }
-                    assayQuantLayerList.add(new MzqAssayQuantLayer(mzqUm, featureList.getId(), assQL, "Feature"));
+                    String dataType = assQL.getDataType().getCvParam().getName();
+                    
+                    MzqAssayQuantLayer mzqAQL = new MzqAssayQuantLayer(mzqUm, featureList.getId(), assQL, "Feature", dataType);
+                    // set list of MzqDataMatrix for feature assay quant layer
+                    List<Row> rows = assQL.getDataMatrix().getRow();
+                    for (Row row : rows) {
+                        MzqDataMatrixRow mzqDMRow = new MzqDataMatrixRow();
+                        
+                        mzqDMRow.setObjectId(new SimpleStringProperty(row.getObjectRef()));
+                        mzqDMRow.setValues(row.getValue());
+                        mzqAQL.getDmRows().add(mzqDMRow);
+                    }
+                    
+                    assayQuantLayerList.add(mzqAQL);
                 }
             }
         }
@@ -184,25 +282,37 @@ public class LoadMzQuantMLDataTask extends Task<MzQuantMLData> {
         // Process small molecule list
         SmallMoleculeList smallMolList = mzqUm.unmarshal(MzQuantMLElement.SmallMoleculeList);
         if (smallMolList != null) {
-
+            
             updateMessage("Processing small molecule list");
-
+            
             List<QuantLayer<IdOnly>> smallMolAssQLs = smallMolList.getAssayQuantLayer();
             for (QuantLayer assQL : smallMolAssQLs) {
                 if (isCancelled()) {
                     updateMessage("Cancelled");
                     break;
                 }
-                assayQuantLayerList.add(new MzqAssayQuantLayer(mzqUm, smallMolList.getId(), assQL, "SmallMolecule"));
+                String dataType = assQL.getDataType().getCvParam().getName();
+                
+                MzqAssayQuantLayer mzqAQL = new MzqAssayQuantLayer(mzqUm, smallMolList.getId(), assQL, "SmallMolecule", dataType);
+                // set list of MzqDataMatrix for small molecule assay quant layer
+                List<Row> rows = assQL.getDataMatrix().getRow();
+                for (Row row : rows) {
+                    MzqDataMatrixRow mzqDMRow = new MzqDataMatrixRow();
+                    
+                    mzqDMRow.setObjectId(new SimpleStringProperty(row.getObjectRef()));
+                    mzqDMRow.setValues(row.getValue());
+                    mzqAQL.getDmRows().add(mzqDMRow);
+                }
+                assayQuantLayerList.add(mzqAQL);
             }
         }
-
+        
         mzqData.setMzqQuantLayerList(assayQuantLayerList);
-
+        
         updateMessage("Loading successfully");
         updateProgress(1, 1);
-
+        
         return mzqData;
     }
-
+    
 }

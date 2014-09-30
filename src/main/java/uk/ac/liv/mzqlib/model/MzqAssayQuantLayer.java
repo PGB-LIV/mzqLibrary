@@ -1,15 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package uk.ac.liv.mzqlib.model;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javax.xml.bind.JAXBException;
+import uk.ac.liv.jmzqml.model.mzqml.Assay;
 import uk.ac.liv.jmzqml.model.mzqml.QuantLayer;
 import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;
 
@@ -23,9 +19,12 @@ public class MzqAssayQuantLayer {
 
     private final MzQuantMLUnmarshaller mzqUm;
     private final StringProperty listId;
+    private final StringProperty dataType;
     private final StringProperty quantLayerId;
     private final StringProperty quantLayerType = new SimpleStringProperty("AssayQuantLayer");
-    private final ObjectProperty<QuantLayer> quantLayer;
+    //private final ObjectProperty<QuantLayer> quantLayer;
+    private List<StringProperty> columnNames;
+    private List<MzqDataMatrixRow> dmRows;
     private final StringProperty rowObjectType; //a flag to indicate the type of object in the row, e.g. ProteinGroup, Protein, PeptideConsensus, etc.
 
     /**
@@ -34,14 +33,28 @@ public class MzqAssayQuantLayer {
      * @param listId     the id of the list element (e.g. ProteinGroupList, ProteinList, PeptideConsensusList, etc.
      * @param quantLayer the QuantLayer object
      * @param objectType the object type of rows (e.g. Protein, ProteinGroup, etc.)
+     * @param dataType   the data type of the quant layer
+     *
+     * @throws javax.xml.bind.JAXBException
      */
     public MzqAssayQuantLayer(MzQuantMLUnmarshaller um, String listId,
-                              QuantLayer quantLayer, String objectType) {
+                              QuantLayer quantLayer,
+                              String objectType,
+                              String dataType)
+            throws JAXBException {
         this.mzqUm = um;
         this.listId = new SimpleStringProperty(listId);
-        this.quantLayer = new SimpleObjectProperty<>(quantLayer);
         this.quantLayerId = new SimpleStringProperty(quantLayer.getId());
         this.rowObjectType = new SimpleStringProperty(objectType);
+        this.dataType = new SimpleStringProperty(dataType);
+
+        //set column names 
+        this.columnNames = new ArrayList<>();
+        List<String> columnIndex = quantLayer.getColumnIndex();
+        for (String colId : columnIndex) {
+            Assay assay = mzqUm.unmarshal(uk.ac.liv.jmzqml.model.mzqml.Assay.class, colId);
+            this.columnNames.add(new SimpleStringProperty(assay.getName()));
+        }
     }
 
     /**
@@ -90,21 +103,6 @@ public class MzqAssayQuantLayer {
     }
 
     /**
-     * @return the value of quantLayer
-     */
-    public QuantLayer getQuantLayer() {
-        return quantLayer.get();
-    }
-
-    /**
-     *
-     * @return the quantLayer
-     */
-    public ObjectProperty<QuantLayer> quantLayer() {
-        return quantLayer;
-    }
-
-    /**
      *
      * @return the value of rowObjectType
      */
@@ -117,6 +115,56 @@ public class MzqAssayQuantLayer {
      */
     public StringProperty rowObjectType() {
         return rowObjectType;
+    }
+
+    /**
+     * @return the mzqUm
+     */
+    public MzQuantMLUnmarshaller getMzqUm() {
+        return mzqUm;
+    }
+
+    /**
+     * @return the dataType
+     */
+    public StringProperty getDataType() {
+        return dataType;
+    }
+
+    /**
+     * @return the columnNames
+     */
+    public List<StringProperty> getColumnNames() {
+        if (columnNames == null) {
+            columnNames = new ArrayList<>();
+        }
+        return columnNames;
+    }
+
+    /**
+     * @param columnNames the columnNames to set
+     */
+    public void setColumnNames(
+            List<StringProperty> columnNames) {
+        this.columnNames = columnNames;
+    }
+
+    /**
+     * @return the dmRows
+     */
+    public List<MzqDataMatrixRow> getDmRows() {
+        if (dmRows == null) {
+            dmRows = new ArrayList<>();
+        }
+        return dmRows;
+    }
+
+    /**
+     * @param dmRows the dmRows to set
+     */
+    public void setDmRows(
+            List<MzqDataMatrixRow> dmRows) {
+        this.dmRows = dmRows;
     }
 
 }

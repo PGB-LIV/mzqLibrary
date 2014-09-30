@@ -1,5 +1,7 @@
-
 package uk.ac.liv.mzqlib.model;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -13,6 +15,8 @@ public class HeatMapParam {
     private double max;
     private int rowNumber;
     private String matrix;
+    private List<String> rowNames;
+    private List<String> colNames;
 
     /**
      * Constructor of HeatMapParam
@@ -21,16 +25,21 @@ public class HeatMapParam {
      * @param max    maximum value of the matrix for heat map
      * @param number number of entities
      * @param x      the String used to create an R matrix
+     * @param rowN   the list of row names of data.frame
+     * @param colN   the list of column names of data.frame
      */
-    public HeatMapParam(double min, double max, int number, String x) {
+    public HeatMapParam(double min, double max, int number, String x,
+                        List<String> rowN, List<String> colN) {
         this.min = min;
         this.max = max;
         this.rowNumber = number;
         this.matrix = x;
+        this.rowNames = new ArrayList<>(rowN);
+        this.colNames = new ArrayList<>(colN);
     }
 
     public HeatMapParam() {
-        this(0, 0, 0, "");
+        this(0, 0, 0, "", new ArrayList<>(), new ArrayList<>());
     }
 
     /**
@@ -86,7 +95,35 @@ public class HeatMapParam {
      * @param matrix the matrix to set
      */
     public void setMatrix(String matrix) {
-        this.matrix = new String(matrix);
+        this.matrix = matrix;
+    }
+
+    /**
+     * @return the rowNames
+     */
+    public List<String> getRowNames() {
+        return rowNames;
+    }
+
+    /**
+     * @param rowNames the rowNames to set
+     */
+    public void setRowNames(List<String> rowNames) {
+        this.rowNames = rowNames;
+    }
+
+    /**
+     * @return the colNames
+     */
+    public List<String> getColNames() {
+        return colNames;
+    }
+
+    /**
+     * @param colNames the colNames to set
+     */
+    public void setColNames(List<String> colNames) {
+        this.colNames = colNames;
     }
 
 }

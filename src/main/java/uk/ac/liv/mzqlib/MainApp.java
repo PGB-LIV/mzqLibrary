@@ -3,6 +3,7 @@ package uk.ac.liv.mzqlib;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,7 +13,6 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
@@ -42,9 +42,6 @@ public class MainApp extends Application {
 
     private static final String VERSION = "1.0";
     private static final String INCEPTION_YEAR = "2014";
-//    private HBox hb;
-//    private Label statusLabel;
-//    private ProgressBar statusPb;
 
     private MzQuantMLData mzqData = new MzQuantMLData();
 
@@ -91,19 +88,6 @@ public class MainApp extends Application {
             rootLayoutController.setMainApp(this);
             rootLayoutController.disbbleMenus();
 
-            //Set status bar
-            // Status bar
-//            hb = new HBox();
-//            hb.setSpacing(20);
-//            hb.setPadding(new Insets(0, 10, 0, 10));
-//            statusLabel = new Label("Welcome to use mzq library");
-//            // Set tooltip message for message label
-//            statusLabel.setTooltip(new Tooltip("For file size over 100MB, unmarshalling process could take over 10 minutes"));
-//
-//            statusPb = new ProgressBar(0);
-//            statusLabel.setGraphic(statusPb);
-//            hb.getChildren().addAll(statusLabel);
-//            rootLayout.setBottom(hb);
             primaryStage.show();
         }
         catch (IOException ex) {
@@ -136,10 +120,6 @@ public class MainApp extends Application {
                 .masthead("For file size over 100MB, unmarshalling process could take over 10 minutes.")
                 .showWorkerProgress(loadMzqDataTask);
 
-//        statusPb.progressProperty().unbind();
-//        statusPb.progressProperty().bind(loadMzqDataTask.progressProperty());
-//        statusLabel.textProperty().unbind();
-//        statusLabel.textProperty().bind(loadMzqDataTask.messageProperty());
         loadMzqDataTask.setOnSucceeded((WorkerStateEvent t) -> {
             mzqData = loadMzqDataTask.getValue();
 
@@ -164,10 +144,6 @@ public class MainApp extends Application {
         });
 
         loadMzqDataTask.setOnFailed((WorkerStateEvent t) -> {
-//            statusPb.progressProperty().unbind();
-//            statusLabel.textProperty().unbind();
-//            statusPb.setProgress(1);
-//            statusLabel.setText("File Error");
             Action response = Dialogs.create()
                     .title("File Error")
                     .message("The input file is not a valid mzQuantML file")
@@ -240,13 +216,41 @@ public class MainApp extends Application {
         ObservableList<MzqDataMatrixRow> rowList = dataMatrixTable.getItems();
         CreateRMatrixTask rmTask = new CreateRMatrixTask(rowList);
 
-//        statusPb.progressProperty().unbind();
-//        statusPb.progressProperty().bind(rmTask.progressProperty());
-//        statusLabel.textProperty().unbind();
-//        statusLabel.textProperty().bind(rmTask.messageProperty());
+        Dialogs.create()
+                .title("Generating PCA plot")
+                .showWorkerProgress(rmTask);
+
         rmTask.setOnSucceeded((WorkerStateEvent t) -> {
             String setMatrix = "X = matrix(c(" + rmTask.getValue().getMatrix() + "), nrow=" + rmTask.getValue().getRowNumber() + ",byrow = TRUE)";
             re.eval(setMatrix);
+
+            //build row names from rowNames list
+            StringBuilder rowNames = new StringBuilder();
+            for (String rn : rmTask.getValue().getRowNames()) {
+                rowNames.append("\"");
+                rowNames.append(rn);
+                rowNames.append("\", ");
+            }
+
+            // get column names
+            StringBuilder colNames = new StringBuilder();
+            ObservableList<TableColumn<MzqDataMatrixRow, ?>> colList = dataMatrixTable.getColumns();
+            Iterator<TableColumn<MzqDataMatrixRow, ?>> i = colList.iterator();
+            // skip the first column name --- "Id"
+            i.next();
+
+            while (i.hasNext()) {
+                colNames.append("\"");
+                colNames.append(i.next().getText());
+                colNames.append("\"");
+                if (i.hasNext()) {
+                    colNames.append(",");
+                }
+            }
+
+            re.eval("rownames(X) <- c(" + rowNames.substring(0, rowNames.length() - 2) + ")");
+            re.eval("colnames(X) <- c(" + colNames.substring(0, colNames.length() - 2) + ")");
+
             re.eval("require(graphics)");
             re.eval("biplot(princomp(X))");
         });
@@ -257,6 +261,8 @@ public class MainApp extends Application {
     }
 
     public void saveHeatMapPdf(File pdfFile, double pdfHValue, double pdfWValue) {
+        newStage.hide();
+
         re.eval("if (!require(\"RColorBrewer\")) {\n"
                 + "install.packages(\"RColorBrewer\")\n"
                 + "}");
@@ -272,10 +278,10 @@ public class MainApp extends Application {
         ObservableList<MzqDataMatrixRow> rowList = dataMatrixTable.getItems();
         CreateRMatrixTask rmTask = new CreateRMatrixTask(rowList);
 
-//        statusPb.progressProperty().unbind();
-//        statusPb.progressProperty().bind(rmTask.progressProperty());
-//        statusLabel.textProperty().unbind();
-//        statusLabel.textProperty().bind(rmTask.messageProperty());
+        Dialogs.create()
+                .title("Generating PDF")
+                .showWorkerProgress(rmTask);
+
         rmTask.setOnSucceeded((WorkerStateEvent t) -> {
             String pdfCmd = "pdf(file='" + pdfFile.getAbsolutePath().replace('\\', '/')
                     + "', height=" + pdfHValue + ", width=" + pdfWValue
@@ -301,11 +307,37 @@ public class MainApp extends Application {
                     + ", length = 200)");
 
             // Set color palette
-            re.eval("color.palette  <- colorRampPalette(c(\"#000000\", \"#DC2121\", \"#E9A915\"))");
-
+            //re.eval("color.palette  <- colorRampPalette(c(\"#000000\", \"#DC2121\", \"#E9A915\"))");
             // Set x matrix
             String setMatrix = "X = matrix(c(" + rmTask.getValue().getMatrix() + "), nrow=" + rmTask.getValue().getRowNumber() + ",byrow = TRUE)";
             re.eval(setMatrix);
+
+            //build row names from rowNames list
+            StringBuilder rowNames = new StringBuilder();
+            for (String rn : rmTask.getValue().getRowNames()) {
+                rowNames.append("\"");
+                rowNames.append(rn);
+                rowNames.append("\", ");
+            }
+
+            // get column names
+            StringBuilder colNames = new StringBuilder();
+            ObservableList<TableColumn<MzqDataMatrixRow, ?>> colList = dataMatrixTable.getColumns();
+            Iterator<TableColumn<MzqDataMatrixRow, ?>> i = colList.iterator();
+            // skip the first column name --- "Id"
+            i.next();
+
+            while (i.hasNext()) {
+                colNames.append("\"");
+                colNames.append(i.next().getText());
+                colNames.append("\"");
+                if (i.hasNext()) {
+                    colNames.append(",");
+                }
+            }
+
+            re.eval("rownames(X) <- c(" + rowNames.substring(0, rowNames.length() - 2) + ")");
+            re.eval("colnames(X) <- c(" + colNames.substring(0, colNames.length() - 2) + ")");
 
             // Set heatmap
             String setHeatmap = "heatmap.2(X,\n"
@@ -320,7 +352,7 @@ public class MainApp extends Application {
                     + "scale=\"none\",\n"
                     + "density.info=c(\"none\"),\n"
                     + "#margins=c(18, 8),\n"
-                    + "col=color.palette,\n"
+                    //+ "col=color.palette,\n"
                     + "breaks = breaks,\n"
                     + "lhei=c(0.4,4),\n"
                     + "main=\"Heatmap of\"\n"
@@ -379,10 +411,6 @@ public class MainApp extends Application {
                 .title("Generating heat map by R")
                 .showWorkerProgress(rmTask);
 
-//        statusPb.progressProperty().unbind();
-//        statusPb.progressProperty().bind(rmTask.progressProperty());
-//        statusLabel.textProperty().unbind();
-//        statusLabel.textProperty().bind(rmTask.messageProperty());
         rmTask.setOnSucceeded((WorkerStateEvent t) -> {
             re.eval("breaks <- seq(from = "
                     + String.valueOf(rmTask.getValue().getMin())
@@ -397,23 +425,50 @@ public class MainApp extends Application {
             String setMatrix = "X = matrix(c(" + rmTask.getValue().getMatrix() + "), nrow=" + rmTask.getValue().getRowNumber() + ",byrow = TRUE)";
             re.eval(setMatrix);
 
+            //build row names from rowNames list
+            StringBuilder rowNames = new StringBuilder();
+            for (String rn : rmTask.getValue().getRowNames()) {
+                rowNames.append("\"");
+                rowNames.append(rn);
+                rowNames.append("\", ");
+            }
+
+            // get column names
+            StringBuilder colNames = new StringBuilder();
+            ObservableList<TableColumn<MzqDataMatrixRow, ?>> colList = dataMatrixTable.getColumns();
+            Iterator<TableColumn<MzqDataMatrixRow, ?>> i = colList.iterator();
+            // skip the first column name --- "Id"
+            i.next();
+
+            while (i.hasNext()) {
+                colNames.append("\"");
+                colNames.append(i.next().getText());
+                colNames.append("\"");
+                if (i.hasNext()) {
+                    colNames.append(",");
+                }
+            }
+
+            re.eval("rownames(X) <- c(" + rowNames.substring(0, rowNames.length() - 2) + ")");
+            re.eval("colnames(X) <- c(" + colNames.toString() + ")");
+
             // Set heatmap
-            String setHeatmap = "heatmap.2(X,\n"
-                    + "Rowv=TRUE,\n"
-                    + "Colv=TRUE,\n"
-                    + "na.rm=FALSE,\n"
-                    + "distfun = dist,\n"
-                    + "hclustfun = hclust,\n"
-                    + "key=TRUE,\n"
-                    + "keysize=1,\n"
-                    + "trace=\"none\",\n"
-                    + "scale=\"none\",\n"
-                    + "density.info=c(\"none\"),\n"
-                    + "#margins=c(18, 8),\n"
-                    + "col=color.palette,\n"
-                    + "breaks = breaks,\n"
-                    + "lhei=c(0.4,4),\n"
-                    + "main=\"Heatmap of\"\n"
+            String setHeatmap = "heatmap.2(X,"
+                    //                    + "Rowv=TRUE,\n"
+                    //                    + "Colv=TRUE,\n"
+                    //                    + "na.rm=FALSE,\n"
+                    //                    + "distfun = dist,\n"
+                    //                    + "hclustfun = hclust,\n"
+                    //                    + "key=TRUE,\n"
+                    //                    + "keysize=1,\n"
+                    //                    + "trace=\"none\",\n"
+                    //                    + "scale=\"none\",\n"
+                    //                    + "density.info=c(\"none\"),\n"
+                    //                    + "#margins=c(18, 8),\n"
+                    //                    + "col=color.palette,\n"
+                    //                    + "breaks = breaks,\n"
+                    //                    + "lhei=c(0.4,4),\n"
+                    + "main=\"Heatmap of\""
                     + ")";
             re.eval(setHeatmap);
         });
@@ -426,7 +481,7 @@ public class MainApp extends Application {
 
     public void showCurve() {
         Stage curveStage = new Stage();
-        curveStage.setTitle("Quantitative measurement accross assays");
+        curveStage.setTitle("Quantitative measurement across assays");
 
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
@@ -434,7 +489,7 @@ public class MainApp extends Application {
         final LineChart<String, Number> lineChart
                 = new LineChart<>(xAxis, yAxis);
 
-        lineChart.setTitle("Quantitative measurement for accross assays");
+        lineChart.setTitle("Quantitative measurement for across assays");
 
         TableView<MzqDataMatrixRow> dataMatrixTable = mzqInfoController.getDataMatrixTable();
         ObservableList<MzqDataMatrixRow> rowList = dataMatrixTable.getSelectionModel().getSelectedItems();
@@ -457,51 +512,6 @@ public class MainApp extends Application {
 
         }
 
-//        XYChart.Series series1 = new XYChart.Series();
-//        series1.setName("Portfolio 1");
-//
-//        series1.getData().add(new XYChart.Data("Jan", 23));
-//        series1.getData().add(new XYChart.Data("Feb", 14));
-//        series1.getData().add(new XYChart.Data("Mar", 15));
-//        series1.getData().add(new XYChart.Data("Apr", 24));
-//        series1.getData().add(new XYChart.Data("May", 34));
-//        series1.getData().add(new XYChart.Data("Jun", 36));
-//        series1.getData().add(new XYChart.Data("Jul", 22));
-//        series1.getData().add(new XYChart.Data("Aug", 45));
-//        series1.getData().add(new XYChart.Data("Sep", 43));
-//        series1.getData().add(new XYChart.Data("Oct", 17));
-//        series1.getData().add(new XYChart.Data("Nov", 29));
-//        series1.getData().add(new XYChart.Data("Dec", 25));
-//
-//        XYChart.Series series2 = new XYChart.Series();
-//        series2.setName("Portfolio 2");
-//        series2.getData().add(new XYChart.Data("Jan", 33));
-//        series2.getData().add(new XYChart.Data("Feb", 34));
-//        series2.getData().add(new XYChart.Data("Mar", 25));
-//        series2.getData().add(new XYChart.Data("Apr", 44));
-//        series2.getData().add(new XYChart.Data("May", 39));
-//        series2.getData().add(new XYChart.Data("Jun", 16));
-//        series2.getData().add(new XYChart.Data("Jul", 55));
-//        series2.getData().add(new XYChart.Data("Aug", 54));
-//        series2.getData().add(new XYChart.Data("Sep", 48));
-//        series2.getData().add(new XYChart.Data("Oct", 27));
-//        series2.getData().add(new XYChart.Data("Nov", 37));
-//        series2.getData().add(new XYChart.Data("Dec", 29));
-//
-//        XYChart.Series series3 = new XYChart.Series();
-//        series3.setName("Portfolio 3");
-//        series3.getData().add(new XYChart.Data("Jan", 44));
-//        series3.getData().add(new XYChart.Data("Feb", 35));
-//        series3.getData().add(new XYChart.Data("Mar", 36));
-//        series3.getData().add(new XYChart.Data("Apr", 33));
-//        series3.getData().add(new XYChart.Data("May", 31));
-//        series3.getData().add(new XYChart.Data("Jun", 26));
-//        series3.getData().add(new XYChart.Data("Jul", 22));
-//        series3.getData().add(new XYChart.Data("Aug", 25));
-//        series3.getData().add(new XYChart.Data("Sep", 43));
-//        series3.getData().add(new XYChart.Data("Oct", 44));
-//        series3.getData().add(new XYChart.Data("Nov", 45));
-//        series3.getData().add(new XYChart.Data("Dec", 44));
         Scene scene = new Scene(lineChart, 800, 600);
 
         curveStage.setScene(scene);

@@ -26,6 +26,7 @@ public class MzQuantMLData {
         mzQuantMLSummary.setProteinListNumber(mzqSum.getProteinListNumber());
         mzQuantMLSummary.setPeptideListNumber(mzqSum.getPeptideListNumber());
         mzQuantMLSummary.setFeatureListNumber(mzqSum.getFeatureListNumber());
+        mzQuantMLSummary.setSoftware(mzqSum.getSoftware());
     }
 
     public void setMzqQuantLayerList(

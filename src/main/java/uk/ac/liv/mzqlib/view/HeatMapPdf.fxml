@@ -39,13 +39,13 @@
                   <Insets right="20.0" />
                </GridPane.margin>
             </Button>
-            <Label text="Specify the graphic reagion for PDF file (inch):" GridPane.columnSpan="2147483647">
+            <Label text="Specify the graphic region for PDF file (inch):" GridPane.columnSpan="2147483647">
                <GridPane.margin>
                   <Insets left="15.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="pdfH" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="pdfW" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <TextField fx:id="pdfH" text="20" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="pdfW" text="20" GridPane.columnIndex="3" GridPane.rowIndex="1" />
          </children>
       </GridPane>
    </children>

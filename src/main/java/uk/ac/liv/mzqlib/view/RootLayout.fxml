@@ -31,7 +31,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#handleHeatMapPdf" text="Save as pdf" />
                      </items>
                   </Menu>
-                  <MenuItem mnemonicParsing="false" onAction="#handleCurve" text="Curves" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleCurve" text="Line plot" />
                   <MenuItem mnemonicParsing="false" onAction="#handlePCA" text="Principle Component Analysis" />
             </items>
           </Menu>

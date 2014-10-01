@@ -26,13 +26,12 @@ public class Utils {
             Map.Entry entry = (Map.Entry) it.next();
 //            String key = (String) entry.getKey();
             String value = entry.getValue().toString();
-            
+
             //remove the double quotation marks in front and rear
             value = value.substring(1, value.length() - 1).replaceAll("[\\,]", " ");
-            
+
             //remove the last 5 characters of groupId
 //            value = value.substring(0, value.length() - 5);
-
 //            System.out.println(key + " => " + value);
             Row row = new Row();
 
@@ -63,7 +62,38 @@ public class Utils {
         } else {
             return d[middle];
         }
+       
     }
+    
+//    public static int findMedian(double[] a,int left,int right){ 
+//        int index = 0; 
+//        int mid = (left+right)/2; 
+//        index = partition(a,left,right); 
+//        while( index != mid){ 
+//            if(index < mid) 
+//                index = partition(a,mid,right); 
+//            else index = partition(a,left,mid); 
+//        } 
+//        return index; 
+//    } 
+//    
+//    public static int partition(double[] a,int i,int j ){ 
+//        int pivot = (i+j)/2; 
+//        double temp; 
+//        while(i <= j){ 
+//            while(a[i] < a[pivot]) 
+//                i++; 
+//            while(a[j] > a[pivot]) 
+//                j--; 
+//            if(i <= j){ 
+//                temp = a[i]; 
+//                a[i]=a[j]; 
+//                a[j] = temp; 
+//                i++;j--; 
+//            } 
+//        } 
+//        return pivot; 
+//    } 
 
     public static double mean(double[] m) {
         double sum = 0;

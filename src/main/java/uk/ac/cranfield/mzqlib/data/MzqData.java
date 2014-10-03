@@ -148,8 +148,10 @@ public class MzqData {
 
     public void addFeatures(List<FeatureList> featureLists) {
         for (FeatureList featureList : featureLists) {
+            String rfg = featureList.getRawFilesGroupRef();
             for (Feature feature : featureList.getFeature()) {
                 FeatureData featureData = new FeatureData(feature);
+                featureData.setRawFilesGroupRef(rfg);
                 unsolvedFeatures.put(feature.getId(), featureData);
             }
             for (QuantLayer ql : featureList.getMS2AssayQuantLayer()) {

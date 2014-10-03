@@ -13,6 +13,15 @@ public class FeatureData extends QuantitationLevel{
 //    private String peptideID;
     
     private Feature feature;
+    private String rawFilesGroupRef;
+
+    public String getRawFilesGroupRef() {
+        return rawFilesGroupRef;
+    }
+
+    public void setRawFilesGroupRef(String rawFilesGroupRef) {
+        this.rawFilesGroupRef = rawFilesGroupRef;
+    }
     
     public FeatureData(Feature feature){
         this.feature = feature;

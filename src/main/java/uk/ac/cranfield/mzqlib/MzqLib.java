@@ -8,7 +8,7 @@ import java.util.List;
 import uk.ac.cranfield.mzqlib.converter.CsvConverter;
 import uk.ac.cranfield.mzqlib.converter.GenericConverter;
 import uk.ac.cranfield.mzqlib.converter.HtmlConverter;
-//import uk.ac.cranfield.mzqlib.converter.MztabConverter;
+import uk.ac.cranfield.mzqlib.converter.MztabConverter;
 import uk.ac.cranfield.mzqlib.converter.XlsConverter;
 import uk.ac.cranfield.mzqlib.data.MzqData;
 import uk.ac.liv.jmzqml.MzQuantMLElement;
@@ -50,10 +50,10 @@ public class MzqLib {
                 converter = new CsvConverter(mzqFile,outputFile);
                 data.setNeedAutoAssignment(false);
                 break;
-//            case MZTAB:
-//                converter = new MztabConverter(mzqFile,outputFile);
-//                data.setNeedAutoAssignment(true);//feature_ref is needed to get m/z and rt for peptide from features
-//                break;
+            case MZTAB:
+                converter = new MztabConverter(mzqFile,outputFile);
+                data.setNeedAutoAssignment(true);//feature_ref is needed to get m/z and rt for peptide from features
+                break;
             case HTML:
                 converter = new HtmlConverter(mzqFile,outputFile);
                 data.setNeedAutoAssignment(true);

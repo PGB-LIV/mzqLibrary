@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import org.apache.commons.lang3.StringUtils;
 import uk.ac.liv.jmzqml.MzQuantMLElement;
 import static uk.ac.liv.jmzqml.MzQuantMLElement.PeptideConsensus;
+import static uk.ac.liv.jmzqml.MzQuantMLElement.Protein;
 import uk.ac.liv.jmzqml.model.mzqml.Cv;
 import uk.ac.liv.jmzqml.model.mzqml.CvParam;
 import uk.ac.liv.jmzqml.model.mzqml.CvParamRef;
@@ -25,7 +26,9 @@ import uk.ac.liv.jmzqml.model.mzqml.IdOnly;
 import uk.ac.liv.jmzqml.model.mzqml.MzQuantML;
 import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensus;
 import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensusList;
+import uk.ac.liv.jmzqml.model.mzqml.Protein;
 import uk.ac.liv.jmzqml.model.mzqml.ProteinGroupList;
+import uk.ac.liv.jmzqml.model.mzqml.ProteinList;
 import uk.ac.liv.jmzqml.model.mzqml.QuantLayer;
 import uk.ac.liv.jmzqml.model.mzqml.Row;
 import uk.ac.liv.jmzqml.xml.io.MzQuantMLMarshaller;
@@ -110,7 +113,6 @@ public class PepProtAbundanceNormalisation extends Thread {
         this.quantLayerType = QLType;
         this.referenceNumber = refNo;
         this.setType = IDST;
-        
 
 //        String IDSType;
         String cvAccessionPrefix = "MS:";
@@ -230,7 +232,6 @@ public class PepProtAbundanceNormalisation extends Thread {
         System.out.println("****************************************************");
     }
 
-    
     /**
      * This executor is to execute the main steps in the normalisation.
      *
@@ -289,7 +290,6 @@ public class PepProtAbundanceNormalisation extends Thread {
 //            System.out.println("scalingFactor: " + this.scalingFactor);
             //all assays used are to calculate the proper one assay
 //            double[] sfvals = new double[pepSize];
-            
             /**
              * here apply a median strategy to select the better assay
              */
@@ -298,7 +298,7 @@ public class PepProtAbundanceNormalisation extends Thread {
                 List<String> sfvals;
                 double[] std = new double[pepSize];
                 double[] stdTmp = new double[pepSize]; //stdTmp used for avoiding the sorting issue
-                                                       //keep the std array in the oridinal order
+                //keep the std array in the oridinal order
 
                 for (int i = 1; i <= pepSize; i++) {
                     double sum = 0;
@@ -307,55 +307,52 @@ public class PepProtAbundanceNormalisation extends Thread {
                     std[i - 1] = 0;
 
 //                    System.out.println("values: " + this.scalingFactor);
-
-                    System.out.println("i: " + Integer.toString(i));
-
                     sfvals = this.scalingFactor.get(Integer.toString(i));
 
 //sfvals = scalingFactor.get("1");
-                    System.out.println("sfvalues: " + sfvals);
+//                    System.out.println("sfvalues: " + sfvals);
                     for (String sfval : sfvals) {
                         sum = sum + Double.valueOf(sfval);
                     }
                     mean = sum / pepSize;
-                    
+
                     for (String sfval : sfvals) {
                         sum_dev = sum_dev + Math.pow((Double.valueOf(sfval) - mean), 2);
                     }
-                    
-                    std[i - 1] = Math.pow(sum_dev / (pepSize-1), 0.5);
-                    
-                    stdTmp[i-1] = std[i-1];
-                    System.out.println("std[" + i + "]: " + std[i-1]);
-                    
+
+                    std[i - 1] = Math.pow(sum_dev / (pepSize - 1), 0.5);
+
+                    stdTmp[i - 1] = std[i - 1];
+//                    System.out.println("std[" + i + "]: " + std[i-1]);
+
                 }
-                for (int i = 1; i < pepSize; i++) {
-                                        
-                    System.out.println(" pre-standard deviations Tmp: " + stdTmp[i-1]);
-                }
-                
-                
+
                 double val_median = Utils.Median(stdTmp);
 //                int med = Utils.findMedian(std,0,std.length-1);
 //                double val_median = std[med];
-                
-                System.out.println("standard deviations: " + Arrays.toString(std));
-                 System.out.println("Tmp standard deviations: " + Arrays.toString(stdTmp));
-                System.out.println("median value: " + val_median);
+
+//                System.out.println("standard deviations: " + Arrays.toString(std));
+//                 System.out.println("Tmp standard deviations: " + Arrays.toString(stdTmp));
+//                System.out.println("median value: " + val_median);
+                double tmp = Math.abs(std[0] - val_median);
                 for (int i = 1; i < pepSize; i++) {
-                    if (Math.abs(std[i] - val_median) < Math.abs(std[i - 1] - val_median)) {
-                        refPrefered = i+1; //due to the array dimension being from zero
-                                           //std[i] corresponding to the (i+1) assay
+                    if (Math.abs(std[i] - val_median) < tmp) {
+                        refPrefered = i + 1; //due to being the std array dimesion from zero
+                        tmp = Math.abs(std[i] - val_median);
                     }
-                    
-                    System.out.println("standard deviations: " + std[i-1]);
+
+//                    System.out.println("standard deviations: " + std[i]);
                 }
                 this.preferedRef = String.valueOf(refPrefered);
-                System.out.println("Prefered scaling factor: " + this.preferedRef);
+                System.out.println("Prefered reference assay: " + this.preferedRef);
+//                System.out.println("Prefered reference: " + PepProtAbundanceNormalisation.preferedRef);
+
+                /**
+                 * execute the protein inference and output the inference result
+                 */
             }
 
-            System.out.println("scaling factor: " + scaleFactor);
-
+//            System.out.println("scaling factor: " + scaleFactor);
         }
 
         if (normLevel.equalsIgnoreCase("protein")) {
@@ -422,6 +419,9 @@ public class PepProtAbundanceNormalisation extends Thread {
             String aql_id, String set_type) {
 //    private boolean PeptideAssayValue(MzQuantMLUnmarshaller in_file_um, String aql_id, String set_type) {
         boolean first_list = false;
+        ProteinList protList = in_file_um.unmarshal(MzQuantMLElement.ProteinList);
+        List<Protein> prots = protList.getProtein();
+
         PeptideConsensusList pepConList = in_file_um.unmarshal(MzQuantMLElement.PeptideConsensusList);
         List<PeptideConsensus> pepCons = pepConList.getPeptideConsensus();
         List<QuantLayer<IdOnly>> assayQLs = pepConList.getAssayQuantLayer();
@@ -457,8 +457,33 @@ public class PepProtAbundanceNormalisation extends Thread {
                                 String pepSeq = pepCon.getPeptideSequence();
 
                                 if (StringUtils.isNoneBlank(pepSeq)) {
-                                    this.peptideAssayValues.put(peptideRef, values);
+
+                                    //remove the decoy-related peptides
+                                    for (Protein prot : prots) {
+                                        boolean breakLoop = false;
+                                        String protAcc = prot.getAccession();
+                                        List<String> pepRefs = prot.getPeptideConsensusRefs();
+                                        for (String pepRef : pepRefs) {
+                                            if (pepRef.equalsIgnoreCase(pepId) && !(protAcc.contains("XXX_"))) {
+                                                //
+
+                                                //original
+                                                this.peptideAssayValues.put(peptideRef, values);
 //                                    System.out.println("peptide assay values: " + peptideRef);
+                                                //
+
+                                                //remove the decoy-related peptides
+                                                breakLoop = true;
+                                                break;
+                                            }
+                                        }
+                                        if (breakLoop) {
+                                            break;
+                                        }
+                                    }
+                                    //
+
+                                    //original
                                 }
 
                                 break;
@@ -675,7 +700,7 @@ public class PepProtAbundanceNormalisation extends Thread {
             check = true;
         }
 
-        System.out.println("Scaling Factor: " + Arrays.toString(scalingFactor));
+//        System.out.println("Scaling Factor: " + Arrays.toString(scalingFactor));
 
         for (int row = 0; row < entryNo; row++) {
             List<String> valArrRowList = new ArrayList<String>();

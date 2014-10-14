@@ -103,7 +103,12 @@ public class MzqProcessorFactory {
                             for (SIIData sd : siiDataList) {
                                 double siiExpMz = sd.getExperimentalMassToCharge();
                                 double siiRt = sd.getRetentionTime();
-                                // determine if rt and mz of the SIIData is in the mass trace of the feature
+                                int identCharge = sd.getCharge();
+                                if (identCharge != Integer.parseInt(exFt.getCharge())) {
+                                    continue;
+                                }
+                                
+                                // determine if rt and mz of the SIIData is in the mass trace of the feature                                
                                 if (isInRange(siiExpMz, exFt.getLMZ(), exFt.getRMZ()) && isInRange(siiRt, exFt.getBRT(), exFt.getURT())) {
                                     if (ftSIIDataList == null) {
                                         ftSIIDataList = new ArrayList<>();

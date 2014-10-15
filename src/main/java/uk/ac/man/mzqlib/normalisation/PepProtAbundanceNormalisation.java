@@ -251,7 +251,10 @@ public class PepProtAbundanceNormalisation extends Thread {
             String outDTCA, String quantLayerType, String reference, String idSetType) {
 
         boolean flag = true;
-        Map<String, List<String>> scaleFactor;
+//        Map<String, List<String>> scaleFactor;
+
+        Map<String, List<String>> scaleFactor = new HashMap<String, List<String>>();
+        Map<String, List<String>> normalisedPepAssayVal;
 
         if (normLevel.equalsIgnoreCase("peptide")
                 || normLevel.equalsIgnoreCase("feature")
@@ -277,14 +280,20 @@ public class PepProtAbundanceNormalisation extends Thread {
                 throw new IllegalArgumentException("Wrongly select the reference number!!! "
                         + "It should be an integer in [1 " + pepSize + "]");
             }
-            scaleFactor = OutputMzqPeptideNormalisation(infile_um, inputAssQLID, idSetType, outputFile, outputAssQLID,
-                    inDTCA, outDTCA, quantLayerType, reference, this.peptideAssayValues);
+
+            normalisedPepAssayVal = NormalisedAssayValue(reference, peptideAssayValues);
+            List<String> sf = normalisedPepAssayVal.get("scalingfactor");
+            scaleFactor.put("scalingfactor", sf);
+//            normalisedPepAssayVal.remove("scalingfactor");
+//            OutputMzqPeptideNormalisation(infile_um, inputAssQLID, idSetType, outputFile, outputAssQLID,
+//                    inDTCA, outDTCA, quantLayerType, normalisedPepAssayVal);
+            
             if (!(scaleFactor == null)) {
                 flag = true;
             }
             List<String> vals = scaleFactor.get("scalingfactor");
-//            System.out.println("scale values: " + vals);
-//            System.out.println("Reference: " + reference);
+            System.out.println("scale values: " + vals);
+            System.out.println("Reference: " + reference);
             this.scalingFactor.put(reference, vals);
 
 //            System.out.println("scalingFactor: " + this.scalingFactor);
@@ -347,9 +356,12 @@ public class PepProtAbundanceNormalisation extends Thread {
                 System.out.println("Prefered reference assay: " + this.preferedRef);
 //                System.out.println("Prefered reference: " + PepProtAbundanceNormalisation.preferedRef);
 
-                /**
-                 * execute the protein inference and output the inference result
-                 */
+                normalisedPepAssayVal = NormalisedAssayValue(this.preferedRef, peptideAssayValues);
+                normalisedPepAssayVal.remove("scalingfactor");
+
+                OutputMzqPeptideNormalisation(infile_um, inputAssQLID, idSetType, outputFile, outputAssQLID,
+                        inDTCA, outDTCA, quantLayerType, normalisedPepAssayVal);
+
             }
 
 //            System.out.println("scaling factor: " + scaleFactor);
@@ -701,7 +713,6 @@ public class PepProtAbundanceNormalisation extends Thread {
         }
 
 //        System.out.println("Scaling Factor: " + Arrays.toString(scalingFactor));
-
         for (int row = 0; row < entryNo; row++) {
             List<String> valArrRowList = new ArrayList<String>();
             for (int col = 0; col < vSize; col++) {
@@ -739,189 +750,185 @@ public class PepProtAbundanceNormalisation extends Thread {
      * @param refAssay
      * @return
      */
-    private Map<String, List<String>> OutputMzqPeptideNormalisation(MzQuantMLUnmarshaller infile_um,
+    private void OutputMzqPeptideNormalisation(MzQuantMLUnmarshaller infile_um,
             String inAssQLID, String idST, String outFile, String outAQLID, String inputDTCA,
-            String outputDTCA, String quantLT, String refAssay, Map<String, List<String>> pepAssVal) {
+            String outputDTCA, String quantLT, Map<String, List<String>> normalisedPepAssayVal) {
 //    private boolean OutputMzqPeptideNormalisation(MzQuantMLUnmarshaller infile_um, 
 //            String inAssQLID, String idST, String outFile,
 //            String outAQLID, String inputDTCA, String outputDTCA, String quantLT, String refAssay) {
 
 //        System.out.println("peptide assay values: " + pepAssVal);
-        boolean flag = true;
-        Map<String, List<String>> scaleFactor;
-        scaleFactor = new HashMap<String, List<String>>();
-        Map<String, List<String>> normalisedPepAssayVal;
+//        boolean flag = true;
+//        Map<String, List<String>> scaleFactor;
+//        scaleFactor = new HashMap<String, List<String>>();
+//        Map<String, List<String>> normalisedPepAssayVal;
 //        peptideAssayValues = PeptideAssayValue(infile_um, inAssQLID, idST);
 //        if (peptideAssayValues == null) {
 //            flag = false;
 //        }
-
 //        flag = PeptideAssayValue(infile_um, inAssQLID, idST);
-        if (flag == true) {
-            PeptideConsensusList pepConList = infile_um.unmarshal(MzQuantMLElement.PeptideConsensusList);
-            List<QuantLayer<IdOnly>> assayQLs = pepConList.getAssayQuantLayer();
+//        if (flag == true) {
+        PeptideConsensusList pepConList = infile_um.unmarshal(MzQuantMLElement.PeptideConsensusList);
+        List<QuantLayer<IdOnly>> assayQLs = pepConList.getAssayQuantLayer();
 
-            normalisedPepAssayVal = NormalisedAssayValue(refAssay, pepAssVal);
-            List<String> sf = normalisedPepAssayVal.get("scalingfactor");
+//            normalisedPepAssayVal = NormalisedAssayValue(refAssay, pepAssVal);
+//            List<String> sf = normalisedPepAssayVal.get("scalingfactor");
 //            System.out.println("scaling factor included: " + normalisedPepAssayVal);
 //            System.out.println("sf: " + sf);
-            scaleFactor.put("scalingfactor", sf);
-            normalisedPepAssayVal.remove("scalingfactor");
-
+//            scaleFactor.put("scalingfactor", sf);
+//            normalisedPepAssayVal.remove("scalingfactor");
 //            System.out.println("normalised peptide assay values: " + normalisedPepAssayVal);
 //            normalisedPepAssayVal = NormalisedAssayValue(refAssay, peptideAssayValues);
-            if (quantLT.equals("AssayQuantLayer")) {
+        if (quantLT.equals("AssayQuantLayer")) {
 
-                /**
-                 * Create the quant layer for raw peptide abundance
-                 */
-                QuantLayer newQL0 = new QuantLayer();
-                newQL0.setId(assayQIRawPep);
+            /**
+             * Create the quant layer for raw peptide abundance
+             */
+            QuantLayer newQL0 = new QuantLayer();
+            newQL0.setId(assayQIRawPep);
 
-                /**
-                 * Create the part of DataType
-                 */
-                CvParam cvParam0 = new CvParam();
-                cvParam0.setAccession(this.outputDTCARawPep);
-                Cv cv0 = new Cv();
+            /**
+             * Create the part of DataType
+             */
+            CvParam cvParam0 = new CvParam();
+            cvParam0.setAccession(this.outputDTCARawPep);
+            Cv cv0 = new Cv();
 
-                cv0.setId(this.cvParamId);
-                cvParam0.setCv(cv0);
+            cv0.setId(this.cvParamId);
+            cvParam0.setCv(cv0);
 
 //                String cvParamNameRawPep = "Raw peptide abundance";
-                cvParam0.setName(cvParamNameRawPep);
-                CvParamRef cvParamRef0 = new CvParamRef();
-                cvParamRef0.setCvParam(cvParam0);
-                newQL0.setDataType(cvParamRef0);
+            cvParam0.setName(cvParamNameRawPep);
+            CvParamRef cvParamRef0 = new CvParamRef();
+            cvParamRef0.setCvParam(cvParam0);
+            newQL0.setDataType(cvParamRef0);
 
-                /**
-                 * Create the part of ColumnIndex
-                 */
-                /**
-                 * Get the column indices from the QuantLayer in the original
-                 * file and then add these to the generated QuantLayer in
-                 * ProteinGroup
-                 */
-                for (QuantLayer assayQL : assayQLs) {
-                    if ((assayQL.getDataType().getCvParam().getAccession()).equalsIgnoreCase(inputDTCA)) {
+            /**
+             * Create the part of ColumnIndex
+             */
+            /**
+             * Get the column indices from the QuantLayer in the original file
+             * and then add these to the generated QuantLayer in ProteinGroup
+             */
+            for (QuantLayer assayQL : assayQLs) {
+                if ((assayQL.getDataType().getCvParam().getAccession()).equalsIgnoreCase(inputDTCA)) {
 
-                        List<String> assayCI = (List<String>) assayQL.getColumnIndex();
-                        int nCI = assayCI.size();
-                        for (int i = 0; i < nCI; i++) {
-                            newQL0.getColumnIndex().add(assayCI.get(i));
+                    List<String> assayCI = (List<String>) assayQL.getColumnIndex();
+                    int nCI = assayCI.size();
+                    for (int i = 0; i < nCI; i++) {
+                        newQL0.getColumnIndex().add(assayCI.get(i));
 //                            System.out.println("assayCI: " + assayCI.get(i));
-                        }
-
-                        break;
                     }
+
+                    break;
                 }
-
-                /**
-                 * Create the part of DataMatrix
-                 */
-                DataMatrix dm0 = new DataMatrix() {
-                };
-
-                /**
-                 * make the records in order when outputing
-                 */
-                Map<String, List<String>> rawTmp0 = new HashMap<String, List<String>>();
-//                for (Map.Entry<String, List<String>> entry : pepAssVal.entrySet()) {
-                for (Map.Entry<String, List<String>> entry : peptideAssayValues.entrySet()) {
-                    String key = entry.getKey();
-                    List<String> values = entry.getValue();
-//            String newKey = groupInOrd.get(key);
-                    rawTmp0.put(key, values);
-
-                }
-
-                Map<String, List<String>> treeMap0 = new TreeMap<String, List<String>>(rawTmp0);
-                DataMatrix dMatrix0 = Utils.SortedMap(treeMap0, dm0);
-
-                newQL0.setDataMatrix(dMatrix0);
-                pepConList.getAssayQuantLayer().add(newQL0);
-
-                /////////////////////////////////////////////////////////
-                /////////////////////////////////////////////////////////
-                //add the quant layer for normalized peptide abundance
-                /**
-                 * Create a new quant layer
-                 */
-//                List<QuantLayer> assayQLs = AssayQLs(infile_um);
-                QuantLayer newQL = new QuantLayer();
-                newQL.setId(outAQLID);
-
-                /**
-                 * Create the part of DataType
-                 */
-                CvParam cvParam1 = new CvParam();
-                cvParam1.setAccession(outputDTCA);
-                Cv cv = new Cv();
-
-                cv.setId(cvParamId);
-                cvParam1.setCv(cv);
-                cvParam1.setName(cvParamName);
-                CvParamRef cvParamRef1 = new CvParamRef();
-                cvParamRef1.setCvParam(cvParam1);
-                newQL.setDataType(cvParamRef1);
-
-                /**
-                 * Create the part of ColumnIndex
-                 */
-                /**
-                 * Get the column indices from the QuantLayer in the original
-                 * file and then add these to the generated QuantLayer in
-                 * ProteinGroup
-                 */
-                for (QuantLayer assayQL : assayQLs) {
-                    if ((assayQL.getDataType().getCvParam().getAccession()).equalsIgnoreCase(inputDTCA)) {
-
-                        List<String> assayCI = (List<String>) assayQL.getColumnIndex();
-                        int nCI = assayCI.size();
-                        for (int i = 0; i < nCI; i++) {
-                            newQL.getColumnIndex().add(assayCI.get(i));
-//                            System.out.println("assayCI: " + assayCI.get(i));
-                        }
-
-                        break;
-                    }
-                }
-
-                /**
-                 * Create the part of DataMatrix
-                 */
-                DataMatrix dm = new DataMatrix() {
-                };
-
-                /**
-                 * make the records in order when outputing
-                 */
-                Map<String, List<String>> normalisedTmp = new HashMap<String, List<String>>();
-                for (Map.Entry<String, List<String>> entry : normalisedPepAssayVal.entrySet()) {
-                    String key = entry.getKey();
-                    List<String> values = entry.getValue();
-//            String newKey = groupInOrd.get(key);
-                    normalisedTmp.put(key, values);
-
-                }
-
-                Map<String, List<String>> treeMap = new TreeMap<String, List<String>>(normalisedTmp);
-                DataMatrix dMatrix = Utils.SortedMap(treeMap, dm);
-
-                newQL.setDataMatrix(dMatrix);
-                pepConList.getAssayQuantLayer().add(newQL);
-
-                MzQuantML mzq = infile_um.unmarshal(MzQuantMLElement.MzQuantML);
-                mzq.getPeptideConsensusList().clear();
-                mzq.getPeptideConsensusList().add(pepConList);
-
-                MzQuantMLMarshaller marshaller = new MzQuantMLMarshaller(outFile);
-                marshaller.marshall(mzq);
             }
-        } else {
-            System.out.println("Does not obtain Peptide Assay Raw Values correctly!!!");
+
+            /**
+             * Create the part of DataMatrix
+             */
+            DataMatrix dm0 = new DataMatrix() {
+            };
+
+            /**
+             * make the records in order when outputing
+             */
+            Map<String, List<String>> rawTmp0 = new HashMap<String, List<String>>();
+//                for (Map.Entry<String, List<String>> entry : pepAssVal.entrySet()) {
+            for (Map.Entry<String, List<String>> entry : peptideAssayValues.entrySet()) {
+                String key = entry.getKey();
+                List<String> values = entry.getValue();
+//            String newKey = groupInOrd.get(key);
+                rawTmp0.put(key, values);
+
+            }
+
+            Map<String, List<String>> treeMap0 = new TreeMap<String, List<String>>(rawTmp0);
+            DataMatrix dMatrix0 = Utils.SortedMap(treeMap0, dm0);
+
+            newQL0.setDataMatrix(dMatrix0);
+            pepConList.getAssayQuantLayer().add(newQL0);
+
+                /////////////////////////////////////////////////////////
+            /////////////////////////////////////////////////////////
+            //add the quant layer for normalized peptide abundance
+            /**
+             * Create a new quant layer
+             */
+//                List<QuantLayer> assayQLs = AssayQLs(infile_um);
+            QuantLayer newQL = new QuantLayer();
+            newQL.setId(outAQLID);
+
+            /**
+             * Create the part of DataType
+             */
+            CvParam cvParam1 = new CvParam();
+            cvParam1.setAccession(outputDTCA);
+            Cv cv = new Cv();
+
+            cv.setId(cvParamId);
+            cvParam1.setCv(cv);
+            cvParam1.setName(cvParamName);
+            CvParamRef cvParamRef1 = new CvParamRef();
+            cvParamRef1.setCvParam(cvParam1);
+            newQL.setDataType(cvParamRef1);
+
+            /**
+             * Create the part of ColumnIndex
+             */
+            /**
+             * Get the column indices from the QuantLayer in the original file
+             * and then add these to the generated QuantLayer in ProteinGroup
+             */
+            for (QuantLayer assayQL : assayQLs) {
+                if ((assayQL.getDataType().getCvParam().getAccession()).equalsIgnoreCase(inputDTCA)) {
+
+                    List<String> assayCI = (List<String>) assayQL.getColumnIndex();
+                    int nCI = assayCI.size();
+                    for (int i = 0; i < nCI; i++) {
+                        newQL.getColumnIndex().add(assayCI.get(i));
+//                            System.out.println("assayCI: " + assayCI.get(i));
+                    }
+
+                    break;
+                }
+            }
+
+            /**
+             * Create the part of DataMatrix
+             */
+            DataMatrix dm = new DataMatrix() {
+            };
+
+            /**
+             * make the records in order when outputing
+             */
+            Map<String, List<String>> normalisedTmp = new HashMap<String, List<String>>();
+            for (Map.Entry<String, List<String>> entry : normalisedPepAssayVal.entrySet()) {
+                String key = entry.getKey();
+                List<String> values = entry.getValue();
+//            String newKey = groupInOrd.get(key);
+                normalisedTmp.put(key, values);
+
+            }
+
+            Map<String, List<String>> treeMap = new TreeMap<String, List<String>>(normalisedTmp);
+            DataMatrix dMatrix = Utils.SortedMap(treeMap, dm);
+
+            newQL.setDataMatrix(dMatrix);
+            pepConList.getAssayQuantLayer().add(newQL);
+
+            MzQuantML mzq = infile_um.unmarshal(MzQuantMLElement.MzQuantML);
+            mzq.getPeptideConsensusList().clear();
+            mzq.getPeptideConsensusList().add(pepConList);
+
+            MzQuantMLMarshaller marshaller = new MzQuantMLMarshaller(outFile);
+            marshaller.marshall(mzq);
         }
-        return scaleFactor;
+//        } else {
+//            System.out.println("Does not obtain Peptide Assay Raw Values correctly!!!");
+//        }
+//        return scaleFactor;
     }
 
     /**

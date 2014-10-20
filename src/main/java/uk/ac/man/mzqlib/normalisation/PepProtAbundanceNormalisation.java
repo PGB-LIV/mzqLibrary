@@ -59,7 +59,7 @@ public class PepProtAbundanceNormalisation extends Thread {
     private String in_file;
     private String out_file;
 //    private String techName;
-    private String inputAQLID;
+//    private String inputAQLID;
     private String inputPDTCA;
     private String cvParamAccession;
     private String cvParamId;
@@ -75,7 +75,9 @@ public class PepProtAbundanceNormalisation extends Thread {
     private String referenceNumber;
     private String setType;
     public static Map<String, List<String>> scalingFactor = new HashMap<String, List<String>>();
-    public static String preferedRef;
+    private String preferedRef;
+    private String regExDecoy;
+    
 
     //EvsB, the assay number 9 is the reference. It is also used to other
     //such as EvsC or EvsD
@@ -95,8 +97,8 @@ public class PepProtAbundanceNormalisation extends Thread {
      * @throws FileNotFoundException
      */
     public PepProtAbundanceNormalisation(String in_file, String out_file, String level,
-            String outputCvName, String inputAssQLID, String outputAssQLID, String inputDataTypeCvAcc,
-            String outputCvAcc, String QLType, String refNo, String IDST) throws FileNotFoundException {
+            String outputCvName, String outputAssQLID, String inputDataTypeCvAcc,
+            String outputCvAcc, String QLType, String refNo, String IDST, String decoyRE) throws FileNotFoundException {
 
         //        boolean file_flag = true;
 //        boolean pipeline_flag = true;
@@ -106,13 +108,14 @@ public class PepProtAbundanceNormalisation extends Thread {
         this.normalisedLevel = level;
         this.cvParamName = outputCvName;
         this.cvParamId = "PSI-MS";
-        this.inputAQLID = inputAssQLID;
+//        this.inputAQLID = inputAssQLID;
         this.outputAQLID = outputAssQLID;
         this.inputPDTCA = inputDataTypeCvAcc; //raw values: MS:1001893
         this.cvParamAccession = outputCvAcc;
         this.quantLayerType = QLType;
         this.referenceNumber = refNo;
         this.setType = IDST;
+        this.regExDecoy = decoyRE;
 
 //        String IDSType;
         String cvAccessionPrefix = "MS:";
@@ -218,8 +221,9 @@ public class PepProtAbundanceNormalisation extends Thread {
         }
 
         if (file_flag == true) {
-            pipeline_flag = pipeline_executor(infileum, this.out_file, this.normalisedLevel, this.inputAQLID,
-                    this.outputAQLID, this.inputPDTCA, this.cvParamAccession, this.quantLayerType, this.referenceNumber, this.setType);
+            pipeline_flag = pipeline_executor(infileum, this.out_file, this.normalisedLevel, 
+                    this.outputAQLID, this.inputPDTCA, this.cvParamAccession, this.quantLayerType, 
+                    this.referenceNumber, this.setType, this.regExDecoy);
         }
 
         System.out.println("****************************************************");
@@ -247,8 +251,8 @@ public class PepProtAbundanceNormalisation extends Thread {
      * carried out.
      */
     private boolean pipeline_executor(MzQuantMLUnmarshaller infile_um, String outputFile,
-            String normLevel, String inputAssQLID, String outputAssQLID, String inDTCA,
-            String outDTCA, String quantLayerType, String reference, String idSetType) {
+            String normLevel, String outputAssQLID, String inDTCA, String outDTCA, 
+            String quantLayerType, String reference, String idSetType, String exDecoy) {
 
         boolean flag = true;
 //        Map<String, List<String>> scaleFactor;
@@ -259,7 +263,7 @@ public class PepProtAbundanceNormalisation extends Thread {
         if (normLevel.equalsIgnoreCase("peptide")
                 || normLevel.equalsIgnoreCase("feature")
                 || normLevel.equalsIgnoreCase("feature-then-peptide")) {
-            this.peptideAssayValues = PeptideAssayValue(infile_um, inputAssQLID, idSetType);
+            this.peptideAssayValues = PeptideAssayValue(infile_um, inDTCA, idSetType, exDecoy);
 //            flag = PeptideAssayValue(infile_um, inputAssQLID, idSetType);
             if (this.peptideAssayValues == null) {
                 flag = false;
@@ -359,7 +363,8 @@ public class PepProtAbundanceNormalisation extends Thread {
                 normalisedPepAssayVal = NormalisedAssayValue(this.preferedRef, peptideAssayValues);
                 normalisedPepAssayVal.remove("scalingfactor");
 
-                OutputMzqPeptideNormalisation(infile_um, inputAssQLID, idSetType, outputFile, outputAssQLID,
+//                outputFile = outputFile + this.preferedRef + "_revDecoy.mzq";
+                OutputMzqPeptideNormalisation(infile_um, outputFile, outputAssQLID,
                         inDTCA, outDTCA, quantLayerType, normalisedPepAssayVal);
 
             }
@@ -428,7 +433,7 @@ public class PepProtAbundanceNormalisation extends Thread {
      * @return a boolean value
      */
     private Map<String, List<String>> PeptideAssayValue(MzQuantMLUnmarshaller in_file_um,
-            String aql_id, String set_type) {
+            String inputPeptideDTCA, String set_type, String reg_ex) {
 //    private boolean PeptideAssayValue(MzQuantMLUnmarshaller in_file_um, String aql_id, String set_type) {
         boolean first_list = false;
         ProteinList protList = in_file_um.unmarshal(MzQuantMLElement.ProteinList);
@@ -438,9 +443,9 @@ public class PepProtAbundanceNormalisation extends Thread {
         List<PeptideConsensus> pepCons = pepConList.getPeptideConsensus();
         List<QuantLayer<IdOnly>> assayQLs = pepConList.getAssayQuantLayer();
         for (QuantLayer assayQL : assayQLs) {
-//            if ((assayQL.getDataType().getCvParam().getAccession()).equalsIgnoreCase(inputPeptideDTCA)) {
+            if ((assayQL.getDataType().getCvParam().getAccession()).equalsIgnoreCase(inputPeptideDTCA)) {
 
-            if (assayQL.getId().equalsIgnoreCase(aql_id)) {
+//            if (assayQL.getId().equalsIgnoreCase(aql_id)) {
 
 //                System.out.println("AQL: " + assayQL.getId());
                 DataMatrix assayDM = assayQL.getDataMatrix();
@@ -476,7 +481,7 @@ public class PepProtAbundanceNormalisation extends Thread {
                                         String protAcc = prot.getAccession();
                                         List<String> pepRefs = prot.getPeptideConsensusRefs();
                                         for (String pepRef : pepRefs) {
-                                            if (pepRef.equalsIgnoreCase(pepId) && !(protAcc.contains("XXX_"))) {
+                                            if (pepRef.equalsIgnoreCase(pepId) && !(protAcc.contains(reg_ex))) {
                                                 //
 
                                                 //original
@@ -751,8 +756,8 @@ public class PepProtAbundanceNormalisation extends Thread {
      * @return
      */
     private void OutputMzqPeptideNormalisation(MzQuantMLUnmarshaller infile_um,
-            String inAssQLID, String idST, String outFile, String outAQLID, String inputDTCA,
-            String outputDTCA, String quantLT, Map<String, List<String>> normalisedPepAssayVal) {
+            String outFile, String outAQLID, String inputDTCA, String outputDTCA, 
+            String quantLT, Map<String, List<String>> normalisedPepAssayVal) {
 //    private boolean OutputMzqPeptideNormalisation(MzQuantMLUnmarshaller infile_um, 
 //            String inAssQLID, String idST, String outFile,
 //            String outAQLID, String inputDTCA, String outputDTCA, String quantLT, String refAssay) {

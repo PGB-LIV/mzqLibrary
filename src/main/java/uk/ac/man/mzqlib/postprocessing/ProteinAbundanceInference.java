@@ -86,7 +86,6 @@ public final class ProteinAbundanceInference {
     static String inputPDTCA;
     static String cvParamAccession;
     static String cvParamName;
-
     static String outputAssayQuantLayerID;
 
 //    public ProteinAbundanceInference(String input, String output, String expMethod, String calOperation) {
@@ -112,7 +111,7 @@ public final class ProteinAbundanceInference {
      * @param QuantLayerType
      * @throws java.io.FileNotFoundException
      */
-    public ProteinAbundanceInference(String input, String output, String expMethod, String calOperation,
+    public ProteinAbundanceInference(String input, String output, String calOperation,
             String inputPeptideDataTypeCvAcc, String inputPepQLID, String outputProteinGroupCvAcc,
             String outputProteinGroupCvName, String QuantLayerType) throws FileNotFoundException {
 
@@ -131,7 +130,7 @@ public final class ProteinAbundanceInference {
         String co2 = "mean";
         String co3 = "median";
 
-        System.out.println("DTCA: " + length1);
+//        System.out.println("DTCA: " + length1);
 
         if (!(length1 == cvAccssionLength)) {
             throw new IllegalArgumentException("Invalid Input Peptide Datatype Parameter!!! " + inputPeptideDataTypeCvAcc);
@@ -166,8 +165,6 @@ public final class ProteinAbundanceInference {
             throw new IllegalArgumentException("Method slected is not correct: " + calOperation);
         }
 
-//        in_file = input;
-//        in_file_um = inFile_um;
         boolean file_flag = true;
         boolean pipeline_flag = true;
         in_file = input;
@@ -207,84 +204,54 @@ public final class ProteinAbundanceInference {
     public static void main(String[] args) throws JAXBException, InstantiationException,
             IllegalAccessException, IllegalStateException, FileNotFoundException {
 
-//        boolean file_flag = true;
-//        String infile = path + "test_grouping_data_update.mzq";
-//        String outfile = path + "test_grouping_data_update_pa.mzq";
-//        String infile = path + "unlabeled_result_FLUQT_mapped.mzq";
-//        String outfile = path + "unlabeled_result_FLUQT_mapped_pa_sum.mzq";
-        String refNo = "RefAssay5";
+
+        String quantLT = "AssayQuantLayer";
+        String refNo = "RefAssay2";
         String filter = "qvalue001";
-        //full-consensus
-//        String infile = "C:\\Manchester\\work\\Puf3Study\\ProteoSuite\\IdenOutcomes\\Filtered_AJ_" + filter
-//                + "\\mzq\\full_consensus\\unlabeled_result_FLUQT_mapped_" + filter + 
-//                "_peptideNormalizedRefAssay10_peptideNormalized" + refNo + ".mzq";
-//        String outfile = "C:\\Manchester\\work\\Puf3Study\\ProteoSuite\\Idenoutcomes\\Filtered_AJ_" + filter
-//                + "\\mzq\\full_consensus\\unlabeled_result_FLUQT_mapped_" + filter + 
-//                "_peptideNormalizedRefAssay10_peptideNormalized" + refNo + "_protein_inference.mzq";
-        //consensusonly
+        
         String infile = "C:\\Manchester\\work\\Puf3Study\\ProteoSuite\\IdenOutcomes\\Filtered_AJ_" + filter
                 + "\\mzq\\consensusonly\\test\\unlabeled_result_FLUQT_mapped_" + filter
                 + "_peptideNormalized" + refNo + "_revDecoy.mzq";
         String outfile = "C:\\Manchester\\work\\Puf3Study\\ProteoSuite\\Idenoutcomes\\Filtered_AJ_" + filter
                 + "\\mzq\\consensusonly\\test\\unlabeled_result_FLUQT_mapped_" + filter
-                + "_peptideNormalized" + refNo + "_protein_inference_revDecoy.mzq";
-// 
+                + "_peptideNormalized" + refNo + "_protein_inference_revDecoyTest_raw.mzq";
 
-        //ksl-data
-//        String infile = path + "test_ksl_itraq_result.mzq";
-//        String outfile = path + "test_ksl_itraq_result_pa.mzq";
-//        String method = "iTraq";
-//        String operator = "median"; //"sum", "mean"
-        //label-free
-//        String infile = path + "CPTAC-study6_EvsB_mzqFile.mzq";
-//        String outfile = path + "CPTAC-study6_EvsB_mzqFile_pa.mzq";
-        String method = "Label-free";
-        String operator = "sum"; //"sum", "mean"
+        String operator = "sum"; //"median", "mean"
 
-//        String inputPeptideDTCA = "MS:1001893";
-//        String outputProteinGCA = "MS:1001890";
-//        String outputProteinGCN = "Progenesis: protein normalised abundance";
-//        String quantLT = "AssayQuantLayer";
-        //ksl-data
-//        String inputPeptideDTCA = "MS:1001847";
-//        String outputProteinGCA = "MS:1001840";
-//        String outputProteinGCN = "iTraq: protein abundance";
-//        String quantLT = "AssayQuantLayer";
-        //label-free
-//        String inputPeptideDTCA = "MS:1001893";
-//        String inputPeptideDTCA = "MS:1001840"; //feature
-        String inputPeptideDTCA = "MS:1001891"; //Progenesis:peptide normalised abundance
-        //full-consensus
-//         String inputPepQuantLID = "Pep_AQL.2";
-        //original
-        String inputPepQuantLID = "Pep_AQL.1"; //Normalised peptide abundance
-        String outputProteinGCA = "MS:1001890"; //Progenesis:protein normalised abundance
-        //full-consensus
-//        String outputProteinGCN = "full-consensus: protein normalised abundance";
-        //original
-        String outputProteinGCN = "Progenesis: protein normalised abundance";
+        String dataType = "raw"; //"raw"
+        String inputPeptideDTCA = null;
+        String inputPepQuantLID = null;
+        String outputProteinGCA = null;
+        String outputProteinGCN = null;
 
-        String quantLT = "AssayQuantLayer";
-
-//        ProteinAbundanceInference pai = new ProteinAbundanceInference("./src/main/resources/test_ksl_itraq_result.mzq",
-//            "./src/main/resources/test_ksl_itraq_result_proteinAbundance.mzq", "iTraq");
-        if (args.length != 9 & args.length != 0) {
-            System.out.println("Please input all eight parameters in order: input file with path, "
-                    + "output file with path, method, operator, input Peptide DataType CvAccession, "
-                    + "output Protein Group CvAccession, output Protein Group CvName, QuantLayerType.");
-        } else if (args.length == 9) {
+        if (args.length != 4 && args.length != 0) {
+            System.out.println("Please input all four parameters in order: input file with path, "
+                    + "output file with path, operator, data type");
+        } else if (args.length == 4) {
             infile = args[0];
             outfile = args[1];
-            method = args[2];
-            operator = args[3];
-            inputPeptideDTCA = args[4];
-            inputPepQuantLID = args[5];
-            outputProteinGCA = args[6];
-            outputProteinGCN = args[7];
-            quantLT = args[8];
+            operator = args[2];
+            dataType = args[3];
+
         }
 
-        new ProteinAbundanceInference(infile, outfile, method, operator, inputPeptideDTCA, inputPepQuantLID,
+        if (dataType.equalsIgnoreCase("normalised")) {
+
+
+            inputPeptideDTCA = "MS:1001891"; //Progenesis:peptide normalised abundance
+            inputPepQuantLID = "Pep_AQL.1"; //Normalised peptide abundance
+            outputProteinGCA = "MS:1001890"; //Progenesis:protein normalised abundance
+            
+            outputProteinGCN = "Progenesis: protein normalised abundance with normalised peptide abundance";
+
+        } else if (dataType.equalsIgnoreCase("raw")) {
+            inputPeptideDTCA = "MS:1001893";
+            inputPepQuantLID = "Pep_AQL.0"; //raw peptide abundance
+            outputProteinGCA = "MS:1001890";
+            outputProteinGCN = "Progenesis: protein normalised abundance with raw peptide abundance";
+        }
+
+        new ProteinAbundanceInference(infile, outfile, operator, inputPeptideDTCA, inputPepQuantLID,
                 outputProteinGCA, outputProteinGCN, quantLT);
     }
 
@@ -468,7 +435,7 @@ public final class ProteinAbundanceInference {
             //remove the decoy proteins
             String protAccession = protein.getAccession();
             if (!protAccession.contains("XXX_")) {
-            //    
+                //    
 
                 List<String> pepConRefs = protein.getPeptideConsensusRefs();
 

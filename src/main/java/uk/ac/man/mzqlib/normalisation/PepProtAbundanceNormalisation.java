@@ -546,7 +546,7 @@ public class PepProtAbundanceNormalisation {
 
                 }
                 //use the first AQL encountered even if there are multiple AQLs with the same data type
-                first_list = true;
+//                first_list = true;
                 break;
             }
         }

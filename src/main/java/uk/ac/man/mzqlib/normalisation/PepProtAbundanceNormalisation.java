@@ -2,7 +2,6 @@ package uk.ac.man.mzqlib.normalisation;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,8 +15,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang3.StringUtils;
 import uk.ac.liv.jmzqml.MzQuantMLElement;
-import static uk.ac.liv.jmzqml.MzQuantMLElement.PeptideConsensus;
-import static uk.ac.liv.jmzqml.MzQuantMLElement.Protein;
 import uk.ac.liv.jmzqml.model.mzqml.Cv;
 import uk.ac.liv.jmzqml.model.mzqml.CvParam;
 import uk.ac.liv.jmzqml.model.mzqml.CvParamRef;
@@ -33,185 +30,252 @@ import uk.ac.liv.jmzqml.model.mzqml.QuantLayer;
 import uk.ac.liv.jmzqml.model.mzqml.Row;
 import uk.ac.liv.jmzqml.xml.io.MzQuantMLMarshaller;
 import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;
-import static uk.ac.man.mzqlib.normalisation.Utils.Median;
 
 /**
- * This class is to normalise the peptide and protein group abundance in terms
- * of users' need.
+ * This class is to normalise the peptide abundance.
  *
  * @author man-mqbsshz2
+ * @version 0.2
  */
-public class PepProtAbundanceNormalisation extends Thread {
-//public class PepProtAbundanceNormalisation {
+public class PepProtAbundanceNormalisation {
 
     private Map<String, List<String>> peptideAssayValues = new HashMap<String, List<String>>();
-    private Map<String, List<String>> NormalisedPeptideAssayValues = new HashMap<String, List<String>>();
-
-    private Map<String, List<String>> proteinAssayValues = new HashMap<String, List<String>>();
-    private Map<String, List<String>> NormalisedProteinAssayValues = new HashMap<String, List<String>>();
+    private Map<String, List<String>> NormalisedPeptideAssayValues;
+    private Map<String, List<String>> proteinAssayValues;
+    private Map<String, List<String>> NormalisedProteinAssayValues;
 
     final static double thresholdConfidence = 2;
     final static double coefficientMAD = 1.4826; //scale factor, 
 
     private String in_file;
     private String out_file;
-
-    private String inputPDTCA;
-    private String cvParamAccession;
-    private String cvParamId;
-    private String cvParamName;
-    private String outputAQLID;
-
-    private String assayQIRawPep = "Pep_AQL.0";
-    private String outputDTCARawPep = "MS:1001893";
-    private String cvParamNameRawPep = "Progenesis:peptide raw abundance";
     private String normalisedLevel;
     private String quantLayerType;
-    private String referenceNumber;
-    private String setType;
-    public static Map<String, List<String>> scalingFactor = new HashMap<String, List<String>>();
-    private String preferedRef;
-    private String regExDecoy;
+    private String inputDataTypeAccession;
+    private String outputDataTypeAccession;
+    private String tagDecoy;
 
-    //EvsB, the assay number 9 is the reference. It is also used to other
-    //such as EvsC or EvsD
-//    PrintWriter outReference = new PrintWriter("referenceCPTAC.txt");
+    private String cvParamId;
+    private String outputDataTypeName;
+    private String inputQuantLayerID;
+    private String outputQuantLayerID;
+    private String outputRawQuantLayerID;
+    private String outputRawDataTypeAccession;
+    private String outputRawDataTypeName;
+
+    private int referenceNumber;
+    private String setType;
+    private Map<String, List<String>> scalingFactor;
+    private String preferedRef;
+
+    private MzQuantMLUnmarshaller inFileUM;
+    private int assNo;
+
+    public void setNormLevel(String normLev) {
+        normalisedLevel = normLev;
+    }
+
+    public void setQuantLT(String qlt) {
+        quantLayerType = qlt;
+    }
+
+    public void setInDTAcc(String inDTA) {
+        inputDataTypeAccession = inDTA;
+    }
+
+    public void setOutDTAcc(String outDTA) {
+        outputDataTypeAccession = outDTA;
+    }
+
+    public void setTagDecoy(String td) {
+        tagDecoy = td;
+    }
+
+    public void setReferenceNumber(int refNumber) {
+        referenceNumber = refNumber;
+    }
+
+    public void setOutputAssayDTCN(String outDTCN) {
+        outputDataTypeName = outDTCN;
+    }
+
+    public void setIDType(String idType) {
+        setType = idType;
+    }
+
+    public void setUMInfile(MzQuantMLUnmarshaller um) {
+        inFileUM = um;
+    }
+
     /**
-     * The constructor
+     * Constructor with seven parameters
      *
-     * @param input
-     * @param output
-     * @param level
-     * @param outputCvName
-     * @param assQuantLayerID
-     * @param inputDataTypeCvAcc
-     * @param outputCvAcc
-     * @param QuantLayerType
-     * @param refNo
+     * @param in_file
+     * @param out_file
+     * @param normalisedLevel
+     * @param quantLayerType
+     * @param inputDataTypeAccession
+     * @param outputDataTypeAccession
+     * @param tagDecoy
      * @throws FileNotFoundException
      */
-    public PepProtAbundanceNormalisation(String in_file, String out_file, String normalisedLevel,
-            String outputCvName, String outputAssQLID, String inputDataTypeCvAcc,
-            String outputCvAcc, String QLType, String refNo, String setType, String regExDecoy) throws FileNotFoundException {
+    public PepProtAbundanceNormalisation(String in_file, String out_file, String normalisedLevel, String quantLayerType,
+            String inputDataTypeAccession, String outputDataTypeAccession, String tagDecoy) throws FileNotFoundException {
 
         this.in_file = in_file;
         this.out_file = out_file;
         this.normalisedLevel = normalisedLevel;
-        this.cvParamName = outputCvName;
         this.cvParamId = "PSI-MS";
-        this.outputAQLID = outputAssQLID;
-        this.inputPDTCA = inputDataTypeCvAcc;
-        this.cvParamAccession = outputCvAcc;
-        this.quantLayerType = QLType;
-        this.referenceNumber = refNo;
-        this.setType = setType;
-        this.regExDecoy = regExDecoy;
+        this.inputDataTypeAccession = inputDataTypeAccession;
+        this.outputDataTypeAccession = outputDataTypeAccession;
+        this.quantLayerType = quantLayerType;
+        this.tagDecoy = tagDecoy;
+
+        if (normalisedLevel.equalsIgnoreCase("peptide")) {
+            this.setType = "consensus";
+        } else if (normalisedLevel.equalsIgnoreCase("feature")) {
+            this.setType = "full";
+        }
+
+        outputDataTypeName = "Normalised " + normalisedLevel + " abundance";
+
+        NormalisedPeptideAssayValues = new HashMap<String, List<String>>();
+        proteinAssayValues = new HashMap<String, List<String>>();
+        NormalisedProteinAssayValues = new HashMap<String, List<String>>();
 
         String cvAccessionPrefix = "MS:";
         int cvAccssionLength = 10;
         int cvAccessionLastSevenNumMax = 1002437;
 
-        int length1 = inputDataTypeCvAcc.length();
-        int length2 = outputCvAcc.length();
-        String inputCvAccessionSuffix = inputDataTypeCvAcc.substring(3, inputDataTypeCvAcc.length() - 3);
-        String outputCvAccessionSuffix = outputCvAcc.substring(3, outputCvAcc.length() - 3);
+        int length1 = inputDataTypeAccession.length();
+        int length2 = outputDataTypeAccession.length();
+        String inputCvAccessionSuffix = inputDataTypeAccession.substring(3, inputDataTypeAccession.length() - 3);
+        String outputCvAccessionSuffix = outputDataTypeAccession.substring(3, outputDataTypeAccession.length() - 3);
         String qlt1 = "AssayQuantLayer";
         String qlt2 = "RatioQuantLayer";
         String qlt3 = "StudyVariableQuantLayer";
 
-//        IDSType = IDST;
         if (!(length1 == cvAccssionLength)) {
-            throw new IllegalArgumentException("Invalid Input Peptide Datatype Parameter!!! " + inputDataTypeCvAcc);
+            throw new IllegalArgumentException("Invalid Input Peptide Datatype Parameter!!! " + inputDataTypeAccession);
         }
 
-        if (!(inputDataTypeCvAcc.substring(0, 3).equals(cvAccessionPrefix)) || !(Integer.parseInt(inputCvAccessionSuffix) >= 0)
+        if (!(inputDataTypeAccession.substring(0, 3).equals(cvAccessionPrefix)) || !(Integer.parseInt(inputCvAccessionSuffix) >= 0)
                 || !(Integer.parseInt(inputCvAccessionSuffix) <= cvAccessionLastSevenNumMax)) {
-            throw new IllegalArgumentException("Wrong Input Peptide Datatype CV Accession!!! " + inputDataTypeCvAcc);
+            throw new IllegalArgumentException("Wrong Input Peptide Datatype CV Accession!!! " + inputDataTypeAccession);
         }
 
         if (!(length2 == cvAccssionLength)) {
-            throw new IllegalArgumentException("Invalid Output Protein Group CV Accession!!! " + outputCvAcc);
+            throw new IllegalArgumentException("Invalid Output Protein Group CV Accession!!! " + outputDataTypeAccession);
         }
-        if (!(outputCvAcc.substring(0, 3).equals(cvAccessionPrefix) && (Integer.parseInt(outputCvAccessionSuffix) >= 0)
+
+        if (!(outputDataTypeAccession.substring(0, 3).equals(cvAccessionPrefix) && (Integer.parseInt(outputCvAccessionSuffix) >= 0)
                 && (Integer.parseInt(outputCvAccessionSuffix) <= cvAccessionLastSevenNumMax))) {
-            throw new IllegalArgumentException("Wrong Output Protein Group CV Accession!!! " + outputCvAcc);
+            throw new IllegalArgumentException("Wrong Output Protein Group CV Accession!!! " + outputDataTypeAccession);
         }
-//        if (!textHasContext(outputProteinGroupCvName)) {
-//            throw new IllegalArgumentException("Invalid Output Protein Group CV Name!!! " + outputProteinGroupCvName);
-//        }
-        if (!(QLType.equals(qlt1) || QLType.equals(qlt2) || QLType.equals(qlt3))) {
-            throw new IllegalArgumentException("Invalid Quant Layer Type!!! " + QLType);
+
+        if (!(quantLayerType.equals(qlt1) || quantLayerType.equals(qlt2) || quantLayerType.equals(qlt3))) {
+            throw new IllegalArgumentException("Invalid Quant Layer Type!!! " + quantLayerType);
         }
+
     }
 
-    @Override
-    public void run() {
+    /**
+     * constructor with reference number
+     *
+     * @param referenceNumber
+     * @throws FileNotFoundException
+     */
+    public PepProtAbundanceNormalisation(int referenceNumber) throws FileNotFoundException {
 
-        boolean file_flag = true;
-        boolean pipeline_flag = true;
+        this.referenceNumber = referenceNumber;
+    }
 
-        MzQuantMLUnmarshaller infileum = null;
+    /**
+     * initialise parameters
+     */
+    public void init() {
 
+        scalingFactor = new HashMap<String, List<String>>();
         try {
-            infileum = MzqFileInput(this.in_file);
-        } catch (IllegalStateException ex) {
-            System.out.println("***************************************************************");
-            System.out.println("The mzq file is not found!!! Please check the first input file.");
-            System.err.println(ex);
-            System.out.println("***************************************************************");
-            file_flag = false;
-            pipeline_flag = false;
+
+            assNo = getAssNo();
+            try {
+                inFileUM = MzqFileInput();
+            } catch (IllegalStateException ex) {
+                System.out.println("***************************************************************");
+                System.out.println("The mzq file is not found!!! Please check the first input file.");
+                System.err.println(ex);
+                System.out.println("***************************************************************");
+            }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(PepProtAbundanceNormalisation.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        if (file_flag == true) {
-            pipeline_flag = pipeline_executor(infileum, this.out_file, this.normalisedLevel,
-                    this.outputAQLID, this.inputPDTCA, this.cvParamAccession, this.quantLayerType,
-                    this.referenceNumber, this.setType, this.regExDecoy);
-        }
+        this.inputQuantLayerID = getQLID();
+        this.outputQuantLayerID = this.inputQuantLayerID + ".1";
 
-        System.out.println("****************************************************");
-        if (pipeline_flag) {
-            System.out.println("******** The pipeline does work successfully! *********");
-            System.out.println("**** The normalisation result is output correctly! ****");
-        } else {
-            System.out.println("****** Some errors exist within the pipeline *******");
-        }
-        System.out.println("****************************************************");
+        //for creating raw peptide abundance quant layer
+        outputRawQuantLayerID = "Pep_AQL.0";
+        outputRawDataTypeAccession = "MS:1001893";
+        outputRawDataTypeName = "Progenesis:peptide raw abundance";
     }
 
     /**
-     * This executor is to execute the main steps in the normalisation.
+     * multi-threading workflow
      *
-     * @param infile_um
-     * @param outputFile
-     * @param normalisedLevel
-     * @param assayQuantId
-     * @param inDTCA
-     * @param outDTCA
-     * @param quantLayerType
-     * @param reference
-     * @return a boolean value to show whether the pipeline is successfully
-     * carried out.
+     * @throws FileNotFoundException
      */
-    private boolean pipeline_executor(MzQuantMLUnmarshaller infile_um, String outputFile,
-            String normLevel, String outputAssQLID, String inDTCA, String outDTCA,
-            String quantLayerType, String reference, String idSetType, String exDecoy) {
+    public void multithreadingCalc() throws FileNotFoundException {
+
+        init();
+        for (int ref = 1; ref <= assNo; ref++) {
+            final int refTmp = ref;
+
+            new Thread("" + ref) {
+                @Override
+                public void run() {
+
+                    System.out.println("Thread: " + getName() + " running");
+                    PepProtAbundanceNormalisation.this.referenceNumber = refTmp;
+//                    System.out.println("reference number in thread: " + referenceNumber);
+
+                    boolean pipeline_flag = false;
+                    pipeline_flag = pipeline_executor(PepProtAbundanceNormalisation.this.referenceNumber);
+
+                    System.out.println("****************************************************");
+                    if (pipeline_flag) {
+                        System.out.println("******** The pipeline does work successfully! *********");
+                        System.out.println("**** The normalisation result is output correctly! ****");
+                    } else {
+                        System.out.println("****** Some errors exist within the pipeline *******");
+                    }
+                    System.out.println("****************************************************");
+                }
+            }.start();
+        }
+    }
+
+    /**
+     * execute the main steps in the normalisation including the reference
+     * selection.
+     *
+     * @param reference
+     * @return
+     */
+    private boolean pipeline_executor(int reference) {
 
         boolean flag = true;
-//        Map<String, List<String>> scaleFactor;
 
         Map<String, List<String>> scaleFactor = new HashMap<String, List<String>>();
         Map<String, List<String>> normalisedPepAssayVal;
 
         if (quantLayerType.equalsIgnoreCase("AssayQuantLayer")) {
-            if (normLevel.equalsIgnoreCase("peptide")
-                    || normLevel.equalsIgnoreCase("feature")
-                    || normLevel.equalsIgnoreCase("feature-then-peptide")) {
-                this.peptideAssayValues = PeptideAssayValue(infile_um, inDTCA, idSetType, exDecoy);
-//            flag = PeptideAssayValue(infile_um, inputAssQLID, idSetType);
-                if (this.peptideAssayValues == null) {
+            if (normalisedLevel.equalsIgnoreCase("peptide")
+                    || normalisedLevel.equalsIgnoreCase("feature")
+                    || normalisedLevel.equalsIgnoreCase("feature-then-peptide")) {
+
+                peptideAssayValues = PeptideAssayValue();
+                if (peptideAssayValues == null) {
                     flag = false;
                 }
 //                        System.out.println("peptide assay entry set: " + flag);
@@ -223,20 +287,17 @@ public class PepProtAbundanceNormalisation extends Thread {
                     return flag;
                 }
 
-                int pepSize = this.peptideAssayValues.entrySet().iterator().next().getValue().size();
-//            System.out.println("peptide assay values No: " + pepSize);
+                int pepSize = peptideAssayValues.entrySet().iterator().next().getValue().size();
 
-                if (!(Integer.parseInt(reference) >= 0) || !(Integer.parseInt(reference) <= pepSize)) {
+                if (!(reference >= 0) || !(reference <= pepSize)) {
                     throw new IllegalArgumentException("Wrongly select the reference number!!! "
                             + "It should be an integer in [1 " + pepSize + "]");
                 }
 
-                normalisedPepAssayVal = NormalisedAssayValue(reference, peptideAssayValues);
+//                normalisedPepAssayVal = NormalisedAssayValue(Integer.toString(reference), peptideAssayValues);
+                normalisedPepAssayVal = NormalisedAssayValue(Integer.toString(reference));
                 List<String> sf = normalisedPepAssayVal.get("scalingfactor");
                 scaleFactor.put("scalingfactor", sf);
-//            normalisedPepAssayVal.remove("scalingfactor");
-//            OutputMzqPeptideNormalisation(infile_um, inputAssQLID, idSetType, outputFile, outputAssQLID,
-//                    inDTCA, outDTCA, quantLayerType, normalisedPepAssayVal);
 
                 if (!(scaleFactor == null)) {
                     flag = true;
@@ -244,15 +305,13 @@ public class PepProtAbundanceNormalisation extends Thread {
                 List<String> vals = scaleFactor.get("scalingfactor");
                 System.out.println("scale values: " + vals);
                 System.out.println("Reference: " + reference);
-                this.scalingFactor.put(reference, vals);
+                scalingFactor.put(Integer.toString(reference), vals);
 
-//            System.out.println("scalingFactor: " + this.scalingFactor);
-                //all assays used are to calculate the proper one assay
-//            double[] sfvals = new double[pepSize];
+//                System.out.println("scalingFactor: " + this.scalingFactor);
                 /**
                  * here apply a median strategy to select the better assay
                  */
-                if (this.scalingFactor.keySet().size() == pepSize) {
+                if (scalingFactor.keySet().size() == pepSize) {
                     int refPrefered = 1;
                     List<String> sfvals;
                     double[] std = new double[pepSize];
@@ -266,10 +325,8 @@ public class PepProtAbundanceNormalisation extends Thread {
                         std[i - 1] = 0;
 
 //                    System.out.println("values: " + this.scalingFactor);
-                        sfvals = this.scalingFactor.get(Integer.toString(i));
+                        sfvals = scalingFactor.get(Integer.toString(i));
 
-//sfvals = scalingFactor.get("1");
-//                    System.out.println("sfvalues: " + sfvals);
                         for (String sfval : sfvals) {
                             sum = sum + Double.valueOf(sfval);
                         }
@@ -280,75 +337,58 @@ public class PepProtAbundanceNormalisation extends Thread {
                         }
 
                         std[i - 1] = Math.pow(sum_dev / (pepSize - 1), 0.5);
-
                         stdTmp[i - 1] = std[i - 1];
-//                    System.out.println("std[" + i + "]: " + std[i-1]);
-
                     }
 
                     double val_median = Utils.Median(stdTmp);
-//                int med = Utils.findMedian(std,0,std.length-1);
-//                double val_median = std[med];
-
-//                System.out.println("standard deviations: " + Arrays.toString(std));
-//                 System.out.println("Tmp standard deviations: " + Arrays.toString(stdTmp));
-//                System.out.println("median value: " + val_median);
                     double tmp = Math.abs(std[0] - val_median);
                     for (int i = 1; i < pepSize; i++) {
                         if (Math.abs(std[i] - val_median) < tmp) {
                             refPrefered = i + 1; //due to being the std array dimesion from zero
                             tmp = Math.abs(std[i] - val_median);
                         }
-
-//                    System.out.println("standard deviations: " + std[i]);
                     }
                     this.preferedRef = String.valueOf(refPrefered);
+
                     System.out.println("Prefered reference assay: " + this.preferedRef);
-//                System.out.println("Prefered reference: " + PepProtAbundanceNormalisation.preferedRef);
 
-                    normalisedPepAssayVal = NormalisedAssayValue(this.preferedRef, peptideAssayValues);
+                    normalisedPepAssayVal = NormalisedAssayValue(this.preferedRef);
                     normalisedPepAssayVal.remove("scalingfactor");
+//                    System.out.println("normalisedPepAssayVal: " + normalisedPepAssayVal);
 
-//                outputFile = outputFile + this.preferedRef + "_revDecoy.mzq";
-                    OutputMzqPeptideNormalisation(infile_um, outputFile, outputAssQLID,
-                            inDTCA, outDTCA, quantLayerType, normalisedPepAssayVal);
-
+                    OutputMzqPeptideNormalisation(normalisedPepAssayVal);
                 }
-
-//            System.out.println("scaling factor: " + scaleFactor);
             }
 
-            if (normLevel.equalsIgnoreCase("protein")) {
-//            flag = ProteinAssayValue(infile_um, inDTCA);
-
-                flag = ProteinAssayValue(infile_um, outputAssQLID);
-//            proteinAssayValues = ProteinAssayValue(infile_um, outputAssQLID);
-//            if (proteinAssayValues == null) {
-//                flag = false;
+//            if (normalisedLevel.equalsIgnoreCase("protein")) {
+////            flag = ProteinAssayValue(infile_um, inDTCA);
+//
+//                flag = ProteinAssayValue(inFileUM, outputAssQLID);
+////            proteinAssayValues = ProteinAssayValue(infile_um, outputAssQLID);
+////            if (proteinAssayValues == null) {
+////                flag = false;
+////            }
+//                if (flag == false) {
+//                    System.out.println("****************************************************************************");
+//                    System.out.println("******* The desired assay quant layer in the input file is not found!!! ****");
+//                    System.out.println("************** Please check the input data type accession. *****************");
+//                    System.out.println("****************************************************************************");
+//                    return flag;
+//                }
+//
+//                int proSize = proteinAssayValues.entrySet().iterator().next().getValue().size();
+//
+//                if (!(reference >= 0) || !(reference <= proSize)) {
+//                    throw new IllegalArgumentException("Wrongly select the reference number!!! "
+//                            + "It should be an integer in [1 " + proSize + "]");
+//                }
+//
+//                flag = OutputMzqProteinNormalisation(inFileUM, out_file, outputAssQLID,
+//                        inputDataTypeAccssion, outputDataTypeAccession, quantLayerType, reference);
 //            }
-                if (flag == false) {
-                    System.out.println("****************************************************************************");
-                    System.out.println("******* The desired assay quant layer in the input file is not found!!! ****");
-                    System.out.println("************** Please check the input data type accession. *****************");
-                    System.out.println("****************************************************************************");
-                    return flag;
-                }
-
-                int proSize = proteinAssayValues.entrySet().iterator().next().getValue().size();
-
-                if (!(Integer.parseInt(reference) >= 0) || !(Integer.parseInt(reference) <= proSize)) {
-                    throw new IllegalArgumentException("Wrongly select the reference number!!! "
-                            + "It should be an integer in [1 " + proSize + "]");
-                }
-
-                flag = OutputMzqProteinNormalisation(infile_um, outputFile, outputAssQLID,
-                        inDTCA, outDTCA, quantLayerType, reference);
-            }
-
 //        } else if (quantLayerType.equals("RatioQuantLayer")) {
 //
 //        } else if (quantLayerType.equals("StudyVariableQuantLayer")) {
-
         }
 
         return flag;
@@ -356,46 +396,93 @@ public class PepProtAbundanceNormalisation extends Thread {
     }
 
     /**
-     * convert the input file to the mzq format
+     * obtain the assay number
+     *
+     * @return
+     * @throws FileNotFoundException
+     */
+    private int getAssNo() throws FileNotFoundException {
+        int no = 0;
+        try {
+
+            MzQuantMLUnmarshaller inUm = MzqFileInput();
+            PeptideConsensusList peptideConList = inUm.unmarshal(MzQuantMLElement.PeptideConsensusList);
+            List<QuantLayer<IdOnly>> assayQLs = peptideConList.getAssayQuantLayer();
+
+            for (QuantLayer assayQL : assayQLs) {
+                if ((assayQL.getDataType().getCvParam().getAccession()).equalsIgnoreCase(inputDataTypeAccession)) {
+//                inputAssayQLID = assayQL.getId();
+                    no = assayQL.getColumnIndex().size();
+                    break;
+                }
+            }
+
+        } catch (IllegalStateException ex) {
+            Logger.getLogger(PepProtAbundanceNormalisation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return no;
+    }
+
+    /**
+     * obtain the identifier of quant layer
+     *
+     * @return
+     */
+    private String getQLID() {
+        PeptideConsensusList peptideConList = inFileUM.unmarshal(MzQuantMLElement.PeptideConsensusList);
+        List<QuantLayer<IdOnly>> assayQLs = peptideConList.getAssayQuantLayer();
+        String inAQLID = "";
+        for (QuantLayer assayQL : assayQLs) {
+            if ((assayQL.getDataType().getCvParam().getAccession()).equalsIgnoreCase(inputDataTypeAccession)) {
+                inAQLID = assayQL.getId();
+//                assNo = assayQL.getColumnIndex().size();
+                break;
+            }
+        }
+        return inAQLID;
+    }
+
+    /**
+     * unmarshal xml to java object
      *
      * @param infile
      * @return
      * @throws IllegalStateException
      * @throws FileNotFoundException
      */
-    public static MzQuantMLUnmarshaller MzqFileInput(String infile) throws IllegalStateException,
+    public MzQuantMLUnmarshaller MzqFileInput() throws IllegalStateException,
             FileNotFoundException {
-        File mzqFile = new File(infile);
+        File mzqFile = new File(in_file);
         MzQuantMLUnmarshaller infileUm = new MzQuantMLUnmarshaller(mzqFile);
         return infileUm;
     }
 
+    /**
+     *
+     * @param in_file_um
+     * @return
+     */
     private MzQuantML Mzq(MzQuantMLUnmarshaller in_file_um) {
         MzQuantML mzq = in_file_um.unmarshal(MzQuantMLElement.MzQuantML);
         return mzq;
     }
 
     /**
-     * obtain the peptide assay quant values for the map of peptideAssayValues
-     * from the peptide quant layer in the input file.
+     * obtain the peptide assay quant values
      *
-     * @param in_file_um
-     * @param aql_id
-     * @param setType
-     * @return a boolean value
+     * @return
      */
-    private Map<String, List<String>> PeptideAssayValue(MzQuantMLUnmarshaller in_file_um,
-            String inputPeptideDTCA, String set_type, String reg_ex) {
+    private Map<String, List<String>> PeptideAssayValue() {
 //    private boolean PeptideAssayValue(MzQuantMLUnmarshaller in_file_um, String aql_id, String set_type) {
-        boolean first_list = false;
-        ProteinList protList = in_file_um.unmarshal(MzQuantMLElement.ProteinList);
+//        boolean first_list = false;
+        ProteinList protList = inFileUM.unmarshal(MzQuantMLElement.ProteinList);
         List<Protein> prots = protList.getProtein();
 
-        PeptideConsensusList pepConList = in_file_um.unmarshal(MzQuantMLElement.PeptideConsensusList);
+        PeptideConsensusList pepConList = inFileUM.unmarshal(MzQuantMLElement.PeptideConsensusList);
         List<PeptideConsensus> pepCons = pepConList.getPeptideConsensus();
         List<QuantLayer<IdOnly>> assayQLs = pepConList.getAssayQuantLayer();
         for (QuantLayer assayQL : assayQLs) {
-            if ((assayQL.getDataType().getCvParam().getAccession()).equalsIgnoreCase(inputPeptideDTCA)) {
+            if ((assayQL.getDataType().getCvParam().getAccession()).equalsIgnoreCase(inputDataTypeAccession)) {
 
 //            if (assayQL.getId().equalsIgnoreCase(aql_id)) {
 //                System.out.println("AQL: " + assayQL.getId());
@@ -409,12 +496,12 @@ public class PepProtAbundanceNormalisation extends Thread {
                     List<String> values = row.getValue();
 
                     //for all IDs
-                    if (set_type.equalsIgnoreCase("full")) {
+                    if (setType.equalsIgnoreCase("full")) {
 
-                        this.peptideAssayValues.put(peptideRef, values);
+                        peptideAssayValues.put(peptideRef, values);
 
                         //for consensus ones only    
-                    } else if (set_type.equalsIgnoreCase("consensus")) {
+                    } else if (setType.equalsIgnoreCase("consensus")) {
 
                         for (PeptideConsensus pepCon : pepCons) {
 
@@ -432,11 +519,11 @@ public class PepProtAbundanceNormalisation extends Thread {
                                         String protAcc = prot.getAccession();
                                         List<String> pepRefs = prot.getPeptideConsensusRefs();
                                         for (String pepRef : pepRefs) {
-                                            if (pepRef.equalsIgnoreCase(pepId) && !(protAcc.contains(reg_ex))) {
+                                            if (pepRef.equalsIgnoreCase(pepId) && !(protAcc.contains(tagDecoy))) {
                                                 //
 
                                                 //original
-                                                this.peptideAssayValues.put(peptideRef, values);
+                                                peptideAssayValues.put(peptideRef, values);
 //                                    System.out.println("peptide assay values: " + peptideRef);
                                                 //
 
@@ -449,14 +536,10 @@ public class PepProtAbundanceNormalisation extends Thread {
                                             break;
                                         }
                                     }
-                                    //
 
-                                    //original
                                 }
 
                                 break;
-//                    System.out.println("Peptide ref.: " + row.getObjectRef());
-//                System.out.println("Peptide raw abundance: " + values.toString());
                             }
                         }
                     }
@@ -469,8 +552,7 @@ public class PepProtAbundanceNormalisation extends Thread {
         }
 
 //        System.out.println("Peptide Assay: " + peptideAssayValues);
-        return this.peptideAssayValues;
-//        return first_list;
+        return peptideAssayValues;
     }
 
     /**
@@ -480,7 +562,6 @@ public class PepProtAbundanceNormalisation extends Thread {
      * @param inputProteinDTCA
      * @return a boolean value
      */
-//    private Map<String, List<String>> ProteinAssayValue(MzQuantMLUnmarshaller in_file_um, String assayID) {
     private boolean ProteinAssayValue(MzQuantMLUnmarshaller in_file_um, String assayID) {
 
         boolean first_list = false;
@@ -520,20 +601,20 @@ public class PepProtAbundanceNormalisation extends Thread {
      * @param PAV
      * @return the map with the normalised values
      */
-    private Map<String, List<String>> NormalisedAssayValue(String ref, Map<String, List<String>> PAV) {
-
+//    private Map<String, List<String>> NormalisedAssayValue(String ref, Map<String, List<String>> PAV) {
+    private Map<String, List<String>> NormalisedAssayValue(String ref) {
         Map<String, List<String>> normalisedPAV = new HashMap<String, List<String>>();
         Map<String, List<String>> ratioPAV = new HashMap<String, List<String>>();
-        Set<Entry<String, List<String>>> entrys = PAV.entrySet();
+        Set<Entry<String, List<String>>> entrys = peptideAssayValues.entrySet();
 
 //         System.out.println("PAV Entrys " + ": " + entrys);
         DecimalFormat df = new DecimalFormat(".000");
         double threshold_confidence = thresholdConfidence;
         double coef_mad = coefficientMAD;
-        int vSize = PAV.entrySet().iterator().next().getValue().size();
+        int vSize = peptideAssayValues.entrySet().iterator().next().getValue().size();
 
 //        System.out.println("vSize: " + vSize);
-        int entryNo = PAV.size();
+        int entryNo = peptideAssayValues.size();
         double[] scalingFactor = new double[vSize];
         int entryRow = 0;
         double med = 0.0;
@@ -601,14 +682,7 @@ public class PepProtAbundanceNormalisation extends Thread {
                     nonZero++;
                 }
             }
-//            if (col == 3) {
-//                System.out.println("col3: " + Arrays.toString(objCol));
-//            }
-//            if (col == 5) {
-//                System.out.println("col5: " + Arrays.toString(objCol));
-//            }
 
-//            System.out.println("k " + k);
             double[] logRatioTmp = new double[nonZero];
             double[] logRatioTmp1 = new double[nonZero];
             double[] logRatio_med = new double[nonZero];
@@ -695,66 +769,38 @@ public class PepProtAbundanceNormalisation extends Thread {
     }
 
     /**
-     * output the peptide result.
+     * output the normalised result
      *
-     * @param infile_um
-     * @param outFile
-     * @param assayQI
-     * @param inputDTCA
-     * @param outputDTCA
-     * @param quantLT
-     * @param refAssay
-     * @return
+     * @param normalisedPepAssayVal
      */
-    private void OutputMzqPeptideNormalisation(MzQuantMLUnmarshaller infile_um,
-            String outFile, String outAQLID, String inputDTCA, String outputDTCA,
-            String quantLT, Map<String, List<String>> normalisedPepAssayVal) {
-//    private boolean OutputMzqPeptideNormalisation(MzQuantMLUnmarshaller infile_um, 
-//            String inAssQLID, String idST, String outFile,
-//            String outAQLID, String inputDTCA, String outputDTCA, String quantLT, String refAssay) {
-
-//        System.out.println("peptide assay values: " + pepAssVal);
-//        boolean flag = true;
-//        Map<String, List<String>> scaleFactor;
-//        scaleFactor = new HashMap<String, List<String>>();
-//        Map<String, List<String>> normalisedPepAssayVal;
-//        peptideAssayValues = PeptideAssayValue(infile_um, inAssQLID, idST);
-//        if (peptideAssayValues == null) {
-//            flag = false;
-//        }
-//        flag = PeptideAssayValue(infile_um, inAssQLID, idST);
-//        if (flag == true) {
-        PeptideConsensusList pepConList = infile_um.unmarshal(MzQuantMLElement.PeptideConsensusList);
+//    private void OutputMzqPeptideNormalisation(MzQuantMLUnmarshaller infile_um,
+//            String outFile, String outAQLID, String inputDTCA, String outputDTCA,
+//            String quantLT, Map<String, List<String>> normalisedPepAssayVal) {
+    private void OutputMzqPeptideNormalisation(Map<String, List<String>> normalisedPepAssayVal) {
+        PeptideConsensusList pepConList = inFileUM.unmarshal(MzQuantMLElement.PeptideConsensusList);
         List<QuantLayer<IdOnly>> assayQLs = pepConList.getAssayQuantLayer();
 
-//            normalisedPepAssayVal = NormalisedAssayValue(refAssay, pepAssVal);
-//            List<String> sf = normalisedPepAssayVal.get("scalingfactor");
-//            System.out.println("scaling factor included: " + normalisedPepAssayVal);
-//            System.out.println("sf: " + sf);
-//            scaleFactor.put("scalingfactor", sf);
-//            normalisedPepAssayVal.remove("scalingfactor");
-//            System.out.println("normalised peptide assay values: " + normalisedPepAssayVal);
-//            normalisedPepAssayVal = NormalisedAssayValue(refAssay, peptideAssayValues);
-        if (quantLT.equals("AssayQuantLayer")) {
+//        System.out.println("normalised peptide values: " + normalisedPepAssayVal);
+        if (quantLayerType.equals("AssayQuantLayer")) {
 
             /**
              * Create the quant layer for raw peptide abundance
              */
             QuantLayer newQL0 = new QuantLayer();
-            newQL0.setId(assayQIRawPep);
+            newQL0.setId(outputRawQuantLayerID);
 
             /**
              * Create the part of DataType
              */
             CvParam cvParam0 = new CvParam();
-            cvParam0.setAccession(this.outputDTCARawPep);
+            cvParam0.setAccession(outputRawDataTypeAccession);
             Cv cv0 = new Cv();
 
-            cv0.setId(this.cvParamId);
+            cv0.setId(cvParamId);
             cvParam0.setCv(cv0);
 
 //                String cvParamNameRawPep = "Raw peptide abundance";
-            cvParam0.setName(cvParamNameRawPep);
+            cvParam0.setName(outputRawDataTypeName);
             CvParamRef cvParamRef0 = new CvParamRef();
             cvParamRef0.setCvParam(cvParam0);
             newQL0.setDataType(cvParamRef0);
@@ -767,7 +813,7 @@ public class PepProtAbundanceNormalisation extends Thread {
              * and then add these to the generated QuantLayer in ProteinGroup
              */
             for (QuantLayer assayQL : assayQLs) {
-                if ((assayQL.getDataType().getCvParam().getAccession()).equalsIgnoreCase(inputDTCA)) {
+                if ((assayQL.getDataType().getCvParam().getAccession()).equalsIgnoreCase(inputDataTypeAccession)) {
 
                     List<String> assayCI = (List<String>) assayQL.getColumnIndex();
                     int nCI = assayCI.size();
@@ -813,18 +859,18 @@ public class PepProtAbundanceNormalisation extends Thread {
              */
 //                List<QuantLayer> assayQLs = AssayQLs(infile_um);
             QuantLayer newQL = new QuantLayer();
-            newQL.setId(outAQLID);
+            newQL.setId(outputQuantLayerID);
 
             /**
              * Create the part of DataType
              */
             CvParam cvParam1 = new CvParam();
-            cvParam1.setAccession(outputDTCA);
+            cvParam1.setAccession(outputDataTypeAccession);
             Cv cv = new Cv();
 
             cv.setId(cvParamId);
             cvParam1.setCv(cv);
-            cvParam1.setName(cvParamName);
+            cvParam1.setName(outputDataTypeName);
             CvParamRef cvParamRef1 = new CvParamRef();
             cvParamRef1.setCvParam(cvParam1);
             newQL.setDataType(cvParamRef1);
@@ -837,7 +883,7 @@ public class PepProtAbundanceNormalisation extends Thread {
              * and then add these to the generated QuantLayer in ProteinGroup
              */
             for (QuantLayer assayQL : assayQLs) {
-                if ((assayQL.getDataType().getCvParam().getAccession()).equalsIgnoreCase(inputDTCA)) {
+                if ((assayQL.getDataType().getCvParam().getAccession()).equalsIgnoreCase(inputDataTypeAccession)) {
 
                     List<String> assayCI = (List<String>) assayQL.getColumnIndex();
                     int nCI = assayCI.size();
@@ -859,26 +905,25 @@ public class PepProtAbundanceNormalisation extends Thread {
             /**
              * make the records in order when outputing
              */
-            Map<String, List<String>> normalisedTmp = new HashMap<String, List<String>>();
+//            Map<String, List<String>> normalisedTmp = new HashMap<String, List<String>>();
+            Map<String, List<String>> treeMap = new TreeMap<String, List<String>>();
             for (Map.Entry<String, List<String>> entry : normalisedPepAssayVal.entrySet()) {
                 String key = entry.getKey();
                 List<String> values = entry.getValue();
-//            String newKey = groupInOrd.get(key);
-                normalisedTmp.put(key, values);
-
+//                normalisedTmp.put(key, values);
+                treeMap.put(key, values);
             }
-
-            Map<String, List<String>> treeMap = new TreeMap<String, List<String>>(normalisedTmp);
+//System.out.println("normalised temp: " + treeMap);
+//            Map<String, List<String>> treeMap = new TreeMap<String, List<String>>(normalisedTmp);
             DataMatrix dMatrix = Utils.SortedMap(treeMap, dm);
-
             newQL.setDataMatrix(dMatrix);
             pepConList.getAssayQuantLayer().add(newQL);
 
-            MzQuantML mzq = infile_um.unmarshal(MzQuantMLElement.MzQuantML);
+            MzQuantML mzq = inFileUM.unmarshal(MzQuantMLElement.MzQuantML);
             mzq.getPeptideConsensusList().clear();
             mzq.getPeptideConsensusList().add(pepConList);
 
-            MzQuantMLMarshaller marshaller = new MzQuantMLMarshaller(outFile);
+            MzQuantMLMarshaller marshaller = new MzQuantMLMarshaller(out_file);
             marshaller.marshall(mzq);
         }
 //        } else {
@@ -899,97 +944,97 @@ public class PepProtAbundanceNormalisation extends Thread {
      * @param refAssay
      * @return
      */
-    private boolean OutputMzqProteinNormalisation(MzQuantMLUnmarshaller infile_um, String outFile,
-            String assayQI, String inputDTCA, String outputDTCA, String quantLT, String refAssay) {
-
-        boolean flag = true;
-        Map<String, List<String>> normalisedProAssayVal;
-        flag = ProteinAssayValue(infile_um, inputDTCA);
-//        proteinAssayValues = ProteinAssayValue(infile_um, assayQI);
-//        if (proteinAssayValues == null) {
-//            flag = false;
+//    private boolean OutputMzqProteinNormalisation(MzQuantMLUnmarshaller infile_um, String outFile,
+//            String assayQI, String inputDTCA, String outputDTCA, String quantLT, int refAssay) {
+//
+//        boolean flag = true;
+//        Map<String, List<String>> normalisedProAssayVal;
+//        flag = ProteinAssayValue(infile_um, inputDTCA);
+////        proteinAssayValues = ProteinAssayValue(infile_um, assayQI);
+////        if (proteinAssayValues == null) {
+////            flag = false;
+////        }
+//
+//        if (flag == true) {
+//            ProteinGroupList proGroList = infile_um.unmarshal(MzQuantMLElement.ProteinGroupList);
+//            List<QuantLayer<IdOnly>> assayQLs = proGroList.getAssayQuantLayer();
+//            normalisedProAssayVal = NormalisedAssayValue(Integer.toString(refAssay), proteinAssayValues);
+//           
+//
+//            if (quantLT.equals("AssayQuantLayer")) {
+//
+////                List<QuantLayer> assayQLs = AssayQLs(infile_um);
+//                QuantLayer newQL = new QuantLayer();
+//                newQL.setId(assayQI);
+//
+//                /**
+//                 * Create the part of DataType
+//                 */
+//                CvParam cvParam1 = new CvParam();
+//                cvParam1.setAccession(outputDTCA);
+//                Cv cv = new Cv();
+//
+//                cv.setId(cvParamId);
+//                cvParam1.setCv(cv);
+//                cvParam1.setName(outputDataTypeName);
+//                CvParamRef cvParamRef1 = new CvParamRef();
+//                cvParamRef1.setCvParam(cvParam1);
+//                newQL.setDataType(cvParamRef1);
+//
+//                /**
+//                 * Create the part of ColumnIndex
+//                 */
+//                /**
+//                 * Get the column indices from the QuantLayer in the original
+//                 * file and then add these to the generated QuantLayer in
+//                 * ProteinGroup
+//                 */
+//                for (QuantLayer assayQL : assayQLs) {
+//                    if ((assayQL.getDataType().getCvParam().getAccession()).equalsIgnoreCase(inputDTCA)) {
+//
+//                        List<String> assayCI = (List<String>) assayQL.getColumnIndex();
+//                        int nCI = assayCI.size();
+//                        for (int i = 0; i < nCI; i++) {
+//                            newQL.getColumnIndex().add(assayCI.get(i));
+////                            System.out.println("assayCI: " + assayCI.get(i));
+//                        }
+//
+//                        break;
+//                    }
+//                }
+//
+//                /**
+//                 * Create the part of DataMatrix
+//                 */
+//                DataMatrix dm = new DataMatrix() {
+//                };
+//
+//                /**
+//                 * make the records in order when outputing
+//                 */
+//                Map<String, List<String>> normalisedTmp = new HashMap<String, List<String>>();
+//                for (Map.Entry<String, List<String>> entry : normalisedProAssayVal.entrySet()) {
+//                    String key = entry.getKey();
+//                    List<String> values = entry.getValue();
+//                    normalisedTmp.put(key, values);
+//
+//                }
+//
+//                Map<String, List<String>> treeMap = new TreeMap<String, List<String>>(normalisedTmp);
+//                DataMatrix dMatrix = Utils.SortedMap(treeMap, dm);
+//
+//                newQL.setDataMatrix(dMatrix);
+//                proGroList.getAssayQuantLayer().add(newQL);
+//
+//                MzQuantML mzq = infile_um.unmarshal(MzQuantMLElement.MzQuantML);
+//                mzq.setProteinGroupList(proGroList);
+//
+//                MzQuantMLMarshaller marshaller = new MzQuantMLMarshaller(outFile);
+//                marshaller.marshall(mzq);
+//            }
+//        } else {
+//            System.out.println("Does not obtain Protein Group Assay Raw Values correctly!!!");
 //        }
-
-        if (flag == true) {
-            ProteinGroupList proGroList = infile_um.unmarshal(MzQuantMLElement.ProteinGroupList);
-            List<QuantLayer<IdOnly>> assayQLs = proGroList.getAssayQuantLayer();
-            normalisedProAssayVal = NormalisedAssayValue(refAssay, proteinAssayValues);
-
-            if (quantLT.equals("AssayQuantLayer")) {
-
-//                List<QuantLayer> assayQLs = AssayQLs(infile_um);
-                QuantLayer newQL = new QuantLayer();
-                newQL.setId(assayQI);
-
-                /**
-                 * Create the part of DataType
-                 */
-                CvParam cvParam1 = new CvParam();
-                cvParam1.setAccession(outputDTCA);
-                Cv cv = new Cv();
-
-                cv.setId(cvParamId);
-                cvParam1.setCv(cv);
-                cvParam1.setName(cvParamName);
-                CvParamRef cvParamRef1 = new CvParamRef();
-                cvParamRef1.setCvParam(cvParam1);
-                newQL.setDataType(cvParamRef1);
-
-                /**
-                 * Create the part of ColumnIndex
-                 */
-                /**
-                 * Get the column indices from the QuantLayer in the original
-                 * file and then add these to the generated QuantLayer in
-                 * ProteinGroup
-                 */
-                for (QuantLayer assayQL : assayQLs) {
-                    if ((assayQL.getDataType().getCvParam().getAccession()).equalsIgnoreCase(inputDTCA)) {
-
-                        List<String> assayCI = (List<String>) assayQL.getColumnIndex();
-                        int nCI = assayCI.size();
-                        for (int i = 0; i < nCI; i++) {
-                            newQL.getColumnIndex().add(assayCI.get(i));
-//                            System.out.println("assayCI: " + assayCI.get(i));
-                        }
-
-                        break;
-                    }
-                }
-
-                /**
-                 * Create the part of DataMatrix
-                 */
-                DataMatrix dm = new DataMatrix() {
-                };
-
-                /**
-                 * make the records in order when outputing
-                 */
-                Map<String, List<String>> normalisedTmp = new HashMap<String, List<String>>();
-                for (Map.Entry<String, List<String>> entry : normalisedProAssayVal.entrySet()) {
-                    String key = entry.getKey();
-                    List<String> values = entry.getValue();
-                    normalisedTmp.put(key, values);
-
-                }
-
-                Map<String, List<String>> treeMap = new TreeMap<String, List<String>>(normalisedTmp);
-                DataMatrix dMatrix = Utils.SortedMap(treeMap, dm);
-
-                newQL.setDataMatrix(dMatrix);
-                proGroList.getAssayQuantLayer().add(newQL);
-
-                MzQuantML mzq = infile_um.unmarshal(MzQuantMLElement.MzQuantML);
-                mzq.setProteinGroupList(proGroList);
-
-                MzQuantMLMarshaller marshaller = new MzQuantMLMarshaller(outFile);
-                marshaller.marshall(mzq);
-            }
-        } else {
-            System.out.println("Does not obtain Protein Group Assay Raw Values correctly!!!");
-        }
-        return flag;
-    }
-
+//        return flag;
+//    }
 }

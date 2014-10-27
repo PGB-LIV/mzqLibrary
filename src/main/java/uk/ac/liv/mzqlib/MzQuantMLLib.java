@@ -70,6 +70,14 @@ public class MzQuantMLLib {
     public static String normalisationUsage = "Normalisation input.mzq output.mzq " + normalisationParams
             + " \n\nDescription:\n" + normalisationToolDescription;
 
+    public static String proteinInferenceParams = "";
+    public static String proteinInferenceUsageExample = "-normLvl peptide -qlType AssayQuantLayer -inDTCA MS:1001840 -outDTCA MS:1001891 -tagDecoy XXX_";
+    public static String proteinInferenceToolDescription = "This tool will calculate normalised value of specified AssayQuantLayer in one specified list (peptide or feature). "
+            + "Then output the result as an mzq file. "
+            + "The tool will automatically select the best reference assay.";
+    public static String proteinInferenceUsage = "Normalisation input.mzq output.mzq " + proteinInferenceParams
+            + " \n\nDescription:\n" + proteinInferenceToolDescription;
+
     public static String userFeedback = "java -jar jar-location/mzqlib-version.jar ";
 
 // Added by Fawaz Ghali to automatically update the MzidLib GUI 
@@ -207,10 +215,10 @@ public class MzQuantMLLib {
                     if (inputFileName != null && outputFileName != null) {
                         String rawToMzidMapString = Utils.getCmdParameter(args, "rawToMzidMap", true);
 
-                            MzQuantMLUnmarshaller mzqUm = new MzQuantMLUnmarshaller(new File(inputFileName));
-                            MzqMzIdMapper mapper = MzqMzIdMapperFactory.getInstance().buildMzqMzIdMapper(mzqUm, rawToMzidMapString);
-                            mapper.createMappedFile(outputFileName);
-                        }
+                        MzQuantMLUnmarshaller mzqUm = new MzQuantMLUnmarshaller(new File(inputFileName));
+                        MzqMzIdMapper mapper = MzqMzIdMapperFactory.getInstance().buildMzqMzIdMapper(mzqUm, rawToMzidMapString);
+                        mapper.createMappedFile(outputFileName);
+                    }
 //                    }
                 }
                 else if (args[0].equals("MzqAnovaPValue")) {
@@ -231,7 +239,7 @@ public class MzQuantMLLib {
                         String outDTCA = Utils.getCmdParameter(args, "outDTCA", true);
                         String tagDecoy = Utils.getCmdParameter(args, "tagDecoy", true);
                         //String refAssay = Utils.getCmdParameter(args, "refAssay", false);                       
-                        
+
                         PepProtAbundanceNormalisation normalisation = new PepProtAbundanceNormalisation(inputFileName, outputFileName, normLevel, qlType, inDTCA, outDTCA, tagDecoy);
                         normalisation.multithreadingCalc();
                     }

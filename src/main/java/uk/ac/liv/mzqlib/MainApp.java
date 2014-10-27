@@ -249,7 +249,7 @@ public class MainApp extends Application {
             }
 
             re.eval("rownames(X) <- c(" + rowNames.substring(0, rowNames.length() - 2) + ")");
-            re.eval("colnames(X) <- c(" + colNames.substring(0, colNames.length() - 2) + ")");
+            re.eval("colnames(X) <- c(" + colNames.toString() + ")");
 
             re.eval("require(graphics)");
             re.eval("biplot(princomp(X))");
@@ -337,25 +337,25 @@ public class MainApp extends Application {
             }
 
             re.eval("rownames(X) <- c(" + rowNames.substring(0, rowNames.length() - 2) + ")");
-            re.eval("colnames(X) <- c(" + colNames.substring(0, colNames.length() - 2) + ")");
+            re.eval("colnames(X) <- c(" + colNames.toString() + ")");
 
             // Set heatmap
             String setHeatmap = "heatmap.2(X,\n"
-                    + "Rowv=TRUE,\n"
-                    + "Colv=TRUE,\n"
-                    + "na.rm=FALSE,\n"
-                    + "distfun = dist,\n"
-                    + "hclustfun = hclust,\n"
-                    + "key=TRUE,\n"
-                    + "keysize=1,\n"
-                    + "trace=\"none\",\n"
-                    + "scale=\"none\",\n"
-                    + "density.info=c(\"none\"),\n"
-                    + "#margins=c(18, 8),\n"
-                    //+ "col=color.palette,\n"
-                    + "breaks = breaks,\n"
-                    + "lhei=c(0.4,4),\n"
-                    + "main=\"Heatmap of\"\n"
+                    //                    + "Rowv=TRUE,\n"
+                    //                    + "Colv=TRUE,\n"
+                    //                    + "na.rm=FALSE,\n"
+                    //                    + "distfun = dist,\n"
+                    //                    + "hclustfun = hclust,\n"
+                    //                    + "key=TRUE,\n"
+                    //                    + "keysize=1,\n"
+                    //                    + "trace=\"none\",\n"
+                    //                    + "scale=\"none\",\n"
+                    //                    + "density.info=c(\"none\"),\n"
+                    //                    + "#margins=c(18, 8),\n"
+                    //                    //+ "col=color.palette,\n"
+                    //                    + "breaks = breaks,\n"
+                    //                    + "lhei=c(0.4,4),\n"
+                    + "main=\"Heatmap of Progenesis: normalised abundance in ProteinList AssayQuantLayer\"\n"
                     + ")";
             re.eval(setHeatmap);
             re.eval("dev.off()");
@@ -468,7 +468,7 @@ public class MainApp extends Application {
                     //                    + "col=color.palette,\n"
                     //                    + "breaks = breaks,\n"
                     //                    + "lhei=c(0.4,4),\n"
-                    + "main=\"Heatmap of\""
+                    + "main=\"Heatmap of Progenesis: normalised abundance in ProteinList\""
                     + ")";
             re.eval(setHeatmap);
         });

@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package uk.ac.liv.mzqlib.idmapper;
 
 import java.io.File;
@@ -56,6 +51,32 @@ public class MzqMzIdMapperFactory {
 
     public static MzqMzIdMapperFactory getInstance() {
         return instance;
+    }
+
+    public MzqMzIdMapper buildMzqMzIdMapper(MzQuantMLUnmarshaller mzqUm,
+                                            String rawToMzidString)
+            throws JAXBException {
+        String[] rawToMzidMapArray = rawToMzidString.split(";");
+        Map<String, String> rawToMzidMap = new HashMap<>();
+        if ((rawToMzidMapArray.length % 2) != 0) {
+            //System.err.println("Expected raw file name and mzid file in pairs: " + rawToMzidMap);
+            throw new RuntimeException("Expected raw file name and mzid file in pairs: " + rawToMzidMap);
+        }
+        else {
+            // Build rawToMzidMap
+            for (int i = 0; i < rawToMzidMapArray.length; i++) {
+                String rawFileName = rawToMzidMapArray[i].trim();
+                String mzidFilePath = rawToMzidMapArray[i + 1].trim();
+                if (mzidFilePath.toLowerCase().endsWith("mzid")) {
+                    rawToMzidMap.put(rawFileName, mzidFilePath);
+                }
+                else {
+                    throw new RuntimeException("There is a non mzid file in the argument.");
+                }
+                i++;
+            }
+        }
+        return new MzqMzIdMapperImpl(mzqUm, rawToMzidMap);
     }
 
     public MzqMzIdMapper buildMzqMzIdMapper(MzQuantMLUnmarshaller mzqUm,
@@ -202,7 +223,6 @@ public class MzqMzIdMapperFactory {
                         }
 
                         // handle remain sequences
-
                         for (int i = 1; i < pepModStringList.size(); i++) {
                             UserParam userParam = new UserParam();
 
@@ -349,8 +369,8 @@ public class MzqMzIdMapperFactory {
             InputFiles inputFiles = mzqUm.unmarshal(MzQuantMLElement.InputFiles.getXpath()); //3b. XPath
             SoftwareList softList = mzqUm.unmarshal(MzQuantMLElement.SoftwareList);
             DataProcessingList dpList = mzqUm.unmarshal(MzQuantMLElement.DataProcessingList);
-            Iterator<BibliographicReference> brIter =
-                    mzqUm.unmarshalCollectionFromXpath(MzQuantMLElement.BibliographicReference);
+            Iterator<BibliographicReference> brIter
+                    = mzqUm.unmarshalCollectionFromXpath(MzQuantMLElement.BibliographicReference);
             AssayList assayList = mzqUm.unmarshal(MzQuantMLElement.AssayList);
             StudyVariableList svList = mzqUm.unmarshal(MzQuantMLElement.StudyVariableList);
             RatioList ratioList = mzqUm.unmarshal(MzQuantMLElement.RatioList);
@@ -358,7 +378,6 @@ public class MzqMzIdMapperFactory {
             ProteinList protList = mzqUm.unmarshal(MzQuantMLElement.ProteinList);
             SmallMoleculeList smallMolList = mzqUm.unmarshal(MzQuantMLElement.SmallMoleculeList);
             Iterator<FeatureList> ftListIter = mzqUm.unmarshalCollectionFromXpath(MzQuantMLElement.FeatureList);
-
 
             MzQuantMLMarshaller marsh = new MzQuantMLMarshaller();
 
@@ -399,7 +418,6 @@ public class MzqMzIdMapperFactory {
             inputFiles.setIdentificationFiles(idFiles);
 
             //Map<String, List<SIIData>> featureToSIIsMap = this.mzqProc.getFeatureToSIIsMap();
-
             MzQuantMLMarshaller m = new MzQuantMLMarshaller();
             FileWriter writer = null;
 
@@ -464,10 +482,11 @@ public class MzqMzIdMapperFactory {
                 ProteinList newProtList = new ProteinList();
                 if (protList == null) {
                     newProtList.setId("ProteinList1");
-                } else {
+                }
+                else {
                     newProtList.setId(protList.getId());
                 }
-                
+
                 int protCount = 0;
                 for (String protAcc : protAccToPepConNewIdsMap.keySet()) {
                     Protein protein = new Protein();
@@ -485,7 +504,7 @@ public class MzqMzIdMapperFactory {
                     }
                     newProtList.getProtein().add(protein);
                 }
-                
+
                 if (!protAccToPepConNewIdsMap.isEmpty()) {
                     m.marshall(newProtList, writer);
                     writer.write("\n");

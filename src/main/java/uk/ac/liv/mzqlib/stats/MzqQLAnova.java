@@ -154,8 +154,6 @@ public class MzqQLAnova {
             throws JAXBException {
         // retrieve every attributes and elements from the mzQuantML file
         String mzqId = mzqUm.getMzQuantMLId();
-        String mzqName = mzqUm.getMzQuantMLName();
-        String mzqVersion = mzqUm.getMzQuantMLVersion();
 
         // three ways of unmarshalling an mzQuantML element: 
         CvList cvList = mzqUm.unmarshal(MzQuantMLElement.CvList);
@@ -344,7 +342,7 @@ public class MzqQLAnova {
                     List<QuantLayer<IdOnly>> assayQLs = protGrpList.getAssayQuantLayer();
 
                     for (QuantLayer<IdOnly> assayQL : assayQLs) {
-                        if (assayQL.getDataType().getCvParam().getName().equals(qlDataType)) {
+                        if (assayQL.getDataType().getCvParam().getAccession().equals(qlDataType)) {
                             dataTypeFound = true;
                             anovaPValueMap = CalculatePValueFromQL(assayQL);
                         }
@@ -451,7 +449,7 @@ public class MzqQLAnova {
             // Add pValue to anovaPValueMap
             ret.put(row.getObjectRef(), pValue);
 
-            System.out.println("Ojbect_Ref: " + row.getObjectRef() + " --> " + pValue);
+            //System.out.println("Ojbect_Ref: " + row.getObjectRef() + " --> " + pValue);
         }
 
         return ret;
@@ -502,7 +500,7 @@ public class MzqQLAnova {
 //        assayIdsGroup.add(bList);
 //
 //        String listType = "ProteinGroup";
-//        String qlDataType = "Progenesis:proteingroup normalised abundance";
+//        String qlDataType = "MS:1002518";
 //
 //        MzqQLAnova mzqQLAnova = new MzqQLAnova(inputFileName, listType, assayIdsGroup, qlDataType);
 //

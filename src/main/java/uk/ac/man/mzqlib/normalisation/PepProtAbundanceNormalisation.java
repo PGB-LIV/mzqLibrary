@@ -401,6 +401,8 @@ public class PepProtAbundanceNormalisation {
 
                     normalisedPepAssayVal = normalisedAssayValue(this.preferedRef);
                     normalisedPepAssayVal.remove("scalingfactor");
+                    normalisedPepAssayVal.remove(null);
+                    
 //                    System.out.println("normalisedPepAssayVal: " + normalisedPepAssayVal);
 
                     outputMzqPeptideNormalisation(normalisedPepAssayVal);
@@ -960,7 +962,7 @@ public class PepProtAbundanceNormalisation {
 //                normalisedTmp.put(key, values);
                 treeMap.put(key, values);
             }
-//System.out.println("normalised temp: " + treeMap);
+System.out.println("normalised temp: " + treeMap);
 //            Map<String, List<String>> treeMap = new TreeMap<String, List<String>>(normalisedTmp);
             DataMatrix dMatrix = Utils.sortedMap(treeMap, dm);
             newQL.setDataMatrix(dMatrix);

@@ -303,6 +303,8 @@ public class PepProtAbundanceNormalisation {
                     || normalisedLevel.equalsIgnoreCase("feature-then-peptide")) {
 
                 peptideAssayValues = peptideAssayValue();
+                
+//                System.out.println("*****" + peptideAssayValues.keySet().size());
                 if (peptideAssayValues == null) {
                     flag = false;
                 }
@@ -400,10 +402,14 @@ public class PepProtAbundanceNormalisation {
                     System.out.println("Prefered reference assay: " + this.preferedRef);
 
                     normalisedPepAssayVal = normalisedAssayValue(this.preferedRef);
+                    
+//                    System.out.println("normalisedPepAssayVal before size: " + normalisedPepAssayVal.keySet().size());
+//                    System.out.println("normalisedPepAssayVal: " + normalisedPepAssayVal);
+                    
                     normalisedPepAssayVal.remove("scalingfactor");
                     normalisedPepAssayVal.remove(null);
                     
-//                    System.out.println("normalisedPepAssayVal: " + normalisedPepAssayVal);
+//                    System.out.println("normalisedPepAssayVal after size: " + normalisedPepAssayVal.keySet().size());
 
                     outputMzqPeptideNormalisation(normalisedPepAssayVal);
                 }
@@ -656,6 +662,7 @@ public class PepProtAbundanceNormalisation {
         Map<String, List<String>> ratioPAV = new HashMap<String, List<String>>();
         Set<Entry<String, List<String>>> entrys = peptideAssayValues.entrySet();
 
+//        System.out.println("*****: " + peptideAssayValues.size());
 //         System.out.println("PAV Entrys " + ": " + entrys);
         DecimalFormat df = new DecimalFormat(".000");
         double threshold_confidence = thresholdConfidence;
@@ -813,7 +820,7 @@ public class PepProtAbundanceNormalisation {
         }
         normalisedPAV.put("scalingfactor", Arrays.asList(scale));
 
-//        System.out.println("normalisedPAV: " + normalisedPAV);
+        System.out.println("normalisedPAV: " + normalisedPAV.size());
         return normalisedPAV;
     }
 
@@ -962,7 +969,7 @@ public class PepProtAbundanceNormalisation {
 //                normalisedTmp.put(key, values);
                 treeMap.put(key, values);
             }
-System.out.println("normalised temp: " + treeMap);
+//System.out.println("normalised temp: " + treeMap);
 //            Map<String, List<String>> treeMap = new TreeMap<String, List<String>>(normalisedTmp);
             DataMatrix dMatrix = Utils.sortedMap(treeMap, dm);
             newQL.setDataMatrix(dMatrix);

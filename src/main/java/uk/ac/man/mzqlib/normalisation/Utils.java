@@ -19,7 +19,7 @@ import uk.ac.liv.jmzqml.model.mzqml.Row;
  */
 public class Utils {
 
-    public static DataMatrix SortedMap(Map<String, List<String>> map, DataMatrix dM) {
+    public static DataMatrix sortedMap(Map<String, List<String>> map, DataMatrix dM) {
         Set s = map.entrySet();
 
         for (Iterator it = s.iterator(); it.hasNext();) {
@@ -52,7 +52,7 @@ public class Utils {
      * @param d
      * @return
      */
-    public static double Median(double[] d) {
+    public static double median(double[] d) {
         Arrays.sort(d);
         int middle = d.length / 2;
         if (d.length % 2 == 0) {

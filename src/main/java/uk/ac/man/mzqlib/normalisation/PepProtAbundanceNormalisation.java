@@ -206,6 +206,7 @@ public class PepProtAbundanceNormalisation {
      */
     private void init() {
 
+        boolean flag = true;
         scalingFactor = new HashMap<String, List<String>>();
         
         try {
@@ -230,6 +231,21 @@ public class PepProtAbundanceNormalisation {
         outputRawQuantLayerID = "Pep_AQL.0";
         outputRawDataTypeAccession = "MS:1001893";
         outputRawDataTypeName = "Progenesis:peptide raw abundance";
+        
+        peptideAssayValues = peptideAssayValue();
+//                System.out.println("peptideAssayValues size: " + peptideAssayValues.size());
+//                System.out.println("*****" + peptideAssayValues.keySet().size());
+                if (peptideAssayValues == null) {
+                    flag = false;
+                }
+//                        System.out.println("peptide assay entry set: " + flag);
+                if (flag == false) {
+                    System.out.println("****************************************************************************");
+                    System.out.println("****** The desired assay quant layer in the input file is not found!!! *****");
+                    System.out.println("************** Please check the input data type accession. *****************");
+                    System.out.println("****************************************************************************");
+//                    return flag;
+                }
     }
 
     /**
@@ -302,20 +318,20 @@ public class PepProtAbundanceNormalisation {
                     || normalisedLevel.equalsIgnoreCase("feature")
                     || normalisedLevel.equalsIgnoreCase("feature-then-peptide")) {
 
-                peptideAssayValues = peptideAssayValue();
-                
-//                System.out.println("*****" + peptideAssayValues.keySet().size());
-                if (peptideAssayValues == null) {
-                    flag = false;
-                }
-//                        System.out.println("peptide assay entry set: " + flag);
-                if (flag == false) {
-                    System.out.println("****************************************************************************");
-                    System.out.println("****** The desired assay quant layer in the input file is not found!!! *****");
-                    System.out.println("************** Please check the input data type accession. *****************");
-                    System.out.println("****************************************************************************");
-                    return flag;
-                }
+//                peptideAssayValues = peptideAssayValue();
+//                
+////                System.out.println("*****" + peptideAssayValues.keySet().size());
+//                if (peptideAssayValues == null) {
+//                    flag = false;
+//                }
+////                        System.out.println("peptide assay entry set: " + flag);
+//                if (flag == false) {
+//                    System.out.println("****************************************************************************");
+//                    System.out.println("****** The desired assay quant layer in the input file is not found!!! *****");
+//                    System.out.println("************** Please check the input data type accession. *****************");
+//                    System.out.println("****************************************************************************");
+//                    return flag;
+//                }
 
 //                if (start != null && end != null) {
 //                    pepSize = end - start + 1;
@@ -407,7 +423,7 @@ public class PepProtAbundanceNormalisation {
 //                    System.out.println("normalisedPepAssayVal: " + normalisedPepAssayVal);
                     
                     normalisedPepAssayVal.remove("scalingfactor");
-                    normalisedPepAssayVal.remove(null);
+//                    normalisedPepAssayVal.remove(null);
                     
 //                    System.out.println("normalisedPepAssayVal after size: " + normalisedPepAssayVal.keySet().size());
 
@@ -662,7 +678,6 @@ public class PepProtAbundanceNormalisation {
         Map<String, List<String>> ratioPAV = new HashMap<String, List<String>>();
         Set<Entry<String, List<String>>> entrys = peptideAssayValues.entrySet();
 
-//        System.out.println("*****: " + peptideAssayValues.size());
 //         System.out.println("PAV Entrys " + ": " + entrys);
         DecimalFormat df = new DecimalFormat(".000");
         double threshold_confidence = thresholdConfidence;
@@ -684,6 +699,7 @@ public class PepProtAbundanceNormalisation {
         double[] refCol = new double[entryNo];
         int refNo = Integer.parseInt(ref) - 1;
 
+        //adjust zeros and calculate the ratios
         for (Map.Entry<String, List<String>> entry : entrys) {
             List<String> ratioVals = new ArrayList<String>();
             String key = entry.getKey();
@@ -720,9 +736,7 @@ public class PepProtAbundanceNormalisation {
             entryRow++;
         }
 
-//         outReference.close();
-//        System.out.println("ratio PAV: " + ratioPAV);
-//        System.out.println("Assay Size: " + vSize);
+//calculate the scaling factor for each assay
         int run = 0;
         for (int col = 0; col < vSize; col++) {
             int nonZero = 0;
@@ -730,13 +744,13 @@ public class PepProtAbundanceNormalisation {
             double[] logRatio = new double[entryNo];
             for (int row = 0; row < entryNo; row++) {
                 objCol[row] = valArr[row][col];
-//                System.out.println("ref column: " + refCol[row]);
-//                System.out.println("object column: " + objCol[row]);
+
                 if (!(refCol[row] == 0) && !(objCol[row] == 0)) {
                     logRatio[nonZero] = Math.log10(refCol[row] / objCol[row]);
 //                    System.out.println("Log Ratio " + nonZero + " " + col + ": " + logRatio[nonZero]);
                     nonZero++;
-                }
+                } 
+                
             }
 
             double[] logRatioTmp = new double[nonZero];
@@ -792,12 +806,12 @@ public class PepProtAbundanceNormalisation {
                     run++;
                     break;
                 }
-//           System.out.println("kk: " + kk);      
-//           System.out.println("Run: " + run);     
             }
             check = true;
         }
 
+//        System.out.println("entry no: " + entryNo);
+//        System.out.println("valArr: " + entryRow);
 //        System.out.println("Scaling Factor: " + Arrays.toString(scalingFactor));
         for (int row = 0; row < entryNo; row++) {
             List<String> valArrRowList = new ArrayList<String>();
@@ -812,6 +826,9 @@ public class PepProtAbundanceNormalisation {
             }
             normalisedPAV.put(valArr_key[row], valArrRowList);
         }
+        
+//        normalisedPAV.remove(null);
+//        System.out.println("normalisedPAV not removed null: " + normalisedPAV.size());
 
         //add scaleing factor
         String[] scale = new String[scalingFactor.length];
@@ -820,7 +837,7 @@ public class PepProtAbundanceNormalisation {
         }
         normalisedPAV.put("scalingfactor", Arrays.asList(scale));
 
-        System.out.println("normalisedPAV: " + normalisedPAV.size());
+//        System.out.println("normalisedPAV: " + normalisedPAV.size());
         return normalisedPAV;
     }
 

@@ -162,7 +162,7 @@ public class PepProtAbundanceNormalisation {
         String qlt2 = "RatioQuantLayer";
         String qlt3 = "StudyVariableQuantLayer";
 
-        if (!(normalisedLevel == "peptide") && !(normalisedLevel == "feature")) {
+        if (!(normalisedLevel.equalsIgnoreCase("peptide")) && !(normalisedLevel.equalsIgnoreCase("feature"))) {
             throw new IllegalArgumentException("Invalid Input Normalising Level Parameter!!! " + normalisedLevel);
         }
         

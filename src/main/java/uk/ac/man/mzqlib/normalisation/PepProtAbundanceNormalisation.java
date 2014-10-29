@@ -162,7 +162,7 @@ public class PepProtAbundanceNormalisation {
         String qlt2 = "RatioQuantLayer";
         String qlt3 = "StudyVariableQuantLayer";
 
-        if (!(normalisedLevel.equalsIgnoreCase("peptide")) && !(normalisedLevel.equalsIgnoreCase("feature"))) {
+        if (!(normalisedLevel == "peptide") && !(normalisedLevel == "feature")) {
             throw new IllegalArgumentException("Invalid Input Normalising Level Parameter!!! " + normalisedLevel);
         }
         
@@ -361,8 +361,8 @@ public class PepProtAbundanceNormalisation {
                     flag = true;
                 }
                 List<String> vals = scaleFactor.get("scalingfactor");
-                System.out.println("scale values: " + vals);
-                System.out.println("Reference: " + reference);
+//                System.out.println("scale values: " + vals);
+//                System.out.println("Reference: " + reference);
                 scalingFactor.put(Integer.toString(reference), vals);
 
 //                System.out.println("scalingFactor: " + this.scalingFactor);

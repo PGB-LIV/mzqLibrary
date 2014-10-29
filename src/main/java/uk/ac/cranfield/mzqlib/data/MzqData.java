@@ -45,39 +45,39 @@ public class MzqData {
     /**
      * the map between protein id and the corresponding protein data
      */
-    private HashMap<String, ProteinData> proteins = new HashMap<>();
+    private HashMap<String, ProteinData> proteins = new HashMap<String, ProteinData>();
     /**
      * the list of protein ids
      */
-    private ArrayList<String> proteinIds = new ArrayList<>();
+    private ArrayList<String> proteinIds = new ArrayList<String>();
     /**
      * the list of assayIDs
      */
-    private ArrayList<String> assayIDs = new ArrayList<>();
+    private ArrayList<String> assayIDs = new ArrayList<String>();
     /**
      * the list of assayIDs
      */
-    private ArrayList<Assay> assays = new ArrayList<>();
+    private ArrayList<Assay> assays = new ArrayList<Assay>();
     /**
      * the list of study variables
      */
-    private List<StudyVariable> svs = new ArrayList<>();
+    private List<StudyVariable> svs = new ArrayList<StudyVariable>();
     /**
      * the list of ratios
      */
-    private ArrayList<String> ratios = new ArrayList<>();
+    private ArrayList<String> ratios = new ArrayList<String>();
 //    private HashMap<String, PeptideData> peptides = new HashMap<String, PeptideData>();
     //the map between the name of the quantitation value (e.g. intensity, peak area) and the corresponding CV terms 
-    private HashMap<String, CvParam> cvParams = new HashMap<>();
+    private HashMap<String, CvParam> cvParams = new HashMap<String, CvParam>();
     //the list of quantitation names
-    private ArrayList<String> quantitationNames = new ArrayList<>();
+    private ArrayList<String> quantitationNames = new ArrayList<String>();
 //    private HashMap<String,Character> modificationIndice = new HashMap<String, Character>(); 
 //    private ArrayList<Modification> modifications = new ArrayList<Modification>();
     /**
      * the list of modification names. Ideally should be list of Modification
      * objects, due to lack of equal function in the class, use this alternative
      */
-    private ArrayList<String> modifications = new ArrayList<>();
+    private ArrayList<String> modifications = new ArrayList<String>();
     /**
      * populate when reading the peptide consensus list to contain all peptide
      * consensus elements the entry will be removed when assigned to the protein
@@ -86,9 +86,9 @@ public class MzqData {
      * assign to the ARTIFICIAL protein after loading one mzq file, this
      * structure will be empty
      */
-    private HashMap<String, PeptideData> peptides = new HashMap<>();
-    private HashSet<String> unsolvedPeptides = new HashSet<>();
-    private HashMap<String, FeatureData> unsolvedFeatures = new HashMap<>();
+    private HashMap<String, PeptideData> peptides = new HashMap<String, PeptideData>();
+    private HashSet<String> unsolvedPeptides = new HashSet<String>();
+    private HashMap<String, FeatureData> unsolvedFeatures = new HashMap<String, FeatureData>();
     private SoftwareList softwareList;
     private AnalysisSummary analysisSummary;
     private InputFiles inputFiles;
@@ -262,12 +262,19 @@ public class MzqData {
         List<String> ids = ql.getColumnIndex();
         control.addElement(level, type, quantityName);
         for (Row row : ql.getDataMatrix().getRow()) {
-            HashMap<String, Double> quantities = new HashMap<>();
+            HashMap<String, Double> quantities = new HashMap<String, Double>();
             QuantitationLevel quantObj = determineQuantObj(level, row);
             for (int i = 0; i < ids.size(); i++) {
                 String assayID = ids.get(i);
-                Double value = parseDoubleValue(row.getValue().get(i));
-                quantities.put(assayID, value);
+//                try{
+                    Double value = parseDoubleValue(row.getValue().get(i));
+                    quantities.put(assayID, value);
+//                }catch(Exception e){
+//                    System.out.println(row.getValue());
+//                    System.out.println(row.getValue().get(i));
+//                    parseDoubleValue(row.getValue().get(i));
+//                    System.exit(1);
+//                }
             }
             if (type == ASSAY) {
                 quantObj.setQuantities(quantityName, quantities);
@@ -276,9 +283,16 @@ public class MzqData {
             }
         }
     }
+    private Double parseDoubleValue(String str){
+        if (str == null) return null;
+        if (str.equalsIgnoreCase("null")) return null;
+        if (str.equalsIgnoreCase("INF")) return Double.POSITIVE_INFINITY;
+        if (str.equalsIgnoreCase("NaN")) return Double.NaN;
+        return Double.parseDouble(str);
+    }
 
     private void parseRatioQuantLayer(RatioQuantLayer rql, int level) {
-        ArrayList<String> ratioIDs = new ArrayList<>();
+        ArrayList<String> ratioIDs = new ArrayList<String>();
         for (String ratioID : rql.getColumnIndex()) {
             ratioIDs.add(ratioID);
             control.addElement(level, RATIO, RATIO_STRING);
@@ -287,14 +301,14 @@ public class MzqData {
             QuantitationLevel quantObj = determineQuantObj(level, row);
             for (int i = 0; i < ratioIDs.size(); i++) {
                 String ratioID = ratioIDs.get(i);
-                double value = parseDoubleValue(row.getValue().get(i));
+                Double value = parseDoubleValue(row.getValue().get(i));
                 quantObj.setRatios(ratioID, value);
             }
         }
     }
 
     private void parseGlobalQuantLayer(GlobalQuantLayer gql, int level) {
-        ArrayList<String> columnIDs = new ArrayList<>();
+        ArrayList<String> columnIDs = new ArrayList<String>();
         for (Column column : gql.getColumnDefinition().getColumn()) {
             final CvParam cvParam = column.getDataType().getCvParam();
             String name = cvParam.getName();
@@ -306,7 +320,7 @@ public class MzqData {
             QuantitationLevel quantObj = determineQuantObj(level, row);
             for (int i = 0; i < columnIDs.size(); i++) {
                 String columnID = columnIDs.get(i);
-                double value = parseDoubleValue(row.getValue().get(i));
+                Double value = parseDoubleValue(row.getValue().get(i));
                 quantObj.setGlobal(columnID, value);
             }
         }
@@ -354,7 +368,7 @@ public class MzqData {
     }
 
     public ArrayList<ProteinData> getProteins() {
-        ArrayList<ProteinData> values = new ArrayList<>();
+        ArrayList<ProteinData> values = new ArrayList<ProteinData>();
         for (String id : proteinIds) {
             values.add(proteins.get(id));
         }
@@ -404,8 +418,8 @@ public class MzqData {
     }
 
     public ArrayList<PeptideData> getPeptides() {
-        ArrayList<PeptideData> values = new ArrayList<>();
-        ArrayList<String> idList = new ArrayList<>();
+        ArrayList<PeptideData> values = new ArrayList<PeptideData>();
+        ArrayList<String> idList = new ArrayList<String>();
         for (String id : peptides.keySet()) {
             idList.add(id);
         }
@@ -417,10 +431,10 @@ public class MzqData {
     }
 
     public ArrayList<FeatureData> getFeatures() {
-        ArrayList<FeatureData> values = new ArrayList<>();
+        ArrayList<FeatureData> values = new ArrayList<FeatureData>();
         if (needAutoAssignment) {
         } else {
-            ArrayList<String> idList = new ArrayList<>();
+            ArrayList<String> idList = new ArrayList<String>();
             for (String id : unsolvedFeatures.keySet()) {
                 idList.add(id);
             }
@@ -492,18 +506,5 @@ public class MzqData {
 
     public List<Cv> getCvList() {
         return cvs;
-    }
-
-    private Double parseDoubleValue(String str) {
-        if(str == null || str.equals("null")){
-            return null;
-        }
-        try{
-            Double value = Double.parseDouble(str);
-            return value;
-        }catch(NumberFormatException nfe){
-            System.out.println("Unrecognized double value: "+str);
-            return null;
-        }
     }
 }

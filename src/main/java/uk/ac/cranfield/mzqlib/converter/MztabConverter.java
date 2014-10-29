@@ -403,97 +403,101 @@ public class MztabConverter extends GenericConverter {
             pepSb.append("\n");
 
             for (ProteinData protein : MzqLib.data.getProteins()) {
-                Protein tabProt = new Protein(proFactory);
-                //mandatory field in all cases: accession
-                tabProt.setAccession(protein.getAccession());
-                //mandatory field in all cases: description, taxid, species
-                //which cannot be found any meaningful data in mzq design
-                
-                //mandatory field in all cases: database, database_version
-                final String searchDatabase = protein.getSearchDatabase();
-                tabProt.setDatabase(searchDatabase);
-                final String searchDatabaseVersion = protein.getSearchDatabaseVersion();
-                tabProt.setDatabaseVersion(searchDatabaseVersion);
-                
-                //mandatory field in all cases: search_engine, best_search_engine_score[1-n]
-                //mandatory field in complete mode: search_engine_score[1-n]_ms_run[1-n
-                //only header added, no value expected
-                
-                //optional field in all cases: reliability
-                //optional field in quantitation mode: num_psms_ms_run[1-n], num_peptides_distinct_ms_run[1-n], num_peptides_unique_ms_run[1-n]
-                
-                //mandatory field in all cases: ambiguity_members
-                //current version no ProteinGroup captured, so empty for now
-                
-                //mandatory field in all cases: modifications
-                
-                //optional field in all cases: uri, go_terms
-                //mandatory field in complete mode: protein_coverage
-                
-                //mandatory field in quantification type: protein_abundance_assay[1-n], protein_abundance_study_variable[1-n]
-                //mandatory field in quantification type: protein_abundance_stdev_study_variable[1-n], protein_abundance_std_error_study_variable [1-n]
-                
-                if (proCvParam != null) {
-                    if (MzqLib.data.control.isRequired(MzqData.PROTEIN, MzqData.ASSAY, proCvParam.getName())) {
-                        for (int i = 0; i < assays.size(); i++) {
-                            String assay = assays.get(i).getId();
-                            final Double value = protein.getQuantity(proCvParam.getName(), assay);
-                            if (value != null) {
-                                tabProt.setAbundanceColumnValue(assayMap.get(assay), value);
-                            }
-                        }
-                    }
+                String searchDatabase = "null";
+                String searchDatabaseVersion = "null";
+                if (!protein.getAccession().equals(MzqData.ARTIFICIAL)) {
+                    Protein tabProt = new Protein(proFactory);
+                    //mandatory field in all cases: accession
+                    tabProt.setAccession(protein.getAccession());
+                    //mandatory field in all cases: description, taxid, species
+                    //which cannot be found any meaningful data in mzq design
 
-                    if (MzqLib.data.control.isRequired(MzqData.PROTEIN, MzqData.SV, proCvParam.getName())) {
-                        for (int i = 0; i < svs.size(); i++) {
-                            StudyVariable sv = svs.get(i);
-                            final Double value = protein.getStudyVariableQuantity(proCvParam.getName(), sv.getId());
-                            if (value != null) {
-                                tabProt.setAbundanceColumnValue(tabSvs.get(i), value);
-                            }
-                        }
-                    }
-                    String proCvName = proCvParam.getName();
-                    for (String quantName : names) {
-                        if (quantName.equals(proCvName)) {
-                            continue;
-                        }
-                        if (MzqLib.data.control.isRequired(MzqData.PROTEIN, MzqData.ASSAY, quantName)) {
+                    //mandatory field in all cases: database, database_version
+                    searchDatabase = protein.getSearchDatabase();
+                    tabProt.setDatabase(searchDatabase);
+                    searchDatabaseVersion = protein.getSearchDatabaseVersion();
+                    tabProt.setDatabaseVersion(searchDatabaseVersion);
+
+                    //mandatory field in all cases: search_engine, best_search_engine_score[1-n]
+                    //mandatory field in complete mode: search_engine_score[1-n]_ms_run[1-n
+                    //only header added, no value expected
+
+                    //optional field in all cases: reliability
+                    //optional field in quantitation mode: num_psms_ms_run[1-n], num_peptides_distinct_ms_run[1-n], num_peptides_unique_ms_run[1-n]
+
+                    //mandatory field in all cases: ambiguity_members
+                    //current version no ProteinGroup captured, so empty for now
+
+                    //mandatory field in all cases: modifications
+
+                    //optional field in all cases: uri, go_terms
+                    //mandatory field in complete mode: protein_coverage
+
+                    //mandatory field in quantification type: protein_abundance_assay[1-n], protein_abundance_study_variable[1-n]
+                    //mandatory field in quantification type: protein_abundance_stdev_study_variable[1-n], protein_abundance_std_error_study_variable [1-n]
+
+                    if (proCvParam != null) {
+                        if (MzqLib.data.control.isRequired(MzqData.PROTEIN, MzqData.ASSAY, proCvParam.getName())) {
                             for (int i = 0; i < assays.size(); i++) {
-                                String assayID = assays.get(i).getId();
-                                final Double value = protein.getQuantity(quantName, assayID);
+                                String assay = assays.get(i).getId();
+                                final Double value = protein.getQuantity(proCvParam.getName(), assay);
                                 if (value != null) {
-                                    tabProt.setOptionColumnValue(tabAssays.get(i), quantName, String.valueOf(value));
+                                    tabProt.setAbundanceColumnValue(assayMap.get(assay), value);
                                 }
                             }
                         }
-                        if (MzqLib.data.control.isRequired(MzqData.PROTEIN, MzqData.SV, quantName)) {
+
+                        if (MzqLib.data.control.isRequired(MzqData.PROTEIN, MzqData.SV, proCvParam.getName())) {
                             for (int i = 0; i < svs.size(); i++) {
                                 StudyVariable sv = svs.get(i);
-                                final Double value = protein.getStudyVariableQuantity(quantName, sv.getId());
+                                final Double value = protein.getStudyVariableQuantity(proCvParam.getName(), sv.getId());
                                 if (value != null) {
-                                    tabProt.setOptionColumnValue(tabSvs.get(i), quantName, String.valueOf(value));
+                                    tabProt.setAbundanceColumnValue(tabSvs.get(i), value);
                                 }
                             }
                         }
-                    }
-                    if (MzqLib.data.control.isRequired(MzqData.PROTEIN, MzqData.RATIO, MzqData.RATIO_STRING)) {
-                        for (String ratioID : ratioIDs) {
-                            final Double ratio = protein.getRatio(ratioID);
-                            tabProt.setOptionColumnValue(ratioID, String.valueOf(ratio));
+                        String proCvName = proCvParam.getName();
+                        for (String quantName : names) {
+                            if (quantName.equals(proCvName)) {
+                                continue;
+                            }
+                            if (MzqLib.data.control.isRequired(MzqData.PROTEIN, MzqData.ASSAY, quantName)) {
+                                for (int i = 0; i < assays.size(); i++) {
+                                    String assayID = assays.get(i).getId();
+                                    final Double value = protein.getQuantity(quantName, assayID);
+                                    if (value != null) {
+                                        tabProt.setOptionColumnValue(tabAssays.get(i), quantName, String.valueOf(value));
+                                    }
+                                }
+                            }
+                            if (MzqLib.data.control.isRequired(MzqData.PROTEIN, MzqData.SV, quantName)) {
+                                for (int i = 0; i < svs.size(); i++) {
+                                    StudyVariable sv = svs.get(i);
+                                    final Double value = protein.getStudyVariableQuantity(quantName, sv.getId());
+                                    if (value != null) {
+                                        tabProt.setOptionColumnValue(tabSvs.get(i), quantName, String.valueOf(value));
+                                    }
+                                }
+                            }
+                        }
+                        if (MzqLib.data.control.isRequired(MzqData.PROTEIN, MzqData.RATIO, MzqData.RATIO_STRING)) {
+                            for (String ratioID : ratioIDs) {
+                                final Double ratio = protein.getRatio(ratioID);
+                                tabProt.setOptionColumnValue(ratioID, String.valueOf(ratio));
+                            }
                         }
                     }
-                }
 //                System.out.println(tabProt);
-                proSb.append(tabProt.toString());
-                proSb.append("\n");
-
+                    proSb.append(tabProt.toString());
+                    proSb.append("\n");
+                }
                 for (PeptideData peptide : protein.getPeptides()) {
                     for (int charge : peptide.getCharges()) {
                         Peptide tabPep = new Peptide(pepFactory, mtd);
                         //mandatory field in quantification mode: sequence, accession, unique, database, database_version
                         tabPep.setSequence(peptide.getSeq());
                         tabPep.setAccession(protein.getAccession());
+                        if(protein.getAccession().equals(MzqData.ARTIFICIAL)) tabPep.setAccession("null");
                         tabPep.setDatabase(searchDatabase);
                         tabPep.setDatabaseVersion(searchDatabaseVersion);
                         //mandatory field in quantification mode: search_engine, best_search_engine_score[1-n]
@@ -664,10 +668,14 @@ public class MztabConverter extends GenericConverter {
                 }
             }
             out.append(mtd.toString());
-            out.append("\n");
-            out.append(proSb.toString());
-            out.append("\n");
-            out.append(pepSb.toString());
+            if(proCvParam!=null){
+                out.append("\n");
+                out.append(proSb.toString());
+            }
+            if(pepCvParam!=null){
+                out.append("\n");
+                out.append(pepSb.toString());
+            }
 //            out.append(mztab.toMzTab());
             out.close();
         } catch (IOException ex) {

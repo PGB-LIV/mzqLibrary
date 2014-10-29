@@ -42,20 +42,20 @@
 		/* Sorting */
 		table.feature th.table-sortable {
 			cursor:pointer;
-			background-image:url("http://www.javascripttoolbox.com/lib/table/sortable.gif");
+			background-image:url("http://gio.sbcs.qmul.ac.uk/static/mzqlib/sortable.gif");
 			background-position:center left;
 			background-repeat:no-repeat;
 			padding-left:12px;
 		}
 		
 		table.feature th.table-sorted-asc {
-			background-image:url("http://www.javascripttoolbox.com/lib/table/sorted_down.gif");
+			background-image:url("http://gio.sbcs.qmul.ac.uk/static/mzqlib/sorted_down.gif");
 			background-position:center left;
 			background-repeat:no-repeat;
 		}
 		
 		table.feature th.table-sorted-desc {
-			background-image:url("http://www.javascripttoolbox.com/lib/table/sorted_up.gif");
+			background-image:url("http://gio.sbcs.qmul.ac.uk/static/mzqlib/sorted_up.gif");
 			background-position:center left;
 			background-repeat:no-repeat;
 		}
@@ -76,10 +76,10 @@
                 }
 	</style>
 
-	<link href="http://elvis.ccc.cranfield.ac.uk/treeTable/jquery.treeTable.css" rel="stylesheet" type="text/css" />
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-	<script type="text/javascript" src="http://elvis.ccc.cranfield.ac.uk/treeTable/jquery.treeTable.js"></script>
-	<script type="text/javascript" src="http://www.javascripttoolbox.com/libsource.php/table/source/table.js"></script>
+	<link href="http://gio.sbcs.qmul.ac.uk/static/mzqlib/jquery.treeTable.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="http://gio.sbcs.qmul.ac.uk/static/mzqlib/jquery.min.js"></script>
+	<script type="text/javascript" src="http://gio.sbcs.qmul.ac.uk/static/mzqlib/jquery.treeTable.js"></script>
+	<script type="text/javascript" src="http://gio.sbcs.qmul.ac.uk/static/mzqlib/table.js"></script>
 	
 	<script type="text/javascript">
 		$(document).ready(function (){

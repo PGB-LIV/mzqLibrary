@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import uk.ac.cranfield.mzqlib.MzqLib;
 import uk.ac.cranfield.mzqlib.data.FeatureData;
@@ -31,7 +32,7 @@ public class CsvConverter extends GenericConverter {
         }
         StringBuilder sb = new StringBuilder();
         //deal with proteins
-        ArrayList<QuantitationLevel> proteins = new ArrayList<>();
+        ArrayList<QuantitationLevel> proteins = new ArrayList<QuantitationLevel>();
         for (ProteinData protein : MzqLib.data.getProteins()) {
             proteins.add(protein);
         }
@@ -47,7 +48,7 @@ public class CsvConverter extends GenericConverter {
         }
         sb.append("\n");
         //deal with peptide
-        ArrayList<QuantitationLevel> peptides = new ArrayList<>();
+        ArrayList<QuantitationLevel> peptides = new ArrayList<QuantitationLevel>();
         for (PeptideData peptide : MzqLib.data.getPeptides()) {
             peptides.add(peptide);
         }
@@ -61,7 +62,7 @@ public class CsvConverter extends GenericConverter {
             }
         }
         //deal with features
-        ArrayList<QuantitationLevel> features = new ArrayList<>();
+        ArrayList<QuantitationLevel> features = new ArrayList<QuantitationLevel>();
         for (FeatureData feature : MzqLib.data.getFeatures()) {
             features.add(feature);
         }
@@ -86,7 +87,15 @@ public class CsvConverter extends GenericConverter {
 
     private void addHeaderLine(int level, StringBuilder sb, String quantityName) {
         if (MzqLib.data.control.isRequired(level, MzqData.ASSAY, quantityName) || MzqLib.data.control.isRequired(level, MzqData.SV, quantityName)) {
-            sb.append("Entity");
+            if(level == MzqData.PEPTIDE){
+                sb.append("Peptide");
+                sb.append(SEPERATOR);
+                sb.append("Charge");
+                sb.append(SEPERATOR);
+                sb.append("Modification");
+            }else{
+                sb.append("Entity");
+            }
             addAssayHeader(level, sb, quantityName, SEPERATOR, "");
             addSvHeader(level, sb, quantityName, SEPERATOR, "");
             sb.append("\n");
@@ -146,7 +155,12 @@ public class CsvConverter extends GenericConverter {
                 sb.append(((ProteinData) obj).getId());
                 break;
             case MzqData.PEPTIDE:
-                sb.append(((PeptideData) obj).getId());
+                PeptideData pepData = (PeptideData) obj;
+                sb.append(pepData.getSeq());
+                sb.append(SEPERATOR);
+                sb.append(Arrays.toString(pepData.getCharges()));
+                sb.append(SEPERATOR);
+                sb.append(pepData.getModifications());
                 break;
             case MzqData.FEATURE:
                 sb.append(((FeatureData) obj).getId());

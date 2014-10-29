@@ -205,7 +205,7 @@ public class MzqQLAnova {
             writer.write(MzQuantMLMarshaller.createXmlHeader() + "\n");
 
             // mzQuantML start tag
-            writer.write(MzQuantMLMarshaller.createMzQuantMLStartTag(mzqId));
+            writer.write(MzQuantMLMarshaller.createMzQuantMLStartTag(mzqId) + "\n");
 
             if (cvList != null) {
                 mzqMsh.marshall(cvList, writer);

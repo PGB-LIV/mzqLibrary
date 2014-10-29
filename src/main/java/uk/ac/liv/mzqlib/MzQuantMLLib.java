@@ -16,6 +16,7 @@ import uk.ac.liv.mzqlib.stats.MzqQLAnova;
 import uk.ac.liv.mzqlib.util.Utils;
 import uk.ac.liv.mzqlib.utils.Gzipper;
 import uk.ac.man.mzqlib.normalisation.PepProtAbundanceNormalisation;
+import uk.ac.man.mzqlib.postprocessing.ProteinAbundanceInference;
 
 /**
  * @author Da Qi, adapted from MzIdentMLLib.java
@@ -70,12 +71,14 @@ public class MzQuantMLLib {
     public static String normalisationUsage = "Normalisation input.mzq output.mzq " + normalisationParams
             + " \n\nDescription:\n" + normalisationToolDescription;
 
-    public static String proteinInferenceParams = "";
-    public static String proteinInferenceUsageExample = "-normLvl peptide -qlType AssayQuantLayer -inDTCA MS:1001840 -outDTCA MS:1001891 -tagDecoy XXX_";
-    public static String proteinInferenceToolDescription = "This tool will calculate normalised value of specified AssayQuantLayer in one specified list (peptide or feature). "
-            + "Then output the result as an mzq file. "
-            + "The tool will automatically select the best reference assay.";
-    public static String proteinInferenceUsage = "Normalisation input.mzq output.mzq " + proteinInferenceParams
+    public static String proteinInferenceParams = "-op [sum|mean|median] -inPepNormCA inPeptideNormCvAccession -inPepRawCA inPeptideRawCvAccession "
+            + "-outPGNormCA outProteinGroupNormCvAccession -outPGNormCN outProteinGroupNormCvName "
+            + "-outPGRawCA outProteinGroupRawCvAccession -outPGRawCN outProteinGroupRawCvName -qlType QuantLayerType";
+    public static String proteinInferenceUsageExample = "-op sum -inPepNormCA MS:1001891 -inPepRawCA MS:1001893 "
+            + "-outPGNormCA MS:1002518 -outPGNormCN Progenesis:protein group normalised abundance "
+            + "-outPGRawCA MS:1002519 -outPGRawCN Progenesis:protein group raw abundance -qlType AssayQuantLayer";
+    public static String proteinInferenceToolDescription = "This tool will perform protein inference and calculate the abundance from specified quantlayer.";
+    public static String proteinInferenceUsage = "ProteinInference input.mzq output.mzq " + proteinInferenceParams
             + " \n\nDescription:\n" + proteinInferenceToolDescription;
 
     public static String userFeedback = "java -jar jar-location/mzqlib-version.jar ";
@@ -95,6 +98,7 @@ public class MzQuantMLLib {
         allFunctions.put("MzqMzIdMapping", idMappingParams + ";@;" + idMappingUsage + ";@;" + idMappingUsageExample);
         allFunctions.put("MzqAnovaPValue", anovaParams + ";@;" + anovaUsage + ";@;" + anovaUsageExample);
         allFunctions.put("Normalisation", normalisationParams + ";@;" + normalisationUsage + ";@;" + normalisationUsageExample);
+        allFunctions.put("ProteinInference", proteinInferenceParams + ";@;" + proteinInferenceUsage + ";@;" + proteinInferenceUsageExample);
     }
 
     /**
@@ -238,10 +242,25 @@ public class MzQuantMLLib {
                         String inDTCA = Utils.getCmdParameter(args, "inDTCA", true);
                         String outDTCA = Utils.getCmdParameter(args, "outDTCA", true);
                         String tagDecoy = Utils.getCmdParameter(args, "tagDecoy", true);
-                        //String refAssay = Utils.getCmdParameter(args, "refAssay", false);                       
 
                         PepProtAbundanceNormalisation normalisation = new PepProtAbundanceNormalisation(inputFileName, outputFileName, normLevel, qlType, inDTCA, outDTCA, tagDecoy);
                         normalisation.multithreadingCalc();
+                    }
+                }
+                else if (args[0].equals("ProteinInference")) {
+                    if (inputFileName != null && outputFileName != null) {
+                        String op = Utils.getCmdParameter(args, "op", true);
+                        String inPepNormCA = Utils.getCmdParameter(args, "inPepNormCA", true);
+                        String inPepRawCA = Utils.getCmdParameter(args, "inPepRawCA", true);
+                        String outPGNormCA = Utils.getCmdParameter(args, "outPGNormCA", true);
+                        String outPGNormCN = Utils.getCmdParameter(args, "outPGNormCN", true);
+                        String outPGRawCA = Utils.getCmdParameter(args, "outPGRawCA", true);
+                        String outPGRawCN = Utils.getCmdParameter(args, "outPGRawCN", true);
+                        String qlType = Utils.getCmdParameter(args, "qlType", true);
+
+                        ProteinAbundanceInference pai = new ProteinAbundanceInference(inputFileName, outputFileName, op, inPepNormCA, inPepRawCA,
+                                                                                      outPGNormCA, outPGNormCN, outPGRawCA, outPGRawCN, qlType);
+                        pai.proteinInference();
                     }
                 }
                 else {

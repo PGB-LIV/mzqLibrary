@@ -37,6 +37,7 @@ public class CreateRMatrixTask extends Task<HeatMapParam> {
 
         hmParam.setRowNumber(rowNumber);
         String x = "";
+        String logX = "";
 
         List<String> rowNames = new ArrayList<>();
         hmParam.setRowNames(rowNames);
@@ -71,6 +72,16 @@ public class CreateRMatrixTask extends Task<HeatMapParam> {
                     }
                 }
 
+                // Calclualate log value, if the value is 0 or not a number use 0.5 to calcluate the log
+                String replaceV = String.valueOf(Math.log10(0.5));
+                if (NumberUtils.isNumber(value.get())) {
+                    double logV = Math.log10(Double.parseDouble(value.get()));
+                    logX = logX + String.valueOf(logV) + ",";
+                }
+                else {
+                    logX = logX + replaceV + ",";
+                }
+
                 if (isCancelled()) {
                     updateMessage("Cancelled");
                     break;
@@ -81,7 +92,9 @@ public class CreateRMatrixTask extends Task<HeatMapParam> {
         }
 
         x = x.substring(0, x.lastIndexOf(","));
+        logX = logX.substring(0, logX.lastIndexOf(","));
         hmParam.setMatrix(x);
+        hmParam.setLogMatrix(logX);
         hmParam.setMax(max);
         hmParam.setMin(min);
         updateMessage("Done");

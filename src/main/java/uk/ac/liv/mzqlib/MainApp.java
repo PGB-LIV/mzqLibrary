@@ -221,7 +221,7 @@ public class MainApp extends Application {
                 .showWorkerProgress(rmTask);
 
         rmTask.setOnSucceeded((WorkerStateEvent t) -> {
-            String setMatrix = "X = matrix(c(" + rmTask.getValue().getMatrix() + "), nrow=" + rmTask.getValue().getRowNumber() + ",byrow = TRUE)";
+            String setMatrix = "X = matrix(c(" + rmTask.getValue().getLogMatrix() + "), nrow=" + rmTask.getValue().getRowNumber() + ",byrow = TRUE)";
             re.eval(setMatrix);
 
             //build row names from rowNames list
@@ -422,7 +422,7 @@ public class MainApp extends Application {
             re.eval("color.palette  <- colorRampPalette(c(\"#000000\", \"#DC2121\", \"#E9A915\"))");
 
             // Set x matrix
-            String setMatrix = "X = matrix(c(" + rmTask.getValue().getMatrix() + "), nrow=" + rmTask.getValue().getRowNumber() + ",byrow = TRUE)";
+            String setMatrix = "X = matrix(c(" + rmTask.getValue().getLogMatrix() + "), nrow=" + rmTask.getValue().getRowNumber() + ",byrow = TRUE)";
             re.eval(setMatrix);
 
             //build row names from rowNames list

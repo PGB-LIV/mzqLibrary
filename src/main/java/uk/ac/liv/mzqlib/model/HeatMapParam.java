@@ -15,6 +15,7 @@ public class HeatMapParam {
     private double max;
     private int rowNumber;
     private String matrix;
+    private String logMatrix;
     private List<String> rowNames;
     private List<String> colNames;
 
@@ -124,6 +125,20 @@ public class HeatMapParam {
      */
     public void setColNames(List<String> colNames) {
         this.colNames = colNames;
+    }
+
+    /**
+     * @return the logMatrix
+     */
+    public String getLogMatrix() {
+        return logMatrix;
+    }
+
+    /**
+     * @param logMatrix the logMatrix to set
+     */
+    public void setLogMatrix(String logMatrix) {
+        this.logMatrix = logMatrix;
     }
 
 }

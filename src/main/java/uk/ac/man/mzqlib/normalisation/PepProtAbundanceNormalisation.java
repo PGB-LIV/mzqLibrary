@@ -119,13 +119,19 @@ public class PepProtAbundanceNormalisation {
      * @param inputDataTypeAccession
      * @param outputDataTypeAccession
      * @param tagDecoy
+     *
      * @throws FileNotFoundException
      */
 //    public PepProtAbundanceNormalisation(String in_file, String out_file, String normalisedLevel, String quantLayerType,
 //            String inputDataTypeAccession, String outputDataTypeAccession, String tagDecoy, int assMin, int assMax) 
 //            throws FileNotFoundException {
-    public PepProtAbundanceNormalisation(String in_file, String out_file, String normalisedLevel, String quantLayerType,
-            String inputDataTypeAccession, String outputDataTypeAccession, String tagDecoy) throws FileNotFoundException {
+    public PepProtAbundanceNormalisation(String in_file, String out_file,
+                                         String normalisedLevel,
+                                         String quantLayerType,
+                                         String inputDataTypeAccession,
+                                         String outputDataTypeAccession,
+                                         String tagDecoy)
+            throws FileNotFoundException {
 
         this.in_file = in_file;
         this.out_file = out_file;
@@ -139,7 +145,8 @@ public class PepProtAbundanceNormalisation {
 
         if (normalisedLevel.equalsIgnoreCase("peptide")) {
             this.setType = "consensus";
-        } else if (normalisedLevel.equalsIgnoreCase("feature")) {
+        }
+        else if (normalisedLevel.equalsIgnoreCase("feature")) {
             this.setType = "full";
         }
 
@@ -194,9 +201,11 @@ public class PepProtAbundanceNormalisation {
      * constructor with reference number
      *
      * @param referenceNumber
+     *
      * @throws FileNotFoundException
      */
-    public PepProtAbundanceNormalisation(int referenceNumber) throws FileNotFoundException {
+    public PepProtAbundanceNormalisation(int referenceNumber)
+            throws FileNotFoundException {
 
         this.referenceNumber = referenceNumber;
     }
@@ -214,13 +223,15 @@ public class PepProtAbundanceNormalisation {
             assNo = getAssNo();
             try {
                 inFileUM = mzqFileInput();
-            } catch (IllegalStateException ex) {
+            }
+            catch (IllegalStateException ex) {
                 System.out.println("***************************************************************");
                 System.out.println("The mzq file is not found!!! Please check the first input file.");
                 System.err.println(ex);
                 System.out.println("***************************************************************");
             }
-        } catch (FileNotFoundException ex) {
+        }
+        catch (FileNotFoundException ex) {
             Logger.getLogger(PepProtAbundanceNormalisation.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -253,7 +264,8 @@ public class PepProtAbundanceNormalisation {
      *
      * @throws FileNotFoundException
      */
-    public void multithreadingCalc() throws FileNotFoundException {
+    public void multithreadingCalc()
+            throws FileNotFoundException {
 
         init();
 
@@ -271,6 +283,7 @@ public class PepProtAbundanceNormalisation {
             final int refTmp = ref;
 
             new Thread("" + ref) {
+
                 @Override
                 public void run() {
 
@@ -291,6 +304,7 @@ public class PepProtAbundanceNormalisation {
 //                    }
 //                    System.out.println("****************************************************");
                 }
+
             }.start();
         }
     }
@@ -300,6 +314,7 @@ public class PepProtAbundanceNormalisation {
      * selection.
      *
      * @param reference
+     *
      * @return
      */
 //    private boolean pipeline_executor(int reference, int start, int end) {
@@ -424,7 +439,8 @@ public class PepProtAbundanceNormalisation {
                     if (flag) {
                         System.out.println("******** The pipeline does work successfully! *********");
                         System.out.println("**** The normalisation result is output correctly! ****");
-                    } else {
+                    }
+                    else {
                         System.out.println("****** Some errors exist within the pipeline *******");
                     }
                     System.out.println("****************************************************");
@@ -471,9 +487,11 @@ public class PepProtAbundanceNormalisation {
      * obtain the assay number
      *
      * @return
+     *
      * @throws FileNotFoundException
      */
-    private int getAssNo() throws FileNotFoundException {
+    private int getAssNo()
+            throws FileNotFoundException {
         int no = 0;
         try {
 
@@ -489,7 +507,8 @@ public class PepProtAbundanceNormalisation {
                 }
             }
 
-        } catch (IllegalStateException ex) {
+        }
+        catch (IllegalStateException ex) {
             Logger.getLogger(PepProtAbundanceNormalisation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return no;
@@ -518,11 +537,14 @@ public class PepProtAbundanceNormalisation {
      * unmarshal xml to java object
      *
      * @param infile
+     *
      * @return
+     *
      * @throws IllegalStateException
      * @throws FileNotFoundException
      */
-    public MzQuantMLUnmarshaller mzqFileInput() throws IllegalStateException,
+    public MzQuantMLUnmarshaller mzqFileInput()
+            throws IllegalStateException,
             FileNotFoundException {
         File mzqFile = new File(in_file);
         MzQuantMLUnmarshaller infileUm = new MzQuantMLUnmarshaller(mzqFile);
@@ -532,6 +554,7 @@ public class PepProtAbundanceNormalisation {
     /**
      *
      * @param in_file_um
+     *
      * @return
      */
     private MzQuantML mzq(MzQuantMLUnmarshaller in_file_um) {
@@ -573,7 +596,8 @@ public class PepProtAbundanceNormalisation {
                         peptideAssayValues.put(peptideRef, values);
 
                         //for consensus ones only    
-                    } else if (setType.equalsIgnoreCase("consensus")) {
+                    }
+                    else if (setType.equalsIgnoreCase("consensus")) {
 
                         for (PeptideConsensus pepCon : pepCons) {
 
@@ -632,9 +656,11 @@ public class PepProtAbundanceNormalisation {
      *
      * @param in_file_um
      * @param inputProteinDTCA
+     *
      * @return a boolean value
      */
-    private boolean proteinAssayValue(MzQuantMLUnmarshaller in_file_um, String assayID) {
+    private boolean proteinAssayValue(MzQuantMLUnmarshaller in_file_um,
+                                      String assayID) {
 
         boolean first_list = false;
         ProteinGroupList proGroupList = in_file_um.unmarshal(MzQuantMLElement.ProteinGroupList);
@@ -671,6 +697,7 @@ public class PepProtAbundanceNormalisation {
      *
      * @param ref
      * @param PAV
+     *
      * @return the map with the normalised values
      */
 //    private Map<String, List<String>> NormalisedAssayValue(String ref, Map<String, List<String>> PAV) {
@@ -786,7 +813,8 @@ public class PepProtAbundanceNormalisation {
                         }
                         nonZeroTmp++;
 
-                    } else {
+                    }
+                    else {
                         check = false;
                     }
                 }
@@ -849,7 +877,8 @@ public class PepProtAbundanceNormalisation {
 //    private void OutputMzqPeptideNormalisation(MzQuantMLUnmarshaller infile_um,
 //            String outFile, String outAQLID, String inputDTCA, String outputDTCA,
 //            String quantLT, Map<String, List<String>> normalisedPepAssayVal) {
-    private void outputMzqPeptideNormalisation(Map<String, List<String>> normalisedPepAssayVal) {
+    private void outputMzqPeptideNormalisation(
+            Map<String, List<String>> normalisedPepAssayVal) {
         PeptideConsensusList pepConList = inFileUM.unmarshal(MzQuantMLElement.PeptideConsensusList);
         List<QuantLayer<IdOnly>> assayQLs = pepConList.getAssayQuantLayer();
 
@@ -1015,6 +1044,7 @@ public class PepProtAbundanceNormalisation {
      * @param outputDTCA
      * @param quantLT
      * @param refAssay
+     *
      * @return
      */
 //    private boolean OutputMzqProteinNormalisation(MzQuantMLUnmarshaller infile_um, String outFile,

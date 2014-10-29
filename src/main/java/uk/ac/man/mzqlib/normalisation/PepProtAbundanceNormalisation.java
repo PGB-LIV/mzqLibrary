@@ -276,7 +276,7 @@ public class PepProtAbundanceNormalisation {
                 @Override
                 public void run() {
 
-                    System.out.println("Thread: " + getName() + " running");
+//                    System.out.println("Thread: " + getName() + " running");
                     PepProtAbundanceNormalisation.this.referenceNumber = refTmp;
 //                    System.out.println("reference number in thread: " + referenceNumber);
 
@@ -284,14 +284,14 @@ public class PepProtAbundanceNormalisation {
 //                    pipeline_flay = pipeline_executor(PepProtAbundanceNormalisation.this.referenceNumber, ass_start, ass_end);
                     pipeline_flag = pipeline_executor(PepProtAbundanceNormalisation.this.referenceNumber);
 
-                    System.out.println("****************************************************");
-                    if (pipeline_flag) {
-                        System.out.println("******** The pipeline does work successfully! *********");
-                        System.out.println("**** The normalisation result is output correctly! ****");
-                    } else {
-                        System.out.println("****** Some errors exist within the pipeline *******");
-                    }
-                    System.out.println("****************************************************");
+//                    System.out.println("****************************************************");
+//                    if (pipeline_flag) {
+//                        System.out.println("******** The pipeline does work successfully! *********");
+//                        System.out.println("**** The normalisation result is output correctly! ****");
+//                    } else {
+//                        System.out.println("****** Some errors exist within the pipeline *******");
+//                    }
+//                    System.out.println("****************************************************");
                 }
             }.start();
         }
@@ -357,8 +357,8 @@ public class PepProtAbundanceNormalisation {
                 List<String> sf = normalisedPepAssayVal.get("scalingfactor");
                 scaleFactor.put("scalingfactor", sf);
 
-                if (!(scaleFactor == null)) {
-                    flag = true;
+                if ((scaleFactor == null)) {
+                    flag = false;
                 }
                 List<String> vals = scaleFactor.get("scalingfactor");
 //                System.out.println("scale values: " + vals);
@@ -428,6 +428,16 @@ public class PepProtAbundanceNormalisation {
 //                    System.out.println("normalisedPepAssayVal after size: " + normalisedPepAssayVal.keySet().size());
 
                     outputMzqPeptideNormalisation(normalisedPepAssayVal);
+                    
+                                        System.out.println("****************************************************");
+                    if (flag) {
+                        System.out.println("******** The pipeline does work successfully! *********");
+                        System.out.println("**** The normalisation result is output correctly! ****");
+                    } else {
+                        System.out.println("****** Some errors exist within the pipeline *******");
+                    }
+                    System.out.println("****************************************************");
+                    
                 }
             }
 

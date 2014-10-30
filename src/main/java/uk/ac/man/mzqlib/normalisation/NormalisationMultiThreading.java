@@ -29,38 +29,43 @@ public class NormalisationMultiThreading {
         String quantLayerType = null;
         String inDataTypeAccession = null;
         String outDataTypeAccession = null;
+        String outDataTypeName = null;
         String decoyTag = null;
 
         if (processingLevel.equalsIgnoreCase("peptide")) {
             quantLayerType = "AssayQuantLayer";
             inDataTypeAccession = "MS:1001840"; //LC-MS feature intensity
             outDataTypeAccession = "MS:1001891"; //Progenesis:peptide normalised abundance
+            outDataTypeName = "normalised" + processingLevel + "abundance";
             decoyTag = "XXX_";
 
         } else if (processingLevel.equalsIgnoreCase("feature")) {
             quantLayerType = "AssayQuantLayer";
             inDataTypeAccession = "MS:1001840"; //LC-MS feature intensity
             outDataTypeAccession = "MS:1001891"; //Progenesis:peptide normalised abundance
+            outDataTypeName = "normalised" + processingLevel + "abundance";
             decoyTag = "XXX_";
         }
 
-        if (args.length != 7 && args.length != 0) {
+        if (args.length != 8 && args.length != 0) {
             System.out.println("Please input all seven parameters in order: "
                     + "input file, output file, quant layer type, input datatype CV accession,"
-                    + "output datatype CV accession, processing level, prefix of decoy regex.");
-        } else if (args.length == 7) {
+                    + "output datatype CV accession, output datatype name, processing level, prefix of decoy regex.");
+        } else if (args.length == 8) {
             inputFile = args[0];
             outputFile = args[1];
             processingLevel = args[2];
             quantLayerType = args[3];
             inDataTypeAccession = args[4];
             outDataTypeAccession = args[5];
-            decoyTag = args[6];
+            outDataTypeName = args[6];
+            decoyTag = args[7];
         }
 
 
             PepProtAbundanceNormalisation workTask = new PepProtAbundanceNormalisation(inputFile,
-                    outputFile, processingLevel, quantLayerType, inDataTypeAccession, outDataTypeAccession, decoyTag);
+                    outputFile, processingLevel, quantLayerType, inDataTypeAccession, outDataTypeAccession,
+                    outDataTypeName, decoyTag);
             workTask.multithreadingCalc();
     }
 }

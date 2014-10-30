@@ -62,7 +62,7 @@ public class MzqQLAnova {
      * Constructor
      *
      * @param um            the input MzQuantMLUnmarshaller
-     * @param listType      type of the list, e.g. "ProteinGroup", "Protein", or "Peptide"
+     * @param listType      type of the list, e.g. "ProteinGroup", or "Protein"
      * @param assayIDsGroup list of assay list to be in ANOVA calculation
      * @param qlDataType    CV accession identifying data type of QuantLayer
      */
@@ -374,9 +374,9 @@ public class MzqQLAnova {
                     throw new RuntimeException("There is no ProteinList in the input mzQuantML file.");
                 }
                 break;
-            case "Peptide":
-                //TODO: do we need to calculate ANOVA on peptide level?
-                break;
+//            case "Peptide":
+//                //TODO: do we need to calculate ANOVA on peptide level?
+//                break;
             default:
                 //TODO: do nothing or throw exception?
                 throw new RuntimeException("Please provide valid name of list type such as \"ProtienGroup\" or \"Protein\".");

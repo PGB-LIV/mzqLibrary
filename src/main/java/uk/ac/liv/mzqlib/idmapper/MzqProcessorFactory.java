@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package uk.ac.liv.mzqlib.idmapper;
 
@@ -71,9 +67,13 @@ public class MzqProcessorFactory {
             combinedPepModStringToSIIsMap = new HashMap<>();
 
             Iterator<FeatureList> itFeatureList = this.mzqUm.unmarshalCollectionFromXpath(MzQuantMLElement.FeatureList);
+            if (itFeatureList == null) {
+                throw new RuntimeException("There is no FeatureList in the mzq file.");
+            }
             while (itFeatureList.hasNext()) {
                 FeatureList ftList = itFeatureList.next();
                 RawFilesGroup rg = (RawFilesGroup) this.mzqUm.unmarshal(uk.ac.liv.jmzqml.model.mzqml.RawFilesGroup.class, ftList.getRawFilesGroupRef());
+
                 String rawFn = rg.getRawFile().get(0).getName();
                 if (rawFn == null) {
                     rawFn = rg.getRawFile().get(0).getLocation();
@@ -81,6 +81,9 @@ public class MzqProcessorFactory {
 
                 rawFn = rawFn.replaceAll(".featureXML", ".mzML").replaceAll("_FFC", "").replaceAll("_MAPC", "");
                 String mzidFileName = rawToMzidMap.get(rawFn);
+                if (mzidFileName == null) {
+                    throw new RuntimeException("Can not find the raw file name \"" + rawFn + "\" in rawToMzidMap. Please use correct raw file names in input file.\n");
+                }
 
                 // corresponding mzIdentML processor 
                 MzidProcessor mzidProc = MzidProcessorFactory.getInstance().buildMzidProcessor(new File(mzidFileName));
@@ -107,7 +110,7 @@ public class MzqProcessorFactory {
                                 if (identCharge != Integer.parseInt(exFt.getCharge())) {
                                     continue;
                                 }
-                                
+
                                 // determine if rt and mz of the SIIData is in the mass trace of the feature                                
                                 if (isInRange(siiExpMz, exFt.getLMZ(), exFt.getRMZ()) && isInRange(siiRt, exFt.getBRT(), exFt.getURT())) {
                                     if (ftSIIDataList == null) {
@@ -118,7 +121,7 @@ public class MzqProcessorFactory {
                                 }
                             }
                         }
-                    }  
+                    }
 
                     // build combinedPepModStringToSIIsMap;
                     Map<String, List<SIIData>> pepModStringToSIIsMap = mzidProc.getPeptideModStringToSIIsMap();

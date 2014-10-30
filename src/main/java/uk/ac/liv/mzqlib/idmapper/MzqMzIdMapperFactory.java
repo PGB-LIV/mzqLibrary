@@ -28,6 +28,7 @@ import uk.ac.liv.jmzqml.model.mzqml.Provider;
 import uk.ac.liv.jmzqml.model.mzqml.SearchDatabase;
 import uk.ac.liv.jmzqml.model.mzqml.UserParam;
 import uk.ac.liv.jmzqml.xml.io.*;
+import uk.ac.liv.mzqlib.constants.MzqDataConstants;
 import uk.ac.liv.mzqlib.idmapper.data.SIIData;
 import uk.ac.liv.mzqlib.utils.MzidToMzqElementConvertor;
 
@@ -40,11 +41,6 @@ import uk.ac.liv.mzqlib.utils.MzidToMzqElementConvertor;
 public class MzqMzIdMapperFactory {
 
     private static final MzqMzIdMapperFactory instance = new MzqMzIdMapperFactory();
-    private static final String CvIDPSIMS = "PSI-MS";
-    private static final String CvNamePSIMS = "Proteomics Standards Initiative Mass Spectrometry Vocabularies";
-    private static final String CvUriPSIMS = "http://psidev.cvs.sourceforge.net/viewvc/psidev/psi/psi-ms/"
-            + "mzML/controlledVocabulary/psi-ms.obo";
-    private static final String CvVerPSIMS = "3.61.0";
 
     public MzqMzIdMapperFactory() {
     }
@@ -92,12 +88,12 @@ public class MzqMzIdMapperFactory {
         private MzQuantMLUnmarshaller mzqUm = null;
         // Map of PeptideConsensus ID to possible peptide sequence list
         private Map<String, List<String>> pepConOldToPepSeqsMap = new HashMap<>();
-        private Map<String, List<String>> protToPepSeqsMap = new HashMap<>();
+        //private Map<String, List<String>> protToPepSeqsMap = new HashMap<>();
         private Map<String, List<String>> pepConOldToPepModStringsMap = new HashMap<>();
         private Map<String, String> pepConOldIdToNewIdMap = new HashMap<>();
         private Map<String, String> rawToMzidMap = null;
         private Map<String, String> mzidFnToFileIdMap = new HashMap<>();
-        List<PeptideConsensusList> pepConLists = new ArrayList();
+        private List<PeptideConsensusList> pepConLists = new ArrayList();
         private Map<String, List<String>> pepConNewIdToProtAccsMap = new HashMap<>();
         private Map<String, List<String>> protAccToPepConNewIdsMap = new HashMap<>();
         private SearchDatabase searchDB = new SearchDatabase();
@@ -121,23 +117,25 @@ public class MzqMzIdMapperFactory {
 
             Map<String, List<SIIData>> combPepModStringToSIIsMap = this.mzqProc.getCombinedPepModStringToSIIsMap();
 
-            Map<String, List<String>> pepConIdToProtAccsMap = new HashMap<>();
-
+            //Map<String, List<String>> pepConIdToProtAccsMap = new HashMap<>();
             int pepIdCount = 0; // new id count for pepCon
 
             int idFileCount = 0;
 
             searchDB = this.mzqProc.getSearchDatabase();
 
+            if (itPepConList == null) {
+                throw new RuntimeException("There is no PeptideConsensusList in the mzq file.");
+            }
             while (itPepConList.hasNext()) {
                 PeptideConsensusList pepConList = itPepConList.next();
                 List<PeptideConsensus> pepCons = pepConList.getPeptideConsensus();
 
                 // loop through to each PeptideConsensus
                 for (PeptideConsensus pepCon : pepCons) {
-                    if (pepCon.getId().equals("pep_GLFIIDDKGILR_3_182")) {
-                        System.out.println("stop");
-                    }
+//                    if (pepCon.getId().equals("pep_GLFIIDDKGILR_3_182")) {
+//                        System.out.println("stop");
+//                    }
                     String pepConIdOld = pepCon.getId();
                     List<String> pepSeqList = pepConOldToPepSeqsMap.get(pepConIdOld);
                     List<String> pepModStringList = pepConOldToPepModStringsMap.get(pepConIdOld);
@@ -387,10 +385,10 @@ public class MzqMzIdMapperFactory {
             FileFormat ff = new FileFormat();
 
             Cv cv = new Cv();
-            cv.setId(CvIDPSIMS);
-            cv.setUri(CvUriPSIMS);
-            cv.setFullName(CvNamePSIMS);
-            cv.setVersion(CvVerPSIMS);
+            cv.setId(MzqDataConstants.CvIDPSIMS);
+            cv.setUri(MzqDataConstants.CvUriPSIMS);
+            cv.setFullName(MzqDataConstants.CvNamePSIMS);
+            cv.setVersion(MzqDataConstants.CvVerPSIMS);
 
             CvParam cp = new CvParam();
             cp.setAccession("MS:1002073");

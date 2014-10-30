@@ -130,13 +130,15 @@ public class PepProtAbundanceNormalisation {
 //            String inputDataTypeAccession, String outputDataTypeAccession, String tagDecoy, int assMin, int assMax) 
 //            throws FileNotFoundException {
     public PepProtAbundanceNormalisation(String in_file, String out_file, String normalisedLevel, String quantLayerType,
-            String inputDataTypeAccession, String outputDataTypeAccession, String tagDecoy) throws FileNotFoundException {
+            String inputDataTypeAccession, String outputDataTypeAccession, String outputDataTypeName, 
+            String tagDecoy) throws FileNotFoundException {
 
         this.in_file = in_file;
         this.out_file = out_file;
         this.normalisedLevel = normalisedLevel;
         this.inputDataTypeAccession = inputDataTypeAccession;
         this.outputDataTypeAccession = outputDataTypeAccession;
+        this.outputDataTypeName = outputDataTypeName;
         this.quantLayerType = quantLayerType;
         this.tagDecoy = tagDecoy;
 //        this.assMin = assMin;
@@ -148,7 +150,7 @@ public class PepProtAbundanceNormalisation {
             this.setType = "full";
         }
 
-        outputDataTypeName = "Normalised " + normalisedLevel + " abundance";
+//        outputDataTypeName = "Normalised " + normalisedLevel + " abundance";
         cvParamId = "PSI-MS";
 
 //        normalisedPeptideAssayValues = new HashMap<String, List<String>>();

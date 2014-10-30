@@ -91,6 +91,7 @@ public final class ProteinAbundanceInference {
 
     /**
      * constructor
+     *
      * @param in_file
      * @param out_file
      * @param abundanceOperation
@@ -168,6 +169,7 @@ public final class ProteinAbundanceInference {
 
     /**
      * main method
+     *
      * @param args
      * @throws JAXBException
      * @throws InstantiationException
@@ -186,7 +188,7 @@ public final class ProteinAbundanceInference {
         String infile = "C:\\Manchester\\work\\Puf3Study\\ProteoSuite\\IdenOutcomes\\Filtered_AJ_" + filter
                 + "\\mzq\\consensusonly\\test\\unlabeled_result_FLUQT_mapped_" + filter
                 + "_peptideNormalization_medianSelectedRefAssay_25Oct.mzq";
-//                + "_peptideNormalized" + refNo + "_revDecoy.mzq";
+
         String outfile = "C:\\Manchester\\work\\Puf3Study\\ProteoSuite\\Idenoutcomes\\Filtered_AJ_" + filter
                 + "\\mzq\\consensusonly\\test\\unlabeled_result_FLUQT_mapped_" + filter
                 + "_peptideNormalized" + refNo + "_protein_inference_revDecoyTest_25Oct.mzq";
@@ -235,10 +237,11 @@ public final class ProteinAbundanceInference {
 
     /**
      * protein inference workflow
+     *
      * @throws FileNotFoundException
      */
     public void proteinInference() throws FileNotFoundException {
-        boolean file_flag = true;
+
         boolean pipeline_flag = true;
 
         MzQuantMLUnmarshaller infile_um = null;
@@ -249,26 +252,28 @@ public final class ProteinAbundanceInference {
             System.out.println("The mzq file is not found!!! Please check the input.");
             System.err.println(ex);
             System.out.println("****************************************************");
-            file_flag = false;
-            pipeline_flag = false;
         }
 
-        if (file_flag == true) {
-            pipeline_flag = pipeline_executor(infile_um);
-        }
+        //remove the previous protein group list if existing
+        checkProteinGroupList(infile_um);
+
+        //
+        pipeline_flag = pipeline_executor(infile_um);
 
         System.out.println("****************************************************");
         if (pipeline_flag) {
             System.out.println("******* The pipeline does work successfully! *******");
             System.out.println("**** The protein abundance is output correctly! ****");
         } else {
-            System.out.println("****** Some errors exist within the pipeline *******");
+
+            throw new IllegalStateException("****** Some errors exist within the pipeline *******");
         }
         System.out.println("****************************************************");
     }
 
     /**
      * execute the methods for mapping, grouping, calculation and output
+     *
      * @param infile_um
      * @return
      */
@@ -283,15 +288,8 @@ public final class ProteinAbundanceInference {
         peptideAssayValues = peptideAssayValues(infile_um, inputDataTypeAccession);
 
         if (peptideAssayValues == null) {
-            flag = false;
-        }
 
-        if (flag == false) {
-            System.out.println("****************************************************");
-            System.out.println("*** The desired assay quant layer is not found!!! **");
-            System.out.println("**** Please check the input data type accession. ***");
-            System.out.println("****************************************************");
-            return flag;
+            throw new IllegalStateException("The desired assay quant layer is not found!!! Please check the input file.");
         }
 
 //        System.out.println("Peptide Assay Values: " + peptideAssayValues);
@@ -301,15 +299,6 @@ public final class ProteinAbundanceInference {
 
         if (quantLayerType.equals("AssayQuantLayer")) {
             List<QuantLayer<IdOnly>> assayQLs = assayQLs(infile_um);
-
-//            String assayQuantLayerId_pep = ; //AssayQuantLayerId(infile_um, inputPepDTCA);
-//            for (QuantLayer assayQL : assayQLs) {
-//                if ((assayQL.getDataType().getCvParam().getAccession()).equalsIgnoreCase(inputDTCA)) {
-//                    inputAssayQLID = assayQL.getId();
-////                    assNo = assayQL.getColumnIndex().size();
-//                    break;
-//                }
-//            }
             inputAssayQLID = assayQuantLayerId(infile_um, inputDataTypeAccession);
             outputAssayQuantLayerID = "PGL_" + inputAssayQLID;
             inputRawAssayQLID = assayQuantLayerId(infile_um, inputRawDataTypeAccession);
@@ -317,20 +306,13 @@ public final class ProteinAbundanceInference {
 
             MzQuantML mzq = mzq(infile_um);
 
-//            System.out.println("protein to peptide: " + proteinToPeptide);
-//            System.out.println("peptide to protein: " + peptideToProtein);
+
 //        List<QuantLayer> ratioQLs = RatioQLs(infile_um);
 //        List<QuantLayer> studyVariableQLs = StudyVariableQLs(infile_um);
             uniSetGroup = ProteinGrouping.uniSetGrouping(peptideToProtein, proteinToPeptide);
-//            System.out.println("Uni set group: " + uniSetGroup);
-
             sameSetGroup = ProteinGrouping.sameSetGrouping(peptideToProtein, proteinToPeptide);
-//            System.out.println("Same set group: " + sameSetGroup);
-
             subSetGroup = ProteinGrouping.subSetGrouping(peptideToProtein, proteinToPeptide);
 
-//            System.out.println("Same set group: " + sameSetGroup);
-//            System.out.println("Sub set group: " + subSetGroup);
             Map<String, List<String>> proteinAbundance = proteinAbundanceCalculation(abundanceOperation,
                     uniSetGroup, sameSetGroup, subSetGroup, peptideAssayValues);
             Map<String, List<String>> rawProteinAbundance = proteinAbundanceCalculation(abundanceOperation,
@@ -361,6 +343,22 @@ public final class ProteinAbundanceInference {
 //                    proteinAbundance, rawProteinAbundance);
         }
         return flag;
+    }
+
+    /**
+     * examine if there is a protein group list. If existing, remove it.
+     * @param um 
+     */
+    private void checkProteinGroupList(MzQuantMLUnmarshaller um) {
+        MzQuantML mzq = um.unmarshal(MzQuantMLElement.MzQuantML);
+        ProteinGroupList protGrList = um.unmarshal(MzQuantMLElement.ProteinGroupList);
+        if (protGrList != null) {
+            protGrList = null;
+            mzq.setProteinGroupList(protGrList);
+
+            MzQuantMLMarshaller marshaller = new MzQuantMLMarshaller(in_file);
+            marshaller.marshall(mzq);
+        }
     }
 
     /**

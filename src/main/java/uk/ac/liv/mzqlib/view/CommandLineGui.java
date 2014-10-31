@@ -301,8 +301,9 @@ public class CommandLineGui extends javax.swing.JFrame {
         jTextArea1.setText("Help guide\n************************\n"
                 + "- Parameters in square brackets are optional - example parameters above can be edited.\n"
                 + "- A valid input and output file need to provided in mzid or csv formats (where appropriate).\n"
-                + "- If the output and input file are the same, the input will be overwritten.\n"
-                + "Options for tool " + selected + ":\n\n" + split[0]);
+                + "- If the output and input file are the same, the input will be overwritten.\n\n"
+                + split[3] + "\n\n"
+                + "Options for tool " + selected + ":\n" + split[0]);
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**

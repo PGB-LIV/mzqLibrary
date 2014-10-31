@@ -122,6 +122,7 @@ public class PepProtAbundanceNormalisation {
      * @param quantLayerType
      * @param inputDataTypeAccession
      * @param outputDataTypeAccession
+     * @param outputDataTypeName
      * @param tagDecoy
      * @throws FileNotFoundException
      */

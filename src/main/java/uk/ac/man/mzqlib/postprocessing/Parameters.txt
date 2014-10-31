@@ -1,0 +1,49 @@
+1. Normalisation routine
+
+Parameters
+
+inputFile: 
+outputFile: 
+processingLevel: 	 Normalisation level 
+  	       	         "peptide" or "feature"
+quantLayerType:	         Quant layer type
+			 Ex. "AssayQuantLayer"
+inputDataTypeAccession: Input feature datatype CV accession
+                         Ex. "MS:1001840"
+outDataTypeAccession:   Output normalised peptide datatype accession
+		         Ex. "MS:1001891"
+outDataTypeName:	Output normalised peptide datatype name
+			 Ex. "normalised peptide abundance"
+decoyTag: 	        Decoy protein tag (prefix or suffix)
+                         Ex. "XXX_"     
+
+Execution example in the command line:
+Java -jar PeptideAbundanceNormalisation-1.0-SNAPSHOT-jar-with-dependencies.jar "ex1.mzq" "ex1_normalised.mzq" "peptide" "AssayQuantLayer" "MS:1001840" "MS:1001891" "normalised peptide abundance" "XXX_"
+
+     
+2. Protein inference routine
+
+Parameters
+
+in_file:       	  	          input file name with path
+out_file:      	    	          output file name with path
+quantLT:		          quant layer type
+			            Ex. "AssayQuantLayer"
+inputDataTypeAccession:           input peptide datatype CV accession
+                                    Ex. "MS:1001891"
+inputRaw DataTypeAccession:       input raw peptide datatype CV accession
+			            Ex. "MS:1001893"
+outputProteinGroupDTAccession:    output protein group data type accession
+				    Ex. "MS:1001890"
+outputProteinGroupDTName:         output protein group data type name
+                                   "Progenesis: protein normalised abundance"
+outputRawProteinGroupDTAccession: output raw protein group data type accession
+				   Ex. "MS:1001892"
+outputRawProteinGroupDTName:      output protein group data type name
+                                   "Progenesis: protein raw abundance"
+abundanceOperation: 	          abundance calculation operator
+		 		   Ex. "sum"
+
+
+Execution example in the command line:
+Java -jar ProteinAbundanceInference-1.0-SNAPSHOT-jar-with-dependencies.jar "ex2.mzq" "ex2_inference.mzq" "AssayQuantLayer" "MS:1001891" "MS:1001893" "MS:1001890" "Progenesis: protein normalised abundance" "MS:1001892" "Progenesis: protein raw abundance" "sum"	

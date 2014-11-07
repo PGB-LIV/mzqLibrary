@@ -71,8 +71,15 @@
                     <resource>
                         <directory> src/main/resources/ </directory>                
                         <excludes>
-                            <exclude>**/*.*</exclude>
-                        </excludes>                            
+                            <exclude>IdMapperTestFiles/*.*</exclude>
+                            <exclude>PipelinesOutcomePuf3/*.*</exclude>
+                            <exclude>ProteinAbundanceInference/*.*</exclude>
+                            <exclude>ProteinInferenceTest/*.*</exclude>
+                            <exclude>R-ANOVA/*.*</exclude>
+                        </excludes>
+                        <includes>
+                            <include>htmlTemplate.txt</include>
+                        </includes>                            
                     </resource>
                 </resources>
             </build>
@@ -213,7 +220,7 @@
         <dependency>
             <groupId>org.controlsfx</groupId>
             <artifactId>controlsfx</artifactId>
-            <version>8.0.6</version>
+            <version>8.0.6_20</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>

@@ -3,12 +3,16 @@ package uk.ac.liv.mzqlib;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.concurrent.WorkerStateEvent;
@@ -21,11 +25,23 @@ import javafx.stage.*;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.xml.bind.JAXBException;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialogs;
 import org.rosuda.JRI.Rengine;
+import uk.ac.liv.jmzqml.MzQuantMLElement;
+import uk.ac.liv.jmzqml.model.mzqml.DataMatrix;
+import uk.ac.liv.jmzqml.model.mzqml.IdOnly;
+import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensus;
+import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensusList;
+import uk.ac.liv.jmzqml.model.mzqml.Protein;
+import uk.ac.liv.jmzqml.model.mzqml.ProteinGroup;
+import uk.ac.liv.jmzqml.model.mzqml.ProteinRef;
+import uk.ac.liv.jmzqml.model.mzqml.QuantLayer;
+import uk.ac.liv.jmzqml.model.mzqml.Row;
 import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;
+import uk.ac.liv.mzqlib.constants.MzqDataConstants;
 import uk.ac.liv.mzqlib.model.*;
 import uk.ac.liv.mzqlib.task.*;
 import uk.ac.liv.mzqlib.view.*;
@@ -41,7 +57,7 @@ public class MainApp extends Application {
     private RootLayoutController rootLayoutController;
 
     private static final String VERSION = "1.0";
-    private static final String INCEPTION_YEAR = "2014";
+    //private static final String INCEPTION_YEAR = "2014";
 
     private MzQuantMLData mzqData = new MzQuantMLData();
 
@@ -56,6 +72,8 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
 
+        //setUserAgentStylesheet(STYLESHEET_CASPIAN);
+        setUserAgentStylesheet(STYLESHEET_MODENA);
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("mzQuantML library");
         initRootLayout();
@@ -117,7 +135,7 @@ public class MainApp extends Application {
 
         Dialogs.create()
                 .title("Loading file")
-                .masthead("For file size over 100MB, unmarshalling process could take over 10 minutes.")
+                //.masthead("For file size over 100MB, unmarshalling process could take over 10 minutes.")
                 .showWorkerProgress(loadMzqDataTask);
 
         loadMzqDataTask.setOnSucceeded((WorkerStateEvent t) -> {
@@ -301,15 +319,15 @@ public class MainApp extends Application {
             re.eval("library(\"gplots\")");
 
             re.eval("breaks <- seq(from = "
-                    + String.valueOf(rmTask.getValue().getMin())
+                    + String.valueOf(rmTask.getValue().getLogMin() * 0.9)
                     + ", to = "
-                    + String.valueOf(rmTask.getValue().getMax())
-                    + ", length = 200)");
+                    + String.valueOf(rmTask.getValue().getLogMax() * 1.1)
+                    + ", length = 51)");
 
             // Set color palette
             //re.eval("color.palette  <- colorRampPalette(c(\"#000000\", \"#DC2121\", \"#E9A915\"))");
             // Set x matrix
-            String setMatrix = "X = matrix(c(" + rmTask.getValue().getMatrix() + "), nrow=" + rmTask.getValue().getRowNumber() + ",byrow = TRUE)";
+            String setMatrix = "X = matrix(c(" + rmTask.getValue().getLogMatrix() + "), nrow=" + rmTask.getValue().getRowNumber() + ",byrow = TRUE)";
             re.eval(setMatrix);
 
             //build row names from rowNames list
@@ -341,21 +359,23 @@ public class MainApp extends Application {
 
             // Set heatmap
             String setHeatmap = "heatmap.2(X,\n"
-                    //                    + "Rowv=TRUE,\n"
-                    //                    + "Colv=TRUE,\n"
-                    //                    + "na.rm=FALSE,\n"
-                    //                    + "distfun = dist,\n"
-                    //                    + "hclustfun = hclust,\n"
-                    //                    + "key=TRUE,\n"
-                    //                    + "keysize=1,\n"
-                    //                    + "trace=\"none\",\n"
-                    //                    + "scale=\"none\",\n"
-                    //                    + "density.info=c(\"none\"),\n"
-                    //                    + "#margins=c(18, 8),\n"
+                    + "Rowv=TRUE,\n"
+                    + "Colv=TRUE,\n"
+                    + "na.rm=FALSE,\n"
+                    + "distfun = dist,\n"
+                    + "hclustfun = hclust,\n"
+                    + "key=TRUE,\n"
+                    + "keysize=1,\n"
+                    + "trace=\"none\",\n"
+                    + "scale=\"none\",\n"
+                    + "density.info=c(\"none\"),\n"
+                    + "#margins=c(18, 8),\n"
                     //                    //+ "col=color.palette,\n"
-                    //                    + "breaks = breaks,\n"
+                    + "breaks = breaks,\n"
+                    //+ "breaks = seq(from = 1, to = 10, length = 51), \n"
                     //                    + "lhei=c(0.4,4),\n"
-                    + "main=\"Heatmap of Progenesis: normalised abundance in ProteinList AssayQuantLayer\"\n"
+                    + "main=\"" + mzqInfoController.getAssayQuantLayerTable().getSelectionModel().getSelectedItem().getQuantLayerType()
+                    + ": " + mzqInfoController.getAssayQuantLayerTable().getSelectionModel().getSelectedItem().getQuantLayerId() + "\"\n"
                     + ")";
             re.eval(setHeatmap);
             re.eval("dev.off()");
@@ -413,10 +433,10 @@ public class MainApp extends Application {
 
         rmTask.setOnSucceeded((WorkerStateEvent t) -> {
             re.eval("breaks <- seq(from = "
-                    + String.valueOf(rmTask.getValue().getMin())
+                    + String.valueOf(rmTask.getValue().getLogMin() * 0.9)
                     + ", to = "
-                    + String.valueOf(rmTask.getValue().getMax())
-                    + ", length = 200)");
+                    + String.valueOf(rmTask.getValue().getLogMax() * 1.1)
+                    + ", length = 51)");
 
             // Set color palette
             re.eval("color.palette  <- colorRampPalette(c(\"#000000\", \"#DC2121\", \"#E9A915\"))");
@@ -453,22 +473,24 @@ public class MainApp extends Application {
             re.eval("colnames(X) <- c(" + colNames.toString() + ")");
 
             // Set heatmap
-            String setHeatmap = "heatmap.2(X,"
-                    //                    + "Rowv=TRUE,\n"
-                    //                    + "Colv=TRUE,\n"
-                    //                    + "na.rm=FALSE,\n"
-                    //                    + "distfun = dist,\n"
-                    //                    + "hclustfun = hclust,\n"
-                    //                    + "key=TRUE,\n"
-                    //                    + "keysize=1,\n"
-                    //                    + "trace=\"none\",\n"
-                    //                    + "scale=\"none\",\n"
-                    //                    + "density.info=c(\"none\"),\n"
-                    //                    + "#margins=c(18, 8),\n"
-                    //                    + "col=color.palette,\n"
-                    //                    + "breaks = breaks,\n"
+            String setHeatmap = "heatmap.2(X,\n"
+                    + "Rowv=TRUE,\n"
+                    + "Colv=TRUE,\n"
+                    + "na.rm=FALSE,\n"
+                    + "distfun = dist,\n"
+                    + "hclustfun = hclust,\n"
+                    + "key=TRUE,\n"
+                    + "keysize=1,\n"
+                    + "trace=\"none\",\n"
+                    + "scale=\"none\",\n"
+                    + "density.info=c(\"none\"),\n"
+                    + "#margins=c(18, 8),\n"
+                    //                    //+ "col=color.palette,\n"
+                    + "breaks = breaks,\n"
+                    //+ "breaks = seq(from = 1, to = 10, length = 51),\n"
                     //                    + "lhei=c(0.4,4),\n"
-                    + "main=\"Heatmap of Progenesis: normalised abundance in ProteinList\""
+                    + "main=\"" + mzqInfoController.getAssayQuantLayerTable().getSelectionModel().getSelectedItem().getQuantLayerType()
+                    + ": " + mzqInfoController.getAssayQuantLayerTable().getSelectionModel().getSelectedItem().getQuantLayerId() + "\"\n"
                     + ")";
             re.eval(setHeatmap);
         });
@@ -479,7 +501,8 @@ public class MainApp extends Application {
 
     }
 
-    public void showCurve() {
+    public void showCurve()
+            throws JAXBException {
         Stage curveStage = new Stage();
         curveStage.setTitle("Quantitative measurement across assays");
 
@@ -492,26 +515,142 @@ public class MainApp extends Application {
         lineChart.setTitle("Quantitative measurement for across assays");
 
         TableView<MzqDataMatrixRow> dataMatrixTable = mzqInfoController.getDataMatrixTable();
-        ObservableList<MzqDataMatrixRow> rowList = dataMatrixTable.getSelectionModel().getSelectedItems();
 
-        for (MzqDataMatrixRow row : rowList) {
-            XYChart.Series series = new XYChart.Series();
+        MzqAssayQuantLayer selectedQL = mzqInfoController.getAssayQuantLayerTable().getSelectionModel().getSelectedItem();
+        ObservableList<TableColumn<MzqDataMatrixRow, ?>> columns = dataMatrixTable.getColumns();
+
+        if (selectedQL.getListType().equals(MzqDataConstants.PROTEIN_GROUP_LIST_TYPE)) {
+
+            MzqDataMatrixRow protGrpRow = dataMatrixTable.getSelectionModel().getSelectedItem();
+            if (protGrpRow.getObjectValue().get().equals("P60843")) {
+                System.out.println("stop");
+            }
+
+            //Plot protein group quant value line
+            XYChart.Series series = new XYChart.Series<>();
             lineChart.getData().add(series);
-            series.setName(row.getObjetId());
-            List<StringProperty> values = row.Values();
+
+            //Set protein group line color to RED
+            series.getNode().setStyle("-fx-stroke: red;");
+
+            series.setName(protGrpRow.getObjectValue().get());
+            List<StringProperty> values = protGrpRow.Values();
             int i = 1;
             for (StringProperty value : values) {
                 if (NumberUtils.isNumber(value.get())) {
-                    series.getData().add(new XYChart.Data(dataMatrixTable.getColumns().get(i).getText(), Double.parseDouble(value.get())));
+                    series.getData().add(new XYChart.Data(columns.get(i).getText(), Double.parseDouble(value.get())));
                 }
                 else {
-                    series.getData().add(new XYChart.Data(dataMatrixTable.getColumns().get(i).getText(), -1));
+                    series.getData().add(new XYChart.Data(columns.get(i).getText(), -1));
                 }
                 i++;
             }
 
-        }
+            //showProteinGroupPeptideLinePlot(protGrpRow, selectedQL.getDataType(), columns, lineChart);
+            //Get the first PeptideConsensusList and AssayQuantLayer regardless of the finalResult value
+            Iterator<PeptideConsensusList> peptideConsensusListIter = this.getUnmarshaller().unmarshalCollectionFromXpath(MzQuantMLElement.PeptideConsensusList);
+            DataMatrix peptideDM = new DataMatrix();
+            if (peptideConsensusListIter != null) {
+                PeptideConsensusList peptideList = peptideConsensusListIter.next();
 
+                //Get the peptide quant layer
+                List<QuantLayer<IdOnly>> assayQLs = peptideList.getAssayQuantLayer();
+
+                for (QuantLayer assayQL : assayQLs) {
+                    if (selectedQL.getDataType().toLowerCase().contains("normalised")
+                            && assayQL.getDataType().getCvParam().getName().toLowerCase().contains("normalised")) {
+                        peptideDM = assayQL.getDataMatrix();
+                        break;
+                    }
+                    if (selectedQL.getDataType().toLowerCase().contains("raw")
+                            && assayQL.getDataType().getCvParam().getName().toLowerCase().contains("raw")) {
+                        peptideDM = assayQL.getDataMatrix();
+                        break;
+                    }
+                }
+            }
+            Map<String, List<StringProperty>> peptideDMMap = convertDataMatrixToHashMap(peptideDM);
+
+            ProteinGroup proteinGrp = this.getUnmarshaller().unmarshal(uk.ac.liv.jmzqml.model.mzqml.ProteinGroup.class, protGrpRow.getObjectId());
+
+            //Take the first protein as group leader in the protein group
+            ProteinRef protRef = proteinGrp.getProteinRef().get(0);
+
+            Protein protein = this.getUnmarshaller().unmarshal(uk.ac.liv.jmzqml.model.mzqml.Protein.class, protRef.getProteinRef());
+            List<String> peptideRefs = protein.getPeptideConsensusRefs();
+            for (String peptideRef : peptideRefs) {
+                PeptideConsensus peptide = this.getUnmarshaller().unmarshal(uk.ac.liv.jmzqml.model.mzqml.PeptideConsensus.class, peptideRef);
+                List<StringProperty> peptideValues = peptideDMMap.get(peptideRef);
+                if (peptideValues != null) {
+                    XYChart.Series peptideSeries = new XYChart.Series<>();
+                    lineChart.getData().add(peptideSeries);
+
+                    //Set peptide lines color to GRAY
+                    peptideSeries.getNode().setStyle("-fx-stroke: gray;");
+
+                    peptideSeries.setName(peptide.getPeptideSequence());
+                    //if (peptideValues != null) {
+                    int k = 1;
+                    for (StringProperty value : peptideValues) {
+                        if (NumberUtils.isNumber(value.get())) {
+                            peptideSeries.getData().add(new XYChart.Data(columns.get(k).getText(), Double.parseDouble(value.get())));
+
+                        }
+                        else {
+                            peptideSeries.getData().add(new XYChart.Data(columns.get(k).getText(), -1));
+                        }
+                        k++;
+                    }
+                }
+            }
+
+        }
+        else if (selectedQL.getListType().equals(MzqDataConstants.PROTEIN_LIST_TYPE)) {
+
+            MzqDataMatrixRow protRow = dataMatrixTable.getSelectionModel().getSelectedItem();
+
+            //Plot protein quant value line
+            XYChart.Series series = new XYChart.Series<>();
+            lineChart.getData().add(series);
+
+            //Set protein line color to RED
+            series.getNode().setStyle("-fx-stroke: red;");
+
+            series.setName(protRow.getObjectValue().get());
+            List<StringProperty> values = protRow.Values();
+            int i = 1;
+            for (StringProperty value : values) {
+                if (NumberUtils.isNumber(value.get())) {
+                    series.getData().add(new XYChart.Data(columns.get(i).getText(), Double.parseDouble(value.get())));
+                }
+                else {
+                    series.getData().add(new XYChart.Data(columns.get(i).getText(), -1));
+                }
+                i++;
+            }
+
+            showProteinPeptideLinePlot(protRow, selectedQL.getDataType(), columns, lineChart);
+        }
+        else {
+            ObservableList<MzqDataMatrixRow> rowList = dataMatrixTable.getSelectionModel().getSelectedItems();
+
+            for (MzqDataMatrixRow row : rowList) {
+                XYChart.Series series = new XYChart.Series();
+                lineChart.getData().add(series);
+                series.setName(row.getObjectValue().get());
+                List<StringProperty> values = row.Values();
+                int i = 1;
+                for (StringProperty value : values) {
+                    if (NumberUtils.isNumber(value.get())) {
+                        series.getData().add(new XYChart.Data(dataMatrixTable.getColumns().get(i).getText(), Double.parseDouble(value.get())));
+                    }
+                    else {
+                        series.getData().add(new XYChart.Data(dataMatrixTable.getColumns().get(i).getText(), -1));
+                    }
+                    i++;
+                }
+            }
+        }
         Scene scene = new Scene(lineChart, 800, 600);
 
         curveStage.setScene(scene);
@@ -538,6 +677,10 @@ public class MainApp extends Application {
 
     }
 
+    public void exportMztabFile() {
+
+    }
+
     public void showAbout() {
         Dialogs.create()
                 .title("About")
@@ -557,6 +700,185 @@ public class MainApp extends Application {
     public static void main(String[] args) {
 
         launch(args);
+    }
+
+    /**
+     * Show the plot line of quantitative value from identified peptides for a specific protein
+     *
+     * @param protRow   the selected protein row
+     * @param dataType  the data type of the protein quant layer
+     * @param lineChart the plot chart
+     *
+     * @throws JAXBException
+     */
+    private void showProteinPeptideLinePlot(MzqDataMatrixRow protRow,
+                                            String dataType,
+                                            ObservableList<TableColumn<MzqDataMatrixRow, ?>> columns,
+                                            LineChart<String, Number> lineChart)
+            throws JAXBException {
+
+        //Get the first PeptideConsensusList and AssayQuantLayer regardless of the finalResult value
+        Iterator<PeptideConsensusList> peptideConsensusListIter = this.getUnmarshaller().unmarshalCollectionFromXpath(MzQuantMLElement.PeptideConsensusList);
+        DataMatrix peptideDM = new DataMatrix();
+        if (peptideConsensusListIter != null) {
+            PeptideConsensusList peptideList = peptideConsensusListIter.next();
+
+            //Get the peptide quant layer
+            List<QuantLayer<IdOnly>> assayQLs = peptideList.getAssayQuantLayer();
+
+            for (QuantLayer assayQL : assayQLs) {
+                if (dataType.contains("normalised")
+                        && assayQL.getDataType().getCvParam().getName().contains("normalised")) {
+                    peptideDM = assayQL.getDataMatrix();
+                    break;
+                }
+                if (dataType.contains("raw")
+                        && assayQL.getDataType().getCvParam().getName().contains("raw")) {
+                    peptideDM = assayQL.getDataMatrix();
+                    break;
+                }
+            }
+        }
+
+        Map<String, List<StringProperty>> peptideDMMap = convertDataMatrixToHashMap(peptideDM);
+
+        Protein protein = this.getUnmarshaller().unmarshal(uk.ac.liv.jmzqml.model.mzqml.Protein.class, protRow.getObjectId());
+        List<String> peptideRefs = protein.getPeptideConsensusRefs();
+        for (String peptideRef : peptideRefs) {
+            PeptideConsensus peptide = this.getUnmarshaller().unmarshal(uk.ac.liv.jmzqml.model.mzqml.PeptideConsensus.class, peptideRef);
+            List<StringProperty> peptideValues = peptideDMMap.get(peptideRef);
+            XYChart.Series peptideSeries = new XYChart.Series<>();
+            lineChart.getData().add(peptideSeries);
+            peptideSeries.setName(peptide.getPeptideSequence());
+            if (peptideValues != null) {
+                int k = 1;
+                for (StringProperty value : peptideValues) {
+                    if (NumberUtils.isNumber(value.get())) {
+                        peptideSeries.getData().add(new XYChart.Data(columns.get(k).getText(), Double.parseDouble(value.get())));
+
+                    }
+                    else {
+                        peptideSeries.getData().add(new XYChart.Data(columns.get(k).getText(), -1));
+                    }
+                    k++;
+                }
+            }
+        }
+    }
+
+    /**
+     *
+     * @param protGrpRow
+     * @param dataType
+     * @param lineChart
+     */
+    private void showProteinGroupPeptideLinePlot(MzqDataMatrixRow protGrpRow,
+                                                 String dataType,
+                                                 ObservableList<TableColumn<MzqDataMatrixRow, ?>> columns,
+                                                 LineChart<String, Number> lineChart)
+            throws JAXBException {
+
+        //Get the first PeptideConsensusList and AssayQuantLayer regardless of the finalResult value
+        Iterator<PeptideConsensusList> peptideConsensusListIter = this.getUnmarshaller().unmarshalCollectionFromXpath(MzQuantMLElement.PeptideConsensusList);
+        DataMatrix peptideDM = new DataMatrix();
+        if (peptideConsensusListIter != null) {
+            PeptideConsensusList peptideList = peptideConsensusListIter.next();
+
+            //Get the peptide quant layer
+            List<QuantLayer<IdOnly>> assayQLs = peptideList.getAssayQuantLayer();
+
+            for (QuantLayer assayQL : assayQLs) {
+                if (dataType.contains("normalised")
+                        && assayQL.getDataType().getCvParam().getName().contains("normalised")) {
+                    peptideDM = assayQL.getDataMatrix();
+                    break;
+                }
+                if (dataType.contains("raw")
+                        && assayQL.getDataType().getCvParam().getName().contains("raw")) {
+                    peptideDM = assayQL.getDataMatrix();
+                    break;
+                }
+            }
+        }
+        Map<String, List<StringProperty>> peptideDMMap = convertDataMatrixToHashMap(peptideDM);
+
+        ProteinGroup proteinGrp = this.getUnmarshaller().unmarshal(uk.ac.liv.jmzqml.model.mzqml.ProteinGroup.class, protGrpRow.getObjectId());
+
+        //Take the first protein as group leader in the protein group
+        ProteinRef protRef = proteinGrp.getProteinRef().get(0);
+
+        Protein protein = this.getUnmarshaller().unmarshal(uk.ac.liv.jmzqml.model.mzqml.Protein.class, protRef.getProteinRef());
+        List<String> peptideRefs = protein.getPeptideConsensusRefs();
+        for (String peptideRef : peptideRefs) {
+            PeptideConsensus peptide = this.getUnmarshaller().unmarshal(uk.ac.liv.jmzqml.model.mzqml.PeptideConsensus.class, peptideRef);
+            List<StringProperty> peptideValues = peptideDMMap.get(peptideRef);
+            XYChart.Series peptideSeries = new XYChart.Series<>();
+            lineChart.getData().add(peptideSeries);
+            peptideSeries.setName(peptide.getPeptideSequence());
+            if (peptideValues != null) {
+                int k = 1;
+                for (StringProperty value : peptideValues) {
+                    if (NumberUtils.isNumber(value.get())) {
+                        peptideSeries.getData().add(new XYChart.Data(columns.get(k).getText(), Double.parseDouble(value.get())));
+
+                    }
+                    else {
+                        peptideSeries.getData().add(new XYChart.Data(columns.get(k).getText(), -1));
+                    }
+                    k++;
+                }
+            }
+        }
+
+    }
+
+    /**
+     * Convert DataMatrix to HashMap
+     *
+     * @param peptideDM input DataMatrix object
+     *
+     * @return a HashMap contains the same information as in DataMatrix
+     */
+    private Map<String, List<StringProperty>> convertDataMatrixToHashMap(
+            DataMatrix peptideDM) {
+        if (peptideDM == null) {
+            return null;
+        }
+        else {
+            Map<String, List<StringProperty>> retHashMap = new HashMap<>();
+
+            List<Row> rows = peptideDM.getRow();
+
+            if (rows.isEmpty()) {
+                return retHashMap;
+            }
+            else {
+                for (Row row : rows) {
+                    retHashMap.put(row.getObjectRef(), listStringProperty(row.getValue()));
+                }
+                return retHashMap;
+            }
+        }
+    }
+
+    /**
+     * Convert a list of String to a list of StringProperty
+     *
+     * @param values input list of String
+     *
+     * @return a list of StringProperty
+     */
+    private List<StringProperty> listStringProperty(List<String> values) {
+        if (values == null) {
+            return null;
+        }
+        else {
+            List<StringProperty> retList = new ArrayList<>();
+            for (String s : values) {
+                retList.add(new SimpleStringProperty(s));
+            }
+            return retList;
+        }
     }
 
 }

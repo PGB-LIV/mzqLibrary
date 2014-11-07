@@ -12,6 +12,7 @@ import uk.ac.liv.mzqlib.consensusxml.convertor.ConsensusXMLProcessorFactory;
 import uk.ac.liv.mzqlib.idmapper.MzqMzIdMapper;
 import uk.ac.liv.mzqlib.idmapper.MzqMzIdMapperFactory;
 import uk.ac.liv.mzqlib.maxquant.converter.MaxquantMzquantmlConvertor;
+import uk.ac.liv.mzqlib.progenesis.converter.ProgenMzquantmlConvertor;
 import uk.ac.liv.mzqlib.stats.MzqQLAnova;
 
 import uk.ac.liv.mzqlib.util.Utils;
@@ -91,6 +92,13 @@ public class MzQuantMLLib {
     public static String maxquantConvertorUsage = "MaxquantConvertor evidence.txt output.mzq " + maxquantConvertorParams
             + " \n\nDescription:\n" + maxquantConvertorToolDescription;
 
+    public static String progenesisConvertorParams = "-pepList peptideListFile [-sep CsvSeparator]";
+    public static String progenesisConvertorUsageExample = "-pepList peptide_list.csv";
+    public static String progenesisConvertorToolDescription = "This tool will convert Progenesis result files to a single mzQuantML file. "
+            + "User needs to provide protein list CSV file as the input file and provide peptide list (or feature list) CSV file via option. ";
+    public static String progenesisConvertorUsage = "ProgenesisConvertor proteinList.csv output.mzq " + progenesisConvertorParams
+            + " \n\nDescription:\n" + progenesisConvertorToolDescription;
+
     public static String userFeedback = "java -jar jar-location/mzqlib-version.jar ";
 
 // Added by Fawaz Ghali to automatically update the MzidLib GUI 
@@ -106,10 +114,11 @@ public class MzQuantMLLib {
         allFunctions.put("ConsensusXMLConvertor", consensusXMLConvertorParams + ";@;" + consensusXMLConvertorUsage + ";@;" + consensusXMLConvertorUsageExample + ";@;" + consensusXMLConvertorToolDescription);
         allFunctions.put("MzTabConvertor", mzTabConvertorParams + ";@;" + mzTabConvertorUsage + ";@;" + mzTabConvertorUsageExample + ";@;" + mzTabConvertorToolDescription);
         allFunctions.put("MzqMzIdMapping", idMappingParams + ";@;" + idMappingUsage + ";@;" + idMappingUsageExample + ";@;" + idMappingToolDescription);
-        allFunctions.put("MzqAnovaPValue", anovaParams + ";@;" + anovaUsage + ";@;" + anovaUsageExample + ";@;" + anovaToolDescription);
+        allFunctions.put("AnovaPValue", anovaParams + ";@;" + anovaUsage + ";@;" + anovaUsageExample + ";@;" + anovaToolDescription);
         allFunctions.put("Normalisation", normalisationParams + ";@;" + normalisationUsage + ";@;" + normalisationUsageExample + ";@;" + normalisationToolDescription);
         allFunctions.put("ProteinInference", proteinInferenceParams + ";@;" + proteinInferenceUsage + ";@;" + proteinInferenceUsageExample + ";@;" + proteinInferenceToolDescription);
         allFunctions.put("MaxquantConvertor", maxquantConvertorParams + ";@;" + maxquantConvertorUsage + ";@;" + maxquantConvertorUsageExample + ";@;" + maxquantConvertorToolDescription);
+        allFunctions.put("ProgenesisConvertor", progenesisConvertorParams + ";@;" + progenesisConvertorUsage + ";@;" + progenesisConvertorUsageExample + ";@;" + progenesisConvertorToolDescription);
     }
 
     /**
@@ -236,7 +245,7 @@ public class MzQuantMLLib {
                     }
 //                    }
                 }
-                else if (args[0].equals("MzqAnovaPValue")) {
+                else if (args[0].equals("AnovaPValue")) {
                     if (inputFileName != null && outputFileName != null) {
                         String listType = Utils.getCmdParameter(args, "listType", true);
                         String qlDataType = Utils.getCmdParameter(args, "qlDataType", true);
@@ -255,7 +264,7 @@ public class MzQuantMLLib {
                         String outDTCN = Utils.getCmdParameter(args, "outDTCN", true);
                         String tagDecoy = Utils.getCmdParameter(args, "tagDecoy", true);
 
-                        PepProtAbundanceNormalisation normalisation = new PepProtAbundanceNormalisation(inputFileName, outputFileName, normLevel, qlType, inDTCA, outDTCA, outDTCN, tagDecoy);
+                        PepProtAbundanceNormalisation normalisation = new PepProtAbundanceNormalisation(inputFileName, outputFileName, normLevel, qlType, inDTCA, outDTCA, outDTCN, tagDecoy, null);
                         normalisation.multithreadingCalc();
                     }
                 }
@@ -283,6 +292,23 @@ public class MzQuantMLLib {
                         String templateFn = Utils.getCmdParameter(args, "template", true);
                         MaxquantMzquantmlConvertor maxCon = new MaxquantMzquantmlConvertor(inputFileName, peptidesFn, proteinGroupsFn, templateFn, summaryFn);
                         maxCon.convert(outputFileName);
+                    }
+                }
+                else if (args[0].equals("ProgenesisConvertor")) {
+                    if (inputFileName != null && outputFileName != null) {
+                        String pepList = Utils.getCmdParameter(args, "pepList", true);
+                        String sep = Utils.getCmdParameter(args, "sep", false);
+                        if (sep != null && sep.length() == 1) {
+                            char[] sepCharArray = sep.toCharArray();
+                            char seperator = sepCharArray[0];
+                            ProgenMzquantmlConvertor.createOutput(pepList, inputFileName, "", outputFileName, seperator);
+                        }
+                        else if (sep != null && sep.length() != 1) {
+                            throw new RuntimeException("The input sepearator must be a single character.");
+                        }
+                        else {
+                            ProgenMzquantmlConvertor.createOutput(pepList, inputFileName, "", outputFileName, ',');
+                        }
                     }
                 }
                 else {

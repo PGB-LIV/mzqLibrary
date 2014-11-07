@@ -49,16 +49,19 @@ public class CreateRMatrixTask extends Task<HeatMapParam> {
         // The minimum value of the values
         double min = 0;
 
+        double logMax = 0;
+        double logMin = 0;
+
         updateProgress(0, 1);
 
         int count = 1;
 
         for (MzqDataMatrixRow row : rowList) {
 
-            updateMessage("Processing row: " + row.getObjetId());
+            updateMessage("Processing row: " + row.getObjectValue().get());
 
             // add to row names
-            rowNames.add(row.getObjetId());
+            rowNames.add(row.getObjectValue().get());
 
             List<StringProperty> values = row.Values();
             for (StringProperty value : values) {
@@ -76,7 +79,18 @@ public class CreateRMatrixTask extends Task<HeatMapParam> {
                 String replaceV = String.valueOf(Math.log10(0.5));
                 if (NumberUtils.isNumber(value.get())) {
                     double logV = Math.log10(Double.parseDouble(value.get()));
-                    logX = logX + String.valueOf(logV) + ",";
+                    if (logV != Double.NEGATIVE_INFINITY && logV != Double.POSITIVE_INFINITY) {
+                        logX = logX + String.valueOf(logV) + ",";
+                        if (logV < logMin) {
+                            logMin = logV;
+                        }
+                        if (logV > logMax) {
+                            logMax = logV;
+                        }
+                    }
+                    else {
+                        logX = logX + replaceV + ",";
+                    }
                 }
                 else {
                     logX = logX + replaceV + ",";
@@ -97,6 +111,8 @@ public class CreateRMatrixTask extends Task<HeatMapParam> {
         hmParam.setLogMatrix(logX);
         hmParam.setMax(max);
         hmParam.setMin(min);
+        hmParam.setLogMax(logMax);
+        hmParam.setLogMin(logMin);
         updateMessage("Done");
         updateProgress(1, 1);
 

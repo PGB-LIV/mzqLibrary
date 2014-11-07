@@ -13,6 +13,8 @@ public class HeatMapParam {
 
     private double min;
     private double max;
+    private double logMin;
+    private double logMax;
     private int rowNumber;
     private String matrix;
     private String logMatrix;
@@ -139,6 +141,34 @@ public class HeatMapParam {
      */
     public void setLogMatrix(String logMatrix) {
         this.logMatrix = logMatrix;
+    }
+
+    /**
+     * @return the logMin
+     */
+    public double getLogMin() {
+        return logMin;
+    }
+
+    /**
+     * @param logMin the logMin to set
+     */
+    public void setLogMin(double logMin) {
+        this.logMin = logMin;
+    }
+
+    /**
+     * @return the logMax
+     */
+    public double getLogMax() {
+        return logMax;
+    }
+
+    /**
+     * @param logMax the logMax to set
+     */
+    public void setLogMax(double logMax) {
+        this.logMax = logMax;
     }
 
 }

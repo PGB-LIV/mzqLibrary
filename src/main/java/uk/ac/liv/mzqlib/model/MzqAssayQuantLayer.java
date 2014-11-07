@@ -25,27 +25,27 @@ public class MzqAssayQuantLayer {
     //private final ObjectProperty<QuantLayer> quantLayer;
     private List<StringProperty> columnNames;
     private List<MzqDataMatrixRow> dmRows;
-    private final StringProperty rowObjectType; //a flag to indicate the type of object in the row, e.g. ProteinGroup, Protein, PeptideConsensus, etc.
+    private final StringProperty listType; //a flag to indicate the type of the list, e.g. ProteinGroupList, ProteinList, PeptideConsensusList, etc.
 
     /**
      *
      * @param um         the unmarshaller of the mzq file
      * @param listId     the id of the list element (e.g. ProteinGroupList, ProteinList, PeptideConsensusList, etc.
      * @param quantLayer the QuantLayer object
-     * @param objectType the object type of rows (e.g. Protein, ProteinGroup, etc.)
+     * @param listType   the list type (e.g. Protein, ProteinGroup, etc.)
      * @param dataType   the data type of the quant layer
      *
      * @throws javax.xml.bind.JAXBException
      */
     public MzqAssayQuantLayer(MzQuantMLUnmarshaller um, String listId,
                               QuantLayer quantLayer,
-                              String objectType,
+                              String listType,
                               String dataType)
             throws JAXBException {
         this.mzqUm = um;
         this.listId = new SimpleStringProperty(listId);
         this.quantLayerId = new SimpleStringProperty(quantLayer.getId());
-        this.rowObjectType = new SimpleStringProperty(objectType);
+        this.listType = new SimpleStringProperty(listType);
         this.dataType = new SimpleStringProperty(dataType);
 
         //set column names 
@@ -104,17 +104,17 @@ public class MzqAssayQuantLayer {
 
     /**
      *
-     * @return the value of rowObjectType
+     * @return the value of listType
      */
-    public String getRowObjectType() {
-        return rowObjectType.get();
+    public String getListType() {
+        return listType.get();
     }
 
     /**
-     * @return the rowObjectType
+     * @return the listType
      */
-    public StringProperty rowObjectType() {
-        return rowObjectType;
+    public StringProperty listType() {
+        return listType;
     }
 
     /**
@@ -125,9 +125,17 @@ public class MzqAssayQuantLayer {
     }
 
     /**
+     * @return the value of dataType
+     */
+    public String getDataType() {
+        return dataType.get();
+    }
+
+    /**
+     *
      * @return the dataType
      */
-    public StringProperty getDataType() {
+    public StringProperty dataType() {
         return dataType;
     }
 

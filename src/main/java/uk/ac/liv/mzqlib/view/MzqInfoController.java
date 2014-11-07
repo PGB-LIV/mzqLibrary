@@ -1,5 +1,7 @@
 package uk.ac.liv.mzqlib.view;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.StringProperty;
 import javafx.event.Event;
@@ -12,7 +14,9 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import static javafx.scene.control.TableView.CONSTRAINED_RESIZE_POLICY;
+import javax.xml.bind.JAXBException;
 import uk.ac.liv.mzqlib.MainApp;
+import uk.ac.liv.mzqlib.constants.MzqDataConstants;
 import uk.ac.liv.mzqlib.model.MzQuantMLSummary;
 import uk.ac.liv.mzqlib.model.MzqAssayQuantLayer;
 import uk.ac.liv.mzqlib.model.MzqDataMatrixRow;
@@ -60,7 +64,7 @@ public class MzqInfoController {
     private void initialize() {
         assayQLId.setCellValueFactory(cellData -> cellData.getValue().quantLayerId());
         parentListId.setCellValueFactory(cellData -> cellData.getValue().listId());
-        dataType.setCellValueFactory(cellData -> cellData.getValue().getDataType());
+        dataType.setCellValueFactory(cellData -> cellData.getValue().dataType());
 
         // Clear person details.
         showAssayQLDetails(null);
@@ -86,6 +90,7 @@ public class MzqInfoController {
 
     private void showAssayQLDetails(MzqAssayQuantLayer assayQL) {
         if (assayQL != null) {
+            //if (assayQL.getListId())
             // Clear the table
             dataMatrixTable.getColumns().clear();
             dataMatrixTable.getItems().clear();
@@ -100,7 +105,12 @@ public class MzqInfoController {
 
                 @Override
                 public void handle(Event event) {
-                    mainApp.showCurve();
+                    try {
+                        mainApp.showCurve();
+                    }
+                    catch (JAXBException ex) {
+                        Logger.getLogger(MzqInfoController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
 
             });
@@ -108,12 +118,16 @@ public class MzqInfoController {
             // Set table column resizable policy
             dataMatrixTable.setColumnResizePolicy(CONSTRAINED_RESIZE_POLICY);
 
-            // Set selection mode to  multiple
-            dataMatrixTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
+            // Set selection mode
+            if (assayQL.getListType().equals(MzqDataConstants.PROTEIN_GROUP_LIST_TYPE) || assayQL.getListType().equals(MzqDataConstants.PROTEIN_LIST_TYPE)) {
+                dataMatrixTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+            }
+            else {
+                dataMatrixTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            }
             // The first column
             TableColumn<MzqDataMatrixRow, String> idCol = new TableColumn("Id");
-            idCol.setCellValueFactory(cellData -> cellData.getValue().ObjectId());
+            idCol.setCellValueFactory(cellData -> cellData.getValue().getObjectValue());
 
             dataMatrixTable.getColumns().add(idCol);
 
@@ -134,6 +148,10 @@ public class MzqInfoController {
 
     public TableView<MzqDataMatrixRow> getDataMatrixTable() {
         return dataMatrixTable;
+    }
+
+    public TableView<MzqAssayQuantLayer> getAssayQuantLayerTable() {
+        return assayQuantLayerTable;
     }
 
 }

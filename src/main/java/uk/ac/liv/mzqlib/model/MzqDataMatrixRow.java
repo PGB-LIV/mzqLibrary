@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package uk.ac.liv.mzqlib.model;
 
 import java.util.List;
@@ -20,10 +19,12 @@ import javafx.collections.FXCollections;
 public class MzqDataMatrixRow {
 
     private StringProperty objectId;
+    private StringProperty objectValue; // Sequence or accession
     private List<StringProperty> values;
 
     public MzqDataMatrixRow() {
         objectId = new SimpleStringProperty("");
+        objectValue = new SimpleStringProperty("");
         values = FXCollections.observableArrayList();
     }
 
@@ -38,7 +39,7 @@ public class MzqDataMatrixRow {
      *
      * @return the value of objectId
      */
-    public String getObjetId() {
+    public String getObjectId() {
         return objectId.get();
     }
 
@@ -74,6 +75,20 @@ public class MzqDataMatrixRow {
         for (String value : values) {
             this.values.add(new SimpleStringProperty(value));
         }
+    }
+
+    /**
+     * @return the objectValue
+     */
+    public StringProperty getObjectValue() {
+        return objectValue;
+    }
+
+    /**
+     * @param objectValue the objectValue to set
+     */
+    public void setObjectValue(StringProperty objectValue) {
+        this.objectValue = objectValue;
     }
 
 }

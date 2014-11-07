@@ -1,19 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package uk.ac.liv.mzqlib.view;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javax.xml.bind.JAXBException;
 import uk.ac.liv.mzqlib.MainApp;
+
 
 /**
  * FXML Controller class
@@ -30,10 +33,10 @@ public class RootLayoutController {
 
     @FXML
     private Menu statistics;
-    
+
     @FXML
     private Menu exportTo;
-    
+
     @FXML
     private MenuItem closeFile;
 
@@ -94,7 +97,30 @@ public class RootLayoutController {
     }
 
     @FXML
-    private void handleCurve() {
+    private void showProgenesisConverterWindow() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(RootLayoutController.class.getClassLoader().getResource("ProgenesisConverter.fxml"));
+            AnchorPane progenConvt = (AnchorPane) loader.load();
+
+            ProgenesisConverterController controller = loader.getController();
+
+            Scene scene = new Scene(progenConvt);
+            Stage progStage = new Stage();
+            progStage.initModality(Modality.WINDOW_MODAL);
+
+            progStage.setTitle("Progenesis to MzQuantML Converter");
+            progStage.setScene(scene);
+            progStage.show();
+        }
+        catch (IOException ex) {
+            Logger.getLogger(RootLayoutController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void handleCurve()
+            throws JAXBException {
         mainApp.showCurve();
     }
 
@@ -104,6 +130,11 @@ public class RootLayoutController {
     @FXML
     private void handleExit() {
         System.exit(0);
+    }
+
+    @FXML
+    private void handleExportMztabFile() {
+        mainApp.exportMztabFile();
     }
 
     public void enableMenus() {
@@ -117,14 +148,15 @@ public class RootLayoutController {
         exportTo.setDisable(true);
         closeFile.setDisable(true);
     }
-    
+
     @FXML
-    private void showGui(){
+    private void showGui() {
         mainApp.showGui();
     }
 
     @FXML
-    private void showAbout(){
+    private void showAbout() {
         mainApp.showAbout();
     }
+
 }

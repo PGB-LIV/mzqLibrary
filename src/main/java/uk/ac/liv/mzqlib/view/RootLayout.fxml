@@ -10,13 +10,18 @@
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu text="File">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#handleOpen" text="Open file" />
+                  <Menu mnemonicParsing="false" text="Converter">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#showProgenesisConverterWindow" text="Progenesis converter" />
+                    </items>
+                  </Menu>
                   <Menu fx:id="exportTo" mnemonicParsing="false" text="Export to">
                     <items>
                       <MenuItem mnemonicParsing="false" text="CSV file" />
-                        <MenuItem mnemonicParsing="false" text="HTML file" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleExportMztabFile" text="mzTab file" />
                     </items>
                   </Menu>
                   <MenuItem fx:id="closeFile" mnemonicParsing="false" onAction="#handleClose" text="Close file" />

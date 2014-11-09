@@ -15,8 +15,12 @@ public class ProteinGroupData extends QuantitationLevel{
         pg = proteinGroup;
     }
 
-    public ProteinGroup getPg() {
-        return pg;
+//    public ProteinGroup getPg() {
+//        return pg;
+//    }
+
+    public String getId(){
+        return pg.getId();
     }
     
     public String getAnchorProteinStr(){

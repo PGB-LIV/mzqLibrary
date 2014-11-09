@@ -141,7 +141,8 @@ public class MzqLib {
 //        new MzqLib("csv","maxquant-silac.mzq","");
 //        new MzqLib("mztab","iTraq3standards.mzq","");
 //        new MzqLib("mztab","CPTAC-Progenesis-small-example.mzq","");
-        new MzqLib("csv","AllAgesPeptideNormalised_proteins_pvalues.mzq","");
+//        new MzqLib("csv","AllAgesPeptideNormalised_proteins_pvalues.mzq","");
+        new MzqLib("xls","AllAgesPeptideNormalised_proteins_pvalues.mzq","");
         System.exit(0);
         batch();
         int argsLen = args.length;

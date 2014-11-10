@@ -9,11 +9,11 @@ import java.io.FileNotFoundException;
 
 //import static uk.ac.man.mzqlib.normalisation.PepProtAbundanceNormalisation;
 /**
- * Normalisation at the peptide or feature level. Users can choose a reference assay,
- * otherwise the code will automatically select a robust reference based on a median
- * criterion. The scaling factor is calculated using the identified features, i.e.
- * features with the identified sequences.
- * 
+ * Normalisation at the peptide or feature level. Users can choose a reference
+ * assay, otherwise the code will automatically select a robust reference based
+ * on a median criterion. The scaling factor is calculated using the identified
+ * features, i.e. features with the identified sequences.
+ *
  * @author man-mqbsshz2
  */
 public class NormalisationMultiThreading {
@@ -27,14 +27,12 @@ public class NormalisationMultiThreading {
 //        String inputFile = path + filter + "\\mzq\\" + fileName + ".mzq";;
 //        String outputFile = path + filter + "\\mzq\\consensusonly\\test\\" + fileName
 //                + "_peptideNormalization_medianSelectedRefAssay_25Oct.mzq";
-        
         String inputFile = "C:\\Manchester\\work\\ProteoSuite\\AndyPaper\\AllAges.mzq\\" + "AllAges.mzq";
         String outputFile = "C:\\Manchester\\work\\ProteoSuite\\AndyPaper\\" + "AllAges_featureNormalised11.mzq";
 
         //iTraq for exception test
 //        String inputFile = "C:\\Manchester\\work\\ProteoSuite\\mzq-lib\\example_files\\test_ksl_itraq1.mzq";
 //        String outputFile = "C:\\Manchester\\work\\ProteoSuite\\mzq-lib\\example_files\\test_ksl_itraq_normalised.mzq";
-        
         String processingLevel = "peptide"; //"feature"
         String quantLayerType = null;
         String inDataTypeAccession = null;
@@ -46,13 +44,12 @@ public class NormalisationMultiThreading {
         //the assay range user prefers to select
 //        int assayMin = 1;
 //        int assayMax = 1;
-        
         if (processingLevel.equalsIgnoreCase("peptide")) {
             quantLayerType = "AssayQuantLayer";
 //            inDataTypeAccession = "MS:1001840"; //LC-MS feature intensity
 //            outDataTypeAccession = "MS:1001891"; //Progenesis:peptide normalised abundance
 //            decoyTag = "XXX_";
-            
+
             inDataTypeAccession = "MS:1001893"; //LC-MS feature intensity
             outDataTypeAccession = "MS:1001891"; //Progenesis:peptide normalised abundance
             outDataTypeName = "normalised " + processingLevel + " abundance";
@@ -68,10 +65,20 @@ public class NormalisationMultiThreading {
 //            refNo = "1";
         }
 
-        if (args.length != 9 && args.length != 0) {
+        if ((args.length != 8 || args.length != 9) && args.length != 0) {
             System.out.println("Please input all seven parameters in order: "
-                    + "input file, output file, quant layer type, input datatype CV accession,"
-                    + "output datatype CV accession, processing level, prefix of decoy regex.");
+                    + "input file, output file, processing level, quant layer type, "
+                    + "input datatype CV accession, output datatype CV accession, "
+                    + "output datatype CV name, prefix of decoy regex, reference number (optional).");
+        } else if (args.length == 8) {
+            inputFile = args[0];
+            outputFile = args[1];
+            processingLevel = args[2];
+            quantLayerType = args[3];
+            inDataTypeAccession = args[4];
+            outDataTypeAccession = args[5];
+            outDataTypeName = args[6];
+            decoyTag = args[7];
         } else if (args.length == 9) {
             inputFile = args[0];
             outputFile = args[1];
@@ -86,13 +93,12 @@ public class NormalisationMultiThreading {
 //            assayMax = args[8];
         }
 
-
 //        PepProtAbundanceNormalisation workTask = new PepProtAbundanceNormalisation(inputFile,
 //                outputFile, processingLevel, quantLayerType, inDataTypeAccession, outDataTypeAccession, 
 //                decoyTag, assayMin, assayMax);
-            PepProtAbundanceNormalisation workTask = new PepProtAbundanceNormalisation(inputFile,
-                    outputFile, processingLevel, quantLayerType, inDataTypeAccession, outDataTypeAccession, 
-                    outDataTypeName, decoyTag, refNo);
-            workTask.multithreadingCalc();
+        PepProtAbundanceNormalisation workTask = new PepProtAbundanceNormalisation(inputFile,
+                outputFile, processingLevel, quantLayerType, inDataTypeAccession, outDataTypeAccession,
+                outDataTypeName, decoyTag, refNo);
+        workTask.multithreadingCalc();
     }
 }

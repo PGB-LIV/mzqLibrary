@@ -16,7 +16,7 @@ outDataTypeName:	      Output normalised peptide datatype name
 			           Ex. "normalised peptide abundance"
 decoyTag: 	            Decoy protein tag (prefix or suffix)
                             Ex. "XXX_" 
-refNo:		       Reference assay input by users
+refNo (optional):     Reference assay input by users
 				     Ex. "1". It will run the automatic 
                        selection procedure if no input for 
                        this parameter.    

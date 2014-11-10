@@ -92,8 +92,8 @@ public class MzQuantMLLib {
     public static String maxquantConvertorUsage = "MaxquantConvertor evidence.txt output.mzq " + maxquantConvertorParams
             + " \n\nDescription:\n" + maxquantConvertorToolDescription;
 
-    public static String progenesisConvertorParams = "-pepList peptideListFile [-sep CsvSeparator]";
-    public static String progenesisConvertorUsageExample = "-pepList peptide_list.csv";
+    public static String progenesisConvertorParams = "-pepList peptideListFile [-sep CsvSeparator -proteinGroupList [true|fasle] -rawPlusNorm [norm|raw]]";
+    public static String progenesisConvertorUsageExample = "-pepList peptide_list.csv -proteinGroupList false -rawPlusNorm raw";
     public static String progenesisConvertorToolDescription = "This tool will convert Progenesis result files to a single mzQuantML file. "
             + "User needs to provide protein list CSV file as the input file and provide peptide list (or feature list) CSV file via option. ";
     public static String progenesisConvertorUsage = "ProgenesisConvertor proteinList.csv output.mzq " + progenesisConvertorParams
@@ -298,16 +298,35 @@ public class MzQuantMLLib {
                     if (inputFileName != null && outputFileName != null) {
                         String pepList = Utils.getCmdParameter(args, "pepList", true);
                         String sep = Utils.getCmdParameter(args, "sep", false);
+                        String pgl = Utils.getCmdParameter(args, "proteinGroupList", false);
+                        String rawPlusNorm = Utils.getCmdParameter(args, "rawPlusNorm", false);
+
                         if (sep != null && sep.length() == 1) {
                             char[] sepCharArray = sep.toCharArray();
                             char seperator = sepCharArray[0];
-                            ProgenMzquantmlConvertor.createOutput(pepList, inputFileName, "", outputFileName, seperator);
+                            ProgenMzquantmlConvertor progenConv = new ProgenMzquantmlConvertor(pepList, inputFileName, "", seperator);
+
+                            if (pgl != null) {
+                                boolean pglBoolean = Boolean.valueOf(pgl);
+                                progenConv.convert(outputFileName, pglBoolean, rawPlusNorm);
+                            }
+                            else {
+                                progenConv.convert(outputFileName, true, rawPlusNorm);
+                            }
                         }
                         else if (sep != null && sep.length() != 1) {
                             throw new RuntimeException("The input sepearator must be a single character.");
                         }
                         else {
-                            ProgenMzquantmlConvertor.createOutput(pepList, inputFileName, "", outputFileName, ',');
+                            ProgenMzquantmlConvertor progenConv = new ProgenMzquantmlConvertor(pepList, inputFileName, "", ',');
+
+                            if (pgl != null) {
+                                boolean pglBoolean = Boolean.valueOf(pgl);
+                                progenConv.convert(outputFileName, pglBoolean, rawPlusNorm);
+                            }
+                            else {
+                                progenConv.convert(outputFileName, true, rawPlusNorm);
+                            }
                         }
                     }
                 }

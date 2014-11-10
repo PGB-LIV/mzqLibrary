@@ -205,10 +205,12 @@ public class ProgenesisConverterController implements Initializable {
                     protected String call()
                             throws IOException, DatatypeConfigurationException {
                         updateMessage("Start converting");
-                        String fileName = ProgenMzquantmlConvertor.createOutput(flFn, plFn, idFn, outputFn, separator);
+                        ProgenMzquantmlConvertor progenConv = new ProgenMzquantmlConvertor(flFn, plFn, idFn, separator);
+                        progenConv.convert(outputFn, true, null);
+                        
                         updateMessage("Converting finished");
                         updateProgress(1, 1);
-                        return fileName;
+                        return outputFn;
                     }
 
                 };

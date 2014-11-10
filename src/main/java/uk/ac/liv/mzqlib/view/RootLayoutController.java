@@ -107,7 +107,7 @@ public class RootLayoutController {
 
             Scene scene = new Scene(progenConvt);
             Stage progStage = new Stage();
-            progStage.initModality(Modality.WINDOW_MODAL);
+            progStage.initModality(Modality.APPLICATION_MODAL);
 
             progStage.setTitle("Progenesis to MzQuantML Converter");
             progStage.setScene(scene);

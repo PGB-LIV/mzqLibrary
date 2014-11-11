@@ -18,6 +18,7 @@ import uk.ac.liv.jmzqml.model.mzqml.CvList;
 import uk.ac.liv.jmzqml.model.mzqml.FeatureList;
 import uk.ac.liv.jmzqml.model.mzqml.InputFiles;
 import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensusList;
+import uk.ac.liv.jmzqml.model.mzqml.ProteinGroupList;
 import uk.ac.liv.jmzqml.model.mzqml.ProteinList;
 import uk.ac.liv.jmzqml.model.mzqml.RatioList;
 import uk.ac.liv.jmzqml.model.mzqml.SoftwareList;
@@ -107,6 +108,8 @@ public class MzqLib {
 
         ProteinList proteinList = unmarshaller.unmarshal(MzQuantMLElement.ProteinList);
         data.addProteins(proteinList);
+        ProteinGroupList pgList = unmarshaller.unmarshal(MzQuantMLElement.ProteinGroupList);
+        data.addProteinGroups(pgList);
 
 //	<xsd:element name="SoftwareList" type="SoftwareListType" minOccurs="1" maxOccurs="1"/>
         data.setSoftwareList(unmarshaller.unmarshal(SoftwareList.class));
@@ -136,8 +139,11 @@ public class MzqLib {
 
     public static void main( String[] args ) {
 //        new MzqLib("csv","maxquant-silac.mzq","");
-        new MzqLib("mztab","iTraq3standards.mzq","");
+//        new MzqLib("mztab","iTraq3standards.mzq","");
 //        new MzqLib("mztab","CPTAC-Progenesis-small-example.mzq","");
+        new MzqLib("mztab","AllAgesPeptideNormalised_proteins_pvalues.mzq","");
+//        new MzqLib("csv","AllAgesPeptideNormalised_proteins_pvalues.mzq","");
+//        new MzqLib("xls","AllAgesPeptideNormalised_proteins_pvalues.mzq","");
         System.exit(0);
         batch();
         int argsLen = args.length;

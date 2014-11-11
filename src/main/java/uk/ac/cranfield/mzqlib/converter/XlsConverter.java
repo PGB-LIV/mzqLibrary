@@ -22,6 +22,7 @@ import uk.ac.cranfield.mzqlib.data.FeatureData;
 import uk.ac.cranfield.mzqlib.data.MzqData;
 import uk.ac.cranfield.mzqlib.data.PeptideData;
 import uk.ac.cranfield.mzqlib.data.ProteinData;
+import uk.ac.cranfield.mzqlib.data.ProteinGroupData;
 import uk.ac.cranfield.mzqlib.data.QuantitationLevel;
 import uk.ac.liv.jmzqml.model.mzqml.Assay;
 import uk.ac.liv.jmzqml.model.mzqml.CvParam;
@@ -55,14 +56,30 @@ public class XlsConverter extends GenericConverter {
         try {
             WritableWorkbook wb = Workbook.createWorkbook(new File(outfile));
             wb.createSheet("metadata", 0);
-            wb.createSheet("proteins", 1);
-            wb.createSheet("peptides", 2);
-            wb.createSheet("features", 3);
+            wb.createSheet("protein groups", 1);
+            wb.createSheet("proteins", 2);
+            wb.createSheet("peptides", 3);
+            wb.createSheet("features", 4);
 
             WritableSheet metaSheet = wb.getSheet("metadata");
             outputMetadata(metaSheet);
+            
+            WritableSheet pgSheet = wb.getSheet("protein groups");
+            ArrayList<QuantitationLevel> pgs = new ArrayList<>();
+            for (ProteinGroupData pg : MzqLib.data.getProteinGroups()){
+                pgs.add(pg);
+            }
+            if (!pgs.isEmpty()){
+                int index = 0;
+                index = outputAssayAndSV(MzqData.PROTEIN_GROUP, pgSheet, pgs);
+                if (MzqLib.data.control.isRequired(MzqData.PROTEIN_GROUP, MzqData.RATIO, MzqData.RATIO_STRING)){
+                    index = outputRatio(MzqData.PROTEIN_GROUP, pgSheet, pgs, index);
+                }
+                if (!MzqLib.data.control.getElements(MzqData.PROTEIN_GROUP, MzqData.GLOBAL).isEmpty()) {
+                    outputGlobal(MzqData.PROTEIN_GROUP, pgSheet, pgs, index);
+                }
+            }
             WritableSheet proteinSheet = wb.getSheet("proteins");
-//            ArrayList<ProteinData> proteins = MzqLib.data.getProteins();
             ArrayList<QuantitationLevel> proteins = new ArrayList<>();
             for (ProteinData protein : MzqLib.data.getProteins()) {
                 proteins.add(protein);
@@ -178,6 +195,9 @@ public class XlsConverter extends GenericConverter {
 
     private void printQuantitationLevel(int level, WritableSheet sheet, int rowCount, QuantitationLevel obj) throws WriteException {
         switch (level) {
+            case MzqData.PROTEIN_GROUP:
+                sheet.addCell(new Label(0, rowCount, ((ProteinGroupData) obj).getId(), normalFormat));
+                break;
             case MzqData.PROTEIN:
                 sheet.addCell(new Label(0, rowCount, ((ProteinData) obj).getId(), normalFormat));
                 break;

@@ -13,6 +13,7 @@ import java.util.HashSet;
  */
 public class MzqDataControl {
     
+    private HashMap<Integer,MzqDataControlElement> pgLevel = new HashMap<>();
     private HashMap<Integer,MzqDataControlElement> proteinLevel = new HashMap<>();
     private HashMap<Integer,MzqDataControlElement> peptideLevel = new HashMap<>();
     private HashMap<Integer,MzqDataControlElement> featureLevel = new HashMap<>();
@@ -32,6 +33,9 @@ public class MzqDataControl {
     private MzqDataControlElement getControlElement(int level, int type){
         HashMap<Integer,MzqDataControlElement> map = null;
         switch(level){
+            case MzqData.PROTEIN_GROUP:
+                map = pgLevel;
+                break;
             case MzqData.PROTEIN:
                 map = proteinLevel;
                 break;

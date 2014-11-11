@@ -26,27 +26,37 @@ import uk.ac.man.mzqlib.postprocessing.ProteinAbundanceInference;
  */
 public class MzQuantMLLib {
 
+    //CSV converter
     public static String csvConvertorParams = "-compress true|false";
     public static String csvConvertorUsageExample = "-compress false";
     public static String csvConvertorToolDescription = "This tool converts an mzQuantML file to a CSV file.";
     public static String csvConvertorUsage = "CsvConvertor input.mzq output.csv " + csvConvertorParams + " \n\nDescription:\n" + csvConvertorToolDescription;
 
+    //XLS converter
+    public static String xlsConvertorParams = "-compress true|false";
+    public static String xlsConvertorUsageExample = "-compress false";
+    public static String xlsConvertorToolDescription = "This tool converts an mzQuantML file to a XLS file.";
+    public static String xlsConvertorUsage = "XlsConvertor input.mzq output.csv " + xlsConvertorParams + " \n\nDescription:\n" + xlsConvertorToolDescription;
+
+    //HTML converter
     public static String htmlConvertorParams = "-compress true|false";
     public static String htmlConvertorUsageExample = "-compress false";
     public static String htmlConvertorToolDescription = "This tool converts an mzQuantML file to a HTML file.";
     public static String htmlConvertorUsage = "HtmlConvertor input.mzq output.html " + htmlConvertorParams + " \n\nDescription:\n" + htmlConvertorToolDescription;
 
-    public static String consensusXMLConvertorParams = "-compress true|false";
-    public static String consensusXMLConvertorUsageExample = "-compress false";
-    public static String consensusXMLConvertorToolDescription = "This tool converts a consensusXML file from openMS to an mzQuantML file.";
-    public static String consensusXMLConvertorUsage = "ConsensusXMLConvertor input.consensusXML output.mzq " + consensusXMLConvertorParams
-            + " \n\nDescription:\n" + consensusXMLConvertorToolDescription;
-
+    //mzTab converter
     public static String mzTabConvertorParams = "-compress true|false";
     public static String mzTabConvertorUsageExample = "-compress false";
     public static String mzTabConvertorToolDescription = "This tool converts an mzQuantML file to an mzTab file.";
     public static String mzTabConvertorUsage = "MzTabConvertor input.mzq output.mztab " + mzTabConvertorParams
             + " \n\nDescription:\n" + mzTabConvertorToolDescription;
+
+    //ConsensusXML converter
+    public static String consensusXMLConvertorParams = "-compress true|false";
+    public static String consensusXMLConvertorUsageExample = "-compress false";
+    public static String consensusXMLConvertorToolDescription = "This tool converts a consensusXML file from openMS to an mzQuantML file.";
+    public static String consensusXMLConvertorUsage = "ConsensusXMLConvertor input.consensusXML output.mzq " + consensusXMLConvertorParams
+            + " \n\nDescription:\n" + consensusXMLConvertorToolDescription;
 
     public static String idMappingParams = "-rawToMzidMap rawToMzidMap [-compress true|false]";
     //example: mam_042408o_CPTAC_study6_6B011.raw;D:\Users\ddq\Documents\NetBeansProjects\mzq-lib\mam_042408o_CPTAC_study6_6B011_rt.mzid;mam_050108o_CPTAC_study6_6B011.raw;D:\Users\ddq\Documents\NetBeansProjects\mzq-lib\mam_050108o_CPTAC_study6_6B011_rt.mzid;mam_050108o_CPTAC_study6_6B011_080504231912.raw;D:\Users\ddq\Documents\NetBeansProjects\mzq-lib\mam_050108o_CPTAC_study6_6B011_080504231912_rt.mzid;mam_042408o_CPTAC_study6_6C008.raw;D:\Users\ddq\Documents\NetBeansProjects\mzq-lib\mam_042408o_CPTAC_study6_6C008_rt.mzid;mam_050108o_CPTAC_study6_6C008.raw;D:\Users\ddq\Documents\NetBeansProjects\mzq-lib\mam_050108o_CPTAC_study6_6C008_rt.mzid;mam_050108o_CPTAC_study6_6C008_080505040419.raw;D:\Users\ddq\Documents\NetBeansProjects\mzq-lib\mam_050108o_CPTAC_study6_6C008_080505040419_rt.mzid;mam_042408o_CPTAC_study6_6D004.raw;D:\Users\ddq\Documents\NetBeansProjects\mzq-lib\mam_042408o_CPTAC_study6_6D004_rt.mzid;mam_050108o_CPTAC_study6_6D004.raw;D:\Users\ddq\Documents\NetBeansProjects\mzq-lib\mam_050108o_CPTAC_study6_6D004_rt.mzid;mam_050108o_CPTAC_study6_6D004_080505084927.raw;D:\Users\ddq\Documents\NetBeansProjects\mzq-lib\mam_050108o_CPTAC_study6_6D004_080505084927_rt.mzid;mam_042408o_CPTAC_study6_6E004.raw;D:\Users\ddq\Documents\NetBeansProjects\mzq-lib\mam_042408o_CPTAC_study6_6E004_rt.mzid;mam_050108o_CPTAC_study6_6E004.raw;D:\Users\ddq\Documents\NetBeansProjects\mzq-lib\mam_050108o_CPTAC_study6_6E004_rt.mzid;mam_050108o_CPTAC_study6_6E004_080505133441.raw;D:\Users\ddq\Documents\NetBeansProjects\mzq-lib\mam_050108o_CPTAC_study6_6E004_080505133441_rt.mzid
@@ -62,7 +72,7 @@ public class MzQuantMLLib {
     public static String anovaToolDescription = "This tool will calculate one-way ANOVA p value of speificied QuantLayer for either ProteinGroupList or ProteinList."
             + "The QuantLayer is specified by passing CV accession to qlDataType option. The group of assays included in the ANOVA calculation is proivded by the flat string option of assayIdsGroup."
             + "The whole string is divided into groups which are separated by \";\" (semicolon) and in each group, the member assay ids are separated by \",\" (comma).";
-    public static String anovaUsage = "MzqAnovaPValue input.mzq output.mzq " + anovaParams
+    public static String anovaUsage = "AnovaPValue input.mzq output.mzq " + anovaParams
             + " \n\nDescription:\n" + anovaToolDescription;
 
     public static String normalisationParams = "-normLvl [Peptide|Feature] -qlType qlType -inDTCA inDTCA -outDTCA outDTCA -outDTCN outDTCN -tagDecoy tagDecoy [-compress true|false]";
@@ -110,9 +120,10 @@ public class MzQuantMLLib {
     public MzQuantMLLib() {
         allFunctions = new HashMap<>();
         allFunctions.put("CsvConvertor", csvConvertorParams + ";@;" + csvConvertorUsage + ";@;" + csvConvertorUsageExample + ";@;" + csvConvertorToolDescription);
+        allFunctions.put("XlsConvertor", xlsConvertorParams + ";@;" + xlsConvertorUsage + ";@;" + xlsConvertorUsageExample + ";@;" + xlsConvertorToolDescription);
         allFunctions.put("HtmlConvertor", htmlConvertorParams + ";@;" + htmlConvertorUsage + ";@;" + htmlConvertorUsageExample + ";@;" + htmlConvertorToolDescription);
-        allFunctions.put("ConsensusXMLConvertor", consensusXMLConvertorParams + ";@;" + consensusXMLConvertorUsage + ";@;" + consensusXMLConvertorUsageExample + ";@;" + consensusXMLConvertorToolDescription);
         allFunctions.put("MzTabConvertor", mzTabConvertorParams + ";@;" + mzTabConvertorUsage + ";@;" + mzTabConvertorUsageExample + ";@;" + mzTabConvertorToolDescription);
+        allFunctions.put("ConsensusXMLConvertor", consensusXMLConvertorParams + ";@;" + consensusXMLConvertorUsage + ";@;" + consensusXMLConvertorUsageExample + ";@;" + consensusXMLConvertorToolDescription);
         allFunctions.put("MzqMzIdMapping", idMappingParams + ";@;" + idMappingUsage + ";@;" + idMappingUsageExample + ";@;" + idMappingToolDescription);
         allFunctions.put("AnovaPValue", anovaParams + ";@;" + anovaUsage + ";@;" + anovaUsageExample + ";@;" + anovaToolDescription);
         allFunctions.put("Normalisation", normalisationParams + ";@;" + normalisationUsage + ";@;" + normalisationUsageExample + ";@;" + normalisationToolDescription);
@@ -122,7 +133,7 @@ public class MzQuantMLLib {
     }
 
     /**
-     * Getter for all functions to be used in MzidLib GUI
+     * Getter for all functions to be used in MzqLib GUI
      *
      * @return all functions as hashmap
      */
@@ -204,6 +215,14 @@ public class MzQuantMLLib {
                     }
                     else {
                         guiFeedback = "Error, usage: " + csvConvertorUsage;
+                    }
+                }
+                else if (args[0].equals("XlsConvertor")) {
+                    if (inputFileName != null && outputFileName != null) {
+                        MzqLib mzqlib = new MzqLib("xls", inputFileName, outputFileName);
+                    }
+                    else {
+                        guiFeedback = "Error, usage:  " + xlsConvertorUsage;
                     }
                 }
                 else if (args[0].equals("HtmlConvertor")) {
@@ -331,8 +350,10 @@ public class MzQuantMLLib {
                     }
                 }
                 else {
-                    String tempFeedback = "Program within MzidLib not recognized: " + args[0] + csvConvertorUsage + "\n" + htmlConvertorUsage + "\n"
-                            + consensusXMLConvertorUsage + "\n" + mzTabConvertorUsage + "\n" + idMappingUsage + "\n" + anovaUsage;
+                    String tempFeedback = "Program within mzqLibrary not recognized: " + args[0] + "\n\nPlease use one of the following command:\n\n"
+                            + progenesisConvertorUsage + "\n\n" + maxquantConvertorUsage + "\n\n" + consensusXMLConvertorUsage + "\n\n"
+                            + csvConvertorUsage + "\n\n" + xlsConvertorUsage + "\n\n" + htmlConvertorUsage + "\n\n" + mzTabConvertorUsage + "\n\n"
+                            + idMappingUsage + "\n\n" + normalisationUsage + "\n\n" + proteinInferenceUsage + "\n\n" + anovaUsage + "\n";
 
                     System.out.println(tempFeedback);
                     guiFeedback = "Error, usage: " + tempFeedback;
@@ -341,7 +362,7 @@ public class MzQuantMLLib {
                 if (userFeedback.equals("")) {
                     userFeedback = "Completed successfully, output written to " + outputFileName;
                 }
-                System.out.println(userFeedback);
+                //System.out.println(userFeedback);
                 // Added by FG delete tmp file
                 if (uncompress) {
 //                    Gzipper.deleteFile(inputFile);
@@ -358,12 +379,16 @@ public class MzQuantMLLib {
             String tempFeedback = "Error insufficient arguments entered, options: " + userFeedback + " toolname options\n"
                     + "\n\nTools:\n\n***************\n"
                     + csvConvertorUsage
+                    + "\n" + "***************\n" + xlsConvertorUsage
                     + "\n" + "***************\n" + htmlConvertorUsage
-                    + "\n" + "***************\n" + consensusXMLConvertorUsage
                     + "\n" + "***************\n" + mzTabConvertorUsage
+                    + "\n" + "***************\n" + progenesisConvertorUsage
+                    + "\n" + "***************\n" + maxquantConvertorUsage
+                    + "\n" + "***************\n" + consensusXMLConvertorUsage                    
                     + "\n" + "***************\n" + idMappingUsage
-                    + "\n" + "***************\n" + anovaUsage
-                    + "\n" + "***************\n" + normalisationUsage + "\n";
+                    + "\n" + "***************\n" + normalisationUsage
+                    + "\n" + "***************\n" + proteinInferenceUsage
+                    + "\n" + "***************\n" + anovaUsage + "\n";
 
             System.out.println(tempFeedback);
             guiFeedback = tempFeedback;

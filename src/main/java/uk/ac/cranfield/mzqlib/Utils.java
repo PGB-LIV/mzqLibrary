@@ -99,6 +99,7 @@ public class Utils {
      * Get the extension of a file.
      *
      * @param f The file to get the extension from
+     * @return the extension of the given file
      */
     public static String getExtension(File f) {
         String ext = null;

@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 import javax.swing.*;
 import uk.ac.liv.mzqlib.MzQuantMLLib;
 
-//import uk.ac.liv.mzidlib.MzIdentMLLib;
 /**
  *
  * @author fghali

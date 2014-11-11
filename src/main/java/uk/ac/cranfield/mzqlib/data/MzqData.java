@@ -551,4 +551,11 @@ public class MzqData {
     public List<Cv> getCvList() {
         return cvs;
     }
+
+    public ProteinData getProtein(String anchorProteinStr) {
+        if (proteins.containsKey(anchorProteinStr)){
+            return proteins.get(anchorProteinStr);
+        }
+        return null;
+    }
 }

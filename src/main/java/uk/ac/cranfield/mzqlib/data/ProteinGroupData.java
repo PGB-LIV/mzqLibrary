@@ -1,6 +1,7 @@
 package uk.ac.cranfield.mzqlib.data;
 
 import java.util.List;
+import uk.ac.cranfield.mzqlib.MzqLib;
 import uk.ac.liv.jmzqml.model.mzqml.ProteinGroup;
 import uk.ac.liv.jmzqml.model.mzqml.ProteinRef;
 
@@ -34,7 +35,8 @@ public class ProteinGroupData extends QuantitationLevel{
         StringBuilder sb = new StringBuilder();
         for (int i = 1; i < proteinRefs.size(); i++) {
             ProteinRef ref = proteinRefs.get(i);
-            sb.append(ref.getProteinRef());
+            ProteinData protein = MzqLib.data.getProtein(ref.getProteinRef());
+            sb.append(protein.getAccession());
             sb.append(SEPARATOR);
         }
         sb.deleteCharAt(sb.length()-1);

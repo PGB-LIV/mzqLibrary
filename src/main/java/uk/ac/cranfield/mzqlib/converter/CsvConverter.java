@@ -178,12 +178,12 @@ public class CsvConverter extends GenericConverter {
         switch (level) {
             case MzqData.PROTEIN_GROUP:
                 ProteinGroupData pg = (ProteinGroupData) obj;
-                sb.append(pg.getAnchorProteinStr());
+                sb.append(MzqLib.data.getProtein(pg.getAnchorProteinStr()).getAccession());
                 sb.append(SEPARATOR);
                 sb.append(pg.getAmbiguityMemberStr());
                 break;
             case MzqData.PROTEIN:
-                sb.append(((ProteinData) obj).getId());
+                sb.append(((ProteinData) obj).getAccession());
                 break;
             case MzqData.PEPTIDE:
                 PeptideData pepData = (PeptideData) obj;

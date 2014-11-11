@@ -229,7 +229,7 @@ public class PepProtAbundanceNormalisation {
             } catch (IllegalStateException ex) {
                 System.out.println("*********************************************************");
                 System.out.println("The mzq file is not found!!! Please check the input file.");
-                System.err.println(ex);
+                //System.err.println(ex);
                 System.out.println("*********************************************************");
             }
         } catch (FileNotFoundException ex) {
@@ -521,7 +521,7 @@ public class PepProtAbundanceNormalisation {
             String cvRef = cvPara.getAccession();
 
             if (cvRef.equalsIgnoreCase("MS:1001834")) {
-                System.out.println("This is the label-free data. Protein inference continues ....");
+                System.out.println("This is the label-free data. Normalisation continues ....");
                 flag_lf = true;
                 break;
             }

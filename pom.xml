@@ -3,8 +3,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>uk.ac.liv</groupId>
-    <artifactId>mzqlib</artifactId>
-    <version>0.4-SNAPSHOT</version>
+    <artifactId>mzqLibrary</artifactId>
+    <version>1.0-beta-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>mzQuantML Library</name>

@@ -35,9 +35,6 @@ public class RootLayoutController {
     private Menu statistics;
 
     @FXML
-    private Menu exportTo;
-
-    @FXML
     private MenuItem closeFile;
 
     public void setMainApp(MainApp mainApp) {
@@ -132,20 +129,13 @@ public class RootLayoutController {
         System.exit(0);
     }
 
-    @FXML
-    private void handleExportMztabFile() {
-        mainApp.exportMztabFile();
-    }
-
     public void enableMenus() {
         statistics.setDisable(false);
-        exportTo.setDisable(false);
         closeFile.setDisable(false);
     }
 
     public void disbbleMenus() {
         statistics.setDisable(true);
-        exportTo.setDisable(true);
         closeFile.setDisable(true);
     }
 

@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
@@ -27,7 +28,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.xml.bind.JAXBException;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialogs;
 import org.rosuda.JRI.Rengine;
 import uk.ac.liv.jmzqml.MzQuantMLElement;
@@ -56,8 +56,8 @@ public class MainApp extends Application {
     private static Rengine re;
     private RootLayoutController rootLayoutController;
 
-    private static final String VERSION = "1.0";
-    //private static final String INCEPTION_YEAR = "2014";
+    private static final String VERSION = "1.0-beta";
+    private static final String WINDOW_TITLE = "mzqViewer - mzqLibrary " + VERSION;
 
     private MzQuantMLData mzqData = new MzQuantMLData();
 
@@ -75,12 +75,22 @@ public class MainApp extends Application {
         //setUserAgentStylesheet(STYLESHEET_CASPIAN);
         setUserAgentStylesheet(STYLESHEET_MODENA);
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("mzQuantML library");
+        this.primaryStage.setTitle(WINDOW_TITLE);
         initRootLayout();
 
         InitialREngineTask iniR = new InitialREngineTask();
         iniR.setOnSucceeded((WorkerStateEvent t) -> {
             re = iniR.getValue();
+        });
+
+        iniR.setOnFailed((WorkerStateEvent t) -> {
+            Platform.runLater(() -> {
+                Dialogs.create()
+                        .title("Error")
+                        .message("There are exceptions during the R engine initalisation:")
+                        .showException(iniR.getException());
+            });
+
         });
 
         Thread iniRTh = new Thread(iniR);
@@ -158,14 +168,17 @@ public class MainApp extends Application {
                 Logger.getLogger(RootLayoutController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            this.primaryStage.setTitle("mzQuantML library - " + mzqFile.getAbsolutePath());
+            this.primaryStage.setTitle(WINDOW_TITLE + " - " + mzqFile.getAbsolutePath());
         });
 
         loadMzqDataTask.setOnFailed((WorkerStateEvent t) -> {
-            Action response = Dialogs.create()
-                    .title("File Error")
-                    .message("The input file is not a valid mzQuantML file")
-                    .showError();
+            Platform.runLater(() -> {
+                Dialogs.create()
+                        .title("File Error")
+                        .message("The input file is not a valid mzQuantML file")
+                        .showException(loadMzqDataTask.getException());
+            });
+
         });
 
         Thread loadMzqDataTh = new Thread(loadMzqDataTask);
@@ -181,7 +194,7 @@ public class MainApp extends Application {
     public void closeMzqInfo() {
         rootLayout.setCenter(null);
         rootLayoutController.disbbleMenus();
-        primaryStage.setTitle("mzQuantML library");
+        primaryStage.setTitle(WINDOW_TITLE);
     }
 
     public void setLastFilePath(File file) {
@@ -271,6 +284,16 @@ public class MainApp extends Application {
 
             re.eval("require(graphics)");
             re.eval("biplot(princomp(X))");
+        });
+
+        rmTask.setOnFailed((WorkerStateEvent t) -> {
+            Platform.runLater(() -> {
+                Dialogs.create()
+                        .title("Error")
+                        .message("There are exceptions during the loading data:")
+                        .showException(rmTask.getException());
+            });
+
         });
 
         Thread pcaTh = new Thread(rmTask);
@@ -394,6 +417,16 @@ public class MainApp extends Application {
             }
         });
 
+        rmTask.setOnFailed((WorkerStateEvent t) -> {
+            Platform.runLater(() -> {
+                Dialogs.create()
+                        .title("Error")
+                        .message("There are exceptions during the loading data:")
+                        .showException(rmTask.getException());
+            });
+
+        });
+
         Thread saveHeatMapTh = new Thread(rmTask);
         saveHeatMapTh.setDaemon(true);
         saveHeatMapTh.start();
@@ -493,6 +526,16 @@ public class MainApp extends Application {
                     + ": " + mzqInfoController.getAssayQuantLayerTable().getSelectionModel().getSelectedItem().getQuantLayerId() + "\"\n"
                     + ")";
             re.eval(setHeatmap);
+        });
+
+        rmTask.setOnFailed((WorkerStateEvent t) -> {
+            Platform.runLater(() -> {
+                Dialogs.create()
+                        .title("Error")
+                        .message("There are exceptions during the loading data:")
+                        .showException(rmTask.getException());
+            });
+
         });
 
         Thread showHeatMapTh = new Thread(rmTask);
@@ -677,15 +720,11 @@ public class MainApp extends Application {
 
     }
 
-    public void exportMztabFile() {
-
-    }
-
     public void showAbout() {
         Dialogs.create()
                 .title("About")
-                .masthead("Mzq Library ver " + VERSION)
-                .message("Mzq library is a toolset for post-processing MzQuantML file. For more information, please visit http://code.google.com/p/mzq-lib/.")
+                .masthead("mzqViewer/mzqLibrary ver " + VERSION)
+                .message("mzQuantML library is a toolset for post-processing mzQuantML file. For more information, please visit http://code.google.com/p/mzq-lib/.")
                 .showInformation();
     }
 

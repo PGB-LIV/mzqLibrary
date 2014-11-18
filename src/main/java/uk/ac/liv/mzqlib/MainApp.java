@@ -78,6 +78,16 @@ public class MainApp extends Application {
         this.primaryStage.setTitle(WINDOW_TITLE);
         initRootLayout();
 
+        try {
+            System.loadLibrary("jri");
+        }
+        catch (UnsatisfiedLinkError e) {
+            Dialogs.create()
+                    .title("JRI package Error")
+                    .message("The R and JRI are not properly installed.\nPlease find out how to set up at http://code.google.com/p/mzq-lib/#How_to_install_mzqViewer")
+                    .showException(e);
+        }
+
         InitialREngineTask iniR = new InitialREngineTask();
         iniR.setOnSucceeded((WorkerStateEvent t) -> {
             re = iniR.getValue();

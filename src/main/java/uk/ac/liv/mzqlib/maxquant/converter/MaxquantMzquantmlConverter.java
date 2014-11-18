@@ -21,7 +21,7 @@ import uk.ac.liv.jmzqml.xml.io.MzQuantMLMarshaller;
  *
  * @author Da Qi
  */
-public class MaxquantMzquantmlConvertor {
+public class MaxquantMzquantmlConverter {
 
     /**
      * @param args the command line arguments
@@ -59,12 +59,12 @@ public class MaxquantMzquantmlConvertor {
     private TIntObjectMap<List<String>> evidenceMap;
 
     // Constructor
-    public MaxquantMzquantmlConvertor(String inputFolder)
+    public MaxquantMzquantmlConverter(String inputFolder)
             throws IOException {
         this.maxRd = new MaxquantFilesReader(inputFolder);
     }
 
-    public MaxquantMzquantmlConvertor(String evidenceFn,
+    public MaxquantMzquantmlConverter(String evidenceFn,
                                       String peptidesFn,
                                       String proteinGroupsFn,
                                       String experimentalDesignTemplateFn,
@@ -1138,14 +1138,14 @@ public class MaxquantMzquantmlConvertor {
             writer.write(MzQuantMLMarshaller.createMzQuantMLClosingTag());
         }
         catch (IOException ex) {
-            Logger.getLogger(MaxquantMzquantmlConvertor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MaxquantMzquantmlConverter.class.getName()).log(Level.SEVERE, null, ex);
         }
         finally {
             try {
                 writer.close();
             }
             catch (IOException ex) {
-                Logger.getLogger(MaxquantMzquantmlConvertor.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MaxquantMzquantmlConverter.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

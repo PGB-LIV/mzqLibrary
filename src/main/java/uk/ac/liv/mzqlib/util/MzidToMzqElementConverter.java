@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package uk.ac.liv.mzqlib.utils;
+package uk.ac.liv.mzqlib.util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ import uk.ac.liv.jmzqml.model.mzqml.UserParam;
  * @institute University of Liverpool
  * @time 18-Mar-2014 13:57:49
  */
-public class MzidToMzqElementConvertor {
+public class MzidToMzqElementConverter {
 
     public static List<Modification> convertMzidModsToMzqMods(
             List<uk.ac.ebi.jmzidml.model.mzidml.Modification> modifications) {
@@ -181,7 +181,7 @@ public class MzidToMzqElementConvertor {
         uk.ac.ebi.jmzidml.model.mzidml.FileFormat mzidFF = searchDatabase.getFileFormat();
 
         if (mzidFF != null) {
-            FileFormat mzqFF = MzidToMzqElementConvertor.convertMzidFileFormatToMzqFileFormat(mzidFF);
+            FileFormat mzqFF = MzidToMzqElementConverter.convertMzidFileFormatToMzqFileFormat(mzidFF);
         }
 
         return sDB;

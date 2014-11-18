@@ -29,7 +29,7 @@ import org.apache.commons.lang3.mutable.MutableInt;
 import uk.ac.liv.jmzqml.model.mzqml.*;
 import uk.ac.liv.jmzqml.xml.io.MzQuantMLMarshaller;
 import uk.ac.liv.mzqlib.constants.MzqDataConstants;
-import uk.ac.liv.mzqlib.maxquant.converter.MaxquantMzquantmlConvertor;
+import uk.ac.liv.mzqlib.maxquant.converter.MaxquantMzquantmlConverter;
 import uk.ac.liv.mzqlib.progenesis.reader.ProgenesisFeatureListReader;
 import uk.ac.liv.mzqlib.progenesis.reader.ProgenesisProteinListReader;
 
@@ -37,7 +37,7 @@ import uk.ac.liv.mzqlib.progenesis.reader.ProgenesisProteinListReader;
  *
  * @author Da Qi
  */
-public class ProgenMzquantmlConvertor {
+public class ProgenMzquantmlConverter {
 
     private static final Boolean RawFeatureQuantitation = Boolean.FALSE;
     private static final Boolean PeptideLevelQuantitation = Boolean.TRUE;
@@ -115,11 +115,11 @@ public class ProgenMzquantmlConvertor {
     private String idFn;
     private char separator;
 
-    public ProgenMzquantmlConvertor(String flFn, String plFn, String idFn) {
+    public ProgenMzquantmlConverter(String flFn, String plFn, String idFn) {
         this(flFn, plFn, idFn, ',');
     }
 
-    public ProgenMzquantmlConvertor(String flFn, String plFn, String idFn,
+    public ProgenMzquantmlConverter(String flFn, String plFn, String idFn,
                                     char sep) {
         this.flFn = flFn;
         this.plFn = plFn;
@@ -490,7 +490,7 @@ public class ProgenMzquantmlConvertor {
                             public boolean execute(int id) {
                                 //only the peptide with true value of use in quantitation column to be added in protein
                                 Boolean useInQuant = useInQuantMap.get(id);
-                                if (useInQuant.equals(Boolean.TRUE)) {
+                                if (useInQuant == null || useInQuant.equals(Boolean.TRUE)) {
                                     String index = flIndexMap.get(id);
                                     int chr = chrMap.get(id);
                                     String pepId = "pep_" + pepSeq + "_" + chr + "_" + index;
@@ -1144,7 +1144,7 @@ public class ProgenMzquantmlConvertor {
 
                     @Override
                     public boolean execute(int key) {
-                        if (useInQuantMap.get(key).equals(Boolean.TRUE)) {
+                        if (useInQuantMap.get(key) == null || useInQuantMap.get(key).equals(Boolean.TRUE)) {
                             PeptideConsensus peptideConsensus = new PeptideConsensus();
 
                             String indexStr = flIndexMap.get(key);
@@ -1537,14 +1537,14 @@ public class ProgenMzquantmlConvertor {
             writer.write(MzQuantMLMarshaller.createMzQuantMLClosingTag());
         }
         catch (IOException ex) {
-            Logger.getLogger(MaxquantMzquantmlConvertor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MaxquantMzquantmlConverter.class.getName()).log(Level.SEVERE, null, ex);
         }
         finally {
             try {
                 writer.close();
             }
             catch (IOException ex) {
-                Logger.getLogger(MaxquantMzquantmlConvertor.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MaxquantMzquantmlConverter.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

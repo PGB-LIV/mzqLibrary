@@ -17,7 +17,7 @@ import uk.ac.liv.jmzqml.model.mzqml.SearchDatabase;
 import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;
 import uk.ac.liv.mzqlib.idmapper.data.ExtendedFeature;
 import uk.ac.liv.mzqlib.idmapper.data.SIIData;
-import uk.ac.liv.mzqlib.utils.MzidToMzqElementConvertor;
+import uk.ac.liv.mzqlib.utils.MzidToMzqElementConverter;
 
 /**
  *
@@ -91,7 +91,7 @@ public class MzqProcessorFactory {
                 TIntObjectMap<List<SIIData>> rtToSIIsMap = mzidProc.getRtToSIIsMap();
 
                 if (searchDB == null) {
-                    searchDB = MzidToMzqElementConvertor.convertMzidSDBToMzqSDB(mzidProc.getSearchDatabase());
+                    searchDB = MzidToMzqElementConverter.convertMzidSDBToMzqSDB(mzidProc.getSearchDatabase());
                 }
 
                 List<Feature> features = ftList.getFeature();

@@ -30,7 +30,7 @@ import uk.ac.liv.jmzqml.model.mzqml.UserParam;
 import uk.ac.liv.jmzqml.xml.io.*;
 import uk.ac.liv.mzqlib.constants.MzqDataConstants;
 import uk.ac.liv.mzqlib.idmapper.data.SIIData;
-import uk.ac.liv.mzqlib.utils.MzidToMzqElementConvertor;
+import uk.ac.liv.mzqlib.utils.MzidToMzqElementConverter;
 
 /**
  *
@@ -216,7 +216,7 @@ public class MzqMzIdMapperFactory {
 
                         // Modification
                         if (peptide.getModification() != null && !peptide.getModification().isEmpty()) {
-                            List<Modification> mzqMods = MzidToMzqElementConvertor.convertMzidModsToMzqMods(peptide.getModification());
+                            List<Modification> mzqMods = MzidToMzqElementConverter.convertMzidModsToMzqMods(peptide.getModification());
                             pepCon.getModification().addAll(mzqMods);
                         }
 

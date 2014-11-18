@@ -1,4 +1,3 @@
-
 package uk.ac.liv.mzqlib.progenesis.reader;
 
 import au.com.bytecode.opencsv.CSVReader;
@@ -27,6 +26,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.apache.commons.lang3.math.NumberUtils;
 
 /**
  *
@@ -224,7 +224,12 @@ public class ProgenesisFeatureListReader implements Closeable {
                 // Build normalized abundance hashmap
                 if (normAbStart != 0) {
                     for (int i = normAbStart; i < (normAbStart + assayNum); i++) {
-                        currentV.add(Double.parseDouble(nextLine[i]));
+                        if (!NumberUtils.isNumber(nextLine[i])) {
+                            currentV.add(0.0);
+                        }
+                        else {
+                            currentV.add(Double.parseDouble(nextLine[i]));
+                        }
                     }
                     normalizedAbundanceMap.put(currentK, new TDoubleArrayList(currentV));
                     currentV.clear();
@@ -233,7 +238,12 @@ public class ProgenesisFeatureListReader implements Closeable {
                 // Build raw abundance hashmap
                 if (rawAbStart != 0) {
                     for (int i = rawAbStart; i < (rawAbStart + assayNum); i++) {
-                        currentV.add(Double.parseDouble(nextLine[i]));
+                        if (!NumberUtils.isNumber(nextLine[i])) {
+                            currentV.add(0.0);
+                        }
+                        else {
+                            currentV.add(Double.parseDouble(nextLine[i]));
+                        }
                     }
                     rawAbundanceMap.put(currentK, new TDoubleArrayList(currentV));
                     currentV.clear();
@@ -242,7 +252,12 @@ public class ProgenesisFeatureListReader implements Closeable {
                 // Build intensity hashmap
                 if (intensityStart != 0) {
                     for (int i = intensityStart; i < (intensityStart + assayNum); i++) {
-                        currentV.add(Double.parseDouble(nextLine[i]));
+                        if (!NumberUtils.isNumber(nextLine[i])) {
+                            currentV.add(0.0);
+                        }
+                        else {
+                            currentV.add(Double.parseDouble(nextLine[i]));
+                        }
                     }
                     intensityMap.put(currentK, new TDoubleArrayList(currentV));
                     currentV.clear();
@@ -251,17 +266,26 @@ public class ProgenesisFeatureListReader implements Closeable {
                 // Build Sample retention time hashmap
                 if (retTimeStart != 0) {
                     for (int i = retTimeStart; i < (retTimeStart + assayNum); i++) {
-                        currentV.add(Double.parseDouble(nextLine[i]));
+                        if (!NumberUtils.isNumber(nextLine[i])) {
+                            currentV.add(0.0);
+                        }
+                        else {
+                            currentV.add(Double.parseDouble(nextLine[i]));
+                        }
                     }
                     retentionTimeMap.put(currentK, new TDoubleArrayList(currentV));
                     currentV.clear();
                 }
 
                 // Build mass over charge hashmap
-                mzMap.put(currentK, Double.parseDouble(nextLine[mzPos]));
+                if (NumberUtils.isNumber(nextLine[mzPos])) {
+                    mzMap.put(currentK, Double.parseDouble(nextLine[mzPos]));
+                }
 
                 // Build charge hashmap
-                chargeMap.put(currentK, Integer.parseInt(nextLine[chargePos]));
+                if (NumberUtils.isNumber(nextLine[chargePos])) {
+                    chargeMap.put(currentK, Integer.parseInt(nextLine[chargePos]));
+                }
 
                 /*
                  * Build mater retention time hashmap with duplicated values,
@@ -271,7 +295,9 @@ public class ProgenesisFeatureListReader implements Closeable {
                  ** getMasterRetenTimeMap() to return a HashMap<String, ArrayList<String>>.
                  **
                  */
-                masterRetenTimeMapWithDuplicate.put(currentK, Double.parseDouble(nextLine[masterRTPos]));
+                if (NumberUtils.isNumber(nextLine[masterRTPos])) {
+                    masterRetenTimeMapWithDuplicate.put(currentK, Double.parseDouble(nextLine[masterRTPos]));
+                }
 
                 //filter out the non-protein row
                 if (!nextLine[proteinStart].isEmpty()) {
@@ -288,10 +314,12 @@ public class ProgenesisFeatureListReader implements Closeable {
                 }
 
                 // build retention time window hashmap
-                rtWinMap.put(currentK, Double.parseDouble(nextLine[rtWinPos]));
+                if (NumberUtils.isNumber(nextLine[rtWinPos])) {
+                    rtWinMap.put(currentK, Double.parseDouble(nextLine[rtWinPos]));
+                }
 
                 // build mascot ion score hashmap
-                if (!nextLine[scorePos].isEmpty()) {
+                if (NumberUtils.isNumber(nextLine[scorePos])) {
                     scoreMap.put(currentK, Double.parseDouble(nextLine[scorePos]));
                 }
 

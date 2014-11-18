@@ -1,4 +1,3 @@
-
 package uk.ac.liv.mzqlib.progenesis.reader;
 
 import au.com.bytecode.opencsv.CSVReader;
@@ -160,11 +159,17 @@ public class ProgenesisProteinListReader implements Closeable {
             // Build indexMap, stores proteinAccessions
             indexMap.put(currentK, nextLine[0]);
 
-            confidenceMap.put(currentK, Double.parseDouble(nextLine[pos_conf]));
+            if (NumberUtils.isNumber(nextLine[pos_conf])) {
+                confidenceMap.put(currentK, Double.parseDouble(nextLine[pos_conf]));
+            }
 
-            anovaMap.put(currentK, Double.parseDouble(nextLine[pos_anova]));
+            if (NumberUtils.isNumber(nextLine[pos_anova])) {
+                anovaMap.put(currentK, Double.parseDouble(nextLine[pos_anova]));
+            }
 
-            maxFoldChangeMap.put(currentK, Double.parseDouble(nextLine[pos_mfc]));
+            if (NumberUtils.isNumber(nextLine[pos_mfc])) {
+                maxFoldChangeMap.put(currentK, Double.parseDouble(nextLine[pos_mfc]));
+            }
 
             // Build completeMap
             completeMap.put(currentK, nextLine);

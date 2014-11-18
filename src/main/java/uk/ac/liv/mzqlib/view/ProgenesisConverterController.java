@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -19,7 +20,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javax.xml.datatype.DatatypeConfigurationException;
 import org.controlsfx.dialog.Dialogs;
-import uk.ac.liv.mzqlib.progenesis.converter.ProgenMzquantmlConvertor;
+import uk.ac.liv.mzqlib.progenesis.converter.ProgenMzquantmlConverter;
 
 /**
  * FXML Controller class
@@ -205,9 +206,9 @@ public class ProgenesisConverterController implements Initializable {
                     protected String call()
                             throws IOException, DatatypeConfigurationException {
                         updateMessage("Start converting");
-                        ProgenMzquantmlConvertor progenConv = new ProgenMzquantmlConvertor(flFn, plFn, idFn, separator);
+                        ProgenMzquantmlConverter progenConv = new ProgenMzquantmlConverter(flFn, plFn, idFn, separator);
                         progenConv.convert(outputFn, true, null);
-                        
+
                         updateMessage("Converting finished");
                         updateProgress(1, 1);
                         return outputFn;
@@ -223,6 +224,16 @@ public class ProgenesisConverterController implements Initializable {
                                     .showInformation();
                         }
                     });
+                });
+
+                convertTask.setOnFailed((WorkerStateEvent t) -> {
+                    Platform.runLater(() -> {
+                        Dialogs.create()
+                                .title("Convert failed")
+                                .message("There are exceptions during the conversion process:")
+                                .showException(convertTask.getException());
+                    });
+
                 });
                 Dialogs.create()
                         .title("Converting progress")

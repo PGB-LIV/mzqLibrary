@@ -39,6 +39,11 @@
                 <MenuItem mnemonicParsing="false" onAction="#showGui" text="Run GUI" />
               </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="R packages">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#handleInstallRequiredPackages" text="Install required packages" />
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#showAbout" text="About" />

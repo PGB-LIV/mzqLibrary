@@ -17,7 +17,6 @@ import javafx.stage.Stage;
 import javax.xml.bind.JAXBException;
 import uk.ac.liv.mzqlib.MainApp;
 
-
 /**
  * FXML Controller class
  *
@@ -147,6 +146,11 @@ public class RootLayoutController {
     @FXML
     private void showAbout() {
         mainApp.showAbout();
+    }
+
+    @FXML
+    private void handleInstallRequiredPackages() {
+        mainApp.installRequiredPackages();
     }
 
 }

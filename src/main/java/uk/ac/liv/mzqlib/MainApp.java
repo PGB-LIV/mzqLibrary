@@ -43,6 +43,7 @@ import uk.ac.liv.jmzqml.model.mzqml.Row;
 import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;
 import uk.ac.liv.mzqlib.constants.MzqDataConstants;
 import uk.ac.liv.mzqlib.model.*;
+import uk.ac.liv.mzqlib.r.RUtils;
 import uk.ac.liv.mzqlib.task.*;
 import uk.ac.liv.mzqlib.view.*;
 
@@ -99,6 +100,7 @@ public class MainApp extends Application {
                         .title("Error")
                         .message("There are exceptions during the R engine initalisation:")
                         .showException(iniR.getException());
+                System.exit(1);
             });
 
         });
@@ -928,6 +930,17 @@ public class MainApp extends Application {
             }
             return retList;
         }
+    }
+
+    public void installRequiredPackages() {
+        if (RUtils.installRequiredPackages(re)) {
+            Platform.runLater(() -> {
+                Dialogs.create()
+                        .title("R packages")
+                        .message("Required R packages has been installed.")
+                        .showInformation();
+            });
+        };
     }
 
 }

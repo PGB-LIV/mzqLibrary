@@ -27,7 +27,7 @@ public class RootLayoutController {
     // Reference to the main application
     private MainApp mainApp;
 
-    private Stage newStage;
+    //private Stage newStage;
     private File file; //mzq file
 
     @FXML
@@ -40,15 +40,15 @@ public class RootLayoutController {
         this.mainApp = mainApp;
     }
 
-    public Stage getStage() {
-        return newStage;
-    }
+//    public Stage getStage() {
+//        return newStage;
+//    }
 
     @FXML
     private void handleOpen() {
         FileChooser fileChooser = new FileChooser();
 
-        if (mainApp.getLastFilePath() != null) {
+        if (mainApp.getLastFilePath() != null && mainApp.getLastFilePath().exists()) {
             fileChooser.setInitialDirectory(mainApp.getLastFilePath());
         }
         else {

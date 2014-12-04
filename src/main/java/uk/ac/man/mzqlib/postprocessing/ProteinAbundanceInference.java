@@ -7,6 +7,7 @@ import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -203,7 +204,7 @@ public final class ProteinAbundanceInference {
 
         String outfile = "C:\\Manchester\\work\\Puf3Study\\ProteoSuite\\Idenoutcomes\\Filtered_AJ_" + filter
                 + "\\mzq\\consensusonly\\test\\unlabeled_result_FLUQT_mapped_" + filter
-                + "_peptideNormalized" + refNo + "_protein_inference_revDecoyTest_25Oct.mzq";
+                + "_peptideNormalized" + refNo + "_protein_inference_revDecoyTest_25Oct_samesetOrdered.mzq";
 
         String operator = "sum"; //"median", "mean"
 
@@ -1097,10 +1098,15 @@ public final class ProteinAbundanceInference {
 //                        System.out.println("peptide selection: " + pepSel);
                         Set<String> protsId = peptideToProtein.get(pepSel);
                         //sort proteins
-                        Set<String> protIds = new TreeSet<String>(protsId);
+//                        Set<String> protIds = new TreeSet<String>(protsId);
+                        TreeSet<String> protIds = new TreeSet<String>(protsId);
+                        Iterator<String> protIdsIter = protIds.iterator();
 
                         int sig = 0;
-                        for (String protId : protIds) {
+                        while (protIdsIter.hasNext()) {
+//                        for (String protId : protIds) {
+                            String protId = protIdsIter.next();
+
                             //get the first protein
                             if (sig == 0) {
                                 sig = 1;

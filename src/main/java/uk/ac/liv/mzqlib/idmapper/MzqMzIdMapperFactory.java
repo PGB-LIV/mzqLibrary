@@ -42,7 +42,7 @@ public class MzqMzIdMapperFactory {
 
     private static final MzqMzIdMapperFactory instance = new MzqMzIdMapperFactory();
 
-    public MzqMzIdMapperFactory() {
+    private MzqMzIdMapperFactory() {
     }
 
     public static MzqMzIdMapperFactory getInstance() {
@@ -51,9 +51,9 @@ public class MzqMzIdMapperFactory {
 
     public MzqMzIdMapper buildMzqMzIdMapper(MzQuantMLUnmarshaller mzqUm,
                                             String rawToMzidString)
-            throws JAXBException {
+            throws JAXBException, IOException {
         String[] rawToMzidMapArray = rawToMzidString.split(";");
-        Map<String, String> rawToMzidMap = new HashMap<>();
+        Map<File, File> rawToMzidMap = new HashMap<>();
         if ((rawToMzidMapArray.length % 2) != 0) {
             //System.err.println("Expected raw file name and mzid file in pairs: " + rawToMzidMap);
             throw new RuntimeException("Expected raw file name and mzid file in pairs: " + rawToMzidMap);
@@ -61,10 +61,10 @@ public class MzqMzIdMapperFactory {
         else {
             // Build rawToMzidMap
             for (int i = 0; i < rawToMzidMapArray.length; i++) {
-                String rawFileName = rawToMzidMapArray[i].trim();
-                String mzidFilePath = rawToMzidMapArray[i + 1].trim();
-                if (mzidFilePath.toLowerCase().endsWith("mzid")) {
-                    rawToMzidMap.put(rawFileName, mzidFilePath);
+                String rawFile = rawToMzidMapArray[i].trim();
+                String mzidFile = rawToMzidMapArray[i + 1].trim();
+                if (mzidFile.toLowerCase().endsWith("mzid")) {
+                    rawToMzidMap.put(new File(rawFile).getCanonicalFile(), new File(mzidFile).getCanonicalFile());
                 }
                 else {
                     throw new RuntimeException("There is a non mzid file in the argument.");
@@ -73,11 +73,11 @@ public class MzqMzIdMapperFactory {
             }
         }
         return new MzqMzIdMapperImpl(mzqUm, rawToMzidMap);
-    }
+    }  
 
     public MzqMzIdMapper buildMzqMzIdMapper(MzQuantMLUnmarshaller mzqUm,
-                                            Map rawToMzidMap)
-            throws JAXBException {
+                                            Map<File, File> rawToMzidMap)
+            throws JAXBException, IOException {
         return new MzqMzIdMapperImpl(mzqUm, rawToMzidMap);
     }
 
@@ -91,7 +91,7 @@ public class MzqMzIdMapperFactory {
         //private Map<String, List<String>> protToPepSeqsMap = new HashMap<>();
         private Map<String, List<String>> pepConOldToPepModStringsMap = new HashMap<>();
         private Map<String, String> pepConOldIdToNewIdMap = new HashMap<>();
-        private Map<String, String> rawToMzidMap = null;
+        private Map<File, File> rawToMzidMap = null;
         private Map<String, String> mzidFnToFileIdMap = new HashMap<>();
         private List<PeptideConsensusList> pepConLists = new ArrayList();
         private Map<String, List<String>> pepConNewIdToProtAccsMap = new HashMap<>();
@@ -102,8 +102,8 @@ public class MzqMzIdMapperFactory {
          * Constructor
          */
         private MzqMzIdMapperImpl(MzQuantMLUnmarshaller mzqUm,
-                                  Map rawToMzidMap)
-                throws JAXBException {
+                                  Map<File, File> rawToMzidMap)
+                throws JAXBException, IOException {
 
             this.mzqUm = mzqUm;
 
@@ -351,8 +351,8 @@ public class MzqMzIdMapperFactory {
         }
 
         @Override
-        public void createMappedFile(String output)
-                throws JAXBException {
+        public void createMappedFile(File outputFile)
+                throws JAXBException, IOException {
 
             // retrieve every attributes and elements from the mzQuantML file
             String mzqId = mzqUm.getMzQuantMLId();
@@ -397,17 +397,17 @@ public class MzqMzIdMapperFactory {
             ff.setCvParam(cp);
 
             //int count = 0;
-            for (String mzidFn : rawToMzidMap.values()) {
+            for (File mzidFile : rawToMzidMap.values()) {
                 IdentificationFile idFile = new IdentificationFile();
                 idFile.setFileFormat(ff);
-                //String id = "idfile_" + count;
-                String fileName = new File(mzidFn).getName();
-                idFile.setId(mzidFnToFileIdMap.get(fileName));
+                //String id = "idfile_" + count;                
+                String id = mzidFnToFileIdMap.get(mzidFile.getName());
+                idFile.setId(id);
                 //count++;
-                File f = new File(mzidFn);
-                idFile.setLocation(f.getAbsolutePath());
+                
+                idFile.setLocation(mzidFile.getCanonicalPath());
                 //TODO; to check
-                idFile.setName(mzidFn);
+                idFile.setName(mzidFile.getName());
                 //mzidFnToFileIdMap.put(mzidFn, id);
 
                 idFiles.getIdentificationFile().add(idFile);
@@ -420,7 +420,7 @@ public class MzqMzIdMapperFactory {
             FileWriter writer = null;
 
             try {
-                writer = new FileWriter(output);
+                writer = new FileWriter(outputFile);
 
                 // XML header
                 writer.write(m.createXmlHeader() + "\n");

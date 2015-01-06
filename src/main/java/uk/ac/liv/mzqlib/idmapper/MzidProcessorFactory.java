@@ -81,7 +81,7 @@ public class MzidProcessorFactory {
                 // get retention time from cvParam "spectrum title", return Double.NaN if no "spectrum title"
                 double rt = getRetentionTime(sir);
 
-                if (rt == Double.NaN) {
+                if (Double.isNaN(rt)) {
                     throw new IllegalStateException("Cannot find retention time information in SpectrumIdentificationResult \"" + sir.getId() + "\"");
                 }
 
@@ -122,7 +122,7 @@ public class MzidProcessorFactory {
 
                         int intRt = (int) rt;
                         List<SIIData> rtSiiDataList;
-                        if (rt != Double.NaN) {
+                        if (!Double.isNaN(rt)) {
                             rtSiiDataList = RtToSIIsMap.get(intRt);
                             if (rtSiiDataList == null) {
                                 rtSiiDataList = new ArrayList();
@@ -223,6 +223,10 @@ public class MzidProcessorFactory {
             if (cp.getAccession().equals("MS:1000016")) {
                 String value = cp.getValue();
                 String unit = cp.getUnitName();
+                if (unit == null || unit.equals("")) {
+                    return rt;
+                }
+                
                 switch (unit.toLowerCase()) {
                     case "second":
                         return Double.parseDouble(value) / 60;
@@ -235,7 +239,7 @@ public class MzidProcessorFactory {
                 }
             }
         }
+        
         return rt;
     }
-
 }

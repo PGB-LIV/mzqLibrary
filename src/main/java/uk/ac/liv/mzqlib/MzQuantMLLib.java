@@ -261,7 +261,7 @@ public class MzQuantMLLib {
 
                         MzQuantMLUnmarshaller mzqUm = new MzQuantMLUnmarshaller(new File(inputFileName));
                         MzqMzIdMapper mapper = MzqMzIdMapperFactory.getInstance().buildMzqMzIdMapper(mzqUm, rawToMzidMapString);
-                        mapper.createMappedFile(outputFileName);
+                        mapper.createMappedFile(new File(outputFileName));
                     }
 //                    }
                 }

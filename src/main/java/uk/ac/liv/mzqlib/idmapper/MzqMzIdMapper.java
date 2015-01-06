@@ -5,6 +5,8 @@
 
 package uk.ac.liv.mzqlib.idmapper;
 
+import java.io.File;
+import java.io.IOException;
 import javax.xml.bind.JAXBException;
 
 /**
@@ -24,7 +26,7 @@ public interface MzqMzIdMapper {
      *
      * @throws JAXBException
      */
-    public void createMappedFile(String output)
-            throws JAXBException;
+    public void createMappedFile(File outputFile)
+            throws JAXBException, IOException;
 
 }

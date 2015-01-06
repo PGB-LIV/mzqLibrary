@@ -1,8 +1,10 @@
 package uk.ac.liv.mzqlib.idmapper;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBException;
@@ -20,12 +22,12 @@ public class Mapper {
     private static Map<String, String> rawToMzidMap;
     private static MzQuantMLUnmarshaller umarsh;
 
-    public static void main(String args[]) {
+    public static void main(String args[]) throws IOException {
 
         //String outMzFn = "CPTAC-Progenesis-after-mapper.mzq";                
         //mzqFile = new File("CPTAC-Progenesis.mzq");
         mzqFile = new File("CPTAC-Progenesis-small-example.mzq");
-        String outMzFn = "CPTAC-Progenesis-after-mapper-small.mzq";
+        File outMzFile = new File("CPTAC-Progenesis-after-mapper-small.mzq");
         rawToMzidMap = new HashMap();
         rawToMzidMap.put("mam_042408o_CPTAC_study6_6B011.raw", "mam_042408o_CPTAC_study6_6B011_rt.mzid");
         rawToMzidMap.put("mam_050108o_CPTAC_study6_6B011.raw", "mam_050108o_CPTAC_study6_6B011_rt.mzid");
@@ -41,8 +43,13 @@ public class Mapper {
         rawToMzidMap.put("mam_050108o_CPTAC_study6_6E004_080505133441.raw", "mam_050108o_CPTAC_study6_6E004_080505133441_rt.mzid");
         try {
             umarsh = new MzQuantMLUnmarshaller(mzqFile);
-            MzqMzIdMapper mapper = MzqMzIdMapperFactory.getInstance().buildMzqMzIdMapper(umarsh, rawToMzidMap);
-            mapper.createMappedFile(outMzFn);
+            Map<File, File> fileMap = new HashMap<>();
+            rawToMzidMap.entrySet().stream().forEach((entry) -> {
+                fileMap.put(new File(entry.getKey()), new File(entry.getValue()));
+            });
+            
+            MzqMzIdMapper mapper = MzqMzIdMapperFactory.getInstance().buildMzqMzIdMapper(umarsh, fileMap);
+            mapper.createMappedFile(outMzFile);
         }
         catch (JAXBException ex) {
             Logger.getLogger(Mapper.class.getName()).log(Level.SEVERE, null, ex);

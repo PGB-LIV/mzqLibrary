@@ -3,6 +3,7 @@ package uk.ac.liv.mzqlib.idmapper;
 
 import gnu.trove.map.TIntObjectMap;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -37,8 +38,8 @@ public class MzqProcessorFactory {
     }
 
     public MzqProcessor buildMzqProcessor(MzQuantMLUnmarshaller mzqUm,
-                                          Map rawToMzidMap)
-            throws JAXBException {
+                                          Map<File, File> rawToMzidMap)
+            throws JAXBException, IOException {
         return new MzqProcessorImpl(mzqUm, rawToMzidMap);
     }
 
@@ -58,8 +59,8 @@ public class MzqProcessorFactory {
          * Constructor
          */
         private MzqProcessorImpl(MzQuantMLUnmarshaller mzqUm,
-                                 Map<String, String> rawToMzidMap)
-                throws JAXBException {
+                                 Map<File, File> rawToMzidMap)
+                throws JAXBException, IOException {
 
             this.mzqUm = mzqUm;
 
@@ -74,19 +75,30 @@ public class MzqProcessorFactory {
                 FeatureList ftList = itFeatureList.next();
                 RawFilesGroup rg = (RawFilesGroup) this.mzqUm.unmarshal(uk.ac.liv.jmzqml.model.mzqml.RawFilesGroup.class, ftList.getRawFilesGroupRef());
 
-                String rawFn = rg.getRawFile().get(0).getName();
-                if (rawFn == null) {
-                    rawFn = rg.getRawFile().get(0).getLocation();
+                File rawFileProposed = null;
+                if (rg.getRawFile().get(0).getName() != null) {
+                    rawFileProposed = new File(rg.getRawFile().get(0).getName());
+                }                
+                
+                if (rawFileProposed == null || !rawFileProposed.exists()) {
+                    if (rg.getRawFile().get(0).getLocation() != null) {
+                        rawFileProposed = new File(rg.getRawFile().get(0).getLocation());
+                    }                    
+                }
+                
+                if (rawFileProposed == null || !rawFileProposed.exists()) {
+                    continue;
                 }
 
-                rawFn = rawFn.replaceAll(".featureXML", ".mzML").replaceAll("_FFC", "").replaceAll("_MAPC", "");
-                String mzidFileName = rawToMzidMap.get(rawFn);
-                if (mzidFileName == null) {
-                    throw new RuntimeException("Can not find the raw file name \"" + rawFn + "\" in rawToMzidMap. Please use correct raw file names in input file.\n");
+                String rawFileNameActual = rawFileProposed.getCanonicalPath().replaceAll(".featureXML", ".mzML").replaceAll("_FFC", "").replaceAll("_MAPC", "");
+                File rawFileActual = new File(rawFileNameActual);
+                File mzidFile = rawToMzidMap.get(rawFileActual.getCanonicalFile());
+                if (mzidFile == null || !mzidFile.exists()) {
+                    throw new RuntimeException("Can not find the raw file \"" + rawFileActual.getName() + "\" in rawToMzidMap. Please use correct raw file in input file.\n");
                 }
 
                 // corresponding mzIdentML processor 
-                MzidProcessor mzidProc = MzidProcessorFactory.getInstance().buildMzidProcessor(new File(mzidFileName));
+                MzidProcessor mzidProc = MzidProcessorFactory.getInstance().buildMzidProcessor(mzidFile.getCanonicalFile());
 
                 TIntObjectMap<List<SIIData>> rtToSIIsMap = mzidProc.getRtToSIIsMap();
 

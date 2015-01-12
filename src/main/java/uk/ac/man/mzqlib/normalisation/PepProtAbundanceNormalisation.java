@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang3.StringUtils;
@@ -77,6 +78,8 @@ public class PepProtAbundanceNormalisation {
     private int assNo;
 
     private boolean initted;
+    
+    private final CountDownLatch normalisationCompletionLatch = new CountDownLatch(1);
 
     public void setNormLevel(String normLev) {
         normalisedLevel = normLev;
@@ -279,7 +282,7 @@ public class PepProtAbundanceNormalisation {
         int ass_end = assNo;
         Map<String, List<String>> normalisedPepAssayValTmp;
         Map<String, List<String>> normalisedFeatureAssayValTmp;
-        List<String> sfv;
+        List<String> sfv;        
         int pepSizeTmp = peptideAssayValues.entrySet().iterator().next().getValue().size();
 
 //        if (assMin != null && assMax != null) {
@@ -333,7 +336,13 @@ public class PepProtAbundanceNormalisation {
                 System.out.println("****** Some errors exist within the pipeline *******");
             }
             System.out.println("****************************************************");
-
+            normalisationCompletionLatch.countDown();
+        }
+        
+        try {
+            normalisationCompletionLatch.await();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PepProtAbundanceNormalisation.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -472,7 +481,7 @@ public class PepProtAbundanceNormalisation {
                         System.out.println("****** Some errors exist within the pipeline *******");
                     }
                     System.out.println("****************************************************");
-
+                    normalisationCompletionLatch.countDown();
                 }
             }
 
@@ -585,7 +594,7 @@ public class PepProtAbundanceNormalisation {
      * @throws IllegalStateException
      * @throws FileNotFoundException
      */
-    public MzQuantMLUnmarshaller mzqFileInput() throws IllegalStateException,
+    private MzQuantMLUnmarshaller mzqFileInput() throws IllegalStateException,
             FileNotFoundException {
         File mzqFile = new File(in_file);
         MzQuantMLUnmarshaller infileUm = new MzQuantMLUnmarshaller(mzqFile);

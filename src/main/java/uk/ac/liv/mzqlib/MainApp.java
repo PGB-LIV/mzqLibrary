@@ -1,3 +1,4 @@
+
 package uk.ac.liv.mzqlib;
 
 import java.awt.Desktop;
@@ -79,35 +80,36 @@ public class MainApp extends Application {
         this.primaryStage.setTitle(WINDOW_TITLE);
         initRootLayout();
 
-        try {
-            System.loadLibrary("jri");
-        }
-        catch (UnsatisfiedLinkError e) {
-            Dialogs.create()
-                    .title("JRI package Error")
-                    .message("The R and JRI are not properly installed.\nPlease find out how to set up at http://code.google.com/p/mzq-lib/#How_to_install_mzqViewer")
-                    .showException(e);
-        }
-
-        InitialREngineTask iniR = new InitialREngineTask();
-        iniR.setOnSucceeded((WorkerStateEvent t) -> {
-            re = iniR.getValue();
-        });
-
-        iniR.setOnFailed((WorkerStateEvent t) -> {
-            Platform.runLater(() -> {
-                Dialogs.create()
-                        .title("Error")
-                        .message("There are exceptions during the R engine initalisation:")
-                        .showException(iniR.getException());
-                System.exit(1);
-            });
-
-        });
-
-        Thread iniRTh = new Thread(iniR);
-        iniRTh.setDaemon(true);
-        iniRTh.start();
+        // test if jri is installed correctly
+//        try {
+//            System.loadLibrary("jri");
+//        }
+//        catch (UnsatisfiedLinkError e) {
+//            Dialogs.create()
+//                    .title("JRI package Error")
+//                    .message("The R and JRI are not properly installed.\nPlease find out how to set up at http://code.google.com/p/mzq-lib/#How_to_install_mzqViewer")
+//                    .showException(e);
+//        }
+//
+//        InitialREngineTask iniR = new InitialREngineTask();
+//        iniR.setOnSucceeded((WorkerStateEvent t) -> {
+//            re = iniR.getValue();
+//        });
+//
+//        iniR.setOnFailed((WorkerStateEvent t) -> {
+//            Platform.runLater(() -> {
+//                Dialogs.create()
+//                        .title("Error")
+//                        .message("There are exceptions during the R engine initalisation:")
+//                        .showException(iniR.getException());
+//                System.exit(1);
+//            });
+//
+//        });
+//
+//        Thread iniRTh = new Thread(iniR);
+//        iniRTh.setDaemon(true);
+//        iniRTh.start();
     }
 
     /**
@@ -230,118 +232,110 @@ public class MainApp extends Application {
         }
     }
 
-    public void showHeatMapPdfWindow() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(RootLayoutController.class.getClassLoader().getResource("HeatMapPdf.fxml"));
-            AnchorPane heatMapPdf = (AnchorPane) loader.load();
+    public void showPCAPlot() {
 
-            HeatMapPdfController controller = loader.getController();
-            controller.setMainApp(this);
-            controller.setCaller(rootLayoutController);
-
-            Scene scene = new Scene(heatMapPdf);
-            newStage = new Stage();
-            newStage.initModality(Modality.APPLICATION_MODAL);
-            newStage.initOwner(primaryStage);
-            newStage.setTitle("Specify PDF size (inch)");
-            newStage.setScene(scene);
-            newStage.show();
-
+        if (re == null) {
+            initialREngine();
         }
-        catch (IOException ex) {
-            Logger.getLogger(RootLayoutController.class.getName()).log(Level.SEVERE, null, ex);
+
+        if (re != null) {
+            TableView<MzqDataMatrixRow> dataMatrixTable = mzqInfoController.getDataMatrixTable();
+            ObservableList<MzqDataMatrixRow> rowList = dataMatrixTable.getItems();
+            CreateRMatrixTask rmTask = new CreateRMatrixTask(rowList);
+
+            Dialogs.create()
+                    .title("Generating PCA plot")
+                    .showWorkerProgress(rmTask);
+
+            rmTask.setOnSucceeded((WorkerStateEvent t) -> {
+                String setMatrix = "X = matrix(c(" + rmTask.getValue().getLogMatrix() + "), nrow=" + rmTask.getValue().getRowNumber() + ",byrow = TRUE)";
+                re.eval(setMatrix);
+
+                //build row names from rowNames list
+                StringBuilder rowNames = new StringBuilder();
+                for (String rn : rmTask.getValue().getRowNames()) {
+                    rowNames.append("\"");
+                    rowNames.append(rn);
+                    rowNames.append("\", ");
+                }
+
+                // get column names
+                StringBuilder colNames = new StringBuilder();
+                ObservableList<TableColumn<MzqDataMatrixRow, ?>> colList = dataMatrixTable.getColumns();
+                Iterator<TableColumn<MzqDataMatrixRow, ?>> i = colList.iterator();
+                // skip the first column name --- "Id"
+                i.next();
+
+                while (i.hasNext()) {
+                    colNames.append("\"");
+                    colNames.append(i.next().getText());
+                    colNames.append("\"");
+                    if (i.hasNext()) {
+                        colNames.append(",");
+                    }
+                }
+
+                re.eval("rownames(X) <- c(" + rowNames.substring(0, rowNames.length() - 2) + ")");
+                re.eval("colnames(X) <- c(" + colNames.toString() + ")");
+
+                re.eval("require(graphics)");
+                re.eval("biplot(princomp(X))");
+            });
+
+            rmTask.setOnFailed((WorkerStateEvent t) -> {
+                Platform.runLater(() -> {
+                    Dialogs.create()
+                            .title("Error")
+                            .message("There are exceptions during the loading data:")
+                            .showException(rmTask.getException());
+                });
+
+            });
+
+            Thread pcaTh = new Thread(rmTask);
+            pcaTh.setDaemon(true);
+            pcaTh.start();
         }
     }
 
-    public void showPCAPlot() {
-        TableView<MzqDataMatrixRow> dataMatrixTable = mzqInfoController.getDataMatrixTable();
-        ObservableList<MzqDataMatrixRow> rowList = dataMatrixTable.getItems();
-        CreateRMatrixTask rmTask = new CreateRMatrixTask(rowList);
+    public void showHeatMapPdfWindow() {
+        if (re == null) {
+            initialREngine();
+        }
 
-        Dialogs.create()
-                .title("Generating PCA plot")
-                .showWorkerProgress(rmTask);
+        if (re != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(RootLayoutController.class.getClassLoader().getResource("HeatMapPdf.fxml"));
+                AnchorPane heatMapPdf = (AnchorPane) loader.load();
 
-        rmTask.setOnSucceeded((WorkerStateEvent t) -> {
-            String setMatrix = "X = matrix(c(" + rmTask.getValue().getLogMatrix() + "), nrow=" + rmTask.getValue().getRowNumber() + ",byrow = TRUE)";
-            re.eval(setMatrix);
+                HeatMapPdfController controller = loader.getController();
+                controller.setMainApp(this);
+                controller.setCaller(rootLayoutController);
 
-            //build row names from rowNames list
-            StringBuilder rowNames = new StringBuilder();
-            for (String rn : rmTask.getValue().getRowNames()) {
-                rowNames.append("\"");
-                rowNames.append(rn);
-                rowNames.append("\", ");
+                Scene scene = new Scene(heatMapPdf);
+                newStage = new Stage();
+                newStage.initModality(Modality.APPLICATION_MODAL);
+                newStage.initOwner(primaryStage);
+                newStage.setTitle("Specify PDF size (inch)");
+                newStage.setScene(scene);
+                newStage.show();
+
             }
-
-            // get column names
-            StringBuilder colNames = new StringBuilder();
-            ObservableList<TableColumn<MzqDataMatrixRow, ?>> colList = dataMatrixTable.getColumns();
-            Iterator<TableColumn<MzqDataMatrixRow, ?>> i = colList.iterator();
-            // skip the first column name --- "Id"
-            i.next();
-
-            while (i.hasNext()) {
-                colNames.append("\"");
-                colNames.append(i.next().getText());
-                colNames.append("\"");
-                if (i.hasNext()) {
-                    colNames.append(",");
-                }
+            catch (IOException ex) {
+                Logger.getLogger(RootLayoutController.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-            re.eval("rownames(X) <- c(" + rowNames.substring(0, rowNames.length() - 2) + ")");
-            re.eval("colnames(X) <- c(" + colNames.toString() + ")");
-
-            re.eval("require(graphics)");
-            re.eval("biplot(princomp(X))");
-        });
-
-        rmTask.setOnFailed((WorkerStateEvent t) -> {
-            Platform.runLater(() -> {
-                Dialogs.create()
-                        .title("Error")
-                        .message("There are exceptions during the loading data:")
-                        .showException(rmTask.getException());
-            });
-
-        });
-
-        Thread pcaTh = new Thread(rmTask);
-        pcaTh.setDaemon(true);
-        pcaTh.start();
+        }
     }
 
     public void saveHeatMapPdf(File pdfFile, double pdfHValue, double pdfWValue) {
         newStage.hide();
 
-        re.eval("if (!require(\"RColorBrewer\")) {\n"
-                + "install.packages(\"RColorBrewer\")\n"
-                + "}");
+        if (re == null) {
+            initialREngine();
+        }
 
-        // Require package gplots      
-        re.eval("if (!require(\"gplots\")) {\n"
-                + "install.packages(\"gplots\", dependencies = TRUE)\n"
-                + "}");
-        // Load heatmap.2 library
-        re.eval("library(\"gplots\")");
-
-        TableView<MzqDataMatrixRow> dataMatrixTable = mzqInfoController.getDataMatrixTable();
-        ObservableList<MzqDataMatrixRow> rowList = dataMatrixTable.getItems();
-        CreateRMatrixTask rmTask = new CreateRMatrixTask(rowList);
-
-        Dialogs.create()
-                .title("Generating PDF")
-                .showWorkerProgress(rmTask);
-
-        rmTask.setOnSucceeded((WorkerStateEvent t) -> {
-            String pdfCmd = "pdf(file='" + pdfFile.getAbsolutePath().replace('\\', '/')
-                    + "', height=" + pdfHValue + ", width=" + pdfWValue
-                    + ", onefile=TRUE, family='Helvetica', pointsize=20)";
-            System.out.println(pdfCmd);
-            re.eval(pdfCmd);
-
+        if (re != null) {
             re.eval("if (!require(\"RColorBrewer\")) {\n"
                     + "install.packages(\"RColorBrewer\")\n"
                     + "}");
@@ -353,207 +347,237 @@ public class MainApp extends Application {
             // Load heatmap.2 library
             re.eval("library(\"gplots\")");
 
-            re.eval("breaks <- seq(from = "
-                    + String.valueOf(rmTask.getValue().getLogMin() * 0.9)
-                    + ", to = "
-                    + String.valueOf(rmTask.getValue().getLogMax() * 1.1)
-                    + ", length = 51)");
+            TableView<MzqDataMatrixRow> dataMatrixTable = mzqInfoController.getDataMatrixTable();
+            ObservableList<MzqDataMatrixRow> rowList = dataMatrixTable.getItems();
+            CreateRMatrixTask rmTask = new CreateRMatrixTask(rowList);
 
-            // Set color palette
-            //re.eval("color.palette  <- colorRampPalette(c(\"#000000\", \"#DC2121\", \"#E9A915\"))");
-            // Set x matrix
-            String setMatrix = "X = matrix(c(" + rmTask.getValue().getLogMatrix() + "), nrow=" + rmTask.getValue().getRowNumber() + ",byrow = TRUE)";
-            re.eval(setMatrix);
+            Dialogs.create()
+                    .title("Generating PDF")
+                    .showWorkerProgress(rmTask);
 
-            //build row names from rowNames list
-            StringBuilder rowNames = new StringBuilder();
-            for (String rn : rmTask.getValue().getRowNames()) {
-                rowNames.append("\"");
-                rowNames.append(rn);
-                rowNames.append("\", ");
-            }
+            rmTask.setOnSucceeded((WorkerStateEvent t) -> {
+                String pdfCmd = "pdf(file='" + pdfFile.getAbsolutePath().replace('\\', '/')
+                        + "', height=" + pdfHValue + ", width=" + pdfWValue
+                        + ", onefile=TRUE, family='Helvetica', pointsize=20)";
+                System.out.println(pdfCmd);
+                re.eval(pdfCmd);
 
-            // get column names
-            StringBuilder colNames = new StringBuilder();
-            ObservableList<TableColumn<MzqDataMatrixRow, ?>> colList = dataMatrixTable.getColumns();
-            Iterator<TableColumn<MzqDataMatrixRow, ?>> i = colList.iterator();
-            // skip the first column name --- "Id"
-            i.next();
+                re.eval("if (!require(\"RColorBrewer\")) {\n"
+                        + "install.packages(\"RColorBrewer\")\n"
+                        + "}");
 
-            while (i.hasNext()) {
-                colNames.append("\"");
-                colNames.append(i.next().getText());
-                colNames.append("\"");
-                if (i.hasNext()) {
-                    colNames.append(",");
+                // Require package gplots      
+                re.eval("if (!require(\"gplots\")) {\n"
+                        + "install.packages(\"gplots\", dependencies = TRUE)\n"
+                        + "}");
+                // Load heatmap.2 library
+                re.eval("library(\"gplots\")");
+
+                re.eval("breaks <- seq(from = "
+                        + String.valueOf(rmTask.getValue().getLogMin() * 0.9)
+                        + ", to = "
+                        + String.valueOf(rmTask.getValue().getLogMax() * 1.1)
+                        + ", length = 51)");
+
+                // Set color palette
+                //re.eval("color.palette  <- colorRampPalette(c(\"#000000\", \"#DC2121\", \"#E9A915\"))");
+                // Set x matrix
+                String setMatrix = "X = matrix(c(" + rmTask.getValue().getLogMatrix() + "), nrow=" + rmTask.getValue().getRowNumber() + ",byrow = TRUE)";
+                re.eval(setMatrix);
+
+                //build row names from rowNames list
+                StringBuilder rowNames = new StringBuilder();
+                for (String rn : rmTask.getValue().getRowNames()) {
+                    rowNames.append("\"");
+                    rowNames.append(rn);
+                    rowNames.append("\", ");
                 }
-            }
 
-            re.eval("rownames(X) <- c(" + rowNames.substring(0, rowNames.length() - 2) + ")");
-            re.eval("colnames(X) <- c(" + colNames.toString() + ")");
+                // get column names
+                StringBuilder colNames = new StringBuilder();
+                ObservableList<TableColumn<MzqDataMatrixRow, ?>> colList = dataMatrixTable.getColumns();
+                Iterator<TableColumn<MzqDataMatrixRow, ?>> i = colList.iterator();
+                // skip the first column name --- "Id"
+                i.next();
 
-            // Set heatmap
-            String setHeatmap = "heatmap.2(X,\n"
-                    + "Rowv=TRUE,\n"
-                    + "Colv=TRUE,\n"
-                    + "na.rm=FALSE,\n"
-                    + "distfun = dist,\n"
-                    + "hclustfun = hclust,\n"
-                    + "key=TRUE,\n"
-                    + "keysize=1,\n"
-                    + "trace=\"none\",\n"
-                    + "scale=\"none\",\n"
-                    + "density.info=c(\"none\"),\n"
-                    + "#margins=c(18, 8),\n"
-                    //                    //+ "col=color.palette,\n"
-                    + "breaks = breaks,\n"
-                    //+ "breaks = seq(from = 1, to = 10, length = 51), \n"
-                    //                    + "lhei=c(0.4,4),\n"
-                    + "main=\"" + mzqInfoController.getAssayQuantLayerTable().getSelectionModel().getSelectedItem().getQuantLayerType()
-                    + ": " + mzqInfoController.getAssayQuantLayerTable().getSelectionModel().getSelectedItem().getQuantLayerId() + "\"\n"
-                    + ")";
-            re.eval(setHeatmap);
-            re.eval("dev.off()");
-
-            newStage.close();
-
-            // open the saved pdf file after generation
-            if (Desktop.isDesktopSupported()) {
-                try {
-
-                    Desktop.getDesktop().open(pdfFile);
+                while (i.hasNext()) {
+                    colNames.append("\"");
+                    colNames.append(i.next().getText());
+                    colNames.append("\"");
+                    if (i.hasNext()) {
+                        colNames.append(",");
+                    }
                 }
-                catch (IOException ex) {
-                    // no application registered for PDFs
-                }
-            }
-        });
 
-        rmTask.setOnFailed((WorkerStateEvent t) -> {
-            Platform.runLater(() -> {
-                Dialogs.create()
-                        .title("Error")
-                        .message("There are exceptions during the loading data:")
-                        .showException(rmTask.getException());
+                re.eval("rownames(X) <- c(" + rowNames.substring(0, rowNames.length() - 2) + ")");
+                re.eval("colnames(X) <- c(" + colNames.toString() + ")");
+
+                // Set heatmap
+                String setHeatmap = "heatmap.2(X,\n"
+                        + "Rowv=TRUE,\n"
+                        + "Colv=TRUE,\n"
+                        + "na.rm=FALSE,\n"
+                        + "distfun = dist,\n"
+                        + "hclustfun = hclust,\n"
+                        + "key=TRUE,\n"
+                        + "keysize=1,\n"
+                        + "trace=\"none\",\n"
+                        + "scale=\"none\",\n"
+                        + "density.info=c(\"none\"),\n"
+                        + "#margins=c(18, 8),\n"
+                        //                    //+ "col=color.palette,\n"
+                        + "breaks = breaks,\n"
+                        //+ "breaks = seq(from = 1, to = 10, length = 51), \n"
+                        //                    + "lhei=c(0.4,4),\n"
+                        + "main=\"" + mzqInfoController.getAssayQuantLayerTable().getSelectionModel().getSelectedItem().getQuantLayerType()
+                        + ": " + mzqInfoController.getAssayQuantLayerTable().getSelectionModel().getSelectedItem().getQuantLayerId() + "\"\n"
+                        + ")";
+                re.eval(setHeatmap);
+                re.eval("dev.off()");
+
+                newStage.close();
+
+                // open the saved pdf file after generation
+                if (Desktop.isDesktopSupported()) {
+                    try {
+
+                        Desktop.getDesktop().open(pdfFile);
+                    }
+                    catch (IOException ex) {
+                        // no application registered for PDFs
+                    }
+                }
             });
 
-        });
+            rmTask.setOnFailed((WorkerStateEvent t) -> {
+                Platform.runLater(() -> {
+                    Dialogs.create()
+                            .title("Error")
+                            .message("There are exceptions during the loading data:")
+                            .showException(rmTask.getException());
+                });
 
-        Thread saveHeatMapTh = new Thread(rmTask);
-        saveHeatMapTh.setDaemon(true);
-        saveHeatMapTh.start();
+            });
 
+            Thread saveHeatMapTh = new Thread(rmTask);
+            saveHeatMapTh.setDaemon(true);
+            saveHeatMapTh.start();
+        }
     }
 
     public void showHeatMapinR() {
         //System.out.println("JLP = " + System.getProperty("java.library.path"));
 
-        if (!Rengine.versionCheck()) {
-            System.err.println("** Version mismatch - Java files don't match library version.");
-            //System.exit(1);
+//        if (!Rengine.versionCheck()) {
+//            System.err.println("** Version mismatch - Java files don't match library version.");
+//            //System.exit(1);
+//        }
+        if (re == null) {
+            initialREngine();
         }
 
         // Start R heatamp process
         //re.eval("source(\"http://www.bioconductor.org/biocLite.R\")");
         //re.eval("biocLite(\"ALL\")");
         // Require package RColorBrewer
-        re.eval("if (!require(\"RColorBrewer\")) {\n"
-                + "install.packages(\"RColorBrewer\")\n"
-                + "}");
+        if (re != null) {
+            re.eval("if (!require(\"RColorBrewer\")) {\n"
+                    + "install.packages(\"RColorBrewer\")\n"
+                    + "}");
 
-        // Require package gplots      
-        re.eval("if (!require(\"gplots\")) {\n"
-                + "install.packages(\"gplots\", dependencies = TRUE)\n"
-                + "}");
-        // Load heatmap.2 library
-        re.eval("library(\"gplots\")");
+            // Require package gplots      
+            re.eval("if (!require(\"gplots\")) {\n"
+                    + "install.packages(\"gplots\", dependencies = TRUE)\n"
+                    + "}");
+            // Load heatmap.2 library
+            re.eval("library(\"gplots\")");
 
-        TableView<MzqDataMatrixRow> dataMatrixTable = mzqInfoController.getDataMatrixTable();
-        ObservableList<MzqDataMatrixRow> rowList = dataMatrixTable.getItems();
-        CreateRMatrixTask rmTask = new CreateRMatrixTask(rowList);
+            TableView<MzqDataMatrixRow> dataMatrixTable = mzqInfoController.getDataMatrixTable();
+            ObservableList<MzqDataMatrixRow> rowList = dataMatrixTable.getItems();
+            CreateRMatrixTask rmTask = new CreateRMatrixTask(rowList);
 
-        Dialogs.create()
-                .title("Generating heat map by R")
-                .showWorkerProgress(rmTask);
+            Dialogs.create()
+                    .title("Generating heat map by R")
+                    .showWorkerProgress(rmTask);
 
-        rmTask.setOnSucceeded((WorkerStateEvent t) -> {
-            re.eval("breaks <- seq(from = "
-                    + String.valueOf(rmTask.getValue().getLogMin() * 0.9)
-                    + ", to = "
-                    + String.valueOf(rmTask.getValue().getLogMax() * 1.1)
-                    + ", length = 51)");
+            rmTask.setOnSucceeded((WorkerStateEvent t) -> {
+                re.eval("breaks <- seq(from = "
+                        + String.valueOf(rmTask.getValue().getLogMin() * 0.9)
+                        + ", to = "
+                        + String.valueOf(rmTask.getValue().getLogMax() * 1.1)
+                        + ", length = 51)");
 
-            // Set color palette
-            re.eval("color.palette  <- colorRampPalette(c(\"#000000\", \"#DC2121\", \"#E9A915\"))");
+                // Set color palette
+                re.eval("color.palette  <- colorRampPalette(c(\"#000000\", \"#DC2121\", \"#E9A915\"))");
 
-            // Set x matrix
-            String setMatrix = "X = matrix(c(" + rmTask.getValue().getLogMatrix() + "), nrow=" + rmTask.getValue().getRowNumber() + ",byrow = TRUE)";
-            re.eval(setMatrix);
+                // Set x matrix
+                String setMatrix = "X = matrix(c(" + rmTask.getValue().getLogMatrix() + "), nrow=" + rmTask.getValue().getRowNumber() + ",byrow = TRUE)";
+                re.eval(setMatrix);
 
-            //build row names from rowNames list
-            StringBuilder rowNames = new StringBuilder();
-            for (String rn : rmTask.getValue().getRowNames()) {
-                rowNames.append("\"");
-                rowNames.append(rn);
-                rowNames.append("\", ");
-            }
-
-            // get column names
-            StringBuilder colNames = new StringBuilder();
-            ObservableList<TableColumn<MzqDataMatrixRow, ?>> colList = dataMatrixTable.getColumns();
-            Iterator<TableColumn<MzqDataMatrixRow, ?>> i = colList.iterator();
-            // skip the first column name --- "Id"
-            i.next();
-
-            while (i.hasNext()) {
-                colNames.append("\"");
-                colNames.append(i.next().getText());
-                colNames.append("\"");
-                if (i.hasNext()) {
-                    colNames.append(",");
+                //build row names from rowNames list
+                StringBuilder rowNames = new StringBuilder();
+                for (String rn : rmTask.getValue().getRowNames()) {
+                    rowNames.append("\"");
+                    rowNames.append(rn);
+                    rowNames.append("\", ");
                 }
-            }
 
-            re.eval("rownames(X) <- c(" + rowNames.substring(0, rowNames.length() - 2) + ")");
-            re.eval("colnames(X) <- c(" + colNames.toString() + ")");
+                // get column names
+                StringBuilder colNames = new StringBuilder();
+                ObservableList<TableColumn<MzqDataMatrixRow, ?>> colList = dataMatrixTable.getColumns();
+                Iterator<TableColumn<MzqDataMatrixRow, ?>> i = colList.iterator();
+                // skip the first column name --- "Id"
+                i.next();
 
-            // Set heatmap
-            String setHeatmap = "heatmap.2(X,\n"
-                    + "Rowv=TRUE,\n"
-                    + "Colv=TRUE,\n"
-                    + "na.rm=FALSE,\n"
-                    + "distfun = dist,\n"
-                    + "hclustfun = hclust,\n"
-                    + "key=TRUE,\n"
-                    + "keysize=1,\n"
-                    + "trace=\"none\",\n"
-                    + "scale=\"none\",\n"
-                    + "density.info=c(\"none\"),\n"
-                    + "#margins=c(18, 8),\n"
-                    //                    //+ "col=color.palette,\n"
-                    + "breaks = breaks,\n"
-                    //+ "breaks = seq(from = 1, to = 10, length = 51),\n"
-                    //                    + "lhei=c(0.4,4),\n"
-                    + "main=\"" + mzqInfoController.getAssayQuantLayerTable().getSelectionModel().getSelectedItem().getQuantLayerType()
-                    + ": " + mzqInfoController.getAssayQuantLayerTable().getSelectionModel().getSelectedItem().getQuantLayerId() + "\"\n"
-                    + ")";
-            re.eval(setHeatmap);
-        });
+                while (i.hasNext()) {
+                    colNames.append("\"");
+                    colNames.append(i.next().getText());
+                    colNames.append("\"");
+                    if (i.hasNext()) {
+                        colNames.append(",");
+                    }
+                }
 
-        rmTask.setOnFailed((WorkerStateEvent t) -> {
-            Platform.runLater(() -> {
-                Dialogs.create()
-                        .title("Error")
-                        .message("There are exceptions during the loading data:")
-                        .showException(rmTask.getException());
+                re.eval("rownames(X) <- c(" + rowNames.substring(0, rowNames.length() - 2) + ")");
+                re.eval("colnames(X) <- c(" + colNames.toString() + ")");
+
+                // Set heatmap
+                String setHeatmap = "heatmap.2(X,\n"
+                        + "Rowv=TRUE,\n"
+                        + "Colv=TRUE,\n"
+                        + "na.rm=FALSE,\n"
+                        + "distfun = dist,\n"
+                        + "hclustfun = hclust,\n"
+                        + "key=TRUE,\n"
+                        + "keysize=1,\n"
+                        + "trace=\"none\",\n"
+                        + "scale=\"none\",\n"
+                        + "density.info=c(\"none\"),\n"
+                        + "#margins=c(18, 8),\n"
+                        //                    //+ "col=color.palette,\n"
+                        + "breaks = breaks,\n"
+                        //+ "breaks = seq(from = 1, to = 10, length = 51),\n"
+                        //                    + "lhei=c(0.4,4),\n"
+                        + "main=\"" + mzqInfoController.getAssayQuantLayerTable().getSelectionModel().getSelectedItem().getQuantLayerType()
+                        + ": " + mzqInfoController.getAssayQuantLayerTable().getSelectionModel().getSelectedItem().getQuantLayerId() + "\"\n"
+                        + ")";
+                re.eval(setHeatmap);
             });
 
-        });
+            rmTask.setOnFailed((WorkerStateEvent t) -> {
+                Platform.runLater(() -> {
+                    Dialogs.create()
+                            .title("Error")
+                            .message("There are exceptions during the loading data:")
+                            .showException(rmTask.getException());
+                });
 
-        Thread showHeatMapTh = new Thread(rmTask);
-        showHeatMapTh.setDaemon(true);
-        showHeatMapTh.start();
+            });
 
+            Thread showHeatMapTh = new Thread(rmTask);
+            showHeatMapTh.setDaemon(true);
+            showHeatMapTh.start();
+        }
     }
 
     public void showCurve()
@@ -933,7 +957,11 @@ public class MainApp extends Application {
     }
 
     public void installRequiredPackages() {
-        if (RUtils.installRequiredPackages(re)) {
+        if (re == null) {
+            initialREngine();
+        }
+
+        if (re != null && RUtils.installRequiredPackages(re)) {
             Platform.runLater(() -> {
                 Dialogs.create()
                         .title("R packages")
@@ -941,6 +969,43 @@ public class MainApp extends Application {
                         .showInformation();
             });
         };
+    }
+
+    private void initialREngine() {
+
+        // test if jri is installed correctly
+        try {
+            System.loadLibrary("jri");
+
+            InitialREngineTask iniR = new InitialREngineTask();
+            iniR.setOnSucceeded((WorkerStateEvent t) -> {
+                re = iniR.getValue();
+            });
+
+            iniR.setOnFailed((WorkerStateEvent t) -> {
+                //Platform.runLater(() -> {
+                Dialogs.create()
+                        .title("Error")
+                        .message("There are exceptions during the R engine initalisation:")
+                        .showException(iniR.getException());
+                //System.exit(1);
+                // });
+
+            });
+
+            Thread iniRTh = new Thread(iniR);
+            iniRTh.setDaemon(true);
+            iniRTh.start();
+        }
+        catch (UnsatisfiedLinkError e) {
+            //Platform.runLater(() -> {
+            Dialogs.create()
+                    .title("JRI package Error")
+                    .message("The R and JRI are not properly installed.\nPlease find out how to set up at http://code.google.com/p/mzq-lib/#How_to_install_mzqViewer")
+                    .showException(e);
+            //});
+            //throw new RuntimeException(e);
+        }
     }
 
 }

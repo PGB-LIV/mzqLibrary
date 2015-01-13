@@ -24,16 +24,16 @@ public class NormalisationMultiThreading {
 
     public static void main(String[] args) throws FileNotFoundException {
 
-//        String inputFile = path + filter + "\\mzq\\" + fileName + ".mzq";;
-//        String outputFile = path + filter + "\\mzq\\consensusonly\\test\\" + fileName
-//                + "_peptideNormalization_medianSelectedRefAssay_25Oct.mzq";
-        String inputFile = "C:\\Manchester\\work\\ProteoSuite\\AndyPaper\\AllAges.mzq\\" + "AllAges.mzq";
-        String outputFile = "C:\\Manchester\\work\\ProteoSuite\\AndyPaper\\" + "AllAges_featureNormalised11.mzq";
+        String inputFile = path + filter + "\\mzq\\" + fileName + ".mzq";;
+        String outputFile = path + filter + "\\mzq\\consensusonly\\test\\" + fileName
+                + "_peptideNormalization_medianSelectedRefAssay_25Oct_feature1.mzq";
+//        String inputFile = "C:\\Manchester\\work\\ProteoSuite\\AndyPaper\\AllAges.mzq\\" + "AllAges.mzq";
+//        String outputFile = "C:\\Manchester\\work\\ProteoSuite\\AndyPaper\\" + "AllAges_featureNormalised116.mzq";
 
         //iTraq for exception test
 //        String inputFile = "C:\\Manchester\\work\\ProteoSuite\\mzq-lib\\example_files\\test_ksl_itraq1.mzq";
 //        String outputFile = "C:\\Manchester\\work\\ProteoSuite\\mzq-lib\\example_files\\test_ksl_itraq_normalised.mzq";
-        String processingLevel = "peptide"; //"feature"
+        String processingLevel = "feature";//"peptide"; //
         String quantLayerType = null;
         String inDataTypeAccession = null;
         String outDataTypeAccession = null;
@@ -46,11 +46,13 @@ public class NormalisationMultiThreading {
 //        int assayMax = 1;
         if (processingLevel.equalsIgnoreCase("peptide")) {
             quantLayerType = "AssayQuantLayer";
+//            puf3 data
 //            inDataTypeAccession = "MS:1001840"; //LC-MS feature intensity
 //            outDataTypeAccession = "MS:1001891"; //Progenesis:peptide normalised abundance
 //            decoyTag = "XXX_";
-
-            inDataTypeAccession = "MS:1001893"; //LC-MS feature intensity
+            
+//andy data in paper work
+            inDataTypeAccession = "MS:1001893"; //Progenesis:peptide raw abundance
             outDataTypeAccession = "MS:1001891"; //Progenesis:peptide normalised abundance
             outDataTypeName = "normalised " + processingLevel + " abundance";
             decoyTag = "XXX_";

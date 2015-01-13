@@ -304,13 +304,9 @@ public class PepProtAbundanceNormalisation {
                 new Thread("" + ref) {
                     @Override
                     public void run() {
-
-                        PepProtAbundanceNormalisation.this.referenceNumber = refTmp;
-
                         //range version
 //                    pipeline_flag = pipeline_executor(PepProtAbundanceNormalisation.this.referenceNumber, ass_start, ass_end);
-                        pipeline_executor(PepProtAbundanceNormalisation.this.referenceNumber);
-
+                        pipeline_executor(refTmp);
                     }
                 }.start();
             }
@@ -356,7 +352,6 @@ public class PepProtAbundanceNormalisation {
     //range version
 //    private boolean pipeline_executor(int reference, int start, int end) {
     private boolean pipeline_executor(int reference) {
-
         boolean flag = true;
         int pepSize;
 
@@ -405,7 +400,7 @@ public class PepProtAbundanceNormalisation {
                 /**
                  * here apply a median strategy to select the better assay
                  */
-                if (scalingFactor.keySet().size() == pepSize) {
+                if (scalingFactor.keySet().size() == pepSize) {                    
                     int refPrefered = 1;
                     List<String> sfvals;
                     double[] std = new double[pepSize];

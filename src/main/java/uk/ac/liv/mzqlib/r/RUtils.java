@@ -1,8 +1,8 @@
+
 package uk.ac.liv.mzqlib.r;
 
 import java.util.ArrayList;
 import java.util.List;
-import javafx.application.Platform;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
@@ -61,7 +61,7 @@ public class RUtils {
                 uninstalled = re.eval(condition).asBool();
                 if (uninstalled.isTRUE()) {
                     installed = false;
-                    showUninstallWarningDialog(packageName);
+                    //showUninstallWarningDialog(packageName);
                 }
                 else {
                     installed = true;
@@ -69,10 +69,10 @@ public class RUtils {
                 }
 
             }
-            else {
-                installed = false;
-                showUninstallWarningDialog(packageName);
-            }
+//            else {
+//                installed = false;
+//                showUninstallWarningDialog(packageName);
+//            }
         }
         else {
             installed = true;
@@ -81,22 +81,22 @@ public class RUtils {
     }
 
     private static void showPackageInstalledDialog(String packageName) {
-        Platform.runLater(() -> {
+        //Platform.runLater(() -> {
             Dialogs.create()
                     .title("Package installed")
                     .message(packageName + " is installed.")
                     .showInformation();
-        });
+        //});
     }
 
-    private static void showUninstallWarningDialog(String packageName) {
-        Platform.runLater(() -> {
-            Dialogs.create()
-                    .title("Warning")
-                    .message(packageName + " package is not installed. \nSome mzqLibrary routines might not work properly.\n"
-                            + "Use R packages menu to reinstall!")
-                    .showWarning();
-        });
-    }
+//    private static void showUninstallWarningDialog(String packageName) {
+//        Platform.runLater(() -> {
+//            Dialogs.create()
+//                    .title("Warning")
+//                    .message(packageName + " package is not installed. \nSome mzqLibrary routines might not work properly.\n"
+//                            + "Use R packages menu to reinstall!")
+//                    .showWarning();
+//        });
+//    }
 
 }

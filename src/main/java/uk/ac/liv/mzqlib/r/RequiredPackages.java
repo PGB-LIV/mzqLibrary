@@ -10,8 +10,8 @@ public enum RequiredPackages {
 
     //list of required R pakcages
     //R_JAVA("rJava"),
-    GPLOTS("gplots"),
-    R_COLOR_BREWER("RColorBrewer");
+    GPLOTS("gplots");
+    //R_COLOR_BREWER("RColorBrewer");
     //variables
     private String packageName;
 

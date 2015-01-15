@@ -45,6 +45,7 @@ import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;
 import uk.ac.liv.mzqlib.constants.MzqDataConstants;
 import uk.ac.liv.mzqlib.model.*;
 import uk.ac.liv.mzqlib.r.RUtils;
+import uk.ac.liv.mzqlib.r.RequiredPackages;
 import uk.ac.liv.mzqlib.task.*;
 import uk.ac.liv.mzqlib.view.*;
 
@@ -80,6 +81,9 @@ public class MainApp extends Application {
         this.primaryStage.setTitle(WINDOW_TITLE);
         initRootLayout();
 
+        if (re == null) {
+            initialREngine();
+        }
         // test if jri is installed correctly
 //        try {
 //            System.loadLibrary("jri");
@@ -466,117 +470,109 @@ public class MainApp extends Application {
     }
 
     public void showHeatMapinR() {
-        //System.out.println("JLP = " + System.getProperty("java.library.path"));
 
-//        if (!Rengine.versionCheck()) {
-//            System.err.println("** Version mismatch - Java files don't match library version.");
-//            //System.exit(1);
-//        }
         if (re == null) {
             initialREngine();
         }
 
         // Start R heatamp process
-        //re.eval("source(\"http://www.bioconductor.org/biocLite.R\")");
-        //re.eval("biocLite(\"ALL\")");
-        // Require package RColorBrewer
         if (re != null) {
-            re.eval("if (!require(\"RColorBrewer\")) {\n"
-                    + "install.packages(\"RColorBrewer\")\n"
-                    + "}");
 
-            // Require package gplots      
-            re.eval("if (!require(\"gplots\")) {\n"
-                    + "install.packages(\"gplots\", dependencies = TRUE)\n"
-                    + "}");
+            // install gplots
+            if (!RUtils.installPackage(re, RequiredPackages.GPLOTS.getPackageName())) {
+                Dialogs.create()
+                        .title("R package missing")
+                        .message("Cannot perform heatmap plot as required R packages are missing!\nPlease install them first.")
+                        .showError();
+            }
+            else {
             // Load heatmap.2 library
-            re.eval("library(\"gplots\")");
+                //re.eval("library(\"gplots\")");
+                TableView<MzqDataMatrixRow> dataMatrixTable = mzqInfoController.getDataMatrixTable();
+                ObservableList<MzqDataMatrixRow> rowList = dataMatrixTable.getItems();
+                CreateRMatrixTask rmTask = new CreateRMatrixTask(rowList);
 
-            TableView<MzqDataMatrixRow> dataMatrixTable = mzqInfoController.getDataMatrixTable();
-            ObservableList<MzqDataMatrixRow> rowList = dataMatrixTable.getItems();
-            CreateRMatrixTask rmTask = new CreateRMatrixTask(rowList);
+                Dialogs.create()
+                        .title("Generating heat map by R")
+                        .showWorkerProgress(rmTask);
 
-            Dialogs.create()
-                    .title("Generating heat map by R")
-                    .showWorkerProgress(rmTask);
-
-            rmTask.setOnSucceeded((WorkerStateEvent t) -> {
-                re.eval("breaks <- seq(from = "
-                        + String.valueOf(rmTask.getValue().getLogMin() * 0.9)
-                        + ", to = "
-                        + String.valueOf(rmTask.getValue().getLogMax() * 1.1)
-                        + ", length = 51)");
+                rmTask.setOnSucceeded((WorkerStateEvent t) -> {
+                    re.eval("breaks <- seq(from = "
+                            + String.valueOf(rmTask.getValue().getLogMin() * 0.9)
+                            + ", to = "
+                            + String.valueOf(rmTask.getValue().getLogMax() * 1.1)
+                            + ", length = 51)");
 
                 // Set color palette
-                re.eval("color.palette  <- colorRampPalette(c(\"#000000\", \"#DC2121\", \"#E9A915\"))");
+                    //re.eval("color.palette  <- colorRampPalette(c(\"#000000\", \"#DC2121\", \"#E9A915\"))");
+                    // Set x matrix
+                    String setMatrix = "X = matrix(c(" + rmTask.getValue().getLogMatrix() + "), nrow=" + rmTask.getValue().getRowNumber() + ",byrow = TRUE)";
+                    re.eval(setMatrix);
 
-                // Set x matrix
-                String setMatrix = "X = matrix(c(" + rmTask.getValue().getLogMatrix() + "), nrow=" + rmTask.getValue().getRowNumber() + ",byrow = TRUE)";
-                re.eval(setMatrix);
-
-                //build row names from rowNames list
-                StringBuilder rowNames = new StringBuilder();
-                for (String rn : rmTask.getValue().getRowNames()) {
-                    rowNames.append("\"");
-                    rowNames.append(rn);
-                    rowNames.append("\", ");
-                }
-
-                // get column names
-                StringBuilder colNames = new StringBuilder();
-                ObservableList<TableColumn<MzqDataMatrixRow, ?>> colList = dataMatrixTable.getColumns();
-                Iterator<TableColumn<MzqDataMatrixRow, ?>> i = colList.iterator();
-                // skip the first column name --- "Id"
-                i.next();
-
-                while (i.hasNext()) {
-                    colNames.append("\"");
-                    colNames.append(i.next().getText());
-                    colNames.append("\"");
-                    if (i.hasNext()) {
-                        colNames.append(",");
+                    //build row names from rowNames list
+                    StringBuilder rowNames = new StringBuilder();
+                    for (String rn : rmTask.getValue().getRowNames()) {
+                        rowNames.append("\"");
+                        rowNames.append(rn);
+                        rowNames.append("\", ");
                     }
-                }
 
-                re.eval("rownames(X) <- c(" + rowNames.substring(0, rowNames.length() - 2) + ")");
-                re.eval("colnames(X) <- c(" + colNames.toString() + ")");
+                    // get column names
+                    StringBuilder colNames = new StringBuilder();
+                    ObservableList<TableColumn<MzqDataMatrixRow, ?>> colList = dataMatrixTable.getColumns();
+                    Iterator<TableColumn<MzqDataMatrixRow, ?>> i = colList.iterator();
+                    // skip the first column name --- "Id"
+                    i.next();
 
-                // Set heatmap
-                String setHeatmap = "heatmap.2(X,\n"
-                        + "Rowv=TRUE,\n"
-                        + "Colv=TRUE,\n"
-                        + "na.rm=FALSE,\n"
-                        + "distfun = dist,\n"
-                        + "hclustfun = hclust,\n"
-                        + "key=TRUE,\n"
-                        + "keysize=1,\n"
-                        + "trace=\"none\",\n"
-                        + "scale=\"none\",\n"
-                        + "density.info=c(\"none\"),\n"
-                        + "#margins=c(18, 8),\n"
-                        //                    //+ "col=color.palette,\n"
-                        + "breaks = breaks,\n"
-                        //+ "breaks = seq(from = 1, to = 10, length = 51),\n"
-                        //                    + "lhei=c(0.4,4),\n"
-                        + "main=\"" + mzqInfoController.getAssayQuantLayerTable().getSelectionModel().getSelectedItem().getQuantLayerType()
-                        + ": " + mzqInfoController.getAssayQuantLayerTable().getSelectionModel().getSelectedItem().getQuantLayerId() + "\"\n"
-                        + ")";
-                re.eval(setHeatmap);
-            });
+                    while (i.hasNext()) {
+                        colNames.append("\"");
+                        colNames.append(i.next().getText());
+                        colNames.append("\"");
+                        if (i.hasNext()) {
+                            colNames.append(",");
+                        }
+                    }
 
-            rmTask.setOnFailed((WorkerStateEvent t) -> {
-                Platform.runLater(() -> {
-                    Dialogs.create()
-                            .title("Error")
-                            .message("There are exceptions during the loading data:")
-                            .showException(rmTask.getException());
+                    re.eval("rownames(X) <- c(" + rowNames.substring(0, rowNames.length() - 2) + ")");
+                    re.eval("colnames(X) <- c(" + colNames.toString() + ")");
+
+                    // Set heatmap
+                    String setHeatmap = "heatmap.2(X,\n"
+                            + "Rowv=TRUE,\n"
+                            + "Colv=TRUE,\n"
+                            + "na.rm=FALSE,\n"
+                            + "distfun = dist,\n"
+                            + "hclustfun = hclust,\n"
+                            + "key=TRUE,\n"
+                            + "keysize=1,\n"
+                            + "trace=\"none\",\n"
+                            + "scale=\"none\",\n"
+                            + "density.info=c(\"none\"),\n"
+                            + "#margins=c(18, 8),\n"
+                            //+ "col=color.palette,\n"
+                            + "breaks = breaks,\n"
+                            //+ "breaks = seq(from = 1, to = 10, length = 51),\n"
+                            //                    + "lhei=c(0.4,4),\n"
+                            + "main=\"" + mzqInfoController.getAssayQuantLayerTable().getSelectionModel().getSelectedItem().getQuantLayerType()
+                            + ": " + mzqInfoController.getAssayQuantLayerTable().getSelectionModel().getSelectedItem().getQuantLayerId() + "\"\n"
+                            + ")";
+                    re.eval(setHeatmap);
                 });
 
-            });
+                rmTask.setOnFailed((WorkerStateEvent t) -> {
+                    Platform.runLater(() -> {
+                        Dialogs.create()
+                                .title("Error")
+                                .message("There are exceptions during the loading data:")
+                                .showException(rmTask.getException());
+                    });
 
-            Thread showHeatMapTh = new Thread(rmTask);
-            showHeatMapTh.setDaemon(true);
-            showHeatMapTh.start();
+                });
+
+                Thread showHeatMapTh = new Thread(rmTask);
+                showHeatMapTh.setDaemon(true);
+                showHeatMapTh.start();
+            }
         }
     }
 
@@ -601,84 +597,92 @@ public class MainApp extends Application {
         if (selectedQL.getListType().equals(MzqDataConstants.PROTEIN_GROUP_LIST_TYPE)) {
 
             MzqDataMatrixRow protGrpRow = dataMatrixTable.getSelectionModel().getSelectedItem();
-            if (protGrpRow.getObjectValue().get().equals("P60843")) {
-                System.out.println("stop");
+            if (protGrpRow == null) {
+                Dialogs.create()
+                        .title("No data selected")
+                        .message("Please select a data row")
+                        .showWarning();
             }
-
-            //Plot protein group quant value line
-            XYChart.Series series = new XYChart.Series<>();
-            lineChart.getData().add(series);
-
-            //Set protein group line color to RED
-            series.getNode().setStyle("-fx-stroke: red;");
-
-            series.setName(protGrpRow.getObjectValue().get());
-            List<StringProperty> values = protGrpRow.Values();
-            int i = 1;
-            for (StringProperty value : values) {
-                if (NumberUtils.isNumber(value.get())) {
-                    series.getData().add(new XYChart.Data(columns.get(i).getText(), Double.parseDouble(value.get())));
+            else {
+                if (protGrpRow.getObjectValue().get().equals("P60843")) {
+                    System.out.println("stop");
                 }
-                else {
-                    series.getData().add(new XYChart.Data(columns.get(i).getText(), -1));
-                }
-                i++;
-            }
 
-            //showProteinGroupPeptideLinePlot(protGrpRow, selectedQL.getDataType(), columns, lineChart);
-            //Get the first PeptideConsensusList and AssayQuantLayer regardless of the finalResult value
-            Iterator<PeptideConsensusList> peptideConsensusListIter = this.getUnmarshaller().unmarshalCollectionFromXpath(MzQuantMLElement.PeptideConsensusList);
-            DataMatrix peptideDM = new DataMatrix();
-            if (peptideConsensusListIter != null) {
-                PeptideConsensusList peptideList = peptideConsensusListIter.next();
+                //Plot protein group quant value line
+                XYChart.Series series = new XYChart.Series<>();
+                lineChart.getData().add(series);
 
-                //Get the peptide quant layer
-                List<QuantLayer<IdOnly>> assayQLs = peptideList.getAssayQuantLayer();
+                //Set protein group line color to RED
+                series.getNode().setStyle("-fx-stroke: red;");
 
-                for (QuantLayer assayQL : assayQLs) {
-                    if (selectedQL.getDataType().toLowerCase().contains("normalised")
-                            && assayQL.getDataType().getCvParam().getName().toLowerCase().contains("normalised")) {
-                        peptideDM = assayQL.getDataMatrix();
-                        break;
+                series.setName(protGrpRow.getObjectValue().get());
+                List<StringProperty> values = protGrpRow.Values();
+                int i = 1;
+                for (StringProperty value : values) {
+                    if (NumberUtils.isNumber(value.get())) {
+                        series.getData().add(new XYChart.Data(columns.get(i).getText(), Double.parseDouble(value.get())));
                     }
-                    if (selectedQL.getDataType().toLowerCase().contains("raw")
-                            && assayQL.getDataType().getCvParam().getName().toLowerCase().contains("raw")) {
-                        peptideDM = assayQL.getDataMatrix();
-                        break;
+                    else {
+                        series.getData().add(new XYChart.Data(columns.get(i).getText(), -1));
+                    }
+                    i++;
+                }
+
+                //showProteinGroupPeptideLinePlot(protGrpRow, selectedQL.getDataType(), columns, lineChart);
+                //Get the first PeptideConsensusList and AssayQuantLayer regardless of the finalResult value
+                Iterator<PeptideConsensusList> peptideConsensusListIter = this.getUnmarshaller().unmarshalCollectionFromXpath(MzQuantMLElement.PeptideConsensusList);
+                DataMatrix peptideDM = new DataMatrix();
+                if (peptideConsensusListIter != null) {
+                    PeptideConsensusList peptideList = peptideConsensusListIter.next();
+
+                    //Get the peptide quant layer
+                    List<QuantLayer<IdOnly>> assayQLs = peptideList.getAssayQuantLayer();
+
+                    for (QuantLayer assayQL : assayQLs) {
+                        if (selectedQL.getDataType().toLowerCase().contains("normalised")
+                                && assayQL.getDataType().getCvParam().getName().toLowerCase().contains("normalised")) {
+                            peptideDM = assayQL.getDataMatrix();
+                            break;
+                        }
+                        if (selectedQL.getDataType().toLowerCase().contains("raw")
+                                && assayQL.getDataType().getCvParam().getName().toLowerCase().contains("raw")) {
+                            peptideDM = assayQL.getDataMatrix();
+                            break;
+                        }
                     }
                 }
-            }
-            Map<String, List<StringProperty>> peptideDMMap = convertDataMatrixToHashMap(peptideDM);
+                Map<String, List<StringProperty>> peptideDMMap = convertDataMatrixToHashMap(peptideDM);
 
-            ProteinGroup proteinGrp = this.getUnmarshaller().unmarshal(uk.ac.liv.jmzqml.model.mzqml.ProteinGroup.class, protGrpRow.getObjectId());
+                ProteinGroup proteinGrp = this.getUnmarshaller().unmarshal(uk.ac.liv.jmzqml.model.mzqml.ProteinGroup.class, protGrpRow.getObjectId());
 
-            //Take the first protein as group leader in the protein group
-            ProteinRef protRef = proteinGrp.getProteinRef().get(0);
+                //Take the first protein as group leader in the protein group
+                ProteinRef protRef = proteinGrp.getProteinRef().get(0);
 
-            Protein protein = this.getUnmarshaller().unmarshal(uk.ac.liv.jmzqml.model.mzqml.Protein.class, protRef.getProteinRef());
-            List<String> peptideRefs = protein.getPeptideConsensusRefs();
-            for (String peptideRef : peptideRefs) {
-                PeptideConsensus peptide = this.getUnmarshaller().unmarshal(uk.ac.liv.jmzqml.model.mzqml.PeptideConsensus.class, peptideRef);
-                List<StringProperty> peptideValues = peptideDMMap.get(peptideRef);
-                if (peptideValues != null) {
-                    XYChart.Series peptideSeries = new XYChart.Series<>();
-                    lineChart.getData().add(peptideSeries);
+                Protein protein = this.getUnmarshaller().unmarshal(uk.ac.liv.jmzqml.model.mzqml.Protein.class, protRef.getProteinRef());
+                List<String> peptideRefs = protein.getPeptideConsensusRefs();
+                for (String peptideRef : peptideRefs) {
+                    PeptideConsensus peptide = this.getUnmarshaller().unmarshal(uk.ac.liv.jmzqml.model.mzqml.PeptideConsensus.class, peptideRef);
+                    List<StringProperty> peptideValues = peptideDMMap.get(peptideRef);
+                    if (peptideValues != null) {
+                        XYChart.Series peptideSeries = new XYChart.Series<>();
+                        lineChart.getData().add(peptideSeries);
 
-                    //Set peptide lines color to GRAY
-                    peptideSeries.getNode().setStyle("-fx-stroke: gray;");
+                        //Set peptide lines color to GRAY
+                        peptideSeries.getNode().setStyle("-fx-stroke: gray;");
 
-                    peptideSeries.setName(peptide.getPeptideSequence());
-                    //if (peptideValues != null) {
-                    int k = 1;
-                    for (StringProperty value : peptideValues) {
-                        if (NumberUtils.isNumber(value.get())) {
-                            peptideSeries.getData().add(new XYChart.Data(columns.get(k).getText(), Double.parseDouble(value.get())));
+                        peptideSeries.setName(peptide.getPeptideSequence());
+                        //if (peptideValues != null) {
+                        int k = 1;
+                        for (StringProperty value : peptideValues) {
+                            if (NumberUtils.isNumber(value.get())) {
+                                peptideSeries.getData().add(new XYChart.Data(columns.get(k).getText(), Double.parseDouble(value.get())));
 
+                            }
+                            else {
+                                peptideSeries.getData().add(new XYChart.Data(columns.get(k).getText(), -1));
+                            }
+                            k++;
                         }
-                        else {
-                            peptideSeries.getData().add(new XYChart.Data(columns.get(k).getText(), -1));
-                        }
-                        k++;
                     }
                 }
             }
@@ -688,52 +692,73 @@ public class MainApp extends Application {
 
             MzqDataMatrixRow protRow = dataMatrixTable.getSelectionModel().getSelectedItem();
 
-            //Plot protein quant value line
-            XYChart.Series series = new XYChart.Series<>();
-            lineChart.getData().add(series);
-
-            //Set protein line color to RED
-            series.getNode().setStyle("-fx-stroke: red;");
-
-            series.setName(protRow.getObjectValue().get());
-            List<StringProperty> values = protRow.Values();
-            int i = 1;
-            for (StringProperty value : values) {
-                if (NumberUtils.isNumber(value.get())) {
-                    series.getData().add(new XYChart.Data(columns.get(i).getText(), Double.parseDouble(value.get())));
-                }
-                else {
-                    series.getData().add(new XYChart.Data(columns.get(i).getText(), -1));
-                }
-                i++;
+            if (protRow == null) {
+                Dialogs.create()
+                        .title("No data selected")
+                        .message("Please select a data row")
+                        .showWarning();
             }
+            else {
+                //Plot protein quant value line
+                XYChart.Series series = new XYChart.Series<>();
+                lineChart.getData().add(series);
 
-            showProteinPeptideLinePlot(protRow, selectedQL.getDataType(), columns, lineChart);
+                //Set protein line color to RED
+                series.getNode().setStyle("-fx-stroke: red;");
+
+                series.setName(protRow.getObjectValue().get());
+                List<StringProperty> values = protRow.Values();
+                int i = 1;
+                for (StringProperty value : values) {
+                    if (NumberUtils.isNumber(value.get())) {
+                        series.getData().add(new XYChart.Data(columns.get(i).getText(), Double.parseDouble(value.get())));
+                    }
+                    else {
+                        series.getData().add(new XYChart.Data(columns.get(i).getText(), -1));
+                    }
+                    i++;
+                }
+
+                showProteinPeptideLinePlot(protRow, selectedQL.getDataType(), columns, lineChart);
+            }
         }
         else {
             ObservableList<MzqDataMatrixRow> rowList = dataMatrixTable.getSelectionModel().getSelectedItems();
 
-            for (MzqDataMatrixRow row : rowList) {
-                XYChart.Series series = new XYChart.Series();
-                lineChart.getData().add(series);
-                series.setName(row.getObjectValue().get());
-                List<StringProperty> values = row.Values();
-                int i = 1;
-                for (StringProperty value : values) {
-                    if (NumberUtils.isNumber(value.get())) {
-                        series.getData().add(new XYChart.Data(dataMatrixTable.getColumns().get(i).getText(), Double.parseDouble(value.get())));
+            if (rowList.isEmpty()) {
+                Dialogs.create()
+                        .title("No data selected")
+                        .message("Please select a data row")
+                        .showWarning();
+            }
+            else {
+                for (MzqDataMatrixRow row : rowList) {
+                    XYChart.Series series = new XYChart.Series();
+                    lineChart.getData().add(series);
+                    series.setName(row.getObjectValue().get());
+                    List<StringProperty> values = row.Values();
+                    int i = 1;
+                    for (StringProperty value : values) {
+                        if (NumberUtils.isNumber(value.get())) {
+                            series.getData().add(new XYChart.Data(dataMatrixTable.getColumns().get(i).getText(), Double.parseDouble(value.get())));
+                        }
+                        else {
+                            series.getData().add(new XYChart.Data(dataMatrixTable.getColumns().get(i).getText(), -1));
+                        }
+                        i++;
                     }
-                    else {
-                        series.getData().add(new XYChart.Data(dataMatrixTable.getColumns().get(i).getText(), -1));
-                    }
-                    i++;
                 }
             }
         }
-        Scene scene = new Scene(lineChart, 800, 600);
 
-        curveStage.setScene(scene);
-        curveStage.show();
+        //show the chart only when data row is seleted.
+        //without if condition, empty chart will show if no data row is selected
+        if (dataMatrixTable.getSelectionModel().getSelectedItem() != null) {
+            Scene scene = new Scene(lineChart, 800, 600);
+
+            curveStage.setScene(scene);
+            curveStage.show();
+        }
     }
 
     public void showGui() {
@@ -960,8 +985,7 @@ public class MainApp extends Application {
         if (re == null) {
             initialREngine();
         }
-
-        if (re != null && RUtils.installRequiredPackages(re)) {
+        else if (RUtils.installRequiredPackages(re)) {
             Platform.runLater(() -> {
                 Dialogs.create()
                         .title("R packages")
@@ -1001,10 +1025,9 @@ public class MainApp extends Application {
             //Platform.runLater(() -> {
             Dialogs.create()
                     .title("JRI package Error")
-                    .message("The R and JRI are not properly installed.\nPlease find out how to set up at http://code.google.com/p/mzq-lib/#How_to_install_mzqViewer")
+                    .message("The R and JRI are not properly installed.\nAny routine relying on R will not work.\nPlease find out how to set up at http://code.google.com/p/mzq-lib/#How_to_install_mzqViewer")
                     .showException(e);
             //});
-            //throw new RuntimeException(e);
         }
     }
 

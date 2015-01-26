@@ -95,6 +95,7 @@ public class NormalisationMultiThreading {
 //            assayMax = args[8];
         }
 
+        //input range version
 //        PepProtAbundanceNormalisation workTask = new PepProtAbundanceNormalisation(inputFile,
 //                outputFile, processingLevel, quantLayerType, inDataTypeAccession, outDataTypeAccession, 
 //                decoyTag, assayMin, assayMax);

@@ -1,3 +1,4 @@
+
 package uk.ac.liv.mzqlib.task;
 
 import java.io.File;
@@ -13,6 +14,7 @@ import uk.ac.liv.jmzqml.MzQuantMLElement;
 import uk.ac.liv.jmzqml.model.mzqml.AnalysisSummary;
 import uk.ac.liv.jmzqml.model.mzqml.CvParam;
 import uk.ac.liv.jmzqml.model.mzqml.FeatureList;
+import uk.ac.liv.jmzqml.model.mzqml.GlobalQuantLayer;
 import uk.ac.liv.jmzqml.model.mzqml.IdOnly;
 import uk.ac.liv.jmzqml.model.mzqml.Modification;
 import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensus;
@@ -34,6 +36,7 @@ import uk.ac.liv.mzqlib.model.MzQuantMLData;
 import uk.ac.liv.mzqlib.model.MzQuantMLSummary;
 import uk.ac.liv.mzqlib.model.MzqAssayQuantLayer;
 import uk.ac.liv.mzqlib.model.MzqDataMatrixRow;
+import uk.ac.liv.mzqlib.model.MzqFeatureQuantLayer;
 
 /**
  *
@@ -249,17 +252,24 @@ public class LoadMzQuantMLDataTask extends Task<MzQuantMLData> {
         }
 
         // Process feature list
+        // Construct a list of mzqFeatureQuantLayer
+        ObservableList<MzqFeatureQuantLayer> mzqFtQuantLayerList = FXCollections.observableArrayList();
+
         Iterator<FeatureList> featureListIter = mzqUm.unmarshalCollectionFromXpath(MzQuantMLElement.FeatureList);
         if (featureListIter != null) {
 
             updateMessage("Processing feature list");
 
             while (featureListIter.hasNext()) {
+
+                // start from a new featureList
                 if (isCancelled()) {
                     updateMessage("Cancelled");
                     break;
                 }
                 FeatureList featureList = featureListIter.next();
+
+                // get assay quant layer in featurelist 
                 List<QuantLayer<IdOnly>> ftAssQLs = featureList.getMS2AssayQuantLayer();
                 for (QuantLayer assQL : ftAssQLs) {
                     if (isCancelled()) {
@@ -281,6 +291,28 @@ public class LoadMzQuantMLDataTask extends Task<MzQuantMLData> {
                     }
 
                     assayQuantLayerList.add(mzqAQL);
+                }
+
+                // get feature quant layer (global quant layer) in featurelist
+                List<GlobalQuantLayer> ftQLs = featureList.getFeatureQuantLayer();
+                for (GlobalQuantLayer ftQL : ftQLs) {
+                    if (isCancelled()) {
+                        updateMessage("Cancelled");
+                        break;
+                    }
+                    MzqFeatureQuantLayer mzqFQL = new MzqFeatureQuantLayer(mzqUm, featureList.getId(), ftQL);
+                    // set list of MzqDataMatrix for feature quant layer
+                    List<Row> rows = ftQL.getDataMatrix().getRow();
+                    for (Row row : rows) {
+                        MzqDataMatrixRow mzqDMRow = new MzqDataMatrixRow();
+
+                        mzqDMRow.setObjectId(new SimpleStringProperty(row.getObjectRef()));
+                        mzqDMRow.setObjectValue(new SimpleStringProperty(row.getObjectRef()));
+                        mzqDMRow.setValues(row.getValue());
+                        mzqFQL.getDmRows().add(mzqDMRow);
+                    }
+
+                    mzqFtQuantLayerList.add(mzqFQL);
                 }
             }
         }
@@ -314,7 +346,8 @@ public class LoadMzQuantMLDataTask extends Task<MzQuantMLData> {
             }
         }
 
-        mzqData.setMzqQuantLayerList(assayQuantLayerList);
+        mzqData.setMzqAssayQuantLayerList(assayQuantLayerList);
+        mzqData.setMzqFeatureQuantLayerList(mzqFtQuantLayerList);
 
         updateMessage("Loading successfully");
         updateProgress(1, 1);

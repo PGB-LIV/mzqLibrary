@@ -1,3 +1,4 @@
+
 package uk.ac.liv.mzqlib.view;
 
 import java.util.logging.Level;
@@ -18,8 +19,8 @@ import javax.xml.bind.JAXBException;
 import uk.ac.liv.mzqlib.MainApp;
 import uk.ac.liv.mzqlib.constants.MzqDataConstants;
 import uk.ac.liv.mzqlib.model.MzQuantMLSummary;
-import uk.ac.liv.mzqlib.model.MzqAssayQuantLayer;
 import uk.ac.liv.mzqlib.model.MzqDataMatrixRow;
+import uk.ac.liv.mzqlib.model.MzqQuantLayer;
 
 /**
  * FXML Controller class
@@ -31,13 +32,13 @@ public class MzqInfoController {
     private MainApp mainApp;
 
     @FXML
-    private TableView<MzqAssayQuantLayer> assayQuantLayerTable;
+    private TableView<MzqQuantLayer> quantLayerTable;
     @FXML
-    private TableColumn<MzqAssayQuantLayer, String> assayQLId;
+    private TableColumn<MzqQuantLayer, String> assayQLId;
     @FXML
-    private TableColumn<MzqAssayQuantLayer, String> parentListId;
+    private TableColumn<MzqQuantLayer, String> parentListId;
     @FXML
-    private TableColumn<MzqAssayQuantLayer, String> dataType;
+    private TableColumn<MzqQuantLayer, String> dataType;
     @FXML
     private TableView<MzqDataMatrixRow> dataMatrixTable;
     @FXML
@@ -69,14 +70,15 @@ public class MzqInfoController {
         // Clear person details.
         showAssayQLDetails(null);
         // Listen for selection changes and show the person details when changed.
-        assayQuantLayerTable.getSelectionModel().selectedItemProperty().addListener(
+        quantLayerTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showAssayQLDetails(newValue));
 
     }
 
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
-        assayQuantLayerTable.setItems(mainApp.getMzqAssayQuantLayerData());
+        quantLayerTable.getItems().addAll(mainApp.getMzqAssayQuantLayerData());
+        quantLayerTable.getItems().addAll(mainApp.getMzqFeatureQuantLayerData());
     }
 
     public void showMzqSummary(MzQuantMLSummary sum) {
@@ -88,7 +90,7 @@ public class MzqInfoController {
         software.textProperty().bind(sum.getSoftware());
     }
 
-    private void showAssayQLDetails(MzqAssayQuantLayer assayQL) {
+    private void showAssayQLDetails(MzqQuantLayer assayQL) {
         if (assayQL != null) {
             //if (assayQL.getListId())
             // Clear the table
@@ -150,8 +152,8 @@ public class MzqInfoController {
         return dataMatrixTable;
     }
 
-    public TableView<MzqAssayQuantLayer> getAssayQuantLayerTable() {
-        return assayQuantLayerTable;
+    public TableView<MzqQuantLayer> getQuantLayerTable() {
+        return quantLayerTable;
     }
 
 }

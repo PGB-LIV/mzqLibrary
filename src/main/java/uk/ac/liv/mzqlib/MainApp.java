@@ -68,6 +68,10 @@ public class MainApp extends Application {
         return mzqData.getMzqAssayQuantLayerList();
     }
 
+    public ObservableList<MzqFeatureQuantLayer> getMzqFeatureQuantLayerData() {
+        return mzqData.getMzqFeatureQuantLayerList();
+    }
+
     public MzQuantMLSummary getMzQuantMLSummary() {
         return mzqData.getMzQuantMLSummary();
     }
@@ -433,8 +437,8 @@ public class MainApp extends Application {
                         + "breaks = breaks,\n"
                         //+ "breaks = seq(from = 1, to = 10, length = 51), \n"
                         //                    + "lhei=c(0.4,4),\n"
-                        + "main=\"" + mzqInfoController.getAssayQuantLayerTable().getSelectionModel().getSelectedItem().getQuantLayerType()
-                        + ": " + mzqInfoController.getAssayQuantLayerTable().getSelectionModel().getSelectedItem().getQuantLayerId() + "\"\n"
+                        + "main=\"" + mzqInfoController.getQuantLayerTable().getSelectionModel().getSelectedItem().getQuantLayerType()
+                        + ": " + mzqInfoController.getQuantLayerTable().getSelectionModel().getSelectedItem().getQuantLayerId() + "\"\n"
                         + ")";
                 re.eval(setHeatmap);
                 re.eval("dev.off()");
@@ -486,7 +490,7 @@ public class MainApp extends Application {
                         .showError();
             }
             else {
-            // Load heatmap.2 library
+                // Load heatmap.2 library
                 //re.eval("library(\"gplots\")");
                 TableView<MzqDataMatrixRow> dataMatrixTable = mzqInfoController.getDataMatrixTable();
                 ObservableList<MzqDataMatrixRow> rowList = dataMatrixTable.getItems();
@@ -503,7 +507,7 @@ public class MainApp extends Application {
                             + String.valueOf(rmTask.getValue().getLogMax() * 1.1)
                             + ", length = 51)");
 
-                // Set color palette
+                    // Set color palette
                     //re.eval("color.palette  <- colorRampPalette(c(\"#000000\", \"#DC2121\", \"#E9A915\"))");
                     // Set x matrix
                     String setMatrix = "X = matrix(c(" + rmTask.getValue().getLogMatrix() + "), nrow=" + rmTask.getValue().getRowNumber() + ",byrow = TRUE)";
@@ -553,8 +557,8 @@ public class MainApp extends Application {
                             + "breaks = breaks,\n"
                             //+ "breaks = seq(from = 1, to = 10, length = 51),\n"
                             //                    + "lhei=c(0.4,4),\n"
-                            + "main=\"" + mzqInfoController.getAssayQuantLayerTable().getSelectionModel().getSelectedItem().getQuantLayerType()
-                            + ": " + mzqInfoController.getAssayQuantLayerTable().getSelectionModel().getSelectedItem().getQuantLayerId() + "\"\n"
+                            + "main=\"" + mzqInfoController.getQuantLayerTable().getSelectionModel().getSelectedItem().getQuantLayerType()
+                            + ": " + mzqInfoController.getQuantLayerTable().getSelectionModel().getSelectedItem().getQuantLayerId() + "\"\n"
                             + ")";
                     re.eval(setHeatmap);
                 });
@@ -591,7 +595,7 @@ public class MainApp extends Application {
 
         TableView<MzqDataMatrixRow> dataMatrixTable = mzqInfoController.getDataMatrixTable();
 
-        MzqAssayQuantLayer selectedQL = mzqInfoController.getAssayQuantLayerTable().getSelectionModel().getSelectedItem();
+        MzqQuantLayer selectedQL = mzqInfoController.getQuantLayerTable().getSelectionModel().getSelectedItem();
         ObservableList<TableColumn<MzqDataMatrixRow, ?>> columns = dataMatrixTable.getColumns();
 
         if (selectedQL.getListType().equals(MzqDataConstants.PROTEIN_GROUP_LIST_TYPE)) {

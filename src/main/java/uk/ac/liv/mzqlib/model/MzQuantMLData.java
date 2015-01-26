@@ -15,6 +15,7 @@ public class MzQuantMLData {
 
     private final MzQuantMLSummary mzQuantMLSummary = new MzQuantMLSummary();
     private final ObservableList<MzqAssayQuantLayer> mzqAssayQuantLayerList = FXCollections.observableArrayList();
+    private final ObservableList<MzqFeatureQuantLayer> mzqFeatureQuantLayerList = FXCollections.observableArrayList();
     private MzQuantMLUnmarshaller mzQuantMLUnmarshaller;
 
     public MzQuantMLData() {
@@ -29,7 +30,7 @@ public class MzQuantMLData {
         mzQuantMLSummary.setSoftware(mzqSum.getSoftware());
     }
 
-    public void setMzqQuantLayerList(
+    public void setMzqAssayQuantLayerList(
             ObservableList<MzqAssayQuantLayer> mzqAQLList) {
         mzqAssayQuantLayerList.clear();
         mzqAssayQuantLayerList.addAll(mzqAQLList);
@@ -49,6 +50,22 @@ public class MzQuantMLData {
 
     public MzQuantMLUnmarshaller getMzQuantMLUnmarshaller() {
         return mzQuantMLUnmarshaller;
+    }
+
+    /**
+     * @return the mzqFeatureQuantLayerList
+     */
+    public ObservableList<MzqFeatureQuantLayer> getMzqFeatureQuantLayerList() {
+        return mzqFeatureQuantLayerList;
+    }
+
+    /**
+     * @param mzqFeatureQuantLayerList the mzqFeatureQuantLayerList to set
+     */
+    public void setMzqFeatureQuantLayerList(
+            ObservableList<MzqFeatureQuantLayer> mzqFeatureQuantLayerList) {
+        this.mzqFeatureQuantLayerList.clear();
+        this.mzqFeatureQuantLayerList.addAll(mzqFeatureQuantLayerList);
     }
 
 }

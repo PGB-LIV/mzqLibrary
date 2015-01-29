@@ -22,8 +22,7 @@ import uk.ac.liv.jmzqml.xml.io.MzQuantMLMarshaller;
 import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;
 
 /**
- * This code is created for calculating protein abundance in terms of both raw
- * and normalised peptide abundances.
+ * This code is created for calculating protein abundance inference
  *
  * @author man-mqbsshz2
  * @version 0.2
@@ -58,34 +57,66 @@ public final class ProteinAbundanceInference {
     private String outputAssayQuantLayerID;
     private String outputRawAssayQuantLayerID;
 
+    /**
+     * set quant layer type
+     * @param qlt - quant layer type
+     */
     public void setQuantLayerType(String qlt) {
         quantLayerType = qlt;
     }
 
+    /**
+     * set calculation operator
+     * @param cal - operator
+     */
     public void setCalOperation(String cal) {
         abundanceOperation = cal;
     }
 
+    /**
+     * set input peptide datatype accession
+     * @param pdta - datatype accession
+     */
     public void setInPDTA(String pdta) {
         inputDataTypeAccession = pdta;
     }
 
+    /**
+     * set input raw data peptide datatype accession
+     * @param rdta - datatype accession
+     */
     public void setInRawPDTA(String rdta) {
         inputRawDataTypeAccession = rdta;
     }
 
+    /**
+     * set output protein group datatype accession
+     * @param pgdta - datatype accession
+     */
     public void setOutPGDTA(String pgdta) {
         outputProteinGroupDTAccession = pgdta;
     }
 
+    /**
+     * set output protein group datatype name
+     * @param pgdtn - datatype name
+     */
     public void setOutPGDTN(String pgdtn) {
         outputProteinGroupDTName = pgdtn;
     }
 
+    /**
+     * set output raw protein group datatype accession
+     * @param rpgdta - datatype accession
+     */
     public void setOutRawPGDTA(String rpgdta) {
         outputRawProteinGroupDTAccession = rpgdta;
     }
 
+    /**
+     * set output raw protein group datatype name
+     * @param rpgdtn - datatype name
+     */
     public void setOutRawPGDTN(String rpgdtn) {
         outputRawProteinGroupDTName = rpgdtn;
     }
@@ -93,16 +124,16 @@ public final class ProteinAbundanceInference {
     /**
      * constructor
      *
-     * @param in_file
-     * @param out_file
-     * @param abundanceOperation
-     * @param inputDataTypeAccession
-     * @param inputRawDataTypeAccession
-     * @param outputProteinGroupDTAccession
-     * @param outputProteinGroupDTName
-     * @param outputRawProteinGroupDTAccession
-     * @param outputRawProteinGroupDTName
-     * @param QuantLayerType
+     * @param in_file - input file
+     * @param out_file - output file
+     * @param abundanceOperation - calculation operator
+     * @param inputDataTypeAccession - input datatype accession
+     * @param inputRawDataTypeAccession - input raw datatype accession
+     * @param outputProteinGroupDTAccession - output protein group datatype accession
+     * @param outputProteinGroupDTName - output protein group datatype name
+     * @param outputRawProteinGroupDTAccession - output raw protein group datatype accession
+     * @param outputRawProteinGroupDTName - output raw protein group datatype name
+     * @param QuantLayerType - quant layer type
      *
      * @throws FileNotFoundException
      */
@@ -181,7 +212,7 @@ public final class ProteinAbundanceInference {
     /**
      * main method
      *
-     * @param args
+     * @param args - paramters for command line
      *
      * @throws JAXBException
      * @throws InstantiationException
@@ -291,9 +322,9 @@ public final class ProteinAbundanceInference {
     /**
      * execute the methods for mapping, grouping, calculation and output
      *
-     * @param infile_um
+     * @param infile_um - input unmarshalled mzq file
      *
-     * @return
+     * @return - true/false
      */
     public boolean pipeline_executor(MzQuantMLUnmarshaller infile_um) {
 
@@ -365,7 +396,7 @@ public final class ProteinAbundanceInference {
     /**
      * examine if there is a protein group list. If existing, remove it.
      *
-     * @param um
+     * @param um - unmarshalled mzq file
      */
     private void checkProteinGroupList(MzQuantMLUnmarshaller um) {
         MzQuantML mzq = um.unmarshal(MzQuantMLElement.MzQuantML);
@@ -380,11 +411,11 @@ public final class ProteinAbundanceInference {
     }
 
     /**
-     * String test
+     * String examination
      *
-     * @param aText
+     * @param aText - a character string
      *
-     * @return
+     * @return - true/false
      */
     private boolean textHasContext(String aText) {
         String EMPTY_STRING = "";
@@ -392,11 +423,11 @@ public final class ProteinAbundanceInference {
     }
 
     /**
-     * unmarshal xml to java object
+     * unmarshal mzq to java object
      *
-     * @param infile
+     * @param infile - mzq file
      *
-     * @return
+     * @return - unmarshalled mzq Java object file
      *
      * @throws IllegalStateException
      * @throws FileNotFoundException
@@ -412,10 +443,10 @@ public final class ProteinAbundanceInference {
      * identify peptide assay values using input data type accession and quant
      * layer type (assay quant layer by default)
      *
-     * @param in_file_um
-     * @param inputPepDTCA
+     * @param in_file_um - unmarshalled mzq file
+     * @param inputPepDTCA - input peptide datatype accession
      *
-     * @return
+     * @return - peptide assay values
      */
     private Map<String, List<String>> peptideAssayValues(
             MzQuantMLUnmarshaller in_file_um, String inputPepDTCA) {
@@ -454,10 +485,10 @@ public final class ProteinAbundanceInference {
      * obtain the map of Protein to Peptide, which the peptides are the existing
      * ones in the quant layer identified by the user
      *
-     * @param in_file_um
-     * @param pepAssVal
+     * @param in_file_um - input unmarshalled mzq file
+     * @param pepAssVal - peptide assay values
      *
-     * @return
+     * @return protein-to-peptide map
      */
     private Map<String, HashSet<String>> proteinToPeptide(
             MzQuantMLUnmarshaller in_file_um,
@@ -498,11 +529,11 @@ public final class ProteinAbundanceInference {
     }
 
     /**
-     * map from protein to its accession
+     * mapping protein to its accession
      *
-     * @param in_file_um
+     * @param in_file_um - unmarshalled mzq file
      *
-     * @return a map
+     * @return a map for protein-to-accession
      */
     private Map<String, String> proteinToAccession(
             MzQuantMLUnmarshaller in_file_um) {
@@ -531,10 +562,9 @@ public final class ProteinAbundanceInference {
     /**
      * obtain the map of Peptide-to-Protein from the map of Protein-to-Peptide
      *
-     * @param protToPep
+     * @param protToPep - protein-to-peptide map
      *
-     * @return a map from peptide to protein in terms of the map of
-     *         protein-to-peptide
+     * @return a map for peptide-to-protein 
      */
     private Map<String, HashSet<String>> peptideToProtein(
             Map<String, HashSet<String>> protToPep) {
@@ -554,7 +584,7 @@ public final class ProteinAbundanceInference {
     /**
      * obtain the assay quant layer list
      *
-     * @param in_file_um
+     * @param in_file_um - input marshalled mzq file
      *
      * @return
      */
@@ -571,27 +601,27 @@ public final class ProteinAbundanceInference {
      *
      * @return
      */
-    private List<QuantLayer<IdOnly>> studyVariableQLs(
-            MzQuantMLUnmarshaller in_file_um) {
+//    private List<QuantLayer<IdOnly>> studyVariableQLs(
+//            MzQuantMLUnmarshaller in_file_um) {
+//
+//        PeptideConsensusList pepConList = in_file_um.unmarshal(MzQuantMLElement.PeptideConsensusList);
+//        List<QuantLayer<IdOnly>> sVQLs = pepConList.getStudyVariableQuantLayer();
+//        return sVQLs;
+//    }
 
-        PeptideConsensusList pepConList = in_file_um.unmarshal(MzQuantMLElement.PeptideConsensusList);
-        List<QuantLayer<IdOnly>> sVQLs = pepConList.getStudyVariableQuantLayer();
-        return sVQLs;
-    }
-
-    private RatioQuantLayer ratioQLs(MzQuantMLUnmarshaller in_file_um) {
-
-        PeptideConsensusList pepConList = in_file_um.unmarshal(MzQuantMLElement.PeptideConsensusList);
-        RatioQuantLayer ratioQLs = pepConList.getRatioQuantLayer();
-        return ratioQLs;
-    }
+//    private RatioQuantLayer ratioQLs(MzQuantMLUnmarshaller in_file_um) {
+//
+//        PeptideConsensusList pepConList = in_file_um.unmarshal(MzQuantMLElement.PeptideConsensusList);
+//        RatioQuantLayer ratioQLs = pepConList.getRatioQuantLayer();
+//        return ratioQLs;
+//    }
 
     /**
      * get the object of MzQuantML from the input file
      *
-     * @param in_file1
+     * @param in_file_um - input unmarshalled mzq file
      *
-     * @return
+     * @return java object
      */
     private MzQuantML mzq(MzQuantMLUnmarshaller in_file_um) {
 
@@ -602,10 +632,10 @@ public final class ProteinAbundanceInference {
     /**
      * get the identification of assay quant layer
      *
-     * @param in_file_um
-     * @param inputPeptideDTCA
+     * @param in_file_um - input unmarshalled mzq file
+     * @param inputPeptideDTCA - input peptide datatype accession
      *
-     * @return
+     * @return - assay quant layer ID
      */
     private static String assayQuantLayerId(MzQuantMLUnmarshaller in_file_um,
                                             String inputPeptideDTCA) {
@@ -625,22 +655,24 @@ public final class ProteinAbundanceInference {
 
     }
 
+    
     /**
-     * output the pipeline result (protein groups, assay quant layers) with the
+     * output the result (protein groups, assay quant layers) with the
      * mzQuantML standard format
-     *
-     * @param mzq
-     * @param assayQLs
-     * @param operation
-     * @param uniSetGr
-     * @param sameSetGr
-     * @param subSetGr
-     * @param assayQlId
-     * @param in_file1
-     * @param inputPeptideDTCA
-     *
-     * @return a boolean value for checking whether the output of MZQ format is
-     *         valid
+     * @param mzq - MzQuantML object file
+     * @param assayQLs - assay quant layer list
+     * @param operation - calculation operator
+     * @param uniSetGr - unique set group map
+     * @param sameSetGr - sameset group map
+     * @param subSetGr - subset group map
+     * @param assayQlId - assay quant layer ID
+     * @param inPepQLID - input peptide quant layer ID
+     * @param outRawPQlId - output raw peptide quant layer ID
+     * @param inRawPepQLID - input raw peptide quant layer ID
+     * @param outFile - output mzq file
+     * @param protAbundance - protein abundance
+     * @param rawProtAbundance - raw protein abundance
+     * @return - true/false
      */
     private boolean mzqOutput(MzQuantML mzq, List<QuantLayer<IdOnly>> assayQLs,
                               String operation,
@@ -715,13 +747,13 @@ public final class ProteinAbundanceInference {
     /**
      * calculate protein abundance with the protein grouping result
      *
-     * @param operation
-     * @param uniSetGr
-     * @param sameSetGr
-     * @param subSetGr
-     * @param pepAssVal
+     * @param operation - calculation operator
+     * @param uniSetGr - unique set group map
+     * @param sameSetGr - sameset group map
+     * @param subSetGr - subset group map
+     * @param pepAssVal - peptide assay values
      *
-     * @return
+     * @return - protein abundance
      */
     private Map<String, List<String>> proteinAbundanceCalculation(
             String operation,
@@ -735,8 +767,6 @@ public final class ProteinAbundanceInference {
         int groupLeader = 0;
 
         DecimalFormat df = new DecimalFormat(".000");
-//        Set<String> peptideList = peptideAssayValues.keySet();
-//        System.out.println("Pep List: " + peptideList);
 
         /**
          * unique set case
@@ -775,12 +805,7 @@ public final class ProteinAbundanceInference {
                 }
             }
             operationResult[assaySize] = 0;
-//            operationResult[assaySize + 1] = 0;
-//            operationPepValue[assaySize] = 0;
-//            operationPepValue[assaySize + 1] = 0;
 
-//            System.out.println("Sum of peptide element values: " + Arrays.toString(sumOfpepValues));
-//            System.out.println("Protein ID: " + entry.getKey());
             for (String peptide : entry.getValue()) {
                 List<String> assayValues = pepAssVal.get(peptide);
 
@@ -830,8 +855,6 @@ public final class ProteinAbundanceInference {
                 operationResultFormat[i] = df.format(operationResult[i]);
             }
 
-//            System.out.println("format: " + Arrays.asList(operationResultFormat));
-//            List<String> proteinAbundanceList = Arrays.asList(Arrays.toString(operationResult));
             List<String> proteinAbundanceList = Arrays.asList(operationResultFormat);
             protAbu.put(entry.getKey(), proteinAbundanceList);
 //            proteinAbundance.put("ProteinGroup" + groupId, proteinAbundanceList);
@@ -845,10 +868,8 @@ public final class ProteinAbundanceInference {
 
 //            groupId++;
             String pepSelect = entry.getValue().iterator().next().toString();
-//            System.out.println("Pep Selected: " + pepSelect);
 
             List<String> assayValTmp = pepAssVal.get(pepSelect);
-//            System.out.println("Assay Val Tmp: " + assayValTmp);
 
             //number of assay values in each peptide
             int assaySize = assayValTmp.size();
@@ -880,7 +901,6 @@ public final class ProteinAbundanceInference {
 
             for (String peptide : entry.getValue()) {
                 List<String> assayValues = pepAssVal.get(peptide);
-//                System.out.println("assay value: " + assayValues);
                 for (int j = 0; j < assayValues.size(); j++) {
                     String componentValue = assayValues.get(j);
 
@@ -895,7 +915,6 @@ public final class ProteinAbundanceInference {
                 tempNo++;
             }
 
-//System.out.println("Same Set Peptides: " + entry.getValue());
             /**
              * calculation the abundance according to operation method
              */
@@ -1019,17 +1038,16 @@ public final class ProteinAbundanceInference {
             protAbu.put(entry.getKey(), proteinAbundanceList);
         }
 
-//        System.out.println("Protein abundance:" + proteinAbundance);
         return protAbu;
     }
 
     /**
      * get protein group list from the map of ordered groups
      *
-     * @param protGL
-     * @param groupIO
+     * @param protGL - protein group list
+     * @param groupIO - ordered protein by alphabet
      *
-     * @return
+     * @return - protein group
      */
     private void proteinGroups(ProteinGroupList protGL,
                                Map<String, String> groupIO) {
@@ -1223,14 +1241,14 @@ public final class ProteinAbundanceInference {
      * create assay quant layers using the information of CvParams, calculated
      * abundances and grouping results.
      *
-     * @param protGroList
-     * @param aQLs
-     * @param assayQI
-     * @param inputPepDTCA
-     * @param protAbun
-     * @param groupInOrd
+     * @param protGroList - protein group list
+     * @param aQLs - assay quant layers
+     * @param assayQI - assay quant layer ID
+     * @param inputPepDTCA - input peptide datatype accession
+     * @param protAbun - protein abundance
+     * @param groupInOrd - ordered protein group
      *
-     * @return a boolean value for checking whether the layers of assay quant
+     * @return a boolean value for confirming whether the layers of assay quant
      *         are created correctly
      */
     private boolean assayQuantLayers(ProteinGroupList protGroList,

@@ -15,16 +15,16 @@ import uk.ac.liv.jmzqml.model.mzqml.DataMatrix;
 import uk.ac.liv.jmzqml.model.mzqml.Row;
 
 /**
- *
+ * Utilities used
  * @author man-mqbsshz2
  */
 public class Utils {
     
     /**
      * Make the records of DataMatrix in order
-     * @param map
-     * @param dM
-     * @return 
+     * @param map - a hashmap
+     * @param dM - data matrix
+     * @return a data matrix
      */
     public static DataMatrix sortedMap(Map<String, List<String>> map, DataMatrix dM) {
         Set s = map.entrySet();
@@ -37,15 +37,8 @@ public class Utils {
             value = value.substring(1, value.length() - 2).replaceAll("[\\,]", " ");
             //remove the last 5 characters of groupId
             value = value.substring(0, value.length() - 5);
-
-//            System.out.println(key + " => " + value);
             Row row = new Row();
-
             row.setObjectRef(entry.getKey().toString());
-//            System.out.println("sKey: " + sKey);
-//            String sKey = entry.getKey().toString();
-//            row.setObjectRef(gIo.get(sKey));
-
             row.getValue().add(value);
             dM.getRow().add(row);
         }
@@ -54,8 +47,8 @@ public class Utils {
     
     /**
      * calculate the column sum in a two-dimensional array
-     * @param arr
-     * @return 
+     * @param arr - a 2-d array
+     * @return a 1-d array
      */
      public static double[] columnSum(double[][] arr) {
         int index = 0;
@@ -66,11 +59,7 @@ public class Utils {
                 sum += arr1[i];
             }
 
-//            for (int j = 0; j < arr.length; j++) {
-//                sum += arr[j][i];
-//            }
             temp[index] = sum;
-//      System.out.println("Index is: " + index + " Sum is: " + sum);
             index++;
         }
         return temp;
@@ -78,8 +67,8 @@ public class Utils {
 
      /**
       * get the median for a vector
-      * @param d
-      * @return 
+      * @param d - a 1-d array
+      * @return a double value
       */
     public static double median(double[] d) {
         Arrays.sort(d);

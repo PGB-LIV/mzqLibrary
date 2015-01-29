@@ -14,31 +14,29 @@ import uk.ac.liv.jmzqml.model.mzqml.DataMatrix;
 import uk.ac.liv.jmzqml.model.mzqml.Row;
 
 /**
- *
+ * 
  * @author man-mqbsshz2
  */
 public class Utils {
 
+    /**
+     * sort map entries with values
+     * @param map - a hashmap
+     * @param dM - data matrix
+     * @return  sorted data matrix
+     */
     public static DataMatrix sortedMap(Map<String, List<String>> map, DataMatrix dM) {
         Set s = map.entrySet();
 
         for (Iterator it = s.iterator(); it.hasNext();) {
             Map.Entry entry = (Map.Entry) it.next();
-//            String key = (String) entry.getKey();
             String value = entry.getValue().toString();
 
             //remove the double quotation marks in front and rear
             value = value.substring(1, value.length() - 1).replaceAll("[\\,]", " ");
 
-            //remove the last 5 characters of groupId
-//            value = value.substring(0, value.length() - 5);
-//            System.out.println(key + " => " + value);
             Row row = new Row();
-
             row.setObjectRef(entry.getKey().toString());
-//            System.out.println("sKey: " + sKey);
-//            String sKey = entry.getKey().toString();
-//            row.setObjectRef(gIo.get(sKey));
 
             row.getValue().add(value);
             dM.getRow().add(row);
@@ -49,8 +47,8 @@ public class Utils {
     /**
      * get the median for a vector
      *
-     * @param d
-     * @return
+     * @param d - a double type data vector
+     * @return a double value
      */
     public static double median(double[] d) {
         Arrays.sort(d);
@@ -95,6 +93,11 @@ public class Utils {
 //        return pivot; 
 //    } 
 
+    /**
+     * calculate vector mean value
+     * @param m - a double type data vector
+     * @return a double value
+     */
     public static double mean(double[] m) {
         double sum = 0;
         for (int i = 0; i < m.length; i++) {
@@ -103,6 +106,12 @@ public class Utils {
         return sum / m.length;
     }
 
+    /**
+     * resize an array
+     * @param oldArray - old array
+     * @param newSize - new size
+     * @return a new array
+     */
     public static Object resizeArray(Object oldArray, int newSize) {
         int oldSize = java.lang.reflect.Array.getLength(oldArray);
         Class elementType = oldArray.getClass().getComponentType();

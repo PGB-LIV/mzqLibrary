@@ -80,46 +80,78 @@ public class PepProtAbundanceNormalisation {
 
     private MzQuantMLUnmarshaller inFileUM;
     private int assNo;
-
     private boolean initted;
-
     private int pepSize;
 
+    /**
+     * give the maximum number of threads
+     * @param maximumThreads - Number of maximum threads
+     */
+    
     public void setMaximumThreads(int maximumThreads) {
         this.maximumThreads = maximumThreads;
     }
 
+    /**
+     * give normalised level
+     * @param normLev - normalised level
+     */
     public void setNormLevel(String normLev) {
         normalisedLevel = normLev;
     }
 
+    /**
+     * set quant layer type
+     * @param qlt - quant layer type
+     */
     public void setQuantLT(String qlt) {
         quantLayerType = qlt;
     }
 
+    /**
+     * set input data type accession
+     * @param inDTA - data type accession for input
+     */
     public void setInDTAcc(String inDTA) {
         inputDataTypeAccession = inDTA;
     }
 
+    /**
+     * set output data type accession
+     * @param outDTA - data type accession for output
+     */
     public void setOutDTAcc(String outDTA) {
         outputDataTypeAccession = outDTA;
     }
 
+    /**
+     * set decoy tag
+     * @param td - decoy tag
+     */
     public void setTagDecoy(String td) {
         tagDecoy = td;
     }
 
-//    public void setReferenceNumber(int refNumber) {
-//        referenceNumber = refNumber;
-//    }
+    /**
+     * set data type CV name for output
+     * @param outDTCN - output data type CV name
+     */
     public void setOutputAssayDTCN(String outDTCN) {
         outputDataTypeName = outDTCN;
     }
 
+    /**
+     * set ID type
+     * @param idType - ID type 
+     */
     public void setIDType(String idType) {
         setType = idType;
     }
 
+    /**
+     * set unmarshalling file for mzQuantML object
+     * @param um - unmarshalling input file
+     */
     public void setUMInfile(MzQuantMLUnmarshaller um) {
         inFileUM = um;
     }
@@ -210,7 +242,7 @@ public class PepProtAbundanceNormalisation {
     }
 
     /**
-     * Initialise for calculation
+     * Initialisation for calculation
      */
     private void init() {
 

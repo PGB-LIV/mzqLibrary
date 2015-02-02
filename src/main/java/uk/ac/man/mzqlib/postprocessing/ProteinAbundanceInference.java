@@ -2,6 +2,7 @@ package uk.ac.man.mzqlib.postprocessing;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import static java.lang.System.exit;
 import java.text.DecimalFormat;
 import java.util.Arrays;
@@ -222,7 +223,7 @@ public final class ProteinAbundanceInference {
      */
     public static void main(String[] args)
             throws JAXBException, InstantiationException,
-            IllegalAccessException, IllegalStateException, FileNotFoundException {
+            IllegalAccessException, IllegalStateException, IOException {
 
         String quantLT = "AssayQuantLayer";
 
@@ -286,23 +287,20 @@ public final class ProteinAbundanceInference {
      * @throws FileNotFoundException
      */
     public void proteinInference()
-            throws FileNotFoundException {
+            throws IOException {
 
-        boolean pipeline_flag = true;
-
+        boolean pipeline_flag = true;        
         MzQuantMLUnmarshaller infile_um = null;
         try {
             infile_um = mzqFileInput(in_file);
-        }
-        catch (IllegalStateException ex) {
+            //remove the previous protein group list if existing
+            infile_um = checkProteinGroupList(infile_um);
+        } catch (FileNotFoundException ex) {
             System.out.println("****************************************************");
             System.out.println("The mzq file is not found!!! Please check the input.");
             System.err.println(ex);
             System.out.println("****************************************************");
-        }
-
-        //remove the previous protein group list if existing
-        checkProteinGroupList(infile_um);
+        }       
 
         //
         pipeline_flag = pipeline_executor(infile_um);
@@ -318,6 +316,29 @@ public final class ProteinAbundanceInference {
         }
         System.out.println("****************************************************");
     }
+    
+    /**
+     * Examine if there is a protein group list in the original unmarshaller. If there is, create a new file without the list and pass back an unmarshaller for the new file.
+     * The original file will not be changed.
+     * If there was no list in the original unmarshaller, then the original unmarshaller is returned.
+     *
+     * @param originalUnmarshaller The original unmarshaller for the input data.
+     */
+    private MzQuantMLUnmarshaller checkProteinGroupList(MzQuantMLUnmarshaller originalUnmarshaller) throws IOException {
+        MzQuantML mzq = originalUnmarshaller.unmarshal(MzQuantMLElement.MzQuantML);
+        ProteinGroupList protGrList = originalUnmarshaller.unmarshal(MzQuantMLElement.ProteinGroupList);
+        if (protGrList == null) {
+            return originalUnmarshaller;
+        } else  {
+            File tmpFile = File.createTempFile("mzqlib-inference", null);
+            protGrList = null;
+            mzq.setProteinGroupList(protGrList);
+            MzQuantMLMarshaller marshaller = new MzQuantMLMarshaller(tmpFile.getAbsolutePath());
+            marshaller.marshall(mzq);
+            MzQuantMLUnmarshaller newUnmarshaller = new MzQuantMLUnmarshaller(tmpFile);
+            return newUnmarshaller;
+        }
+    }  
 
     /**
      * execute the methods for mapping, grouping, calculation and output
@@ -392,23 +413,7 @@ public final class ProteinAbundanceInference {
         }
         return flag;
     }
-
-    /**
-     * examine if there is a protein group list. If existing, remove it.
-     *
-     * @param um - unmarshalled mzq file
-     */
-    private void checkProteinGroupList(MzQuantMLUnmarshaller um) {
-        MzQuantML mzq = um.unmarshal(MzQuantMLElement.MzQuantML);
-        ProteinGroupList protGrList = um.unmarshal(MzQuantMLElement.ProteinGroupList);
-        if (protGrList != null) {
-            protGrList = null;
-            mzq.setProteinGroupList(protGrList);
-
-            MzQuantMLMarshaller marshaller = new MzQuantMLMarshaller(in_file);
-            marshaller.marshall(mzq);
-        }
-    }
+    
 
     /**
      * String examination

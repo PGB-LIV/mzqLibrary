@@ -158,18 +158,24 @@ public class ProgenesisProteinListReader implements Closeable {
         while ((nextLine = reader.readNext()) != null) {
             // Build indexMap, stores proteinAccessions
             indexMap.put(currentK, nextLine[0]);
+            
+            double conf = getDoubleOrNaN(nextLine[pos_conf]);
+            confidenceMap.put(currentK, conf);
+//            if (NumberUtils.isNumber(nextLine[pos_conf])) {
+//                confidenceMap.put(currentK, Double.parseDouble(nextLine[pos_conf]));
+//            }            
+            
+            double anova = getDoubleOrNaN(nextLine[pos_anova]);
+            anovaMap.put(currentK, anova);
+//            if (NumberUtils.isNumber(nextLine[pos_anova])) {
+//                anovaMap.put(currentK, Double.parseDouble(nextLine[pos_anova]));
+//            }
 
-            if (NumberUtils.isNumber(nextLine[pos_conf])) {
-                confidenceMap.put(currentK, Double.parseDouble(nextLine[pos_conf]));
-            }
-
-            if (NumberUtils.isNumber(nextLine[pos_anova])) {
-                anovaMap.put(currentK, Double.parseDouble(nextLine[pos_anova]));
-            }
-
-            if (NumberUtils.isNumber(nextLine[pos_mfc])) {
-                maxFoldChangeMap.put(currentK, Double.parseDouble(nextLine[pos_mfc]));
-            }
+            double mfc = getDoubleOrNaN(nextLine[pos_mfc]);
+            maxFoldChangeMap.put(currentK, mfc);
+//            if (NumberUtils.isNumber(nextLine[pos_mfc])) {
+//                maxFoldChangeMap.put(currentK, Double.parseDouble(nextLine[pos_mfc]));
+//            }
 
             // Build completeMap
             completeMap.put(currentK, nextLine);
@@ -204,6 +210,17 @@ public class ProgenesisProteinListReader implements Closeable {
 
             currentK++;
         }
+    }
+    
+    private static double getDoubleOrNaN(String string) {
+        double value;
+        try {
+            value = Double.parseDouble(string);
+        } catch (NumberFormatException ex) {
+            value = Double.NaN;
+        }
+        
+        return value;
     }
 
     public ProgenesisProteinListReader(Reader rd)

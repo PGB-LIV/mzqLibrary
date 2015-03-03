@@ -1,19 +1,17 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package uk.ac.liv.mzqlib.idmapper;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import uk.ac.ebi.jmzidml.MzIdentMLElement;
 import uk.ac.ebi.jmzidml.model.mzidml.SpectrumIdentificationItem;
 import uk.ac.ebi.jmzidml.model.mzidml.SpectrumIdentificationResult;
 import uk.ac.ebi.jmzidml.xml.io.MzIdentMLUnmarshaller;
 
 /**
+ * This is the wrapper class for mzIdentML file.
  *
  * @author Da Qi
  * @institute University of Liverpool
@@ -23,12 +21,22 @@ public class Mzid {
 
     MzIdentMLUnmarshaller um;
 
+    /**
+     * Constructor of Mzid class.
+     *
+     * @param mzidUm MzIdentMLUnmarshaller instance
+     */
     public Mzid(MzIdentMLUnmarshaller mzidUm) {
         this.um = mzidUm;
     }
 
-    public HashMap<String, SIIData> getPeptideSIIData() {
-        HashMap<String, SIIData> retMap = new HashMap();
+    /**
+     * Get map of peptide sequence to SIIData.
+     *
+     * @return Map&lt;String, SIIData>
+     */
+    public Map<String, SIIData> getPeptideSIIData() {
+        Map<String, SIIData> retMap = new HashMap();
 
         Iterator<SpectrumIdentificationResult> sirIter = um.unmarshalCollectionFromXpath(MzIdentMLElement.SpectrumIdentificationResult);
         while (sirIter.hasNext()) {
@@ -83,13 +91,39 @@ public class Mzid {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
+    /**
+     * Inner class SIIData to store information from SpectrumIdentificationItem.
+     */
     public static class SIIData {
 
+        /**
+         * Charge
+         */
         public String charge;
+
+        /**
+         * m/z
+         */
         public double mz;
+
+        /**
+         * retention time
+         */
         public double rt;
+
+        /**
+         * SpectrumIdentificationItem id
+         */
         public String siiID;
 
+        /**
+         * Constructor of SIIData.
+         *
+         * @param charge charge
+         * @param mz     m/z
+         * @param rt     retention time
+         * @param siiID  SpectrumIdentification id
+         */
         public SIIData(String charge, double mz, double rt, String siiID) {
             this.charge = charge;
             this.mz = mz;

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package uk.ac.liv.mzqlib.idmapper;
 
@@ -38,10 +34,23 @@ public class MzidProcessorFactory {
 //    public MzidProcessorFactory(MzIdentMLUnmarshaller mzidUm) {
 //        this.um = mzidUm;
 //    }
+    /**
+     * The method provides a static instance of the class MzidProcessorFactory.
+     * User will always call this method for accessing to buildMzidProcessor method.
+     *
+     * @return the static instance of MzidProcessorFactory
+     */
     public static MzidProcessorFactory getInstance() {
         return instance;
     }
 
+    /**
+     * The method builds a MzidProcessor instance from an input mzIdentML file.
+     *
+     * @param mzidFile input mzIdentML file
+     *
+     * @return the MzidProcessor instance
+     */
     public MzidProcessor buildMzidProcessor(File mzidFile) {
         return new MzidProcessorImpl(mzidFile);
     }
@@ -92,7 +101,6 @@ public class MzidProcessorFactory {
 
                     // generate peptide mod string
                     //String pepModString = createPeptideModString(umarsh, sii.getPeptideRef());
-
                     //sd.setPeptideModString(pepModString);
                     String pepModString = sd.getPeptideModString();
 
@@ -226,7 +234,7 @@ public class MzidProcessorFactory {
                 if (unit == null || unit.equals("")) {
                     return rt;
                 }
-                
+
                 switch (unit.toLowerCase()) {
                     case "second":
                         return Double.parseDouble(value) / 60;
@@ -239,7 +247,8 @@ public class MzidProcessorFactory {
                 }
             }
         }
-        
+
         return rt;
     }
+
 }

@@ -423,10 +423,10 @@ public class MzqMzIdMapperFactory {
                 writer = new FileWriter(outputFile);
 
                 // XML header
-                writer.write(m.createXmlHeader() + "\n");
+                writer.write(MzQuantMLMarshaller.createXmlHeader() + "\n");
 
                 // mzQuantML start tag
-                writer.write(m.createMzQuantMLStartTag(mzqId) + "\n");
+                writer.write(MzQuantMLMarshaller.createMzQuantMLStartTag(mzqId) + "\n");
 
                 if (cvList != null) {
                     m.marshall(cvList, writer);
@@ -523,7 +523,7 @@ public class MzqMzIdMapperFactory {
                     m.marshall(ftList, writer);
                     writer.write("\n");
                 }
-                writer.write(m.createMzQuantMLClosingTag());
+                writer.write(MzQuantMLMarshaller.createMzQuantMLClosingTag());
             }
             catch (IOException e) {
                 System.out.println(e.getMessage());

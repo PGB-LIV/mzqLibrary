@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package uk.ac.liv.mzqlib.idmapper;
 
@@ -95,7 +91,7 @@ public class Mzq {
     }
 
     private double getRetentionWindow(List<Double> massTrace) {
-        return Math.abs(massTrace.get(0).doubleValue() - massTrace.get(2).doubleValue());
+        return Math.abs(massTrace.get(0) - massTrace.get(2));
     }
 
 }

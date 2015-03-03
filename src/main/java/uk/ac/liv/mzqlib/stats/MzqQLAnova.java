@@ -177,7 +177,9 @@ public class MzqQLAnova {
         switch (listType) {
             case "ProteinGroup":
                 if (protGrpList != null) {
-                    protGrpList.getGlobalQuantLayer().add(getAnovaGlobalQuantLayer());
+                    GlobalQuantLayer pgGQL = getAnovaGlobalQuantLayer();
+                    pgGQL.setId("PG_GQL");
+                    protGrpList.getGlobalQuantLayer().add(pgGQL);
                 }
                 else {
                     throw new RuntimeException("There is no ProteinGroupList in the input mzQuantML file.");
@@ -185,7 +187,9 @@ public class MzqQLAnova {
                 break;
             case "Protein":
                 if (protList != null) {
-                    protList.getGlobalQuantLayer().add(getAnovaGlobalQuantLayer());
+                    GlobalQuantLayer prGQL = getAnovaGlobalQuantLayer();
+                    prGQL.setId("PR_GQL");
+                    protList.getGlobalQuantLayer().add(prGQL);
                 }
                 else {
                     throw new RuntimeException("There is no ProteinList in the input mzQuantML file.");

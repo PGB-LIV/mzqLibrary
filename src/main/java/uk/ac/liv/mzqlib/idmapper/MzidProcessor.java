@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package uk.ac.liv.mzqlib.idmapper;
 
@@ -10,6 +6,7 @@ import java.util.Map;
 import uk.ac.ebi.jmzidml.model.mzidml.SearchDatabase;
 
 /**
+ * Interface of MzidProcessor
  *
  * @author Da Qi
  * @institute University of Liverpool
@@ -34,6 +31,10 @@ public interface MzidProcessor {
      */
     public TIntObjectMap getRtToSIIsMap();
 
+    /**
+     * Get SearchDatabase element.
+     * @return SearchDatabase
+     */
     public SearchDatabase getSearchDatabase();
 
 }

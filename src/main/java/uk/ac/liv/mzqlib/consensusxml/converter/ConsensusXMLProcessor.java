@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package uk.ac.liv.mzqlib.consensusxml.converter;
 
@@ -16,6 +12,7 @@ import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensusList;
 import uk.ac.liv.jmzqml.model.mzqml.RawFilesGroup;
 
 /**
+ * The interface of ConsensusXMLProcessor that provides methods of creating mzQuantML elements from consensusxml file.
  *
  * @author Da Qi
  * @institute University of Liverpool
@@ -23,18 +20,55 @@ import uk.ac.liv.jmzqml.model.mzqml.RawFilesGroup;
  */
 public interface ConsensusXMLProcessor {
 
+    /**
+     * Get PeptideConsensusList element.
+     *
+     * @return PeptideConsensusList
+     */
     public PeptideConsensusList getPeptideConsensusList();
 
+    /**
+     * Get map of rawFilesGroup's id to FeatureList.
+     *
+     * @return Map&lt;String, FeatureList>
+     */
     public Map<String, FeatureList> getRawFilesGroupIdToFeatureListMap();
 
+    /**
+     * Get Cv element.
+     *
+     * @return Cv
+     */
     public Cv getCv();
 
+    /**
+     * Get AssayList element.
+     *
+     * @return AssayList
+     */
     public AssayList getAssayList();
 
+    /**
+     * Get map of rawFilesGroup to Assay.
+     *
+     * @return Map&lt;String, Assay>
+     */
     public Map<String, Assay> getRawFilesGroupAssayMap();
 
+    /**
+     * Get list of rawFilesGroup.
+     *
+     * @return List&lt;RawFilesGroup>
+     */
     public List<RawFilesGroup> getRawFilesGroupList();
 
+    /**
+     * Convert to mzQuantML file.
+     *
+     * @param outputFn output file name
+     *
+     * @throws IOException
+     */
     public void convert(String outputFn)
             throws IOException;
 

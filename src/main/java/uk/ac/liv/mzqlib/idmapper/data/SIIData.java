@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package uk.ac.liv.mzqlib.idmapper.data;
 
@@ -16,6 +12,7 @@ import uk.ac.ebi.jmzidml.model.mzidml.*;
 import uk.ac.ebi.jmzidml.xml.io.MzIdentMLUnmarshaller;
 
 /**
+ * Wrapper class for SpectrumIdentificationItem element.
  *
  * @author Da Qi
  * @institute University of Liverpool
@@ -38,12 +35,18 @@ public class SIIData implements Comparable<SIIData> {
     private MzIdentMLUnmarshaller um;
     private String mzidFn;
 
+    /**
+     * Constructor of SIIData base on parameters.
+     *
+     * @param sii    SpectrumIdentificationItem
+     * @param umarsh MzIdentMLUnmarshaller
+     */
     public SIIData(SpectrumIdentificationItem sii, MzIdentMLUnmarshaller umarsh) {
         //this.sii = sii;
         this.um = umarsh;
         this.pepRef = sii.getPeptideRef();
         this.id = sii.getId();
-        this.mzCalculated = sii.getCalculatedMassToCharge().doubleValue();
+        this.mzCalculated = sii.getCalculatedMassToCharge();
         this.mzExperimental = sii.getExperimentalMassToCharge();
         this.charge = sii.getChargeState();
         this.rank = sii.getRank();
@@ -55,59 +58,122 @@ public class SIIData implements Comparable<SIIData> {
 //    public SpectrumIdentificationItem getSII() {
 //        return sii;
 //    }
-
+    /**
+     * Get MzIdentMLUnmarshaller.
+     *
+     * @return MzIdentMLUnmarshaller
+     */
     public MzIdentMLUnmarshaller getUnmarshaller() {
         return um;
     }
 
+    /**
+     * Get id of SpectrumIdentificationItem.
+     *
+     * @return id string
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Get peptide reference.
+     *
+     * @return peptide reference string
+     */
     public String getPeptideRef() {
         return pepRef;
     }
 
+    /**
+     * Get calculated m/z.
+     *
+     * @return calculated m/z double
+     */
     public double getCalculatedMassToCharge() {
         return mzCalculated;
     }
 
+    /**
+     * Get experimental m/z.
+     *
+     * @return experimental m/z double
+     */
     public double getExperimentalMassToCharge() {
         return mzExperimental;
     }
 
+    /**
+     * Get charge.
+     *
+     * @return charge value
+     */
     public int getCharge() {
         return charge;
     }
 
+    /**
+     * Get rank.
+     *
+     * @return rank value
+     */
     public int getRank() {
         return rank;
     }
 
+    /**
+     * Get attribute passthreshold.
+     *
+     * @return boolean value of passthreshold
+     */
     public boolean isPassThreshold() {
         return passTh;
     }
 
+    /**
+     * Get peptide evidence reference list.
+     *
+     * @return list of reference string
+     */
     public List getPeptideEvidenceRef() {
         return peptideEvidenceRef;
     }
 
+    /**
+     * Get peptide modification string.
+     *
+     * @return peptide modification string
+     */
     public String getPeptideModString() {
         return peptideModString;
     }
-    
-    public String getSequence(){
+
+    /**
+     * Get peptide sequence.
+     *
+     * @return sequence string
+     */
+    public String getSequence() {
         return sequence;
     }
 
+    /**
+     * Set retention time.
+     *
+     * @param rt retention time in double value
+     */
     public void setRetentionTime(double rt) {
         this.rt = rt;
     }
 
+    /**
+     * Get retention time.
+     *
+     * @return retention time
+     */
     public double getRetentionTime() {
         return this.rt;
     }
-   
 
     @Override
     public int compareTo(SIIData compareSIIData) {
@@ -120,6 +186,9 @@ public class SIIData implements Comparable<SIIData> {
         //return compareModString.compareTo(this.peptideModString);
     }
 
+    /**
+     * SIIData is comparable base on the retention time value.
+     */
     public static Comparator<SIIData> SIIDataRTComparator = new Comparator<SIIData>() {
 
         @Override
@@ -206,28 +275,28 @@ public class SIIData implements Comparable<SIIData> {
     }
 
     /**
-     * @return the mzidFn
+     * Get mzIdentML file name.
+     *
+     * @return the mzIdentML file name
      */
     public String getMzidFn() {
         return mzidFn;
     }
 
     /**
-     * @param mzidFn the mzidFn to set
+     * Set mzIdentML file name.
+     *
+     * @param mzidFn the mzIdentML file name
      */
     public void setMzidFn(String mzidFn) {
         this.mzidFn = mzidFn;
     }
 
     /**
-     * @param peptideModString the peptideModString to set
-     */
-//    public void setPeptideModString(String peptideModString) {
-//        this.peptideModString = peptideModString;
-//    }
-
-    /**
-     * @param sequence the sequence to set
+     *
+     * Set peptide sequence.
+     *
+     * @param sequence peptide sequence
      */
     public void setSequence(String sequence) {
         this.sequence = sequence;

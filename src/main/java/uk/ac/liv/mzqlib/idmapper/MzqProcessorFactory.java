@@ -21,6 +21,7 @@ import uk.ac.liv.mzqlib.idmapper.data.SIIData;
 import uk.ac.liv.mzqlib.utils.MzidToMzqElementConverter;
 
 /**
+ * The MzqProcessorFactory class parse the input mzQuantML file and create an MzqProcessor instance.
  *
  * @author Da Qi
  * @institute University of Liverpool
@@ -33,10 +34,26 @@ public class MzqProcessorFactory {
     private MzqProcessorFactory() {
     }
 
+    /**
+     * The method provides a static instance of the class MzqProcessorFactory.
+     * User will call this method for accessing to buildMzqProcessor method.
+     *
+     * @return the instance of MzqProcessorFactor
+     */
     public static MzqProcessorFactory getInstance() {
         return instance;
     }
 
+    /**
+     *
+     * @param mzqUm        MzQuantMLUnmarshaller
+     * @param rawToMzidMap map of raw file to mzIdentML file
+     *
+     * @return MzqProcessor
+     *
+     * @throws JAXBException
+     * @throws IOException
+     */
     public MzqProcessor buildMzqProcessor(MzQuantMLUnmarshaller mzqUm,
                                           Map<File, File> rawToMzidMap)
             throws JAXBException, IOException {
@@ -78,14 +95,14 @@ public class MzqProcessorFactory {
                 File rawFileProposed = null;
                 if (rg.getRawFile().get(0).getName() != null) {
                     rawFileProposed = new File(rg.getRawFile().get(0).getName());
-                }                
-                
+                }
+
                 if (rawFileProposed == null || !rawFileProposed.exists()) {
                     if (rg.getRawFile().get(0).getLocation() != null) {
                         rawFileProposed = new File(rg.getRawFile().get(0).getLocation());
-                    }                    
+                    }
                 }
-                
+
                 if (rawFileProposed == null || !rawFileProposed.exists()) {
                     continue;
                 }

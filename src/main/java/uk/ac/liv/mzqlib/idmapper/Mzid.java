@@ -33,7 +33,7 @@ public class Mzid {
     /**
      * Get map of peptide sequence to SIIData.
      *
-     * @return Map&lt;String, SIIData>
+     * @return Map<String, SIIData>
      */
     public Map<String, SIIData> getPeptideSIIData() {
         Map<String, SIIData> retMap = new HashMap();

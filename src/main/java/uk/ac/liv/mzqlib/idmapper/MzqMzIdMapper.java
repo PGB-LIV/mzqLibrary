@@ -6,6 +6,7 @@ import java.io.IOException;
 import javax.xml.bind.JAXBException;
 
 /**
+ * Interface of MzqMzidMapper.
  *
  * @author Da Qi
  * @institute University of Liverpool
@@ -13,14 +14,14 @@ import javax.xml.bind.JAXBException;
  */
 public interface MzqMzIdMapper {
 
-//    public Map getPeptideConsensusToPeptideSequencesMap();
     /**
      * Generate the output mzQuantML file from input mzQuantML file and related mzIdentML files.
      * The mzIdentML files provide spectrum identification item as the EvidenceRef based on the matching of feature retention time and m/z
      *
-     * @param output output file name
+     * @param outputFile output file name
      *
      * @throws JAXBException
+     * @throws java.io.IOException
      */
     public void createMappedFile(File outputFile)
             throws JAXBException, IOException;

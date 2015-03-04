@@ -23,7 +23,7 @@ import uk.ac.liv.mzqlib.consensusxml.converter.jaxb.Element;
 import uk.ac.liv.mzqlib.consensusxml.converter.jaxb.MapList;
 
 /**
- * The ConsensusXMLProcessorFactory class parse the input consensusxml file and create a ConsensusXMLProcessor object.
+ * The ConsensusXMLProcessorFactory class parse the input consensusxml file and create a ConsensusXMLProcessor instance.
  *
  * @author Da Qi
  * @institute University of Liverpool
@@ -38,16 +38,12 @@ public class ConsensusXMLProcessorFactory {
             + "mzML/controlledVocabulary/psi-ms.obo";
     private static final String CvVerPSIMS = "3.61.0";
 
-    /**
-     * Constructor of the ConsensusXMLProcessorFactory.
-     *
-     */
-    public ConsensusXMLProcessorFactory() {
+    private ConsensusXMLProcessorFactory() {
     }
 
     /**
      * The method provides a static instance of the class ConsensusXMLProcessorFactory.
-     * User will always call this method for accessing to buildConsensusXMLProcessor method.
+     * User will call this method for accessing to buildConsensusXMLProcessor method.
      *
      * @return the static instance of ConsensusXMLProcessorFactory
      */

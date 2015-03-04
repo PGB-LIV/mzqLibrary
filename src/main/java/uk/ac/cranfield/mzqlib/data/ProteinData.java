@@ -55,13 +55,7 @@ public class ProteinData extends QuantitationLevel{
     public String getSearchDatabaseVersion(){
         return ((SearchDatabase)protein.getSearchDatabase()).getVersion();
     }
-    /**
-     * Get all peptids
-     * @return 
-     */
-//    public ArrayList<String> getPeptides() {
-//        return peptides;
-//    }
+
     
     @Override
     public boolean equals(Object obj){

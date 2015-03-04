@@ -1,3 +1,4 @@
+
 package uk.ac.liv.mzqlib.idmapper;
 
 import java.io.File;
@@ -33,6 +34,7 @@ import uk.ac.liv.mzqlib.idmapper.data.SIIData;
 import uk.ac.liv.mzqlib.utils.MzidToMzqElementConverter;
 
 /**
+ * The MzqMzIdMapperFactory class create an MzqMzIdMapper instance from mzQuantML file and map of raw file name to mzIdentML file name.
  *
  * @author Da Qi
  * @institute University of Liverpool
@@ -45,10 +47,27 @@ public class MzqMzIdMapperFactory {
     private MzqMzIdMapperFactory() {
     }
 
+    /**
+     * The method provides a static instance of the class MzqMzIdMapperFactory.
+     * User will call this method for accessing to buildMzqMzIdMapper method.
+     *
+     * @return instance of MzqMzIdMapperFactory
+     */
     public static MzqMzIdMapperFactory getInstance() {
         return instance;
     }
 
+    /**
+     *
+     * @param mzqUm           MzQuantMLUnmarshaller
+     * @param rawToMzidString String contains the relationship between raw file names and corresponding mzIdentML files.
+     *                        The raw file name and mzIdentML file name are separated by semi-column(;) and arranged in alternative manner.
+     *
+     * @return MzqMzIdMapper
+     *
+     * @throws JAXBException
+     * @throws IOException
+     */
     public MzqMzIdMapper buildMzqMzIdMapper(MzQuantMLUnmarshaller mzqUm,
                                             String rawToMzidString)
             throws JAXBException, IOException {
@@ -73,8 +92,18 @@ public class MzqMzIdMapperFactory {
             }
         }
         return new MzqMzIdMapperImpl(mzqUm, rawToMzidMap);
-    }  
+    }
 
+    /**
+     *
+     * @param mzqUm        MzQuantMLUnmarshaller
+     * @param rawToMzidMap map of raw file to mzIdentML file
+     *
+     * @return MzqMzIdMapper
+     *
+     * @throws JAXBException
+     * @throws IOException
+     */
     public MzqMzIdMapper buildMzqMzIdMapper(MzQuantMLUnmarshaller mzqUm,
                                             Map<File, File> rawToMzidMap)
             throws JAXBException, IOException {
@@ -404,7 +433,7 @@ public class MzqMzIdMapperFactory {
                 String id = mzidFnToFileIdMap.get(mzidFile.getName());
                 idFile.setId(id);
                 //count++;
-                
+
                 idFile.setLocation(mzidFile.getCanonicalPath());
                 //TODO; to check
                 idFile.setName(mzidFile.getName());

@@ -1,3 +1,4 @@
+
 package uk.ac.liv.mzqlib.idmapper.data;
 
 import java.util.List;
@@ -8,6 +9,7 @@ import uk.ac.liv.jmzqml.model.mzqml.RawFile;
 import uk.ac.liv.jmzqml.model.mzqml.UserParam;
 
 /**
+ * Subclass of Feature
  *
  * @author Da Qi
  * @institute University of Liverpool
@@ -21,6 +23,11 @@ public class ExtendedFeature extends Feature {
     private final double brt; // bottom boundary of rt (min)
     private final Feature feature;
 
+    /**
+     * Constructor of ExtendedFeature base on Feature
+     *
+     * @param ft Feature
+     */
     public ExtendedFeature(Feature ft) {
         super();
         feature = ft;
@@ -42,18 +49,38 @@ public class ExtendedFeature extends Feature {
         }
     }
 
+    /**
+     * Get left boundary m/z of the feature.
+     *
+     * @return double value of m/z
+     */
     public double getLMZ() {
         return lmz;
     }
 
+    /**
+     * Get right boundary m/z of the feature.
+     *
+     * @return double value of m/z
+     */
     public double getRMZ() {
         return rmz;
     }
 
+    /**
+     * Get up boundary retention time of the feature.
+     *
+     * @return double value of retention time
+     */
     public double getURT() {
         return urt;
     }
 
+    /**
+     * Get bottom boundary retention time of the feature.
+     *
+     * @return double value of retention time
+     */
     public double getBRT() {
         return brt;
     }

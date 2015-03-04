@@ -18,6 +18,7 @@ import uk.ac.ebi.jmzidml.xml.io.MzIdentMLUnmarshaller;
 import uk.ac.liv.mzqlib.idmapper.data.SIIData;
 
 /**
+ * The MzidProcessorFactory class parse the input mzIdentML file and create an MzidProcessor instance.
  *
  * @author Da Qi
  * @institute University of Liverpool
@@ -36,7 +37,7 @@ public class MzidProcessorFactory {
 //    }
     /**
      * The method provides a static instance of the class MzidProcessorFactory.
-     * User will always call this method for accessing to buildMzidProcessor method.
+     * User will call this method for accessing to buildMzidProcessor method.
      *
      * @return the static instance of MzidProcessorFactory
      */

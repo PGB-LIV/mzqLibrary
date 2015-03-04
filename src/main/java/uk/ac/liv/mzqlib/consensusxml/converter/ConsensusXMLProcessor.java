@@ -30,7 +30,7 @@ public interface ConsensusXMLProcessor {
     /**
      * Get map of rawFilesGroup's id to FeatureList.
      *
-     * @return Map&lt;String, FeatureList>
+     * @return Map<String, FeatureList>
      */
     public Map<String, FeatureList> getRawFilesGroupIdToFeatureListMap();
 
@@ -51,14 +51,14 @@ public interface ConsensusXMLProcessor {
     /**
      * Get map of rawFilesGroup to Assay.
      *
-     * @return Map&lt;String, Assay>
+     * @return Map<String, Assay>
      */
     public Map<String, Assay> getRawFilesGroupAssayMap();
 
     /**
      * Get list of rawFilesGroup.
      *
-     * @return List&lt;RawFilesGroup>
+     * @return List<RawFilesGroup>
      */
     public List<RawFilesGroup> getRawFilesGroupList();
 

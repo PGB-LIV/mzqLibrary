@@ -45,6 +45,27 @@ public class MzqProcessorFactory {
     }
 
     /**
+     * The method builds a MzqProcessor instance from an input mzQuantML unmarshaller and other parameters.
+     *
+     * @param mzqUm        MzQuantMLUnmarshaller
+     * @param rawToMzidMap map of raw file to mzIdentML file
+     * @param mzWin        the m/z window of feature measured from left to right in Da
+     * @param rtWin        the retention time of feature measured from top to bottom in second
+     *
+     * @return MzqProcessor
+     *
+     * @throws JAXBException
+     * @throws IOException
+     */
+    public MzqProcessor buildMzqProcessor(MzQuantMLUnmarshaller mzqUm,
+                                          Map<File, File> rawToMzidMap,
+                                          double mzWin, double rtWin)
+            throws JAXBException, IOException {
+        return new MzqProcessorImpl(mzqUm, rawToMzidMap, mzWin, rtWin);
+    }
+
+    /**
+     * The method builds a MzqProcessor instance from an input mzQuantML unmarshaller and other parameters.
      *
      * @param mzqUm        MzQuantMLUnmarshaller
      * @param rawToMzidMap map of raw file to mzIdentML file
@@ -76,7 +97,8 @@ public class MzqProcessorFactory {
          * Constructor
          */
         private MzqProcessorImpl(MzQuantMLUnmarshaller mzqUm,
-                                 Map<File, File> rawToMzidMap)
+                                 Map<File, File> rawToMzidMap, double mzWin,
+                                 double rtWin)
                 throws JAXBException, IOException {
 
             this.mzqUm = mzqUm;
@@ -127,7 +149,7 @@ public class MzqProcessorFactory {
                 for (Feature ft : features) {
                     List<SIIData> ftSIIDataList = featureToSIIsMap.get(ft.getId());
 
-                    ExtendedFeature exFt = new ExtendedFeature(ft);
+                    ExtendedFeature exFt = new ExtendedFeature(ft, mzWin, rtWin);
 
                     for (int i = (int) exFt.getBRT(); i <= (int) exFt.getURT(); i++) {
                         List<SIIData> siiDataList = rtToSIIsMap.get(i);
@@ -182,6 +204,12 @@ public class MzqProcessorFactory {
                 }
                 System.out.println("MzqProcessorFactory -- finish processing FeatureList: " + ftList.getId());
             }
+        }
+
+        private MzqProcessorImpl(MzQuantMLUnmarshaller mzqUm,
+                                 Map<File, File> rawToMzidMap)
+                throws JAXBException, IOException {
+            this(mzqUm, rawToMzidMap, 0.1, 20);
         }
 
         @Override

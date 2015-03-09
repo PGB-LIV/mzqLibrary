@@ -58,6 +58,7 @@ public class MzqMzIdMapperFactory {
     }
 
     /**
+     * The method builds a MzqMzidMapper instance from an input mzQuantML unmarshaller and a parameter string.
      *
      * @param mzqUm           MzQuantMLUnmarshaller
      * @param rawToMzidString String contains the relationship between raw file names and corresponding mzIdentML files.
@@ -95,6 +96,7 @@ public class MzqMzIdMapperFactory {
     }
 
     /**
+     * The method builds a MzqMzidMapper instance from an input mzQuantML unmarshaller and a parameter map.
      *
      * @param mzqUm        MzQuantMLUnmarshaller
      * @param rawToMzidMap map of raw file to mzIdentML file

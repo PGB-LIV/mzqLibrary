@@ -1,3 +1,4 @@
+
 package uk.ac.liv.mzqlib.maxquant.converter;
 
 import gnu.trove.iterator.TDoubleIterator;
@@ -18,6 +19,7 @@ import uk.ac.liv.jmzqml.model.mzqml.*;
 import uk.ac.liv.jmzqml.xml.io.MzQuantMLMarshaller;
 
 /**
+ * Convert MaxQuant result files into mzQuantML format.
  *
  * @author Da Qi
  */
@@ -59,11 +61,30 @@ public class MaxquantMzquantmlConverter {
     private TIntObjectMap<List<String>> evidenceMap;
 
     // Constructor
+    /**
+     * Constructor taking file folder as parameter.
+     * The required MaxQuant result files must be in the folder.
+     *
+     * @param inputFolder path of the input folder
+     *
+     * @throws IOException
+     */
     public MaxquantMzquantmlConverter(String inputFolder)
             throws IOException {
         this.maxRd = new MaxquantFilesReader(inputFolder);
     }
 
+    /**
+     * Constructor taking required individual file names as parameters.
+     *
+     * @param evidenceFn                   evidence.txt
+     * @param peptidesFn                   peptides.txt
+     * @param proteinGroupsFn              proteingroup.txt
+     * @param experimentalDesignTemplateFn experimentalDesignTemplate.txt
+     * @param summaryFn                    summary.txt
+     *
+     * @throws IOException
+     */
     public MaxquantMzquantmlConverter(String evidenceFn,
                                       String peptidesFn,
                                       String proteinGroupsFn,
@@ -1150,6 +1171,13 @@ public class MaxquantMzquantmlConverter {
         }
     }
 
+    /**
+     * Convert to mzQuantML format with output file name.
+     *
+     * @param outputFn output file name
+     *
+     * @throws IOException
+     */
     public void convert(String outputFn)
             throws IOException {
 

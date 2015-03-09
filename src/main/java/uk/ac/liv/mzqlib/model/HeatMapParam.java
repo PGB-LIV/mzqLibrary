@@ -1,9 +1,11 @@
+
 package uk.ac.liv.mzqlib.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * The class to store the parameters for plotting heat map.
  *
  * @author Da Qi
  * @institute University of Liverpool
@@ -22,7 +24,7 @@ public class HeatMapParam {
     private List<String> colNames;
 
     /**
-     * Constructor of HeatMapParam
+     * Constructor of HeatMapParam.
      *
      * @param min    minimum value of the matrix for heat map
      * @param max    maximum value of the matrix for heat map
@@ -41,11 +43,16 @@ public class HeatMapParam {
         this.colNames = new ArrayList<>(colN);
     }
 
+    /**
+     * Constructor of HeatMapParam.
+     */
     public HeatMapParam() {
         this(0, 0, 0, "", new ArrayList<>(), new ArrayList<>());
     }
 
     /**
+     * Get the minimum value of the matrix.
+     *
      * @return the min
      */
     public double getMin() {
@@ -53,6 +60,8 @@ public class HeatMapParam {
     }
 
     /**
+     * Set the minimum value.
+     *
      * @param min the min to set
      */
     public void setMin(double min) {
@@ -60,6 +69,8 @@ public class HeatMapParam {
     }
 
     /**
+     * Get the maximum value of the matrix.
+     *
      * @return the max
      */
     public double getMax() {
@@ -67,6 +78,8 @@ public class HeatMapParam {
     }
 
     /**
+     * Set the maximum value.
+     *
      * @param max the max to set
      */
     public void setMax(double max) {
@@ -74,6 +87,8 @@ public class HeatMapParam {
     }
 
     /**
+     * Get the number of rows in the matrix.
+     *
      * @return the rowNumber
      */
     public int getRowNumber() {
@@ -81,6 +96,8 @@ public class HeatMapParam {
     }
 
     /**
+     * Set the number of rows.
+     *
      * @param rowNumber the rowNumber to set
      */
     public void setRowNumber(int rowNumber) {
@@ -88,13 +105,17 @@ public class HeatMapParam {
     }
 
     /**
-     * @return the matrix
+     * Get the whole matrix in a single string.
+     *
+     * @return the matrix string
      */
     public String getMatrix() {
         return matrix;
     }
 
     /**
+     * Set the matrix string.
+     *
      * @param matrix the matrix to set
      */
     public void setMatrix(String matrix) {
@@ -102,6 +123,8 @@ public class HeatMapParam {
     }
 
     /**
+     * Get the list of row names.
+     *
      * @return the rowNames
      */
     public List<String> getRowNames() {
@@ -109,6 +132,8 @@ public class HeatMapParam {
     }
 
     /**
+     * Set the list of row names.
+     *
      * @param rowNames the rowNames to set
      */
     public void setRowNames(List<String> rowNames) {
@@ -116,6 +141,8 @@ public class HeatMapParam {
     }
 
     /**
+     * Get the list of column names.
+     *
      * @return the colNames
      */
     public List<String> getColNames() {
@@ -123,6 +150,8 @@ public class HeatMapParam {
     }
 
     /**
+     * Set the list of column names.
+     *
      * @param colNames the colNames to set
      */
     public void setColNames(List<String> colNames) {
@@ -130,6 +159,8 @@ public class HeatMapParam {
     }
 
     /**
+     * Get the log values of the whole matrix in a single string.
+     *
      * @return the logMatrix
      */
     public String getLogMatrix() {
@@ -137,6 +168,8 @@ public class HeatMapParam {
     }
 
     /**
+     * Set the log values of the matrix string.
+     *
      * @param logMatrix the logMatrix to set
      */
     public void setLogMatrix(String logMatrix) {
@@ -144,6 +177,8 @@ public class HeatMapParam {
     }
 
     /**
+     * Get the minimum value of log value of matrix.
+     *
      * @return the logMin
      */
     public double getLogMin() {
@@ -151,6 +186,8 @@ public class HeatMapParam {
     }
 
     /**
+     * Set the minimum log value.
+     *
      * @param logMin the logMin to set
      */
     public void setLogMin(double logMin) {
@@ -158,6 +195,8 @@ public class HeatMapParam {
     }
 
     /**
+     * Get the maximum value of log value of matrix.
+     *
      * @return the logMax
      */
     public double getLogMax() {
@@ -165,6 +204,8 @@ public class HeatMapParam {
     }
 
     /**
+     * Set the maximum log value.
+     *
      * @param logMax the logMax to set
      */
     public void setLogMax(double logMax) {

@@ -1,3 +1,4 @@
+
 package uk.ac.liv.mzqlib.maxquant.converter;
 
 import au.com.bytecode.opencsv.*;
@@ -21,6 +22,7 @@ import java.util.Map;
 import org.apache.commons.lang3.math.NumberUtils;
 
 /**
+ * Read MaxQuant output files and parse them for converting to mzQuantML format.
  *
  * @author Da Qi
  */
@@ -850,78 +852,173 @@ public class MaxquantFilesReader {
 
     }
 
+    /**
+     * Get assay list.
+     *
+     * @return assay list
+     */
     public List<String> getAssayList() {
         return this.assays;
     }
 
+    /**
+     * Get map of raw file name to experiment name.
+     *
+     * @return Map
+     */
     public Map getRawFileExpMap() {
         return this.rawFileExpMap;
     }
 
+    /**
+     * Get prime study variable list.
+     *
+     * @return list
+     */
     public List<String> getPrimeStudyVariableList() {
         return this.primeStudyVars;
     }
 
+    /**
+     * Get study variable list.
+     *
+     * @return list
+     */
     public List<String> getStudyVariableList() {
         return this.studyVars;
     }
 
+    /**
+     * Get map of prime study group name to study variable list.
+     *
+     * @return Map
+     */
     public Map getPrimeStudyGroupMap() {
         return this.primeStudyGroupMap;
     }
 
+    /**
+     * Get map of study group name to assay list.
+     *
+     * @return Map
+     */
     public Map getStudyGroupMap() {
         return this.studyGroupMap;
     }
 
+    /**
+     * Get peptide list.
+     *
+     * @return peptide list
+     */
     public List getPeptideList() {
         return this.peptides;
     }
 
+    /**
+     * Get raw file name list.
+     *
+     * @return raw file name list
+     */
     public List getRawFileList() {
         return this.rawFiles;
     }
 
+    /**
+     * Get map of assay name to raw file name.
+     *
+     * @return Map
+     */
     public Map getAssayRawFileMap() {
         return this.assayRawFileMap;
     }
 
+    /**
+     * Get map of index to a list of various values from evidence.txt.
+     *
+     * @return TIntObjectMap<List<String>>
+     */
     public TIntObjectMap<List<String>> getEvidenceMap() {
         return this.evidenceMap;
     }
 
+    /**
+     * Get map of peptide sequence to evidence index.
+     *
+     * @return Map
+     */
     public Map getPeptideEvidenceIdsMap() {
         return this.peptideToEvdIdsMap;
     }
 
+    /**
+     * Get map of peptide sequence to intensity.
+     *
+     * @return Map
+     */
     public Map getPeptideIntensityMap() {
         return this.peptideToIntMap;
     }
 
+    /**
+     * Get map of peptide sequence to ratio.
+     *
+     * @return Map
+     */
     public Map getPeptideRatioMap() {
         return this.peptideToRatioMap;
     }
 
+    /**
+     * Get map of index to list of protein intensity value.
+     *
+     * @return TIntObjectMap<TDoubleList>
+     */
     public TIntObjectMap<TDoubleList> getProteinIntensityMap() {
         return this.proteinIntMap;
     }
 
+    /**
+     * Get map of protein id to list of unique peptide ids.
+     *
+     * @return TIntObjectMap<TIntList>
+     */
     public TIntObjectMap<TIntList> getProteinUniquePeptiedsMap() {
         return this.proteinUniqPepMap;
     }
 
+    /**
+     * Get map of protein to list of peptides.
+     *
+     * @return Map
+     */
     public Map getProteinPeptidesMap() {
         return this.proteinToPepMap;
     }
 
+    /**
+     * Checks if the input folder contains the proteingroup.txt file.
+     *
+     * @return boolean value
+     */
     public Boolean hasProteinGroupsFile() {
         return this.hasProteinGroupsFile;
     }
 
+    /**
+     * Checks if the input files are from label-free experiment or not.
+     *
+     * @return boolean value
+     */
     public Boolean isLabelFree() {
         return this.isLabelFree;
     }
 
+    /**
+     * Get number of label (for label free, the number is 0).
+     *
+     * @return the number of label
+     */
     public int getLabelNumber() {
         return this.multiplicity;
     }
@@ -996,7 +1093,9 @@ public class MaxquantFilesReader {
     }
 
     /**
-     * @return the majorityProteinIDMap
+     * Get map of majorirty protein id.
+     *
+     * @return TIntObjectMap<String>
      */
     public TIntObjectMap<String> getMajorityProteinIDMap() {
         return majorityProteinIDMap;

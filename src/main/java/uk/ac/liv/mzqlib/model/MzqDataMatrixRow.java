@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package uk.ac.liv.mzqlib.model;
 
 import java.util.List;
@@ -22,6 +18,9 @@ public class MzqDataMatrixRow {
     private StringProperty objectValue; // Sequence or accession
     private List<StringProperty> values;
 
+    /**
+     * Constructor of MzqDataMatrixRow.
+     */
     public MzqDataMatrixRow() {
         objectId = new SimpleStringProperty("");
         objectValue = new SimpleStringProperty("");
@@ -29,6 +28,8 @@ public class MzqDataMatrixRow {
     }
 
     /**
+     * Get object id as StringProperty.
+     *
      * @return the objectId
      */
     public StringProperty ObjectId() {
@@ -36,6 +37,7 @@ public class MzqDataMatrixRow {
     }
 
     /**
+     * Get object id as String.
      *
      * @return the value of objectId
      */
@@ -44,6 +46,8 @@ public class MzqDataMatrixRow {
     }
 
     /**
+     * Set the list of values.
+     *
      * @return the values
      */
     public List<StringProperty> Values() {
@@ -51,6 +55,7 @@ public class MzqDataMatrixRow {
     }
 
     /**
+     * Get value from specified position.
      *
      * @param i the position of the value
      *
@@ -61,6 +66,8 @@ public class MzqDataMatrixRow {
     }
 
     /**
+     * Set object id.
+     *
      * @param objectId the objectId to set
      */
     public void setObjectId(StringProperty objectId) {
@@ -68,6 +75,8 @@ public class MzqDataMatrixRow {
     }
 
     /**
+     * Set list of values.
+     *
      * @param values the values to set
      */
     public void setValues(
@@ -78,6 +87,8 @@ public class MzqDataMatrixRow {
     }
 
     /**
+     * Get object value as StringProperty.
+     *
      * @return the objectValue
      */
     public StringProperty getObjectValue() {
@@ -85,6 +96,8 @@ public class MzqDataMatrixRow {
     }
 
     /**
+     * Set object value.
+     *
      * @param objectValue the objectValue to set
      */
     public void setObjectValue(StringProperty objectValue) {

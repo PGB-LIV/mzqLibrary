@@ -16,8 +16,8 @@ public class MassTrace {
     private double mz_start;
     private double mz_end;
 
-    /*
-     * constructor
+    /**
+     * Constructor of MassTrace.
      */
     public MassTrace() {
         rt_start = (double) 0;
@@ -26,8 +26,13 @@ public class MassTrace {
         mz_end = (double) 0;
     }
 
-    /*
-     * @param m/z, charge, retention time(center), retention time window
+    /**
+     * Constructor with initial parameters (double).
+     *
+     * @param mz     mass to charge value
+     * @param charge charge value
+     * @param rt     retention time value
+     * @param rtWin  retention time window value
      */
     public MassTrace(double mz, double charge, double rt, double rtWin) {
         rt_start = rt - rtWin / 2;
@@ -36,24 +41,54 @@ public class MassTrace {
         mz_end = mz_start + 3 / charge;
     }
 
+    /**
+     * Constructor with initial parameters (String).
+     *
+     * @param mz     mass to charge value
+     * @param charge charge value
+     * @param rt     retention time value
+     * @param rtWin  retention time window value
+     */
     public MassTrace(String mz, String charge, String rt, String rtWin) {
         this(Double.parseDouble(mz), Double.parseDouble(charge), Double.parseDouble(rt), Double.parseDouble(rtWin));
     }
 
-    public MassTrace(double mz, double charge, double rt, double rtWin, DecimalFormat df) {
+    /**
+     * Constructor with initial parameters (double).
+     *
+     * @param mz     mass to charge value
+     * @param charge charge value
+     * @param rt     retention time value
+     * @param rtWin  retention time window value
+     * @param df     DecimalFormat setting
+     */
+    public MassTrace(double mz, double charge, double rt, double rtWin,
+                     DecimalFormat df) {
         this(mz, charge, rt, rtWin);
-        this.rt_start = Double.valueOf(df.format(rt_start)); 
+        this.rt_start = Double.valueOf(df.format(rt_start));
         this.rt_end = Double.valueOf(df.format(rt_end));
         this.mz_start = Double.valueOf(df.format(mz_start));
         this.mz_end = Double.valueOf(df.format(mz_end));
     }
 
-    public MassTrace(String mz, String charge, String rt, String rtWin, DecimalFormat df) {
+    /**
+     * Constructor with initial parameters (String).
+     *
+     * @param mz     mass to charge value
+     * @param charge charge value
+     * @param rt     retention time value
+     * @param rtWin  retention time window value
+     * @param df     DecimalFormat setting
+     */
+    public MassTrace(String mz, String charge, String rt, String rtWin,
+                     DecimalFormat df) {
         this(Double.parseDouble(mz), Double.parseDouble(charge), Double.parseDouble(rt), Double.parseDouble(rtWin), df);
     }
 
-    /*
-     * public methods
+    /**
+     * Get list of mass trace value.
+     *
+     * @return List<Double>
      */
     public List<Double> getMassTraceDoubleList() {
         List<Double> mtDList = new ArrayList<>();
@@ -63,4 +98,5 @@ public class MassTrace {
         mtDList.add(mz_end);
         return mtDList;
     }
+
 }

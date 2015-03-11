@@ -1,3 +1,4 @@
+
 package uk.ac.liv.mzqlib.progenesis.reader;
 
 import au.com.bytecode.opencsv.CSVReader;
@@ -81,8 +82,14 @@ public class ProgenesisFeatureListReader implements Closeable {
     private String headingRow2 = new String();
     private String headingRow3 = new String();
 
-    ////////// ////////// ////////// ////////// //////////
-    //Constrctor
+    /**
+     * Constructor of ProgenesisFeatureListReader.
+     *
+     * @param rd        input Reader
+     * @param separator separator of input file
+     *
+     * @throws IOException
+     */
     public ProgenesisFeatureListReader(Reader rd, char separator)
             throws IOException {
         br = new BufferedReader(rd);
@@ -333,63 +340,128 @@ public class ProgenesisFeatureListReader implements Closeable {
         }
     }
 
+    /**
+     * Constructor of ProgenesisFeatuerListReader.
+     *
+     * @param rd input Reader
+     *
+     * @throws IOException
+     */
     public ProgenesisFeatureListReader(Reader rd)
             throws IOException {
         this(rd, ',');
     }
 
+    /**
+     * Get IndexMap.
+     * 
+     * 
+     * @return
+     */
     public TIntObjectMap<String> getIndexMap() {
         return indexMap;
     }
 
+    /**
+     *
+     * @return
+     */
     public TIntObjectMap<TDoubleList> getNormalizedAbundanceMap() {
         return normalizedAbundanceMap;
     }
 
+    /**
+     *
+     * @return
+     */
     public TIntObjectMap<TDoubleList> getRawAbundanceMap() {
         return rawAbundanceMap;
     }
 
+    /**
+     *
+     * @return
+     */
     public TIntObjectMap<TDoubleList> getIntensityMap() {
         return intensityMap;
     }
 
+    /**
+     *
+     * @return
+     */
     public TIntObjectMap<TDoubleList> getRetentionTimeMap() {
         return retentionTimeMap;
     }
 
+    /**
+     *
+     * @return
+     */
     public TIntDoubleMap getRtWindowMap() {
         return rtWinMap;
     }
 
+    /**
+     *
+     * @return
+     */
     public TIntDoubleMap getScoreMap() {
         return scoreMap;
     }
 
+    /**
+     *
+     * @return
+     */
     public TIntObjectMap<String> getModificationMap() {
         return modificationMap;
     }
 
+    /**
+     *
+     * @return
+     */
     public TIntDoubleMap getMassOverChargeMap() {
         return mzMap;
     }
 
+    /**
+     *
+     * @return
+     */
     public TIntIntMap getChargeMap() {
         return chargeMap;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<String> getStudyVariableList() {
         return stuVarList;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<String> getAssayList() {
         return assayList;
     }
 
+    /**
+     *
+     * @return
+     */
     public Map<String, Set<String>> getStudyGroupMap() {
         return studyGroupMap;
     }
 
+    /**
+     *
+     * @return
+     */
     public TDoubleObjectMap<TIntSet> getMasterRetenTimeMap() {
 
         masterRetenTimeMapWithDuplicate.forEachEntry(new TIntDoubleProcedure() {
@@ -417,6 +489,10 @@ public class ProgenesisFeatureListReader implements Closeable {
         return masterRetenTimeMap.keySet();
     }
 
+    /**
+     *
+     * @return
+     */
     public Map<String, TIntSet> getProteinMap() {
 
         proteinMapWithDuplicate.forEachEntry(new TIntObjectProcedure<String>() {
@@ -437,10 +513,18 @@ public class ProgenesisFeatureListReader implements Closeable {
         return proteinMap;
     }
 
+    /**
+     *
+     * @return
+     */
     public Set getProteinList() {
         return proteinMap.keySet();
     }
 
+    /**
+     *
+     * @return
+     */
     public Map<String, Set<String>> getProteinPeptidesMap() {
         final Map<String, Set<String>> proteinPeptidesMap = new HashMap<>();
 
@@ -465,6 +549,10 @@ public class ProgenesisFeatureListReader implements Closeable {
         return proteinPeptidesMap;
     }
 
+    /**
+     *
+     * @return
+     */
     public Map<String, Set<String>> getPeptideProteinsMap() {
         final Map<String, Set<String>> peptideProteinsMap = new HashMap<>();
 
@@ -488,6 +576,10 @@ public class ProgenesisFeatureListReader implements Closeable {
         return peptideProteinsMap;
     }
 
+    /**
+     *
+     * @return
+     */
     public Map<String, TIntSet> getPeptideMap() {
 
         peptideMapWithDuplicate.forEachEntry(new TIntObjectProcedure<String>() {
@@ -507,42 +599,85 @@ public class ProgenesisFeatureListReader implements Closeable {
         return peptideMap;
     }
 
+    /**
+     *
+     * @return
+     */
     public Set<String> getPeptideList() {
         return peptideMap.keySet();
     }
 
+    /**
+     *
+     * @return
+     */
     public TIntObjectMap<String> getPeptideDuplicateMap() {
         return peptideMapWithDuplicate;
     }
 
+    /**
+     *
+     * @return
+     */
     public TIntObjectMap<String> getProteinDuplicateMap() {
         return proteinMapWithDuplicate;
     }
 
+    /**
+     *
+     * @return
+     */
     public TIntDoubleMap getMasterRTDuplicateMap() {
         return masterRetenTimeMapWithDuplicate;
     }
 
+    /**
+     *
+     * @return
+     */
     public TIntObjectMap<Boolean> getUseInQuantMap() {
         return useInQuantMap;
     }
 
+    /**
+     *
+     * @return
+     */
     public TIntObjectMap<String[]> getCompleteMap() {
         return completeMap;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getHeadingRow2() {
         return headingRow2;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getHeadingRow3() {
         return headingRow3;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getAssayNumber() {
         return assayNum;
     }
 
+    /**
+     *
+     * @param startCol
+     * @param endCol
+     *
+     * @return
+     */
     public TIntObjectMap<List<String>> getMultipleColumn(final int startCol,
                                                          final int endCol) {
         final TIntObjectMap<List<String>> retMap = new TIntObjectHashMap<>();
@@ -561,6 +696,12 @@ public class ProgenesisFeatureListReader implements Closeable {
         return retMap;
     }
 
+    /**
+     *
+     * @param col
+     *
+     * @return
+     */
     public TIntObjectMap<String> getSingleColumn(final int col) {
 
         final TIntObjectMap<String> retMap = new TIntObjectHashMap<>();

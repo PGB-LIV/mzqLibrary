@@ -14,16 +14,49 @@ import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;
  */
 public abstract class MzqQuantLayer {
 
+    /**
+     * The input MzQuantMLUnmarshaller.
+     */
     protected MzQuantMLUnmarshaller mzqUm;
+
+    /**
+     * The list id of the list which contains the QuantLayer.
+     */
     protected StringProperty listId;
+
+    /**
+     * The data type of the QuantLayer from CV param.
+     */
     protected StringProperty dataType;
+
+    /**
+     * The id of the QuantLayer.
+     */
     protected StringProperty quantLayerId;
+
+    /**
+     * The type of QuantLayer, e.g AssayQuantLayer, GlobalQuantLayer, etc.
+     */
     protected StringProperty quantLayerType;
+
+    /**
+     * The type of the list, e.g ProteinList, PeptideConsensusList, etc.
+     */
     protected StringProperty listType;
+
+    /**
+     * The list of the names of QuantLayer columns.
+     */
     protected List<StringProperty> columnNames;
+
+    /**
+     * The list of MzqDataMatrixRow of the QuantLayer.
+     */
     protected List<MzqDataMatrixRow> dmRows;
 
     /**
+     * Get the id of the list as String.
+     *
      * @return the value of listId
      */
     public String getListId() {
@@ -31,6 +64,7 @@ public abstract class MzqQuantLayer {
     }
 
     /**
+     * Get the id of the list as StringProperty.
      *
      * @return the listId
      */
@@ -39,6 +73,8 @@ public abstract class MzqQuantLayer {
     }
 
     /**
+     * Get the id of the QuantLayer as String.
+     *
      * @return the value of quantLayerId
      */
     public String getQuantLayerId() {
@@ -46,6 +82,7 @@ public abstract class MzqQuantLayer {
     }
 
     /**
+     * Get the id of the QuantLayer as StringProperty.
      *
      * @return the quantLayerId
      */
@@ -54,6 +91,8 @@ public abstract class MzqQuantLayer {
     }
 
     /**
+     * Get type of QuantLayer as String.
+     *
      * @return the value of quantLayerType
      */
     public String getQuantLayerType() {
@@ -61,6 +100,7 @@ public abstract class MzqQuantLayer {
     }
 
     /**
+     * Get type of QuantLayer as StringProperty.
      *
      * @return the quantLayerType
      */
@@ -69,6 +109,7 @@ public abstract class MzqQuantLayer {
     }
 
     /**
+     * Get type of the list as String.
      *
      * @return the value of listType
      */
@@ -77,6 +118,8 @@ public abstract class MzqQuantLayer {
     }
 
     /**
+     * Get type of the list as StringProperty.
+     *
      * @return the listType
      */
     public StringProperty listType() {
@@ -84,6 +127,8 @@ public abstract class MzqQuantLayer {
     }
 
     /**
+     * Get input MzQuantMLUnmarshaller.
+     *
      * @return the mzqUm
      */
     public MzQuantMLUnmarshaller getMzqUm() {
@@ -91,6 +136,8 @@ public abstract class MzqQuantLayer {
     }
 
     /**
+     * Get data type value of the QuantLayer as String.
+     *
      * @return the value of dataType
      */
     public String getDataType() {
@@ -98,6 +145,7 @@ public abstract class MzqQuantLayer {
     }
 
     /**
+     * Get data type of the QuantLayer as StringProperty.
      *
      * @return the dataType
      */
@@ -106,6 +154,8 @@ public abstract class MzqQuantLayer {
     }
 
     /**
+     * Get list of column names.
+     *
      * @return the columnNames
      */
     public List<StringProperty> getColumnNames() {
@@ -116,6 +166,8 @@ public abstract class MzqQuantLayer {
     }
 
     /**
+     * Set list of column names.
+     *
      * @param columnNames the columnNames to set
      */
     public void setColumnNames(
@@ -124,6 +176,8 @@ public abstract class MzqQuantLayer {
     }
 
     /**
+     * Get list of MzqDataMatrixRow.
+     *
      * @return the dmRows
      */
     public List<MzqDataMatrixRow> getDmRows() {
@@ -134,6 +188,8 @@ public abstract class MzqQuantLayer {
     }
 
     /**
+     * Set list of MzqDataMatrixRow.
+     *
      * @param dmRows the dmRows to set
      */
     public void setDmRows(

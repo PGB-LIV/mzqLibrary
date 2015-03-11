@@ -17,6 +17,13 @@ import uk.ac.liv.mzqlib.constants.MzqDataConstants;
  */
 public class MzqFeatureQuantLayer extends MzqQuantLayer {
 
+    /**
+     * Constructor of MzqFeatureQuantLayer.
+     *
+     * @param um           the input MzQuantMLUnmarshaller
+     * @param listId       the specific id of list
+     * @param ftQuantLayer the GlobalQuantLayer
+     */
     public MzqFeatureQuantLayer(MzQuantMLUnmarshaller um, String listId,
                                 GlobalQuantLayer ftQuantLayer) {
 

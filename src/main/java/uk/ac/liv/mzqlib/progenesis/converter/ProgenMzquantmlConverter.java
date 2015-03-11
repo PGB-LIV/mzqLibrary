@@ -1,3 +1,4 @@
+
 package uk.ac.liv.mzqlib.progenesis.converter;
 
 import au.com.bytecode.opencsv.CSVReader;
@@ -45,7 +46,7 @@ public class ProgenMzquantmlConverter {
     private static final Boolean ProteinGroupLevelQuantitation = Boolean.TRUE;
     private final String RAW_ONLY = "raw";
     private final String NORM_ONLY = "norm";
-    private final String RAW_PLUS_NORM = "both";
+    //private final String RAW_PLUS_NORM = "both";
     //
     private static final String CvIDPSIMS = "PSI-MS";
     private static final String CvNamePSIMS = "Proteomics Standards Initiative Mass Spectrometry Vocabularies";
@@ -115,10 +116,25 @@ public class ProgenMzquantmlConverter {
     private String idFn;
     private char separator;
 
+    /**
+     * Constructor of ProgenMzquantmlConverter with input parameters.
+     *
+     * @param flFn feature/peptide result file name, e.g feature.csv or peptide.csv
+     * @param plFn protein result file name
+     * @param idFn mzIdentML file name
+     */
     public ProgenMzquantmlConverter(String flFn, String plFn, String idFn) {
         this(flFn, plFn, idFn, ',');
     }
 
+    /**
+     * Constructor of ProgenMzquantmlConverter with input parameters.
+     *
+     * @param flFn feature/peptide result file name, e.g feature.csv or peptide.csv
+     * @param plFn protein result file name
+     * @param idFn mzIdentML file name
+     * @param sep  separator of input files
+     */
     public ProgenMzquantmlConverter(String flFn, String plFn, String idFn,
                                     char sep) {
         this.flFn = flFn;
@@ -127,11 +143,6 @@ public class ProgenMzquantmlConverter {
         this.separator = sep;
     }
 
-//    public String createOutput(
-//                               String outFn)
-//            throws IOException, DatatypeConfigurationException {
-//        return createOutput(flFn, plFn, idFn, outFn, ',');
-//    }
     private void createBibliographicReferenceList() {
 
         //TODO: this is only for example file, remove it for generic use
@@ -1353,6 +1364,20 @@ public class ProgenMzquantmlConverter {
         pepConListList.add(peptideConsensusList);
     }
 
+    /**
+     * Create output mzQuantML file with output parameters.
+     * The protGrpList flag decides if output file contains ProteinGroupList or not.
+     * The rawPlusNorm flag decides which type of abundance QuantLayer is in the output file.
+     * If rawPlusNorm equals NORM_ONLY or RAW_ONLY, only normalised abundance or raw abundance values are output.
+     * Otherwise (including rawPlusNorm is null), any available abundance values are output.
+     *
+     * @param outFn       output file name
+     * @param protGrpList flag indicates if output ProteinGroupList or not
+     * @param rawPlusNorm flag indicates which type of abundance is in the output file.
+     *
+     * @throws IOException
+     * @throws DatatypeConfigurationException
+     */
     public void convert(String outFn, boolean protGrpList, String rawPlusNorm)
             throws IOException, DatatypeConfigurationException {
 

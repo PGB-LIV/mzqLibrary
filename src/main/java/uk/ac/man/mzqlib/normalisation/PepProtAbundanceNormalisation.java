@@ -341,6 +341,8 @@ public class PepProtAbundanceNormalisation {
             Map<String, List<String>> normalisedValues = getNormalisationValues(scalingFactors);
 
             outputMzqPeptideNormalisation(normalisedValues);
+            
+            service.shutdown();
         } else {
             normalisedPepAssayValTmp = normalisedAssayValue(userRef);
             sfv = normalisedPepAssayValTmp.get("scalingfactor");

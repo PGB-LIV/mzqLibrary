@@ -84,40 +84,6 @@ public class MainApp extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle(WINDOW_TITLE);
         initRootLayout();
-
-        if (re == null) {
-            initialREngine();
-        }
-        // test if jri is installed correctly
-//        try {
-//            System.loadLibrary("jri");
-//        }
-//        catch (UnsatisfiedLinkError e) {
-//            Dialogs.create()
-//                    .title("JRI package Error")
-//                    .message("The R and JRI are not properly installed.\nPlease find out how to set up at http://code.google.com/p/mzq-lib/#How_to_install_mzqViewer")
-//                    .showException(e);
-//        }
-//
-//        InitialREngineTask iniR = new InitialREngineTask();
-//        iniR.setOnSucceeded((WorkerStateEvent t) -> {
-//            re = iniR.getValue();
-//        });
-//
-//        iniR.setOnFailed((WorkerStateEvent t) -> {
-//            Platform.runLater(() -> {
-//                Dialogs.create()
-//                        .title("Error")
-//                        .message("There are exceptions during the R engine initalisation:")
-//                        .showException(iniR.getException());
-//                System.exit(1);
-//            });
-//
-//        });
-//
-//        Thread iniRTh = new Thread(iniR);
-//        iniRTh.setDaemon(true);
-//        iniRTh.start();
     }
 
     /**
@@ -242,6 +208,8 @@ public class MainApp extends Application {
 
     public void showPCAPlot() {
 
+        //TODO: PCA plot does not need gplots. The initialREngine() method include install gplots as required package
+        //TODO: Here the code only need to initial Rengine successfully (check R.dll and jri.dll)
         if (re == null) {
             initialREngine();
         }
@@ -998,7 +966,7 @@ public class MainApp extends Application {
             });
         };
     }
-
+  
     private void initialREngine() {
 
         // test if jri is installed correctly
@@ -1011,13 +979,11 @@ public class MainApp extends Application {
             });
 
             iniR.setOnFailed((WorkerStateEvent t) -> {
-                //Platform.runLater(() -> {
+
                 Dialogs.create()
                         .title("Error")
                         .message("There are exceptions during the R engine initalisation:")
                         .showException(iniR.getException());
-                //System.exit(1);
-                // });
 
             });
 
@@ -1026,12 +992,11 @@ public class MainApp extends Application {
             iniRTh.start();
         }
         catch (UnsatisfiedLinkError e) {
-            //Platform.runLater(() -> {
             Dialogs.create()
                     .title("JRI package Error")
-                    .message("The R and JRI are not properly installed.\nAny routine relying on R will not work.\nPlease find out how to set up at http://code.google.com/p/mzq-lib/#How_to_install_mzqViewer")
+                    .message("The R and JRI are not properly installed.\nAll R related functions will not work.\nPlease find out how to set up at http://code.google.com/p/mzq-lib/#How_to_run_mzqViewer_with_R")
                     .showException(e);
-            //});
+
         }
     }
 

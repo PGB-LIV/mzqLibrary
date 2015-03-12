@@ -85,15 +85,16 @@ public class PepProtAbundanceNormalisation {
 
     /**
      * give the maximum number of threads
+     *
      * @param maximumThreads - Number of maximum threads
      */
-    
     public void setMaximumThreads(int maximumThreads) {
         this.maximumThreads = maximumThreads;
     }
 
     /**
      * give normalised level
+     *
      * @param normLev - normalised level
      */
     public void setNormLevel(String normLev) {
@@ -102,6 +103,7 @@ public class PepProtAbundanceNormalisation {
 
     /**
      * set quant layer type
+     *
      * @param qlt - quant layer type
      */
     public void setQuantLT(String qlt) {
@@ -110,6 +112,7 @@ public class PepProtAbundanceNormalisation {
 
     /**
      * set input data type accession
+     *
      * @param inDTA - data type accession for input
      */
     public void setInDTAcc(String inDTA) {
@@ -118,6 +121,7 @@ public class PepProtAbundanceNormalisation {
 
     /**
      * set output data type accession
+     *
      * @param outDTA - data type accession for output
      */
     public void setOutDTAcc(String outDTA) {
@@ -126,6 +130,7 @@ public class PepProtAbundanceNormalisation {
 
     /**
      * set decoy tag
+     *
      * @param td - decoy tag
      */
     public void setTagDecoy(String td) {
@@ -134,6 +139,7 @@ public class PepProtAbundanceNormalisation {
 
     /**
      * set data type CV name for output
+     *
      * @param outDTCN - output data type CV name
      */
     public void setOutputAssayDTCN(String outDTCN) {
@@ -142,7 +148,8 @@ public class PepProtAbundanceNormalisation {
 
     /**
      * set ID type
-     * @param idType - ID type 
+     *
+     * @param idType - ID type
      */
     public void setIDType(String idType) {
         setType = idType;
@@ -150,6 +157,7 @@ public class PepProtAbundanceNormalisation {
 
     /**
      * set unmarshalling file for mzQuantML object
+     *
      * @param um - unmarshalling input file
      */
     public void setUMInfile(MzQuantMLUnmarshaller um) {
@@ -340,8 +348,11 @@ public class PepProtAbundanceNormalisation {
 
             Map<String, List<String>> normalisedValues = getNormalisationValues(scalingFactors);
 
+            //remove "null" entry
+            normalisedValues.remove(null);
+
             outputMzqPeptideNormalisation(normalisedValues);
-            
+
             service.shutdown();
         } else {
             normalisedPepAssayValTmp = normalisedAssayValue(userRef);
@@ -545,9 +556,13 @@ public class PepProtAbundanceNormalisation {
         PeptideConsensusList pepConList = inFileUM.unmarshal(MzQuantMLElement.PeptideConsensusList);
         List<PeptideConsensus> pepCons = pepConList.getPeptideConsensus();
         List<QuantLayer<IdOnly>> assayQLs = pepConList.getAssayQuantLayer();
+        
+//        boolean foundQL = false;
         for (QuantLayer assayQL : assayQLs) {
             if ((assayQL.getDataType().getCvParam().getAccession()).equalsIgnoreCase(inputDataTypeAccession)) {
 
+//                foundQL = true;
+                
 //            if (assayQL.getId().equalsIgnoreCase(aql_id)) {
 //                System.out.println("AQL: " + assayQL.getId());
                 DataMatrix assayDM = assayQL.getDataMatrix();
@@ -615,6 +630,15 @@ public class PepProtAbundanceNormalisation {
                 break;
             }
         }
+        
+        //        if (!foundQL) {
+//           try { 
+//            throw new IllegalStateException("The given quant layer is not found in the mzq file!!! "
+//                    + "Please check the input data type accession.");
+//           } catch (IllegalStateException e) {
+//               System.out.println(e.getMessage());
+//           }
+//        }
 
 //        System.out.println("Peptide Assay: " + peptideAssayValues);
 //        return peptideAssayValues;
@@ -693,27 +717,39 @@ public class PepProtAbundanceNormalisation {
 
         //adjust zeros and calculate the ratios
         for (Map.Entry<String, List<String>> entry : entrys) {
+            int sig_ignore = 0;
             List<String> ratioVals = new ArrayList<String>();
             String key = entry.getKey();
             String vRef = entry.getValue().get(refNo);
 
+//            if (vRef.equalsIgnoreCase("null")) {
+//                vRef = "0";
+//            }
             if (vRef.equalsIgnoreCase("null")) {
-                vRef = "0";
+                continue;
             }
 
             refCol[entryRow] = Double.parseDouble(vRef);
             for (int col = 0; col < vSize; col++) {
                 String vj = entry.getValue().get(col);
 
+//                if (vj.equalsIgnoreCase("null") || vj.equalsIgnoreCase("0")) {
+////                    if (vj.equalsIgnoreCase("null")) {
+//                    vj = "0.5";
+//                }
                 if (vj.equalsIgnoreCase("null") || vj.equalsIgnoreCase("0")) {
-//                    if (vj.equalsIgnoreCase("null")) {
-                    vj = "0.5";
+                    sig_ignore = 1;
+                    break;
                 }
 
                 double ratioVal = Double.parseDouble(vRef) / Double.parseDouble(vj);
 
                 ratioVals.add(col, Double.toString(ratioVal));
                 valArr[entryRow][col] = Double.parseDouble(vj);
+            }
+
+            if (sig_ignore == 1) {
+                continue;
             }
 
             valArr_key[entryRow] = key;
@@ -789,14 +825,44 @@ public class PepProtAbundanceNormalisation {
             check = true;
         }
 
-        for (int row = 0; row < entryNo; row++) {
+//normalising each entry
+//        for (int row = 0; row < entryNo; row++) {
+//            List<String> valArrRowList = new ArrayList<String>();
+//            for (int col = 0; col < vSize; col++) {
+//                double valArrTmp = valArr[row][col] * scalingFactor[col];
+//                valArrRow[col] = df.format(valArrTmp);
+//                valArrRowList.add(valArrRow[col]);
+//            }
+//            normalisedPAV.put(valArr_key[row], valArrRowList);
+//        }
+        //normalising the entries without the "null" value
+        for (Map.Entry<String, List<String>> entry : entrys) {
+            int sig_ignore_null = 0;
+
             List<String> valArrRowList = new ArrayList<String>();
+            String key = entry.getKey();
+            List<String> values = entry.getValue();
+
+            for (String val : values) {
+                if (val.equalsIgnoreCase("null")) {
+                    sig_ignore_null = 1;
+                }
+            }
+            //ignore the entry with the "null" element
+            if (sig_ignore_null == 1) {
+                continue;
+            }
+
             for (int col = 0; col < vSize; col++) {
-                double valArrTmp = valArr[row][col] * scalingFactor[col];
+                String value = entry.getValue().get(col);
+
+                double valArrTmp = Double.parseDouble(value) * scalingFactor[col];
                 valArrRow[col] = df.format(valArrTmp);
                 valArrRowList.add(valArrRow[col]);
+
             }
-            normalisedPAV.put(valArr_key[row], valArrRowList);
+
+            normalisedPAV.put(key, valArrRowList);
         }
 
         //add scaleing factor
@@ -832,16 +898,26 @@ public class PepProtAbundanceNormalisation {
         for (Map.Entry<String, List<String>> entry : featureEntrys) {
 //            List<String> ratioVals = new ArrayList<String>();
             String key = entry.getKey();
+            int sig_ignore_feature_null = 0;
 
             for (int col = 0; col < vSize; col++) {
                 String vj = entry.getValue().get(col);
 
-                if (vj.equalsIgnoreCase("null") || vj.equalsIgnoreCase("0")) {
-//                    if (vj.equalsIgnoreCase("null")) {
-                    vj = "0.5";
+//                if (vj.equalsIgnoreCase("null") || vj.equalsIgnoreCase("0")) {
+////                    if (vj.equalsIgnoreCase("null")) {
+//                    vj = "0.5";
+//                }
+                //ignore the entry with "null"
+                if (vj.equalsIgnoreCase("null")) {
+                    sig_ignore_feature_null = 1;
+                    break;
                 }
 
                 valArrFeature[entryRow][col] = Double.parseDouble(vj);
+            }
+
+            if (sig_ignore_feature_null == 1) {
+                continue;
             }
 
             valArrFeature_key[entryRow] = key;

@@ -6,14 +6,16 @@
 //
 
 
-package uk.ac.liv.mzqlib.consensusxml.converter.jaxb;
+package uk.ac.liv.mzqlib.openms.jaxb;
 
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -27,8 +29,9 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{}element" maxOccurs="unbounded"/>
+ *         &lt;element ref="{}map" maxOccurs="unbounded"/>
  *       &lt;/sequence>
+ *       &lt;attribute name="count" use="required" type="{http://www.w3.org/2001/XMLSchema}unsignedInt" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -38,41 +41,60 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "element"
+    "map"
 })
-@XmlRootElement(name = "groupedElementList")
-public class GroupedElementList {
+@XmlRootElement(name = "mapList")
+public class MapList {
 
     @XmlElement(required = true)
-    protected List<Element> element;
+    protected List<Map> map;
+    @XmlAttribute(name = "count", required = true)
+    @XmlSchemaType(name = "unsignedInt")
+    protected long count;
 
     /**
-     * The combined elements.Gets the value of the element property.
+     * Gets the value of the map property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the element property.
+     * This is why there is not a <CODE>set</CODE> method for the map property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getElement().add(newItem);
+     *    getMap().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Element }
+     * {@link Map }
      * 
      * 
      */
-    public List<Element> getElement() {
-        if (element == null) {
-            element = new ArrayList<>();
+    public List<Map> getMap() {
+        if (map == null) {
+            map = new ArrayList<>();
         }
-        return this.element;
+        return this.map;
+    }
+
+    /**
+     * Gets the value of the count property.
+     * 
+     */
+    public long getCount() {
+        return count;
+    }
+
+    /**
+     * Sets the value of the count property.
+     * 
+     */
+    public void setCount(long value) {
+        this.count = value;
     }
 
 }

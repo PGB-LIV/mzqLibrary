@@ -1,29 +1,38 @@
-
-package uk.ac.liv.mzqlib.consensusxml.converter;
+package uk.ac.liv.mzqlib.openms.converter;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.DoubleSummaryStatistics;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import uk.ac.liv.jmzqml.model.mzqml.*;
 import uk.ac.liv.jmzqml.xml.io.MzQuantMLMarshaller;
-import uk.ac.liv.mzqlib.consensusxml.converter.jaxb.ConsensusElement;
-import uk.ac.liv.mzqlib.consensusxml.converter.jaxb.ConsensusElementList;
-import uk.ac.liv.mzqlib.consensusxml.converter.jaxb.ConsensusXML;
-import uk.ac.liv.mzqlib.consensusxml.converter.jaxb.Element;
-import uk.ac.liv.mzqlib.consensusxml.converter.jaxb.MapList;
+import uk.ac.liv.mzqlib.openms.jaxb.ConsensusElement;
+import uk.ac.liv.mzqlib.openms.jaxb.ConsensusElementList;
+import uk.ac.liv.mzqlib.openms.jaxb.ConsensusXML;
+import uk.ac.liv.mzqlib.openms.jaxb.Element;
+import uk.ac.liv.mzqlib.openms.jaxb.FeatureMap;
+import uk.ac.liv.mzqlib.openms.jaxb.FeatureType;
+import uk.ac.liv.mzqlib.openms.jaxb.FeatureType.Convexhull;
+import uk.ac.liv.mzqlib.openms.jaxb.FeatureType.Convexhull.Pt;
+import uk.ac.liv.mzqlib.openms.jaxb.MapList;
 
 /**
- * The ConsensusXMLProcessorFactory class parse the input consensusxml file and create a ConsensusXMLProcessor instance.
+ * The ConsensusXMLProcessorFactory class parse the input consensusxml file and
+ * create a ConsensusXMLProcessor instance.
  *
  * @author Da Qi
  * @institute University of Liverpool
@@ -42,8 +51,9 @@ public class ConsensusXMLProcessorFactory {
     }
 
     /**
-     * The method provides a static instance of the class ConsensusXMLProcessorFactory.
-     * User will call this method for accessing to buildConsensusXMLProcessor method.
+     * The method provides a static instance of the class
+     * ConsensusXMLProcessorFactory. User will call this method for accessing to
+     * buildConsensusXMLProcessor method.
      *
      * @return the static instance of ConsensusXMLProcessorFactory
      */
@@ -52,7 +62,8 @@ public class ConsensusXMLProcessorFactory {
     }
 
     /**
-     * The method builds a ConsensusXMLProcessor instance from input consensusxml file.
+     * The method builds a ConsensusXMLProcessor instance from input
+     * consensusxml file.
      *
      * @param xmlFile the input consensusxml file
      *
@@ -67,21 +78,20 @@ public class ConsensusXMLProcessorFactory {
 
     private class ConsensusXMLProcessorImpl implements ConsensusXMLProcessor {
 
-        Unmarshaller unmarsh;
-        //List<FeatureList> featureLists = new ArrayList();
-        Map<String, FeatureList> rgIdToFeatureListMap = new HashMap<>();
-        PeptideConsensusList pepConList = new PeptideConsensusList();
-        AssayList assays = new AssayList();
-        Cv cv;
-        List<RawFilesGroup> rgList = new ArrayList();
-        Map<String, Assay> rgIdToAssayMap = new HashMap<>();
-        Map<String, RawFilesGroup> rgIdToRgObjectMap = new HashMap<>();
-        /*
-         * Constructor
-         */
+        protected Unmarshaller unmarsh;
+        protected Map<String, FeatureList> rgIdToFeatureListMap = new HashMap<>();
+        protected PeptideConsensusList pepConList = new PeptideConsensusList();
+        protected AssayList assays = new AssayList();
+        protected Cv cv;
+        protected List<RawFilesGroup> rgList = new ArrayList();
+        protected Map<String, Assay> rgIdToAssayMap = new HashMap<>();
+        protected Map<String, RawFilesGroup> rgIdToRgObjectMap = new HashMap<>();
+        private Map<Integer, Map<String, MzRtArea>> featureAreasPreAligned = new HashMap<>();
+        private Map<Integer, Map<String, MzRtArea>> featureAreasPostAligned = new HashMap<>();        
+        private final JAXBContext context = JAXBContext.newInstance(new Class[]{FeatureMap.class});
+        private Unmarshaller featureUnmarshaller = context.createUnmarshaller();
 
-        private ConsensusXMLProcessorImpl(File xmlFile)
-                throws JAXBException {
+        public ConsensusXMLProcessorImpl(File file) throws JAXBException {
             JAXBContext context = JAXBContext.newInstance(new Class[]{ConsensusXML.class});
             unmarsh = context.createUnmarshaller();
 
@@ -103,7 +113,7 @@ public class ConsensusXMLProcessorFactory {
             modParams.add(modParam);
 
             // root
-            ConsensusXML consensus = (ConsensusXML) unmarsh.unmarshal(xmlFile);
+            ConsensusXML consensus = (ConsensusXML) unmarsh.unmarshal(file);
 
             ConsensusElementList conEleList = consensus.getConsensusElementList();
 
@@ -115,8 +125,9 @@ public class ConsensusXMLProcessorFactory {
 
             assays.setId("AssayList1");
 
-            List<uk.ac.liv.mzqlib.consensusxml.converter.jaxb.Map> maps = mapList.getMap();
-            for (uk.ac.liv.mzqlib.consensusxml.converter.jaxb.Map map : maps) {
+            List<uk.ac.liv.mzqlib.openms.jaxb.Map> maps = mapList.getMap();
+            //readFeatureXmlMzRtAreas(maps);
+            for (uk.ac.liv.mzqlib.openms.jaxb.Map map : maps) {
                 RawFilesGroup rg = new RawFilesGroup();
 
                 // ID of RawFilesGroup
@@ -157,6 +168,11 @@ public class ConsensusXMLProcessorFactory {
 
             pepConList.setFinalResult(true);
             pepConList.setId("pepConList_consensusXML");
+
+            CvParam massTraceRectangleParam = new CvParam();
+            massTraceRectangleParam.setAccession("MS:1001826");
+            massTraceRectangleParam.setName("mass trace reporting: rectangles");
+            massTraceRectangleParam.setCv(cv);
 
             for (ConsensusElement conElement : conElements) {
 
@@ -217,6 +233,8 @@ public class ConsensusXMLProcessorFactory {
                         rgIdToFeatureListMap.put(rawFilesGroupId, featureList);
                         featureList.setRawFilesGroup(rgIdToRgObjectMap.get(rawFilesGroupId));
                         featureList.setId("FList_" + element.getMap());
+
+                        featureList.getCvParam().add(massTraceRectangleParam);
                     }
 
                     //new Feature
@@ -226,6 +244,31 @@ public class ConsensusXMLProcessorFactory {
                     feature.setId(ftId);
                     feature.setMz(ftMz);
                     feature.setRt(String.valueOf(ftRt));
+
+                    Map<String, MzRtArea> featureAreaPreAligned = featureAreasPreAligned.get((int) element.getMap());
+                    if (featureAreaPreAligned != null) {
+                        MzRtArea featureArea = featureAreaPreAligned.get(element.getId());
+                        if (featureArea != null) {
+                            feature.getMassTrace().addAll(featureArea.getMassTrace());
+                            feature.setMz(featureArea.getMzCentroid());
+                            feature.setRt(String.valueOf(featureArea.getRtCentroid()));
+                        }
+                    }
+
+                    Map<String, MzRtArea> featureAreaPostAligned = featureAreasPostAligned.get((int) element.getMap());
+                    if (featureAreaPostAligned != null) {
+                        MzRtArea featureArea = featureAreaPostAligned.get(element.getId());
+                        if (featureArea != null) {
+                            UserParam rtCentroidParam = new UserParam();
+                            rtCentroidParam.setName("Retention time centroid: post-alignment");
+                            rtCentroidParam.setValue(String.valueOf(featureArea.getRtCentroid()));
+                            UserParam massTraceParam = new UserParam();
+                            massTraceParam.setName("Mass trace: post-alignment");
+                            massTraceParam.setValue(String.join(" ", featureArea.getMassTrace().stream().map(p -> String.valueOf(p)).collect(Collectors.toList())));
+                            feature.getUserParam().add(rtCentroidParam);
+                            feature.getUserParam().add(massTraceParam);
+                        }
+                    }
 
                     // add new feature to featureList
                     featureList.getFeature().add(feature);
@@ -246,6 +289,7 @@ public class ConsensusXMLProcessorFactory {
                 dm.getRow().add(row);
 
             }
+
             assayQL.getColumnIndex().addAll(Arrays.asList(columnIndex));
             assayQL.setDataMatrix(dm);
 
@@ -258,6 +302,52 @@ public class ConsensusXMLProcessorFactory {
             assayQL.setDataType(cpRef);
             assayQL.setId("AQL_intensity");
             pepConList.getAssayQuantLayer().add(assayQL);
+
+        }
+
+        private void readFeatureXmlMzRtAreas(List<uk.ac.liv.mzqlib.openms.jaxb.Map> featureXmlMaps) throws JAXBException {           
+            for (uk.ac.liv.mzqlib.openms.jaxb.Map featureXmlMap : featureXmlMaps) {
+                String featureXmlLocation = featureXmlMap.getName();                
+                File featureXmlFile = new File(featureXmlLocation);
+                if (!featureXmlFile.exists()) {
+                    continue;
+                }
+
+                if (!featureXmlLocation.contains("_MAPC")) {
+                    readSingleFeatureXmlMzRtAreas(featureXmlFile, (int) featureXmlMap.getId(), featureAreasPreAligned);
+                } else {
+                    readSingleFeatureXmlMzRtAreas(featureXmlFile, (int) featureXmlMap.getId(), featureAreasPostAligned);
+                    File featureXmlUnalignedFile = new File(featureXmlLocation.replace("_MAPC", ""));
+                    if (featureXmlUnalignedFile.exists()) {
+                        readSingleFeatureXmlMzRtAreas(featureXmlUnalignedFile, (int) featureXmlMap.getId(), featureAreasPreAligned);
+                    }
+                }               
+            }
+        }
+
+        private void readSingleFeatureXmlMzRtAreas(File featureXmlFile, int mapNumber, Map<Integer, Map<String, MzRtArea>> mzRtAreas) throws JAXBException {
+            FeatureMap featureMap = (FeatureMap) featureUnmarshaller.unmarshal(featureXmlFile);
+            Map<String, MzRtArea> featureAreas = new HashMap<>();
+            for (FeatureType feature : featureMap.getFeatureList().getFeature()) {
+                List<Pt> allPts = new LinkedList<>();
+                for (Convexhull convexHull : feature.getConvexhull()) {
+                    allPts.addAll(convexHull.getPt());
+                }
+
+                DoubleSummaryStatistics rtStats = allPts.stream().mapToDouble(p -> p.getX()).summaryStatistics();
+                DoubleSummaryStatistics mzStats = allPts.stream().mapToDouble(p -> p.getY()).summaryStatistics();
+
+                double mzCentroid = feature.getPosition().stream().filter(p -> p.getDim().equals("1")).findFirst().get().getValue();
+                double rtCentroid = feature.getPosition().stream().filter(p -> p.getDim().equals("0")).findFirst().get().getValue();
+                MzRtArea featureArea = new MzRtArea(mzCentroid, rtCentroid);
+                featureArea.getMassTrace().add(rtStats.getMin());
+                featureArea.getMassTrace().add(mzStats.getMin());
+                featureArea.getMassTrace().add(rtStats.getMax());
+                featureArea.getMassTrace().add(mzStats.getMax());
+                featureAreas.put(feature.getId().replace("f_", ""), featureArea);
+            }
+            
+            mzRtAreas.put(mapNumber, featureAreas);
         }
 
         @Override
@@ -291,9 +381,7 @@ public class ConsensusXMLProcessorFactory {
         }
 
         @Override
-        public void convert(String outputFileName)
-                throws IOException {
-
+        public void convert(String outputFileName) throws IOException {
             //File file = new File("CPTAC_study6_2400_3600_FLUQT.consensusXML");
             //String output = "CPTAC_study6_2400_3600_FLUQT.consensusXML.mzq";
             FileWriter writer = new FileWriter(outputFileName);
@@ -371,13 +459,36 @@ public class ConsensusXMLProcessorFactory {
             if (writer != null) {
                 try {
                     writer.close();
-                }
-                catch (IOException ex) {
+                } catch (IOException ex) {
                     Logger.getLogger(Converter.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
 
+    }
+
+    private static class MzRtArea {
+
+        private double mzCentroid;
+        private double rtCentroid;
+        private List<Double> massTrace = new LinkedList<>();
+
+        public MzRtArea(double mzCentroid, double rtCentroid) {
+            this.mzCentroid = mzCentroid;
+            this.rtCentroid = rtCentroid;
+        }
+
+        public double getMzCentroid() {
+            return this.mzCentroid;
+        }
+
+        public double getRtCentroid() {
+            return this.rtCentroid;
+        }
+
+        public List<Double> getMassTrace() {
+            return this.massTrace;
+        }
     }
 
 }

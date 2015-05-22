@@ -6,12 +6,14 @@
 //
 
 
-package uk.ac.liv.mzqlib.consensusxml.converter.jaxb;
+package uk.ac.liv.mzqlib.openms.jaxb;
 
+import java.math.BigInteger;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -24,9 +26,12 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;complexType>
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;attribute name="map" use="required" type="{http://www.w3.org/2001/XMLSchema}unsignedInt" />
+ *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
  *       &lt;attribute name="rt" use="required" type="{http://www.w3.org/2001/XMLSchema}double" />
  *       &lt;attribute name="mz" use="required" type="{http://www.w3.org/2001/XMLSchema}double" />
  *       &lt;attribute name="it" use="required" type="{http://www.w3.org/2001/XMLSchema}double" />
+ *       &lt;attribute name="charge" type="{http://www.w3.org/2001/XMLSchema}integer" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -36,15 +41,62 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
-@XmlRootElement(name = "centroid")
-public class Centroid {
+@XmlRootElement(name = "element")
+public class Element {
 
+    @XmlAttribute(name = "map", required = true)
+    @XmlSchemaType(name = "unsignedInt")
+    protected long map;
+    @XmlAttribute(name = "id", required = true)
+    protected String id;
     @XmlAttribute(name = "rt", required = true)
     protected double rt;
     @XmlAttribute(name = "mz", required = true)
     protected double mz;
     @XmlAttribute(name = "it", required = true)
     protected double it;
+    @XmlAttribute(name = "charge")
+    protected BigInteger charge;
+
+    /**
+     * Gets the value of the map property.
+     * 
+     */
+    public long getMap() {
+        return map;
+    }
+
+    /**
+     * Sets the value of the map property.
+     * 
+     */
+    public void setMap(long value) {
+        this.map = value;
+    }
+
+    /**
+     * Gets the value of the id property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setId(String value) {
+        this.id = value;
+    }
 
     /**
      * Gets the value of the rt property.
@@ -92,6 +144,30 @@ public class Centroid {
      */
     public void setIt(double value) {
         this.it = value;
+    }
+
+    /**
+     * Gets the value of the charge property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
+     */
+    public BigInteger getCharge() {
+        return charge;
+    }
+
+    /**
+     * Sets the value of the charge property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
+     */
+    public void setCharge(BigInteger value) {
+        this.charge = value;
     }
 
 }

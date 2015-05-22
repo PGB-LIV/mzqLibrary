@@ -6,7 +6,7 @@
 //
 
 
-package uk.ac.liv.mzqlib.consensusxml.converter.jaxb;
+package uk.ac.liv.mzqlib.openms.jaxb;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
@@ -14,34 +14,31 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for UserParamType.
+ * <p>Java class for MassType.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <pre>
- * &lt;simpleType name="UserParamType">
+ * &lt;simpleType name="MassType">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="int"/>
- *     &lt;enumeration value="float"/>
- *     &lt;enumeration value="string"/>
+ *     &lt;enumeration value="average"/>
+ *     &lt;enumeration value="monoisotopic"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
  * 
  */
-@XmlType(name = "UserParamType")
+@XmlType(name = "MassType")
 @XmlEnum
-public enum UserParamType {
+public enum MassType {
 
-    @XmlEnumValue("int")
-    INT("int"),
-    @XmlEnumValue("float")
-    FLOAT("float"),
-    @XmlEnumValue("string")
-    STRING("string");
+    @XmlEnumValue("average")
+    AVERAGE("average"),
+    @XmlEnumValue("monoisotopic")
+    MONOISOTOPIC("monoisotopic");
     private final String value;
 
-    UserParamType(String v) {
+    MassType(String v) {
         value = v;
     }
 
@@ -49,8 +46,8 @@ public enum UserParamType {
         return value;
     }
 
-    public static UserParamType fromValue(String v) {
-        for (UserParamType c: UserParamType.values()) {
+    public static MassType fromValue(String v) {
+        for (MassType c: MassType.values()) {
             if (c.value.equals(v)) {
                 return c;
             }

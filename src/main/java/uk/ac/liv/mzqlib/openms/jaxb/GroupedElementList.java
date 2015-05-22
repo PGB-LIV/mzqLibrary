@@ -6,7 +6,7 @@
 //
 
 
-package uk.ac.liv.mzqlib.consensusxml.converter.jaxb;
+package uk.ac.liv.mzqlib.openms.jaxb;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{}consensusElement" maxOccurs="unbounded"/>
+ *         &lt;element ref="{}element" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -38,41 +38,41 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "consensusElement"
+    "element"
 })
-@XmlRootElement(name = "consensusElementList")
-public class ConsensusElementList {
+@XmlRootElement(name = "groupedElementList")
+public class GroupedElementList {
 
     @XmlElement(required = true)
-    protected List<ConsensusElement> consensusElement;
+    protected List<Element> element;
 
     /**
-     * The consensus element combines corresponding elements of the maps. Gets the value of the consensusElement property.
+     * The combined elements.Gets the value of the element property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the consensusElement property.
+     * This is why there is not a <CODE>set</CODE> method for the element property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getConsensusElement().add(newItem);
+     *    getElement().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link ConsensusElement }
+     * {@link Element }
      * 
      * 
      */
-    public List<ConsensusElement> getConsensusElement() {
-        if (consensusElement == null) {
-            consensusElement = new ArrayList<>();
+    public List<Element> getElement() {
+        if (element == null) {
+            element = new ArrayList<>();
         }
-        return this.consensusElement;
+        return this.element;
     }
 
 }

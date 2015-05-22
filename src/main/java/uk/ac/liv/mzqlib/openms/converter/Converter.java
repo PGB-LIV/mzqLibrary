@@ -1,5 +1,5 @@
 
-package uk.ac.liv.mzqlib.consensusxml.converter;
+package uk.ac.liv.mzqlib.openms.converter;
 
 import java.io.File;
 import java.io.IOException;

@@ -6,7 +6,7 @@
 //
 
 
-package uk.ac.liv.mzqlib.consensusxml.converter.jaxb;
+package uk.ac.liv.mzqlib.openms.jaxb;
 
 import java.math.BigInteger;
 import java.util.ArrayList;

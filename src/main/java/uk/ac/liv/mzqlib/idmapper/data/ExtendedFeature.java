@@ -44,9 +44,9 @@ public class ExtendedFeature extends Feature {
             rmz = ft.getMz() + mzWin / 2;
         }
         else {
-            brt = massT.get(0);
+            brt = massT.get(0) / 60.0;
             lmz = massT.get(1);
-            urt = massT.get(2);
+            urt = massT.get(2) / 60.0;
             rmz = massT.get(3);
         }
     }

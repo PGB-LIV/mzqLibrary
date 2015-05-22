@@ -6,7 +6,7 @@
 //
 
 
-package uk.ac.liv.mzqlib.consensusxml.converter.jaxb;
+package uk.ac.liv.mzqlib.openms.jaxb;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -40,7 +40,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "userParam")
 @XmlSeeAlso({
-    uk.ac.liv.mzqlib.consensusxml.converter.jaxb.ConsensusXML.DataProcessing.UserParam.class
+    uk.ac.liv.mzqlib.openms.jaxb.ConsensusXML.DataProcessing.UserParam.class, uk.ac.liv.mzqlib.openms.jaxb.FeatureMap.DataProcessing.UserParam.class
 })
 public class UserParam {
 

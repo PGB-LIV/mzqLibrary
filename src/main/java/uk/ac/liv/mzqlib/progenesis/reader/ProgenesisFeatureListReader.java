@@ -354,7 +354,7 @@ public class ProgenesisFeatureListReader implements Closeable {
 
     /**
      * Get IndexMap.
-     * 
+     *
      * 
      * @return
      */

@@ -296,11 +296,11 @@ public class PepProtAbundanceNormalisation {
         featureAssayValues = peptideAssayValue("full");
         peptideAssayValues = peptideAssayValue("consensus");
 
-        if (featureAssayValues == null) {
+        if (featureAssayValues.isEmpty()) {
             flag_assVal = false;
         }
-        
-        if (peptideAssayValues == null) {
+
+        if (peptideAssayValues.isEmpty()) {
             flag_assVal = false;
         }
 
@@ -319,29 +319,28 @@ public class PepProtAbundanceNormalisation {
     public void multithreadingCalc() throws FileNotFoundException {
 
 //        Map<String, List<String>> assayVals = new HashMap<String, List<String>>();
-        
         init();
         if (!initted) {
             throw new IllegalStateException("Initialisation is needed!");
         }
-        
+
         if (normalisedLevel == "feature") {
             assayVals = featureAssayValues;
         } else if (normalisedLevel == "peptide") {
             assayVals = peptideAssayValues;
         }
-        
+
         boolean flag = true;
         int ass_start = 1;
         int ass_end = assNo;
         Map<String, List<String>> normalisedPepAssayValTmp;
         Map<String, List<String>> normalisedFeatureAssayValTmp;
         List<String> sfv;
-        
+
 //        System.out.println(assayVals);
 //        int pepSizeTmp = peptideAssayValues.entrySet().iterator().next().getValue().size();
         int pepSizeTmp = assayVals.entrySet().iterator().next().getValue().size();
-        
+
 //        multi-threading will start if no user reference is input.
         if (userRef == null) {
             Set<ScaleFactorCalculation> calculations = new HashSet<>();
@@ -369,6 +368,8 @@ public class PepProtAbundanceNormalisation {
             if (scalingFactors == null) {
                 flag = false;
             }
+
+//            System.out.println("Scaling factors: " + Arrays.toString(scalingFactors));
 
             Map<String, List<String>> normalisedValues = getNormalisationValues(scalingFactors);
 
@@ -603,8 +604,43 @@ public class PepProtAbundanceNormalisation {
                     //for all IDs
                     if (st.equalsIgnoreCase("full")) {
 
-//                        peptideAssayValues.put(peptideRef, values);
-                        assayValues.put(peptideRef, values);
+                        for (PeptideConsensus pepCon : pepCons) {
+
+                            String pepId = pepCon.getId();
+                            if (pepId.equalsIgnoreCase(peptideRef)) {
+//                            System.out.println("Peptide ID: " + pepId);
+
+//                                String pepSeq = pepCon.getPeptideSequence();
+//                                if (StringUtils.isNotEmpty(pepSeq)) {
+                                //remove the decoy-related peptides
+                                for (Protein prot : prots) {
+                                    boolean breakLoop = false;
+                                    String protAcc = prot.getAccession();
+                                    List<String> pepRefs = prot.getPeptideConsensusRefs();
+                                    for (String pepRef : pepRefs) {
+                                        if (pepRef.equalsIgnoreCase(pepId) && !(protAcc.contains(tagDecoy))) {
+                                                //
+
+                                            //original
+//                                                peptideAssayValues.put(peptideRef, values);
+                                            assayValues.put(peptideRef, values);
+//                                    System.out.println("peptide assay values: " + peptideRef);
+                                            //
+
+                                            //remove the decoy-related peptides
+                                            breakLoop = true;
+                                            break;
+                                        }
+                                    }
+                                    if (breakLoop) {
+                                        break;
+                                    }
+                                }
+
+//                                }
+                                break;
+                            }
+                        }
                         //for consensus ones only    
                     } else if (st.equalsIgnoreCase("consensus")) {
 
@@ -657,13 +693,13 @@ public class PepProtAbundanceNormalisation {
             }
         }
 
-                if (!foundQL) {
-           try { 
-            throw new IllegalStateException("The given quant layer is not found in the mzq file!!! "
-                    + "Please check the input data type accession.");
-           } catch (IllegalStateException e) {
-               System.out.println(e.getMessage());
-           }
+        if (!foundQL) {
+            try {
+                throw new IllegalStateException("The given quant layer is not found in the mzq file!!! "
+                        + "Please check the input data type accession.");
+            } catch (IllegalStateException e) {
+                System.out.println(e.getMessage());
+            }
         }
 //        System.out.println("Peptide Assay: " + peptideAssayValues);
 //        return peptideAssayValues;
@@ -677,37 +713,36 @@ public class PepProtAbundanceNormalisation {
      * @param inputProteinDTCA - protein CV accession
      * @return true/false
      */
-    private boolean proteinAssayValue(MzQuantMLUnmarshaller in_file_um, String assayID) {
-
-        boolean first_list = false;
-        ProteinGroupList proGroupList = in_file_um.unmarshal(MzQuantMLElement.ProteinGroupList);
-        List<QuantLayer<IdOnly>> assayQLs = proGroupList.getAssayQuantLayer();
-        for (QuantLayer assayQL : assayQLs) {
-//            System.out.println("Assay Quant Layer ID: " + assayQL.getId());
-//            if ((assayQL.getDataType().getCvParam().getAccession()).equalsIgnoreCase(inputProteinDTCA)) {
-
-            if (assayQL.getId().equalsIgnoreCase(assayID)) {
-                DataMatrix assayDM = assayQL.getDataMatrix();
-                List<Row> rows = assayDM.getRow();
-                for (Row row : rows) {
-                    //get protein reference
-                    String proteinRef = row.getObjectRef();
-
-                    //get value String type
-                    List<String> values = row.getValue();
-
-                    proteinAssayValues.put(proteinRef, values);
-
-                }
-//System.out.println("protein assay values: " + proteinAssayValues);
-                first_list = true;
-                break;
-            }
-        }
-//        return proteinAssayValues;
-        return first_list;
-    }
-
+//    private boolean proteinAssayValue(MzQuantMLUnmarshaller in_file_um, String assayID) {
+//
+//        boolean first_list = false;
+//        ProteinGroupList proGroupList = in_file_um.unmarshal(MzQuantMLElement.ProteinGroupList);
+//        List<QuantLayer<IdOnly>> assayQLs = proGroupList.getAssayQuantLayer();
+//        for (QuantLayer assayQL : assayQLs) {
+////            System.out.println("Assay Quant Layer ID: " + assayQL.getId());
+////            if ((assayQL.getDataType().getCvParam().getAccession()).equalsIgnoreCase(inputProteinDTCA)) {
+//
+//            if (assayQL.getId().equalsIgnoreCase(assayID)) {
+//                DataMatrix assayDM = assayQL.getDataMatrix();
+//                List<Row> rows = assayDM.getRow();
+//                for (Row row : rows) {
+//                    //get protein reference
+//                    String proteinRef = row.getObjectRef();
+//
+//                    //get value String type
+//                    List<String> values = row.getValue();
+//
+//                    proteinAssayValues.put(proteinRef, values);
+//
+//                }
+////System.out.println("protein assay values: " + proteinAssayValues);
+//                first_list = true;
+//                break;
+//            }
+//        }
+////        return proteinAssayValues;
+//        return first_list;
+//    }
     /**
      * calculate scaling factors based on the median absolute deviation (MAD)
      * algorithm.
@@ -871,21 +906,25 @@ public class PepProtAbundanceNormalisation {
             String key = entry.getKey();
             List<String> values = entry.getValue();
 
-            for (String val : values) {
-                if (val.equalsIgnoreCase("null")) {
-                    sig_ignore_null = 1;
-                }
-            }
-            //ignore the entry with the "null" element
-            if (sig_ignore_null == 1) {
-                continue;
-            }
-
+            //remove entries with "null"
+//            for (String val : values) {
+//                if (val.equalsIgnoreCase("null")) {
+//                    sig_ignore_null = 1;
+//                }
+//            }
+//            //ignore the entry with the "null" element
+//            if (sig_ignore_null == 1) {
+//                continue;
+//            }
             for (int col = 0; col < vSize; col++) {
                 String value = entry.getValue().get(col);
 
-                double valArrTmp = Double.parseDouble(value) * scalingFactor[col];
-                valArrRow[col] = df.format(valArrTmp);
+                if (value.equalsIgnoreCase("null")) {
+                    valArrRow[col] = "null";
+                } else {
+                    double valArrTmp = Double.parseDouble(value) * scalingFactor[col];
+                    valArrRow[col] = df.format(valArrTmp);
+                }
                 valArrRowList.add(valArrRow[col]);
 
             }
@@ -918,7 +957,8 @@ public class PepProtAbundanceNormalisation {
         int vSize = featureAssayValues.entrySet().iterator().next().getValue().size();
         int entryNoFeature = featureAssayValues.size();
         int entryRow = 0;
-        double[][] valArrFeature = new double[entryNoFeature][vSize];
+//        double[][] valArrFeature = new double[entryNoFeature][vSize];
+        String[][] valArrFeature = new String[entryNoFeature][vSize];
         String[] valArrRow = new String[vSize];
         String[] valArrFeature_key = new String[entryNoFeature];
 
@@ -936,12 +976,17 @@ public class PepProtAbundanceNormalisation {
 //                    vj = "0.5";
 //                }
                 //ignore the entry with "null"
-                if (vj.equalsIgnoreCase("null")) {
-                    sig_ignore_feature_null = 1;
-                    break;
+//                if (vj.equalsIgnoreCase("null") | vj.equalsIgnoreCase("nan")) {
+//                    sig_ignore_feature_null = 1;
+//                    break;
+//                }
+                //if the component is "null", it is set to zero
+                if (vj.equalsIgnoreCase("null") | vj.equalsIgnoreCase("nan")) {
+                    vj = "null";
                 }
 
-                valArrFeature[entryRow][col] = Double.parseDouble(vj);
+                valArrFeature[entryRow][col] = vj;
+//                valArrFeature[entryRow][col] = Double.parseDouble(vj);
             }
 
             if (sig_ignore_feature_null == 1) {
@@ -957,8 +1002,15 @@ public class PepProtAbundanceNormalisation {
             List<String> valArrRowList = new ArrayList<String>();
             for (int col = 0; col < vSize; col++) {
                 double scale = Double.valueOf(scalingFactor[col]);
-                double valArrTmp = valArrFeature[row][col] * scale;
-                valArrRow[col] = df.format(valArrTmp);
+
+                if (valArrFeature[row][col].equalsIgnoreCase("null")) {
+                    valArrRow[col] = "null";
+                } else {
+                    double valArrTmp = Double.parseDouble(valArrFeature[row][col]) * scale;
+                    valArrRow[col] = df.format(valArrTmp);
+                }
+//                double valArrTmp = Double.parseDouble(valArrFeature[row][col]) * scale;
+//                valArrRow[col] = df.format(valArrTmp);
                 valArrRowList.add(valArrRow[col]);
             }
             normalisedFAV.put(valArrFeature_key[row], valArrRowList);
@@ -1136,8 +1188,7 @@ public class PepProtAbundanceNormalisation {
 
             if (quantLayerType.equalsIgnoreCase("AssayQuantLayer")) {
                 if (normalisedLevel.equalsIgnoreCase("peptide")
-                        || normalisedLevel.equalsIgnoreCase("feature")
-                        || normalisedLevel.equalsIgnoreCase("feature-then-peptide")) {
+                        || normalisedLevel.equalsIgnoreCase("feature")) {
 
 //                    pepSize = peptideAssayValues.entrySet().iterator().next().getValue().size();
                     pepSize = assayVals.entrySet().iterator().next().getValue().size();

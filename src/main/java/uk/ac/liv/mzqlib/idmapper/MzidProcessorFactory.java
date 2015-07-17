@@ -60,9 +60,7 @@ public class MzidProcessorFactory {
 
         private File mzidFile = null;
         private MzIdentMLUnmarshaller umarsh = null;
-        private Map<String, List<SIIData>> pepModStringToSIIsMap = new HashMap<>();
-        private Map<String, List<String>> pepModStringToProtAccsMap;
-        //private Map<SIIData, String> SIIToPeptideMap = new HashMap<SIIData, String>();
+        private final Map<String, List<SIIData>> pepModStringToSIIsMap = new HashMap<>();
         private TIntObjectMap<List<SIIData>> RtToSIIsMap = new TIntObjectHashMap<>();
         private SearchDatabase searchDB;
         /*
@@ -105,7 +103,7 @@ public class MzidProcessorFactory {
                     //sd.setPeptideModString(pepModString);
                     String pepModString = sd.getPeptideModString();
 
-                    String pep[] = pepModString.split("_", 2);
+                    String pep[] = pepModString.split("_", 2); // separate modString into two parts: peptide sequence and mods
 
                     sd.setSequence(pep[0]);
 
@@ -120,14 +118,13 @@ public class MzidProcessorFactory {
 
                         //String pepModString = sd.getPeptideModString();
                         List<SIIData> pepSiiDataList;
-                        if (pepModString != null) {
-                            pepSiiDataList = pepModStringToSIIsMap.get(pepModString);
-                            if (pepSiiDataList == null) {
-                                pepSiiDataList = new ArrayList();
-                                pepModStringToSIIsMap.put(pepModString, pepSiiDataList);
-                            }
-                            pepSiiDataList.add(sd);
+
+                        pepSiiDataList = pepModStringToSIIsMap.get(pepModString);
+                        if (pepSiiDataList == null) {
+                            pepSiiDataList = new ArrayList();
+                            pepModStringToSIIsMap.put(pepModString, pepSiiDataList);
                         }
+                        pepSiiDataList.add(sd);
 
                         int intRt = (int) rt;
                         List<SIIData> rtSiiDataList;
@@ -155,36 +152,6 @@ public class MzidProcessorFactory {
             return pepModStringToSIIsMap;
         }
 
-//        @Override
-//        public Map getPeptideModStringToProtAccessionsMap() {
-//            if (pepModStringToProtAccsMap == null) {
-//                pepModStringToProtAccsMap = new HashMap<>();
-//            }
-//
-//            for (String pepMod : pepModStringToSIIsMap.keySet()) {
-//                List<String> protAccList = pepModStringToProtAccsMap.get(pepMod);
-//
-//                List<SIIData> siiDataList = pepModStringToSIIsMap.get(pepMod);
-//                if (siiDataList != null) {
-//                    for (SIIData sd : siiDataList) {
-//                        List<PeptideEvidenceRef> pepEviRefs = sd.getPeptideEvidenceRef();
-//                        if (pepEviRefs != null) {
-//                            for (PeptideEvidenceRef pepEviRef : pepEviRefs) {
-//                                String protAcc = pepEviRef.getPeptideEvidence().getDBSequence().getAccession();
-//                                if (protAccList == null) {
-//                                    protAccList = new ArrayList();
-//                                    pepModStringToProtAccsMap.put(pepMod, protAccList);
-//                                }
-//                                protAccList.add(protAcc);
-//                            }
-//                        }
-//                    }
-//                }
-//
-//            }
-//
-//            return pepModStringToProtAccsMap;
-//        }
         @Override
         public TIntObjectMap getRtToSIIsMap() {
             return RtToSIIsMap;
@@ -192,32 +159,6 @@ public class MzidProcessorFactory {
 
     }
 
-//    private String createPeptideModString(MzIdentMLUnmarshaller um,
-//                                          String pepRef) {
-//        String modString = null;
-//        try {
-//            Peptide peptide = um.unmarshal(uk.ac.ebi.jmzidml.model.mzidml.Peptide.class, pepRef);
-//            String pepSeq = peptide.getPeptideSequence();
-//            //this.setSequence(pepSeq);
-//            List<Modification> mods = peptide.getModification();
-//            modString = "_";
-//            for (Modification mod : mods) {
-//                modString = modString + mod.getLocation().toString() + "_";
-//                List<CvParam> cps = mod.getCvParam();
-//                for (CvParam cp : cps) {
-//                    modString = modString + cp.getAccession() + "_" + cp.getName() + "_";
-//                }
-//            }
-//            modString = pepSeq + modString;
-//            return modString;
-//        }
-//        catch (JAXBException ex) {
-//            Logger.getLogger(SIIData.class.getName()).log(Level.SEVERE, null, ex);
-//            System.out.println("Couldn't get peptide object: " + pepRef + " -- " + ex.getMessage());
-//            return modString;
-//        }
-//
-//    }
     /**
      *
      * @param sir

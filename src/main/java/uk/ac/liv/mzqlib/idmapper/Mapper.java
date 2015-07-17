@@ -42,12 +42,8 @@ public class Mapper {
         rawToMzidMap.put("mam_050108o_CPTAC_study6_6E004_080505133441.raw", "mam_050108o_CPTAC_study6_6E004_080505133441_rt.mzid");
         try {
             umarsh = new MzQuantMLUnmarshaller(mzqFile);
-            Map<File, File> fileMap = new HashMap<>();
-            rawToMzidMap.entrySet().stream().forEach((entry) -> {
-                fileMap.put(new File(entry.getKey()), new File(entry.getValue()));
-            });
-            
-            MzqMzIdMapper mapper = MzqMzIdMapperFactory.getInstance().buildMzqMzIdMapper(umarsh, fileMap);
+       
+            MzqMzIdMapper mapper = MzqMzIdMapperFactory.getInstance().buildMzqMzIdMapper(umarsh, rawToMzidMap);
             mapper.createMappedFile(outMzFile);
         }
         catch (JAXBException ex) {

@@ -48,7 +48,7 @@ public class MzqProcessorFactory {
      * The method builds a MzqProcessor instance from an input mzQuantML unmarshaller and other parameters.
      *
      * @param mzqUm        MzQuantMLUnmarshaller
-     * @param rawToMzidMap map of raw file to mzIdentML file
+     * @param rawToMzidMap map of raw file name to mzIdentML file name
      * @param mzWin        the m/z window of feature measured from left to right in Da
      * @param rtWin        the retention time of feature measured from top to bottom in second
      *
@@ -58,7 +58,7 @@ public class MzqProcessorFactory {
      * @throws IOException
      */
     public MzqProcessor buildMzqProcessor(MzQuantMLUnmarshaller mzqUm,
-                                          Map<File, File> rawToMzidMap,
+                                          Map<String, String> rawToMzidMap,
                                           double mzWin, double rtWin)
             throws JAXBException, IOException {
         return new MzqProcessorImpl(mzqUm, rawToMzidMap, mzWin, rtWin);
@@ -68,7 +68,7 @@ public class MzqProcessorFactory {
      * The method builds a MzqProcessor instance from an input mzQuantML unmarshaller and other parameters.
      *
      * @param mzqUm        MzQuantMLUnmarshaller
-     * @param rawToMzidMap map of raw file to mzIdentML file
+     * @param rawToMzidMap map of raw file name to mzIdentML file name
      *
      * @return MzqProcessor
      *
@@ -76,35 +76,27 @@ public class MzqProcessorFactory {
      * @throws IOException
      */
     public MzqProcessor buildMzqProcessor(MzQuantMLUnmarshaller mzqUm,
-                                          Map<File, File> rawToMzidMap)
+                                          Map<String, String> rawToMzidMap)
             throws JAXBException, IOException {
         return new MzqProcessorImpl(mzqUm, rawToMzidMap);
     }
 
     private class MzqProcessorImpl implements MzqProcessor {
 
-        //private File mzqFile = null;
         private MzQuantMLUnmarshaller mzqUm = null;
         //Map of feature id (Stirng) to list of SIIData
-        private Map<String, List<SIIData>> featureToSIIsMap = null;
-        //Map of Peptide mod string to list of SIIData from all mzidProcs
-        private Map<String, List<SIIData>> combinedPepModStringToSIIsMap = null;
-        //Map of Peptide mod string to list of protein accessions
-        private Map<String, List<String>> combPepModStringToProtAccessionsMap = null;
+        private Map<String, List<SIIData>> featureToSIIsMap = new HashMap<>();
         private SearchDatabase searchDB;
 
         /*
          * Constructor
          */
         private MzqProcessorImpl(MzQuantMLUnmarshaller mzqUm,
-                                 Map<File, File> rawToMzidMap, double mzWin,
+                                 Map<String, String> rawToMzidMap, double mzWin,
                                  double rtWin)
                 throws JAXBException, IOException {
 
             this.mzqUm = mzqUm;
-
-            featureToSIIsMap = new HashMap<>();
-            combinedPepModStringToSIIsMap = new HashMap<>();
 
             Iterator<FeatureList> itFeatureList = this.mzqUm.unmarshalCollectionFromXpath(MzQuantMLElement.FeatureList);
             if (itFeatureList == null) {
@@ -114,30 +106,22 @@ public class MzqProcessorFactory {
                 FeatureList ftList = itFeatureList.next();
                 RawFilesGroup rg = (RawFilesGroup) this.mzqUm.unmarshal(uk.ac.liv.jmzqml.model.mzqml.RawFilesGroup.class, ftList.getRawFilesGroupRef());
 
-                File rawFileProposed = null;
+                String rawFileName = "";
                 if (rg.getRawFile().get(0).getName() != null) {
-                    rawFileProposed = new File(rg.getRawFile().get(0).getName());
-                }
-
-                if (rawFileProposed == null || !rawFileProposed.exists()) {
-                    if (rg.getRawFile().get(0).getLocation() != null) {
-                        rawFileProposed = new File(rg.getRawFile().get(0).getLocation());
-                    }
-                }
-
-                if (rawFileProposed == null || !rawFileProposed.exists()) {
+                    rawFileName = rg.getRawFile().get(0).getName();
+                } else if (rg.getRawFile().get(0).getLocation() != null) {
+                        rawFileName = rg.getRawFile().get(0).getLocation();
+                } else {
                     continue;
                 }
-
-                String rawFileNameActual = rawFileProposed.getCanonicalPath().replaceAll(".featureXML", ".mzML").replaceAll("_FFC", "").replaceAll("_MAPC", "");
-                File rawFileActual = new File(rawFileNameActual);
-                File mzidFile = rawToMzidMap.get(rawFileActual.getCanonicalFile());
-                if (mzidFile == null || !mzidFile.exists()) {
-                    throw new RuntimeException("Can not find the raw file \"" + rawFileActual.getName() + "\" in rawToMzidMap. Please use correct raw file in input file.\n");
+               
+                String mzidFileName = rawToMzidMap.get(rawFileName);
+                if (mzidFileName == null) {
+                    throw new RuntimeException("Can not find the raw file name \"" + rawFileName + "\" which appears in mzq file from input rawToMzidMap.\n");
                 }
 
                 // corresponding mzIdentML processor 
-                MzidProcessor mzidProc = MzidProcessorFactory.getInstance().buildMzidProcessor(mzidFile.getCanonicalFile());
+                MzidProcessor mzidProc = MzidProcessorFactory.getInstance().buildMzidProcessor(new File(mzidFileName));
 
                 TIntObjectMap<List<SIIData>> rtToSIIsMap = mzidProc.getRtToSIIsMap();
 
@@ -151,7 +135,7 @@ public class MzqProcessorFactory {
 
                     ExtendedFeature exFt = new ExtendedFeature(ft, mzWin, rtWin);
 
-                    for (int i = (int) exFt.getBRT(); i <= (int) exFt.getURT(); i++) {
+                    for (int i = (int) exFt.getBRT(); i <= (int) exFt.getURT() + 1; i++) {
                         List<SIIData> siiDataList = rtToSIIsMap.get(i);
                         if (siiDataList != null) {
                             for (SIIData sd : siiDataList) {
@@ -173,41 +157,13 @@ public class MzqProcessorFactory {
                             }
                         }
                     }
-
-                    // build combinedPepModStringToSIIsMap;
-                    Map<String, List<SIIData>> pepModStringToSIIsMap = mzidProc.getPeptideModStringToSIIsMap();
-
-                    for (String pepModString : pepModStringToSIIsMap.keySet()) {
-                        List<SIIData> combSIIsList = combinedPepModStringToSIIsMap.get(pepModString);
-                        if (combSIIsList == null) {
-                            combSIIsList = new ArrayList();
-                            combinedPepModStringToSIIsMap.put(pepModString, combSIIsList);
-                            //TODO: Deliberately bring this inside the loop to reduce memory usage
-                            combSIIsList.addAll(pepModStringToSIIsMap.get(pepModString));
-                        }
-                        //combSIIsList.addAll(pepModStringToSIIsMap.get(pepModString));
-                    }
-
-                    //build combinedPepModStringToProtAccessionsMap;
-//                    Map<String, List<String>> pepModStringToProtAccsMap = mzidProc.getPeptideModStringToProtAccessionsMap();
-//
-//                    for (String pepMod : pepModStringToProtAccsMap.keySet()) {
-//                        if (pepModStringToProtAccsMap.get(pepMod) != null) {
-//                            List<String> protAccList = combPepModStringToProtAccessionsMap.get(pepMod);
-//                            if (protAccList == null) {
-//                                protAccList = new ArrayList();
-//                                combPepModStringToProtAccessionsMap.put(pepMod, protAccList);
-//                            }
-//                            protAccList.addAll(pepModStringToProtAccsMap.get(pepMod));
-//                        }
-//                    }
                 }
                 System.out.println("MzqProcessorFactory -- finish processing FeatureList: " + ftList.getId());
             }
         }
 
         private MzqProcessorImpl(MzQuantMLUnmarshaller mzqUm,
-                                 Map<File, File> rawToMzidMap)
+                                 Map<String, String> rawToMzidMap)
                 throws JAXBException, IOException {
             this(mzqUm, rawToMzidMap, 0.1, 20);
         }
@@ -215,19 +171,6 @@ public class MzqProcessorFactory {
         @Override
         public Map getFeatureToSIIsMap() {
             return featureToSIIsMap;
-        }
-
-        @Override
-        public Map getCombinedPepModStringToSIIsMap() {
-            return combinedPepModStringToSIIsMap;
-        }
-
-        @Override
-        public Map getCombPepModStringToProtAccessionsMap() {
-            if (combPepModStringToProtAccessionsMap == null) {
-                combPepModStringToProtAccessionsMap = new HashMap<>();
-            }
-            return combPepModStringToProtAccessionsMap;
         }
 
         @Override

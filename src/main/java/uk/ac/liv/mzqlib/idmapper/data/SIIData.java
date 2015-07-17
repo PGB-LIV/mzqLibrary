@@ -29,10 +29,9 @@ public class SIIData implements Comparable<SIIData> {
     private double rt = Double.NaN;
     private final int rank;
     private final boolean passTh;
-    private List peptideEvidenceRef;
-    private String peptideModString;
-    //private SpectrumIdentificationItem sii;
-    private MzIdentMLUnmarshaller um;
+    private final List peptideEvidenceRef;
+    private final String peptideModString;
+    private final MzIdentMLUnmarshaller um;
     private String mzidFn;
 
     /**
@@ -42,7 +41,7 @@ public class SIIData implements Comparable<SIIData> {
      * @param umarsh MzIdentMLUnmarshaller
      */
     public SIIData(SpectrumIdentificationItem sii, MzIdentMLUnmarshaller umarsh) {
-        //this.sii = sii;
+
         this.um = umarsh;
         this.pepRef = sii.getPeptideRef();
         this.id = sii.getId();
@@ -55,9 +54,6 @@ public class SIIData implements Comparable<SIIData> {
         this.peptideModString = this.createPeptideModString();
     }
 
-//    public SpectrumIdentificationItem getSII() {
-//        return sii;
-//    }
     /**
      * Get MzIdentMLUnmarshaller.
      *
@@ -245,11 +241,15 @@ public class SIIData implements Comparable<SIIData> {
                 .toHashCode();
     }
 
-    /*
-     * private method
+    /**
+     * Create peptide mod string for this SIIData.
+     * The modString contains peptide sequence and list of mods.
+     * Each mod contains mod accession and mod name, plus monoisotopicMassDelta and location.
+     * They all connected by '_'.
+     * @return 
      */
     private String createPeptideModString() {
-        String modString = null;
+        String modString = "";
         try {
             Peptide peptide = um.unmarshal(uk.ac.ebi.jmzidml.model.mzidml.Peptide.class, pepRef);
             String pepSeq = peptide.getPeptideSequence();
@@ -260,11 +260,11 @@ public class SIIData implements Comparable<SIIData> {
                 //modString = modString + mod.getLocation().toString() + "_";
                 List<CvParam> cps = mod.getCvParam();
                 for (CvParam cp : cps) {
-                    modString = modString + cp.getAccession() + "_" + cp.getName() + "_";
+                    modString = modString + cp.getAccession() + "_" + cp.getName() + "_" + mod.getMonoisotopicMassDelta() + "_" + mod.getLocation() + "_";
                 }
             }
             modString = pepSeq + modString;
-            return modString;
+            return modString.substring(0, modString.length()-1); //remove the last '_'
         }
         catch (JAXBException ex) {
             Logger.getLogger(SIIData.class.getName()).log(Level.SEVERE, null, ex);

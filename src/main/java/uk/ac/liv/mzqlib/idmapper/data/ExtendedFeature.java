@@ -36,17 +36,17 @@ public class ExtendedFeature extends Feature {
         List<Double> massT = feature.getMassTrace();
 
         if (massT == null || massT.isEmpty()) {
-            brt = (Double.valueOf(ft.getRt()) - rtWin / 2) / 60.0;
+            brt = (Double.valueOf(ft.getRt()) - rtWin / 120);
             //brt = Double.valueOf(ft.getRt()) - 10;
             lmz = ft.getMz() - mzWin / 2;
-            urt = (Double.valueOf(ft.getRt()) + rtWin / 2) / 60.0;
+            urt = (Double.valueOf(ft.getRt()) + rtWin / 120);
             //urt = Double.valueOf(ft.getRt()) + 10;
             rmz = ft.getMz() + mzWin / 2;
         }
         else {
-            brt = massT.get(0) / 60.0;
+            brt = massT.get(0);
             lmz = massT.get(1);
-            urt = massT.get(2) / 60.0;
+            urt = massT.get(2);
             rmz = massT.get(3);
         }
     }

@@ -1,0 +1,33 @@
+Parameters
+
+1. in_file:       	  	     input file name with path
+2. out_file:      	    	     output file name with path
+3. operator: 	                     abundance calculation operator
+		 		     Ex. "sum"
+4. quantLT:	 	             quant layer type
+			             Ex. "AssayQuantLayer"
+5. inputDataTypeAccession:           input peptide datatype CV accession
+                                     Ex. "MS:1001891"
+6. inputRawDataTypeAccession:        input raw peptide datatype CV accession
+			             Ex. "MS:1001893"
+7. outputProteinGroupDTAccession:    output protein group data type accession
+ 			             Ex. "MS:1001890"
+8. outputProteinGroupDTName:         output protein group data type name
+                                     Ex. "protein normalised abundance"
+9. outputRawProteinGroupDTAccession: output raw protein group data type accession
+				     Ex. "MS:1001892"
+10. outputRawProteinGroupDTName:     output protein group data type name
+                                     Ex. "protein raw abundance"
+
+11. signalConflictPeptideExcluded:   remove conflicting peptides
+			             Ex. "true"
+
+
+
+Execution example in the command line:
+
+Conflicting peptides included:
+Java -jar ProteinAbundanceInference-1.0-SNAPSHOT-jar-with-dependencies.jar "ex2.mzq" "ex2_inference.mzq" "sum" "AssayQuantLayer" "MS:1001891" "MS:1001893" "MS:1001890" "Progenesis: protein normalised abundance" "MS:1001892" "Progenesis: protein raw abundance"
+
+Conflicting peptides excluded:
+Java -jar ProteinAbundanceInference-1.0-SNAPSHOT-jar-with-dependencies.jar "ex2.mzq" "ex2_inference.mzq" "sum" "AssayQuantLayer" "MS:1001891" "MS:1001893" "MS:1001890" "Progenesis: protein normalised abundance" "MS:1001892" "Progenesis: protein raw abundance" "true"

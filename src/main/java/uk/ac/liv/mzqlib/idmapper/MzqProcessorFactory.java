@@ -109,15 +109,18 @@ public class MzqProcessorFactory {
                 String rawFileName = "";
                 if (rg.getRawFile().get(0).getName() != null) {
                     rawFileName = rg.getRawFile().get(0).getName();
-                } else if (rg.getRawFile().get(0).getLocation() != null) {
-                        rawFileName = rg.getRawFile().get(0).getLocation();
-                } else {
+                }
+                else if (rg.getRawFile().get(0).getLocation() != null) {
+                    rawFileName = rg.getRawFile().get(0).getLocation();
+                }
+                else {
                     continue;
                 }
-               
+
                 String mzidFileName = rawToMzidMap.get(rawFileName);
-                if (mzidFileName == null) {
-                    throw new RuntimeException("Can not find the raw file name \"" + rawFileName + "\" which appears in mzq file from input rawToMzidMap.\n");
+                if (mzidFileName == null || !(new File(mzidFileName).isFile())) {
+                    throw new RuntimeException("The raw file name \"" + rawFileName + "\" which appears in mzq file cannot be found in rawToMzidMap "
+                            + "or the related mzid file: \"" + mzidFileName + "\" is not exist.\n");
                 }
 
                 // corresponding mzIdentML processor 

@@ -28,7 +28,7 @@ public class ExtendedFeature extends Feature {
      *
      * @param ft    the base Feature
      * @param mzWin the m/z window measured from left to right in Da
-     * @param rtWin the retention time measured from top to bottom in second
+     * @param rtWin the retention time measured from top to bottom in minutes
      */
     public ExtendedFeature(Feature ft, double mzWin, double rtWin) {
         super();
@@ -36,10 +36,10 @@ public class ExtendedFeature extends Feature {
         List<Double> massT = feature.getMassTrace();
 
         if (massT == null || massT.isEmpty()) {
-            brt = (Double.valueOf(ft.getRt()) - rtWin / 120);
+            brt = (Double.valueOf(ft.getRt()) - rtWin / 2);
             //brt = Double.valueOf(ft.getRt()) - 10;
             lmz = ft.getMz() - mzWin / 2;
-            urt = (Double.valueOf(ft.getRt()) + rtWin / 120);
+            urt = (Double.valueOf(ft.getRt()) + rtWin / 2);
             //urt = Double.valueOf(ft.getRt()) + 10;
             rmz = ft.getMz() + mzWin / 2;
         }
@@ -52,12 +52,12 @@ public class ExtendedFeature extends Feature {
     }
 
     /**
-     * Constructor of ExtendedFeature base on Feature and default m/z window (0.1 Da) and retention time window (20 second).
+     * Constructor of ExtendedFeature base on Feature and default m/z window (0.1 Da) and retention time window (20 second, 1/3 minute).
      *
      * @param ft Feature
      */
     public ExtendedFeature(Feature ft) {
-        this(ft, 0.1, 20);
+        this(ft, 0.2, 1.0/3.0);
     }
 
     /**

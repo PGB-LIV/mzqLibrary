@@ -102,6 +102,9 @@ public class MzqProcessorFactory {
             if (itFeatureList == null) {
                 throw new RuntimeException("There is no FeatureList in the mzq file.");
             }
+            
+            int featuresWithMatch = 0;
+            int featuresWithoutMatch = 0;
             while (itFeatureList.hasNext()) {
                 FeatureList ftList = itFeatureList.next();
                 RawFilesGroup rg = (RawFilesGroup) this.mzqUm.unmarshal(uk.ac.liv.jmzqml.model.mzqml.RawFilesGroup.class, ftList.getRawFilesGroupRef());
@@ -133,6 +136,10 @@ public class MzqProcessorFactory {
                 }
 
                 List<Feature> features = ftList.getFeature();
+                
+                int ftFeaturesWithMatch = 0;
+                int ftFeaturesWithoutMatch = 0;
+                
                 for (Feature ft : features) {
                     List<SIIData> ftSIIDataList = featureToSIIsMap.get(ft.getId());
 
@@ -155,20 +162,31 @@ public class MzqProcessorFactory {
                                         ftSIIDataList = new ArrayList<>();
                                         featureToSIIsMap.put(ft.getId(), ftSIIDataList);
                                     }
+                                    
                                     ftSIIDataList.add(sd);
                                 }
                             }
                         }
                     }
+                    
+                    if (ftSIIDataList == null || ftSIIDataList.isEmpty()) {
+                        ftFeaturesWithoutMatch++;
+                    } else {
+                        ftFeaturesWithMatch++;
+                    }
                 }
-                System.out.println("MzqProcessorFactory -- finish processing FeatureList: " + ftList.getId());
+                System.out.println("MzqProcessorFactory -- finish processing FeatureList: " + ftList.getId() + ". Matched features: " + ftFeaturesWithMatch + ". Unmatched features: " + ftFeaturesWithoutMatch + ". Total features: " + (ftFeaturesWithMatch+ftFeaturesWithoutMatch) + ".");
+                featuresWithMatch += ftFeaturesWithMatch;
+                featuresWithoutMatch += ftFeaturesWithoutMatch;
             }
+            
+            System.out.println("MzqProcessorFactory -- finish processing feature lists. Matched features: " + featuresWithMatch + ". Unmatched features: " + featuresWithoutMatch + ". Total features: " + (featuresWithMatch+featuresWithoutMatch) + ".");
         }
 
         private MzqProcessorImpl(MzQuantMLUnmarshaller mzqUm,
                                  Map<String, String> rawToMzidMap)
                 throws JAXBException, IOException {
-            this(mzqUm, rawToMzidMap, 0.1, 20);
+            this(mzqUm, rawToMzidMap, 0.2, 1.0/3.0);
         }
 
         @Override

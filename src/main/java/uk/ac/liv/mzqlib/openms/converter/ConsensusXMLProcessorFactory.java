@@ -126,7 +126,7 @@ public class ConsensusXMLProcessorFactory {
             assays.setId("AssayList1");
 
             List<uk.ac.liv.mzqlib.openms.jaxb.Map> maps = mapList.getMap();
-            //readFeatureXmlMzRtAreas(maps);
+            readFeatureXmlMzRtAreas(maps);
             for (uk.ac.liv.mzqlib.openms.jaxb.Map map : maps) {
                 RawFilesGroup rg = new RawFilesGroup();
 
@@ -338,11 +338,11 @@ public class ConsensusXMLProcessorFactory {
                 DoubleSummaryStatistics mzStats = allPts.stream().mapToDouble(p -> p.getY()).summaryStatistics();
 
                 double mzCentroid = feature.getPosition().stream().filter(p -> p.getDim().equals("1")).findFirst().get().getValue();
-                double rtCentroid = feature.getPosition().stream().filter(p -> p.getDim().equals("0")).findFirst().get().getValue();
+                double rtCentroid = feature.getPosition().stream().filter(p -> p.getDim().equals("0")).findFirst().get().getValue() / 60.0;
                 MzRtArea featureArea = new MzRtArea(mzCentroid, rtCentroid);
-                featureArea.getMassTrace().add(rtStats.getMin());
+                featureArea.getMassTrace().add(rtStats.getMin() / 60.0);
                 featureArea.getMassTrace().add(mzStats.getMin());
-                featureArea.getMassTrace().add(rtStats.getMax());
+                featureArea.getMassTrace().add(rtStats.getMax() / 60.0);
                 featureArea.getMassTrace().add(mzStats.getMax());
                 featureAreas.put(feature.getId().replace("f_", ""), featureArea);
             }

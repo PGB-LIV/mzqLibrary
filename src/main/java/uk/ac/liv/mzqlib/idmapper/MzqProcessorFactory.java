@@ -105,6 +105,8 @@ public class MzqProcessorFactory {
             
             int featuresWithMatch = 0;
             int featuresWithoutMatch = 0;
+            int identificationsAssignedCount = 0;
+            int identificationsUnassignedCount = 0;
             while (itFeatureList.hasNext()) {
                 FeatureList ftList = itFeatureList.next();
                 RawFilesGroup rg = (RawFilesGroup) this.mzqUm.unmarshal(uk.ac.liv.jmzqml.model.mzqml.RawFilesGroup.class, ftList.getRawFilesGroupRef());
@@ -130,22 +132,25 @@ public class MzqProcessorFactory {
                 MzidProcessor mzidProc = MzidProcessorFactory.getInstance().buildMzidProcessor(new File(mzidFileName));
 
                 TIntObjectMap<List<SIIData>> rtToSIIsMap = mzidProc.getRtToSIIsMap();
-
+                
+                // Let's work out how many identifications there are.
+                int flIdentificationCount = rtToSIIsMap.valueCollection().stream().mapToInt(p -> p.size()).sum();                
+                int flIdentificationsAssignedCount = 0;
                 if (searchDB == null) {
                     searchDB = MzidToMzqElementConverter.convertMzidSDBToMzqSDB(mzidProc.getSearchDatabase());
                 }
 
                 List<Feature> features = ftList.getFeature();
                 
-                int ftFeaturesWithMatch = 0;
-                int ftFeaturesWithoutMatch = 0;
+                int flFeaturesWithMatch = 0;
+                int flFeaturesWithoutMatch = 0;
                 
                 for (Feature ft : features) {
                     List<SIIData> ftSIIDataList = featureToSIIsMap.get(ft.getId());
 
                     ExtendedFeature exFt = new ExtendedFeature(ft, mzWin, rtWin);
 
-                    for (int i = (int) exFt.getBRT(); i <= (int) exFt.getURT() + 1; i++) {
+                    for (int i = (int) exFt.getBRT(); i <= (int) exFt.getURT(); i++) {
                         List<SIIData> siiDataList = rtToSIIsMap.get(i);
                         if (siiDataList != null) {
                             for (SIIData sd : siiDataList) {
@@ -164,23 +169,30 @@ public class MzqProcessorFactory {
                                     }
                                     
                                     ftSIIDataList.add(sd);
+                                    flIdentificationsAssignedCount++;
                                 }
                             }
                         }
                     }
                     
                     if (ftSIIDataList == null || ftSIIDataList.isEmpty()) {
-                        ftFeaturesWithoutMatch++;
+                        flFeaturesWithoutMatch++;
                     } else {
-                        ftFeaturesWithMatch++;
+                        flFeaturesWithMatch++;
                     }
                 }
-                System.out.println("MzqProcessorFactory -- finish processing FeatureList: " + ftList.getId() + ". Matched features: " + ftFeaturesWithMatch + ". Unmatched features: " + ftFeaturesWithoutMatch + ". Total features: " + (ftFeaturesWithMatch+ftFeaturesWithoutMatch) + ".");
-                featuresWithMatch += ftFeaturesWithMatch;
-                featuresWithoutMatch += ftFeaturesWithoutMatch;
+                System.out.println("MzqProcessorFactory -- finish processing FeatureList: " + ftList.getId());
+                System.out.println("Matched features: " + flFeaturesWithMatch + ". Unmatched features: " + flFeaturesWithoutMatch + ". Total features: " + (flFeaturesWithMatch+flFeaturesWithoutMatch) + ".");
+                System.out.println("Assigned identifications: " + flIdentificationsAssignedCount + ". Unassigned identifications: " + (flIdentificationCount - flIdentificationsAssignedCount) + ". Total identifications: " + flIdentificationCount + ".");
+                featuresWithMatch += flFeaturesWithMatch;
+                featuresWithoutMatch += flFeaturesWithoutMatch;
+                identificationsAssignedCount += flIdentificationsAssignedCount;
+                identificationsUnassignedCount += flIdentificationCount - flIdentificationsAssignedCount;
             }
             
-            System.out.println("MzqProcessorFactory -- finish processing feature lists. Matched features: " + featuresWithMatch + ". Unmatched features: " + featuresWithoutMatch + ". Total features: " + (featuresWithMatch+featuresWithoutMatch) + ".");
+            System.out.println("MzqProcessorFactory -- finish processing feature lists.");
+            System.out.println("Matched features: " + featuresWithMatch + ". Unmatched features: " + featuresWithoutMatch + ". Total features: " + (featuresWithMatch+featuresWithoutMatch) + ".");
+            System.out.println("Assigned identifications: " + identificationsAssignedCount + ". Unassigned identifications: " + identificationsUnassignedCount + ". Total identifications: " + (identificationsAssignedCount+identificationsUnassignedCount) + ".");
         }
 
         private MzqProcessorImpl(MzQuantMLUnmarshaller mzqUm,

@@ -56,7 +56,7 @@ public final class ProteinAbundanceInference {
     private String outputRawProteinGroupDTName;
     private String outputAssayQuantLayerID;
     private String outputRawAssayQuantLayerID;
-    
+
     static boolean conflictPeptideExcluded;
 
     /**
@@ -347,8 +347,8 @@ public final class ProteinAbundanceInference {
 //                + "unlabeled_result_FLUQT_mapped_normalised_peptide.mzq";
 //                + "unlabeled_result_FLUQT_mapped_normalised_simon.mzq";
 //                + "unlabeled_result_FLUQT_mapped_speciesNormalised_peptide_1_0.mzq";
-        String infile = "C:\\Manchester\\work\\ProteoSuite\\proteosuite-0.3.5\\puf3\\"
-                + "unlabeled_result_FLUQT__mapped_v0.3.5_peptide_normalised.mzq";
+        String infile = "C:\\Manchester\\result\\CPTAC_Study6_Progenesis_result\\study6\\CPTAC_study6\\"
+                + "data\\CPTAC_EvsB_unlabeled_result_FLUQT__mapped_v0.3.5_peptide_normalised.mzq";
 
 //        String outfile = "C:\\Manchester\\work\\Puf3Study\\ProteoSuite\\"
 //                + "IdenOutcomes\\CPTAC_EvsB\\qvalue001\\mzq\\"
@@ -356,8 +356,8 @@ public final class ProteinAbundanceInference {
 //                + "unlabeled_result_FLUQT_mapped_normalised_peptide_proteinInference.mzq";
 //                + "unlabeled_result_FLUQT_mapped_normalised_simon_proteinInference.mzq";
 //                + "unlabeled_result_FLUQT_mapped_speciesNormalised_peptide_proteinInference_1_0.mzq";
-        String outfile = "C:\\Manchester\\work\\ProteoSuite\\proteosuite-0.3.5\\puf3\\"
-                + "unlabeled_result_FLUQT__mapped_v0.3.5_peptide_normalised_proteinInference_filtered_noConflictPeptide.mzq";
+        String outfile = "C:\\Manchester\\result\\CPTAC_Study6_Progenesis_result\\study6\\CPTAC_study6\\"
+                + "data\\CPTAC_EvsB_unlabeled_result_FLUQT_mapped_v0.3.5_peptide_normalised_proteinInference_filtered_noConflictPeptide.mzq";
 
         String operator = "sum"; //"median", "mean"
 
@@ -383,23 +383,12 @@ public final class ProteinAbundanceInference {
 //        outputProteinGCN = "Progenesis: protein normalised abundance";
 //        outputRawProteinGCA = "MS:1002519";
 //        outputRawProteinGCN = "Progenesis: protein raw abundance";
-        if (args.length != 10 && args.length != 11 && args.length != 0) {
+        if (args.length != 11 && args.length != 0) {
             System.out.println("Please input all eight parameters in order: input file, "
                     + "output file, quant layer type, input normalised peptide datatype CV accession,"
                     + "input raw peptide datatype CV accession, output protein group CV accession,"
                     + "output protein group CV name, output raw protein group CV accession, "
                     + "output raw protein group CV name" + "operator.");
-        } else if (args.length == 10) {
-            infile = args[0];
-            outfile = args[1];
-            operator = args[2];
-            inputPeptideDTCA = args[3];
-            inputRawPeptideDTCA = args[4];
-            outputProteinGCA = args[5];
-            outputProteinGCN = args[6];
-            outputRawProteinGCA = args[7];
-            outputRawProteinGCN = args[8];
-            quantLT = args[9];
         } else if (args.length == 11) {
             infile = args[0];
             outfile = args[1];
@@ -414,16 +403,16 @@ public final class ProteinAbundanceInference {
             signalConflictPeptideExcluded = (Integer.parseInt(args[10]) != 0);
         }
 
-        if (!signalConflictPeptideExcluded) {
-            ProteinAbundanceInference pai = new ProteinAbundanceInference(infile, outfile, operator,
-                    inputPeptideDTCA, inputRawPeptideDTCA, outputProteinGCA, outputProteinGCN,
-                    outputRawProteinGCA, outputRawProteinGCN, quantLT);
-            pai.proteinInference();
-        } else if (signalConflictPeptideExcluded) {
+        if (signalConflictPeptideExcluded) {
             ProteinAbundanceInference pai = new ProteinAbundanceInference(infile, outfile, operator,
                     inputPeptideDTCA, inputRawPeptideDTCA, outputProteinGCA, outputProteinGCN,
                     outputRawProteinGCA, outputRawProteinGCN, quantLT, signalConflictPeptideExcluded);
             pai.proteinInference(conflictPeptideExcluded);
+        } else if (!signalConflictPeptideExcluded) {
+            ProteinAbundanceInference pai = new ProteinAbundanceInference(infile, outfile, operator,
+                    inputPeptideDTCA, inputRawPeptideDTCA, outputProteinGCA, outputProteinGCN,
+                    outputRawProteinGCA, outputRawProteinGCN, quantLT);
+            pai.proteinInference();
         }
     }
 

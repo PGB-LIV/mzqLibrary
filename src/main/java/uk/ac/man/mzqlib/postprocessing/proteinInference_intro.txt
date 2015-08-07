@@ -23,11 +23,10 @@ Parameters
 			             Ex. "true"
 
 
-
 Execution example in the command line:
-
-Conflicting peptides included:
-Java -jar ProteinAbundanceInference-1.0-SNAPSHOT-jar-with-dependencies.jar "ex2.mzq" "ex2_inference.mzq" "sum" "AssayQuantLayer" "MS:1001891" "MS:1001893" "MS:1001890" "Progenesis: protein normalised abundance" "MS:1001892" "Progenesis: protein raw abundance"
 
 Conflicting peptides excluded:
 Java -jar ProteinAbundanceInference-1.0-SNAPSHOT-jar-with-dependencies.jar "ex2.mzq" "ex2_inference.mzq" "sum" "AssayQuantLayer" "MS:1001891" "MS:1001893" "MS:1001890" "Progenesis: protein normalised abundance" "MS:1001892" "Progenesis: protein raw abundance" "true"
+
+Conflicting peptides included:
+Java -jar ProteinAbundanceInference-1.0-SNAPSHOT-jar-with-dependencies.jar "ex2.mzq" "ex2_inference.mzq" "sum" "AssayQuantLayer" "MS:1001891" "MS:1001893" "MS:1001890" "Progenesis: protein normalised abundance" "MS:1001892" "Progenesis: protein raw abundance" "false"

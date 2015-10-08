@@ -481,7 +481,7 @@ public class MzqMzIdMapperFactory {
                 IdentificationFile idFile = new IdentificationFile();
                 idFile.setFileFormat(ff);
                 //String id = "idfile_" + count;                
-                String id = mzidFnToFileIdMap.get(mzidFileName);
+                String id = mzidFnToFileIdMap.get(new File(mzidFileName).getName());
                 idFile.setId(id);
                 //count++;
 

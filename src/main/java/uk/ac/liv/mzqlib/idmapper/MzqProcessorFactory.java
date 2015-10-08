@@ -103,10 +103,11 @@ public class MzqProcessorFactory {
                 throw new RuntimeException("There is no FeatureList in the mzq file.");
             }
             
+            
             int featuresWithMatch = 0;
             int featuresWithoutMatch = 0;
             int identificationsAssignedCount = 0;
-            int identificationsUnassignedCount = 0;
+            int identificationsUnassignedCount = 0;            
             while (itFeatureList.hasNext()) {
                 FeatureList ftList = itFeatureList.next();
                 RawFilesGroup rg = (RawFilesGroup) this.mzqUm.unmarshal(uk.ac.liv.jmzqml.model.mzqml.RawFilesGroup.class, ftList.getRawFilesGroupRef());

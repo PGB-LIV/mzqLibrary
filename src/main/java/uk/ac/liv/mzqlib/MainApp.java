@@ -1,14 +1,18 @@
-
 package uk.ac.liv.mzqlib;
 
 import java.awt.Desktop;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
@@ -56,7 +60,7 @@ public class MainApp extends Application {
     private BorderPane rootLayout;
     private AnchorPane mzqInfo;
     private MzqInfoController mzqInfoController;
-    private static Rengine re;
+    private Rengine re;
     private RootLayoutController rootLayoutController;
 
     private static final String VERSION = "1.0-beta";
@@ -84,6 +88,59 @@ public class MainApp extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle(WINDOW_TITLE);
         initRootLayout();
+        readPossibleStartupParameters();
+    }
+
+    private void readPossibleStartupParameters() {
+        Parameters parameters = this.getParameters();
+        for (Entry<String, String> entry : parameters.getNamed().entrySet()) {
+            if (entry.getKey().equalsIgnoreCase("dataForQualityCalculationLocation")) {
+                // Get the location of our quality data files.
+                String location = entry.getValue();
+
+                Rengine engine = getRengine();
+
+                if (engine == null) {
+                    System.out.println("R engine not initialised! Aborting creation of quality plots.");
+                    return;
+                }                
+
+                engine.eval(getResourceFileText("R/featureRTDelta_Simon_format.R"));
+                engine.eval(getResourceFileText("R/pepConsHist_Simon_format.R"));
+
+                String assayCountFrequenciesCommand = "pepConsHist(\"" + location + "\\\\" + "assays_per_feature_format.csv\")";
+                String deltaStatsCommand = "featureRTDelta(\"" + location + "\\\\" + "rt_format.csv\")";
+                // Create our display of the distribution of the frequency of features with 1-N assays.
+                engine.eval(assayCountFrequenciesCommand);
+                // Create our display of RT delta distribution for all features.
+                engine.eval(deltaStatsCommand);
+            }
+        }
+    }
+
+    private String getResourceFileText(String resourceRelativePath) {
+        try {
+            InputStream stream = getClass().getClassLoader().getResourceAsStream(resourceRelativePath);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+            List<String> lines = readAllLines(reader);
+            reader.close();
+            String joinedLines = String.join("\n", lines);
+            return joinedLines;
+        } catch (IOException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return "";
+    }
+
+    private static List<String> readAllLines(BufferedReader reader) throws IOException {
+        List<String> lines = new LinkedList<>();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            lines.add(line);
+        }
+
+        return lines;
     }
 
     /**
@@ -105,8 +162,7 @@ public class MainApp extends Application {
             rootLayoutController.disbbleMenus();
 
             primaryStage.show();
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -151,8 +207,7 @@ public class MainApp extends Application {
                 mzqInfoController.showMzqSummary(mzqData.getMzQuantMLSummary());
                 mzqInfoController.setMainApp(this);
                 rootLayoutController.enableMenus();
-            }
-            catch (IOException ex) {
+            } catch (IOException ex) {
                 Logger.getLogger(RootLayoutController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
@@ -189,8 +244,7 @@ public class MainApp extends Application {
         Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
         if (file != null) {
             prefs.put("lastFilePath", file.getParent());
-        }
-        else {
+        } else {
             prefs.put("lastFilePath", System.getProperty("user.home"));
         }
     }
@@ -200,8 +254,7 @@ public class MainApp extends Application {
         String filePath = prefs.get("lastFilePath", null);
         if (filePath != null) {
             return new File(filePath);
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -297,8 +350,7 @@ public class MainApp extends Application {
                 newStage.setScene(scene);
                 newStage.show();
 
-            }
-            catch (IOException ex) {
+            } catch (IOException ex) {
                 Logger.getLogger(RootLayoutController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -418,8 +470,7 @@ public class MainApp extends Application {
                     try {
 
                         Desktop.getDesktop().open(pdfFile);
-                    }
-                    catch (IOException ex) {
+                    } catch (IOException ex) {
                         // no application registered for PDFs
                     }
                 }
@@ -456,8 +507,7 @@ public class MainApp extends Application {
                         .title("R package missing")
                         .message("Cannot perform heatmap plot as required R packages are missing!\nPlease install them first.")
                         .showError();
-            }
-            else {
+            } else {
                 // Load heatmap.2 library
                 //re.eval("library(\"gplots\")");
                 TableView<MzqDataMatrixRow> dataMatrixTable = mzqInfoController.getDataMatrixTable();
@@ -574,8 +624,7 @@ public class MainApp extends Application {
                         .title("No data selected")
                         .message("Please select a data row")
                         .showWarning();
-            }
-            else {
+            } else {
                 if (protGrpRow.getObjectValue().get().equals("P60843")) {
                     System.out.println("stop");
                 }
@@ -593,8 +642,7 @@ public class MainApp extends Application {
                 for (StringProperty value : values) {
                     if (NumberUtils.isNumber(value.get())) {
                         series.getData().add(new XYChart.Data(columns.get(i).getText(), Double.parseDouble(value.get())));
-                    }
-                    else {
+                    } else {
                         series.getData().add(new XYChart.Data(columns.get(i).getText(), -1));
                     }
                     i++;
@@ -649,8 +697,7 @@ public class MainApp extends Application {
                             if (NumberUtils.isNumber(value.get())) {
                                 peptideSeries.getData().add(new XYChart.Data(columns.get(k).getText(), Double.parseDouble(value.get())));
 
-                            }
-                            else {
+                            } else {
                                 peptideSeries.getData().add(new XYChart.Data(columns.get(k).getText(), -1));
                             }
                             k++;
@@ -659,8 +706,7 @@ public class MainApp extends Application {
                 }
             }
 
-        }
-        else if (selectedQL.getListType().equals(MzqDataConstants.PROTEIN_LIST_TYPE)) {
+        } else if (selectedQL.getListType().equals(MzqDataConstants.PROTEIN_LIST_TYPE)) {
 
             MzqDataMatrixRow protRow = dataMatrixTable.getSelectionModel().getSelectedItem();
 
@@ -669,8 +715,7 @@ public class MainApp extends Application {
                         .title("No data selected")
                         .message("Please select a data row")
                         .showWarning();
-            }
-            else {
+            } else {
                 //Plot protein quant value line
                 XYChart.Series series = new XYChart.Series<>();
                 lineChart.getData().add(series);
@@ -684,8 +729,7 @@ public class MainApp extends Application {
                 for (StringProperty value : values) {
                     if (NumberUtils.isNumber(value.get())) {
                         series.getData().add(new XYChart.Data(columns.get(i).getText(), Double.parseDouble(value.get())));
-                    }
-                    else {
+                    } else {
                         series.getData().add(new XYChart.Data(columns.get(i).getText(), -1));
                     }
                     i++;
@@ -693,8 +737,7 @@ public class MainApp extends Application {
 
                 showProteinPeptideLinePlot(protRow, selectedQL.getDataType(), columns, lineChart);
             }
-        }
-        else {
+        } else {
             ObservableList<MzqDataMatrixRow> rowList = dataMatrixTable.getSelectionModel().getSelectedItems();
 
             if (rowList.isEmpty()) {
@@ -702,8 +745,7 @@ public class MainApp extends Application {
                         .title("No data selected")
                         .message("Please select a data row")
                         .showWarning();
-            }
-            else {
+            } else {
                 for (MzqDataMatrixRow row : rowList) {
                     XYChart.Series series = new XYChart.Series();
                     lineChart.getData().add(series);
@@ -713,8 +755,7 @@ public class MainApp extends Application {
                     for (StringProperty value : values) {
                         if (NumberUtils.isNumber(value.get())) {
                             series.getData().add(new XYChart.Data(dataMatrixTable.getColumns().get(i).getText(), Double.parseDouble(value.get())));
-                        }
-                        else {
+                        } else {
                             series.getData().add(new XYChart.Data(dataMatrixTable.getColumns().get(i).getText(), -1));
                         }
                         i++;
@@ -742,11 +783,9 @@ public class MainApp extends Application {
                 gui.setTitle("Mzq library command line GUI");
                 gui.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 gui.setVisible(true);
-            }
-            catch (ClassNotFoundException ex) {
+            } catch (ClassNotFoundException ex) {
                 Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            catch (InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            } catch (InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
                 ex.printStackTrace();
             }
         });
@@ -770,23 +809,23 @@ public class MainApp extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
         launch(args);
     }
 
     /**
-     * Show the plot line of quantitative value from identified peptides for a specific protein
+     * Show the plot line of quantitative value from identified peptides for a
+     * specific protein
      *
-     * @param protRow   the selected protein row
-     * @param dataType  the data type of the protein quant layer
+     * @param protRow the selected protein row
+     * @param dataType the data type of the protein quant layer
      * @param lineChart the plot chart
      *
      * @throws JAXBException
      */
     private void showProteinPeptideLinePlot(MzqDataMatrixRow protRow,
-                                            String dataType,
-                                            ObservableList<TableColumn<MzqDataMatrixRow, ?>> columns,
-                                            LineChart<String, Number> lineChart)
+            String dataType,
+            ObservableList<TableColumn<MzqDataMatrixRow, ?>> columns,
+            LineChart<String, Number> lineChart)
             throws JAXBException {
 
         //Get the first PeptideConsensusList and AssayQuantLayer regardless of the finalResult value
@@ -828,8 +867,7 @@ public class MainApp extends Application {
                     if (NumberUtils.isNumber(value.get())) {
                         peptideSeries.getData().add(new XYChart.Data(columns.get(k).getText(), Double.parseDouble(value.get())));
 
-                    }
-                    else {
+                    } else {
                         peptideSeries.getData().add(new XYChart.Data(columns.get(k).getText(), -1));
                     }
                     k++;
@@ -845,9 +883,9 @@ public class MainApp extends Application {
      * @param lineChart
      */
     private void showProteinGroupPeptideLinePlot(MzqDataMatrixRow protGrpRow,
-                                                 String dataType,
-                                                 ObservableList<TableColumn<MzqDataMatrixRow, ?>> columns,
-                                                 LineChart<String, Number> lineChart)
+            String dataType,
+            ObservableList<TableColumn<MzqDataMatrixRow, ?>> columns,
+            LineChart<String, Number> lineChart)
             throws JAXBException {
 
         //Get the first PeptideConsensusList and AssayQuantLayer regardless of the finalResult value
@@ -893,8 +931,7 @@ public class MainApp extends Application {
                     if (NumberUtils.isNumber(value.get())) {
                         peptideSeries.getData().add(new XYChart.Data(columns.get(k).getText(), Double.parseDouble(value.get())));
 
-                    }
-                    else {
+                    } else {
                         peptideSeries.getData().add(new XYChart.Data(columns.get(k).getText(), -1));
                     }
                     k++;
@@ -915,16 +952,14 @@ public class MainApp extends Application {
             DataMatrix peptideDM) {
         if (peptideDM == null) {
             return null;
-        }
-        else {
+        } else {
             Map<String, List<StringProperty>> retHashMap = new HashMap<>();
 
             List<Row> rows = peptideDM.getRow();
 
             if (rows.isEmpty()) {
                 return retHashMap;
-            }
-            else {
+            } else {
                 for (Row row : rows) {
                     retHashMap.put(row.getObjectRef(), listStringProperty(row.getValue()));
                 }
@@ -943,8 +978,7 @@ public class MainApp extends Application {
     private List<StringProperty> listStringProperty(List<String> values) {
         if (values == null) {
             return null;
-        }
-        else {
+        } else {
             List<StringProperty> retList = new ArrayList<>();
             for (String s : values) {
                 retList.add(new SimpleStringProperty(s));
@@ -956,8 +990,7 @@ public class MainApp extends Application {
     public void installRequiredPackages() {
         if (re == null) {
             initialREngine();
-        }
-        else if (RUtils.installRequiredPackages(re)) {
+        } else if (RUtils.installRequiredPackages(re)) {
             Platform.runLater(() -> {
                 Dialogs.create()
                         .title("R packages")
@@ -966,7 +999,27 @@ public class MainApp extends Application {
             });
         };
     }
-  
+
+    private synchronized Rengine getRengine() {
+        if (re != null) {
+            return re;
+        }
+
+        try {
+            System.loadLibrary("jri");
+            re = new Rengine(new String[]{" ", " "}, false, null);
+            Platform.runLater(() -> {
+                RUtils.installRequiredPackages(re);
+            });
+
+            return re;
+        } catch (UnsatisfiedLinkError ex) {
+            System.out.println(ex.getLocalizedMessage());
+        }
+
+        return null;
+    }
+
     private void initialREngine() {
 
         // test if jri is installed correctly
@@ -990,8 +1043,7 @@ public class MainApp extends Application {
             Thread iniRTh = new Thread(iniR);
             iniRTh.setDaemon(true);
             iniRTh.start();
-        }
-        catch (UnsatisfiedLinkError e) {
+        } catch (UnsatisfiedLinkError e) {
             Dialogs.create()
                     .title("JRI package Error")
                     .message("The R and JRI are not properly installed.\nAll R related functions will not work.\nPlease find out how to set up at http://code.google.com/p/mzq-lib/#How_to_run_mzqViewer_with_R")

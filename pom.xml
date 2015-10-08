@@ -241,9 +241,12 @@
             </resource>
             <resource>
                 <directory> src/main/resources/ </directory>                
-                <excludes>
+                <!--excludes>
                     <exclude>**/*.*</exclude>
-                </excludes>                            
+                </excludes-->           
+                <includes>
+                    <include>R/*.*</include>
+                </includes>                 
             </resource>      
         </resources>
     </build>

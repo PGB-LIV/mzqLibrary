@@ -5,16 +5,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.DoubleSummaryStatistics;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -90,6 +91,7 @@ public class ConsensusXMLProcessorFactory {
         private Map<Integer, Map<String, MzRtArea>> featureAreasPostAligned = new HashMap<>();        
         private final JAXBContext context = JAXBContext.newInstance(new Class[]{FeatureMap.class});
         private Unmarshaller featureUnmarshaller = context.createUnmarshaller();
+        private Map<File, Assay> filesToAssays = new HashMap<>();
 
         public ConsensusXMLProcessorImpl(File file) throws JAXBException {
             JAXBContext context = JAXBContext.newInstance(new Class[]{ConsensusXML.class});
@@ -157,9 +159,12 @@ public class ConsensusXMLProcessorFactory {
                 assay.setRawFilesGroup(rg);
 
                 assays.getAssay().add(assay);
+                
                 rgList.add(rg);
 
                 rgIdToAssayMap.put(rgId, assay);
+                
+                filesToAssays.put(new File(map.getName()), assay);
             }
 
             QuantLayer assayQL = new QuantLayer();
@@ -382,11 +387,16 @@ public class ConsensusXMLProcessorFactory {
 
         @Override
         public void convert(String outputFileName) throws IOException {
+            convert(outputFileName, new HashMap<>());
+        }
+
+        @Override
+        public void convert(String outputFileName, Map<String, ? extends Collection<File>> studyVariablesToFiles) throws IOException {
             //File file = new File("CPTAC_study6_2400_3600_FLUQT.consensusXML");
             //String output = "CPTAC_study6_2400_3600_FLUQT.consensusXML.mzq";
             FileWriter writer = new FileWriter(outputFileName);
 
-            MzQuantMLMarshaller m = new MzQuantMLMarshaller();
+            MzQuantMLMarshaller m = new MzQuantMLMarshaller();            
 
             //ConsensusXMLProcessor conProc = ConsensusXMLProcessorFactory.getInstance().buildConsensusXMLProcessor(file);
             // XML header
@@ -443,6 +453,22 @@ public class ConsensusXMLProcessorFactory {
             // AssayList
             m.marshall(this.getAssayList(), writer);
             writer.write("\n");
+            
+            // StudyVariableList
+            if (studyVariablesToFiles != null && studyVariablesToFiles.size() > 0) {
+                StudyVariableList studyVariables = new StudyVariableList();
+                for (Entry<String, ? extends Collection<File>> entry : studyVariablesToFiles.entrySet()) {
+                    StudyVariable variable = new StudyVariable();
+                    variable.setId("std_var_" + entry.getKey());
+                    variable.setName(entry.getKey());
+                    List<Assay> matchedAssays = entry.getValue().stream().map(file -> filesToAssays.get(file)).collect(Collectors.toList());
+                    variable.setAssays(matchedAssays);
+                    studyVariables.getStudyVariable().add(variable);
+                }
+                
+                m.marshall(studyVariables, writer);
+                writer.write("\n");
+            }
 
             // PeptideConsensusList
             m.marshall(this.getPeptideConsensusList(), writer);
@@ -464,7 +490,6 @@ public class ConsensusXMLProcessorFactory {
                 }
             }
         }
-
     }
 
     private static class MzRtArea {

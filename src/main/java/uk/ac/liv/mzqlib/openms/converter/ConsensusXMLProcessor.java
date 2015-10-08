@@ -1,9 +1,12 @@
 
 package uk.ac.liv.mzqlib.openms.converter;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import uk.ac.liv.jmzqml.model.mzqml.Assay;
 import uk.ac.liv.jmzqml.model.mzqml.AssayList;
 import uk.ac.liv.jmzqml.model.mzqml.Cv;
@@ -70,6 +73,9 @@ public interface ConsensusXMLProcessor {
      * @throws IOException
      */
     public void convert(String outputFn)
+            throws IOException;
+    
+    public void convert(String outputFn, Map<String, ? extends Collection<File>> studyVariablesToFiles)
             throws IOException;
 
 }

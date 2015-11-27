@@ -1,3 +1,4 @@
+
 package uk.ac.liv.mzqlib.stats;
 
 import gnu.trove.list.TDoubleList;
@@ -18,30 +19,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBException;
 import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.commons.math3.stat.inference.OneWayAnova;
 import uk.ac.liv.jmzqml.MzQuantMLElement;
-import uk.ac.liv.jmzqml.model.mzqml.AnalysisSummary;
-import uk.ac.liv.jmzqml.model.mzqml.AssayList;
-import uk.ac.liv.jmzqml.model.mzqml.AuditCollection;
-import uk.ac.liv.jmzqml.model.mzqml.BibliographicReference;
-import uk.ac.liv.jmzqml.model.mzqml.Column;
-import uk.ac.liv.jmzqml.model.mzqml.ColumnDefinition;
-import uk.ac.liv.jmzqml.model.mzqml.CvList;
-import uk.ac.liv.jmzqml.model.mzqml.CvParamRef;
-import uk.ac.liv.jmzqml.model.mzqml.DataMatrix;
-import uk.ac.liv.jmzqml.model.mzqml.DataProcessingList;
-import uk.ac.liv.jmzqml.model.mzqml.FeatureList;
-import uk.ac.liv.jmzqml.model.mzqml.GlobalQuantLayer;
-import uk.ac.liv.jmzqml.model.mzqml.IdOnly;
-import uk.ac.liv.jmzqml.model.mzqml.InputFiles;
-import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensusList;
-import uk.ac.liv.jmzqml.model.mzqml.ProteinGroupList;
-import uk.ac.liv.jmzqml.model.mzqml.ProteinList;
-import uk.ac.liv.jmzqml.model.mzqml.QuantLayer;
-import uk.ac.liv.jmzqml.model.mzqml.Row;
-import uk.ac.liv.jmzqml.model.mzqml.SmallMoleculeList;
-import uk.ac.liv.jmzqml.model.mzqml.SoftwareList;
-import uk.ac.liv.jmzqml.model.mzqml.StudyVariableList;
+import uk.ac.liv.jmzqml.model.mzqml.*;
 import uk.ac.liv.jmzqml.xml.io.MzQuantMLMarshaller;
 import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;
 
@@ -422,11 +403,12 @@ public class MzqQLAnova {
         for (Row row : protGrpAQLDataMatrix.getRow()) {
             List<String> valueList = row.getValue();
             List<double[]> doubleArrayList = new ArrayList<>();
-
+            boolean doPV = true;
             // Get doulbeArrayList for ANOVA calculation
             for (TIntList posList : assayPosListList) {
                 TDoubleList doubleList = new TDoubleArrayList();
-
+                //Count number of zero in 
+                MutableInt numberOfZero = new MutableInt(0);
                 posList.forEach((int pos) -> {
                     String valueString = valueList.get(pos);
                     if (NumberUtils.isNumber(valueString)) {
@@ -434,6 +416,7 @@ public class MzqQLAnova {
                         // Do log on valueD
                         if (valueD == 0) {
                             valueD = 0.5;
+                            numberOfZero.increment();
                         }
                         doubleList.add(Math.log10(valueD));
                     }
@@ -443,12 +426,19 @@ public class MzqQLAnova {
 
                     return true;
                 });
+                if (numberOfZero.intValue() > 1) {
+                    doPV = false;
+                    break;
+                }
                 double[] doubleArray = doubleList.toArray();
                 doubleArrayList.add(doubleArray);
             }
 
-            OneWayAnova owa = new OneWayAnova();
-            double pValue = owa.anovaPValue(doubleArrayList);
+            double pValue = Double.NaN;
+            if (doPV) {
+                OneWayAnova owa = new OneWayAnova();
+                pValue = owa.anovaPValue(doubleArrayList);
+            }
 
             // Add pValue to anovaPValueMap
             ret.put(row.getObjectRef(), pValue);
@@ -511,5 +501,4 @@ public class MzqQLAnova {
 //        //mzqQLAnova.getAnovaPValueMap();
 //        mzqQLAnova.writeMzQuantMLFile(inputFileName.replace(".mzq", "_new.mzq"));
 //    }
-
 }

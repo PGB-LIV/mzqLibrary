@@ -1,7 +1,10 @@
+
 package uk.ac.liv.mzqlib.view;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -13,12 +16,18 @@ import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javax.xml.datatype.DatatypeConfigurationException;
-import org.controlsfx.dialog.Dialogs;
+import org.controlsfx.dialog.ProgressDialog;
 import uk.ac.liv.mzqlib.progenesis.converter.ProgenMzquantmlConverter;
 
 /**
@@ -152,18 +161,31 @@ public class ProgenesisConverterController implements Initializable {
 
         // Both peptide list and protein list files are missing
         if (this.flFileTextField.getText().isEmpty() && this.plFileTextField.getText().isEmpty()) {
-            Dialogs.create()
-                    .title("File missing")
-                    .message("Please select at least one list csv file!")
-                    .showError();
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("File missing");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select at least one list csv file!");
+
+            alert.showAndWait();
+//            Dialogs.create()
+//                    .title("File missing")
+//                    .message("Please select at least one list csv file!")
+//                    .showError();
         }
         // Either of the file names is not end with ".csv"
         else if ((((!this.flFileTextField.getText().isEmpty()) && !this.flFileTextField.getText().endsWith(".csv")))
                 || (((!this.plFileTextField.getText().isEmpty()) && !this.plFileTextField.getText().endsWith(".csv")))) {
-            Dialogs.create()
-                    .title("Wrong file format")
-                    .message("The selected list file(s) is/are not in csv format! Please select the right format.")
-                    .showError();
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Wrong file format");
+            alert.setHeaderText(null);
+            alert.setContentText("The selected list file(s) is/are not in csv format! Please select the right format.");
+
+            alert.showAndWait();
+
+//            Dialogs.create()
+//                    .title("Wrong file format")
+//                    .message("The selected list file(s) is/are not in csv format! Please select the right format.")
+//                    .showError();
         }
         else {
             FileChooser fileChooser = new FileChooser();
@@ -217,26 +239,66 @@ public class ProgenesisConverterController implements Initializable {
                 convertTask.setOnSucceeded((WorkerStateEvent t) -> {
                     Platform.runLater(() -> {
                         if (convertTask.isDone()) {
-                            Dialogs.create()
-                                    .title("Converting succeeded")
-                                    .message("The MzQuantML file is stored in " + convertTask.getValue())
-                                    .showInformation();
+                            Alert alert = new Alert(AlertType.INFORMATION);
+                            alert.setTitle("Converting succeeded");
+                            alert.setHeaderText(null);
+                            alert.setContentText("The mzQuantML file is stored in " + convertTask.getValue());
+
+                            alert.showAndWait();
+
+//                            Dialogs.create()
+//                                    .title("Converting succeeded")
+//                                    .message("The MzQuantML file is stored in " + convertTask.getValue())
+//                                    .showInformation();
                         }
                     });
                 });
 
                 convertTask.setOnFailed((WorkerStateEvent t) -> {
                     Platform.runLater(() -> {
-                        Dialogs.create()
-                                .title("Convert failed")
-                                .message("There are exceptions during the conversion process:")
-                                .showException(convertTask.getException());
+                        Alert alert = new Alert(AlertType.ERROR);
+                        alert.setTitle("Convert failed");
+                        alert.setHeaderText(null);
+                        alert.setContentText("There are exceptions during the conversion process:");
+
+                        StringWriter sw = new StringWriter();
+                        PrintWriter pw = new PrintWriter(sw);
+                        convertTask.getException().printStackTrace(pw);
+                        String exceptionText = sw.toString();
+
+                        Label label = new Label("The exception stacktrace was:");
+
+                        TextArea textArea = new TextArea(exceptionText);
+                        textArea.setEditable(false);
+                        textArea.setWrapText(true);
+
+                        textArea.setMaxWidth(Double.MAX_VALUE);
+                        textArea.setMaxHeight(Double.MAX_VALUE);
+                        GridPane.setVgrow(textArea, Priority.ALWAYS);
+                        GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+                        GridPane expContent = new GridPane();
+                        expContent.setMaxWidth(Double.MAX_VALUE);
+                        expContent.add(label, 0, 0);
+                        expContent.add(textArea, 0, 1);
+
+                        //Set expandable Exception into the dialog pane.
+                        alert.getDialogPane().setExpandableContent(expContent);
+                        alert.showAndWait();
+//                        Dialogs.create()
+//                                .title("Convert failed")
+//                                .message("There are exceptions during the conversion process:")
+//                                .showException(convertTask.getException());
                     });
 
                 });
-                Dialogs.create()
-                        .title("Converting progress")
-                        .showWorkerProgress(convertTask);
+                ProgressDialog pd = new ProgressDialog(convertTask);
+                pd.setTitle("Converting progress");
+
+                pd.show();
+//                Dialogs.create()
+//                        .title("Converting progress")
+//                        .showWorkerProgress(convertTask);
 
                 Thread convertTh = new Thread(convertTask);
                 convertTh.setDaemon(true);

@@ -2,11 +2,11 @@ package uk.ac.liv.mzqlib.view;
 
 import java.io.File;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import org.apache.commons.lang.math.NumberUtils;
-import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialogs;
 import uk.ac.liv.mzqlib.MainApp;
 
 /**
@@ -68,10 +68,15 @@ public class HeatMapPdfController {
             }
         }
         else {
-            Action response = Dialogs.create()
-                    .title("Something wrong with the input demension!")
-                    .message("The input Height or Width is invalid or empty. They must be numbers.")
-                    .showError();
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Something wrong with the input demension!");
+            alert.setHeaderText(null);
+            alert.setContentText("The input Height or Width is invalid or empty. They must be numbers.");
+            alert.showAndWait();
+//            Action response = Dialogs.create()
+//                    .title("Something wrong with the input demension!")
+//                    .message("The input Height or Width is invalid or empty. They must be numbers.")
+//                    .showError();
         }
 
         //mainApp.getNewStage().close();

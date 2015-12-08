@@ -3,9 +3,10 @@ package uk.ac.liv.mzqlib.r;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialog;
-import org.controlsfx.dialog.Dialogs;
+import java.util.Optional;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import org.rosuda.JRI.RBool;
 import org.rosuda.JRI.Rengine;
 
@@ -43,12 +44,19 @@ public class RUtils {
                 + "\")";
         RBool uninstalled = re.eval(condition).asBool();
         if (uninstalled.isTRUE()) {
-            Action response = Dialogs.create()
-                    .title("Install " + packageName + " package?")
-                    .message("mzqLibrary is going to install R package \"" + packageName + "\"")
-                    .showConfirm();
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Install " + packageName + " package?");
+            alert.setHeaderText(null);
+            alert.setContentText("mzqLibrary is going to install R package \"" + packageName + "\"");
 
-            if (response == Dialog.Actions.YES) {
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+//            Action response = Dialogs.create()
+//                    .title("Install " + packageName + " package?")
+//                    .message("mzqLibrary is going to install R package \"" + packageName + "\"")
+//                    .showConfirm();
+
+//            if (response == Dialog.Actions.YES) {
                 String installString = "install.packages(\""
                         + packageName
                         + "\", dependencies = TRUE)";
@@ -82,10 +90,17 @@ public class RUtils {
 
     private static void showPackageInstalledDialog(String packageName) {
         //Platform.runLater(() -> {
-            Dialogs.create()
-                    .title("Package installed")
-                    .message(packageName + " is installed.")
-                    .showInformation();
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Package installed");
+        alert.setHeaderText(null);
+        alert.setContentText(packageName + " is installed.");
+
+        alert.showAndWait();
+
+//        Dialogs.create()
+//                .title("Package installed")
+//                .message(packageName + " is installed.")
+//                .showInformation();
         //});
     }
 
@@ -98,5 +113,4 @@ public class RUtils {
 //                    .showWarning();
 //        });
 //    }
-
 }

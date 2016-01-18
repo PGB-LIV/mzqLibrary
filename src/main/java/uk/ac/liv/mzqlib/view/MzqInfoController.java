@@ -61,7 +61,6 @@ public class MzqInfoController {
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
      */
-    @FXML
     private void initialize() {
         assayQLId.setCellValueFactory(cellData -> cellData.getValue().quantLayerId());
         parentListId.setCellValueFactory(cellData -> cellData.getValue().listId());
@@ -117,9 +116,6 @@ public class MzqInfoController {
 
             });
 
-            // Set table column resizable policy
-            dataMatrixTable.setColumnResizePolicy(CONSTRAINED_RESIZE_POLICY);
-
             // Set selection mode
             if (assayQL.getListType().equals(MzqDataConstants.PROTEIN_GROUP_LIST_TYPE) || assayQL.getListType().equals(MzqDataConstants.PROTEIN_LIST_TYPE)) {
                 dataMatrixTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -146,6 +142,8 @@ public class MzqInfoController {
         else {
             //remove all the text.
         }
+        // Set table column resizable policy
+        dataMatrixTable.setColumnResizePolicy(CONSTRAINED_RESIZE_POLICY);
     }
 
     public TableView<MzqDataMatrixRow> getDataMatrixTable() {

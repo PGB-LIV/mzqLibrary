@@ -15,6 +15,7 @@ import gnu.trove.procedure.TIntObjectProcedure;
 import gnu.trove.procedure.TIntProcedure;
 import gnu.trove.set.TIntSet;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -77,6 +78,7 @@ public class ProgenMzquantmlConverter {
     //
     final DecimalFormat format = new DecimalFormat("#.###");
     List<String> assayListFrReader;
+    Set<String> proteinList; //list of protein accessions from either feature list or protein list; 
     Software software;
     Map<String, String> rawFileNameIdMap;
     Label label;
@@ -432,11 +434,10 @@ public class ProgenMzquantmlConverter {
         }
     }
 
-    private void createProteinList(String rawPlusNorm) {
+    private void createProteinList(String rawPlusNorm)
+            throws IOException {
         protList = new ProteinList();
         List<Protein> proteins = protList.getProtein();
-
-        Set<String> proteinList; //list of protein accessions from either feature list or protein list; 
 
         final Set<String> plProteinL = new HashSet<>(); //proteins from protein list file
 
@@ -457,17 +458,61 @@ public class ProgenMzquantmlConverter {
         Set<String> flProteinL = proteinPeptidesMap.keySet(); // proteins from feature list file
 
         // decide which proteins to be used as proteinList
-        if (plProteinL.containsAll(flProteinL)) {
-            //System.out.println("protein list contains feature list");
-            proteinList = plProteinL;
+//        if (plProteinL.containsAll(flProteinL)) {
+//            //System.out.println("protein list contains feature list");
+//            proteinList = flProteinL;
+//        }
+//        else if (flProteinL.containsAll(plProteinL)) {
+//            //System.out.println("feature list contains protein list");
+//            proteinList = plProteinL;
+//        }
+//        else {
+//            //System.out.println("feature list and protein list overlap");
+//            flProteinL.retainAll(plProteinL);
+//            proteinList = flProteinL;
+//        }
+        flProteinL.retainAll(plProteinL);
+        proteinList = flProteinL;
+
+        List<String> flProteinList = new ArrayList(flProteinL);
+        List<String> plProteinList = new ArrayList(plProteinL);
+        List<String> proteinArrayList = new ArrayList(proteinList);
+
+        int max = flProteinL.size();
+        if (max < plProteinL.size()) {
+            max = plProteinL.size();
         }
-        else if (flProteinL.containsAll(plProteinL)) {
-            //System.out.println("feature list contains protein list");
-            proteinList = flProteinL;
+        if (max < proteinList.size()) {
+            max = proteinList.size();
         }
-        else {
-            //System.out.println("feature list and protein list overlap");
-            proteinList = plProteinL;
+
+        //test bit
+        FileWriter file = new FileWriter("portein_list.csv");
+        BufferedWriter br = new BufferedWriter(file);
+
+        br.write("protein file protein list, feature file protein list, Selected protein list\n");
+        for (int i = 0; i < max; i++) {
+            if (i < plProteinList.size()) {
+                br.write(plProteinList.get(i) + ", ");
+            }
+            else {
+                br.write(", ");
+            }
+
+            if (i < flProteinList.size()) {
+                br.write(flProteinList.get(i) + ", ");
+            }
+            else {
+                br.write(", ");
+            }
+
+            if (i < proteinArrayList.size()) {
+                br.write(proteinArrayList.get(i) + "\n");
+            }
+            else {
+                br.write("\n");
+            }
+
         }
 
         /*
@@ -479,7 +524,7 @@ public class ProgenMzquantmlConverter {
 
             Set<String> pepSequences = proteinPeptidesMap.get(accession);
 
-            String protId = "prot_" + Integer.toString(index);
+            String protId = "prot_" + index;
             index++;
 
             Protein protein = new Protein();
@@ -524,7 +569,11 @@ public class ProgenMzquantmlConverter {
             if (!protein.getPeptideConsensusRefs().isEmpty()) {
                 proteins.add(protein);
             }
+            else {
+                proteinAccessionIdMap.remove(accession); //remove protein entity which doesn't contain any peptide evidence
+            }
         }
+
         protList.setId("ProtList1");
     }
 
@@ -547,41 +596,51 @@ public class ProgenMzquantmlConverter {
                 Set<String> protsInGroup = new HashSet(Arrays.asList(accession.split(";")));
 
                 if (!protsInGroup.isEmpty()) {
-                    // make sure protGrpProteinMap does not contain the accession key
-                    if (protGrpProteinMap.get(accession) == null) {
-                        protGrpProteinMap.put(accession, protsInGroup);
-                    }
 
                     // new proteinGroup element
                     ProteinGroup protGrp = new ProteinGroup();
 
-                    // set proteinGroup id attribute
-                    protGrp.setId("protGrp_" + Integer.toString(protGroupId));
-                    protGroupId++;
-                    // make sure proteinGroupNameIdMap does not contain the accession key
-                    if (proteinGroupNameIdMap.get(accession) == null) {
-                        proteinGroupNameIdMap.put(accession, protGrp.getId());
-                    }
-
                     protGrp.setSearchDatabase(db);
                     List<ProteinRef> protRefList = protGrp.getProteinRef();
                     for (String prot : protsInGroup) {
-                        // get protein id from proteinAccessionIdMap
-                        String protId = proteinAccessionIdMap.get(prot);
 
-                        // new Protein;
-                        Protein protein = new Protein();
-                        if (protId != null) {
-                            protein.setAccession(prot);
-                            protein.setId(protId);
+                        if (proteinAccessionIdMap.keySet().contains(prot)) {
+                            // get protein id from proteinAccessionIdMap
+                            String protId = proteinAccessionIdMap.get(prot);
 
-                            // new ProteinRef
-                            ProteinRef protRef = new ProteinRef();
-                            protRef.setProtein(protein);
-                            protRefList.add(protRef);
+                            // new Protein;
+                            Protein protein = new Protein();
+                            if (protId != null) {
+                                protein.setAccession(prot);
+                                protein.setId(protId);
+
+                                // new ProteinRef
+                                ProteinRef protRef = new ProteinRef();
+                                protRef.setProtein(protein);
+                                protRefList.add(protRef);
+                            }
                         }
                     }
-                    proteinGrps.add(protGrp);
+                    if (!protGrp.getProteinRef().isEmpty()) {
+                        Set<String> prots = new HashSet<>();
+                        for (ProteinRef ref : protGrp.getProteinRef()) {
+                            prots.add(ref.getProteinRef());
+                        }
+                        // make sure protGrpProteinMap does not contain the accession key
+                        if (protGrpProteinMap.get(accession) == null) {
+                            protGrpProteinMap.put(accession, prots);
+                        }
+
+                        // set proteinGroup id attribute
+                        protGrp.setId("protGrp_" + protGroupId);
+                        protGroupId++;
+                        // make sure proteinGroupNameIdMap does not contain the accession key
+                        if (proteinGroupNameIdMap.get(accession) == null) {
+                            proteinGroupNameIdMap.put(accession, protGrp.getId());
+                        }
+
+                        proteinGrps.add(protGrp);
+                    }
                 }
                 return true;
             }
@@ -654,23 +713,25 @@ public class ProgenMzquantmlConverter {
                     String protGrpAccession = proteinAccessionsMap.get(id);
 
                     ProteinGroup protGrp = new ProteinGroup();
-                    protGrp.setId(proteinGroupNameIdMap.get(protGrpAccession));
-                    Row row = new Row();
-                    row.setObject(protGrp);
-                    row.getValue().add(String.valueOf(value));
-                    double anova;
-                    double mfc;
-                    if (!anovaMap.isEmpty()) {
-                        anova = anovaMap.get(id);
-                        row.getValue().add(String.valueOf(anova));
-                    }
+                    if (proteinGroupNameIdMap.get(protGrpAccession) != null) {
+                        protGrp.setId(proteinGroupNameIdMap.get(protGrpAccession));
+                        Row row = new Row();
+                        row.setObject(protGrp);
+                        row.getValue().add(String.valueOf(value));
+                        double anova;
+                        double mfc;
+                        if (!anovaMap.isEmpty()) {
+                            anova = anovaMap.get(id);
+                            row.getValue().add(String.valueOf(anova));
+                        }
 
-                    if (!mfcMap.isEmpty()) {
-                        mfc = mfcMap.get(id);
-                        String mfcStr = String.valueOf(mfc);
-                        row.getValue().add(mfcStr.equals("Infinity") ? "INF" : mfcStr);
+                        if (!mfcMap.isEmpty()) {
+                            mfc = mfcMap.get(id);
+                            String mfcStr = String.valueOf(mfc);
+                            row.getValue().add(mfcStr.equals("Infinity") ? "INF" : mfcStr);
+                        }
+                        protGrpQLDM.getRow().add(row);
                     }
-                    protGrpQLDM.getRow().add(row);
                     return true;
                 }
 
@@ -712,21 +773,23 @@ public class ProgenMzquantmlConverter {
                 public boolean execute(int id, TDoubleList normAbValues) {
                     String protGrpAccession = proteinAccessionsMap.get(id);
                     ProteinGroup protGrp = new ProteinGroup();
-                    protGrp.setId(proteinGroupNameIdMap.get(protGrpAccession));
-                    final Row row = new Row();
-                    row.setObject(protGrp);
+                    if (proteinGroupNameIdMap.get(protGrpAccession) != null) {
+                        protGrp.setId(proteinGroupNameIdMap.get(protGrpAccession));
+                        final Row row = new Row();
+                        row.setObject(protGrp);
 
-                    normAbValues.forEach(new TDoubleProcedure() {
+                        normAbValues.forEach(new TDoubleProcedure() {
 
-                        @Override
-                        public boolean execute(double value) {
-                            row.getValue().add(format.format(value));
-                            return true;
-                        }
+                            @Override
+                            public boolean execute(double value) {
+                                row.getValue().add(format.format(value));
+                                return true;
+                            }
 
-                    });
+                        });
 
-                    nabDM.getRow().add(row);
+                        nabDM.getRow().add(row);
+                    }
                     return true;
                 }
 
@@ -764,21 +827,23 @@ public class ProgenMzquantmlConverter {
                     String protGrpAccession = proteinAccessionsMap.get(id);
 
                     ProteinGroup protGrp = new ProteinGroup();
-                    protGrp.setId(proteinGroupNameIdMap.get(protGrpAccession));
-                    final Row row = new Row();
-                    row.setObject(protGrp);
+                    if (proteinGroupNameIdMap.get(protGrpAccession) != null) {
+                        protGrp.setId(proteinGroupNameIdMap.get(protGrpAccession));
+                        final Row row = new Row();
+                        row.setObject(protGrp);
 
-                    rawAbValues.forEach(new TDoubleProcedure() {
+                        rawAbValues.forEach(new TDoubleProcedure() {
 
-                        @Override
-                        public boolean execute(double value) {
-                            row.getValue().add(format.format(value));
-                            return true;
-                        }
+                            @Override
+                            public boolean execute(double value) {
+                                row.getValue().add(format.format(value));
+                                return true;
+                            }
 
-                    });
+                        });
 
-                    rabDM.getRow().add(row);
+                        rabDM.getRow().add(row);
+                    }
                     return true;
                 }
 

@@ -10,16 +10,15 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.bind.JAXBException;
-import uk.ac.liv.jmzqml.MzQuantMLElement;
-import uk.ac.liv.jmzqml.model.mzqml.*;
-import uk.ac.liv.jmzqml.xml.io.MzQuantMLMarshaller;
-import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;
+import uk.ac.liv.pgb.jmzqml.MzQuantMLElement;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.*;
+import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLMarshaller;
+import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
 
 /**
  * This code is created for calculating protein abundance inference
@@ -29,14 +28,14 @@ import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;
  */
 public final class ProteinAbundanceInference {
 
-    private static final Map<String, HashSet<String>> proteinToPeptide = new HashMap<String, HashSet<String>>();
-    private static final Map<String, HashSet<String>> peptideToProtein = new HashMap<String, HashSet<String>>();
+    private static final Map<String, Set<String>> proteinToPeptide = new HashMap<>();
+    private static final Map<String, Set<String>> peptideToProtein = new HashMap<>();
     private Map<String, List<String>> peptideAssayValues = new HashMap<String, List<String>>();
     private static final Map<String, String> proteinToAccession = new HashMap<String, String>();
 
-    private static Map<String, HashSet<String>> sameSetGroup = new HashMap<String, HashSet<String>>();
-    private static Map<String, HashSet<String>> subSetGroup = new HashMap<String, HashSet<String>>();
-    private static Map<String, HashSet<String>> uniSetGroup = new HashMap<String, HashSet<String>>();
+    private static Map<String, Set<String>> sameSetGroup = new HashMap<>();
+    private static Map<String, Set<String>> subSetGroup = new HashMap<>();
+    private static Map<String, Set<String>> uniSetGroup = new HashMap<>();
 
     final static String path = "./src/main/resources/";
     final static String proteinGroupList = "ProteinGroupList11";
@@ -318,7 +317,7 @@ public final class ProteinAbundanceInference {
     /**
      * main method
      *
-     * @param args - paramters for command line
+     * @param args - parameters for command line
      *
      * @throws JAXBException
      * @throws InstantiationException
@@ -423,33 +422,7 @@ public final class ProteinAbundanceInference {
      */
     public void proteinInference()
             throws FileNotFoundException {
-
-        boolean pipeline_flag = true;
-
-        MzQuantMLUnmarshaller infile_um = null;
-        try {
-            infile_um = mzqFileInput(in_file);
-        } catch (IllegalStateException ex) {
-            System.out.println("****************************************************");
-            System.out.println("The mzq file is not found!!! Please check the input.");
-            System.err.println(ex);
-            System.out.println("****************************************************");
-        }
-
-        //remove the previous protein group list if existing
-        checkProteinGroupList(infile_um);
-        //
-        pipeline_flag = pipeline_executor(infile_um);
-
-        System.out.println("****************************************************");
-        if (pipeline_flag) {
-            System.out.println("******* The pipeline does work successfully! *******");
-            System.out.println("**** The protein abundance is output correctly! ****");
-        } else {
-
-            throw new IllegalStateException("****** Some errors exist within the pipeline *******");
-        }
-        System.out.println("****************************************************");
+        proteinInference(true);
     }
 
     /**
@@ -481,7 +454,9 @@ public final class ProteinAbundanceInference {
         System.out.println("****************************************************");
         if (pipeline_flag) {
             System.out.println("******************** The pipeline does work successfully! *********************");
-            System.out.println("**** The protein abundance is calculated by removing conflicting pepConsensuses! ****");
+            if (signalConflict) {
+                System.out.println("**** The protein abundance is calculated by removing conflicting pepConsensuses! ****");
+            }            
         } else {
 
             throw new IllegalStateException("****** Some errors exist within the pipeline *******");
@@ -490,113 +465,30 @@ public final class ProteinAbundanceInference {
     }
 
     /**
-     * execute the methods for mapping, grouping, calculation and output
-     *
-     * @param infile_um - input unmarshalled mzq file
-     *
-     * @return - true/false
-     */
-    public boolean pipeline_executor(MzQuantMLUnmarshaller infile_um) {
-
-        boolean flag = true;
-        String inputAssayQLID = "";
-        String inputRawAssayQLID = "";
-        Map<String, List<String>> peptideRawAssayValues = new HashMap<String, List<String>>();
-//        String inputRawPQLID = "AQL_intensity";
-        peptideRawAssayValues = peptideAssayValues(infile_um, inputRawDataTypeAccession);
-//        peptideAssayValues = peptideAssayValues(infile_um, inputDataTypeAccession);
-
-        //filtering is applied, pepCon has more than 50% of total assays
-        peptideAssayValues = peptideValidAssayValues(infile_um, inputDataTypeAccession);
-//        System.out.println("peptide raw assay values: " + peptideRawAssayValues);
-//System.out.println("peptide assay values: " + peptideAssayValues);
-        if (peptideAssayValues == null) {
-
-            throw new IllegalStateException("The desired assay quant layer is not found!!! Please check the input file.");
-        }
-
-//        System.out.println("Peptide Assay Values: " + peptideAssayValues);
-        proteinToPeptide(infile_um, peptideAssayValues);
-        proteinToAccession(infile_um);
-        peptideToProtein(proteinToPeptide);
-
-        if (quantLayerType.equals("AssayQuantLayer")) {
-            List<QuantLayer<IdOnly>> assayQLs = assayQLs(infile_um);
-            inputAssayQLID = assayQuantLayerId(infile_um, inputDataTypeAccession);
-            outputAssayQuantLayerID = "PGL_" + inputAssayQLID;
-            inputRawAssayQLID = assayQuantLayerId(infile_um, inputRawDataTypeAccession);
-            outputRawAssayQuantLayerID = "PGL_raw_" + inputRawAssayQLID;
-
-            MzQuantML mzq = mzq(infile_um);
-
-//        List<QuantLayer> ratioQLs = RatioQLs(infile_um);
-//        List<QuantLayer> studyVariableQLs = StudyVariableQLs(infile_um);
-            uniSetGroup = ProteinGrouping.uniSetGrouping(peptideToProtein, proteinToPeptide);
-            sameSetGroup = ProteinGrouping.sameSetGrouping(peptideToProtein, proteinToPeptide);
-            subSetGroup = ProteinGrouping.subSetGrouping(peptideToProtein, proteinToPeptide);
-
-            Map<String, List<String>> proteinAbundance = proteinAbundanceCalculation(abundanceOperation,
-                    uniSetGroup, sameSetGroup, subSetGroup, peptideAssayValues);
-            Map<String, List<String>> rawProteinAbundance = proteinAbundanceCalculation(abundanceOperation,
-                    uniSetGroup, sameSetGroup, subSetGroup, peptideRawAssayValues);
-
-            mzqOutput(infile_um, mzq, assayQLs, abundanceOperation, uniSetGroup, sameSetGroup,
-                    subSetGroup, outputAssayQuantLayerID, inputAssayQLID, outputRawAssayQuantLayerID,
-                    inputRawAssayQLID, out_file, proteinAbundance, rawProteinAbundance);
-
-//        } else if (quantLayerType.equals("RatioQuantLayer")) {
-//
-//        } else if (quantLayerType.equals("StudyVariableQuantLayer")) {
-//
-//            List<QuantLayer> studyVariableQLs = StudyVariableQLs(infile_um);
-//            String assayQuantLayerId_pep = inputPQLID; //AssayQuantLayerId(infile_um, inputPepDTCA);
-//            outputAssayQuantLayerID = "PGL_" + assayQuantLayerId_pep;
-//
-//            MzQuantML mzq = Mzq(infile_um);
-//
-//            uniSetGroup = ProteinGrouping.UniSetGrouping(peptideToProtein, proteinToPeptide);
-//            sameSetGroup = ProteinGrouping.SameSetGrouping(peptideToProtein, proteinToPeptide);
-//            subSetGroup = ProteinGrouping.SubSetGrouping(peptideToProtein, proteinToPeptide);
-//
-//           
-//            
-//            MzqOutput(mzq, studyVariableQLs, abunOperation, uniSetGroup, sameSetGroup,
-//                    subSetGroup, outputAssayQuantLayerID, inputPQLID, outputFile,
-//                    proteinAbundance, rawProteinAbundance);
-        }
-        return flag;
-    }
-
-    /**
      * execute Protein Inference without pepCons conflicting
      *
      * @param infile_um: unmarshalled input file
-     * @param signalConflict: signal for judging with/without conflicting
-     * peptides
+     * @param excludeConflictingPeptides: Whether to exclude conflicting
+     * peptides or not. peptides
      * @return
      */
-    public boolean pipeline_executor(MzQuantMLUnmarshaller infile_um, boolean signalConflict) {
+    private boolean pipeline_executor(MzQuantMLUnmarshaller infile_um, boolean excludeConflictingPeptides) {
 
         boolean flag = true;
         String inputAssayQLID = "";
         String inputRawAssayQLID = "";
-        Map<String, List<String>> peptideRawAssayValues = new HashMap<String, List<String>>();
-//        String inputRawPQLID = "AQL_intensity";
-        peptideRawAssayValues = peptideAssayValues(infile_um, inputRawDataTypeAccession);
-//        peptideAssayValues = peptideAssayValues(infile_um, inputDataTypeAccession);
+        Map<String, List<String>> peptideRawAssayValues = new HashMap<>();
 
-        //filtering is applied, pepCon has more than 50% of total assays
+        peptideRawAssayValues = peptideAssayValues(infile_um, inputRawDataTypeAccession);
+
         peptideAssayValues = peptideValidAssayValues(infile_um, inputDataTypeAccession);
-//        System.out.println("peptide raw assay values: " + peptideRawAssayValues);
-//System.out.println("peptide assay values: " + peptideAssayValues);
+
         if (peptideAssayValues == null) {
 
             throw new IllegalStateException("The desired assay quant layer is not found!!! Please check the input file.");
         }
 
-//        System.out.println("Peptide Assay Values: " + peptideAssayValues);
-        //protein-to-peptide without conflicting pepCons
-        proteinToPeptideNoConflict(infile_um, peptideAssayValues);
+        proteinToPeptide(infile_um, peptideAssayValues, excludeConflictingPeptides);
         proteinToAccession(infile_um);
         peptideToProtein(proteinToPeptide);
 
@@ -609,8 +501,6 @@ public final class ProteinAbundanceInference {
 
             MzQuantML mzq = mzq(infile_um);
 
-//        List<QuantLayer> ratioQLs = RatioQLs(infile_um);
-//        List<QuantLayer> studyVariableQLs = StudyVariableQLs(infile_um);
             uniSetGroup = ProteinGrouping.uniSetGrouping(peptideToProtein, proteinToPeptide);
             sameSetGroup = ProteinGrouping.sameSetGrouping(peptideToProtein, proteinToPeptide);
             subSetGroup = ProteinGrouping.subSetGrouping(peptideToProtein, proteinToPeptide);
@@ -772,53 +662,6 @@ public final class ProteinAbundanceInference {
     }
 
     /**
-     * obtain the map of Protein to Peptide, which the peptides are the existing
-     * ones in the quant layer identified by the user
-     *
-     * @param in_file_um - input unmarshalled mzq file
-     * @param pepAssVal - peptide assay values
-     *
-     * @return protein-to-peptide map
-     */
-    private Map<String, HashSet<String>> proteinToPeptide(
-            MzQuantMLUnmarshaller in_file_um,
-            Map<String, List<String>> pepAssVal) {
-        Set<String> peptideList = pepAssVal.keySet();
-        ProteinList protList = in_file_um.unmarshal(MzQuantMLElement.ProteinList);
-        List<Protein> proteins = protList.getProtein();
-        for (Protein protein : proteins) {
-
-            //remove the decoy proteins
-            String protAccession = protein.getAccession();
-            if (!protAccession.contains("XXX_")) {
-                //    
-
-                List<String> pepConRefs = protein.getPeptideConsensusRefs();
-
-                /**
-                 * generate the protein-to-peptide map
-                 */
-                HashSet<String> setOfPeptides = new HashSet<String>();
-                for (String pepCon : pepConRefs) {
-                    //examine whether pepCon is in peptideList (given assayQuantLayer)
-                    if (peptideList.contains(pepCon)) {
-
-                        setOfPeptides.add(pepCon);
-
-                        /**
-                         * Accession or ID for protein
-                         */
-//                proteinToPeptide.put(protein.getAccession(), setOfPeptides);
-                        proteinToPeptide.put(protein.getId(), setOfPeptides);
-//                proteinToAccession.put(protein.getId(), protein.getAccession());
-                    }
-                }
-            }
-        }
-        return proteinToPeptide;
-    }
-
-    /**
      * create a protein-to-peptide map without conflicting peptides, i.e.
      * another sequence in userParam
      *
@@ -826,9 +669,9 @@ public final class ProteinAbundanceInference {
      * @param pepAssVal: peptide assay values
      * @return proteinToPeptide map
      */
-    private Map<String, HashSet<String>> proteinToPeptideNoConflict(
+    private Map<String, Set<String>> proteinToPeptide(
             MzQuantMLUnmarshaller in_file_um,
-            Map<String, List<String>> pepAssVal) {
+            Map<String, List<String>> pepAssVal, boolean excludeConflictingPeptides) {
         Set<String> peptideList = pepAssVal.keySet();
         PeptideConsensusList peptideConsensusList = in_file_um.unmarshal(MzQuantMLElement.PeptideConsensusList);
         List<PeptideConsensus> peptideCons = peptideConsensusList.getPeptideConsensus();
@@ -836,70 +679,40 @@ public final class ProteinAbundanceInference {
         List<Protein> proteins = protList.getProtein();
 
         for (Protein protein : proteins) {
+            // Skip the decoy proteins.
+            if (protein.getAccession().contains("XXX_")) {
+                continue;
+            }
 
-            //remove the decoy proteins
-            String protAccession = protein.getAccession();
-            if (!protAccession.contains("XXX_")) {
-                //    
+            // Get the PeptideConsensus refs for this protein.   
+            List<String> pepConRefs = protein.getPeptideConsensusRefs();
 
-                List<String> pepConRefs = protein.getPeptideConsensusRefs();
+            /**
+             * generate the protein-to-peptide map
+             */
+            Set<String> setOfPeptides = new HashSet<>();
+            proteinToPeptide.put(protein.getId(), setOfPeptides);
 
-                /**
-                 * generate the protein-to-peptide map
-                 */
-                HashSet<String> setOfPeptides = new HashSet<String>();
-                for (String pepCon : pepConRefs) {
-                    //examine whether pepCon is in peptideList (given assayQuantLayer)
-                    if (peptideList.contains(pepCon)) {
-
-                        //check if conflicting. If not, add to setOfPeptides.
-                        for (PeptideConsensus peptideCon : peptideCons) {
-                            if (peptideCon.getId().equalsIgnoreCase(pepCon)) {
-                                List<UserParam> userParams = peptideCon.getUserParam();
-                                //note: here is a bug from jmzquantml for isEmpty().
-                                //isEmpty() is actually isNonEmpty()
-//                                for (UserParam userParam : userParams) {
-//                                    System.out.println("UP: " + userParam.getName());
-//                                }
-//                                System.out.println("Peptide Consensus: " + pepCon);
-//                                System.out.println("Is empty?  " + userParams.isEmpty());
-
-                                if (!userParams.isEmpty()) { //here acturall isEmpty() due to a bug
-//                                    System.out.println("empty!");
-//                                    for (UserParam userParam : userParams) {
-//                                        System.out.println(userParam.getName());
-//                                    }
-//                                    System.out.println("empty!!!");
-
-                                    setOfPeptides.add(pepCon);
-
-                                    /**
-                                     * Accession or ID for protein
-                                     */
-//                proteinToPeptide.put(protein.getAccession(), setOfPeptides);
-                                    proteinToPeptide.put(protein.getId(), setOfPeptides);
-//                proteinToAccession.put(protein.getId(), protein.getAccession());
-                                } else if (userParams.isEmpty()) {
-                                    for (UserParam userParam : userParams) {
-                                        String upName = userParam.getName();
-//                                        System.out.println("User Param: " + upName);
-                                        if (!upName.equalsIgnoreCase("Other identified sequence")) {
-//                                            System.out.println("User Param: " + upName);
-                                            setOfPeptides.add(pepCon);
-                                            proteinToPeptide.put(protein.getId(), setOfPeptides);
-                                            break;
-                                        }
-
-                                    }
-                                }
-
-                                break;
-                            }
+            // Check if the peptide consensus ref is in the peptide list.
+            pepConRefs.stream().filter((pepConRef) -> !(!peptideList.contains(pepConRef))).forEach((pepConRef) -> {
+                if (!excludeConflictingPeptides) {
+                    setOfPeptides.add(pepConRef);
+                } else {
+                    // Get the peptide consensus for this ref.
+                    Optional<PeptideConsensus> peptideConOptional = peptideCons.parallelStream().filter(p -> p.getId().equalsIgnoreCase(pepConRef)).findAny();
+                    if (peptideConOptional.isPresent()) {
+                        PeptideConsensus peptideCon = peptideConOptional.get();
+                        // Get the user params.
+                        List<UserParam> userParams = peptideCon.getUserParam();
+                        // If none of the user params contain the explicit text, don't add this peptide consensus ref to the map.
+                        if (!userParams.stream().anyMatch(p -> p.getName().equalsIgnoreCase("Other identified sequence with modification string"))) {
+                            setOfPeptides.add(pepConRef);
                         }
                     }
                 }
-            }
+            });
         }
+
         return proteinToPeptide;
     }
 
@@ -941,13 +754,13 @@ public final class ProteinAbundanceInference {
      *
      * @return a map for peptide-to-protein
      */
-    private Map<String, HashSet<String>> peptideToProtein(
-            Map<String, HashSet<String>> protToPep) {
+    private Map<String, Set<String>> peptideToProtein(
+            Map<String, Set<String>> protToPep) {
 
-        for (Map.Entry<String, HashSet<String>> entry : protToPep.entrySet()) {
+        for (Map.Entry<String, Set<String>> entry : protToPep.entrySet()) {
             for (String value : entry.getValue()) {
                 if (!peptideToProtein.containsKey(value)) {
-                    peptideToProtein.put(value, new HashSet<String>());
+                    peptideToProtein.put(value, new HashSet<>());
                 }
                 peptideToProtein.get(value).add(entry.getKey());
             }
@@ -1050,9 +863,9 @@ public final class ProteinAbundanceInference {
     private boolean mzqOutput(MzQuantMLUnmarshaller um,
             MzQuantML mzq, List<QuantLayer<IdOnly>> assayQLs,
             String operation,
-            Map<String, HashSet<String>> uniSetGr,
-            Map<String, HashSet<String>> sameSetGr,
-            Map<String, HashSet<String>> subSetGr,
+            Map<String, Set<String>> uniSetGr,
+            Map<String, Set<String>> sameSetGr,
+            Map<String, Set<String>> subSetGr,
             String assayQlId, String inPepQLID,
             String outRawPQlId, String inRawPepQLID,
             String outFile,
@@ -1068,8 +881,8 @@ public final class ProteinAbundanceInference {
 //        System.out.println("Group in Order:" + groupInOrder.entrySet());
 //        Map<String, String> rawGroupInOrder = ProteinGrouping.GroupInOrder(rawProtAbundance);
 
-        //        uk.ac.liv.jmzqml.model.mzqml.ProteinGroupList protGroupList = 
-//        uk.ac.liv.jmzqml.model.mzqml.ProteinGroupList.class.newInstance();
+        //        uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinGroupList protGroupList = 
+//        uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinGroupList.class.newInstance();
 //        ProteinGroupList protGroupList = um.unmarshal(MzQuantMLElement.ProteinGroupList);
         ProteinGroupList protGroupList = null;
         protGroupList = new ProteinGroupList();
@@ -1119,9 +932,9 @@ public final class ProteinAbundanceInference {
      */
     private Map<String, List<String>> proteinAbundanceCalculation(
             String operation,
-            Map<String, HashSet<String>> uniSetGr,
-            Map<String, HashSet<String>> sameSetGr,
-            Map<String, HashSet<String>> subSetGr,
+            Map<String, Set<String>> uniSetGr,
+            Map<String, Set<String>> sameSetGr,
+            Map<String, Set<String>> subSetGr,
             Map<String, List<String>> pepAssVal) {
 
         Map<String, List<String>> protAbu = new HashMap<String, List<String>>();
@@ -1133,7 +946,7 @@ public final class ProteinAbundanceInference {
         /**
          * unique set case
          */
-        for (Map.Entry<String, HashSet<String>> entry : uniSetGr.entrySet()) {
+        for (Map.Entry<String, Set<String>> entry : uniSetGr.entrySet()) {
 //            groupId++;
             /**
              * get the dimension of peptide assay values
@@ -1181,7 +994,7 @@ public final class ProteinAbundanceInference {
                      */
                     double temp = (componentValue.equals("NaN") | componentValue.equals("nan")
                             | componentValue.equals("Null") | componentValue.equals("null"))
-                                    ? Double.parseDouble("0") : Double.parseDouble(componentValue);
+                            ? Double.parseDouble("0") : Double.parseDouble(componentValue);
 //                        sumOfpepValues[j] = sumOfpepValues[j] + temp;
                     matrixPepValue[tempNo][j] = temp;
                 }
@@ -1226,7 +1039,7 @@ public final class ProteinAbundanceInference {
         /**
          * sameSet case
          */
-        for (Map.Entry<String, HashSet<String>> entry : sameSetGr.entrySet()) {
+        for (Map.Entry<String, Set<String>> entry : sameSetGr.entrySet()) {
 
 //            groupId++;
             String pepSelect = entry.getValue().iterator().next().toString();
@@ -1314,7 +1127,7 @@ public final class ProteinAbundanceInference {
         /**
          * subSet case
          */
-        for (Map.Entry<String, HashSet<String>> entry : subSetGr.entrySet()) {
+        for (Map.Entry<String, Set<String>> entry : subSetGr.entrySet()) {
 
 //            groupId++;
             String pepSelect = entry.getValue().iterator().next().toString();
@@ -1357,7 +1170,7 @@ public final class ProteinAbundanceInference {
                      */
                     double temp = (componentValue.equals("NaN") | componentValue.equals("nan")
                             | componentValue.equals("Null") | componentValue.equals("null"))
-                                    ? Double.parseDouble("0") : Double.parseDouble(componentValue);
+                            ? Double.parseDouble("0") : Double.parseDouble(componentValue);
                     matrixPepValue[tempNo][j] = temp;
                 }
                 tempNo++;
@@ -1456,7 +1269,7 @@ public final class ProteinAbundanceInference {
                         cv.setId(cvRef);
                         cvParam.setCv(cv);
 
-                        HashSet<String> setPeptides = uniSetGroup.get(proteinGroupIdOri);
+                        Set<String> setPeptides = uniSetGroup.get(proteinGroupIdOri);
                         String pepTmp = setPeptides.iterator().next();
                         anchorProtein = peptideToProtein.get(pepTmp).iterator().next();
 

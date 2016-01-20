@@ -40,17 +40,17 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.controlsfx.dialog.ProgressDialog;
 
 import org.rosuda.JRI.Rengine;
-import uk.ac.liv.jmzqml.MzQuantMLElement;
-import uk.ac.liv.jmzqml.model.mzqml.DataMatrix;
-import uk.ac.liv.jmzqml.model.mzqml.IdOnly;
-import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensus;
-import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensusList;
-import uk.ac.liv.jmzqml.model.mzqml.Protein;
-import uk.ac.liv.jmzqml.model.mzqml.ProteinGroup;
-import uk.ac.liv.jmzqml.model.mzqml.ProteinRef;
-import uk.ac.liv.jmzqml.model.mzqml.QuantLayer;
-import uk.ac.liv.jmzqml.model.mzqml.Row;
-import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;
+import uk.ac.liv.pgb.jmzqml.MzQuantMLElement;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.DataMatrix;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.IdOnly;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensus;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensusList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Protein;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinGroup;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinRef;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.QuantLayer;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Row;
+import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
 import uk.ac.liv.mzqlib.constants.MzqDataConstants;
 import uk.ac.liv.mzqlib.model.*;
 import uk.ac.liv.mzqlib.r.RUtils;
@@ -727,15 +727,15 @@ public class MainApp extends Application {
                 }
                 Map<String, List<StringProperty>> peptideDMMap = convertDataMatrixToHashMap(peptideDM);
 
-                ProteinGroup proteinGrp = this.getUnmarshaller().unmarshal(uk.ac.liv.jmzqml.model.mzqml.ProteinGroup.class, protGrpRow.getObjectId());
+                ProteinGroup proteinGrp = this.getUnmarshaller().unmarshal(uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinGroup.class, protGrpRow.getObjectId());
 
                 //Take the first protein as group leader in the protein group
                 ProteinRef protRef = proteinGrp.getProteinRef().get(0);
 
-                Protein protein = this.getUnmarshaller().unmarshal(uk.ac.liv.jmzqml.model.mzqml.Protein.class, protRef.getProteinRef());
+                Protein protein = this.getUnmarshaller().unmarshal(uk.ac.liv.pgb.jmzqml.model.mzqml.Protein.class, protRef.getProteinRef());
                 List<String> peptideRefs = protein.getPeptideConsensusRefs();
                 for (String peptideRef : peptideRefs) {
-                    PeptideConsensus peptide = this.getUnmarshaller().unmarshal(uk.ac.liv.jmzqml.model.mzqml.PeptideConsensus.class, peptideRef);
+                    PeptideConsensus peptide = this.getUnmarshaller().unmarshal(uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensus.class, peptideRef);
                     List<StringProperty> peptideValues = peptideDMMap.get(peptideRef);
                     if (peptideValues != null) {
                         XYChart.Series peptideSeries = new XYChart.Series<>();
@@ -935,10 +935,10 @@ public class MainApp extends Application {
 
         Map<String, List<StringProperty>> peptideDMMap = convertDataMatrixToHashMap(peptideDM);
 
-        Protein protein = this.getUnmarshaller().unmarshal(uk.ac.liv.jmzqml.model.mzqml.Protein.class, protRow.getObjectId());
+        Protein protein = this.getUnmarshaller().unmarshal(uk.ac.liv.pgb.jmzqml.model.mzqml.Protein.class, protRow.getObjectId());
         List<String> peptideRefs = protein.getPeptideConsensusRefs();
         for (String peptideRef : peptideRefs) {
-            PeptideConsensus peptide = this.getUnmarshaller().unmarshal(uk.ac.liv.jmzqml.model.mzqml.PeptideConsensus.class, peptideRef);
+            PeptideConsensus peptide = this.getUnmarshaller().unmarshal(uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensus.class, peptideRef);
             List<StringProperty> peptideValues = peptideDMMap.get(peptideRef);
             XYChart.Series peptideSeries = new XYChart.Series<>();
             lineChart.getData().add(peptideSeries);
@@ -995,15 +995,15 @@ public class MainApp extends Application {
         }
         Map<String, List<StringProperty>> peptideDMMap = convertDataMatrixToHashMap(peptideDM);
 
-        ProteinGroup proteinGrp = this.getUnmarshaller().unmarshal(uk.ac.liv.jmzqml.model.mzqml.ProteinGroup.class, protGrpRow.getObjectId());
+        ProteinGroup proteinGrp = this.getUnmarshaller().unmarshal(uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinGroup.class, protGrpRow.getObjectId());
 
         //Take the first protein as group leader in the protein group
         ProteinRef protRef = proteinGrp.getProteinRef().get(0);
 
-        Protein protein = this.getUnmarshaller().unmarshal(uk.ac.liv.jmzqml.model.mzqml.Protein.class, protRef.getProteinRef());
+        Protein protein = this.getUnmarshaller().unmarshal(uk.ac.liv.pgb.jmzqml.model.mzqml.Protein.class, protRef.getProteinRef());
         List<String> peptideRefs = protein.getPeptideConsensusRefs();
         for (String peptideRef : peptideRefs) {
-            PeptideConsensus peptide = this.getUnmarshaller().unmarshal(uk.ac.liv.jmzqml.model.mzqml.PeptideConsensus.class, peptideRef);
+            PeptideConsensus peptide = this.getUnmarshaller().unmarshal(uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensus.class, peptideRef);
             List<StringProperty> peptideValues = peptideDMMap.get(peptideRef);
             XYChart.Series peptideSeries = new XYChart.Series<>();
             lineChart.getData().add(peptideSeries);

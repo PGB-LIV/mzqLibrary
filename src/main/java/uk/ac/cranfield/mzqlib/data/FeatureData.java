@@ -1,6 +1,6 @@
 package uk.ac.cranfield.mzqlib.data;
 
-import uk.ac.liv.jmzqml.model.mzqml.Feature;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Feature;
 
 /**
  *

@@ -10,27 +10,27 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
-import uk.ac.liv.jmzqml.MzQuantMLElement;
-import uk.ac.liv.jmzqml.model.mzqml.AnalysisSummary;
-import uk.ac.liv.jmzqml.model.mzqml.CvParam;
-import uk.ac.liv.jmzqml.model.mzqml.FeatureList;
-import uk.ac.liv.jmzqml.model.mzqml.GlobalQuantLayer;
-import uk.ac.liv.jmzqml.model.mzqml.IdOnly;
-import uk.ac.liv.jmzqml.model.mzqml.Modification;
-import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensus;
-import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensusList;
-import uk.ac.liv.jmzqml.model.mzqml.Protein;
-import uk.ac.liv.jmzqml.model.mzqml.ProteinGroup;
-import uk.ac.liv.jmzqml.model.mzqml.ProteinGroupList;
-import uk.ac.liv.jmzqml.model.mzqml.ProteinList;
-import uk.ac.liv.jmzqml.model.mzqml.ProteinRef;
-import uk.ac.liv.jmzqml.model.mzqml.QuantLayer;
-import uk.ac.liv.jmzqml.model.mzqml.Row;
-import uk.ac.liv.jmzqml.model.mzqml.SmallMoleculeList;
-import uk.ac.liv.jmzqml.model.mzqml.Software;
-import uk.ac.liv.jmzqml.model.mzqml.SoftwareList;
-import uk.ac.liv.jmzqml.model.mzqml.UserParam;
-import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;
+import uk.ac.liv.pgb.jmzqml.MzQuantMLElement;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.AnalysisSummary;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.CvParam;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.FeatureList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.GlobalQuantLayer;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.IdOnly;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Modification;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensus;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensusList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Protein;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinGroup;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinGroupList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinRef;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.QuantLayer;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Row;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.SmallMoleculeList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Software;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.SoftwareList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.UserParam;
+import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
 import uk.ac.liv.mzqlib.constants.MzqDataConstants;
 import uk.ac.liv.mzqlib.model.MzQuantMLData;
 import uk.ac.liv.mzqlib.model.MzQuantMLSummary;
@@ -155,12 +155,12 @@ public class LoadMzQuantMLDataTask extends Task<MzQuantMLData> {
 
                 for (Row row : rows) {
                     MzqDataMatrixRow mzqDMRow = new MzqDataMatrixRow();
-                    ProteinGroup protGrp = mzqUm.unmarshal(uk.ac.liv.jmzqml.model.mzqml.ProteinGroup.class, row.getObjectRef()); //get ProteinGrouop object from objectRef
+                    ProteinGroup protGrp = mzqUm.unmarshal(uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinGroup.class, row.getObjectRef()); //get ProteinGrouop object from objectRef
                     List<ProteinRef> protRefs = protGrp.getProteinRef();
                     //represent each row with accessions
                     StringBuilder proteinGroupAccessions = new StringBuilder();
                     for (ProteinRef protRef : protRefs) {
-                        Protein protein = mzqUm.unmarshal(uk.ac.liv.jmzqml.model.mzqml.Protein.class, protRef.getProteinRef());
+                        Protein protein = mzqUm.unmarshal(uk.ac.liv.pgb.jmzqml.model.mzqml.Protein.class, protRef.getProteinRef());
                         proteinGroupAccessions.append(protein.getAccession()).append(" ;");
                     }
                     mzqDMRow.setObjectValue(new SimpleStringProperty(proteinGroupAccessions.substring(0, proteinGroupAccessions.length() - 2)));
@@ -191,7 +191,7 @@ public class LoadMzQuantMLDataTask extends Task<MzQuantMLData> {
                 List<Row> rows = assQL.getDataMatrix().getRow();
                 for (Row row : rows) {
                     MzqDataMatrixRow mzqDMRow = new MzqDataMatrixRow();
-                    Protein protein = mzqUm.unmarshal(uk.ac.liv.jmzqml.model.mzqml.Protein.class, row.getObjectRef());
+                    Protein protein = mzqUm.unmarshal(uk.ac.liv.pgb.jmzqml.model.mzqml.Protein.class, row.getObjectRef());
                     mzqDMRow.setObjectValue(new SimpleStringProperty(protein.getAccession()));
                     mzqDMRow.setObjectId(new SimpleStringProperty(row.getObjectRef()));
                     mzqDMRow.setValues(row.getValue());
@@ -226,7 +226,7 @@ public class LoadMzQuantMLDataTask extends Task<MzQuantMLData> {
                     List<Row> rows = assQL.getDataMatrix().getRow();
                     for (Row row : rows) {
                         MzqDataMatrixRow mzqDMRow = new MzqDataMatrixRow();
-                        PeptideConsensus peptide = mzqUm.unmarshal(uk.ac.liv.jmzqml.model.mzqml.PeptideConsensus.class, row.getObjectRef());
+                        PeptideConsensus peptide = mzqUm.unmarshal(uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensus.class, row.getObjectRef());
                         StringBuilder peptideString = new StringBuilder();
                         peptideString.append(peptide.getPeptideSequence());
                         if (!peptide.getModification().isEmpty()) {

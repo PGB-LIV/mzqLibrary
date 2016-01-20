@@ -3,7 +3,7 @@ package uk.ac.liv.mzqlib.model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;
+import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
 
 /**
  *

@@ -1,11 +1,11 @@
 package uk.ac.liv.mzqlib.idmapper.data;
 
 import java.util.List;
-import uk.ac.liv.jmzqml.model.mzqml.AbstractParam;
-import uk.ac.liv.jmzqml.model.mzqml.CvParam;
-import uk.ac.liv.jmzqml.model.mzqml.Feature;
-import uk.ac.liv.jmzqml.model.mzqml.RawFile;
-import uk.ac.liv.jmzqml.model.mzqml.UserParam;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.AbstractParam;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.CvParam;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Feature;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.RawFile;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.UserParam;
 import uk.ac.liv.mzqlib.idmapper.data.Tolerance.ToleranceUnit;
 
 /**

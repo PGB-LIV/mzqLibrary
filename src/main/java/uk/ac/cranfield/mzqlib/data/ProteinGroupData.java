@@ -2,8 +2,8 @@ package uk.ac.cranfield.mzqlib.data;
 
 import java.util.List;
 import uk.ac.cranfield.mzqlib.MzqLib;
-import uk.ac.liv.jmzqml.model.mzqml.ProteinGroup;
-import uk.ac.liv.jmzqml.model.mzqml.ProteinRef;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinGroup;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinRef;
 
 /**
  *

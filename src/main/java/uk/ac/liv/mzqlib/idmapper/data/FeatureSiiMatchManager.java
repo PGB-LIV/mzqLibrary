@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.function.BinaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import uk.ac.liv.jmzqml.model.mzqml.Feature;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Feature;
 
 /**
  *

@@ -7,12 +7,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.xml.bind.JAXBException;
-import uk.ac.liv.jmzqml.MzQuantMLElement;
-import uk.ac.liv.jmzqml.model.mzqml.Feature;
-import uk.ac.liv.jmzqml.model.mzqml.FeatureList;
-import uk.ac.liv.jmzqml.model.mzqml.RawFilesGroup;
-import uk.ac.liv.jmzqml.model.mzqml.SearchDatabase;
-import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;
+import uk.ac.liv.pgb.jmzqml.MzQuantMLElement;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Feature;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.FeatureList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.RawFilesGroup;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.SearchDatabase;
+import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
 import uk.ac.liv.mzqlib.idmapper.data.ExtendedFeature;
 import uk.ac.liv.mzqlib.idmapper.data.FeatureSiiMatchManager;
 import uk.ac.liv.mzqlib.idmapper.data.SIIData;
@@ -130,7 +130,7 @@ public class MzqProcessorFactory {
       
       while (itFeatureList.hasNext()) {
         FeatureList ftList = itFeatureList.next();
-        RawFilesGroup rg = (RawFilesGroup) this.mzqUm.unmarshal(uk.ac.liv.jmzqml.model.mzqml.RawFilesGroup.class, ftList.getRawFilesGroupRef());        
+        RawFilesGroup rg = (RawFilesGroup) this.mzqUm.unmarshal(uk.ac.liv.pgb.jmzqml.model.mzqml.RawFilesGroup.class, ftList.getRawFilesGroupRef());        
 
         String rawFileName = "";
         if (rg.getRawFile().get(0).getName() != null) {

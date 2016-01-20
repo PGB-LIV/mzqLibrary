@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.xml.bind.JAXBException;
 import uk.ac.cranfield.mzqlib.MzqLib;
-import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;
+import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
 import uk.ac.liv.mzqlib.openms.converter.ConsensusXMLProcessor;
 import uk.ac.liv.mzqlib.openms.converter.ConsensusXMLProcessorFactory;
 import uk.ac.liv.mzqlib.idmapper.MzqMzIdMapper;

@@ -15,8 +15,8 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang3.math.NumberUtils;
-import uk.ac.liv.jmzqml.model.mzqml.*;
-import uk.ac.liv.jmzqml.xml.io.MzQuantMLMarshaller;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.*;
+import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLMarshaller;
 
 /**
  * Convert MaxQuant result files into mzQuantML format.

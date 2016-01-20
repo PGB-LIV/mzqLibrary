@@ -21,10 +21,10 @@ import uk.ac.cranfield.mzqlib.data.PeptideData;
 import uk.ac.cranfield.mzqlib.data.ProteinData;
 import uk.ac.cranfield.mzqlib.data.ProteinGroupData;
 import uk.ac.cranfield.mzqlib.data.QuantitationLevel;
-import uk.ac.liv.jmzqml.model.mzqml.Assay;
-import uk.ac.liv.jmzqml.model.mzqml.CvParam;
-import uk.ac.liv.jmzqml.model.mzqml.Software;
-import uk.ac.liv.jmzqml.model.mzqml.StudyVariable;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Assay;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.CvParam;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Software;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.StudyVariable;
 
 /**
  *

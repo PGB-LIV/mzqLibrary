@@ -193,6 +193,7 @@
                     <compilerArguments>
                         <bootclasspath>${sun.boot.class.path}${path.separator}${java.home}/lib/jfxrt.jar</bootclasspath>
                     </compilerArguments>
+                    <showDeprecation>true</showDeprecation>
                 </configuration>
             </plugin>
             <plugin>
@@ -219,11 +220,6 @@
         </resources>
     </build>
     <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>jmzquantml</artifactId>
-            <version>1.0.0-1.0.5</version>
-        </dependency>
         <dependency>
             <groupId>net.sourceforge.jexcelapi</groupId>
             <artifactId>jxl</artifactId>
@@ -276,6 +272,11 @@
             <artifactId>commons-math3</artifactId>
             <version>3.2</version>
             <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>uk.ac.liv.pgb</groupId>
+            <artifactId>jmzquantml</artifactId>
+            <version>1.0.0-1.1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
     <repositories>

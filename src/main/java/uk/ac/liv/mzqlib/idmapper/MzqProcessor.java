@@ -2,7 +2,7 @@
 package uk.ac.liv.mzqlib.idmapper;
 
 import java.util.Map;
-import uk.ac.liv.jmzqml.model.mzqml.SearchDatabase;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.SearchDatabase;
 
 /**
  * Interface of MzqProcessor

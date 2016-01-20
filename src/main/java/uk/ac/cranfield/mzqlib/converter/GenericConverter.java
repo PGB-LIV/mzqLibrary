@@ -4,7 +4,7 @@ import java.util.HashSet;
 import uk.ac.cranfield.mzqlib.MzqLib;
 import uk.ac.cranfield.mzqlib.data.MzqData;
 import uk.ac.cranfield.mzqlib.data.QuantitationLevel;
-import uk.ac.liv.jmzqml.model.mzqml.StudyVariable;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.StudyVariable;
 
 /**
  *

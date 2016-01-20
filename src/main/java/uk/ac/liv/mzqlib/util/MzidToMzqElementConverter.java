@@ -3,13 +3,13 @@ package uk.ac.liv.mzqlib.util;
 
 import java.util.ArrayList;
 import java.util.List;
-import uk.ac.liv.jmzqml.model.mzqml.Cv;
-import uk.ac.liv.jmzqml.model.mzqml.CvParam;
-import uk.ac.liv.jmzqml.model.mzqml.FileFormat;
-import uk.ac.liv.jmzqml.model.mzqml.Modification;
-import uk.ac.liv.jmzqml.model.mzqml.Param;
-import uk.ac.liv.jmzqml.model.mzqml.SearchDatabase;
-import uk.ac.liv.jmzqml.model.mzqml.UserParam;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Cv;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.CvParam;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.FileFormat;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Modification;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Param;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.SearchDatabase;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.UserParam;
 
 /**
  *

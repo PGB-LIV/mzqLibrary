@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.beans.property.SimpleStringProperty;
 import javax.xml.bind.JAXBException;
-import uk.ac.liv.jmzqml.model.mzqml.Assay;
-import uk.ac.liv.jmzqml.model.mzqml.QuantLayer;
-import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Assay;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.QuantLayer;
+import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
 
 /**
  *
@@ -43,7 +43,7 @@ public class MzqAssayQuantLayer extends MzqQuantLayer {
         this.columnNames = new ArrayList<>();
         List<String> columnIndex = quantLayer.getColumnIndex();
         for (String colId : columnIndex) {
-            Assay assay = mzqUm.unmarshal(uk.ac.liv.jmzqml.model.mzqml.Assay.class, colId);
+            Assay assay = mzqUm.unmarshal(uk.ac.liv.pgb.jmzqml.model.mzqml.Assay.class, colId);
             this.columnNames.add(new SimpleStringProperty(assay.getName()));
         }
     }

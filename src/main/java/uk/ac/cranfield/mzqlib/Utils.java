@@ -17,7 +17,7 @@ import javax.xml.validation.Validator;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import uk.ac.ebi.pride.jmztab.model.Param;
-import uk.ac.liv.jmzqml.model.mzqml.CvParam;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.CvParam;
 
 /**
  *

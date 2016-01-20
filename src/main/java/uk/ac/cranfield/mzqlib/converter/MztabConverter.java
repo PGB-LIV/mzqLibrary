@@ -35,15 +35,15 @@ import uk.ac.ebi.pride.jmztab.model.ProteinColumn;
 import uk.ac.ebi.pride.jmztab.model.Section;
 import uk.ac.ebi.pride.jmztab.model.SpectraRef;
 import uk.ac.ebi.pride.jmztab.model.SplitList;
-import uk.ac.liv.jmzqml.model.mzqml.AnalysisSummary;
-import uk.ac.liv.jmzqml.model.mzqml.Assay;
-import uk.ac.liv.jmzqml.model.mzqml.Cv;
-import uk.ac.liv.jmzqml.model.mzqml.CvParam;
-import uk.ac.liv.jmzqml.model.mzqml.ModParam;
-import uk.ac.liv.jmzqml.model.mzqml.RawFile;
-import uk.ac.liv.jmzqml.model.mzqml.RawFilesGroup;
-import uk.ac.liv.jmzqml.model.mzqml.Software;
-import uk.ac.liv.jmzqml.model.mzqml.StudyVariable;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.AnalysisSummary;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Assay;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Cv;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.CvParam;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.ModParam;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.RawFile;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.RawFilesGroup;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Software;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.StudyVariable;
 
 /**
  *
@@ -570,11 +570,11 @@ public class MztabConverter extends GenericConverter {
                         //optional field in all cases: reliability
                         
                         //mandatory field in quantification mode: modification
-                        final List<uk.ac.liv.jmzqml.model.mzqml.Modification> modifications = peptide.getPeptide().getModification();
+                        final List<uk.ac.liv.pgb.jmzqml.model.mzqml.Modification> modifications = peptide.getPeptide().getModification();
                         if (!modifications.isEmpty()) {
                             SplitList<Modification> mods = new SplitList<>('|');
                             for (int i = 0; i < modifications.size(); i++) {
-                                uk.ac.liv.jmzqml.model.mzqml.Modification modification = modifications.get(i);
+                                uk.ac.liv.pgb.jmzqml.model.mzqml.Modification modification = modifications.get(i);
 //                                //<xsd:element name="cvParam" type="CVParamType" minOccurs="1"
                                 CvParam param = modification.getCvParam().get(0);
                                 if(modCount.containsKey(param)){

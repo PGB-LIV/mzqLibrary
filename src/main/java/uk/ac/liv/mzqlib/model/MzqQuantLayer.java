@@ -4,7 +4,7 @@ package uk.ac.liv.mzqlib.model;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.beans.property.StringProperty;
-import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;
+import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
 
 /**
  *

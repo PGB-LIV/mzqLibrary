@@ -11,8 +11,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import uk.ac.liv.jmzqml.model.mzqml.DataMatrix;
-import uk.ac.liv.jmzqml.model.mzqml.Row;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.DataMatrix;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Row;
 
 /**
  * Utilities used

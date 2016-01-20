@@ -7,12 +7,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.xml.bind.JAXBException;
-import uk.ac.liv.jmzqml.MzQuantMLElement;
-import uk.ac.liv.jmzqml.model.mzqml.EvidenceRef;
-import uk.ac.liv.jmzqml.model.mzqml.Feature;
-import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensus;
-import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensusList;
-import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;
+import uk.ac.liv.pgb.jmzqml.MzQuantMLElement;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.EvidenceRef;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Feature;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensus;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensusList;
+import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
 
 /**
  * The wrapper class for mzQuantML file.
@@ -60,7 +60,7 @@ public class Mzq {
 
                     String ftRef = eviRef.getFeatureRef();
 
-                    Feature ft = this.um.unmarshal(uk.ac.liv.jmzqml.model.mzqml.Feature.class, ftRef);
+                    Feature ft = this.um.unmarshal(uk.ac.liv.pgb.jmzqml.model.mzqml.Feature.class, ftRef);
                     double mz = ft.getMz();
                     double rw = this.getRetentionWindow(ft.getMassTrace());
 

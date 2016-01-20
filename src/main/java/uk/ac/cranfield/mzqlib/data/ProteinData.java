@@ -2,9 +2,9 @@ package uk.ac.cranfield.mzqlib.data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import uk.ac.liv.jmzqml.model.mzqml.Param;
-import uk.ac.liv.jmzqml.model.mzqml.Protein;
-import uk.ac.liv.jmzqml.model.mzqml.SearchDatabase;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Param;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Protein;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.SearchDatabase;
 /**
  * The Protein class
  * @author Jun Fan@cranfield

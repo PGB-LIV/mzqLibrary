@@ -19,9 +19,9 @@ import java.util.Set;
  */
 public class ProteinGrouping {
 
-    private static final Map<String, HashSet<String>> sameSetGr = new HashMap<String, HashSet<String>>();
-    private static final Map<String, HashSet<String>> subSetGr = new HashMap<String, HashSet<String>>();
-    private static final Map<String, HashSet<String>> uniSetGr = new HashMap<String, HashSet<String>>();
+    private static final Map<String, Set<String>> sameSetGr = new HashMap<>();
+    private static final Map<String, Set<String>> subSetGr = new HashMap<>();
+    private static final Map<String, Set<String>> uniSetGr = new HashMap<>();
 
     /**
      * set the protein groups in order in terms of the grouping results
@@ -79,18 +79,18 @@ public class ProteinGrouping {
      * @param protToPep - protein-to-peptide map
      * @return a map of SameSetGroup-to-peptides
      */
-    public static Map<String, HashSet<String>> sameSetGrouping(Map<String, HashSet<String>> pepToProt,
-            Map<String, HashSet<String>> protToPep) {
-        HashSet<String> sameSetTmp = getSameSetPeptides(pepToProt, protToPep);
+    public static Map<String, Set<String>> sameSetGrouping(Map<String, Set<String>> pepToProt,
+            Map<String, Set<String>> protToPep) {
+        Set<String> sameSetTmp = getSameSetPeptides(pepToProt, protToPep);
 
         int sameSetGroupNo = 0;
         while (!sameSetTmp.isEmpty()) {
             sameSetGroupNo++;
             String pepTmpSel = sameSetTmp.iterator().next().toString();
-            HashSet<String> proSetTmp = pepToProt.get(pepTmpSel);
+            Set<String> proSetTmp = pepToProt.get(pepTmpSel);
 
             String proTmpSel = proSetTmp.iterator().next().toString();
-            HashSet<String> pepSetTmp = protToPep.get(proTmpSel);
+            Set<String> pepSetTmp = protToPep.get(proTmpSel);
 
             sameSetGr.put("SameSetGroup" + sameSetGroupNo, pepSetTmp);
 
@@ -112,26 +112,26 @@ public class ProteinGrouping {
      * @param protToPep - protein-to-peptide map
      * @return a map of SubSetGroups-to-peptides
      */
-    public static Map<String, HashSet<String>> subSetGrouping(Map<String, HashSet<String>> pepToProt,
-            Map<String, HashSet<String>> protToPep) {
-        HashSet<String> subSetTmp = getSubsetPeptides(pepToProt, protToPep);
+    public static Map<String, Set<String>> subSetGrouping(Map<String, Set<String>> pepToProt,
+            Map<String, Set<String>> protToPep) {
+        Set<String> subSetTmp = getSubsetPeptides(pepToProt, protToPep);
 
         int subSetGroupNo = 0;
         String pepTmpSel = null;
         while (!subSetTmp.isEmpty()) {
             subSetGroupNo++;
 
-            HashSet<String> pepSetTmp = new HashSet<String>();
+            Set<String> pepSetTmp = new HashSet<>();
             pepTmpSel = subSetTmp.iterator().next().toString();
 
-            HashSet<String> proSetTmp = pepToProt.get(pepTmpSel);
+            Set<String> proSetTmp = pepToProt.get(pepTmpSel);
 
             Iterator<String> proteinsPepSel = proSetTmp.iterator();
-            
+
             while (proteinsPepSel.hasNext()) {
 
                 String proteinPepSel = proteinsPepSel.next();
-                HashSet<String> pepSetTmp0 = protToPep.get(proteinPepSel);
+                Set<String> pepSetTmp0 = protToPep.get(proteinPepSel);
                 pepSetTmp.addAll(pepSetTmp0);
 
             }
@@ -156,13 +156,13 @@ public class ProteinGrouping {
      * @param protToPep - protein-to-peptide map
      * @return a map of UniSetGroups-to-peptides
      */
-    public static Map<String, HashSet<String>> uniSetGrouping(Map<String, HashSet<String>> pepToProt,
-            Map<String, HashSet<String>> protToPep) {
+    public static Map<String, Set<String>> uniSetGrouping(Map<String, Set<String>> pepToProt,
+            Map<String, Set<String>> protToPep) {
 //        Map<String, HashSet<String>> uniSetGroup0 = new HashMap<String, HashSet<String>>();
-        HashSet<String> uniSetTmp = getUniquePeptides(pepToProt);
+        Set<String> uniSetTmp = getUniquePeptides(pepToProt);
 
         //remove the uniques in subSet from uniSetTmp
-        HashSet<String> subSet0 = getSubsetPeptides(pepToProt, protToPep);
+        Set<String> subSet0 = getSubsetPeptides(pepToProt, protToPep);
         Iterator<String> uniSetTmpItr = uniSetTmp.iterator();
         while (uniSetTmpItr.hasNext()) {
             String pep = uniSetTmpItr.next();
@@ -174,15 +174,15 @@ public class ProteinGrouping {
         int uniSetGroupNo = 0;
         while (!uniSetTmp.isEmpty()) {
             String pepTmp = uniSetTmp.iterator().next().toString();
-            HashSet<String> uniSetTmp1 = uniSetTmp;
+            Set<String> uniSetTmp1 = uniSetTmp;
             uniSetGroupNo++;
 
-            HashSet<String> proTmp = pepToProt.get(pepTmp);
+            Set<String> proTmp = pepToProt.get(pepTmp);
             //obtain pepSetTmp, cannot directly use proTmp
             Iterator<String> proTmpItr = proTmp.iterator();
-            HashSet<String> pepSetTmp = protToPep.get(proTmpItr.next());
+            Set<String> pepSetTmp = protToPep.get(proTmpItr.next());
 
-            HashSet<String> uniSetTmpJoined = new HashSet<String>();
+            Set<String> uniSetTmpJoined = new HashSet<String>();
 
             for (String pepTmp1 : pepSetTmp) {
                 if (uniSetTmp1.contains(pepTmp1)) {
@@ -211,10 +211,10 @@ public class ProteinGrouping {
      * @param pepToPro - peptide-to-protein
      * @return a hashSet for unique peptides
      */
-    private static HashSet<String> getUniquePeptides(Map<String, HashSet<String>> pepToPro) {
-        HashSet<String> uniquePeptides = new HashSet<String>();
+    private static Set<String> getUniquePeptides(Map<String, Set<String>> pepToPro) {
+        HashSet<String> uniquePeptides = new HashSet<>();
 
-        for (Map.Entry<String, HashSet<String>> entry : pepToPro.entrySet()) {
+        for (Map.Entry<String, Set<String>> entry : pepToPro.entrySet()) {
             if (entry.getValue().size() == 1) {
                 uniquePeptides.add(entry.getKey());
             }
@@ -229,10 +229,10 @@ public class ProteinGrouping {
      * @param proToPep - protein-to-peptide
      * @return a hashSet for sameSet peptides
      */
-    private static HashSet<String> getSameSetPeptides(Map<String, HashSet<String>> pepToPro,
-            Map<String, HashSet<String>> proToPep) {
-        HashSet<String> sameSet = new HashSet<String>();
-        for (Map.Entry<String, HashSet<String>> entry : pepToPro.entrySet()) {
+    private static Set<String> getSameSetPeptides(Map<String, Set<String>> pepToPro,
+            Map<String, Set<String>> proToPep) {
+        Set<String> sameSet = new HashSet<>();
+        for (Map.Entry<String, Set<String>> entry : pepToPro.entrySet()) {
             if (entry.getValue().size() == 1) {
                 continue;
             }
@@ -268,10 +268,10 @@ public class ProteinGrouping {
      * @param proToPep - protein-to-peptide
      * @return a map for subSet peptides
      */
-    private static HashSet<String> getSubsetPeptides(Map<String, HashSet<String>> pepToPro,
-            Map<String, HashSet<String>> proToPep) {
-        HashSet<String> subSet = new HashSet<String>();
-        for (Map.Entry<String, HashSet<String>> entry : pepToPro.entrySet()) {
+    private static Set<String> getSubsetPeptides(Map<String, Set<String>> pepToPro,
+            Map<String, Set<String>> proToPep) {
+        Set<String> subSet = new HashSet<>();
+        for (Map.Entry<String, Set<String>> entry : pepToPro.entrySet()) {
 
             String largestProtein = entry.getValue().iterator().next().toString();
             HashSet<String> peptides = new HashSet<String>();

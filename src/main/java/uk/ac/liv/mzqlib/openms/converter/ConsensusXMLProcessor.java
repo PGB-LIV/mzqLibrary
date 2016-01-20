@@ -7,12 +7,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import uk.ac.liv.jmzqml.model.mzqml.Assay;
-import uk.ac.liv.jmzqml.model.mzqml.AssayList;
-import uk.ac.liv.jmzqml.model.mzqml.Cv;
-import uk.ac.liv.jmzqml.model.mzqml.FeatureList;
-import uk.ac.liv.jmzqml.model.mzqml.PeptideConsensusList;
-import uk.ac.liv.jmzqml.model.mzqml.RawFilesGroup;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Assay;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.AssayList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Cv;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.FeatureList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensusList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.RawFilesGroup;
 
 /**
  * The interface of ConsensusXMLProcessor that provides methods of creating mzQuantML elements from consensusxml file.

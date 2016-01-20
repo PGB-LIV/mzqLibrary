@@ -4,9 +4,9 @@ package uk.ac.liv.mzqlib.model;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.beans.property.SimpleStringProperty;
-import uk.ac.liv.jmzqml.model.mzqml.Column;
-import uk.ac.liv.jmzqml.model.mzqml.GlobalQuantLayer;
-import uk.ac.liv.jmzqml.xml.io.MzQuantMLUnmarshaller;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Column;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.GlobalQuantLayer;
+import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
 import uk.ac.liv.mzqlib.constants.MzqDataConstants;
 
 /**

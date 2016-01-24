@@ -276,7 +276,7 @@
         <dependency>
             <groupId>uk.ac.liv.pgb</groupId>
             <artifactId>jmzquantml</artifactId>
-            <version>1.0.0-1.1.0-SNAPSHOT</version>
+            <version>1.0.0-1.1.0</version>
         </dependency>
     </dependencies>
     <repositories>
@@ -294,11 +294,6 @@
             <snapshots>      
                 <enabled>false</enabled>    
             </snapshots>  
-        </repository>
-        <repository>
-            <id>jmzquantml-maven-repo</id>
-            <name>Maven Repository for jmzquantml release</name>
-            <url>http://jmzquantml.googlecode.com/svn/maven/repo</url>
         </repository>
         <!-- EBI SNAPSHOT repo -->
         <repository>

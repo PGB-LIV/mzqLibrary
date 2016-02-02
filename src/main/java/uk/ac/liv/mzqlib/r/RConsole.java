@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package uk.ac.liv.mzqlib.r;
 
 import java.awt.FileDialog;
@@ -53,7 +47,7 @@ public class RConsole implements RMainLoopCallbacks {
     @Override
     public String rChooseFile(Rengine re, int newFile) {
         FileDialog fd = new FileDialog(new Frame(), (newFile == 0) ? "Select a file" : "Select a new file", (newFile == 0) ? FileDialog.LOAD : FileDialog.SAVE);
-        fd.show();
+        fd.setVisible(true);
         String res = null;
         if (fd.getDirectory() != null) {
             res = fd.getDirectory();

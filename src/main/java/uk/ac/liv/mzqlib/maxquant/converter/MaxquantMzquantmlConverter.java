@@ -67,7 +67,7 @@ public class MaxquantMzquantmlConverter {
      *
      * @param inputFolder path of the input folder
      *
-     * @throws IOException
+     * @throws IOException io exception
      */
     public MaxquantMzquantmlConverter(String inputFolder)
             throws IOException {
@@ -83,7 +83,7 @@ public class MaxquantMzquantmlConverter {
      * @param experimentalDesignTemplateFn experimentalDesignTemplate.txt
      * @param summaryFn                    summary.txt
      *
-     * @throws IOException
+     * @throws IOException io exception
      */
     public MaxquantMzquantmlConverter(String evidenceFn,
                                       String peptidesFn,
@@ -251,7 +251,6 @@ public class MaxquantMzquantmlConverter {
 //        // the schema require person before organization
 //        ac.getOrganization().add(uol);
 //    }
-
     private void createSoftwareList() {
         softList = new SoftwareList();
         software = new Software();
@@ -1163,7 +1162,9 @@ public class MaxquantMzquantmlConverter {
         }
         finally {
             try {
-                writer.close();
+                if (writer != null) {
+                    writer.close();
+                }
             }
             catch (IOException ex) {
                 Logger.getLogger(MaxquantMzquantmlConverter.class.getName()).log(Level.SEVERE, null, ex);
@@ -1176,7 +1177,7 @@ public class MaxquantMzquantmlConverter {
      *
      * @param outputFn output file name
      *
-     * @throws IOException
+     * @throws IOException io exception
      */
     public void convert(String outputFn)
             throws IOException {

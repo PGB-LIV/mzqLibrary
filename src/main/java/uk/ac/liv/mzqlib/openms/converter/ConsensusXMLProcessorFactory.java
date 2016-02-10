@@ -3,7 +3,6 @@ package uk.ac.liv.mzqlib.openms.converter;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
@@ -72,7 +71,7 @@ public class ConsensusXMLProcessorFactory {
      *
      * @return the ConsensusXMLProcessor instance
      *
-     * @throws JAXBException
+     * @throws JAXBException jaxb exception
      */
     public ConsensusXMLProcessor buildConsensusXMLProcessor(File xmlFile)
             throws JAXBException {

@@ -81,7 +81,7 @@ public class MaxquantFilesReader {
      * @param summaryF                    summary.txt file
      * @param sep                         the separator used by input files
      *
-     * @throws IOException
+     * @throws IOException io exception
      */
     public MaxquantFilesReader(File evidenceF,
                                File peptidesF,
@@ -122,7 +122,7 @@ public class MaxquantFilesReader {
      * @param experimentalDesignTemplateF experimentalDesignTemplate.txt file
      * @param summaryF                    summary.txt file
      *
-     * @throws IOException
+     * @throws IOException io exception
      */
     public MaxquantFilesReader(File evidenceF,
                                File peptidesF,
@@ -141,7 +141,7 @@ public class MaxquantFilesReader {
      * @param folderName the folder with input files
      * @param sep        the separator used by input files
      *
-     * @throws IOException
+     * @throws IOException io exception
      */
     public MaxquantFilesReader(String folderName, char sep)
             throws IOException {
@@ -209,7 +209,7 @@ public class MaxquantFilesReader {
      *
      * @param folderName the folder with input files
      *
-     * @throws IOException
+     * @throws IOException io exception
      */
     public MaxquantFilesReader(String folderName)
             throws IOException {
@@ -552,7 +552,7 @@ public class MaxquantFilesReader {
                      * Time, (8)Intensity
                      * (9)Intensity L, (10)Intensity H (for 2 labels case)
                      */
-                    List<String> valueList = new ArrayList<>();
+                    List<String> valueList;
                     if (isLabelFree) {
                         String[] values = {nextLine[posSeq], nextLine[posMod], nextLine[posProt], nextLine[posRaw], nextLine[posExp],
                             nextLine[posChr], nextLine[posMz], nextLine[posRet], nextLine[posInt]};

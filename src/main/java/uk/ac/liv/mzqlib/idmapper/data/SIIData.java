@@ -185,7 +185,7 @@ public class SIIData implements Comparable<SIIData> {
     /**
      * SIIData is comparable base on the retention time value.
      */
-    public static Comparator<SIIData> SIIDataRTComparator = new Comparator<SIIData>() {
+    public final static Comparator<SIIData> SIIDataRTComparator = new Comparator<SIIData>() {
 
         @Override
         public int compare(SIIData siiData1, SIIData siiData2) {

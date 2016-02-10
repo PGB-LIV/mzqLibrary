@@ -25,7 +25,7 @@ public class MzqAssayQuantLayer extends MzqQuantLayer {
      * @param listType   the list type (e.g. Protein, ProteinGroup, etc.)
      * @param dataType   the data type of the quant layer
      *
-     * @throws javax.xml.bind.JAXBException
+     * @throws JAXBException jaxb exception
      */
     public MzqAssayQuantLayer(MzQuantMLUnmarshaller um, String listId,
                               QuantLayer quantLayer,

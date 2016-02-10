@@ -20,8 +20,8 @@ public interface MzqMzIdMapper {
      *
      * @param outputFile output file name
      *
-     * @throws JAXBException
-     * @throws java.io.IOException
+     * @throws JAXBException jaxb exception
+     * @throws java.io.IOException io exception
      */
     public void createMappedFile(File outputFile)
             throws JAXBException, IOException;

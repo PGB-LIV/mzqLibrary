@@ -971,65 +971,65 @@ public class MainApp extends Application {
      * @param dataType
      * @param lineChart
      */
-    private void showProteinGroupPeptideLinePlot(MzqDataMatrixRow protGrpRow,
-                                                 String dataType,
-                                                 ObservableList<TableColumn<MzqDataMatrixRow, ?>> columns,
-                                                 LineChart<String, Number> lineChart)
-            throws JAXBException {
-
-        //Get the first PeptideConsensusList and AssayQuantLayer regardless of the finalResult value
-        Iterator<PeptideConsensusList> peptideConsensusListIter = this.getUnmarshaller().unmarshalCollectionFromXpath(MzQuantMLElement.PeptideConsensusList);
-        DataMatrix peptideDM = new DataMatrix();
-        if (peptideConsensusListIter != null) {
-            PeptideConsensusList peptideList = peptideConsensusListIter.next();
-
-            //Get the peptide quant layer
-            List<QuantLayer<IdOnly>> assayQLs = peptideList.getAssayQuantLayer();
-
-            for (QuantLayer assayQL : assayQLs) {
-                if (dataType.contains("normalised")
-                        && assayQL.getDataType().getCvParam().getName().contains("normalised")) {
-                    peptideDM = assayQL.getDataMatrix();
-                    break;
-                }
-                if (dataType.contains("raw")
-                        && assayQL.getDataType().getCvParam().getName().contains("raw")) {
-                    peptideDM = assayQL.getDataMatrix();
-                    break;
-                }
-            }
-        }
-        Map<String, List<StringProperty>> peptideDMMap = convertDataMatrixToHashMap(peptideDM);
-
-        ProteinGroup proteinGrp = this.getUnmarshaller().unmarshal(uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinGroup.class, protGrpRow.getObjectId());
-
-        //Take the first protein as group leader in the protein group
-        ProteinRef protRef = proteinGrp.getProteinRef().get(0);
-
-        Protein protein = this.getUnmarshaller().unmarshal(uk.ac.liv.pgb.jmzqml.model.mzqml.Protein.class, protRef.getProteinRef());
-        List<String> peptideRefs = protein.getPeptideConsensusRefs();
-        for (String peptideRef : peptideRefs) {
-            PeptideConsensus peptide = this.getUnmarshaller().unmarshal(uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensus.class, peptideRef);
-            List<StringProperty> peptideValues = peptideDMMap.get(peptideRef);
-            XYChart.Series peptideSeries = new XYChart.Series<>();
-            lineChart.getData().add(peptideSeries);
-            peptideSeries.setName(peptide.getPeptideSequence());
-            if (peptideValues != null) {
-                int k = 1;
-                for (StringProperty value : peptideValues) {
-                    if (NumberUtils.isNumber(value.get())) {
-                        peptideSeries.getData().add(new XYChart.Data(columns.get(k).getText(), Double.parseDouble(value.get())));
-
-                    }
-                    else {
-                        peptideSeries.getData().add(new XYChart.Data(columns.get(k).getText(), -1));
-                    }
-                    k++;
-                }
-            }
-        }
-
-    }
+//    private void showProteinGroupPeptideLinePlot(MzqDataMatrixRow protGrpRow,
+//                                                 String dataType,
+//                                                 ObservableList<TableColumn<MzqDataMatrixRow, ?>> columns,
+//                                                 LineChart<String, Number> lineChart)
+//            throws JAXBException {
+//
+//        //Get the first PeptideConsensusList and AssayQuantLayer regardless of the finalResult value
+//        Iterator<PeptideConsensusList> peptideConsensusListIter = this.getUnmarshaller().unmarshalCollectionFromXpath(MzQuantMLElement.PeptideConsensusList);
+//        DataMatrix peptideDM = new DataMatrix();
+//        if (peptideConsensusListIter != null) {
+//            PeptideConsensusList peptideList = peptideConsensusListIter.next();
+//
+//            //Get the peptide quant layer
+//            List<QuantLayer<IdOnly>> assayQLs = peptideList.getAssayQuantLayer();
+//
+//            for (QuantLayer assayQL : assayQLs) {
+//                if (dataType.contains("normalised")
+//                        && assayQL.getDataType().getCvParam().getName().contains("normalised")) {
+//                    peptideDM = assayQL.getDataMatrix();
+//                    break;
+//                }
+//                if (dataType.contains("raw")
+//                        && assayQL.getDataType().getCvParam().getName().contains("raw")) {
+//                    peptideDM = assayQL.getDataMatrix();
+//                    break;
+//                }
+//            }
+//        }
+//        Map<String, List<StringProperty>> peptideDMMap = convertDataMatrixToHashMap(peptideDM);
+//
+//        ProteinGroup proteinGrp = this.getUnmarshaller().unmarshal(uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinGroup.class, protGrpRow.getObjectId());
+//
+//        //Take the first protein as group leader in the protein group
+//        ProteinRef protRef = proteinGrp.getProteinRef().get(0);
+//
+//        Protein protein = this.getUnmarshaller().unmarshal(uk.ac.liv.pgb.jmzqml.model.mzqml.Protein.class, protRef.getProteinRef());
+//        List<String> peptideRefs = protein.getPeptideConsensusRefs();
+//        for (String peptideRef : peptideRefs) {
+//            PeptideConsensus peptide = this.getUnmarshaller().unmarshal(uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensus.class, peptideRef);
+//            List<StringProperty> peptideValues = peptideDMMap.get(peptideRef);
+//            XYChart.Series peptideSeries = new XYChart.Series<>();
+//            lineChart.getData().add(peptideSeries);
+//            peptideSeries.setName(peptide.getPeptideSequence());
+//            if (peptideValues != null) {
+//                int k = 1;
+//                for (StringProperty value : peptideValues) {
+//                    if (NumberUtils.isNumber(value.get())) {
+//                        peptideSeries.getData().add(new XYChart.Data(columns.get(k).getText(), Double.parseDouble(value.get())));
+//
+//                    }
+//                    else {
+//                        peptideSeries.getData().add(new XYChart.Data(columns.get(k).getText(), -1));
+//                    }
+//                    k++;
+//                }
+//            }
+//        }
+//
+//    }
 
     /**
      * Convert DataMatrix to HashMap

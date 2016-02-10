@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.Assay;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.AssayList;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.Cv;
@@ -70,12 +69,13 @@ public interface ConsensusXMLProcessor {
      *
      * @param outputFn output file name
      *
-     * @throws IOException
+     * @throws IOException io exception
      */
     public void convert(String outputFn)
             throws IOException;
-    
-    public void convert(String outputFn, Map<String, ? extends Collection<File>> studyVariablesToFiles)
+
+    public void convert(String outputFn,
+                        Map<String, ? extends Collection<File>> studyVariablesToFiles)
             throws IOException;
 
 }

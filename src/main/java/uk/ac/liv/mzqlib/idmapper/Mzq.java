@@ -39,7 +39,7 @@ public class Mzq {
      *
      * @return Map<String, List<SimpleFeature>>
      *
-     * @throws JAXBException
+     * @throws JAXBException jaxb exception
      */
     public Map<String, List<SimpleFeature>> getPepIdFeature()
             throws JAXBException {

@@ -49,8 +49,8 @@ public class GenericInferenceMethod {
     }
     /**
      * The sum method
-     * @param lowLevelQuant
-     * @param assayIDs
+     * @param lowLevelQuant low level quantlayer
+     * @param assayIDs id list of assay
      * @return sum
      */
     public static HashMap<String,Double> sum(ArrayList<HashMap<String, Double>> lowLevelQuant, ArrayList<String> assayIDs) {
@@ -64,8 +64,8 @@ public class GenericInferenceMethod {
     }
     /**
      * The median method
-     * @param lowLevelQuant
-     * @param assayIDs
+     * @param lowLevelQuant low level quantlayer
+     * @param assayIDs id list of assay
      * @return median
      */
     public static HashMap<String,Double> median(ArrayList<HashMap<String, Double>> lowLevelQuant, ArrayList<String> assayIDs){
@@ -80,8 +80,8 @@ public class GenericInferenceMethod {
     }
     /**
      * The mean method
-     * @param lowLevelQuant
-     * @param assayIDs
+     * @param lowLevelQuant low level quantlayer
+     * @param assayIDs id list of assay
      * @return mean
      */
     public static HashMap<String,Double> mean(ArrayList<HashMap<String, Double>> lowLevelQuant, ArrayList<String> assayIDs){
@@ -95,8 +95,8 @@ public class GenericInferenceMethod {
     }
     /**
      * Calculate the weighted mean
-     * @param lowLevelQuant
-     * @param assayIDs
+     * @param lowLevelQuant low level quantlayer
+     * @param assayIDs id list of assay
      * @param count  
      * @return weighted mean
      */

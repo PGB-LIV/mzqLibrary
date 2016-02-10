@@ -29,7 +29,7 @@ import uk.ac.man.mzqlib.postprocessing.ProteinAbundanceInference;
  * @author Fawaz Ghali, University of Liverpool, 2011
  */
 public class MzQuantMLLib implements Serializable {
-    
+
     private static final long serialVersionUID = 103L;
 
     //CSV converter
@@ -184,107 +184,77 @@ public class MzQuantMLLib implements Serializable {
             System.out.println();
         }
 
-        if (args.length > MINARGLEN) {
+        if (args != null && args.length > MINARGLEN) {
 
             inputFileName = args[1];
             outputFileName = args[2];
             // Added by FG uncompress
-            boolean testDir = new File(inputFileName).isDirectory();
-            if (inputFileName.equals(outputFileName) && !testDir) {
-                guiFeedback = "Error: input and output file names are same";
-            }
-            else {
-                boolean uncompress = false;
-                File inputFile;
-                if (inputFileName.endsWith(".gz")) {
-                    inputFile = Gzipper.extractFile(new File(inputFileName));
-                    uncompress = true;
-
+            if (inputFileName != null && outputFileName != null) {
+                boolean testDir = new File(inputFileName).isDirectory();
+                if (inputFileName.equals(outputFileName) && !testDir) {
+                    guiFeedback = "Error: input and output file names are same";
                 }
                 else {
-                    inputFile = new File(inputFileName);
-                }
-                // Added by FG compress file
-                String compress = Utils.getCmdParameter(args, "compress", false);
-                //set default to "false" if compress parameter is not set:
-                if (compress == null) {
-                    compress = "false";
-                }
-                if (Boolean.valueOf(compress)) {
-                    if (outputFileName.endsWith(".gz")) {
-                        outputFileName = outputFileName.substring(0, outputFileName.length() - 3);
+                    boolean uncompress = false;
+                    File inputFile;
+                    if (inputFileName.endsWith(".gz")) {
+                        inputFile = Gzipper.extractFile(new File(inputFileName));
+                        uncompress = true;
                     }
+                    else {
+                        inputFile = new File(inputFileName);
+                    }
+                    // Added by FG compress file
+                    String compress = Utils.getCmdParameter(args, "compress", false);
+                    //set default to "false" if compress parameter is not set:
+                    if (compress == null) {
+                        compress = "false";
+                    }
+                    if (Boolean.valueOf(compress)) {
+                        if (outputFileName.endsWith(".gz")) {
+                            outputFileName = outputFileName.substring(0, outputFileName.length() - 3);
+                        }
 
-                }
-                // Added by FG check if path is folder
+                    }
+                    // Added by FG check if path is folder
 
-                if (args[0].equals("CsvConverter")) {
-                    if (inputFileName != null && outputFileName != null) {
+                    if (args[0].equals("CsvConverter")) {
                         MzqLib mzqlib = new MzqLib("csv", inputFileName, outputFileName);
                     }
-                    else {
-                        guiFeedback = "Error, usage: " + csvConverterUsage;
-                    }
-                }
-                else if (args[0].equals("XlsConverter")) {
-                    if (inputFileName != null && outputFileName != null) {
+                    else if (args[0].equals("XlsConverter")) {
                         MzqLib mzqlib = new MzqLib("xls", inputFileName, outputFileName);
                     }
-                    else {
-                        guiFeedback = "Error, usage:  " + xlsConverterUsage;
-                    }
-                }
-                else if (args[0].equals("HtmlConverter")) {
-                    if (inputFileName != null && outputFileName != null) {
+                    else if (args[0].equals("HtmlConverter")) {
                         MzqLib mzqlib = new MzqLib("html", inputFileName, outputFileName);
                     }
-                    else {
-                        guiFeedback = "Error, usage: " + htmlConverterUsage;
+                    else if (args[0].equals("ConsensusXMLConverter")) {
+                        try {
+                            ConsensusXMLProcessor conProc = ConsensusXMLProcessorFactory.getInstance().buildConsensusXMLProcessor(new File(inputFileName));
+                            conProc.convert(outputFileName);
+                        }
+                        catch (JAXBException | IOException ex) {
+                            System.out.println("Error running ConsensusXMLConverter: " + userFeedback + consensusXMLConverterUsage);
+                            guiFeedback = "Error running ConsensusXMLConverter: " + consensusXMLConverterUsage + "\n"
+                                    + ex.getMessage();
+                        }
                     }
-                }
-                else if (args[0].equals("ConsensusXMLConverter")) {
-
-                    try {
-                        ConsensusXMLProcessor conProc = ConsensusXMLProcessorFactory.getInstance().buildConsensusXMLProcessor(new File(inputFileName));
-                        conProc.convert(outputFileName);
-                    }
-                    catch (JAXBException | IOException ex) {
-                        System.out.println("Error running ConsensusXMLConverter: " + userFeedback + consensusXMLConverterUsage);
-                        guiFeedback = "Error running ConsensusXMLConverter: " + consensusXMLConverterUsage + "\n"
-                                + ex.getMessage();
-
-                    }
-                }
-                else if (args[0].equals("MzTabConverter")) {
-                    if (inputFileName != null && outputFileName != null) {
+                    else if (args[0].equals("MzTabConverter")) {
                         MzqLib mzqlib = new MzqLib("mztab", inputFileName, outputFileName);
                     }
-                    else {
-                        guiFeedback = "Error, usage: " + mzTabConverterUsage;
-                    }
-                }
-                else if (args[0].equals("MzqMzIdMapping")) {
-                    if (inputFileName != null && outputFileName != null) {
+                    else if (args[0].equals("MzqMzIdMapping")) {
                         String rawToMzidMapString = Utils.getCmdParameter(args, "rawToMzidMap", true);
-
                         MzQuantMLUnmarshaller mzqUm = new MzQuantMLUnmarshaller(new File(inputFileName));
                         MzqMzIdMapper mapper = MzqMzIdMapperFactory.getInstance().buildMzqMzIdMapper(mzqUm, rawToMzidMapString);
                         mapper.createMappedFile(new File(outputFileName));
                     }
-//                    }
-                }
-                else if (args[0].equals("AnovaPValue")) {
-                    if (inputFileName != null && outputFileName != null) {
+                    else if (args[0].equals("AnovaPValue")) {
                         String listType = Utils.getCmdParameter(args, "listType", true);
                         String qlDTCA = Utils.getCmdParameter(args, "qlDTCA", true);
                         String assayIdsGroupString = Utils.getCmdParameter(args, "assayIdsGroup", true);
 
                         MzqQLAnova mzqAnova = new MzqQLAnova(inputFileName, listType, assayIdsGroupString, qlDTCA);
-                        mzqAnova.writeMzQuantMLFile(outputFileName);
                     }
-                }
-                else if (args[0].equals("Normalisation")) {
-                    if (inputFileName != null && outputFileName != null) {
+                    else if (args[0].equals("Normalisation")) {
                         String normLevel = Utils.getCmdParameter(args, "normLvl", true);
                         //String qlType = Utils.getCmdParameter(args, "qlType", true);
                         String inDTCA = Utils.getCmdParameter(args, "inDTCA", true);
@@ -295,9 +265,7 @@ public class MzQuantMLLib implements Serializable {
                         PepProtAbundanceNormalisation normalisation = new PepProtAbundanceNormalisation(inputFileName, outputFileName, normLevel, "AssayQuantLayer", inDTCA, outDTCA, outDTCN, tagDecoy, null);
                         normalisation.multithreadingCalc();
                     }
-                }
-                else if (args[0].equals("ProteinInference")) {
-                    if (inputFileName != null && outputFileName != null) {
+                    else if (args[0].equals("ProteinInference")) {
                         String op = Utils.getCmdParameter(args, "op", true);
                         String inPepNormCA = Utils.getCmdParameter(args, "inPepNormCA", true);
                         String inPepRawCA = Utils.getCmdParameter(args, "inPepRawCA", true);
@@ -311,9 +279,7 @@ public class MzQuantMLLib implements Serializable {
                                                                                       outPGNormCA, outPGNormCN, outPGRawCA, outPGRawCN, "AssayQuantLayer");
                         pai.proteinInference();
                     }
-                }
-                else if (args[0].equals("MaxquantConverter")) {
-                    if (inputFileName != null && outputFileName != null) {
+                    else if (args[0].equals("MaxquantConverter")) {
                         String summaryFn = Utils.getCmdParameter(args, "summary", true);
                         String peptidesFn = Utils.getCmdParameter(args, "peptides", true);
                         String proteinGroupsFn = Utils.getCmdParameter(args, "proteinGroups", true);
@@ -321,9 +287,7 @@ public class MzQuantMLLib implements Serializable {
                         MaxquantMzquantmlConverter maxCon = new MaxquantMzquantmlConverter(inputFileName, peptidesFn, proteinGroupsFn, templateFn, summaryFn);
                         maxCon.convert(outputFileName);
                     }
-                }
-                else if (args[0].equals("ProgenesisConverter")) {
-                    if (inputFileName != null && outputFileName != null) {
+                    else if (args[0].equals("ProgenesisConverter")) {
                         String pepList = Utils.getCmdParameter(args, "pepList", true);
                         String sep = Utils.getCmdParameter(args, "sep", false);
                         String pgl = Utils.getCmdParameter(args, "proteinGroupList", false);
@@ -357,32 +321,78 @@ public class MzQuantMLLib implements Serializable {
                             }
                         }
                     }
-                }
-                else {
-                    String tempFeedback = "Program within mzqLibrary not recognized: " + args[0] + "\n\nPlease use one of the following command:\n\n"
-                            + progenesisConverterUsage + "\n\n" + maxquantConverterUsage + "\n\n" + consensusXMLConverterUsage + "\n\n"
-                            + csvConverterUsage + "\n\n" + xlsConverterUsage + "\n\n" + htmlConverterUsage + "\n\n" + mzTabConverterUsage + "\n\n"
-                            + idMappingUsage + "\n\n" + normalisationUsage + "\n\n" + proteinInferenceUsage + "\n\n" + anovaUsage + "\n";
+                    else {
+                        String tempFeedback = "Program within mzqLibrary not recognized: " + args[0] + "\n\nPlease use one of the following command:\n\n"
+                                + progenesisConverterUsage + "\n\n" + maxquantConverterUsage + "\n\n" + consensusXMLConverterUsage + "\n\n"
+                                + csvConverterUsage + "\n\n" + xlsConverterUsage + "\n\n" + htmlConverterUsage + "\n\n" + mzTabConverterUsage + "\n\n"
+                                + idMappingUsage + "\n\n" + normalisationUsage + "\n\n" + proteinInferenceUsage + "\n\n" + anovaUsage + "\n";
 
-                    System.out.println(tempFeedback);
-                    guiFeedback = "Error, usage: " + tempFeedback;
-                    userFeedback = tempFeedback;
-                }
-                if (userFeedback.equals("")) {
-                    userFeedback = "Completed successfully, output written to " + outputFileName;
-                }
-                //System.out.println(userFeedback);
-                // Added by FG delete tmp file
-                if (uncompress) {
+                        System.out.println(tempFeedback);
+                        guiFeedback = "Error, usage: " + tempFeedback;
+                        userFeedback = tempFeedback;
+                    }
+                    if (userFeedback.equals("")) {
+                        userFeedback = "Completed successfully, output written to " + outputFileName;
+                    }
+                    //System.out.println(userFeedback);
+                    // Added by FG delete tmp file
+                    if (uncompress) {
 //                    Gzipper.deleteFile(inputFile);
-                    inputFile.deleteOnExit();
+                        inputFile.deleteOnExit();
+                    }
+
+                    if (Boolean.valueOf(compress)) {
+                        Gzipper.compressFile(new File(outputFileName));
+                    }
                 }
 
-                if (Boolean.valueOf(compress)) {
-                    Gzipper.compressFile(new File(outputFileName));
-                }
             }
+            else if (args[0].equals("CsvConverter")) {
+                guiFeedback = "Error, usage: " + csvConverterUsage;
+            }
+            else if (args[0].equals("XlsConverter")) {
+                guiFeedback = "Error, usage:  " + xlsConverterUsage;
+            }
+            else if (args[0].equals("HtmlConverter")) {
+                guiFeedback = "Error, usage: " + htmlConverterUsage;
+            }
+            else if (args[0].equals("ConsensusXMLConverter")) {
+                guiFeedback = "Error, usage:  " + consensusXMLConverterUsage;
+            }
+            else if (args[0].equals("MzTabConverter")) {
+                guiFeedback = "Error, usage: " + mzTabConverterUsage;
+            }
+            else if (args[0].equals("MzqMzIdMapping")) {
+                guiFeedback = "Error, usage:  " + idMappingUsage;
+            }
+            else if (args[0].equals("AnovaPValue")) {
+                guiFeedback = "Error, usage:  " + anovaUsage;
+            }
+            else if (args[0].equals("Normalisation")) {
+                guiFeedback = "Error, usage:  " + normalisationUsage;
+            }
+            else if (args[0].equals("ProteinInference")) {
+                guiFeedback = "Error, usage:  " + proteinInferenceUsage;
+            }
+            else if (args[0].equals("MaxquantConverter")) {
+                guiFeedback = "Error, usage:  " + maxquantConverterUsage;
+            }
+            else if (args[0].equals("ProgenesisConverter")) {
+                guiFeedback = "Error, usage:  " + progenesisConverterUsage;
+            }
+            else {
+                String tempFeedback = "Program within mzqLibrary not recognized: " + args[0] + "\n\nPlease use one of the following command:\n\n"
+                        + progenesisConverterUsage + "\n\n" + maxquantConverterUsage + "\n\n" + consensusXMLConverterUsage + "\n\n"
+                        + csvConverterUsage + "\n\n" + xlsConverterUsage + "\n\n" + htmlConverterUsage + "\n\n" + mzTabConverterUsage + "\n\n"
+                        + idMappingUsage + "\n\n" + normalisationUsage + "\n\n" + proteinInferenceUsage + "\n\n" + anovaUsage + "\n";
 
+                System.out.println(tempFeedback);
+                guiFeedback = "Error, usage: " + tempFeedback;
+                userFeedback = tempFeedback;
+            }
+            if (userFeedback.equals("")) {
+                userFeedback = "Completed successfully, output written to " + outputFileName;
+            }
         }
         else {
             String tempFeedback = "Error insufficient arguments entered, options: " + userFeedback + " toolname options\n"

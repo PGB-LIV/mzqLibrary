@@ -51,7 +51,7 @@ public class GenericInferenceMethod {
      * The sum method
      * @param lowLevelQuant
      * @param assayIDs
-     * @return 
+     * @return sum
      */
     public static HashMap<String,Double> sum(ArrayList<HashMap<String, Double>> lowLevelQuant, ArrayList<String> assayIDs) {
         HashMap<String,Double> ret = initializeRet(assayIDs);
@@ -66,7 +66,7 @@ public class GenericInferenceMethod {
      * The median method
      * @param lowLevelQuant
      * @param assayIDs
-     * @return 
+     * @return median
      */
     public static HashMap<String,Double> median(ArrayList<HashMap<String, Double>> lowLevelQuant, ArrayList<String> assayIDs){
         HashMap<String,Double> ret = initializeRet(assayIDs);
@@ -82,7 +82,7 @@ public class GenericInferenceMethod {
      * The mean method
      * @param lowLevelQuant
      * @param assayIDs
-     * @return 
+     * @return mean
      */
     public static HashMap<String,Double> mean(ArrayList<HashMap<String, Double>> lowLevelQuant, ArrayList<String> assayIDs){
         HashMap<String,Double> ret = initializeRet(assayIDs);
@@ -98,7 +98,7 @@ public class GenericInferenceMethod {
      * @param lowLevelQuant
      * @param assayIDs
      * @param count  
-     * @return 
+     * @return weighted mean
      */
     public static HashMap<String,Double> weightedAverage(ArrayList<HashMap<String, Double>> lowLevelQuant, ArrayList<String> assayIDs, ArrayList<Integer> count){
         HashMap<String,Double> ret = initializeRet(assayIDs);

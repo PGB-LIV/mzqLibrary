@@ -21,7 +21,7 @@ abstract public class GenericConverter {
     }
 
     String getBaseFilename() {
-        int idx = filename.lastIndexOf(".");
+        int idx = filename.lastIndexOf('.');
         return filename.substring(0, idx);
     }
 

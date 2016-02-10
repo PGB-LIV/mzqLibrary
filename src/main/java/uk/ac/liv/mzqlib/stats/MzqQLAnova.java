@@ -7,9 +7,11 @@ import gnu.trove.list.array.TDoubleArrayList;
 import gnu.trove.list.array.TIntArrayList;
 import gnu.trove.map.TObjectDoubleMap;
 import gnu.trove.map.hash.TObjectDoubleHashMap;
+
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,10 +19,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.xml.bind.JAXBException;
+
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.commons.math3.stat.inference.OneWayAnova;
+
 import uk.ac.liv.pgb.jmzqml.MzQuantMLElement;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.*;
 import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLMarshaller;
@@ -181,96 +186,90 @@ public class MzqQLAnova {
                 throw new RuntimeException("Please provide valid name of list type such as \"ProtienGroup\" or \"Protein\".");
         }
 
-        FileWriter writer = null;
+        OutputStreamWriter writer;
         try {
             MzQuantMLMarshaller mzqMsh = new MzQuantMLMarshaller();
-            writer = new FileWriter(outputFileName);
+
+            FileOutputStream fos = new FileOutputStream(outputFileName);
+            writer = new OutputStreamWriter(fos, "UTF-8");
 
             // XML header
-            writer.write(MzQuantMLMarshaller.createXmlHeader() + "\n");
+            writer.write(MzQuantMLMarshaller.createXmlHeader() + '\n');
 
             // mzQuantML start tag
-            writer.write(MzQuantMLMarshaller.createMzQuantMLStartTag(mzqId) + "\n");
+            writer.write(MzQuantMLMarshaller.createMzQuantMLStartTag(mzqId) + '\n');
 
             if (cvList != null) {
                 mzqMsh.marshall(cvList, writer);
-                writer.write("\n");
+                writer.write('\n');
             }
             if (ac != null) {
                 mzqMsh.marshall(ac, writer);
-                writer.write("\n");
+                writer.write('\n');
             }
             if (as != null) {
                 mzqMsh.marshall(as, writer);
-                writer.write("\n");
+                writer.write('\n');
             }
             if (inputFiles != null) {
                 mzqMsh.marshall(inputFiles, writer);
-                writer.write("\n");
+                writer.write('\n');
             }
             if (softList != null) {
                 mzqMsh.marshall(softList, writer);
-                writer.write("\n");
+                writer.write('\n');
             }
             if (dpList != null) {
                 mzqMsh.marshall(dpList, writer);
-                writer.write("\n");
+                writer.write('\n');
             }
             if (brIter != null) {
                 while (brIter.hasNext()) {
                     BibliographicReference bibRef = brIter.next();
                     mzqMsh.marshall(bibRef, writer);
-                    writer.write("\n");
+                    writer.write('\n');
                 }
             }
             if (assayList != null) {
                 mzqMsh.marshall(assayList, writer);
-                writer.write("\n");
+                writer.write('\n');
             }
             if (svList != null) {
                 mzqMsh.marshall(svList, writer);
-                writer.write("\n");
+                writer.write('\n');
             }
             if (protGrpList != null) {
                 mzqMsh.marshall(protGrpList, writer);
-                writer.write("\n");
+                writer.write('\n');
             }
             if (protList != null) {
                 mzqMsh.marshall(protList, writer);
-                writer.write("\n");
+                writer.write('\n');
             }
             if (pepConListIter != null) {
                 while (pepConListIter.hasNext()) {
                     PeptideConsensusList pepConList = pepConListIter.next();
                     mzqMsh.marshall(pepConList, writer);
-                    writer.write("\n");
+                    writer.write('\n');
                 }
             }
             if (ftListIter != null) {
                 while (ftListIter.hasNext()) {
                     FeatureList ftList = ftListIter.next();
                     mzqMsh.marshall(ftList, writer);
-                    writer.write("\n");
+                    writer.write('\n');
                 }
             }
             if (smallMolList != null) {
                 mzqMsh.marshall(smallMolList, writer);
-                writer.write("\n");
+                writer.write('\n');
             }
 
             writer.write(MzQuantMLMarshaller.createMzQuantMLClosingTag());
-
+            writer.close();
         }
         catch (IOException ex) {
             Logger.getLogger(MzqQLAnova.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally {
-            try {
-                writer.close();
-            }
-            catch (IOException ex) {
-                Logger.getLogger(MzqQLAnova.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
     }
 
@@ -329,7 +328,7 @@ public class MzqQLAnova {
                     for (QuantLayer<IdOnly> assayQL : assayQLs) {
                         if (assayQL.getDataType().getCvParam().getAccession().equals(qlDataType)) {
                             dataTypeFound = true;
-                            anovaPValueMap = CalculatePValueFromQL(assayQL);
+                            anovaPValueMap = calculatePValueFromQL(assayQL);
                         }
                     }
                     if (!dataTypeFound) {
@@ -348,7 +347,7 @@ public class MzqQLAnova {
                     for (QuantLayer<IdOnly> assayQL : assayQLs) {
                         if (assayQL.getDataType().getCvParam().getName().equals(qlDataType)) {
                             dataTypeFound = true;
-                            anovaPValueMap = CalculatePValueFromQL(assayQL);
+                            anovaPValueMap = calculatePValueFromQL(assayQL);
                         }
                     }
                     if (!dataTypeFound) {
@@ -377,7 +376,7 @@ public class MzqQLAnova {
      *
      * @return map of object reference from each row to the calculated p-value (doulbe)
      */
-    private TObjectDoubleMap<String> CalculatePValueFromQL(
+    private TObjectDoubleMap<String> calculatePValueFromQL(
             QuantLayer<IdOnly> assayQL) {
 
         TObjectDoubleMap<String> ret = new TObjectDoubleHashMap<>();

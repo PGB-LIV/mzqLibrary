@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 import uk.ac.ebi.jmzidml.MzIdentMLElement;
 import uk.ac.ebi.jmzidml.model.mzidml.SpectrumIdentificationItem;
 import uk.ac.ebi.jmzidml.model.mzidml.SpectrumIdentificationResult;
@@ -53,7 +54,7 @@ public class Mzid {
                 SIIData siiData = getSIIData(sii);
 
                 // set the retention time
-                siiData.rt = rt;
+                siiData.setRt(rt);
 
                 if (retMap.get(pepSeq) == null) {
                     retMap.put(pepSeq, siiData);
@@ -99,22 +100,22 @@ public class Mzid {
         /**
          * Charge
          */
-        public String charge;
+        private String charge;
 
         /**
          * m/z
          */
-        public double mz;
+        private double mz;
 
         /**
          * retention time
          */
-        public double rt;
+        private double rt;
 
         /**
          * SpectrumIdentificationItem id
          */
-        public String siiID;
+        private String siiID;
 
         /**
          * Constructor of SIIData.
@@ -128,6 +129,62 @@ public class Mzid {
             this.charge = charge;
             this.mz = mz;
             this.rt = rt;
+            this.siiID = siiID;
+        }
+
+        /**
+         * @return the charge
+         */
+        public String getCharge() {
+            return charge;
+        }
+
+        /**
+         * @param charge the charge to set
+         */
+        public void setCharge(String charge) {
+            this.charge = charge;
+        }
+
+        /**
+         * @return the mz
+         */
+        public double getMz() {
+            return mz;
+        }
+
+        /**
+         * @param mz the mz to set
+         */
+        public void setMz(double mz) {
+            this.mz = mz;
+        }
+
+        /**
+         * @return the rt
+         */
+        public double getRt() {
+            return rt;
+        }
+
+        /**
+         * @param rt the rt to set
+         */
+        public void setRt(double rt) {
+            this.rt = rt;
+        }
+
+        /**
+         * @return the siiID
+         */
+        public String getSiiID() {
+            return siiID;
+        }
+
+        /**
+         * @param siiID the siiID to set
+         */
+        public void setSiiID(String siiID) {
             this.siiID = siiID;
         }
 

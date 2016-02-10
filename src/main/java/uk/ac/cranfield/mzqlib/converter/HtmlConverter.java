@@ -1,3 +1,4 @@
+
 package uk.ac.cranfield.mzqlib.converter;
 
 import java.io.BufferedReader;
@@ -20,37 +21,39 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.Software;
  *
  * @author Jun Fan@cranfield
  */
-public class HtmlConverter extends GenericConverter{
+public class HtmlConverter extends GenericConverter {
+
     private static final String SEPERATOR = "</td><td>";
     final private String TEMPLATE = "htmlTemplate.txt";
-    static private HashMap<String,String> templates = new HashMap<>();
-    
-    public HtmlConverter(String filename,String outputFile){
-        super(filename,outputFile);
+    static private HashMap<String, String> templates = new HashMap<>();
+
+    public HtmlConverter(String filename, String outputFile) {
+        super(filename, outputFile);
     }
 
     @Override
     public void convert() {
-        if(outfile.length()==0){
+        if (outfile.length() == 0) {
             outfile = getBaseFilename() + ".html";
         }
         //read in the template from the local file and saved in the hash
-        if(templates.isEmpty()){
-            try{
+        if (templates.isEmpty()) {
+            try {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(HtmlConverter.class.getClassLoader().getResourceAsStream(TEMPLATE)));
                 String line = "";
                 String tag = "";
                 StringBuilder sb = new StringBuilder();
-                while((line=reader.readLine())!=null){
-                    if(line.startsWith("#")){//tag line
-                        if(tag.length()>0) {
-                            sb.deleteCharAt(sb.length()-1);
-                            sb.deleteCharAt(sb.length()-1);
+                while ((line = reader.readLine()) != null) {
+                    if (line.startsWith("#")) {//tag line
+                        if (tag.length() > 0) {
+                            sb.deleteCharAt(sb.length() - 1);
+                            sb.deleteCharAt(sb.length() - 1);
                             templates.put(tag, sb.toString());
                         }
                         sb = new StringBuilder();
                         tag = line.substring(1);
-                    }else{
+                    }
+                    else {
                         sb.append(line);
                         sb.append("\n");
                     }
@@ -58,9 +61,11 @@ public class HtmlConverter extends GenericConverter{
                 sb.deleteCharAt(sb.length() - 1);
                 sb.deleteCharAt(sb.length() - 1);
                 templates.put(tag, sb.toString());
-            }catch(IOException ioe){
-                System.out.println("Can not find the template file");
-                System.exit(0);
+
+                reader.close();
+            }
+            catch (IOException ioe) {
+                throw new IllegalStateException("Can not find the template file: " + ioe.getMessage());
             }
         }
 
@@ -71,63 +76,64 @@ public class HtmlConverter extends GenericConverter{
         //add metadata
         //analysis summary
         sb.append("<h3>Analysis Summary</h3>\n<ul>\n");
-        for (CvParam cv:MzqLib.data.getAnalysisSummary().getCvParam()){
+        for (CvParam cv : MzqLib.data.getAnalysisSummary().getCvParam()) {
             sb.append("<li><b>");
             sb.append(cv.getName());
-            if(cv.getValue()!=null && cv.getValue().length()>1 && (!cv.getValue().equalsIgnoreCase("null"))){
+            if (cv.getValue() != null && cv.getValue().length() > 1 && (!cv.getValue().equalsIgnoreCase("null"))) {
                 sb.append(":</b> ");
                 sb.append(cv.getValue());
-            }else{
+            }
+            else {
                 sb.append("</b>");
             }
             sb.append("</li>\n");
         }
-        sb.append("</ul>\n"); 
+        sb.append("</ul>\n");
         //software
         sb.append("<h3>Software List</h3>\n<ul>\n");
-        for (Software software:MzqLib.data.getSoftwareList().getSoftware()){
+        for (Software software : MzqLib.data.getSoftwareList().getSoftware()) {
             sb.append("<li>");
             sb.append(software.getId());
             sb.append(" (Version: ");
             sb.append(software.getVersion());
             sb.append(")</li>\n");
         }
-        sb.append("</ul>\n"); 
+        sb.append("</ul>\n");
         //Assays
         sb.append("<h3>Assays</h3>\n<ul>\n");
-        for (Assay  assay:MzqLib.data.getAssays()){
+        for (Assay assay : MzqLib.data.getAssays()) {
             sb.append("<li><b> ");
             sb.append(assay.getId());
             sb.append(":</b>");
             sb.append(assay.getName());
             sb.append("</li>\n");
         }
-        sb.append("</ul>\n"); 
+        sb.append("</ul>\n");
         //start the protein table
         sb.append(templates.get("PROTEIN_HEADER_START"));
         addHeader(MzqData.PROTEIN, sb);
         sb.append(templates.get("PROTEIN_HEADER_END"));
-        
+
         HashSet<String> proteinGlobalNames = MzqLib.data.control.getElements(MzqData.PROTEIN, MzqData.GLOBAL);
         HashSet<String> peptideGlobalNames = MzqLib.data.control.getElements(MzqData.PEPTIDE, MzqData.GLOBAL);
         HashSet<String> featureGlobalNames = MzqLib.data.control.getElements(MzqData.FEATURE, MzqData.GLOBAL);
         int proteinAssaySize = MzqLib.data.control.getElements(MzqData.PROTEIN, MzqData.ASSAY).size() * MzqLib.data.getAssayIDs().size();
         int proteinSvSize = MzqLib.data.control.getElements(MzqData.PROTEIN, MzqData.SV).size() * MzqLib.data.getSvs().size();
         int proteinRatioSize = 0;
-        if (MzqLib.data.control.isRequired(MzqData.PROTEIN, MzqData.RATIO, MzqData.RATIO_STRING)){
+        if (MzqLib.data.control.isRequired(MzqData.PROTEIN, MzqData.RATIO, MzqData.RATIO_STRING)) {
             proteinRatioSize = MzqLib.data.getRatios().size();
         }
         //start from the first quantitation/sv column
-        final int proteinTotalSize = proteinAssaySize + proteinSvSize + proteinRatioSize + proteinGlobalNames.size()+1; //+1 for the protein accession column
+        final int proteinTotalSize = proteinAssaySize + proteinSvSize + proteinRatioSize + proteinGlobalNames.size() + 1; //+1 for the protein accession column
         int peptideAssaySize = MzqLib.data.control.getElements(MzqData.PEPTIDE, MzqData.ASSAY).size() * MzqLib.data.getAssayIDs().size();
         int peptideSvSize = MzqLib.data.control.getElements(MzqData.PEPTIDE, MzqData.SV).size() * MzqLib.data.getSvs().size();
         int peptideRatioSize = 0;
-        if (MzqLib.data.control.isRequired(MzqData.PEPTIDE, MzqData.RATIO, MzqData.RATIO_STRING)){
+        if (MzqLib.data.control.isRequired(MzqData.PEPTIDE, MzqData.RATIO, MzqData.RATIO_STRING)) {
             peptideRatioSize = MzqLib.data.getRatios().size();
         }
         //start from modification column
         final int peptideTotalSize = peptideAssaySize + peptideSvSize + peptideRatioSize + peptideGlobalNames.size() + 2; //+2 for the peptide sequence and modification columns
-        
+
 //        for(ProteinData protein:MzqLib.data.getProteins()){
         for (int proIdx = 0; proIdx < MzqLib.data.getProteins().size(); proIdx++) {
             ProteinData protein = MzqLib.data.getProteins().get(proIdx);
@@ -135,7 +141,7 @@ public class HtmlConverter extends GenericConverter{
             String proteinID = protein.getAccession().replace(".", "_");
             sb.append(templates.get("PROTEIN_START_1"));
             sb.append(proteinID);
-            if(proIdx%2==1){
+            if (proIdx % 2 != 0) {
                 sb.append("\" class=\"pro-alternate");
             }
             sb.append(templates.get("PROTEIN_START_2"));
@@ -160,10 +166,10 @@ public class HtmlConverter extends GenericConverter{
 //            for(PeptideData peptide:protein.getPeptides()){
             for (int pepIdx = 0; pepIdx < protein.getPeptides().size(); pepIdx++) {
                 PeptideData peptide = protein.getPeptides().get(pepIdx);
-                String peptideID = proteinID +"-"+peptide.getSeq()+"-"+peptide.getPeptide().getModification().size();
+                String peptideID = proteinID + "-" + peptide.getSeq() + "-" + peptide.getPeptide().getModification().size();
                 sb.append(templates.get("PEPTIDE_START_1"));
                 sb.append(peptideID);
-                if(pepIdx%2==1){
+                if (pepIdx % 2 != 0) {
                     sb.append("\" class=\"pep-alternate");
                 }
                 sb.append(templates.get("PEPTIDE_START_2"));
@@ -187,12 +193,12 @@ public class HtmlConverter extends GenericConverter{
                 sb.append(templates.get("PEPTIDE_END_4"));
                 addHeader(MzqData.FEATURE, sb);
                 sb.append(templates.get("PEPTIDE_END_5"));
-                for(FeatureData feature:peptide.getFeatures()){
+                for (FeatureData feature : peptide.getFeatures()) {
                     sb.append(templates.get("FEATURE_START"));
                     sb.append(feature.getFeature().getCharge());
                     sb.append(SEPERATOR);
                     sb.append(feature.getFeature().getMz());
-                    for(String quantityName : MzqLib.data.getQuantitationNames()) {
+                    for (String quantityName : MzqLib.data.getQuantitationNames()) {
                         addAssayValue(MzqData.FEATURE, sb, feature, SEPERATOR, quantityName);
                         addSvValue(MzqData.FEATURE, sb, feature, SEPERATOR, quantityName);
                     }
@@ -210,36 +216,41 @@ public class HtmlConverter extends GenericConverter{
             BufferedWriter out = new BufferedWriter(new FileWriter(outfile));
             out.append(sb.toString());
             out.close();
-        } catch (IOException e) {
-            System.out.println("Problems while closing file " + outfile + "!\n" + e);
         }
-        
+        catch (IOException e) {
+            throw new IllegalStateException("Problems while closing file " + outfile + "!\n" + e);
+        }
+
     }
 
     private void addHeader(int level, StringBuilder sb) {
         for (String quantityName : MzqLib.data.getQuantitationNames()) {
-            if(level == MzqData.FEATURE){
+            if (level == MzqData.FEATURE) {
                 addAssayHeader(level, sb, quantityName, "<th class=\"table-sortable:numeric\">", "</th>");
                 addSvHeader(level, sb, quantityName, "<th class=\"table-sortable:numeric\">", "</th>");
-            }else{
+            }
+            else {
                 addAssayHeader(level, sb, quantityName, "<th>", "</th>");
                 addSvHeader(level, sb, quantityName, "<th>", "</th>");
-                
+
             }
         }
-        if(level == MzqData.FEATURE){        
+        if (level == MzqData.FEATURE) {
             addRatioHeader(level, sb, "<th class=\"table-sortable:numeric\">", "</th>");
-        }else{
+        }
+        else {
             addRatioHeader(level, sb, "<th>", "</th>");
         }
         HashSet<String> names = MzqLib.data.control.getElements(level, MzqData.GLOBAL);
-        if (names.size()>0){
-            if(level == MzqData.FEATURE){        
-                addGlobalHeader(sb,"<th class=\"table-sortable:numeric\">", "</th>", names);
-            }else{
-                addGlobalHeader(sb,"<th>", "</th>", names);
+        if (names.size() > 0) {
+            if (level == MzqData.FEATURE) {
+                addGlobalHeader(sb, "<th class=\"table-sortable:numeric\">", "</th>", names);
+            }
+            else {
+                addGlobalHeader(sb, "<th>", "</th>", names);
             }
             sb.append("\n");
         }
     }
+
 }

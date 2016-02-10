@@ -1,8 +1,11 @@
+
 package uk.ac.liv.mzqlib.openms.converter;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -12,13 +15,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+
 import uk.ac.liv.pgb.jmzqml.model.mzqml.*;
 import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLMarshaller;
 import uk.ac.liv.mzqlib.openms.jaxb.ConsensusElement;
@@ -77,7 +79,8 @@ public class ConsensusXMLProcessorFactory {
         return new ConsensusXMLProcessorImpl(xmlFile);
     }
 
-    private class ConsensusXMLProcessorImpl implements ConsensusXMLProcessor {
+    private static class ConsensusXMLProcessorImpl implements
+            ConsensusXMLProcessor {
 
         protected Unmarshaller unmarsh;
         protected Map<String, FeatureList> rgIdToFeatureListMap = new HashMap<>();
@@ -88,12 +91,13 @@ public class ConsensusXMLProcessorFactory {
         protected Map<String, Assay> rgIdToAssayMap = new HashMap<>();
         protected Map<String, RawFilesGroup> rgIdToRgObjectMap = new HashMap<>();
         private Map<Integer, Map<String, MzRtArea>> featureAreasPreAligned = new HashMap<>();
-        private Map<Integer, Map<String, MzRtArea>> featureAreasPostAligned = new HashMap<>();        
+        private Map<Integer, Map<String, MzRtArea>> featureAreasPostAligned = new HashMap<>();
         private final JAXBContext context = JAXBContext.newInstance(new Class[]{FeatureMap.class});
         private Unmarshaller featureUnmarshaller = context.createUnmarshaller();
         private Map<File, Assay> filesToAssays = new HashMap<>();
 
-        public ConsensusXMLProcessorImpl(File file) throws JAXBException {
+        public ConsensusXMLProcessorImpl(File file)
+                throws JAXBException {
             JAXBContext context = JAXBContext.newInstance(new Class[]{ConsensusXML.class});
             unmarsh = context.createUnmarshaller();
 
@@ -159,11 +163,11 @@ public class ConsensusXMLProcessorFactory {
                 assay.setRawFilesGroup(rg);
 
                 assays.getAssay().add(assay);
-                
+
                 rgList.add(rg);
 
                 rgIdToAssayMap.put(rgId, assay);
-                
+
                 filesToAssays.put(new File(map.getName()), assay);
             }
 
@@ -310,9 +314,11 @@ public class ConsensusXMLProcessorFactory {
 
         }
 
-        private void readFeatureXmlMzRtAreas(List<uk.ac.liv.mzqlib.openms.jaxb.Map> featureXmlMaps) throws JAXBException {           
+        private void readFeatureXmlMzRtAreas(
+                List<uk.ac.liv.mzqlib.openms.jaxb.Map> featureXmlMaps)
+                throws JAXBException {
             for (uk.ac.liv.mzqlib.openms.jaxb.Map featureXmlMap : featureXmlMaps) {
-                String featureXmlLocation = featureXmlMap.getName();                
+                String featureXmlLocation = featureXmlMap.getName();
                 File featureXmlFile = new File(featureXmlLocation);
                 if (!featureXmlFile.exists()) {
                     continue;
@@ -320,17 +326,21 @@ public class ConsensusXMLProcessorFactory {
 
                 if (!featureXmlLocation.contains("_MAPC")) {
                     readSingleFeatureXmlMzRtAreas(featureXmlFile, (int) featureXmlMap.getId(), featureAreasPreAligned);
-                } else {
+                }
+                else {
                     readSingleFeatureXmlMzRtAreas(featureXmlFile, (int) featureXmlMap.getId(), featureAreasPostAligned);
                     File featureXmlUnalignedFile = new File(featureXmlLocation.replace("_MAPC", ""));
                     if (featureXmlUnalignedFile.exists()) {
                         readSingleFeatureXmlMzRtAreas(featureXmlUnalignedFile, (int) featureXmlMap.getId(), featureAreasPreAligned);
                     }
-                }               
+                }
             }
         }
 
-        private void readSingleFeatureXmlMzRtAreas(File featureXmlFile, int mapNumber, Map<Integer, Map<String, MzRtArea>> mzRtAreas) throws JAXBException {
+        private void readSingleFeatureXmlMzRtAreas(File featureXmlFile,
+                                                   int mapNumber,
+                                                   Map<Integer, Map<String, MzRtArea>> mzRtAreas)
+                throws JAXBException {
             FeatureMap featureMap = (FeatureMap) featureUnmarshaller.unmarshal(featureXmlFile);
             Map<String, MzRtArea> featureAreas = new HashMap<>();
             for (FeatureType feature : featureMap.getFeatureList().getFeature()) {
@@ -351,7 +361,7 @@ public class ConsensusXMLProcessorFactory {
                 featureArea.getMassTrace().add(mzStats.getMax());
                 featureAreas.put(feature.getId().replace("f_", ""), featureArea);
             }
-            
+
             mzRtAreas.put(mapNumber, featureAreas);
         }
 
@@ -386,17 +396,21 @@ public class ConsensusXMLProcessorFactory {
         }
 
         @Override
-        public void convert(String outputFileName) throws IOException {
+        public void convert(String outputFileName)
+                throws IOException {
             convert(outputFileName, new HashMap<>());
         }
 
         @Override
-        public void convert(String outputFileName, Map<String, ? extends Collection<File>> studyVariablesToFiles) throws IOException {
+        public void convert(String outputFileName,
+                            Map<String, ? extends Collection<File>> studyVariablesToFiles)
+                throws IOException {
             //File file = new File("CPTAC_study6_2400_3600_FLUQT.consensusXML");
             //String output = "CPTAC_study6_2400_3600_FLUQT.consensusXML.mzq";
-            FileWriter writer = new FileWriter(outputFileName);
+            FileOutputStream fos = new FileOutputStream(outputFileName);
+            OutputStreamWriter writer = new OutputStreamWriter(fos, "UTF-8");
 
-            MzQuantMLMarshaller m = new MzQuantMLMarshaller();            
+            MzQuantMLMarshaller m = new MzQuantMLMarshaller();
 
             //ConsensusXMLProcessor conProc = ConsensusXMLProcessorFactory.getInstance().buildConsensusXMLProcessor(file);
             // XML header
@@ -453,7 +467,7 @@ public class ConsensusXMLProcessorFactory {
             // AssayList
             m.marshall(this.getAssayList(), writer);
             writer.write("\n");
-            
+
             // StudyVariableList
             if (studyVariablesToFiles != null && studyVariablesToFiles.size() > 0) {
                 StudyVariableList studyVariables = new StudyVariableList();
@@ -465,7 +479,7 @@ public class ConsensusXMLProcessorFactory {
                     variable.setAssays(matchedAssays);
                     studyVariables.getStudyVariable().add(variable);
                 }
-                
+
                 m.marshall(studyVariables, writer);
                 writer.write("\n");
             }
@@ -482,14 +496,9 @@ public class ConsensusXMLProcessorFactory {
             // mzQuantML closing tag
             writer.write(m.createMzQuantMLClosingTag());
 
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(Converter.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+            writer.close();
         }
+
     }
 
     private static class MzRtArea {
@@ -514,6 +523,7 @@ public class ConsensusXMLProcessorFactory {
         public List<Double> getMassTrace() {
             return this.massTrace;
         }
+
     }
 
 }

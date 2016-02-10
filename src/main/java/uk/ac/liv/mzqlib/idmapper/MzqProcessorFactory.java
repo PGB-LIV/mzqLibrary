@@ -89,7 +89,7 @@ public class MzqProcessorFactory {
     return new MzqProcessorImpl(mzqUm, rawToMzidMap, msTolerance);
   }
 
-  private class MzqProcessorImpl implements MzqProcessor {
+  private static class MzqProcessorImpl implements MzqProcessor {
 
     private MzQuantMLUnmarshaller mzqUm = null;
     private FeatureSiiMatchManager matchManager = new FeatureSiiMatchManager();    
@@ -237,7 +237,7 @@ public class MzqProcessorFactory {
    *
    * @return true if test double falls in the given range; false otherwise
    */
-  private boolean isInRange(double test, double rangeBoundary1,
+  private static boolean isInRange(double test, double rangeBoundary1,
           double rangeBoundary2) {
     if (rangeBoundary1 <= rangeBoundary2) {
       return test >= rangeBoundary1 && test <= rangeBoundary2;

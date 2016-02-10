@@ -16,12 +16,12 @@ import java.util.zip.GZIPOutputStream;
  */
 public class Gzipper {
 
-    public static File extractFile(File zipped_file) {
+    public static File extractFile(File zipped_file)
+            throws IOException {
         GZIPInputStream gin = null;
         File outFile = null;
+        FileOutputStream fos = null;
         try {
-
-            FileOutputStream fos = null;
             gin = new GZIPInputStream(new FileInputStream(zipped_file));
             outFile = File.createTempFile("tmp_" + new Random().toString(), ".mzq");
             //outFile = new File(zipped_file.getParent(), "tmp_" + zipped_file.getName().replaceAll("\\.gz$", ""));
@@ -32,17 +32,10 @@ public class Gzipper {
                 fos.write(buf, 0, len);
             }
             fos.close();
-
-        }
-        catch (IOException ex) {
-            Logger.getLogger(Gzipper.class.getName()).log(Level.SEVERE, null, ex);
         }
         finally {
-            try {
+            if (gin != null) {
                 gin.close();
-            }
-            catch (IOException ex) {
-                Logger.getLogger(Gzipper.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return outFile;

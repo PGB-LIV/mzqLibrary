@@ -204,6 +204,8 @@ public class XlsConverter extends GenericConverter {
             case MzqData.FEATURE:
                 sheet.addCell(new Label(0, rowCount, ((FeatureData) obj).getId(), normalFormat));
                 break;
+            default:
+                break;
         }
     }
 

@@ -63,7 +63,7 @@ public class CreateRMatrixTask extends Task<HeatMapParam> {
             // add to row names
             rowNames.add(row.getObjectValue().get());
 
-            List<StringProperty> values = row.Values();
+            List<StringProperty> values = row.values();
             for (StringProperty value : values) {
                 x = x + value.get() + ",";
                 if (NumberUtils.isNumber(value.get())) {
@@ -105,8 +105,8 @@ public class CreateRMatrixTask extends Task<HeatMapParam> {
             count++;
         }
 
-        x = x.substring(0, x.lastIndexOf(","));
-        logX = logX.substring(0, logX.lastIndexOf(","));
+        x = x.substring(0, x.lastIndexOf(','));
+        logX = logX.substring(0, logX.lastIndexOf(','));
         hmParam.setMatrix(x);
         hmParam.setLogMatrix(logX);
         hmParam.setMax(max);

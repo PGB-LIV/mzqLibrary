@@ -3,12 +3,15 @@ package uk.ac.liv.mzqlib.idmapper;
 
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+
 import uk.ac.ebi.jmzidml.MzIdentMLElement;
 import uk.ac.ebi.jmzidml.model.mzidml.CvParam;
 import uk.ac.ebi.jmzidml.model.mzidml.SearchDatabase;
@@ -56,7 +59,7 @@ public class MzidProcessorFactory {
         return new MzidProcessorImpl(mzidFile);
     }
 
-    private class MzidProcessorImpl implements MzidProcessor {
+    private static class MzidProcessorImpl implements MzidProcessor {
 
         private File mzidFile = null;
         private MzIdentMLUnmarshaller umarsh = null;
@@ -165,7 +168,7 @@ public class MzidProcessorFactory {
      *
      * @return retention time (in minute) in the cvParam of SpectrumIdentificationResult with accession="MS:1000016"
      */
-    private double getRetentionTime(SpectrumIdentificationResult sir) {
+    private static double getRetentionTime(SpectrumIdentificationResult sir) {
         double rt = Double.NaN;
 
         List<CvParam> cvParams = sir.getCvParam();
@@ -177,7 +180,7 @@ public class MzidProcessorFactory {
                     return rt;
                 }
 
-                switch (unit.toLowerCase()) {
+                switch (unit.toLowerCase(Locale.ENGLISH)) {
                     case "second":
                         return Double.parseDouble(value) / 60;
                     case "minute":

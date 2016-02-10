@@ -1,3 +1,4 @@
+
 package uk.ac.cranfield.mzqlib.converter;
 
 import java.io.BufferedWriter;
@@ -34,7 +35,7 @@ public class CsvConverter extends GenericConverter {
         StringBuilder sb = new StringBuilder();
         //deal with protein groups
         ArrayList<QuantitationLevel> pgs = new ArrayList<>();
-        for(ProteinGroupData pg : MzqLib.data.getProteinGroups()){
+        for (ProteinGroupData pg : MzqLib.data.getProteinGroups()) {
             pgs.add(pg);
         }
         outputAssayAndSV(sb, MzqData.PROTEIN_GROUP, pgs);
@@ -45,7 +46,7 @@ public class CsvConverter extends GenericConverter {
             outputGlobal(sb, MzqData.PROTEIN_GROUP, pgs);
         }
         sb.append("\n");
-        
+
         //deal with proteins
         ArrayList<QuantitationLevel> proteins = new ArrayList<>();
         for (ProteinData protein : MzqLib.data.getProteins()) {
@@ -95,7 +96,8 @@ public class CsvConverter extends GenericConverter {
             BufferedWriter out = new BufferedWriter(new FileWriter(outfile));
             out.append(sb.toString());
             out.close();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             System.out.println("Problems while closing file " + outfile + "!\n" + e);
         }
     }
@@ -110,22 +112,25 @@ public class CsvConverter extends GenericConverter {
     }
 
     private void addEntityHeader(int level, StringBuilder sb) {
-        if(level == MzqData.PEPTIDE){
+        if (level == MzqData.PEPTIDE) {
             sb.append("Peptide");
             sb.append(SEPARATOR);
             sb.append("Charge");
             sb.append(SEPARATOR);
             sb.append("Modification");
-        }else if(level == MzqData.PROTEIN_GROUP){
+        }
+        else if (level == MzqData.PROTEIN_GROUP) {
             sb.append("Anchor protein");
             sb.append(SEPARATOR);
             sb.append("Ambiguity member");
-        }else{
+        }
+        else {
             sb.append("Entity");
         }
     }
 
-    private void outputAssayAndSV(StringBuilder sb, int level, ArrayList<QuantitationLevel> objects) {
+    private void outputAssayAndSV(StringBuilder sb, int level,
+                                  ArrayList<QuantitationLevel> objects) {
         printQuantitationLevelHeader(sb, level);
         for (String quantityName : MzqLib.data.getQuantitationNames()) {
             addHeaderLine(level, sb, quantityName);
@@ -141,7 +146,8 @@ public class CsvConverter extends GenericConverter {
         }
     }
 
-    private void outputRatio(StringBuilder sb, int level, ArrayList<QuantitationLevel> objects) {
+    private void outputRatio(StringBuilder sb, int level,
+                             ArrayList<QuantitationLevel> objects) {
         sb.append("Ratios\n");
         addEntityHeader(level, sb);
         addRatioHeader(level, sb, SEPARATOR, "");
@@ -156,7 +162,8 @@ public class CsvConverter extends GenericConverter {
         sb.append("\n");
     }
 
-    private void outputGlobal(StringBuilder sb, int level, ArrayList<QuantitationLevel> objects) {
+    private void outputGlobal(StringBuilder sb, int level,
+                              ArrayList<QuantitationLevel> objects) {
         HashSet<String> globals = MzqLib.data.control.getElements(level, MzqData.GLOBAL);
         if (globals.size() > 0) {
             sb.append("Global\n");
@@ -174,7 +181,8 @@ public class CsvConverter extends GenericConverter {
         }
     }
 
-    private void printQuantitationLevel(StringBuilder sb, int level, QuantitationLevel obj) {
+    private void printQuantitationLevel(StringBuilder sb, int level,
+                                        QuantitationLevel obj) {
         switch (level) {
             case MzqData.PROTEIN_GROUP:
                 ProteinGroupData pg = (ProteinGroupData) obj;
@@ -196,6 +204,8 @@ public class CsvConverter extends GenericConverter {
             case MzqData.FEATURE:
                 sb.append(((FeatureData) obj).getId());
                 break;
+            default:
+                break;
         }
     }
 
@@ -213,7 +223,10 @@ public class CsvConverter extends GenericConverter {
             case MzqData.FEATURE:
                 sb.append("Features");
                 break;
+            default:
+                break;
         }
         sb.append("\n");
     }
+
 }

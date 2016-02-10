@@ -1,3 +1,4 @@
+
 package uk.ac.liv.mzqlib.view;
 
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ public class CommandLineGui extends javax.swing.JFrame {
 
         }
         catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -260,7 +262,7 @@ public class CommandLineGui extends javax.swing.JFrame {
             String[] args = matchList.toArray(new String[matchList.size()]);
 
             //System.out.println("input: " + input + " output: " + output);
-            if (input != null && output != null && !input.equals("") && !output.equals("")) {
+            if (!input.equals("") && !output.equals("")) {
 
                 String libFeedback = null;
                 try {
@@ -270,7 +272,7 @@ public class CommandLineGui extends javax.swing.JFrame {
                     ex.printStackTrace();
                 }
 
-                if (libFeedback.equals("")) {
+                if (libFeedback != null && libFeedback.equals("")) {
                     JOptionPane.showMessageDialog(null, "Output written to " + output, "Result", JOptionPane.INFORMATION_MESSAGE);
 
                 }

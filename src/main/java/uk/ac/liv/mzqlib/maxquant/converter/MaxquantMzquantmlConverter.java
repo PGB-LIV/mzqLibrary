@@ -224,33 +224,33 @@ public class MaxquantMzquantmlConverter {
         }
     }
 
-    private void createAuditCollection() {
-        ac = new AuditCollection();
-
-        Organization uol = new Organization();
-        uol.setId("ORG_UOL");
-        uol.setName("University of Liverpool");
-
-        Person andy = new Person();
-        andy.setFirstName("Andy");
-        andy.setLastName("Jones");
-
-        Affiliation aff = new Affiliation();
-        aff.setOrganization(uol);
-        andy.getAffiliation().add(aff);
-        andy.setId("PERS_ARJ");
-        ac.getPerson().add(andy);
-
-        Person ddq = new Person();
-        ddq.setFirstName("Da");
-        ddq.setLastName("Qi");
-        ddq.setId("PERS_DQ");
-        ddq.getAffiliation().add(aff);
-        ac.getPerson().add(ddq);
-
-        // the schema require person before organization
-        ac.getOrganization().add(uol);
-    }
+//    private void createAuditCollection() {
+//        ac = new AuditCollection();
+//
+//        Organization uol = new Organization();
+//        uol.setId("ORG_UOL");
+//        uol.setName("University of Liverpool");
+//
+//        Person andy = new Person();
+//        andy.setFirstName("Andy");
+//        andy.setLastName("Jones");
+//
+//        Affiliation aff = new Affiliation();
+//        aff.setOrganization(uol);
+//        andy.getAffiliation().add(aff);
+//        andy.setId("PERS_ARJ");
+//        ac.getPerson().add(andy);
+//
+//        Person ddq = new Person();
+//        ddq.setFirstName("Da");
+//        ddq.setLastName("Qi");
+//        ddq.setId("PERS_DQ");
+//        ddq.getAffiliation().add(aff);
+//        ac.getPerson().add(ddq);
+//
+//        // the schema require person before organization
+//        ac.getOrganization().add(uol);
+//    }
 
     private void createSoftwareList() {
         softList = new SoftwareList();
@@ -351,11 +351,11 @@ public class MaxquantMzquantmlConverter {
                 //TODO: need to find a better way to form this later
 
                 //find out if it is light or heavy label assay
-                if (assName.toLowerCase().contains("light")) {
+                if (assName.toLowerCase(Locale.ENGLISH).contains("light")) {
                     assay.setLabel(label);
                     assays.add(assay);
                 }
-                else if (assName.toLowerCase().contains("heavy")) {
+                else if (assName.toLowerCase(Locale.ENGLISH).contains("heavy")) {
                     Label label_heavy = new Label();
                     CvParam label_lysine = new CvParam();
                     label_lysine.setAccession("MOD:00582");
@@ -938,7 +938,7 @@ public class MaxquantMzquantmlConverter {
                 peptideConsensus.setSearchDatabase(db);
 
                 List<String> chrKeys = peptideFeatureIdsMap.get(key);
-                if (chrKeys != null || !chrKeys.isEmpty()) {
+                if (!chrKeys.isEmpty()) {
 
                     Iterator<String> iChr = chrKeys.iterator();
                     while (iChr.hasNext()) {

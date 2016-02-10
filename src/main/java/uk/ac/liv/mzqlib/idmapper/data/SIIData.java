@@ -246,30 +246,33 @@ public class SIIData implements Comparable<SIIData> {
      * The modString contains peptide sequence and list of mods.
      * Each mod contains mod accession and mod name, plus monoisotopicMassDelta and location.
      * They all connected by '_'.
-     * @return 
+     *
+     * @return
      */
     private String createPeptideModString() {
-        String modString = "";
+        StringBuffer modString = new StringBuffer();
         try {
             Peptide peptide = um.unmarshal(uk.ac.ebi.jmzidml.model.mzidml.Peptide.class, pepRef);
             String pepSeq = peptide.getPeptideSequence();
             this.setSequence(pepSeq);
             List<Modification> mods = peptide.getModification();
-            modString = "_";
+            modString.append(pepSeq);
+            modString.append('_');
             for (Modification mod : mods) {
                 //modString = modString + mod.getLocation().toString() + "_";
                 List<CvParam> cps = mod.getCvParam();
                 for (CvParam cp : cps) {
-                    modString = modString + cp.getAccession() + "_" + cp.getName() + "_" + mod.getMonoisotopicMassDelta() + "_" + mod.getLocation() + "_";
+                    modString = modString.append(cp.getAccession()).append('_')
+                            .append(cp.getName()).append('_').append(mod.getMonoisotopicMassDelta())
+                            .append('_').append(mod.getLocation()).append('_');
                 }
             }
-            modString = pepSeq + modString;
-            return modString.substring(0, modString.length()-1); //remove the last '_'
+            return modString.substring(0, modString.length() - 1); //remove the last '_'
         }
         catch (JAXBException ex) {
             Logger.getLogger(SIIData.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Couldn't get peptide object: " + pepRef + " -- " + ex.getMessage());
-            return modString;
+            return modString.toString();
         }
 
     }

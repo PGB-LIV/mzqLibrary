@@ -99,7 +99,7 @@ public class RootLayoutController {
             loader.setLocation(RootLayoutController.class.getClassLoader().getResource("ProgenesisConverter.fxml"));
             AnchorPane progenConvt = (AnchorPane) loader.load();
 
-            ProgenesisConverterController controller = loader.getController();
+            //ProgenesisConverterController controller = loader.getController();
 
             Scene scene = new Scene(progenConvt);
             Stage progStage = new Stage();

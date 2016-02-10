@@ -32,7 +32,7 @@ public class MzqDataMatrixRow {
      *
      * @return the objectId
      */
-    public StringProperty ObjectId() {
+    public StringProperty objectId() {
         return objectId;
     }
 
@@ -50,7 +50,7 @@ public class MzqDataMatrixRow {
      *
      * @return the values
      */
-    public List<StringProperty> Values() {
+    public List<StringProperty> values() {
         return values;
     }
 
@@ -61,7 +61,7 @@ public class MzqDataMatrixRow {
      *
      * @return the value of specific position in the list
      */
-    public StringProperty Value(int i) {
+    public StringProperty value(int i) {
         return values.get(i);
     }
 

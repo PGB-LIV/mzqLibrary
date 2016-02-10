@@ -8,6 +8,7 @@ import gnu.trove.list.array.TDoubleArrayList;
 import gnu.trove.list.array.TIntArrayList;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,7 +19,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+
 import org.apache.commons.lang3.math.NumberUtils;
 
 /**
@@ -362,7 +365,7 @@ public class MaxquantFilesReader {
                     String studyV;
                     int prefixLen = 0;
                     tempAssays = new ArrayList();
-                    studyV = new String();
+                    studyV = "";
                     for (int j = 0; j < experiments.size(); j++) {
                         if (!(i == j)) {
                             int tempLen = lengthOfPrefix((String) experiments.get(i), (String) experiments.get(j));
@@ -440,10 +443,10 @@ public class MaxquantFilesReader {
                         Iterator iV = value.iterator();
                         while (iV.hasNext()) {
                             String assName = (String) iV.next();
-                            if (assName.toLowerCase().contains("light")) {
+                            if (assName.toLowerCase(Locale.ENGLISH).contains("light")) {
                                 assListLight.add(assName);
                             }
-                            else if (assName.toLowerCase().contains("heavy")) {
+                            else if (assName.toLowerCase(Locale.ENGLISH).contains("heavy")) {
                                 assListHeavy.add(assName);
                             }
                         }
@@ -506,31 +509,31 @@ public class MaxquantFilesReader {
                     if (nextLine[i].equalsIgnoreCase("id")) {
                         posId = i;
                     }
-                    else if (nextLine[i].toLowerCase().equals("sequence")) {
+                    else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("sequence")) {
                         posSeq = i;
                     }
-                    else if (nextLine[i].toLowerCase().equals("modifications")) {
+                    else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("modifications")) {
                         posMod = i;
                     }
-                    else if (nextLine[i].toLowerCase().equals("leading proteins")) {
+                    else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("leading proteins")) {
                         posProt = i;
                     }
-                    else if (nextLine[i].toLowerCase().equals("raw file")) {
+                    else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("raw file")) {
                         posRaw = i;
                     }
-                    else if (nextLine[i].toLowerCase().equals("experiment")) {
+                    else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("experiment")) {
                         posExp = i;
                     }
-                    else if (nextLine[i].toLowerCase().equals("charge")) {
+                    else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("charge")) {
                         posChr = i;
                     }
-                    else if (nextLine[i].toLowerCase().equals("m/z")) {
+                    else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("m/z")) {
                         posMz = i;
                     }
-                    else if (nextLine[i].toLowerCase().equals("retention time")) {
+                    else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("retention time")) {
                         posRet = i;
                     }
-                    else if (nextLine[i].toLowerCase().equals("intensity")) {
+                    else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("intensity")) {
                         posInt = i;
                     }
                 }
@@ -549,7 +552,7 @@ public class MaxquantFilesReader {
                      * Time, (8)Intensity
                      * (9)Intensity L, (10)Intensity H (for 2 labels case)
                      */
-                    List<String> valueList = new ArrayList();
+                    List<String> valueList = new ArrayList<>();
                     if (isLabelFree) {
                         String[] values = {nextLine[posSeq], nextLine[posMod], nextLine[posProt], nextLine[posRaw], nextLine[posExp],
                             nextLine[posChr], nextLine[posMz], nextLine[posRet], nextLine[posInt]};
@@ -592,13 +595,13 @@ public class MaxquantFilesReader {
                 int posMajProtIds = 0, posProtInt = 0, posUniqPep = 0;
                 nextLine = csvReader.readNext();
                 for (int i = 0; i < nextLine.length; i++) {
-                    if (nextLine[i].toLowerCase().equals("majority protein ids")) {
+                    if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("majority protein ids")) {
                         posMajProtIds = i;
                     }
-                    else if (nextLine[i].toLowerCase().equals("intensity")) {
+                    else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("intensity")) {
                         posProtInt = i;
                     }
-                    else if (nextLine[i].toLowerCase().contains("unique peptides")) {  // this is the position of the LAST column title containing "unique peptides";
+                    else if (nextLine[i].toLowerCase(Locale.ENGLISH).contains("unique peptides")) {  // this is the position of the LAST column title containing "unique peptides";
                         posUniqPep = i;
                     }
                 }
@@ -620,7 +623,7 @@ public class MaxquantFilesReader {
                     String protId = majProtIds;
                     // Only take the first ID in Majority protein IDs as the protein id
                     if (majProtIds.contains(";")) {
-                        int endIndex = majProtIds.indexOf(";");
+                        int endIndex = majProtIds.indexOf(';');
                         protId = majProtIds.substring(0, endIndex);
                     }
 
@@ -735,24 +738,24 @@ public class MaxquantFilesReader {
             peptideToRatioMap = new HashMap<>();
 
             for (int i = 0; i < nextLine.length; i++) {
-                if (nextLine[i].toLowerCase().equals("evidence ids")) {
+                if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("evidence ids")) {
                     posEvdId = i;
                 }
-                else if (nextLine[i].toLowerCase().equals("sequence")) {
+                else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("sequence")) {
                     posPepSeq = i;
                 }
-                else if (nextLine[i].toLowerCase().equals("proteins")) {
+                else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("proteins")) {
                     posProt = i;
                 }
-                else if (nextLine[i].toLowerCase().contains("h/l")) {
+                else if (nextLine[i].toLowerCase(Locale.ENGLISH).contains("h/l")) {
                     for (int k = 0; k < primeStudyVars.size(); k++) {
-                        if (nextLine[i].toLowerCase().equals("ratio h/l " + (String) primeStudyVars.get(k))) {
+                        if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("ratio h/l " + (String) primeStudyVars.get(k))) {
                             posPepRatio[k] = i;
                             titlePepRatio[k] = nextLine[i];
                         }
                     }
                 }
-                else if (nextLine[i].toLowerCase().equals("intensity")) {
+                else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("intensity")) {
                     posPepInt = i;
                     //break;
                 }
@@ -785,7 +788,7 @@ public class MaxquantFilesReader {
                  * assay number comes from assays.size()
                  * peptide sequence as key, intensity list as value
                  */
-                ArrayList intList = new ArrayList();
+                List intList = new ArrayList();
 
                 if (isLabelFree) {
                     for (int i = 0; i < assays.size(); i++) {
@@ -1028,7 +1031,7 @@ public class MaxquantFilesReader {
         List<String> aList = Arrays.asList(list);
         List<String> aListLowerCase = new ArrayList();
         for (String a : aList) {
-            aListLowerCase.add(a.toLowerCase());
+            aListLowerCase.add(a.toLowerCase(Locale.ENGLISH));
         }
         for (int i = 0; i < require.length; i++) {
 

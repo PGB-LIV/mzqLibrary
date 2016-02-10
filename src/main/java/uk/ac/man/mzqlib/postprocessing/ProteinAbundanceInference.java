@@ -1,3 +1,4 @@
+
 package uk.ac.man.mzqlib.postprocessing;
 
 import java.io.File;
@@ -133,31 +134,31 @@ public final class ProteinAbundanceInference {
     /**
      * constructor
      *
-     * @param in_file - input file
-     * @param out_file - output file
-     * @param abundanceOperation - calculation operator
-     * @param inputDataTypeAccession - input datatype accession
-     * @param inputRawDataTypeAccession - input raw datatype accession
-     * @param outputProteinGroupDTAccession - output protein group datatype
-     * accession
-     * @param outputProteinGroupDTName - output protein group datatype name
+     * @param in_file                          - input file
+     * @param out_file                         - output file
+     * @param abundanceOperation               - calculation operator
+     * @param inputDataTypeAccession           - input datatype accession
+     * @param inputRawDataTypeAccession        - input raw datatype accession
+     * @param outputProteinGroupDTAccession    - output protein group datatype
+     *                                         accession
+     * @param outputProteinGroupDTName         - output protein group datatype name
      * @param outputRawProteinGroupDTAccession - output raw protein group
-     * datatype accession
-     * @param outputRawProteinGroupDTName - output raw protein group datatype
-     * name
-     * @param QuantLayerType - quant layer type
+     *                                         datatype accession
+     * @param outputRawProteinGroupDTName      - output raw protein group datatype
+     *                                         name
+     * @param QuantLayerType                   - quant layer type
      *
      * @throws FileNotFoundException
      */
     public ProteinAbundanceInference(String in_file, String out_file,
-            String abundanceOperation,
-            String inputDataTypeAccession,
-            String inputRawDataTypeAccession,
-            String outputProteinGroupDTAccession,
-            String outputProteinGroupDTName,
-            String outputRawProteinGroupDTAccession,
-            String outputRawProteinGroupDTName,
-            String QuantLayerType)
+                                     String abundanceOperation,
+                                     String inputDataTypeAccession,
+                                     String inputRawDataTypeAccession,
+                                     String outputProteinGroupDTAccession,
+                                     String outputProteinGroupDTName,
+                                     String outputRawProteinGroupDTAccession,
+                                     String outputRawProteinGroupDTName,
+                                     String QuantLayerType)
             throws FileNotFoundException {
 
         String cvAccessionPrefix = "MS:";
@@ -224,32 +225,33 @@ public final class ProteinAbundanceInference {
     /**
      * constructor with the option for skipping the conflicting peptides.
      *
-     * @param in_file - input file
-     * @param out_file - output file
-     * @param abundanceOperation - calculation operator
-     * @param inputDataTypeAccession - input datatype accession
-     * @param inputRawDataTypeAccession - input raw datatype accession
-     * @param outputProteinGroupDTAccession - output protein group datatype
-     * accession
-     * @param outputProteinGroupDTName - output protein group datatype name
+     * @param in_file                          - input file
+     * @param out_file                         - output file
+     * @param abundanceOperation               - calculation operator
+     * @param inputDataTypeAccession           - input datatype accession
+     * @param inputRawDataTypeAccession        - input raw datatype accession
+     * @param outputProteinGroupDTAccession    - output protein group datatype
+     *                                         accession
+     * @param outputProteinGroupDTName         - output protein group datatype name
      * @param outputRawProteinGroupDTAccession - output raw protein group
-     * datatype accession
-     * @param outputRawProteinGroupDTName - output raw protein group datatype
-     * name
-     * @param QuantLayerType - quant layer type
-     * @param conflictPeptideExcluded - remove conflicting peptides
+     *                                         datatype accession
+     * @param outputRawProteinGroupDTName      - output raw protein group datatype
+     *                                         name
+     * @param QuantLayerType                   - quant layer type
+     * @param conflictPeptideExcluded          - remove conflicting peptides
+     *
      * @throws FileNotFoundException
      */
     public ProteinAbundanceInference(String in_file, String out_file,
-            String abundanceOperation,
-            String inputDataTypeAccession,
-            String inputRawDataTypeAccession,
-            String outputProteinGroupDTAccession,
-            String outputProteinGroupDTName,
-            String outputRawProteinGroupDTAccession,
-            String outputRawProteinGroupDTName,
-            String QuantLayerType,
-            boolean conflictPeptideExcluded)
+                                     String abundanceOperation,
+                                     String inputDataTypeAccession,
+                                     String inputRawDataTypeAccession,
+                                     String outputProteinGroupDTAccession,
+                                     String outputProteinGroupDTName,
+                                     String outputRawProteinGroupDTAccession,
+                                     String outputRawProteinGroupDTName,
+                                     String QuantLayerType,
+                                     boolean conflictPeptideExcluded)
             throws FileNotFoundException {
 
         String cvAccessionPrefix = "MS:";
@@ -388,7 +390,8 @@ public final class ProteinAbundanceInference {
                     + "input raw peptide datatype CV accession, output protein group CV accession,"
                     + "output protein group CV name, output raw protein group CV accession, "
                     + "output raw protein group CV name" + "operator.");
-        } else if (args.length == 11) {
+        }
+        else if (args.length == 11) {
             infile = args[0];
             outfile = args[1];
             operator = args[2];
@@ -404,13 +407,14 @@ public final class ProteinAbundanceInference {
 
         if (signalConflictPeptideExcluded) {
             ProteinAbundanceInference pai = new ProteinAbundanceInference(infile, outfile, operator,
-                    inputPeptideDTCA, inputRawPeptideDTCA, outputProteinGCA, outputProteinGCN,
-                    outputRawProteinGCA, outputRawProteinGCN, quantLT, signalConflictPeptideExcluded);
+                                                                          inputPeptideDTCA, inputRawPeptideDTCA, outputProteinGCA, outputProteinGCN,
+                                                                          outputRawProteinGCA, outputRawProteinGCN, quantLT, signalConflictPeptideExcluded);
             pai.proteinInference(conflictPeptideExcluded);
-        } else if (!signalConflictPeptideExcluded) {
+        }
+        else if (!signalConflictPeptideExcluded) {
             ProteinAbundanceInference pai = new ProteinAbundanceInference(infile, outfile, operator,
-                    inputPeptideDTCA, inputRawPeptideDTCA, outputProteinGCA, outputProteinGCN,
-                    outputRawProteinGCA, outputRawProteinGCN, quantLT);
+                                                                          inputPeptideDTCA, inputRawPeptideDTCA, outputProteinGCA, outputProteinGCN,
+                                                                          outputRawProteinGCA, outputRawProteinGCN, quantLT);
             pai.proteinInference();
         }
     }
@@ -429,6 +433,7 @@ public final class ProteinAbundanceInference {
      * protein inference method with the parameter of conflicting signal
      *
      * @param signalConflict: with/without conflicting peptides
+     *
      * @throws FileNotFoundException
      */
     public void proteinInference(boolean signalConflict)
@@ -439,7 +444,8 @@ public final class ProteinAbundanceInference {
         MzQuantMLUnmarshaller infile_um = null;
         try {
             infile_um = mzqFileInput(in_file);
-        } catch (IllegalStateException ex) {
+        }
+        catch (IllegalStateException ex) {
             System.out.println("****************************************************");
             System.out.println("The mzq file is not found!!! Please check the input.");
             System.err.println(ex);
@@ -456,8 +462,9 @@ public final class ProteinAbundanceInference {
             System.out.println("******************** The pipeline does work successfully! *********************");
             if (signalConflict) {
                 System.out.println("**** The protein abundance is calculated by removing conflicting pepConsensuses! ****");
-            }            
-        } else {
+            }
+        }
+        else {
 
             throw new IllegalStateException("****** Some errors exist within the pipeline *******");
         }
@@ -467,12 +474,14 @@ public final class ProteinAbundanceInference {
     /**
      * execute Protein Inference without pepCons conflicting
      *
-     * @param infile_um: unmarshalled input file
+     * @param infile_um:                  unmarshalled input file
      * @param excludeConflictingPeptides: Whether to exclude conflicting
-     * peptides or not. peptides
+     *                                    peptides or not. peptides
+     *
      * @return
      */
-    private boolean pipeline_executor(MzQuantMLUnmarshaller infile_um, boolean excludeConflictingPeptides) {
+    private boolean pipeline_executor(MzQuantMLUnmarshaller infile_um,
+                                      boolean excludeConflictingPeptides) {
 
         boolean flag = true;
         String inputAssayQLID = "";
@@ -506,13 +515,13 @@ public final class ProteinAbundanceInference {
             subSetGroup = ProteinGrouping.subSetGrouping(peptideToProtein, proteinToPeptide);
 
             Map<String, List<String>> proteinAbundance = proteinAbundanceCalculation(abundanceOperation,
-                    uniSetGroup, sameSetGroup, subSetGroup, peptideAssayValues);
+                                                                                     uniSetGroup, sameSetGroup, subSetGroup, peptideAssayValues);
             Map<String, List<String>> rawProteinAbundance = proteinAbundanceCalculation(abundanceOperation,
-                    uniSetGroup, sameSetGroup, subSetGroup, peptideRawAssayValues);
+                                                                                        uniSetGroup, sameSetGroup, subSetGroup, peptideRawAssayValues);
 
             mzqOutput(infile_um, mzq, assayQLs, abundanceOperation, uniSetGroup, sameSetGroup,
-                    subSetGroup, outputAssayQuantLayerID, inputAssayQLID, outputRawAssayQuantLayerID,
-                    inputRawAssayQLID, out_file, proteinAbundance, rawProteinAbundance);
+                      subSetGroup, outputAssayQuantLayerID, inputAssayQLID, outputRawAssayQuantLayerID,
+                      inputRawAssayQLID, out_file, proteinAbundance, rawProteinAbundance);
 
         }
         return flag;
@@ -568,7 +577,7 @@ public final class ProteinAbundanceInference {
      * identify peptide assay values using input data type accession and quant
      * layer type (assay quant layer by default)
      *
-     * @param in_file_um - unmarshalled mzq file
+     * @param in_file_um   - unmarshalled mzq file
      * @param inputPepDTCA - input peptide datatype accession
      *
      * @return - peptide assay values
@@ -610,8 +619,9 @@ public final class ProteinAbundanceInference {
      * a filter is applied to let the pepCons with No. "null"s less than
      * No.assays/2
      *
-     * @param in_file_um: unmarshalled mzq input file
+     * @param in_file_um:   unmarshalled mzq input file
      * @param inputPepDTCA: data type accession
+     *
      * @return peptideAV: peptide assay values
      */
     private Map<String, List<String>> peptideValidAssayValues(
@@ -640,7 +650,7 @@ public final class ProteinAbundanceInference {
 
                     for (String value : values) {
 
-                        if (value.equalsIgnoreCase("null") | value.equalsIgnoreCase("nan")) {
+                        if (value.equalsIgnoreCase("null") || value.equalsIgnoreCase("nan")) {
                             ++ass_no_invalid;
                         }
                     }
@@ -666,12 +676,14 @@ public final class ProteinAbundanceInference {
      * another sequence in userParam
      *
      * @param in_file_um: unmarshalled mzq input file
-     * @param pepAssVal: peptide assay values
+     * @param pepAssVal:  peptide assay values
+     *
      * @return proteinToPeptide map
      */
     private Map<String, Set<String>> proteinToPeptide(
             MzQuantMLUnmarshaller in_file_um,
-            Map<String, List<String>> pepAssVal, boolean excludeConflictingPeptides) {
+            Map<String, List<String>> pepAssVal,
+            boolean excludeConflictingPeptides) {
         Set<String> peptideList = pepAssVal.keySet();
         PeptideConsensusList peptideConsensusList = in_file_um.unmarshal(MzQuantMLElement.PeptideConsensusList);
         List<PeptideConsensus> peptideCons = peptideConsensusList.getPeptideConsensus();
@@ -697,7 +709,8 @@ public final class ProteinAbundanceInference {
             pepConRefs.stream().filter((pepConRef) -> !(!peptideList.contains(pepConRef))).forEach((pepConRef) -> {
                 if (!excludeConflictingPeptides) {
                     setOfPeptides.add(pepConRef);
-                } else {
+                }
+                else {
                     // Get the peptide consensus for this ref.
                     Optional<PeptideConsensus> peptideConOptional = peptideCons.parallelStream().filter(p -> p.getId().equalsIgnoreCase(pepConRef)).findAny();
                     if (peptideConOptional.isPresent()) {
@@ -818,13 +831,13 @@ public final class ProteinAbundanceInference {
     /**
      * get the identification of assay quant layer
      *
-     * @param in_file_um - input unmarshalled mzq file
+     * @param in_file_um       - input unmarshalled mzq file
      * @param inputPeptideDTCA - input peptide datatype accession
      *
      * @return - assay quant layer ID
      */
     private static String assayQuantLayerId(MzQuantMLUnmarshaller in_file_um,
-            String inputPeptideDTCA) {
+                                            String inputPeptideDTCA) {
 
         String assayQLID = null;
         PeptideConsensusList pepConList = in_file_um.unmarshal(MzQuantMLElement.PeptideConsensusList);
@@ -845,32 +858,33 @@ public final class ProteinAbundanceInference {
      * output the result (protein groups, assay quant layers) with the mzQuantML
      * standard format
      *
-     * @param mzq - MzQuantML object file
-     * @param assayQLs - assay quant layer list
-     * @param operation - calculation operator
-     * @param uniSetGr - unique set group map
-     * @param sameSetGr - sameset group map
-     * @param subSetGr - subset group map
-     * @param assayQlId - assay quant layer ID
-     * @param inPepQLID - input peptide quant layer ID
-     * @param outRawPQlId - output raw peptide quant layer ID
-     * @param inRawPepQLID - input raw peptide quant layer ID
-     * @param outFile - output mzq file
-     * @param protAbundance - protein abundance
+     * @param mzq              - MzQuantML object file
+     * @param assayQLs         - assay quant layer list
+     * @param operation        - calculation operator
+     * @param uniSetGr         - unique set group map
+     * @param sameSetGr        - sameset group map
+     * @param subSetGr         - subset group map
+     * @param assayQlId        - assay quant layer ID
+     * @param inPepQLID        - input peptide quant layer ID
+     * @param outRawPQlId      - output raw peptide quant layer ID
+     * @param inRawPepQLID     - input raw peptide quant layer ID
+     * @param outFile          - output mzq file
+     * @param protAbundance    - protein abundance
      * @param rawProtAbundance - raw protein abundance
+     *
      * @return - true/false
      */
     private boolean mzqOutput(MzQuantMLUnmarshaller um,
-            MzQuantML mzq, List<QuantLayer<IdOnly>> assayQLs,
-            String operation,
-            Map<String, Set<String>> uniSetGr,
-            Map<String, Set<String>> sameSetGr,
-            Map<String, Set<String>> subSetGr,
-            String assayQlId, String inPepQLID,
-            String outRawPQlId, String inRawPepQLID,
-            String outFile,
-            Map<String, List<String>> protAbundance,
-            Map<String, List<String>> rawProtAbundance) {
+                              MzQuantML mzq, List<QuantLayer<IdOnly>> assayQLs,
+                              String operation,
+                              Map<String, Set<String>> uniSetGr,
+                              Map<String, Set<String>> sameSetGr,
+                              Map<String, Set<String>> subSetGr,
+                              String assayQlId, String inPepQLID,
+                              String outRawPQlId, String inRawPepQLID,
+                              String outFile,
+                              Map<String, List<String>> protAbundance,
+                              Map<String, List<String>> rawProtAbundance) {
 
         boolean flag = true;
 //        Map<String, List<String>> proteinAbundance = ProteinAbundanceCalculation(operation,
@@ -894,11 +908,11 @@ public final class ProteinAbundanceInference {
 
         //create assay quant layers for raw peptide abundances
         flag = assayQuantLayers(protGroupList, assayQLs, outRawPQlId, inRawPepQLID,
-                rawProtAbundance, rawGroupInOrder, outputRawProteinGroupDTAccession, cvParamId, outputRawProteinGroupDTName);
+                                rawProtAbundance, rawGroupInOrder, outputRawProteinGroupDTAccession, cvParamId, outputRawProteinGroupDTName);
 
         //create assay quant layers in ProteinGroupList for normalised peptide abundances
         flag = assayQuantLayers(protGroupList, assayQLs, assayQlId, inPepQLID,
-                protAbundance, groupInOrder, outputProteinGroupDTAccession, cvParamId, outputProteinGroupDTName);
+                                protAbundance, groupInOrder, outputProteinGroupDTAccession, cvParamId, outputProteinGroupDTName);
 
         /**
          * Create the ProteinGroupList in mzq
@@ -923,9 +937,9 @@ public final class ProteinAbundanceInference {
      * calculate protein abundance with the protein grouping result
      *
      * @param operation - calculation operator
-     * @param uniSetGr - unique set group map
+     * @param uniSetGr  - unique set group map
      * @param sameSetGr - sameset group map
-     * @param subSetGr - subset group map
+     * @param subSetGr  - subset group map
      * @param pepAssVal - peptide assay values
      *
      * @return - protein abundance
@@ -992,8 +1006,8 @@ public final class ProteinAbundanceInference {
                     /**
                      * set NaN/Null to zero
                      */
-                    double temp = (componentValue.equals("NaN") | componentValue.equals("nan")
-                            | componentValue.equals("Null") | componentValue.equals("null"))
+                    double temp = (componentValue.equals("NaN") || componentValue.equals("nan")
+                            || componentValue.equals("Null") || componentValue.equals("null"))
                             ? Double.parseDouble("0") : Double.parseDouble(componentValue);
 //                        sumOfpepValues[j] = sumOfpepValues[j] + temp;
                     matrixPepValue[tempNo][j] = temp;
@@ -1006,12 +1020,14 @@ public final class ProteinAbundanceInference {
              */
             if (operation.equals("sum")) {
                 operationPepValue = Utils.columnSum(matrixPepValue);
-            } else if (operation.equals("mean")) {
+            }
+            else if (operation.equals("mean")) {
                 operationPepValue = Utils.columnSum(matrixPepValue);
                 for (int i = 0; i < operationPepValue.length; i++) {
                     operationPepValue[i] = operationPepValue[i] / numPeptides;
                 }
-            } else if (operation.equals("median")) {
+            }
+            else if (operation.equals("median")) {
                 double[] tmp = new double[numPeptides];
                 for (int j = 0; j < operationPepValue.length; j++) {
                     for (int i = 0; i < numPeptides; i++) {
@@ -1042,7 +1058,7 @@ public final class ProteinAbundanceInference {
         for (Map.Entry<String, Set<String>> entry : sameSetGr.entrySet()) {
 
 //            groupId++;
-            String pepSelect = entry.getValue().iterator().next().toString();
+            String pepSelect = entry.getValue().iterator().next();
 
             List<String> assayValTmp = pepAssVal.get(pepSelect);
 
@@ -1094,12 +1110,14 @@ public final class ProteinAbundanceInference {
              */
             if (operation.equals("sum")) {
                 operationPepValue = Utils.columnSum(matrixPepValue);
-            } else if (operation.equals("mean")) {
+            }
+            else if (operation.equals("mean")) {
                 operationPepValue = Utils.columnSum(matrixPepValue);
                 for (int i = 0; i < operationPepValue.length; i++) {
                     operationPepValue[i] = operationPepValue[i] / numPeptides;
                 }
-            } else if (operation.equals("median")) {
+            }
+            else if (operation.equals("median")) {
                 double[] tmp = new double[numPeptides];
                 for (int j = 0; j < operationPepValue.length; j++) {
                     for (int i = 0; i < numPeptides; i++) {
@@ -1130,7 +1148,7 @@ public final class ProteinAbundanceInference {
         for (Map.Entry<String, Set<String>> entry : subSetGr.entrySet()) {
 
 //            groupId++;
-            String pepSelect = entry.getValue().iterator().next().toString();
+            String pepSelect = entry.getValue().iterator().next();
 //            HashSet<String> proteins = peptideToProtein.get(pepSelect);
             List<String> assayValTmp = pepAssVal.get(pepSelect);
             //number of assay values in each peptide
@@ -1181,12 +1199,14 @@ public final class ProteinAbundanceInference {
              */
             if (operation.equals("sum")) {
                 operationPepValue = Utils.columnSum(matrixPepValue);
-            } else if (operation.equals("mean")) {
+            }
+            else if (operation.equals("mean")) {
                 operationPepValue = Utils.columnSum(matrixPepValue);
                 for (int i = 0; i < operationPepValue.length; i++) {
                     operationPepValue[i] = operationPepValue[i] / numPeptides;
                 }
-            } else if (operation.equals("median")) {
+            }
+            else if (operation.equals("median")) {
                 double[] tmp = new double[numPeptides];
                 for (int j = 0; j < operationPepValue.length; j++) {
                     for (int i = 0; i < numPeptides; i++) {
@@ -1214,13 +1234,13 @@ public final class ProteinAbundanceInference {
     /**
      * get protein group list from the map of ordered groups
      *
-     * @param protGL - protein group list
+     * @param protGL  - protein group list
      * @param groupIO - ordered protein by alphabet
      *
      * @return - protein group
      */
     private void proteinGroups(ProteinGroupList protGL,
-            Map<String, String> groupIO) {
+                               Map<String, String> groupIO) {
         List<ProteinGroup> protGrs = protGL.getProteinGroup();
         for (int i = 1; i < groupIO.size() + 1; i++) {
             for (Map.Entry<String, String> entry : groupIO.entrySet()) {
@@ -1249,8 +1269,8 @@ public final class ProteinAbundanceInference {
                     String anchorProtein = null;
 
                     if (proteinGroupIdOri.contains("UniSetGroup")) {
-                        String pepSel = uniSetGroup.get(proteinGroupIdOri).iterator().next().toString();
-                        String protId = peptideToProtein.get(pepSel).iterator().next().toString();
+                        String pepSel = uniSetGroup.get(proteinGroupIdOri).iterator().next();
+                        String protId = peptideToProtein.get(pepSel).iterator().next();
 
                         ProteinRef protRef = new ProteinRef();
                         Protein prot = new Protein();
@@ -1282,7 +1302,7 @@ public final class ProteinAbundanceInference {
                     }
 
                     if (proteinGroupIdOri.contains("SameSetGroup")) {
-                        String pepSel = sameSetGroup.get(proteinGroupIdOri).iterator().next().toString();
+                        String pepSel = sameSetGroup.get(proteinGroupIdOri).iterator().next();
 //                        System.out.println("peptide selection: " + pepSel);
                         Set<String> protsId = peptideToProtein.get(pepSel);
                         //sort proteins
@@ -1298,7 +1318,8 @@ public final class ProteinAbundanceInference {
                             //get the first protein
                             if (sig == 0) {
                                 sig = 1;
-                            } else {
+                            }
+                            else {
                                 sig = -1;
                             }
                             ProteinRef protRef = new ProteinRef();
@@ -1314,7 +1335,8 @@ public final class ProteinAbundanceInference {
 //                            cvParam.setAccession(prot.getAccession());
                             if (sig == 1) {
                                 cvParam.setAccession("MS:1001591");
-                            } else {
+                            }
+                            else {
                                 cvParam.setAccession("MS:1001594");
                             }
 //                            System.out.println("Protein Accession: " + prot.getAccession());
@@ -1328,7 +1350,8 @@ public final class ProteinAbundanceInference {
 //                            cvParam.setName(anchorProtein);
                             if (sig == 1) {
                                 cvParam.setName("anchor protein");
-                            } else {
+                            }
+                            else {
                                 cvParam.setName("sequence same-set protein");
                             }
                             CvParamRef cvParamRef = new CvParamRef();
@@ -1339,7 +1362,7 @@ public final class ProteinAbundanceInference {
                     }
 
                     if (proteinGroupIdOri.contains("SubSetGroup")) {
-                        String pepSel = subSetGroup.get(proteinGroupIdOri).iterator().next().toString();
+                        String pepSel = subSetGroup.get(proteinGroupIdOri).iterator().next();
 
                         Set<String> protsId = peptideToProtein.get(pepSel);
                         //sort proteins
@@ -1376,7 +1399,8 @@ public final class ProteinAbundanceInference {
 //                            cvParam.setAccession(prot.getAccession());
                             if (protId.equals(anchorProtein)) {
                                 cvParam.setAccession("MS:1001591");
-                            } else {
+                            }
+                            else {
                                 cvParam.setAccession("MS:1001596");
                             }
 //                            System.out.println("Protein Accession: " + prot.getAccession());
@@ -1387,7 +1411,8 @@ public final class ProteinAbundanceInference {
 //                            cvParam.setName(anchorProtein);
                             if (protId.equals(anchorProtein)) {
                                 cvParam.setName("anchor protein");
-                            } else {
+                            }
+                            else {
                                 cvParam.setName("sequence sub-set protein");
                             }
                             CvParamRef cvParamRef = new CvParamRef();
@@ -1406,23 +1431,23 @@ public final class ProteinAbundanceInference {
      * create assay quant layers using the information of CvParams, calculated
      * abundances and grouping results.
      *
-     * @param protGroList - protein group list
-     * @param aQLs - assay quant layers
-     * @param assayQI - assay quant layer ID
+     * @param protGroList  - protein group list
+     * @param aQLs         - assay quant layers
+     * @param assayQI      - assay quant layer ID
      * @param inputPepDTCA - input peptide datatype accession
-     * @param protAbun - protein abundance
-     * @param groupInOrd - ordered protein group
+     * @param protAbun     - protein abundance
+     * @param groupInOrd   - ordered protein group
      *
      * @return a boolean value for confirming whether the layers of assay quant
-     * are created correctly
+     *         are created correctly
      */
     private boolean assayQuantLayers(ProteinGroupList protGroList,
-            List<QuantLayer<IdOnly>> aQLs,
-            String assayQI,
-            String inPQLID,
-            Map<String, List<String>> protAbun,
-            Map<String, String> groupInOrd,
-            String cvPA, String cvPI, String cvPN) {
+                                     List<QuantLayer<IdOnly>> aQLs,
+                                     String assayQI,
+                                     String inPQLID,
+                                     Map<String, List<String>> protAbun,
+                                     Map<String, String> groupInOrd,
+                                     String cvPA, String cvPI, String cvPN) {
         boolean first_layer = false;
         List<QuantLayer<IdOnly>> assayQuantLayers = protGroList.getAssayQuantLayer();
         QuantLayer assayQuantLayer = new QuantLayer();
@@ -1462,9 +1487,8 @@ public final class ProteinAbundanceInference {
             }
         }
         if (first_layer == false) {
-            System.out.println("The desired assay quant layer is not found!!! "
+            throw new IllegalStateException("The desired assay quant layer is not found!!! "
                     + "Please check the input data type accession.");
-            exit(1);
         }
 
         /**

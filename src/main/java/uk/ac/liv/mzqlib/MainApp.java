@@ -14,11 +14,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -32,14 +34,17 @@ import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.*;
 import javafx.stage.*;
+
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.xml.bind.JAXBException;
+
 import org.apache.commons.lang3.math.NumberUtils;
 import org.controlsfx.dialog.ProgressDialog;
 
 import org.rosuda.JRI.Rengine;
+
 import uk.ac.liv.pgb.jmzqml.MzQuantMLElement;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.DataMatrix;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.IdOnly;
@@ -124,11 +129,11 @@ public class MainApp extends Application {
     }
 
     private String getResourceFileText(String resourceRelativePath) {
+        BufferedReader reader;
         try {
             InputStream stream = getClass().getClassLoader().getResourceAsStream(resourceRelativePath);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+            reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
             List<String> lines = readAllLines(reader);
-            reader.close();
             String joinedLines = String.join("\n", lines);
             return joinedLines;
         }
@@ -146,6 +151,7 @@ public class MainApp extends Application {
         while ((line = reader.readLine()) != null) {
             lines.add(line);
         }
+        reader.close();
 
         return lines;
     }
@@ -690,7 +696,7 @@ public class MainApp extends Application {
                 series.getNode().setStyle("-fx-stroke: red;");
 
                 series.setName(protGrpRow.getObjectValue().get());
-                List<StringProperty> values = protGrpRow.Values();
+                List<StringProperty> values = protGrpRow.values();
                 int i = 1;
                 for (StringProperty value : values) {
                     if (NumberUtils.isNumber(value.get())) {
@@ -713,13 +719,13 @@ public class MainApp extends Application {
                     List<QuantLayer<IdOnly>> assayQLs = peptideList.getAssayQuantLayer();
 
                     for (QuantLayer assayQL : assayQLs) {
-                        if (selectedQL.getDataType().toLowerCase().contains("normalised")
-                                && assayQL.getDataType().getCvParam().getName().toLowerCase().contains("normalised")) {
+                        if (selectedQL.getDataType().toLowerCase(Locale.ENGLISH).contains("normalised")
+                                && assayQL.getDataType().getCvParam().getName().toLowerCase(Locale.ENGLISH).contains("normalised")) {
                             peptideDM = assayQL.getDataMatrix();
                             break;
                         }
-                        if (selectedQL.getDataType().toLowerCase().contains("raw")
-                                && assayQL.getDataType().getCvParam().getName().toLowerCase().contains("raw")) {
+                        if (selectedQL.getDataType().toLowerCase(Locale.ENGLISH).contains("raw")
+                                && assayQL.getDataType().getCvParam().getName().toLowerCase(Locale.ENGLISH).contains("raw")) {
                             peptideDM = assayQL.getDataMatrix();
                             break;
                         }
@@ -787,7 +793,7 @@ public class MainApp extends Application {
                 series.getNode().setStyle("-fx-stroke: red;");
 
                 series.setName(protRow.getObjectValue().get());
-                List<StringProperty> values = protRow.Values();
+                List<StringProperty> values = protRow.values();
                 int i = 1;
                 for (StringProperty value : values) {
                     if (NumberUtils.isNumber(value.get())) {
@@ -823,7 +829,7 @@ public class MainApp extends Application {
                     XYChart.Series series = new XYChart.Series();
                     lineChart.getData().add(series);
                     series.setName(row.getObjectValue().get());
-                    List<StringProperty> values = row.Values();
+                    List<StringProperty> values = row.values();
                     int i = 1;
                     for (StringProperty value : values) {
                         if (NumberUtils.isNumber(value.get())) {
@@ -1156,8 +1162,8 @@ public class MainApp extends Application {
     }
 
     protected Alert exceptionDialogCreate(String title,
-                                        String content,
-                                        Throwable exception) {
+                                          String content,
+                                          Throwable exception) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(null);

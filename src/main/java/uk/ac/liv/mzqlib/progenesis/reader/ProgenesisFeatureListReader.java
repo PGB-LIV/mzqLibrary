@@ -79,8 +79,8 @@ public class ProgenesisFeatureListReader implements Closeable {
     private TIntDoubleMap scoreMap = new TIntDoubleHashMap();
     private TIntObjectMap<String> modificationMap = new TIntObjectHashMap<>();
     //
-    private String headingRow2 = new String();
-    private String headingRow3 = new String();
+    private String headingRow2 = "";
+    private String headingRow3 = "";
 
     /**
      * Constructor of ProgenesisFeatureListReader.

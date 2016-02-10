@@ -45,8 +45,8 @@ public class ProgenMzquantmlConverter {
     private static final Boolean PeptideLevelQuantitation = Boolean.TRUE;
     private static final Boolean ProteinLevelQuantitation = Boolean.FALSE;
     private static final Boolean ProteinGroupLevelQuantitation = Boolean.TRUE;
-    private final String RAW_ONLY = "raw";
-    private final String NORM_ONLY = "norm";
+    private static final String RAW_ONLY = "raw";
+    private static final String NORM_ONLY = "norm";
     //private final String RAW_PLUS_NORM = "both";
     //
     private static final String CvIDPSIMS = "PSI-MS";
@@ -60,20 +60,20 @@ public class ProgenMzquantmlConverter {
 
     // MzQuantML elements
     private CvList cvList = null;
-    private AuditCollection ac = null;
+    private AuditCollection ac;
     private AnalysisSummary as = null;
     private InputFiles inputFiles = null;
     private SoftwareList softList = null;
-    private DataProcessingList dpList = null;
+    private DataProcessingList dpList;
     private List<BibliographicReference> brList = null;
     private AssayList assayList = null;
     private StudyVariableList svList = null;
-    private RatioList ratioList = null;
+    //private RatioList ratioList = null;
     private ProteinGroupList protGrpList = null;
     private ProteinList protList = null;
     private List<PeptideConsensusList> pepConListList = null;
     private List<FeatureList> ftListList = null;
-    private SmallMoleculeList smallMolList = null;
+    private SmallMoleculeList smallMolList;
 
     //
     final DecimalFormat format = new DecimalFormat("#.###");
@@ -288,7 +288,7 @@ public class ProgenMzquantmlConverter {
         if (!idFn.isEmpty()) {
             IdentificationFile idFile = new IdentificationFile();
             idFile.setId("idfile_1");
-            idFile.setName(idFn.substring(idFn.lastIndexOf("\\") + 1));
+            idFile.setName(idFn.substring(idFn.lastIndexOf('\\') + 1));
             idFile.setSearchDatabase(db);
             idFile.setLocation(idFn);
             idFileList.add(idFile);
@@ -307,12 +307,13 @@ public class ProgenMzquantmlConverter {
                 psmidModMap.put(nextLine[4], nextLine[11]);
                 psmidChrMap.put(nextLine[4], nextLine[9]);
                 psmidMzMap.put(nextLine[4], nextLine[7]); //Calc m/z
-                psmidAssMap.put(nextLine[4], nextLine[2].substring(0, nextLine[2].indexOf(".")));
+                psmidAssMap.put(nextLine[4], nextLine[2].substring(0, nextLine[2].indexOf('.')));
             }
             //build sequence to psm_id(s) map
 
-            for (String psmid : psmidSeqMap.keySet()) {
-                String seq = psmidSeqMap.get(psmid);
+            for (Map.Entry<String, String> psmEntry : psmidSeqMap.entrySet()) {
+                String psmid = psmEntry.getKey();
+                String seq = psmEntry.getValue();
                 if (!seq.isEmpty()) {
                     List<String> psmids = seqPsmidMap.get(seq);
                     if (psmids == null) {
@@ -484,35 +485,6 @@ public class ProgenMzquantmlConverter {
         }
         if (max < proteinList.size()) {
             max = proteinList.size();
-        }
-
-        //test bit
-        FileWriter file = new FileWriter("portein_list.csv");
-        BufferedWriter br = new BufferedWriter(file);
-
-        br.write("protein file protein list, feature file protein list, Selected protein list\n");
-        for (int i = 0; i < max; i++) {
-            if (i < plProteinList.size()) {
-                br.write(plProteinList.get(i) + ", ");
-            }
-            else {
-                br.write(", ");
-            }
-
-            if (i < flProteinList.size()) {
-                br.write(flProteinList.get(i) + ", ");
-            }
-            else {
-                br.write(", ");
-            }
-
-            if (i < proteinArrayList.size()) {
-                br.write(proteinArrayList.get(i) + "\n");
-            }
-            else {
-                br.write("\n");
-            }
-
         }
 
         /*
@@ -1273,8 +1245,8 @@ public class ProgenMzquantmlConverter {
                             if (modification != null) {
                                 String[] modifications = modification.replace('|', ';').split(";");
                                 for (String mod : modifications) {
-                                    if (mod.toLowerCase().contains("oxidation")) {
-                                        Integer location = Integer.valueOf(mod.substring(mod.indexOf("[") + 1, mod.indexOf("]")));
+                                    if (mod.toLowerCase(Locale.ENGLISH).contains("oxidation")) {
+                                        Integer location = Integer.valueOf(mod.substring(mod.indexOf('[') + 1, mod.indexOf(']')));
                                         Modification modObj = new Modification();
                                         modObj.setMonoisotopicMassDelta(15.994915);
                                         modObj.setLocation(location);
@@ -1564,10 +1536,10 @@ public class ProgenMzquantmlConverter {
                 mzqMsh.marshall(cvList, writer);
                 writer.write("\n");
             }
-            if (ac != null) {
-                mzqMsh.marshall(ac, writer);
-                writer.write("\n");
-            }
+//            if (ac != null) {
+//                mzqMsh.marshall(ac, writer);
+//                writer.write("\n");
+//            }
             if (as != null) {
                 mzqMsh.marshall(as, writer);
                 writer.write("\n");
@@ -1580,10 +1552,10 @@ public class ProgenMzquantmlConverter {
                 mzqMsh.marshall(softList, writer);
                 writer.write("\n");
             }
-            if (dpList != null) {
-                mzqMsh.marshall(dpList, writer);
-                writer.write("\n");
-            }
+//            if (dpList != null) {
+//                mzqMsh.marshall(dpList, writer);
+//                writer.write("\n");
+//            }
             if (brList != null) {
                 for (BibliographicReference bibRef : brList) {
                     mzqMsh.marshall(bibRef, writer);
@@ -1619,10 +1591,10 @@ public class ProgenMzquantmlConverter {
                     writer.write("\n");
                 }
             }
-            if (smallMolList != null) {
-                mzqMsh.marshall(smallMolList, writer);
-                writer.write("\n");
-            }
+//            if (smallMolList != null) {
+//                mzqMsh.marshall(smallMolList, writer);
+//                writer.write("\n");
+//            }
 
             writer.write(MzQuantMLMarshaller.createMzQuantMLClosingTag());
         }

@@ -324,9 +324,9 @@ public class PepProtAbundanceNormalisation {
             throw new IllegalStateException("Initialisation is needed!");
         }
 
-        if (normalisedLevel == "feature") {
+        if ("feature".equals(normalisedLevel)) {
             assayVals = featureAssayValues;
-        } else if (normalisedLevel == "peptide") {
+        } else if ("peptide".equals(normalisedLevel)) {
             assayVals = peptideAssayValues;
         }
 
@@ -562,10 +562,10 @@ public class PepProtAbundanceNormalisation {
      * @param in_file_um - input file Java object
      * @return mzq instance
      */
-    private MzQuantML mzq(MzQuantMLUnmarshaller in_file_um) {
-        MzQuantML mzq = in_file_um.unmarshal(MzQuantMLElement.MzQuantML);
-        return mzq;
-    }
+//    private MzQuantML mzq(MzQuantMLUnmarshaller in_file_um) {
+//        MzQuantML mzq = in_file_um.unmarshal(MzQuantMLElement.MzQuantML);
+//        return mzq;
+//    }
 
     /**
      * obtain the peptide assay quant values
@@ -981,7 +981,7 @@ public class PepProtAbundanceNormalisation {
 //                    break;
 //                }
                 //if the component is "null", it is set to zero
-                if (vj.equalsIgnoreCase("null") | vj.equalsIgnoreCase("nan")) {
+                if (vj.equalsIgnoreCase("null") || vj.equalsIgnoreCase("nan")) {
                     vj = "null";
                 }
 

@@ -12,27 +12,27 @@ import java.util.HashSet;
  * @author Jun Fan@cranfield
  */
 public class MzqDataControl {
-    
-    private HashMap<Integer,MzqDataControlElement> pgLevel = new HashMap<>();
-    private HashMap<Integer,MzqDataControlElement> proteinLevel = new HashMap<>();
-    private HashMap<Integer,MzqDataControlElement> peptideLevel = new HashMap<>();
-    private HashMap<Integer,MzqDataControlElement> featureLevel = new HashMap<>();
-    
-    public void addElement(int level, int type, String element){
+
+    private HashMap<Integer, MzqDataControlElement> pgLevel = new HashMap<>();
+    private HashMap<Integer, MzqDataControlElement> proteinLevel = new HashMap<>();
+    private HashMap<Integer, MzqDataControlElement> peptideLevel = new HashMap<>();
+    private HashMap<Integer, MzqDataControlElement> featureLevel = new HashMap<>();
+
+    public void addElement(int level, int type, String element) {
         getControlElement(level, type).addElement(element);
     }
-    
-    public boolean isRequired(int level, int type, String quantityName){
+
+    public boolean isRequired(int level, int type, String quantityName) {
         return getControlElement(level, type).isRequired(quantityName);
     }
 
-    public HashSet<String> getElements(int level, int type){
-        return getControlElement(level,type).getElements();
+    public HashSet<String> getElements(int level, int type) {
+        return getControlElement(level, type).getElements();
     }
-            
-    private MzqDataControlElement getControlElement(int level, int type){
-        HashMap<Integer,MzqDataControlElement> map = null;
-        switch(level){
+
+    private MzqDataControlElement getControlElement(int level, int type) {
+        HashMap<Integer, MzqDataControlElement> map = null;
+        switch (level) {
             case MzqData.PROTEIN_GROUP:
                 map = pgLevel;
                 break;
@@ -45,23 +45,27 @@ public class MzqDataControl {
             case MzqData.FEATURE:
                 map = featureLevel;
                 break;
+            default:
+                break;
         }
-        if(map == null) {
-            System.out.println("Unrecognized quantitation level, program exits in MzqDataControl.java");
-            System.exit(0);
+        if (map == null) {
+            throw new IllegalStateException("Unrecognized quantitation level, program exits in MzqDataControl.java");
         }
-        
-        if(!map.containsKey(type)){
-             MzqDataControlElement controlElement = new MzqDataControlElement();
-             map.put(type, controlElement);
+
+        if (!map.containsKey(type)) {
+            MzqDataControlElement controlElement = new MzqDataControlElement();
+            map.put(type, controlElement);
         }
         return map.get(type);
     }
+
 }
 
-class MzqDataControlElement{
+class MzqDataControlElement {
+
     private HashSet<String> elements = new HashSet<>();
-    boolean isRequired(String quantityName){
+
+    boolean isRequired(String quantityName) {
         if (elements.isEmpty()) {
             return false;
         }
@@ -70,12 +74,13 @@ class MzqDataControlElement{
         }
         return false;
     }
-    
-    HashSet<String> getElements(){
+
+    HashSet<String> getElements() {
         return elements;
     }
-    
-    void addElement(String element){
+
+    void addElement(String element) {
         elements.add(element);
     }
+
 }

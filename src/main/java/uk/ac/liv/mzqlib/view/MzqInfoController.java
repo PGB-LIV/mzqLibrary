@@ -133,7 +133,7 @@ public class MzqInfoController {
             for (StringProperty colName : assayQL.getColumnNames()) {
                 final int j = i;
                 TableColumn<MzqDataMatrixRow, String> col = new TableColumn(colName.getValue());
-                col.setCellValueFactory(cellData -> cellData.getValue().Value(j));
+                col.setCellValueFactory(cellData -> cellData.getValue().value(j));
                 i++;
                 dataMatrixTable.getColumns().add(col);
             }

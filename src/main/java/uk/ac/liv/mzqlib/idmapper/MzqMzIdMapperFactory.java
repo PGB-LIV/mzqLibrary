@@ -9,11 +9,14 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.xml.bind.JAXBException;
+
 import uk.ac.ebi.jmzidml.model.mzidml.*;
 import uk.ac.liv.pgb.jmzqml.MzQuantMLElement;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.*;
@@ -92,7 +95,7 @@ public class MzqMzIdMapperFactory {
       for (int i = 0; i < rawToMzidMapArray.length; i++) {
         String rawFile = rawToMzidMapArray[i].trim();
         String mzidFile = rawToMzidMapArray[i + 1].trim();
-        if (mzidFile.toLowerCase().endsWith("mzid")) {
+        if (mzidFile.toLowerCase(Locale.ENGLISH).endsWith("mzid")) {
           rawToMzidMap.put(rawFile, mzidFile);
         } else {
           throw new RuntimeException("There is a non mzid file in the argument.");
@@ -127,7 +130,7 @@ public class MzqMzIdMapperFactory {
     return new MzqMzIdMapperImpl(mzqUm, rawToMzidMap, msTolerance);
   }
 
-  private class MzqMzIdMapperImpl implements MzqMzIdMapper {
+  private static class MzqMzIdMapperImpl implements MzqMzIdMapper {
 
     private MzqProcessor mzqProc = null;
     //private File mzqFile = null;
@@ -261,7 +264,7 @@ public class MzqMzIdMapperFactory {
             //Peptide peptide = siiData.getUnmarshaller().unmarshal(uk.ac.ebi.jmzidml.model.mzidml.Peptide.class, siiData.getPeptideRef());
             String seq = pepModString;
             if (pepModString.contains("_")) {
-              seq = pepModString.substring(0, pepModString.indexOf("_"));
+              seq = pepModString.substring(0, pepModString.indexOf('_'));
             }
 //                        if (!peptide.getPeptideSequence().equals(seq)) {
 //                            System.out.println("unequal peptide sequence: from pepModString \"" + seq + "\"; from siiData \"" + peptide.getPeptideSequence() + "\".");
@@ -450,8 +453,8 @@ public class MzqMzIdMapperFactory {
 
       // retrieve every attributes and elements from the mzQuantML file
       String mzqId = mzqUm.getMzQuantMLId();
-      String mzqName = mzqUm.getMzQuantMLName();
-      String mzqVersion = mzqUm.getMzQuantMLVersion();
+      //String mzqName = mzqUm.getMzQuantMLName();
+      //String mzqVersion = mzqUm.getMzQuantMLVersion();
 
       // three ways of unmarshalling an mzQuantML element: 
       CvList cvList = mzqUm.unmarshal(uk.ac.liv.pgb.jmzqml.model.mzqml.CvList.class); //1. class name
@@ -466,12 +469,10 @@ public class MzqMzIdMapperFactory {
       AssayList assayList = mzqUm.unmarshal(MzQuantMLElement.AssayList);
       StudyVariableList svList = mzqUm.unmarshal(MzQuantMLElement.StudyVariableList);
       RatioList ratioList = mzqUm.unmarshal(MzQuantMLElement.RatioList);
-      ProteinGroupList protGrpList = mzqUm.unmarshal(MzQuantMLElement.ProteinGroupList);
+      //ProteinGroupList protGrpList = mzqUm.unmarshal(MzQuantMLElement.ProteinGroupList);
       ProteinList protList = mzqUm.unmarshal(MzQuantMLElement.ProteinList);
       SmallMoleculeList smallMolList = mzqUm.unmarshal(MzQuantMLElement.SmallMoleculeList);
       Iterator<FeatureList> ftListIter = mzqUm.unmarshalCollectionFromXpath(MzQuantMLElement.FeatureList);
-
-      MzQuantMLMarshaller marsh = new MzQuantMLMarshaller();
 
       //build a mzid file name to mzid file id map
       IdentificationFiles idFiles = new IdentificationFiles();

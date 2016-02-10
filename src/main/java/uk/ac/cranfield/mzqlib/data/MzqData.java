@@ -279,6 +279,8 @@ public class MzqData {
             case FEATURE:
                 quantObj = unsolvedFeatures.get(row.getObjectRef());
                 break;
+            default:
+                break;
         }
         return quantObj;
     }

@@ -88,22 +88,22 @@ public class Mzq {
         /**
          * Feature charge
          */
-        public String charge;
+        private String charge;
 
         /**
          * Feature ID
          */
-        public String ftId;
+        private String ftId;
 
         /**
          * Feature m/z
          */
-        public double mz;
+        private double mz;
 
         /**
          * Feature retention time window
          */
-        public double retWin;
+        private double retWin;
 
         /**
          * Constructor of SimpleFeature by initial values.
@@ -118,6 +118,62 @@ public class Mzq {
             this.ftId = ftId;
             this.mz = mz;
             this.retWin = rw;
+        }
+
+        /**
+         * @return the charge
+         */
+        public String getCharge() {
+            return charge;
+        }
+
+        /**
+         * @param charge the charge to set
+         */
+        public void setCharge(String charge) {
+            this.charge = charge;
+        }
+
+        /**
+         * @return the ftId
+         */
+        public String getFtId() {
+            return ftId;
+        }
+
+        /**
+         * @param ftId the ftId to set
+         */
+        public void setFtId(String ftId) {
+            this.ftId = ftId;
+        }
+
+        /**
+         * @return the mz
+         */
+        public double getMz() {
+            return mz;
+        }
+
+        /**
+         * @param mz the mz to set
+         */
+        public void setMz(double mz) {
+            this.mz = mz;
+        }
+
+        /**
+         * @return the retWin
+         */
+        public double getRetWin() {
+            return retWin;
+        }
+
+        /**
+         * @param retWin the retWin to set
+         */
+        public void setRetWin(double retWin) {
+            this.retWin = retWin;
         }
 
     }

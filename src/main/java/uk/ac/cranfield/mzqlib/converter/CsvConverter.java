@@ -2,11 +2,15 @@
 package uk.ac.cranfield.mzqlib.converter;
 
 import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import uk.ac.cranfield.mzqlib.MzqLib;
 import uk.ac.cranfield.mzqlib.data.FeatureData;
 import uk.ac.cranfield.mzqlib.data.MzqData;
@@ -91,14 +95,23 @@ public class CsvConverter extends GenericConverter {
                 outputGlobal(sb, MzqData.FEATURE, features);
             }
         }
-
+        BufferedWriter out = null;
         try {
-            BufferedWriter out = new BufferedWriter(new FileWriter(outfile));
+            out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outfile), "UTF-8"));
             out.append(sb.toString());
-            out.close();
         }
         catch (IOException e) {
             System.out.println("Problems while closing file " + outfile + "!\n" + e);
+        }
+        finally {
+            if (out != null) {
+                try {
+                    out.close();
+                }
+                catch (IOException ex) {
+                    Logger.getLogger(CsvConverter.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 
@@ -185,24 +198,32 @@ public class CsvConverter extends GenericConverter {
                                         QuantitationLevel obj) {
         switch (level) {
             case MzqData.PROTEIN_GROUP:
-                ProteinGroupData pg = (ProteinGroupData) obj;
-                sb.append(MzqLib.data.getProtein(pg.getAnchorProteinStr()).getAccession());
-                sb.append(SEPARATOR);
-                sb.append(pg.getAmbiguityMemberStr());
+                if (obj instanceof ProteinGroupData) {
+                    ProteinGroupData pg = (ProteinGroupData) obj;
+                    sb.append(MzqLib.data.getProtein(pg.getAnchorProteinStr()).getAccession());
+                    sb.append(SEPARATOR);
+                    sb.append(pg.getAmbiguityMemberStr());
+                }
                 break;
             case MzqData.PROTEIN:
-                sb.append(((ProteinData) obj).getAccession());
+                if (obj instanceof ProteinData) {
+                    sb.append(((ProteinData) obj).getAccession());
+                }
                 break;
             case MzqData.PEPTIDE:
-                PeptideData pepData = (PeptideData) obj;
-                sb.append(pepData.getSeq());
-                sb.append(SEPARATOR);
-                sb.append(Arrays.toString(pepData.getCharges()));
-                sb.append(SEPARATOR);
-                sb.append(pepData.getModifications());
+                if (obj instanceof PeptideData) {
+                    PeptideData pepData = (PeptideData) obj;
+                    sb.append(pepData.getSeq());
+                    sb.append(SEPARATOR);
+                    sb.append(Arrays.toString(pepData.getCharges()));
+                    sb.append(SEPARATOR);
+                    sb.append(pepData.getModifications());
+                }
                 break;
             case MzqData.FEATURE:
-                sb.append(((FeatureData) obj).getId());
+                if (obj instanceof FeatureData) {
+                    sb.append(((FeatureData) obj).getId());
+                }
                 break;
             default:
                 break;

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+
 import uk.ac.cranfield.mzqlib.converter.CsvConverter;
 import uk.ac.cranfield.mzqlib.converter.GenericConverter;
 import uk.ac.cranfield.mzqlib.converter.HtmlConverter;
@@ -28,10 +30,10 @@ import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
 
 public class MzqLib {
 
-    private final int CSV = 1;
-    private final int MZTAB = 2;
-    private final int HTML = 3;
-    private final int XLS = 4;
+    private final static int CSV = 1;
+    private final static int MZTAB = 2;
+    private final static int HTML = 3;
+    private final static int XLS = 4;
     public static MzqData data = new MzqData();
     private HashMap<String, Integer> converterTypeMap = new HashMap<>();
 
@@ -70,7 +72,9 @@ public class MzqLib {
             default:
         }
         data.autoAssign();
-        converter.convert();
+        if (converter != null) {
+            converter.convert();
+        }
     }
 
     private void parseMzq(String mzqFile) {
@@ -126,20 +130,19 @@ public class MzqLib {
         data.setMzqName(unmarshaller.getMzQuantMLName());
     }
 
-    private static void batch() {
-        File dir = new File(".");
-        for (File file : dir.listFiles()) {
-            if (file.getAbsolutePath().endsWith(".mzq")) {
-                System.out.println(file.getAbsolutePath());
-                MzqLib lib = new MzqLib("xls", file.getAbsolutePath(), "");
-                MzqLib lib2 = new MzqLib("csv", file.getAbsolutePath(), "");
-                MzqLib lib3 = new MzqLib("html", file.getAbsolutePath(), "");
-                MzqLib lib4 = new MzqLib("mztab", file.getAbsolutePath(), "");
-            }
-        }
-        //System.exit(0);
-    }
-
+//    private static void batch() {
+//        File dir = new File(".");
+//        for (File file : dir.listFiles()) {
+//            if (file.getAbsolutePath().endsWith(".mzq")) {
+//                System.out.println(file.getAbsolutePath());
+//                MzqLib lib = new MzqLib("xls", file.getAbsolutePath(), "");
+//                MzqLib lib2 = new MzqLib("csv", file.getAbsolutePath(), "");
+//                MzqLib lib3 = new MzqLib("html", file.getAbsolutePath(), "");
+//                MzqLib lib4 = new MzqLib("mztab", file.getAbsolutePath(), "");
+//            }
+//        }
+//        //System.exit(0);
+//    }
     public static void main(String[] args) {
 //        new MzqLib("csv","maxquant-silac.mzq","");
 //        new MzqLib("mztab","iTraq3standards.mzq","");
@@ -148,18 +151,20 @@ public class MzqLib {
 //        new MzqLib("csv","AllAgesPeptideNormalised_proteins_pvalues.mzq","");
 //        new MzqLib("xls","AllAgesPeptideNormalised_proteins_pvalues.mzq","");
         //System.exit(0);
-        batch();
+        //batch();
         int argsLen = args.length;
-        MzqLib lib;
+        //MzqLib lib;
         switch (argsLen) {
 //            case 0://GUI
 //                lib = new MzqLib();
 //                break;
             case 2://command line converter
-                lib = new MzqLib(args[0].toLowerCase(), args[1], "");
+                //lib = 
+                new MzqLib(args[0].toLowerCase(Locale.ENGLISH), args[1], "");
                 break;
             case 3://command line converter
-                lib = new MzqLib(args[0].toLowerCase(), args[1], args[2]);
+                //lib = 
+                new MzqLib(args[0].toLowerCase(Locale.ENGLISH), args[1], args[2]);
                 break;
             default:
                 printUsage();

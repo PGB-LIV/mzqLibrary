@@ -3,11 +3,16 @@ package uk.ac.cranfield.mzqlib.converter;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import uk.ac.cranfield.mzqlib.MzqLib;
 import uk.ac.cranfield.mzqlib.data.FeatureData;
 import uk.ac.cranfield.mzqlib.data.MzqData;
@@ -38,8 +43,9 @@ public class HtmlConverter extends GenericConverter {
         }
         //read in the template from the local file and saved in the hash
         if (templates.isEmpty()) {
+            BufferedReader reader = null;
             try {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(HtmlConverter.class.getClassLoader().getResourceAsStream(TEMPLATE)));
+                reader = new BufferedReader(new InputStreamReader(HtmlConverter.class.getClassLoader().getResourceAsStream(TEMPLATE), "UTF-8"));
                 String line = "";
                 String tag = "";
                 StringBuilder sb = new StringBuilder();
@@ -62,10 +68,19 @@ public class HtmlConverter extends GenericConverter {
                 sb.deleteCharAt(sb.length() - 1);
                 templates.put(tag, sb.toString());
 
-                reader.close();
             }
             catch (IOException ioe) {
                 throw new IllegalStateException("Can not find the template file: " + ioe.getMessage());
+            }
+            finally {
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    }
+                    catch (IOException ex) {
+                        Logger.getLogger(HtmlConverter.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
             }
         }
 
@@ -212,13 +227,23 @@ public class HtmlConverter extends GenericConverter {
         }
         sb.append(templates.get("MAIN_FOOTER"));
 
+        BufferedWriter out = null;
         try {
-            BufferedWriter out = new BufferedWriter(new FileWriter(outfile));
+            out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outfile), "UTF-8"));
             out.append(sb.toString());
-            out.close();
         }
         catch (IOException e) {
-            throw new IllegalStateException("Problems while closing file " + outfile + "!\n" + e);
+            System.out.println("Problems while closing file " + outfile + "!\n" + e);
+        }
+        finally {
+            if (out != null) {
+                try {
+                    out.close();
+                }
+                catch (IOException ex) {
+                    Logger.getLogger(CsvConverter.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
 
     }

@@ -1,3 +1,4 @@
+
 package uk.ac.liv.mzqlib.progenesis.reader;
 
 import au.com.bytecode.opencsv.CSVReader;
@@ -8,6 +9,7 @@ import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntDoubleHashMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.procedure.TIntObjectProcedure;
+
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.IOException;
@@ -16,8 +18,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+
 import org.apache.commons.lang3.math.NumberUtils;
 
 /**
@@ -66,10 +70,10 @@ public class ProgenesisProteinListReader implements Closeable {
         completeMap.put(ROW1, nextLine);
 
         for (int i = 0; i < nextLine.length; i++) {
-            if (nextLine[i].toLowerCase().equals(ProteinListHeaders.NORMALIZED_ABUNDANCE)) {
+            if (nextLine[i].toLowerCase(Locale.ENGLISH).equals(ProteinListHeaders.NORMALIZED_ABUNDANCE)) {
                 normAbStart = i;
             }
-            else if (nextLine[i].toLowerCase().contains(ProteinListHeaders.RAW_ABUNDANCE)) {
+            else if (nextLine[i].toLowerCase(Locale.ENGLISH).contains(ProteinListHeaders.RAW_ABUNDANCE)) {
                 rawAbStart = i;
                 rawAbEnd = rawAbStart + (rawAbStart - normAbStart);
                 break;
@@ -140,7 +144,7 @@ public class ProgenesisProteinListReader implements Closeable {
 
         //get the position of confidence score, anova, max fold change
         for (int i = 0; i < nextLine.length; i++) {
-            String lowerCaseHeader = nextLine[i].trim().toLowerCase();
+            String lowerCaseHeader = nextLine[i].trim().toLowerCase(Locale.ENGLISH);
 
             if (lowerCaseHeader.equals(ProteinListHeaders.CONFIDENCE_SCORE)) {
                 pos_conf = i;
@@ -158,13 +162,13 @@ public class ProgenesisProteinListReader implements Closeable {
         while ((nextLine = reader.readNext()) != null) {
             // Build indexMap, stores proteinAccessions
             indexMap.put(currentK, nextLine[0]);
-            
+
             double conf = getDoubleOrNaN(nextLine[pos_conf]);
             confidenceMap.put(currentK, conf);
 //            if (NumberUtils.isNumber(nextLine[pos_conf])) {
 //                confidenceMap.put(currentK, Double.parseDouble(nextLine[pos_conf]));
 //            }            
-            
+
             double anova = getDoubleOrNaN(nextLine[pos_anova]);
             anovaMap.put(currentK, anova);
 //            if (NumberUtils.isNumber(nextLine[pos_anova])) {
@@ -211,15 +215,16 @@ public class ProgenesisProteinListReader implements Closeable {
             currentK++;
         }
     }
-    
+
     private static double getDoubleOrNaN(String string) {
         double value;
         try {
             value = Double.parseDouble(string);
-        } catch (NumberFormatException ex) {
+        }
+        catch (NumberFormatException ex) {
             value = Double.NaN;
         }
-        
+
         return value;
     }
 
@@ -323,7 +328,7 @@ public class ProgenesisProteinListReader implements Closeable {
         int ret = 1;
 
         for (int i = start + 1; i < line.length; i++) {
-            if (line[i].toLowerCase().equals("")) {
+            if (line[i].toLowerCase(Locale.ENGLISH).equals("")) {
                 ret++;
             }
             else {

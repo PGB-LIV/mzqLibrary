@@ -841,9 +841,10 @@ public class PepProtAbundanceNormalisation {
             double[] logRatioTmp1 = new double[nonZero];
             double[] logRatio_med = new double[nonZero];
             boolean check = true;
-            for (int k = 0; k < nonZero; k++) {
-                logRatioTmp[k] = logRatio[k];
-            }
+//            for (int k = 0; k < nonZero; k++) {
+//                logRatioTmp[k] = logRatio[k];
+//            }
+            System.arraycopy(logRatio, 0, logRatioTmp, 0, logRatio.length);
 
             while (true) {
 //                System.out.println("log ratio vector: " + Arrays.toString(logRatio));
@@ -873,9 +874,10 @@ public class PepProtAbundanceNormalisation {
 
                 logRatioTmp = (double[]) Utils.resizeArray(logRatioTmp, nonZeroTmp);
                 logRatio_med = (double[]) Utils.resizeArray(logRatio_med, nonZeroTmp);
-                for (int i = 0; i < nonZeroTmp; i++) {
-                    logRatioTmp[i] = logRatioTmp1[i];
-                }
+//                for (int i = 0; i < nonZeroTmp; i++) {
+//                    logRatioTmp[i] = logRatioTmp1[i];
+//                }
+                System.arraycopy(logRatioTmp1, 0, logRatioTmp, 0, logRatioTmp1.length);
 
                 logRatioTmp1 = (double[]) Utils.resizeArray(logRatioTmp1, nonZeroTmp);
                 nonZero = nonZeroTmp;
@@ -1144,8 +1146,7 @@ public class PepProtAbundanceNormalisation {
             /**
              * Create the part of DataMatrix
              */
-            DataMatrix dm = new DataMatrix() {
-            };
+            DataMatrix dm = new DataMatrix();
 
             // make the records in order when outputing
             Map<String, List<String>> treeMap = new TreeMap<String, List<String>>();
@@ -1213,7 +1214,7 @@ public class PepProtAbundanceNormalisation {
         }
     }
 
-    public class ScaleFactorCalculationResult {
+    public static class ScaleFactorCalculationResult {
 
         private final int referenceNumber;
         private final List<String> scalingFactors;

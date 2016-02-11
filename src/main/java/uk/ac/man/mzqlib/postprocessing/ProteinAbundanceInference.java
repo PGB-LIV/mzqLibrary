@@ -486,9 +486,7 @@ public final class ProteinAbundanceInference {
         boolean flag = true;
         String inputAssayQLID = "";
         String inputRawAssayQLID = "";
-        Map<String, List<String>> peptideRawAssayValues = new HashMap<>();
-
-        peptideRawAssayValues = peptideAssayValues(infile_um, inputRawDataTypeAccession);
+        Map<String, List<String>> peptideRawAssayValues = peptideAssayValues(infile_um, inputRawDataTypeAccession);
 
         peptideAssayValues = peptideValidAssayValues(infile_um, inputDataTypeAccession);
 
@@ -536,8 +534,7 @@ public final class ProteinAbundanceInference {
         MzQuantML mzq = um.unmarshal(MzQuantMLElement.MzQuantML);
         ProteinGroupList protGrList = um.unmarshal(MzQuantMLElement.ProteinGroupList);
         if (protGrList != null) {
-            protGrList = null;
-            mzq.setProteinGroupList(protGrList);
+            mzq.setProteinGroupList(null);
 
             MzQuantMLMarshaller marshaller = new MzQuantMLMarshaller(in_file);
             marshaller.marshall(mzq);
@@ -655,7 +652,7 @@ public final class ProteinAbundanceInference {
                         }
                     }
 
-                    if (ass_no_invalid < (int) Math.round(ass_size / 2)) {
+                    if (ass_no_invalid < (int) Math.round(ass_size / 2.0)) {
                         peptideAV.put(peptideRef, values);
                     }
 
@@ -907,11 +904,11 @@ public final class ProteinAbundanceInference {
         proteinGroups(protGroupList, groupInOrder);
 
         //create assay quant layers for raw peptide abundances
-        flag = assayQuantLayers(protGroupList, assayQLs, outRawPQlId, inRawPepQLID,
+        assayQuantLayers(protGroupList, assayQLs, outRawPQlId, inRawPepQLID,
                                 rawProtAbundance, rawGroupInOrder, outputRawProteinGroupDTAccession, cvParamId, outputRawProteinGroupDTName);
 
         //create assay quant layers in ProteinGroupList for normalised peptide abundances
-        flag = assayQuantLayers(protGroupList, assayQLs, assayQlId, inPepQLID,
+        assayQuantLayers(protGroupList, assayQLs, assayQlId, inPepQLID,
                                 protAbundance, groupInOrder, outputProteinGroupDTAccession, cvParamId, outputProteinGroupDTName);
 
         /**
@@ -1098,7 +1095,7 @@ public final class ProteinAbundanceInference {
                     /**
                      * set NaN/Null to zero
                      */
-                    double temp = (componentValue.equalsIgnoreCase("nan") | componentValue.equalsIgnoreCase("null"))
+                    double temp = (componentValue.equalsIgnoreCase("nan") || componentValue.equalsIgnoreCase("null"))
                             ? Double.parseDouble("0") : Double.parseDouble(componentValue);
                     matrixPepValue[tempNo][j] = temp;
                 }
@@ -1186,8 +1183,8 @@ public final class ProteinAbundanceInference {
                     /**
                      * set NaN/Null to zero
                      */
-                    double temp = (componentValue.equals("NaN") | componentValue.equals("nan")
-                            | componentValue.equals("Null") | componentValue.equals("null"))
+                    double temp = (componentValue.equals("NaN") || componentValue.equals("nan")
+                            || componentValue.equals("Null") || componentValue.equals("null"))
                             ? Double.parseDouble("0") : Double.parseDouble(componentValue);
                     matrixPepValue[tempNo][j] = temp;
                 }
@@ -1494,8 +1491,7 @@ public final class ProteinAbundanceInference {
         /**
          * Create the part of DataMatrix
          */
-        DataMatrix dm = new DataMatrix() {
-        };
+        DataMatrix dm = new DataMatrix();
 
         /**
          * make the records in order when outputing

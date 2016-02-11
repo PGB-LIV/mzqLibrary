@@ -17,6 +17,7 @@ import gnu.trove.procedure.TIntObjectProcedure;
 import gnu.trove.set.TDoubleSet;
 import gnu.trove.set.TIntSet;
 import gnu.trove.set.hash.TIntHashSet;
+
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.IOException;
@@ -25,8 +26,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+
 import org.apache.commons.lang3.math.NumberUtils;
 
 /**
@@ -102,17 +105,17 @@ public class ProgenesisFeatureListReader implements Closeable {
             completeMap.put(ROW1, nextLine);
 
             for (int i = 0; i < nextLine.length; i++) {
-                if (nextLine[i].toLowerCase().equals(FeatureListHeaders.NORMALIZED_ABUNDANCE)) {
+                if (nextLine[i].toLowerCase(Locale.ENGLISH).equals(FeatureListHeaders.NORMALIZED_ABUNDANCE)) {
                     normAbStart = i;
                 }
-                else if (nextLine[i].toLowerCase().contains(FeatureListHeaders.RAW_ABUNDANCE)) {
+                else if (nextLine[i].toLowerCase(Locale.ENGLISH).contains(FeatureListHeaders.RAW_ABUNDANCE)) {
                     rawAbStart = i;
                 }
-                else if (nextLine[i].toLowerCase().contains(FeatureListHeaders.INTENSITY)) {
+                else if (nextLine[i].toLowerCase(Locale.ENGLISH).contains(FeatureListHeaders.INTENSITY)) {
                     intensityStart = i;
                 }
                 // Column of 'Sample retention time (min)'
-                else if (nextLine[i].toLowerCase().contains(FeatureListHeaders.SAMPLE_RETENTION_TIME)) {
+                else if (nextLine[i].toLowerCase(Locale.ENGLISH).contains(FeatureListHeaders.SAMPLE_RETENTION_TIME)) {
                     retTimeStart = i;
                     break;
                 }
@@ -171,7 +174,7 @@ public class ProgenesisFeatureListReader implements Closeable {
             }
 
             for (int i = 0; i < nextLine.length; i++) {
-                String lowerCaseHeader = nextLine[i].trim().toLowerCase();
+                String lowerCaseHeader = nextLine[i].trim().toLowerCase(Locale.ENGLISH);
 
                 if (lowerCaseHeader.equals(FeatureListHeaders.RETENTION_TIME)) {
                     masterRTPos = i;
@@ -355,7 +358,7 @@ public class ProgenesisFeatureListReader implements Closeable {
     /**
      * Get IndexMap.
      *
-     * 
+     *
      * @return
      */
     public TIntObjectMap<String> getIndexMap() {
@@ -742,7 +745,7 @@ public class ProgenesisFeatureListReader implements Closeable {
         int ret = 1;
 
         for (int i = start + 1; i < line.length; i++) {
-            if (line[i].toLowerCase().equals("")) {
+            if (line[i].toLowerCase(Locale.ENGLISH).equals("")) {
                 ret++;
             }
             else {

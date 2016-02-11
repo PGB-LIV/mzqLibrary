@@ -42,7 +42,6 @@ public class Gzipper {
             if (fos != null) {
                 fos.close();
             }
-
         }
         return outFile;
     }

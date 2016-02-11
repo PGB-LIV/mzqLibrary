@@ -12,7 +12,7 @@ import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
  * @institute University of Liverpool
  * @time 26-Jan-2015 15:34:59
  */
-public abstract class MzqQuantLayer {
+public class MzqQuantLayer {
 
     /**
      * The input MzQuantMLUnmarshaller.

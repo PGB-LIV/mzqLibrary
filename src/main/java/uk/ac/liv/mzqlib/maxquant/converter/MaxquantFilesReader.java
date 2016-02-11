@@ -11,9 +11,11 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -43,7 +45,7 @@ public class MaxquantFilesReader {
     private final File summaryFile;
     private char separator;
     private BufferedReader br;
-    private FileReader rd;
+    private FileInputStream fis;
     private CSVReader csvReader;
     private List<String> assays;
     private List<String> experiments;
@@ -231,8 +233,8 @@ public class MaxquantFilesReader {
                 String nextLine[];
                 multiplicity = 0;
 
-                rd = new FileReader(this.summaryFile);
-                br = new BufferedReader(rd);
+                fis = new FileInputStream(this.summaryFile);
+                br = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
                 csvReader = new CSVReader(br, separator);
 
                 nextLine = csvReader.readNext();
@@ -282,8 +284,8 @@ public class MaxquantFilesReader {
         else {
             try {
                 String[] nextLine;
-                rd = new FileReader(this.experimentalDesignTemplateFile);
-                br = new BufferedReader(rd);
+                fis = new FileInputStream(this.experimentalDesignTemplateFile);
+                br = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
                 csvReader = new CSVReader(br, separator);
 
                 /**
@@ -496,8 +498,8 @@ public class MaxquantFilesReader {
         }
         else {
             try {
-                rd = new FileReader(this.evidenceFile);
-                br = new BufferedReader(rd);
+                fis = new FileInputStream(this.evidenceFile);
+                br = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
                 csvReader = new CSVReader(br, '\t');
                 /*
                  * read the column title and acquire column number
@@ -588,8 +590,8 @@ public class MaxquantFilesReader {
         }
         else {
             try {
-                rd = new FileReader(this.proteinGroupsFile);
-                br = new BufferedReader(rd);
+                fis = new FileInputStream(this.proteinGroupsFile);
+                br = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
                 csvReader = new CSVReader(br, separator);
                 String[] nextLine;
                 int posMajProtIds = 0, posProtInt = 0, posUniqPep = 0;
@@ -660,13 +662,11 @@ public class MaxquantFilesReader {
                                         throw new RuntimeException("There is non number cell in one of the intensity columns.");
                                     }
                                 }
+                                else if (NumberUtils.isNumber(nextLine[posProtInt + multiplicity + (i + 1) + (j + 1)])) {
+                                    intList.add(Double.parseDouble(nextLine[posProtInt + multiplicity + (i + 1) + (j + 1)]));
+                                }
                                 else {
-                                    if (NumberUtils.isNumber(nextLine[posProtInt + multiplicity + (i + 1) + (j + 1)])) {
-                                        intList.add(Double.parseDouble(nextLine[posProtInt + multiplicity + (i + 1) + (j + 1)]));
-                                    }
-                                    else {
-                                        throw new RuntimeException("There is non number cell in one of the intensity columns.");
-                                    }
+                                    throw new RuntimeException("There is non number cell in one of the intensity columns.");
                                 }
                                 i++;
                                 k++;
@@ -710,8 +710,8 @@ public class MaxquantFilesReader {
     private void readPeptidesFile()
             throws IOException {
         try {
-            rd = new FileReader(this.peptidesFile);
-            br = new BufferedReader(rd);
+            fis = new FileInputStream(this.peptidesFile);
+            br = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
             csvReader = new CSVReader(br, separator);
             String[] nextLine;
 

@@ -181,7 +181,8 @@ public class MzidToMzqElementConverter {
         uk.ac.ebi.jmzidml.model.mzidml.FileFormat mzidFF = searchDatabase.getFileFormat();
 
         if (mzidFF != null) {
-            FileFormat mzqFF = MzidToMzqElementConverter.convertMzidFileFormatToMzqFileFormat(mzidFF);
+            //FileFormat mzqFF = 
+            MzidToMzqElementConverter.convertMzidFileFormatToMzqFileFormat(mzidFF);
         }
 
         return sDB;

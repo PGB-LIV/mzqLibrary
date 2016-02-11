@@ -60,16 +60,16 @@ public class XlsConverter extends GenericConverter {
 
             WritableSheet metaSheet = wb.getSheet("metadata");
             outputMetadata(metaSheet);
-            
+
             WritableSheet pgSheet = wb.getSheet("protein groups");
             ArrayList<QuantitationLevel> pgs = new ArrayList<>();
-            for (ProteinGroupData pg : MzqLib.data.getProteinGroups()){
+            for (ProteinGroupData pg : MzqLib.data.getProteinGroups()) {
                 pgs.add(pg);
             }
-            if (!pgs.isEmpty()){
+            if (!pgs.isEmpty()) {
                 int index = 0;
                 index = outputAssayAndSV(MzqData.PROTEIN_GROUP, pgSheet, pgs);
-                if (MzqLib.data.control.isRequired(MzqData.PROTEIN_GROUP, MzqData.RATIO, MzqData.RATIO_STRING)){
+                if (MzqLib.data.control.isRequired(MzqData.PROTEIN_GROUP, MzqData.RATIO, MzqData.RATIO_STRING)) {
                     index = outputRatio(MzqData.PROTEIN_GROUP, pgSheet, pgs, index);
                 }
                 if (!MzqLib.data.control.getElements(MzqData.PROTEIN_GROUP, MzqData.GLOBAL).isEmpty()) {
@@ -127,12 +127,15 @@ public class XlsConverter extends GenericConverter {
 
             wb.write();
             wb.close();
-        } catch (WriteException | IOException ex) {
+        }
+        catch (WriteException | IOException ex) {
             Logger.getLogger(XlsConverter.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private int outputAssayAndSV(int level, WritableSheet sheet, ArrayList<QuantitationLevel> objects) throws NumberFormatException, WriteException {
+    private int outputAssayAndSV(int level, WritableSheet sheet,
+                                 ArrayList<QuantitationLevel> objects)
+            throws NumberFormatException, WriteException {
         //reference to CsvConverter
         //when sb.append("\n"), it should be rowCount++ and colCount=1 here
         //when sb.append(SEPERATOR), it should be colCount++ here except every new line colCount should be reset
@@ -182,34 +185,49 @@ public class XlsConverter extends GenericConverter {
         return rowCount;
     }
 
-    private void printValue(Double value, WritableSheet sheet, int colCount, int rowCount) throws WriteException, NumberFormatException {
+    private void printValue(Double value, WritableSheet sheet, int colCount,
+                            int rowCount)
+            throws WriteException, NumberFormatException {
         if (value == null) {
             sheet.addCell(new Label(colCount, rowCount, "null", normalFormat));
-        } else {
+        }
+        else {
             sheet.addCell(new Number(colCount, rowCount, value, normalFormat));
         }
     }
 
-    private void printQuantitationLevel(int level, WritableSheet sheet, int rowCount, QuantitationLevel obj) throws WriteException {
+    private void printQuantitationLevel(int level, WritableSheet sheet,
+                                        int rowCount, QuantitationLevel obj)
+            throws WriteException {
         switch (level) {
             case MzqData.PROTEIN_GROUP:
-                sheet.addCell(new Label(0, rowCount, ((ProteinGroupData) obj).getId(), normalFormat));
+                if (obj instanceof ProteinGroupData) {
+                    sheet.addCell(new Label(0, rowCount, ((ProteinGroupData) obj).getId(), normalFormat));
+                }
                 break;
             case MzqData.PROTEIN:
-                sheet.addCell(new Label(0, rowCount, ((ProteinData) obj).getId(), normalFormat));
+                if (obj instanceof ProteinData) {
+                    sheet.addCell(new Label(0, rowCount, ((ProteinData) obj).getId(), normalFormat));
+                }
                 break;
             case MzqData.PEPTIDE:
-                sheet.addCell(new Label(0, rowCount, ((PeptideData) obj).getId(), normalFormat));
+                if (obj instanceof PeptideData) {
+                    sheet.addCell(new Label(0, rowCount, ((PeptideData) obj).getId(), normalFormat));
+                }
                 break;
             case MzqData.FEATURE:
-                sheet.addCell(new Label(0, rowCount, ((FeatureData) obj).getId(), normalFormat));
+                if (obj instanceof FeatureData) {
+                    sheet.addCell(new Label(0, rowCount, ((FeatureData) obj).getId(), normalFormat));
+                }
                 break;
             default:
                 break;
         }
     }
 
-    private int outputRatio(int level, WritableSheet sheet, ArrayList<QuantitationLevel> objects, int rowCount) throws NumberFormatException, WriteException {
+    private int outputRatio(int level, WritableSheet sheet,
+                            ArrayList<QuantitationLevel> objects, int rowCount)
+            throws NumberFormatException, WriteException {
         sheet.addCell(new Label(0, rowCount, "Ratios", boldFormat));
         int colCount = 1;
         for (String ratioID : MzqLib.data.getRatios()) {
@@ -234,7 +252,9 @@ public class XlsConverter extends GenericConverter {
         return rowCount;
     }
 
-    private void outputGlobal(int level, WritableSheet sheet, ArrayList<QuantitationLevel> objects, int rowCount) throws NumberFormatException, WriteException {
+    private void outputGlobal(int level, WritableSheet sheet,
+                              ArrayList<QuantitationLevel> objects, int rowCount)
+            throws NumberFormatException, WriteException {
         sheet.addCell(new Label(0, rowCount, "Global", boldFormat));
         int colCount = 1;
         for (String columnID : MzqLib.data.control.getElements(level, MzqData.GLOBAL)) {
@@ -257,7 +277,8 @@ public class XlsConverter extends GenericConverter {
         }
     }
 
-    private void outputMetadata(WritableSheet metaSheet) throws NumberFormatException, WriteException {
+    private void outputMetadata(WritableSheet metaSheet)
+            throws NumberFormatException, WriteException {
         int rowCount = 0;
         //analysis summary
         metaSheet.addCell(new Label(0, rowCount, "Analysis Summary", boldFormat));
@@ -293,4 +314,5 @@ public class XlsConverter extends GenericConverter {
         }
         rowCount++;
     }
+
 }

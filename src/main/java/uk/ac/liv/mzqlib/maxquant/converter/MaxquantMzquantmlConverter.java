@@ -7,14 +7,18 @@ import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.list.TDoubleList;
 import gnu.trove.list.TIntList;
 import gnu.trove.map.TIntObjectMap;
+
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.math.BigInteger;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.apache.commons.lang3.math.NumberUtils;
+
 import uk.ac.liv.pgb.jmzqml.model.mzqml.*;
 import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLMarshaller;
 
@@ -345,12 +349,10 @@ public class MaxquantMzquantmlConverter {
                 assay.setLabel(label);
                 assays.add(assay);
             } //non label free example
-            else {
-                //TODO: this is fixed label modification just used for example file
-                //TODO: need to find a better way to form this later
-
-                //find out if it is light or heavy label assay
-                if (assName.toLowerCase(Locale.ENGLISH).contains("light")) {
+            else //TODO: this is fixed label modification just used for example file
+            //TODO: need to find a better way to form this later
+            //find out if it is light or heavy label assay
+             if (assName.toLowerCase(Locale.ENGLISH).contains("light")) {
                     assay.setLabel(label);
                     assays.add(assay);
                 }
@@ -379,7 +381,6 @@ public class MaxquantMzquantmlConverter {
                     assay.setLabel(label_heavy);
                     assays.add(assay);
                 }
-            }
             ass_i++;
         }
     }
@@ -1065,11 +1066,11 @@ public class MaxquantMzquantmlConverter {
     }
 
     private void writeMzqFile(String out) {
-        FileWriter writer = null;
-
+        OutputStreamWriter writer = null;
         try {
             MzQuantMLMarshaller mzqMsh = new MzQuantMLMarshaller();
-            writer = new FileWriter(out);
+            FileOutputStream fos = new FileOutputStream(out);
+            writer = new OutputStreamWriter(fos, "UTF-8");
 
             // XML header
             writer.write(MzQuantMLMarshaller.createXmlHeader() + "\n");

@@ -14,20 +14,27 @@ import gnu.trove.procedure.TIntDoubleProcedure;
 import gnu.trove.procedure.TIntObjectProcedure;
 import gnu.trove.procedure.TIntProcedure;
 import gnu.trove.set.TIntSet;
+
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.xml.datatype.DatatypeConfigurationException;
+
 import org.apache.commons.lang3.mutable.MutableInt;
+
 import uk.ac.liv.pgb.jmzqml.model.mzqml.*;
 import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLMarshaller;
 import uk.ac.liv.mzqlib.constants.MzqDataConstants;
@@ -60,11 +67,11 @@ public class ProgenMzquantmlConverter {
 
     // MzQuantML elements
     private CvList cvList = null;
-    private AuditCollection ac;
+//    private AuditCollection ac;
     private AnalysisSummary as = null;
     private InputFiles inputFiles = null;
     private SoftwareList softList = null;
-    private DataProcessingList dpList;
+//    private DataProcessingList dpList;
     private List<BibliographicReference> brList = null;
     private AssayList assayList = null;
     private StudyVariableList svList = null;
@@ -73,7 +80,7 @@ public class ProgenMzquantmlConverter {
     private ProteinList protList = null;
     private List<PeptideConsensusList> pepConListList = null;
     private List<FeatureList> ftListList = null;
-    private SmallMoleculeList smallMolList;
+//    private SmallMoleculeList smallMolList;
 
     //
     final DecimalFormat format = new DecimalFormat("#.###");
@@ -293,9 +300,11 @@ public class ProgenMzquantmlConverter {
             idFile.setLocation(idFn);
             idFileList.add(idFile);
 
-            BufferedReader id_br = new BufferedReader(new FileReader(idFn));
+            FileInputStream fis = new FileInputStream(idFn);
+            BufferedReader id_br = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
             CSVReader reader = new CSVReader(id_br);
-            String nextLine[] = reader.readNext();
+            String nextLine[];
+            reader.readNext();
             /*
              * Raw data location, Spectrum ID, Spectrum Title, Retention
              * Time(s), PSM_ID, rank, Pass Threshold, Calc m/z, Exp m/z, Charge,
@@ -475,17 +484,17 @@ public class ProgenMzquantmlConverter {
         flProteinL.retainAll(plProteinL);
         proteinList = flProteinL;
 
-        List<String> flProteinList = new ArrayList(flProteinL);
-        List<String> plProteinList = new ArrayList(plProteinL);
-        List<String> proteinArrayList = new ArrayList(proteinList);
+        //List<String> flProteinList = new ArrayList(flProteinL);
+        //List<String> plProteinList = new ArrayList(plProteinL);
+        //List<String> proteinArrayList = new ArrayList(proteinList);
 
-        int max = flProteinL.size();
-        if (max < plProteinL.size()) {
-            max = plProteinL.size();
-        }
-        if (max < proteinList.size()) {
-            max = proteinList.size();
-        }
+//        int max = flProteinL.size();
+////        if (max < plProteinL.size()) {
+////            max = plProteinL.size();
+////        }
+//        if (max < proteinList.size()) {
+//            max = proteinList.size();
+//        }
 
         /*
          * get the protein list from proteinPeptidesMap.keySet()
@@ -1510,11 +1519,12 @@ public class ProgenMzquantmlConverter {
     }
 
     private void writeMzqFile(String out, boolean pgl) {
-        FileWriter writer = null;
+        OutputStreamWriter writer = null;
 
         try {
             MzQuantMLMarshaller mzqMsh = new MzQuantMLMarshaller();
-            writer = new FileWriter(out);
+            FileOutputStream fos = new FileOutputStream(out);
+            writer = new OutputStreamWriter(fos, "UTF-8");
 
             // XML header
             writer.write(MzQuantMLMarshaller.createXmlHeader() + "\n");
@@ -1603,7 +1613,9 @@ public class ProgenMzquantmlConverter {
         }
         finally {
             try {
-                writer.close();
+                if (writer != null) {
+                    writer.close();
+                }
             }
             catch (IOException ex) {
                 Logger.getLogger(MaxquantMzquantmlConverter.class.getName()).log(Level.SEVERE, null, ex);

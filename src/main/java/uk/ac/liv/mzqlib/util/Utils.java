@@ -1,3 +1,4 @@
+
 package uk.ac.liv.mzqlib.util;
 
 import java.io.BufferedReader;
@@ -42,11 +43,11 @@ public class Utils {
         BufferedReader in = null;
         Map<String, String> resultMap = new HashMap<String, String>();
         try {
-        	//Use the getResourceAsStream trick to read the file packaged in
+            //Use the getResourceAsStream trick to read the file packaged in
             //the .jar .  This simplifies usage of the solution as no extra 
             //classpath or path configurations are needed: 
             InputStream resourceAsStream = ClassLoader.getSystemClassLoader().getResourceAsStream("CV_psi-ms.obo.txt");
-            Reader reader = new InputStreamReader(resourceAsStream);
+            Reader reader = new InputStreamReader(resourceAsStream, "UTF-8");
             in = new BufferedReader(reader);
             String inputLine;
             String key = "";

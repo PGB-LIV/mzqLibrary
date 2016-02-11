@@ -2,8 +2,10 @@
 package uk.ac.cranfield.mzqlib.converter;
 
 import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,12 +62,12 @@ public class MztabConverter extends GenericConverter {
 
     @Override
     public void convert() {
+        BufferedWriter out = null;
         try {
             if (outfile.length() == 0) {
                 outfile = getBaseFilename() + ".mztab";
             }
-            BufferedWriter out = new BufferedWriter(new FileWriter(outfile));
-
+            out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outfile), "UTF-8"));
 //            Decide if we are working with protein groups (PG) or proteins:
 //            Easiest done by checking if there any QLs for PG – if yes, we are in PG mode
 //            Retrieve all the Protein accessions for each protein within each PG. For now, we arbitrarily select the first protein accession as the group leader, the rest are reported as ambiguity members separated by semi-colons I think:
@@ -758,14 +760,20 @@ public class MztabConverter extends GenericConverter {
                 out.append("\n");
                 out.append(pepSb.toString());
             }
-//            out.append(mztab.toMzTab());
-            out.close();
         }
-
         catch (IOException ex) {
             Logger.getLogger(MztabConverter.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        finally {
+            if (out != null) {
+                try {
+                    out.close();
+                }
+                catch (IOException ex) {
+                    Logger.getLogger(MztabConverter.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
     }
 
     /*
@@ -824,5 +832,4 @@ public class MztabConverter extends GenericConverter {
 //        }
 //        return null;
 //    }
-
 }

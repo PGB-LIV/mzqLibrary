@@ -32,7 +32,10 @@ public class ExtendedFeature extends Feature {
      * @param ft          the base Feature
      * @param msTolerance the m/z tolerance, can be expressed in Da or ppm, and is
      *                    the measurement from the m/z value before and after the feature.
-     * @param rtWin       the retention time measured from top to bottom in minutes
+     *                    The MS tolerance is always calculated from the Tolerance object,
+     *                    unless it is null or its value is 0.
+     * @param rtWin       the retention time measured from top to bottom in minutes. Only
+     *                    used if the feature mass trace is null or empty.
      */
     public ExtendedFeature(Feature ft, Tolerance msTolerance, double rtWin) {
         super();

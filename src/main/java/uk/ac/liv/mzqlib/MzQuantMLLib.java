@@ -118,10 +118,10 @@ public class MzQuantMLLib implements Serializable {
     public String userFeedback = "java -jar jar-location/mzqlib-version.jar ";
 
     // Added by Fawaz Ghali to automatically update the MzidLib GUI 
-    private Map<String, String> allFunctions;
+    private final Map<String, String> allFunctions;
 
     //TODO: changed from 3 to 2 by Da 16/09/2014
-    private int MINARGLEN = 3; //minimum argument length
+    private final int MINARGLEN = 3; //minimum argument length
 
     /**
      * Init all functions hashmap

@@ -34,7 +34,7 @@ public class MzqLib {
     private final static int MZTAB = 2;
     private final static int HTML = 3;
     private final static int XLS = 4;
-    public static MzqData data = new MzqData();
+    public static final MzqData data = new MzqData();
     private HashMap<String, Integer> converterTypeMap = new HashMap<>();
 
     //call the GUI
@@ -186,7 +186,7 @@ public class MzqLib {
         converterTypeMap.put("mztab", MZTAB);
         converterTypeMap.put("csv", CSV);
         converterTypeMap.put("xls", XLS);
-        data = new MzqData();
+        //data = new MzqData();
     }
 
     private int getType(String type) {

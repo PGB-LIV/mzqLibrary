@@ -121,7 +121,7 @@ public class MzQuantMLLib implements Serializable {
     private final Map<String, String> allFunctions;
 
     //TODO: changed from 3 to 2 by Da 16/09/2014
-    private final int MINARGLEN = 3; //minimum argument length
+    private static final int MINARGLEN = 3; //minimum argument length
 
     /**
      * Init all functions hashmap

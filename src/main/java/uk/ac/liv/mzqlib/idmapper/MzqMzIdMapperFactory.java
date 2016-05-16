@@ -596,14 +596,15 @@ public class MzqMzIdMapperFactory {
                 }
 
                 int protCount = 0;
-                for (String protAcc : protAccToPepConNewIdsMap.keySet()) {
+                for (Entry<String, List<String>> entry : protAccToPepConNewIdsMap.entrySet()) {
+                    String protAcc = entry.getKey();
                     Protein protein = new Protein();
                     protein.setSearchDatabase(searchDB);
                     String protId = "prot_" + protCount;
                     protein.setId(protId);
                     protCount++;
                     protein.setAccession(protAcc);
-                    List<String> pepConNewIds = protAccToPepConNewIdsMap.get(protAcc);
+                    List<String> pepConNewIds = entry.getValue();
                     for (String pepConNewId : pepConNewIds) {
 //                        PeptideConsensus pepCon = new PeptideConsensus();
 //                        pepCon.setId(pepConNewId);
@@ -652,8 +653,9 @@ public class MzqMzIdMapperFactory {
         }
 
         private void buildProtAccToPepConNewIdsMap() {
-            for (String pepConNewId : pepConNewIdToProtAccsMap.keySet()) {
-                List<String> protAccs = pepConNewIdToProtAccsMap.get(pepConNewId);
+            for (Entry<String, List<String>> entry : pepConNewIdToProtAccsMap.entrySet()) {
+                String pepConNewId = entry.getKey();
+                List<String> protAccs = entry.getValue();
                 if (protAccs != null) {
                     for (String prot : protAccs) {
                         List<String> pepConNewIds = protAccToPepConNewIdsMap.get(prot);

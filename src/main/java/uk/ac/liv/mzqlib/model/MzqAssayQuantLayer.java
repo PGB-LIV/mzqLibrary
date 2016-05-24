@@ -45,7 +45,7 @@ public class MzqAssayQuantLayer extends MzqQuantLayer {
         List<String> columnIndex = quantLayer.getColumnIndex();
         for (String colId : columnIndex) {
             Assay assay = mzqUm.unmarshal(
-                    uk.ac.liv.pgb.jmzqml.model.mzqml.Assay.class, colId);
+                    Assay.class, colId);
             this.columnNames.add(new SimpleStringProperty(assay.getName()));
         }
     }

@@ -146,7 +146,7 @@ public class MzqProcessorFactory {
             while (itFeatureList.hasNext()) {
                 FeatureList ftList = itFeatureList.next();
                 RawFilesGroup rg = (RawFilesGroup) this.mzqUm.unmarshal(
-                        uk.ac.liv.pgb.jmzqml.model.mzqml.RawFilesGroup.class,
+                        RawFilesGroup.class,
                         ftList.getRawFilesGroupRef());
 
                 String rawFileName = "";

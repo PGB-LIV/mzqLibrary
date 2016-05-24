@@ -257,7 +257,7 @@ public class SIIData implements Comparable<SIIData> {
         StringBuffer modString = new StringBuffer();
         try {
             Peptide peptide = um.unmarshal(
-                    uk.ac.ebi.jmzidml.model.mzidml.Peptide.class, pepRef);
+                    Peptide.class, pepRef);
             String pepSeq = peptide.getPeptideSequence();
             this.setSequence(pepSeq);
             List<Modification> mods = peptide.getModification();

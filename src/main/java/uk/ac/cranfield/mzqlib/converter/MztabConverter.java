@@ -294,7 +294,7 @@ public class MztabConverter extends GenericConverter {
                 if (methodAccession.equals("MS:1001834") || methodAccession.
                         equals("MS:1001836")) {//label free 
                     tabAssay.setQuantificationReagent(
-                            new uk.ac.ebi.pride.jmztab.model.CVParam(msCVstr,
+                            new CVParam(msCVstr,
                                                                      "MS:1002038",
                                                                      "unlabeled sample",
                                                                      null));

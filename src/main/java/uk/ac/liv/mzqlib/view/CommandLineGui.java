@@ -9,14 +9,18 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.*;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+
 import uk.ac.liv.mzqlib.MzQuantMLLib;
 
 /**
  *
  * @author fghali
  */
-public class CommandLineGui extends javax.swing.JFrame {
+public class CommandLineGui extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JFileChooser fc = new JFileChooser();

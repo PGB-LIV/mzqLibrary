@@ -168,14 +168,14 @@ public class LoadMzQuantMLDataTask extends Task<MzQuantMLData> {
                 for (Row row : rows) {
                     MzqDataMatrixRow mzqDMRow = new MzqDataMatrixRow();
                     ProteinGroup protGrp = mzqUm.unmarshal(
-                            uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinGroup.class,
+                            ProteinGroup.class,
                             row.getObjectRef()); //get ProteinGrouop object from objectRef
                     List<ProteinRef> protRefs = protGrp.getProteinRef();
                     //represent each row with accessions
                     StringBuilder proteinGroupAccessions = new StringBuilder();
                     for (ProteinRef protRef : protRefs) {
                         Protein protein = mzqUm.unmarshal(
-                                uk.ac.liv.pgb.jmzqml.model.mzqml.Protein.class,
+                                Protein.class,
                                 protRef.getProteinRef());
                         proteinGroupAccessions.append(protein.getAccession()).
                                 append(" ;");
@@ -218,7 +218,7 @@ public class LoadMzQuantMLDataTask extends Task<MzQuantMLData> {
                 for (Row row : rows) {
                     MzqDataMatrixRow mzqDMRow = new MzqDataMatrixRow();
                     Protein protein = mzqUm.unmarshal(
-                            uk.ac.liv.pgb.jmzqml.model.mzqml.Protein.class, row.
+                            Protein.class, row.
                             getObjectRef());
                     mzqDMRow.setObjectValue(new SimpleStringProperty(protein.
                             getAccession()));
@@ -265,7 +265,7 @@ public class LoadMzQuantMLDataTask extends Task<MzQuantMLData> {
                     for (Row row : rows) {
                         MzqDataMatrixRow mzqDMRow = new MzqDataMatrixRow();
                         PeptideConsensus peptide = mzqUm.unmarshal(
-                                uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensus.class,
+                                PeptideConsensus.class,
                                 row.getObjectRef());
                         StringBuilder peptideString = new StringBuilder();
                         peptideString.append(peptide.getPeptideSequence());

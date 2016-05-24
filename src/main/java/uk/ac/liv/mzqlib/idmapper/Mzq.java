@@ -63,7 +63,7 @@ public class Mzq {
                     String ftRef = eviRef.getFeatureRef();
 
                     Feature ft = this.um.unmarshal(
-                            uk.ac.liv.pgb.jmzqml.model.mzqml.Feature.class,
+                            Feature.class,
                             ftRef);
                     double mz = ft.getMz();
                     double rw = this.getRetentionWindow(ft.getMassTrace());

@@ -403,12 +403,12 @@ public class MzqMzIdMapperFactory {
                                 // String protAcc = pepEvdRef.getPeptideEvidence().getDBSequence().getAccession();
                                 PeptideEvidence pepEvd = siiData.
                                         getUnmarshaller().unmarshal(
-                                                uk.ac.ebi.jmzidml.model.mzidml.PeptideEvidence.class,
+                                                PeptideEvidence.class,
                                                 pepEvdRef.
                                                 getPeptideEvidenceRef());
                                 DBSequence dbSeq = siiData.getUnmarshaller().
                                         unmarshal(
-                                                uk.ac.ebi.jmzidml.model.mzidml.DBSequence.class,
+                                                DBSequence.class,
                                                 pepEvd.getDBSequenceRef());
                                 String protAcc = dbSeq.getAccession();
                                 if (protAccs == null) {
@@ -525,7 +525,7 @@ public class MzqMzIdMapperFactory {
 
             // three ways of unmarshalling an mzQuantML element: 
             CvList cvList = mzqUm.unmarshal(
-                    uk.ac.liv.pgb.jmzqml.model.mzqml.CvList.class); //1. class name
+                    CvList.class); //1. class name
             Provider provider = mzqUm.unmarshal(MzQuantMLElement.Provider);
             AuditCollection ac = mzqUm.unmarshal(
                     MzQuantMLElement.AuditCollection); //2. member of MzQuantMLElement

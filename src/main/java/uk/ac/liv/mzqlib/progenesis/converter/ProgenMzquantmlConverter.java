@@ -20,7 +20,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -1541,8 +1540,10 @@ public class ProgenMzquantmlConverter {
             /**
              * parsing feature list file
              */
+            FileInputStream fis = new FileInputStream(flFn);
             try (ProgenesisFeatureListReader pflr
-                    = new ProgenesisFeatureListReader(new FileReader(flFn),
+                    = new ProgenesisFeatureListReader(new InputStreamReader(fis,
+                                                                            "UTF-8"),
                                                       separator)) {
                 nabMap.putAll(pflr.getNormalizedAbundanceMap());
                 rabMap.putAll(pflr.getRawAbundanceMap());

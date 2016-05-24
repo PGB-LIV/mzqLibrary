@@ -31,7 +31,7 @@ public class RConsole implements RMainLoopCallbacks {
         System.out.print(prompt);
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(
-                    System.in));
+                    System.in, "UTF-8"));
             String s = br.readLine();
             return (s == null || s.length() == 0) ? s : s + "\n";
         } catch (Exception e) {

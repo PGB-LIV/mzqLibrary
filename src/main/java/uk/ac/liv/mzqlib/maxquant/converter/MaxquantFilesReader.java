@@ -166,7 +166,8 @@ public class MaxquantFilesReader {
         /**
          * check if the file folder contains all the required files
          */
-        boolean contain = containsAll(fileList, requireList);
+        boolean contain = false;
+        contain = containsAll(fileList, requireList);
         if (!contain) {
             this.evidenceFile = null;
             this.proteinGroupsFile = null;

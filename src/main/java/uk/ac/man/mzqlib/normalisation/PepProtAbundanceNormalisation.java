@@ -423,15 +423,16 @@ public class PepProtAbundanceNormalisation {
 
             if ((sfv == null)) {
                 flag = false;
+            } else {
+                String[] sfValue = sfv.toArray(new String[pepSizeTmp]);
+
+                //calculate the normalisation values of all features
+                //Note: apply the scaling factors to all features although they are 
+                //created depending on the choice of peptide or features.
+                normalisedFeatureAssayValTmp = normalisedFeatureAssayValue(
+                        sfValue);
+                outputMzqPeptideNormalisation(normalisedFeatureAssayValTmp);
             }
-
-            String[] sfValue = sfv.toArray(new String[pepSizeTmp]);
-
-            //calculate the normalisation values of all features
-            //Note: apply the scaling factors to all features although they are 
-            //created depending on the choice of peptide or features.
-            normalisedFeatureAssayValTmp = normalisedFeatureAssayValue(sfValue);
-            outputMzqPeptideNormalisation(normalisedFeatureAssayValTmp);
         }
 
         System.out.println(

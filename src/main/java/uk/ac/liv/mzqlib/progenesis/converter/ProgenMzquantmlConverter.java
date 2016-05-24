@@ -698,8 +698,8 @@ public class ProgenMzquantmlConverter {
             CvParamRef mfcCvRef = new CvParamRef();
             if (!confidenceMap.isEmpty() && !anovaMap.isEmpty()) {
                 mfcCol.setIndex(BigInteger.valueOf(2));
-            } else if ((!confidenceMap.isEmpty() && anovaMap.isEmpty())
-                    || (confidenceMap.isEmpty() && !anovaMap.isEmpty())) {
+            } else if (!confidenceMap.isEmpty() && anovaMap.isEmpty()
+                    || confidenceMap.isEmpty() && !anovaMap.isEmpty()) {
                 mfcCol.setIndex(BigInteger.ONE);
             } else {
                 mfcCol.setIndex(BigInteger.ZERO);

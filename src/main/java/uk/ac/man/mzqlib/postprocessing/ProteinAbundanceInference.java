@@ -34,9 +34,9 @@ public final class ProteinAbundanceInference {
     private static final Map<String, Set<String>> peptideToProtein
             = new HashMap<>();
     private Map<String, List<String>> peptideAssayValues
-            = new HashMap<String, List<String>>();
+            = new HashMap<>();
     private static final Map<String, String> proteinToAccession
-            = new HashMap<String, String>();
+            = new HashMap<>();
 
     private static Map<String, Set<String>> sameSetGroup = new HashMap<>();
     private static Map<String, Set<String>> subSetGroup = new HashMap<>();
@@ -208,10 +208,10 @@ public final class ProteinAbundanceInference {
         }
 
         if (!(outputProteinGroupDTAccession.substring(0, 3).equals(
-                cvAccessionPrefix) && (Integer.parseInt(outputCvAccessionSuffix)
-                >= 0)
-                && (Integer.parseInt(outputCvAccessionSuffix)
-                <= cvAccessionLastSevenNumMax))) {
+                cvAccessionPrefix) && Integer.parseInt(outputCvAccessionSuffix)
+                >= 0
+                && Integer.parseInt(outputCvAccessionSuffix)
+                <= cvAccessionLastSevenNumMax)) {
             throw new IllegalArgumentException(
                     "Wrong Output Protein Group CV Accession!!! "
                     + outputProteinGroupDTAccession);
@@ -326,10 +326,10 @@ public final class ProteinAbundanceInference {
         }
 
         if (!(outputProteinGroupDTAccession.substring(0, 3).equals(
-                cvAccessionPrefix) && (Integer.parseInt(outputCvAccessionSuffix)
-                >= 0)
-                && (Integer.parseInt(outputCvAccessionSuffix)
-                <= cvAccessionLastSevenNumMax))) {
+                cvAccessionPrefix) && Integer.parseInt(outputCvAccessionSuffix)
+                >= 0
+                && Integer.parseInt(outputCvAccessionSuffix)
+                <= cvAccessionLastSevenNumMax)) {
             throw new IllegalArgumentException(
                     "Wrong Output Protein Group CV Accession!!! "
                     + outputProteinGroupDTAccession);
@@ -458,7 +458,7 @@ public final class ProteinAbundanceInference {
             outputRawProteinGCA = args[7];
             outputRawProteinGCN = args[8];
             quantLT = args[9];
-            signalConflictPeptideExcluded = (Integer.parseInt(args[10]) != 0);
+            signalConflictPeptideExcluded = Integer.parseInt(args[10]) != 0;
         }
 
         if (signalConflictPeptideExcluded) {
@@ -641,7 +641,7 @@ public final class ProteinAbundanceInference {
      */
     private boolean textHasContext(String aText) {
         String EMPTY_STRING = "";
-        return (aText != null) && (!aText.trim().equals(EMPTY_STRING));
+        return aText != null && !aText.trim().equals(EMPTY_STRING);
     }
 
     /**
@@ -674,13 +674,13 @@ public final class ProteinAbundanceInference {
             MzQuantMLUnmarshaller in_file_um, String inputPepDTCA) {
         boolean first_list = false;
         Map<String, List<String>> peptideAV
-                = new HashMap<String, List<String>>();
+                = new HashMap<>();
 
         PeptideConsensusList pepConList = in_file_um.unmarshal(
                 MzQuantMLElement.PeptideConsensusList);
         List<QuantLayer<IdOnly>> assayQLs = pepConList.getAssayQuantLayer();
         for (QuantLayer assayQL : assayQLs) {
-            if ((assayQL.getDataType().getCvParam().getAccession()).
+            if (assayQL.getDataType().getCvParam().getAccession().
                     equalsIgnoreCase(inputPepDTCA)) {
 
                 DataMatrix assayDM = assayQL.getDataMatrix();
@@ -719,7 +719,7 @@ public final class ProteinAbundanceInference {
             MzQuantMLUnmarshaller in_file_um, String inputPepDTCA) {
         boolean first_list = false;
         Map<String, List<String>> peptideAV
-                = new HashMap<String, List<String>>();
+                = new HashMap<>();
 
         PeptideConsensusList pepConList = in_file_um.unmarshal(
                 MzQuantMLElement.PeptideConsensusList);
@@ -727,7 +727,7 @@ public final class ProteinAbundanceInference {
         int ass_no_invalid;
         int ass_size;
         for (QuantLayer assayQL : assayQLs) {
-            if ((assayQL.getDataType().getCvParam().getAccession()).
+            if (assayQL.getDataType().getCvParam().getAccession().
                     equalsIgnoreCase(inputPepDTCA)) {
 
                 DataMatrix assayDM = assayQL.getDataMatrix();
@@ -950,7 +950,7 @@ public final class ProteinAbundanceInference {
         List<QuantLayer<IdOnly>> assayQLs = pepConList.getAssayQuantLayer();
 
         for (QuantLayer assayQL : assayQLs) {
-            if ((assayQL.getDataType().getCvParam().getAccession()).
+            if (assayQL.getDataType().getCvParam().getAccession().
                     equalsIgnoreCase(inputPeptideDTCA)) {
                 assayQLID = assayQL.getId();
                 break;
@@ -1063,7 +1063,7 @@ public final class ProteinAbundanceInference {
             Map<String, Set<String>> subSetGr,
             Map<String, List<String>> pepAssVal) {
 
-        Map<String, List<String>> protAbu = new HashMap<String, List<String>>();
+        Map<String, List<String>> protAbu = new HashMap<>();
 //        int groupId = 0;
         int groupLeader = 0;
 
@@ -1118,10 +1118,10 @@ public final class ProteinAbundanceInference {
                     /**
                      * set NaN/Null to zero
                      */
-                    double temp = (componentValue.equals("NaN")
+                    double temp = componentValue.equals("NaN")
                             || componentValue.equals("nan")
                             || componentValue.equals("Null") || componentValue.
-                            equals("null"))
+                            equals("null")
                                     ? Double.parseDouble("0") : Double.
                                     parseDouble(componentValue);
 //                        sumOfpepValues[j] = sumOfpepValues[j] + temp;
@@ -1214,8 +1214,8 @@ public final class ProteinAbundanceInference {
                     /**
                      * set NaN/Null to zero
                      */
-                    double temp = (componentValue.equalsIgnoreCase("nan")
-                            || componentValue.equalsIgnoreCase("null"))
+                    double temp = componentValue.equalsIgnoreCase("nan")
+                            || componentValue.equalsIgnoreCase("null")
                                     ? Double.parseDouble("0") : Double.
                                     parseDouble(componentValue);
                     matrixPepValue[tempNo][j] = temp;
@@ -1305,10 +1305,10 @@ public final class ProteinAbundanceInference {
                     /**
                      * set NaN/Null to zero
                      */
-                    double temp = (componentValue.equals("NaN")
+                    double temp = componentValue.equals("NaN")
                             || componentValue.equals("nan")
                             || componentValue.equals("Null") || componentValue.
-                            equals("null"))
+                            equals("null")
                                     ? Double.parseDouble("0") : Double.
                                     parseDouble(componentValue);
                     matrixPepValue[tempNo][j] = temp;

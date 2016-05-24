@@ -199,8 +199,8 @@ public class ProgenesisFeatureListReader implements Closeable {
                 } else if (lowerCaseHeader.contains(
                         FeatureListHeaders.MODIFICATIONS)) {
                     modPos = i;
-                } else if ((lowerCaseHeader.equals(FeatureListHeaders.PROTEIN))
-                        || (lowerCaseHeader.equals(FeatureListHeaders.ACCESSION))) {
+                } else if (lowerCaseHeader.equals(FeatureListHeaders.PROTEIN)
+                        || lowerCaseHeader.equals(FeatureListHeaders.ACCESSION)) {
                     proteinStart = i;
                 } else if (lowerCaseHeader.equals(FeatureListHeaders.SEQUENCE)) {
                     peptideStart = i;
@@ -740,7 +740,7 @@ public class ProgenesisFeatureListReader implements Closeable {
     // isFirstThreeRow determine whether an entry is from the title row
     private boolean isFirstThreeRow(int i) {
         boolean b = false;
-        if ((i == ROW1) || (i == ROW2) || (i == ROW3)) {
+        if (i == ROW1 || i == ROW2 || i == ROW3) {
             b = true;
         }
         return b;

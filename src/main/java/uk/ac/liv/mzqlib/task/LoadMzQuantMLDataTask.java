@@ -82,8 +82,8 @@ public class LoadMzQuantMLDataTask extends Task<MzQuantMLData> {
         List<StringProperty> techList = new ArrayList<>();
 
         //parallel computing
-        cvParams.stream().parallel().filter((cp) -> (!cp.getName().contains(
-                "level"))).forEach((cp) -> {
+        cvParams.stream().parallel().filter((cp) -> !cp.getName().contains(
+                "level")).forEach((cp) -> {
 //TODO: how do we check the status or does the code need for checking in stream?
 //            if (isCancelled()) {
 //                updateMessage("Cancelled");

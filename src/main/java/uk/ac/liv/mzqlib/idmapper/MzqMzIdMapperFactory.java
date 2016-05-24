@@ -94,7 +94,7 @@ public class MzqMzIdMapperFactory {
             throws JAXBException, IOException {
         String[] rawToMzidMapArray = rawToMzidString.split(";");
         Map<String, String> rawToMzidMap = new HashMap<>();
-        if ((rawToMzidMapArray.length % 2) != 0) {
+        if (rawToMzidMapArray.length % 2 != 0) {
             //System.err.println("Expected raw file name and mzid file in pairs: " + rawToMzidMap);
             throw new RuntimeException(
                     "Expected raw file name and mzid file in pairs: "

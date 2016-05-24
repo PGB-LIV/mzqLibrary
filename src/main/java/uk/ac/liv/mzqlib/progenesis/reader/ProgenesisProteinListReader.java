@@ -308,7 +308,7 @@ public class ProgenesisProteinListReader implements Closeable {
     // isFirstThreeRow determine whether an entry is from the title row
     private boolean isFirstThreeRow(Integer i) {
         boolean b = false;
-        if ((i == ROW1) || (i == ROW2) || (i == ROW3)) {
+        if (i == ROW1 || i == ROW2 || i == ROW3) {
             b = true;
         }
         return b;

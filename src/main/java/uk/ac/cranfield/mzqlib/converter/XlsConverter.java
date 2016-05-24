@@ -325,8 +325,8 @@ public class XlsConverter extends GenericConverter {
         rowCount++;
         for (CvParam cv : MzqLib.data.getAnalysisSummary().getCvParam()) {
             metaSheet.addCell(new Label(0, rowCount, cv.getName(), boldFormat));
-            if (cv.getValue() != null && cv.getValue().length() > 1 && (!cv.
-                    getValue().equalsIgnoreCase("null"))) {
+            if (cv.getValue() != null && cv.getValue().length() > 1 && !cv.
+                    getValue().equalsIgnoreCase("null")) {
                 metaSheet.addCell(new Label(1, rowCount, cv.getValue(),
                                             normalFormat));
             }

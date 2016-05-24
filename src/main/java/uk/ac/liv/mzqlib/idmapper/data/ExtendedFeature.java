@@ -45,13 +45,13 @@ public class ExtendedFeature extends Feature {
         List<Double> massT = feature.getMassTrace();
 
         if (massT == null || massT.isEmpty()) {
-            brt = (Double.valueOf(ft.getRt()) - rtWin / 2);
-            urt = (Double.valueOf(ft.getRt()) + rtWin / 2);
+            brt = Double.valueOf(ft.getRt()) - rtWin / 2;
+            urt = Double.valueOf(ft.getRt()) + rtWin / 2;
 
             double mzToleranceDaltons = msTolerance.getUnit()
-                    == ToleranceUnit.DALTON ? msTolerance.getTolerance() : (ft.
+                    == ToleranceUnit.DALTON ? msTolerance.getTolerance() : ft.
                             getMz() / ((1 / msTolerance.getTolerance())
-                            * 1000000.0));
+                            * 1000000.0);
             lmz = ft.getMz() - mzToleranceDaltons;
             rmz = ft.getMz() + mzToleranceDaltons;
         } else {
@@ -61,8 +61,8 @@ public class ExtendedFeature extends Feature {
             if (msTolerance != null && msTolerance.getTolerance() > 0.0) {
                 double mzToleranceDaltons = msTolerance.getUnit()
                         == ToleranceUnit.DALTON ? msTolerance.getTolerance()
-                                : (ft.getMz()
-                                / ((1 / msTolerance.getTolerance()) * 1000000.0));
+                                : ft.getMz()
+                                / ((1 / msTolerance.getTolerance()) * 1000000.0);
                 lmz = ft.getMz() - mzToleranceDaltons;
                 rmz = ft.getMz() + mzToleranceDaltons;
             } else {

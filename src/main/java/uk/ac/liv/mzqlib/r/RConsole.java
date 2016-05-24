@@ -33,7 +33,7 @@ public class RConsole implements RMainLoopCallbacks {
             BufferedReader br = new BufferedReader(new InputStreamReader(
                     System.in, "UTF-8"));
             String s = br.readLine();
-            return (s == null || s.length() == 0) ? s : s + "\n";
+            return s == null || s.length() == 0 ? s : s + "\n";
         } catch (Exception e) {
             System.out.println("jriReadConsole exception: " + e.getMessage());
         }
@@ -57,7 +57,7 @@ public class RConsole implements RMainLoopCallbacks {
             res = fd.getDirectory();
         }
         if (fd.getFile() != null) {
-            res = (res == null) ? fd.getFile() : (res + fd.getFile());
+            res = res == null ? fd.getFile() : (res + fd.getFile());
         }
         return res;
     }

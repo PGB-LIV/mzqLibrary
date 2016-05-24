@@ -388,7 +388,7 @@ public class MaxquantFilesReader {
                         if (!(i == j)) {
                             int tempLen = lengthOfPrefix((String) experiments.
                                     get(i), (String) experiments.get(j));
-                            if ((tempLen > 0) && (prefixLen < tempLen)) {
+                            if (tempLen > 0 && prefixLen < tempLen) {
                                 prefixLen = tempLen; // find the longest prefix. e.g. 'test1', 'test2', 'test12' TODO: bugs to be fixed
                                 studyV = ((String) experiments.get(i)).
                                         substring(0, prefixLen);
@@ -407,7 +407,7 @@ public class MaxquantFilesReader {
                                                 * multiplicity + n));
                                     }
                                 }
-                            } else if ((prefixLen > 0) && (prefixLen == tempLen)) {
+                            } else if (prefixLen > 0 && prefixLen == tempLen) {
                                 // TODO: can this if/else if/else block be shortened?
                                 if (isLabelFree) {
                                     tempAssays.add(assays.get(j));
@@ -1103,9 +1103,9 @@ public class MaxquantFilesReader {
         // Compare length is based on the shortest length of two strings.
         int length = (a.length() < b.length()) ? a.length() : b.length();
         int len = 1;
-        if ((length == 1) && (a.charAt(0) == b.charAt(0))) {
+        if (length == 1 && a.charAt(0) == b.charAt(0)) {
             len = 1;
-        } else if ((a.charAt(0) != b.charAt(0))) {
+        } else if (a.charAt(0) != b.charAt(0)) {
             len = 0;
         } else {
             len = len + lengthOfPrefix(a.substring(1), b.substring(1));

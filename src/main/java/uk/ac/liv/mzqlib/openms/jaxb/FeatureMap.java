@@ -5,7 +5,6 @@
 // Generated on: 2015.05.15 at 05:31:52 PM BST 
 //
 
-
 package uk.ac.liv.mzqlib.openms.jaxb;
 
 import java.math.BigInteger;
@@ -24,12 +23,14 @@ import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-
 /**
- * <p>Java class for anonymous complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p>
+ * Java class for anonymous complex type.
+ *
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -241,8 +242,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -270,25 +271,26 @@ public class FeatureMap {
 
     /**
      * Gets the value of the dataProcessing property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the dataProcessing property.
-     * 
+     * This is why there is not a <CODE>set</CODE> method for the dataProcessing
+     * property.
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getDataProcessing().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link FeatureMap.DataProcessing }
-     * 
-     * 
+     *
+     *
      */
     public List<FeatureMap.DataProcessing> getDataProcessing() {
         if (dataProcessing == null) {
@@ -299,25 +301,26 @@ public class FeatureMap {
 
     /**
      * Gets the value of the identificationRun property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the identificationRun property.
-     * 
+     * This is why there is not a <CODE>set</CODE> method for the
+     * identificationRun property.
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getIdentificationRun().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link FeatureMap.IdentificationRun }
-     * 
-     * 
+     *
+     *
      */
     public List<FeatureMap.IdentificationRun> getIdentificationRun() {
         if (identificationRun == null) {
@@ -328,40 +331,42 @@ public class FeatureMap {
 
     /**
      * Gets the value of the unassignedPeptideIdentification property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the unassignedPeptideIdentification property.
-     * 
+     * This is why there is not a <CODE>set</CODE> method for the
+     * unassignedPeptideIdentification property.
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getUnassignedPeptideIdentification().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link FeatureMap.UnassignedPeptideIdentification }
-     * 
-     * 
+     *
+     *
      */
     public List<FeatureMap.UnassignedPeptideIdentification> getUnassignedPeptideIdentification() {
         if (unassignedPeptideIdentification == null) {
-            unassignedPeptideIdentification = new ArrayList<FeatureMap.UnassignedPeptideIdentification>();
+            unassignedPeptideIdentification
+                    = new ArrayList<FeatureMap.UnassignedPeptideIdentification>();
         }
         return this.unassignedPeptideIdentification;
     }
 
     /**
      * Gets the value of the featureList property.
-     * 
+     *
      * @return
-     *     possible object is
-     *     {@link FeatureMap.FeatureList }
-     *     
+     *         possible object is
+     *         {@link FeatureMap.FeatureList }
+     *
      */
     public FeatureMap.FeatureList getFeatureList() {
         return featureList;
@@ -369,11 +374,11 @@ public class FeatureMap {
 
     /**
      * Sets the value of the featureList property.
-     * 
+     *
      * @param value
-     *     allowed object is
-     *     {@link FeatureMap.FeatureList }
-     *     
+     *              allowed object is
+     *              {@link FeatureMap.FeatureList }
+     *
      */
     public void setFeatureList(FeatureMap.FeatureList value) {
         this.featureList = value;
@@ -381,11 +386,11 @@ public class FeatureMap {
 
     /**
      * Gets the value of the version property.
-     * 
+     *
      * @return
-     *     possible object is
-     *     {@link Float }
-     *     
+     *         possible object is
+     *         {@link Float }
+     *
      */
     public Float getVersion() {
         return version;
@@ -393,11 +398,11 @@ public class FeatureMap {
 
     /**
      * Sets the value of the version property.
-     * 
+     *
      * @param value
-     *     allowed object is
-     *     {@link Float }
-     *     
+     *              allowed object is
+     *              {@link Float }
+     *
      */
     public void setVersion(Float value) {
         this.version = value;
@@ -405,11 +410,11 @@ public class FeatureMap {
 
     /**
      * Gets the value of the documentId property.
-     * 
+     *
      * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *         possible object is
+     *         {@link String }
+     *
      */
     public String getDocumentId() {
         return documentId;
@@ -417,11 +422,11 @@ public class FeatureMap {
 
     /**
      * Sets the value of the documentId property.
-     * 
+     *
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *              allowed object is
+     *              {@link String }
+     *
      */
     public void setDocumentId(String value) {
         this.documentId = value;
@@ -429,11 +434,11 @@ public class FeatureMap {
 
     /**
      * Gets the value of the id property.
-     * 
+     *
      * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *         possible object is
+     *         {@link String }
+     *
      */
     public String getId() {
         return id;
@@ -441,22 +446,24 @@ public class FeatureMap {
 
     /**
      * Sets the value of the id property.
-     * 
+     *
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *              allowed object is
+     *              {@link String }
+     *
      */
     public void setId(String value) {
         this.id = value;
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
-     * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
+     * <p>
+     * Java class for anonymous complex type.
+     *
+     * <p>
+     * The following schema fragment specifies the expected content contained
+     * within this class.
+     *
      * <pre>
      * &lt;complexType>
      *   &lt;complexContent>
@@ -495,8 +502,8 @@ public class FeatureMap {
      *   &lt;/complexContent>
      * &lt;/complexType>
      * </pre>
-     * 
-     * 
+     *
+     *
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
@@ -516,11 +523,11 @@ public class FeatureMap {
 
         /**
          * Gets the value of the software property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link FeatureMap.DataProcessing.Software }
-         *     
+         *         possible object is
+         *         {@link FeatureMap.DataProcessing.Software }
+         *
          */
         public FeatureMap.DataProcessing.Software getSoftware() {
             return software;
@@ -528,11 +535,11 @@ public class FeatureMap {
 
         /**
          * Sets the value of the software property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link FeatureMap.DataProcessing.Software }
-         *     
+         *              allowed object is
+         *              {@link FeatureMap.DataProcessing.Software }
+         *
          */
         public void setSoftware(FeatureMap.DataProcessing.Software value) {
             this.software = value;
@@ -540,54 +547,57 @@ public class FeatureMap {
 
         /**
          * Gets the value of the processingAction property.
-         * 
+         *
          * <p>
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the processingAction property.
-         * 
+         * This is why there is not a <CODE>set</CODE> method for the
+         * processingAction property.
+         *
          * <p>
          * For example, to add a new item, do as follows:
          * <pre>
          *    getProcessingAction().add(newItem);
          * </pre>
-         * 
-         * 
+         *
+         *
          * <p>
          * Objects of the following type(s) are allowed in the list
          * {@link FeatureMap.DataProcessing.ProcessingAction }
-         * 
-         * 
+         *
+         *
          */
         public List<FeatureMap.DataProcessing.ProcessingAction> getProcessingAction() {
             if (processingAction == null) {
-                processingAction = new ArrayList<FeatureMap.DataProcessing.ProcessingAction>();
+                processingAction
+                        = new ArrayList<FeatureMap.DataProcessing.ProcessingAction>();
             }
             return this.processingAction;
         }
 
         /**
          * Gets the value of the userParam property.
-         * 
+         *
          * <p>
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the userParam property.
-         * 
+         * This is why there is not a <CODE>set</CODE> method for the userParam
+         * property.
+         *
          * <p>
          * For example, to add a new item, do as follows:
          * <pre>
          *    getUserParam().add(newItem);
          * </pre>
-         * 
-         * 
+         *
+         *
          * <p>
          * Objects of the following type(s) are allowed in the list
          * {@link FeatureMap.DataProcessing.UserParam }
-         * 
-         * 
+         *
+         *
          */
         public List<FeatureMap.DataProcessing.UserParam> getUserParam() {
             if (userParam == null) {
@@ -598,11 +608,11 @@ public class FeatureMap {
 
         /**
          * Gets the value of the completionTime property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link XMLGregorianCalendar }
-         *     
+         *         possible object is
+         *         {@link XMLGregorianCalendar }
+         *
          */
         public XMLGregorianCalendar getCompletionTime() {
             return completionTime;
@@ -610,22 +620,24 @@ public class FeatureMap {
 
         /**
          * Sets the value of the completionTime property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link XMLGregorianCalendar }
-         *     
+         *              allowed object is
+         *              {@link XMLGregorianCalendar }
+         *
          */
         public void setCompletionTime(XMLGregorianCalendar value) {
             this.completionTime = value;
         }
 
-
         /**
-         * <p>Java class for anonymous complex type.
-         * 
-         * <p>The following schema fragment specifies the expected content contained within this class.
-         * 
+         * <p>
+         * Java class for anonymous complex type.
+         *
+         * <p>
+         * The following schema fragment specifies the expected content
+         * contained within this class.
+         *
          * <pre>
          * &lt;complexType>
          *   &lt;complexContent>
@@ -635,8 +647,8 @@ public class FeatureMap {
          *   &lt;/complexContent>
          * &lt;/complexType>
          * </pre>
-         * 
-         * 
+         *
+         *
          */
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "")
@@ -647,11 +659,11 @@ public class FeatureMap {
 
             /**
              * Gets the value of the name property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getName() {
                 return name;
@@ -659,11 +671,11 @@ public class FeatureMap {
 
             /**
              * Sets the value of the name property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setName(String value) {
                 this.name = value;
@@ -671,12 +683,14 @@ public class FeatureMap {
 
         }
 
-
         /**
-         * <p>Java class for anonymous complex type.
-         * 
-         * <p>The following schema fragment specifies the expected content contained within this class.
-         * 
+         * <p>
+         * Java class for anonymous complex type.
+         *
+         * <p>
+         * The following schema fragment specifies the expected content
+         * contained within this class.
+         *
          * <pre>
          * &lt;complexType>
          *   &lt;complexContent>
@@ -687,8 +701,8 @@ public class FeatureMap {
          *   &lt;/complexContent>
          * &lt;/complexType>
          * </pre>
-         * 
-         * 
+         *
+         *
          */
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "")
@@ -701,11 +715,11 @@ public class FeatureMap {
 
             /**
              * Gets the value of the name property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getName() {
                 return name;
@@ -713,11 +727,11 @@ public class FeatureMap {
 
             /**
              * Sets the value of the name property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setName(String value) {
                 this.name = value;
@@ -725,11 +739,11 @@ public class FeatureMap {
 
             /**
              * Gets the value of the version property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getVersion() {
                 return version;
@@ -737,11 +751,11 @@ public class FeatureMap {
 
             /**
              * Sets the value of the version property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setVersion(String value) {
                 this.version = value;
@@ -749,12 +763,14 @@ public class FeatureMap {
 
         }
 
-
         /**
-         * <p>Java class for anonymous complex type.
-         * 
-         * <p>The following schema fragment specifies the expected content contained within this class.
-         * 
+         * <p>
+         * Java class for anonymous complex type.
+         *
+         * <p>
+         * The following schema fragment specifies the expected content
+         * contained within this class.
+         *
          * <pre>
          * &lt;complexType>
          *   &lt;complexContent>
@@ -763,26 +779,26 @@ public class FeatureMap {
          *   &lt;/complexContent>
          * &lt;/complexType>
          * </pre>
-         * 
-         * 
+         *
+         *
          */
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "")
         public static class UserParam
-            extends uk.ac.liv.mzqlib.openms.jaxb.UserParam
-        {
-
+                extends uk.ac.liv.mzqlib.openms.jaxb.UserParam {
 
         }
 
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
-     * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
+     * <p>
+     * Java class for anonymous complex type.
+     *
+     * <p>
+     * The following schema fragment specifies the expected content contained
+     * within this class.
+     *
      * <pre>
      * &lt;complexType>
      *   &lt;complexContent>
@@ -795,8 +811,8 @@ public class FeatureMap {
      *   &lt;/complexContent>
      * &lt;/complexType>
      * </pre>
-     * 
-     * 
+     *
+     *
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
@@ -810,25 +826,26 @@ public class FeatureMap {
 
         /**
          * Gets the value of the feature property.
-         * 
+         *
          * <p>
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the feature property.
-         * 
+         * This is why there is not a <CODE>set</CODE> method for the feature
+         * property.
+         *
          * <p>
          * For example, to add a new item, do as follows:
          * <pre>
          *    getFeature().add(newItem);
          * </pre>
-         * 
-         * 
+         *
+         *
          * <p>
          * Objects of the following type(s) are allowed in the list
          * {@link FeatureType }
-         * 
-         * 
+         *
+         *
          */
         public List<FeatureType> getFeature() {
             if (feature == null) {
@@ -839,11 +856,11 @@ public class FeatureMap {
 
         /**
          * Gets the value of the count property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link BigInteger }
-         *     
+         *         possible object is
+         *         {@link BigInteger }
+         *
          */
         public BigInteger getCount() {
             return count;
@@ -851,11 +868,11 @@ public class FeatureMap {
 
         /**
          * Sets the value of the count property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link BigInteger }
-         *     
+         *              allowed object is
+         *              {@link BigInteger }
+         *
          */
         public void setCount(BigInteger value) {
             this.count = value;
@@ -863,12 +880,14 @@ public class FeatureMap {
 
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
-     * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
+     * <p>
+     * Java class for anonymous complex type.
+     *
+     * <p>
+     * The following schema fragment specifies the expected content contained
+     * within this class.
+     *
      * <pre>
      * &lt;complexType>
      *   &lt;complexContent>
@@ -968,8 +987,8 @@ public class FeatureMap {
      *   &lt;/complexContent>
      * &lt;/complexType>
      * </pre>
-     * 
-     * 
+     *
+     *
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
@@ -997,11 +1016,11 @@ public class FeatureMap {
 
         /**
          * Gets the value of the searchParameters property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link FeatureMap.IdentificationRun.SearchParameters }
-         *     
+         *         possible object is
+         *         {@link FeatureMap.IdentificationRun.SearchParameters }
+         *
          */
         public FeatureMap.IdentificationRun.SearchParameters getSearchParameters() {
             return searchParameters;
@@ -1009,23 +1028,24 @@ public class FeatureMap {
 
         /**
          * Sets the value of the searchParameters property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link FeatureMap.IdentificationRun.SearchParameters }
-         *     
+         *              allowed object is
+         *              {@link FeatureMap.IdentificationRun.SearchParameters }
+         *
          */
-        public void setSearchParameters(FeatureMap.IdentificationRun.SearchParameters value) {
+        public void setSearchParameters(
+                FeatureMap.IdentificationRun.SearchParameters value) {
             this.searchParameters = value;
         }
 
         /**
          * Gets the value of the proteinIdentification property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link FeatureMap.IdentificationRun.ProteinIdentification }
-         *     
+         *         possible object is
+         *         {@link FeatureMap.IdentificationRun.ProteinIdentification }
+         *
          */
         public FeatureMap.IdentificationRun.ProteinIdentification getProteinIdentification() {
             return proteinIdentification;
@@ -1033,23 +1053,24 @@ public class FeatureMap {
 
         /**
          * Sets the value of the proteinIdentification property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link FeatureMap.IdentificationRun.ProteinIdentification }
-         *     
+         *              allowed object is
+         *              {@link FeatureMap.IdentificationRun.ProteinIdentification }
+         *
          */
-        public void setProteinIdentification(FeatureMap.IdentificationRun.ProteinIdentification value) {
+        public void setProteinIdentification(
+                FeatureMap.IdentificationRun.ProteinIdentification value) {
             this.proteinIdentification = value;
         }
 
         /**
          * Gets the value of the id property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         *         possible object is
+         *         {@link String }
+         *
          */
         public String getId() {
             return id;
@@ -1057,11 +1078,11 @@ public class FeatureMap {
 
         /**
          * Sets the value of the id property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *              allowed object is
+         *              {@link String }
+         *
          */
         public void setId(String value) {
             this.id = value;
@@ -1069,11 +1090,11 @@ public class FeatureMap {
 
         /**
          * Gets the value of the searchEngine property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         *         possible object is
+         *         {@link String }
+         *
          */
         public String getSearchEngine() {
             return searchEngine;
@@ -1081,11 +1102,11 @@ public class FeatureMap {
 
         /**
          * Sets the value of the searchEngine property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *              allowed object is
+         *              {@link String }
+         *
          */
         public void setSearchEngine(String value) {
             this.searchEngine = value;
@@ -1093,11 +1114,11 @@ public class FeatureMap {
 
         /**
          * Gets the value of the searchEngineVersion property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         *         possible object is
+         *         {@link String }
+         *
          */
         public String getSearchEngineVersion() {
             return searchEngineVersion;
@@ -1105,11 +1126,11 @@ public class FeatureMap {
 
         /**
          * Sets the value of the searchEngineVersion property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *              allowed object is
+         *              {@link String }
+         *
          */
         public void setSearchEngineVersion(String value) {
             this.searchEngineVersion = value;
@@ -1117,11 +1138,11 @@ public class FeatureMap {
 
         /**
          * Gets the value of the date property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link XMLGregorianCalendar }
-         *     
+         *         possible object is
+         *         {@link XMLGregorianCalendar }
+         *
          */
         public XMLGregorianCalendar getDate() {
             return date;
@@ -1129,22 +1150,24 @@ public class FeatureMap {
 
         /**
          * Sets the value of the date property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link XMLGregorianCalendar }
-         *     
+         *              allowed object is
+         *              {@link XMLGregorianCalendar }
+         *
          */
         public void setDate(XMLGregorianCalendar value) {
             this.date = value;
         }
 
-
         /**
-         * <p>Java class for anonymous complex type.
-         * 
-         * <p>The following schema fragment specifies the expected content contained within this class.
-         * 
+         * <p>
+         * Java class for anonymous complex type.
+         *
+         * <p>
+         * The following schema fragment specifies the expected content
+         * contained within this class.
+         *
          * <pre>
          * &lt;complexType>
          *   &lt;complexContent>
@@ -1174,8 +1197,8 @@ public class FeatureMap {
          *   &lt;/complexContent>
          * &lt;/complexType>
          * </pre>
-         * 
-         * 
+         *
+         *
          */
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "", propOrder = {
@@ -1196,69 +1219,74 @@ public class FeatureMap {
 
             /**
              * Gets the value of the proteinHit property.
-             * 
+             *
              * <p>
              * This accessor method returns a reference to the live list,
              * not a snapshot. Therefore any modification you make to the
              * returned list will be present inside the JAXB object.
-             * This is why there is not a <CODE>set</CODE> method for the proteinHit property.
-             * 
+             * This is why there is not a <CODE>set</CODE> method for the
+             * proteinHit property.
+             *
              * <p>
              * For example, to add a new item, do as follows:
              * <pre>
              *    getProteinHit().add(newItem);
              * </pre>
-             * 
-             * 
+             *
+             *
              * <p>
              * Objects of the following type(s) are allowed in the list
-             * {@link FeatureMap.IdentificationRun.ProteinIdentification.ProteinHit }
-             * 
-             * 
+             * {@link FeatureMap.IdentificationRun.ProteinIdentification.ProteinHit
+             * }
+             *
+             *
              */
             public List<FeatureMap.IdentificationRun.ProteinIdentification.ProteinHit> getProteinHit() {
                 if (proteinHit == null) {
-                    proteinHit = new ArrayList<FeatureMap.IdentificationRun.ProteinIdentification.ProteinHit>();
+                    proteinHit
+                            = new ArrayList<FeatureMap.IdentificationRun.ProteinIdentification.ProteinHit>();
                 }
                 return this.proteinHit;
             }
 
             /**
              * Gets the value of the userParam property.
-             * 
+             *
              * <p>
              * This accessor method returns a reference to the live list,
              * not a snapshot. Therefore any modification you make to the
              * returned list will be present inside the JAXB object.
-             * This is why there is not a <CODE>set</CODE> method for the userParam property.
-             * 
+             * This is why there is not a <CODE>set</CODE> method for the
+             * userParam property.
+             *
              * <p>
              * For example, to add a new item, do as follows:
              * <pre>
              *    getUserParam().add(newItem);
              * </pre>
-             * 
-             * 
+             *
+             *
              * <p>
              * Objects of the following type(s) are allowed in the list
              * {@link uk.ac.liv.mzqlib.openms.jaxb.UserParam }
-             * 
-             * 
+             *
+             *
              */
             public List<uk.ac.liv.mzqlib.openms.jaxb.UserParam> getUserParam() {
                 if (userParam == null) {
-                    userParam = new ArrayList<uk.ac.liv.mzqlib.openms.jaxb.UserParam>();
+                    userParam
+                            = new ArrayList<uk.ac.liv.mzqlib.openms.jaxb.UserParam>();
                 }
                 return this.userParam;
             }
 
             /**
              * Gets the value of the scoreType property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getScoreType() {
                 return scoreType;
@@ -1266,11 +1294,11 @@ public class FeatureMap {
 
             /**
              * Sets the value of the scoreType property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setScoreType(String value) {
                 this.scoreType = value;
@@ -1278,7 +1306,7 @@ public class FeatureMap {
 
             /**
              * Gets the value of the higherScoreBetter property.
-             * 
+             *
              */
             public boolean isHigherScoreBetter() {
                 return higherScoreBetter;
@@ -1286,7 +1314,7 @@ public class FeatureMap {
 
             /**
              * Sets the value of the higherScoreBetter property.
-             * 
+             *
              */
             public void setHigherScoreBetter(boolean value) {
                 this.higherScoreBetter = value;
@@ -1294,11 +1322,11 @@ public class FeatureMap {
 
             /**
              * Gets the value of the significanceThreshold property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link Float }
-             *     
+             *         possible object is
+             *         {@link Float }
+             *
              */
             public Float getSignificanceThreshold() {
                 return significanceThreshold;
@@ -1306,22 +1334,24 @@ public class FeatureMap {
 
             /**
              * Sets the value of the significanceThreshold property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link Float }
-             *     
+             *              allowed object is
+             *              {@link Float }
+             *
              */
             public void setSignificanceThreshold(Float value) {
                 this.significanceThreshold = value;
             }
 
-
             /**
-             * <p>Java class for anonymous complex type.
-             * 
-             * <p>The following schema fragment specifies the expected content contained within this class.
-             * 
+             * <p>
+             * Java class for anonymous complex type.
+             *
+             * <p>
+             * The following schema fragment specifies the expected content
+             * contained within this class.
+             *
              * <pre>
              * &lt;complexType>
              *   &lt;complexContent>
@@ -1337,8 +1367,8 @@ public class FeatureMap {
              *   &lt;/complexContent>
              * &lt;/complexType>
              * </pre>
-             * 
-             * 
+             *
+             *
              */
             @XmlAccessorType(XmlAccessType.FIELD)
             @XmlType(name = "", propOrder = {
@@ -1361,40 +1391,42 @@ public class FeatureMap {
 
                 /**
                  * Gets the value of the userParam property.
-                 * 
+                 *
                  * <p>
                  * This accessor method returns a reference to the live list,
                  * not a snapshot. Therefore any modification you make to the
                  * returned list will be present inside the JAXB object.
-                 * This is why there is not a <CODE>set</CODE> method for the userParam property.
-                 * 
+                 * This is why there is not a <CODE>set</CODE> method for the
+                 * userParam property.
+                 *
                  * <p>
                  * For example, to add a new item, do as follows:
                  * <pre>
                  *    getUserParam().add(newItem);
                  * </pre>
-                 * 
-                 * 
+                 *
+                 *
                  * <p>
                  * Objects of the following type(s) are allowed in the list
                  * {@link uk.ac.liv.mzqlib.openms.jaxb.UserParam }
-                 * 
-                 * 
+                 *
+                 *
                  */
                 public List<uk.ac.liv.mzqlib.openms.jaxb.UserParam> getUserParam() {
                     if (userParam == null) {
-                        userParam = new ArrayList<uk.ac.liv.mzqlib.openms.jaxb.UserParam>();
+                        userParam
+                                = new ArrayList<uk.ac.liv.mzqlib.openms.jaxb.UserParam>();
                     }
                     return this.userParam;
                 }
 
                 /**
                  * Gets the value of the id property.
-                 * 
+                 *
                  * @return
-                 *     possible object is
-                 *     {@link String }
-                 *     
+                 *         possible object is
+                 *         {@link String }
+                 *
                  */
                 public String getId() {
                     return id;
@@ -1402,11 +1434,11 @@ public class FeatureMap {
 
                 /**
                  * Sets the value of the id property.
-                 * 
+                 *
                  * @param value
-                 *     allowed object is
-                 *     {@link String }
-                 *     
+                 *              allowed object is
+                 *              {@link String }
+                 *
                  */
                 public void setId(String value) {
                     this.id = value;
@@ -1414,11 +1446,11 @@ public class FeatureMap {
 
                 /**
                  * Gets the value of the accession property.
-                 * 
+                 *
                  * @return
-                 *     possible object is
-                 *     {@link String }
-                 *     
+                 *         possible object is
+                 *         {@link String }
+                 *
                  */
                 public String getAccession() {
                     return accession;
@@ -1426,11 +1458,11 @@ public class FeatureMap {
 
                 /**
                  * Sets the value of the accession property.
-                 * 
+                 *
                  * @param value
-                 *     allowed object is
-                 *     {@link String }
-                 *     
+                 *              allowed object is
+                 *              {@link String }
+                 *
                  */
                 public void setAccession(String value) {
                     this.accession = value;
@@ -1438,7 +1470,7 @@ public class FeatureMap {
 
                 /**
                  * Gets the value of the score property.
-                 * 
+                 *
                  */
                 public float getScore() {
                     return score;
@@ -1446,7 +1478,7 @@ public class FeatureMap {
 
                 /**
                  * Sets the value of the score property.
-                 * 
+                 *
                  */
                 public void setScore(float value) {
                     this.score = value;
@@ -1454,11 +1486,11 @@ public class FeatureMap {
 
                 /**
                  * Gets the value of the sequence property.
-                 * 
+                 *
                  * @return
-                 *     possible object is
-                 *     {@link String }
-                 *     
+                 *         possible object is
+                 *         {@link String }
+                 *
                  */
                 public String getSequence() {
                     return sequence;
@@ -1466,11 +1498,11 @@ public class FeatureMap {
 
                 /**
                  * Sets the value of the sequence property.
-                 * 
+                 *
                  * @param value
-                 *     allowed object is
-                 *     {@link String }
-                 *     
+                 *              allowed object is
+                 *              {@link String }
+                 *
                  */
                 public void setSequence(String value) {
                     this.sequence = value;
@@ -1480,12 +1512,14 @@ public class FeatureMap {
 
         }
 
-
         /**
-         * <p>Java class for anonymous complex type.
-         * 
-         * <p>The following schema fragment specifies the expected content contained within this class.
-         * 
+         * <p>
+         * Java class for anonymous complex type.
+         *
+         * <p>
+         * The following schema fragment specifies the expected content
+         * contained within this class.
+         *
          * <pre>
          * &lt;complexType>
          *   &lt;complexContent>
@@ -1542,8 +1576,8 @@ public class FeatureMap {
          *   &lt;/complexContent>
          * &lt;/complexType>
          * </pre>
-         * 
-         * 
+         *
+         *
          */
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "", propOrder = {
@@ -1580,98 +1614,106 @@ public class FeatureMap {
 
             /**
              * Gets the value of the fixedModification property.
-             * 
+             *
              * <p>
              * This accessor method returns a reference to the live list,
              * not a snapshot. Therefore any modification you make to the
              * returned list will be present inside the JAXB object.
-             * This is why there is not a <CODE>set</CODE> method for the fixedModification property.
-             * 
+             * This is why there is not a <CODE>set</CODE> method for the
+             * fixedModification property.
+             *
              * <p>
              * For example, to add a new item, do as follows:
              * <pre>
              *    getFixedModification().add(newItem);
              * </pre>
-             * 
-             * 
+             *
+             *
              * <p>
              * Objects of the following type(s) are allowed in the list
-             * {@link FeatureMap.IdentificationRun.SearchParameters.FixedModification }
-             * 
-             * 
+             * {@link FeatureMap.IdentificationRun.SearchParameters.FixedModification
+             * }
+             *
+             *
              */
             public List<FeatureMap.IdentificationRun.SearchParameters.FixedModification> getFixedModification() {
                 if (fixedModification == null) {
-                    fixedModification = new ArrayList<FeatureMap.IdentificationRun.SearchParameters.FixedModification>();
+                    fixedModification
+                            = new ArrayList<FeatureMap.IdentificationRun.SearchParameters.FixedModification>();
                 }
                 return this.fixedModification;
             }
 
             /**
              * Gets the value of the variableModification property.
-             * 
+             *
              * <p>
              * This accessor method returns a reference to the live list,
              * not a snapshot. Therefore any modification you make to the
              * returned list will be present inside the JAXB object.
-             * This is why there is not a <CODE>set</CODE> method for the variableModification property.
-             * 
+             * This is why there is not a <CODE>set</CODE> method for the
+             * variableModification property.
+             *
              * <p>
              * For example, to add a new item, do as follows:
              * <pre>
              *    getVariableModification().add(newItem);
              * </pre>
-             * 
-             * 
+             *
+             *
              * <p>
              * Objects of the following type(s) are allowed in the list
-             * {@link FeatureMap.IdentificationRun.SearchParameters.VariableModification }
-             * 
-             * 
+             * {@link FeatureMap.IdentificationRun.SearchParameters.VariableModification
+             * }
+             *
+             *
              */
             public List<FeatureMap.IdentificationRun.SearchParameters.VariableModification> getVariableModification() {
                 if (variableModification == null) {
-                    variableModification = new ArrayList<FeatureMap.IdentificationRun.SearchParameters.VariableModification>();
+                    variableModification
+                            = new ArrayList<FeatureMap.IdentificationRun.SearchParameters.VariableModification>();
                 }
                 return this.variableModification;
             }
 
             /**
              * Gets the value of the userParam property.
-             * 
+             *
              * <p>
              * This accessor method returns a reference to the live list,
              * not a snapshot. Therefore any modification you make to the
              * returned list will be present inside the JAXB object.
-             * This is why there is not a <CODE>set</CODE> method for the userParam property.
-             * 
+             * This is why there is not a <CODE>set</CODE> method for the
+             * userParam property.
+             *
              * <p>
              * For example, to add a new item, do as follows:
              * <pre>
              *    getUserParam().add(newItem);
              * </pre>
-             * 
-             * 
+             *
+             *
              * <p>
              * Objects of the following type(s) are allowed in the list
              * {@link uk.ac.liv.mzqlib.openms.jaxb.UserParam }
-             * 
-             * 
+             *
+             *
              */
             public List<uk.ac.liv.mzqlib.openms.jaxb.UserParam> getUserParam() {
                 if (userParam == null) {
-                    userParam = new ArrayList<uk.ac.liv.mzqlib.openms.jaxb.UserParam>();
+                    userParam
+                            = new ArrayList<uk.ac.liv.mzqlib.openms.jaxb.UserParam>();
                 }
                 return this.userParam;
             }
 
             /**
              * Gets the value of the db property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getDb() {
                 return db;
@@ -1679,11 +1721,11 @@ public class FeatureMap {
 
             /**
              * Sets the value of the db property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setDb(String value) {
                 this.db = value;
@@ -1691,11 +1733,11 @@ public class FeatureMap {
 
             /**
              * Gets the value of the dbVersion property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getDbVersion() {
                 return dbVersion;
@@ -1703,11 +1745,11 @@ public class FeatureMap {
 
             /**
              * Sets the value of the dbVersion property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setDbVersion(String value) {
                 this.dbVersion = value;
@@ -1715,11 +1757,11 @@ public class FeatureMap {
 
             /**
              * Gets the value of the taxonomy property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getTaxonomy() {
                 return taxonomy;
@@ -1727,11 +1769,11 @@ public class FeatureMap {
 
             /**
              * Sets the value of the taxonomy property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setTaxonomy(String value) {
                 this.taxonomy = value;
@@ -1739,11 +1781,11 @@ public class FeatureMap {
 
             /**
              * Gets the value of the massType property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link MassType }
-             *     
+             *         possible object is
+             *         {@link MassType }
+             *
              */
             public MassType getMassType() {
                 return massType;
@@ -1751,11 +1793,11 @@ public class FeatureMap {
 
             /**
              * Sets the value of the massType property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link MassType }
-             *     
+             *              allowed object is
+             *              {@link MassType }
+             *
              */
             public void setMassType(MassType value) {
                 this.massType = value;
@@ -1763,11 +1805,11 @@ public class FeatureMap {
 
             /**
              * Gets the value of the charges property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getCharges() {
                 return charges;
@@ -1775,11 +1817,11 @@ public class FeatureMap {
 
             /**
              * Sets the value of the charges property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setCharges(String value) {
                 this.charges = value;
@@ -1787,11 +1829,11 @@ public class FeatureMap {
 
             /**
              * Gets the value of the enzyme property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link DigestionEnzyme }
-             *     
+             *         possible object is
+             *         {@link DigestionEnzyme }
+             *
              */
             public DigestionEnzyme getEnzyme() {
                 return enzyme;
@@ -1799,11 +1841,11 @@ public class FeatureMap {
 
             /**
              * Sets the value of the enzyme property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link DigestionEnzyme }
-             *     
+             *              allowed object is
+             *              {@link DigestionEnzyme }
+             *
              */
             public void setEnzyme(DigestionEnzyme value) {
                 this.enzyme = value;
@@ -1811,11 +1853,11 @@ public class FeatureMap {
 
             /**
              * Gets the value of the missedCleavages property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link Long }
-             *     
+             *         possible object is
+             *         {@link Long }
+             *
              */
             public Long getMissedCleavages() {
                 return missedCleavages;
@@ -1823,11 +1865,11 @@ public class FeatureMap {
 
             /**
              * Sets the value of the missedCleavages property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link Long }
-             *     
+             *              allowed object is
+             *              {@link Long }
+             *
              */
             public void setMissedCleavages(Long value) {
                 this.missedCleavages = value;
@@ -1835,7 +1877,7 @@ public class FeatureMap {
 
             /**
              * Gets the value of the precursorPeakTolerance property.
-             * 
+             *
              */
             public float getPrecursorPeakTolerance() {
                 return precursorPeakTolerance;
@@ -1843,7 +1885,7 @@ public class FeatureMap {
 
             /**
              * Sets the value of the precursorPeakTolerance property.
-             * 
+             *
              */
             public void setPrecursorPeakTolerance(float value) {
                 this.precursorPeakTolerance = value;
@@ -1851,7 +1893,7 @@ public class FeatureMap {
 
             /**
              * Gets the value of the peakMassTolerance property.
-             * 
+             *
              */
             public float getPeakMassTolerance() {
                 return peakMassTolerance;
@@ -1859,18 +1901,20 @@ public class FeatureMap {
 
             /**
              * Sets the value of the peakMassTolerance property.
-             * 
+             *
              */
             public void setPeakMassTolerance(float value) {
                 this.peakMassTolerance = value;
             }
 
-
             /**
-             * <p>Java class for anonymous complex type.
-             * 
-             * <p>The following schema fragment specifies the expected content contained within this class.
-             * 
+             * <p>
+             * Java class for anonymous complex type.
+             *
+             * <p>
+             * The following schema fragment specifies the expected content
+             * contained within this class.
+             *
              * <pre>
              * &lt;complexType>
              *   &lt;complexContent>
@@ -1889,8 +1933,8 @@ public class FeatureMap {
              *   &lt;/complexContent>
              * &lt;/complexType>
              * </pre>
-             * 
-             * 
+             *
+             *
              */
             @XmlAccessorType(XmlAccessType.FIELD)
             @XmlType(name = "", propOrder = {
@@ -1904,40 +1948,42 @@ public class FeatureMap {
 
                 /**
                  * Gets the value of the userParam property.
-                 * 
+                 *
                  * <p>
                  * This accessor method returns a reference to the live list,
                  * not a snapshot. Therefore any modification you make to the
                  * returned list will be present inside the JAXB object.
-                 * This is why there is not a <CODE>set</CODE> method for the userParam property.
-                 * 
+                 * This is why there is not a <CODE>set</CODE> method for the
+                 * userParam property.
+                 *
                  * <p>
                  * For example, to add a new item, do as follows:
                  * <pre>
                  *    getUserParam().add(newItem);
                  * </pre>
-                 * 
-                 * 
+                 *
+                 *
                  * <p>
                  * Objects of the following type(s) are allowed in the list
                  * {@link uk.ac.liv.mzqlib.openms.jaxb.UserParam }
-                 * 
-                 * 
+                 *
+                 *
                  */
                 public List<uk.ac.liv.mzqlib.openms.jaxb.UserParam> getUserParam() {
                     if (userParam == null) {
-                        userParam = new ArrayList<uk.ac.liv.mzqlib.openms.jaxb.UserParam>();
+                        userParam
+                                = new ArrayList<uk.ac.liv.mzqlib.openms.jaxb.UserParam>();
                     }
                     return this.userParam;
                 }
 
                 /**
                  * Gets the value of the name property.
-                 * 
+                 *
                  * @return
-                 *     possible object is
-                 *     {@link String }
-                 *     
+                 *         possible object is
+                 *         {@link String }
+                 *
                  */
                 public String getName() {
                     return name;
@@ -1945,11 +1991,11 @@ public class FeatureMap {
 
                 /**
                  * Sets the value of the name property.
-                 * 
+                 *
                  * @param value
-                 *     allowed object is
-                 *     {@link String }
-                 *     
+                 *              allowed object is
+                 *              {@link String }
+                 *
                  */
                 public void setName(String value) {
                     this.name = value;
@@ -1957,12 +2003,14 @@ public class FeatureMap {
 
             }
 
-
             /**
-             * <p>Java class for anonymous complex type.
-             * 
-             * <p>The following schema fragment specifies the expected content contained within this class.
-             * 
+             * <p>
+             * Java class for anonymous complex type.
+             *
+             * <p>
+             * The following schema fragment specifies the expected content
+             * contained within this class.
+             *
              * <pre>
              * &lt;complexType>
              *   &lt;complexContent>
@@ -1981,8 +2029,8 @@ public class FeatureMap {
              *   &lt;/complexContent>
              * &lt;/complexType>
              * </pre>
-             * 
-             * 
+             *
+             *
              */
             @XmlAccessorType(XmlAccessType.FIELD)
             @XmlType(name = "", propOrder = {
@@ -1996,40 +2044,42 @@ public class FeatureMap {
 
                 /**
                  * Gets the value of the userParam property.
-                 * 
+                 *
                  * <p>
                  * This accessor method returns a reference to the live list,
                  * not a snapshot. Therefore any modification you make to the
                  * returned list will be present inside the JAXB object.
-                 * This is why there is not a <CODE>set</CODE> method for the userParam property.
-                 * 
+                 * This is why there is not a <CODE>set</CODE> method for the
+                 * userParam property.
+                 *
                  * <p>
                  * For example, to add a new item, do as follows:
                  * <pre>
                  *    getUserParam().add(newItem);
                  * </pre>
-                 * 
-                 * 
+                 *
+                 *
                  * <p>
                  * Objects of the following type(s) are allowed in the list
                  * {@link uk.ac.liv.mzqlib.openms.jaxb.UserParam }
-                 * 
-                 * 
+                 *
+                 *
                  */
                 public List<uk.ac.liv.mzqlib.openms.jaxb.UserParam> getUserParam() {
                     if (userParam == null) {
-                        userParam = new ArrayList<uk.ac.liv.mzqlib.openms.jaxb.UserParam>();
+                        userParam
+                                = new ArrayList<uk.ac.liv.mzqlib.openms.jaxb.UserParam>();
                     }
                     return this.userParam;
                 }
 
                 /**
                  * Gets the value of the name property.
-                 * 
+                 *
                  * @return
-                 *     possible object is
-                 *     {@link String }
-                 *     
+                 *         possible object is
+                 *         {@link String }
+                 *
                  */
                 public String getName() {
                     return name;
@@ -2037,11 +2087,11 @@ public class FeatureMap {
 
                 /**
                  * Sets the value of the name property.
-                 * 
+                 *
                  * @param value
-                 *     allowed object is
-                 *     {@link String }
-                 *     
+                 *              allowed object is
+                 *              {@link String }
+                 *
                  */
                 public void setName(String value) {
                     this.name = value;
@@ -2053,12 +2103,14 @@ public class FeatureMap {
 
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
-     * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
+     * <p>
+     * Java class for anonymous complex type.
+     *
+     * <p>
+     * The following schema fragment specifies the expected content contained
+     * within this class.
+     *
      * <pre>
      * &lt;complexType>
      *   &lt;complexContent>
@@ -2108,8 +2160,8 @@ public class FeatureMap {
      *   &lt;/complexContent>
      * &lt;/complexType>
      * </pre>
-     * 
-     * 
+     *
+     *
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
@@ -2141,69 +2193,73 @@ public class FeatureMap {
 
         /**
          * Gets the value of the peptideHit property.
-         * 
+         *
          * <p>
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the peptideHit property.
-         * 
+         * This is why there is not a <CODE>set</CODE> method for the peptideHit
+         * property.
+         *
          * <p>
          * For example, to add a new item, do as follows:
          * <pre>
          *    getPeptideHit().add(newItem);
          * </pre>
-         * 
-         * 
+         *
+         *
          * <p>
          * Objects of the following type(s) are allowed in the list
          * {@link FeatureMap.UnassignedPeptideIdentification.PeptideHit }
-         * 
-         * 
+         *
+         *
          */
         public List<FeatureMap.UnassignedPeptideIdentification.PeptideHit> getPeptideHit() {
             if (peptideHit == null) {
-                peptideHit = new ArrayList<FeatureMap.UnassignedPeptideIdentification.PeptideHit>();
+                peptideHit
+                        = new ArrayList<FeatureMap.UnassignedPeptideIdentification.PeptideHit>();
             }
             return this.peptideHit;
         }
 
         /**
          * Gets the value of the userParam property.
-         * 
+         *
          * <p>
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the userParam property.
-         * 
+         * This is why there is not a <CODE>set</CODE> method for the userParam
+         * property.
+         *
          * <p>
          * For example, to add a new item, do as follows:
          * <pre>
          *    getUserParam().add(newItem);
          * </pre>
-         * 
-         * 
+         *
+         *
          * <p>
          * Objects of the following type(s) are allowed in the list
          * {@link uk.ac.liv.mzqlib.openms.jaxb.UserParam }
-         * 
-         * 
+         *
+         *
          */
         public List<uk.ac.liv.mzqlib.openms.jaxb.UserParam> getUserParam() {
             if (userParam == null) {
-                userParam = new ArrayList<uk.ac.liv.mzqlib.openms.jaxb.UserParam>();
+                userParam
+                        = new ArrayList<uk.ac.liv.mzqlib.openms.jaxb.UserParam>();
             }
             return this.userParam;
         }
 
         /**
          * Gets the value of the identificationRunRef property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link Object }
-         *     
+         *         possible object is
+         *         {@link Object }
+         *
          */
         public Object getIdentificationRunRef() {
             return identificationRunRef;
@@ -2211,11 +2267,11 @@ public class FeatureMap {
 
         /**
          * Sets the value of the identificationRunRef property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link Object }
-         *     
+         *              allowed object is
+         *              {@link Object }
+         *
          */
         public void setIdentificationRunRef(Object value) {
             this.identificationRunRef = value;
@@ -2223,11 +2279,11 @@ public class FeatureMap {
 
         /**
          * Gets the value of the scoreType property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         *         possible object is
+         *         {@link String }
+         *
          */
         public String getScoreType() {
             return scoreType;
@@ -2235,11 +2291,11 @@ public class FeatureMap {
 
         /**
          * Sets the value of the scoreType property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *              allowed object is
+         *              {@link String }
+         *
          */
         public void setScoreType(String value) {
             this.scoreType = value;
@@ -2247,7 +2303,7 @@ public class FeatureMap {
 
         /**
          * Gets the value of the higherScoreBetter property.
-         * 
+         *
          */
         public boolean isHigherScoreBetter() {
             return higherScoreBetter;
@@ -2255,7 +2311,7 @@ public class FeatureMap {
 
         /**
          * Sets the value of the higherScoreBetter property.
-         * 
+         *
          */
         public void setHigherScoreBetter(boolean value) {
             this.higherScoreBetter = value;
@@ -2263,11 +2319,11 @@ public class FeatureMap {
 
         /**
          * Gets the value of the significanceThreshold property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link Float }
-         *     
+         *         possible object is
+         *         {@link Float }
+         *
          */
         public Float getSignificanceThreshold() {
             return significanceThreshold;
@@ -2275,11 +2331,11 @@ public class FeatureMap {
 
         /**
          * Sets the value of the significanceThreshold property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link Float }
-         *     
+         *              allowed object is
+         *              {@link Float }
+         *
          */
         public void setSignificanceThreshold(Float value) {
             this.significanceThreshold = value;
@@ -2287,11 +2343,11 @@ public class FeatureMap {
 
         /**
          * Gets the value of the spectrumReference property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link Long }
-         *     
+         *         possible object is
+         *         {@link Long }
+         *
          */
         public Long getSpectrumReference() {
             return spectrumReference;
@@ -2299,11 +2355,11 @@ public class FeatureMap {
 
         /**
          * Sets the value of the spectrumReference property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link Long }
-         *     
+         *              allowed object is
+         *              {@link Long }
+         *
          */
         public void setSpectrumReference(Long value) {
             this.spectrumReference = value;
@@ -2311,11 +2367,11 @@ public class FeatureMap {
 
         /**
          * Gets the value of the rt property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link Float }
-         *     
+         *         possible object is
+         *         {@link Float }
+         *
          */
         public Float getRT() {
             return rt;
@@ -2323,11 +2379,11 @@ public class FeatureMap {
 
         /**
          * Sets the value of the rt property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link Float }
-         *     
+         *              allowed object is
+         *              {@link Float }
+         *
          */
         public void setRT(Float value) {
             this.rt = value;
@@ -2335,11 +2391,11 @@ public class FeatureMap {
 
         /**
          * Gets the value of the mz property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link Float }
-         *     
+         *         possible object is
+         *         {@link Float }
+         *
          */
         public Float getMZ() {
             return mz;
@@ -2347,22 +2403,24 @@ public class FeatureMap {
 
         /**
          * Sets the value of the mz property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link Float }
-         *     
+         *              allowed object is
+         *              {@link Float }
+         *
          */
         public void setMZ(Float value) {
             this.mz = value;
         }
 
-
         /**
-         * <p>Java class for anonymous complex type.
-         * 
-         * <p>The following schema fragment specifies the expected content contained within this class.
-         * 
+         * <p>
+         * Java class for anonymous complex type.
+         *
+         * <p>
+         * The following schema fragment specifies the expected content
+         * contained within this class.
+         *
          * <pre>
          * &lt;complexType>
          *   &lt;complexContent>
@@ -2394,8 +2452,8 @@ public class FeatureMap {
          *   &lt;/complexContent>
          * &lt;/complexType>
          * </pre>
-         * 
-         * 
+         *
+         *
          */
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "", propOrder = {
@@ -2421,40 +2479,42 @@ public class FeatureMap {
 
             /**
              * Gets the value of the userParam property.
-             * 
+             *
              * <p>
              * This accessor method returns a reference to the live list,
              * not a snapshot. Therefore any modification you make to the
              * returned list will be present inside the JAXB object.
-             * This is why there is not a <CODE>set</CODE> method for the userParam property.
-             * 
+             * This is why there is not a <CODE>set</CODE> method for the
+             * userParam property.
+             *
              * <p>
              * For example, to add a new item, do as follows:
              * <pre>
              *    getUserParam().add(newItem);
              * </pre>
-             * 
-             * 
+             *
+             *
              * <p>
              * Objects of the following type(s) are allowed in the list
              * {@link uk.ac.liv.mzqlib.openms.jaxb.UserParam }
-             * 
-             * 
+             *
+             *
              */
             public List<uk.ac.liv.mzqlib.openms.jaxb.UserParam> getUserParam() {
                 if (userParam == null) {
-                    userParam = new ArrayList<uk.ac.liv.mzqlib.openms.jaxb.UserParam>();
+                    userParam
+                            = new ArrayList<uk.ac.liv.mzqlib.openms.jaxb.UserParam>();
                 }
                 return this.userParam;
             }
 
             /**
              * Gets the value of the sequence property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getSequence() {
                 return sequence;
@@ -2462,11 +2522,11 @@ public class FeatureMap {
 
             /**
              * Sets the value of the sequence property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setSequence(String value) {
                 this.sequence = value;
@@ -2474,11 +2534,11 @@ public class FeatureMap {
 
             /**
              * Gets the value of the charge property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link BigInteger }
-             *     
+             *         possible object is
+             *         {@link BigInteger }
+             *
              */
             public BigInteger getCharge() {
                 return charge;
@@ -2486,11 +2546,11 @@ public class FeatureMap {
 
             /**
              * Sets the value of the charge property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link BigInteger }
-             *     
+             *              allowed object is
+             *              {@link BigInteger }
+             *
              */
             public void setCharge(BigInteger value) {
                 this.charge = value;
@@ -2498,7 +2558,7 @@ public class FeatureMap {
 
             /**
              * Gets the value of the score property.
-             * 
+             *
              */
             public float getScore() {
                 return score;
@@ -2506,7 +2566,7 @@ public class FeatureMap {
 
             /**
              * Sets the value of the score property.
-             * 
+             *
              */
             public void setScore(float value) {
                 this.score = value;
@@ -2514,11 +2574,11 @@ public class FeatureMap {
 
             /**
              * Gets the value of the aaBefore property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getAaBefore() {
                 return aaBefore;
@@ -2526,11 +2586,11 @@ public class FeatureMap {
 
             /**
              * Sets the value of the aaBefore property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setAaBefore(String value) {
                 this.aaBefore = value;
@@ -2538,11 +2598,11 @@ public class FeatureMap {
 
             /**
              * Gets the value of the aaAfter property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getAaAfter() {
                 return aaAfter;
@@ -2550,11 +2610,11 @@ public class FeatureMap {
 
             /**
              * Sets the value of the aaAfter property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setAaAfter(String value) {
                 this.aaAfter = value;
@@ -2562,25 +2622,26 @@ public class FeatureMap {
 
             /**
              * Gets the value of the proteinRefs property.
-             * 
+             *
              * <p>
              * This accessor method returns a reference to the live list,
              * not a snapshot. Therefore any modification you make to the
              * returned list will be present inside the JAXB object.
-             * This is why there is not a <CODE>set</CODE> method for the proteinRefs property.
-             * 
+             * This is why there is not a <CODE>set</CODE> method for the
+             * proteinRefs property.
+             *
              * <p>
              * For example, to add a new item, do as follows:
              * <pre>
              *    getProteinRefs().add(newItem);
              * </pre>
-             * 
-             * 
+             *
+             *
              * <p>
              * Objects of the following type(s) are allowed in the list
              * {@link Object }
-             * 
-             * 
+             *
+             *
              */
             public List<Object> getProteinRefs() {
                 if (proteinRefs == null) {

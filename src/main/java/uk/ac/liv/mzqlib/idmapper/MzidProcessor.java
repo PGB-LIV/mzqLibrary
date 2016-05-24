@@ -16,7 +16,8 @@ public interface MzidProcessor {
 
     /**
      * Get peptide to spectrumIdentificationItems map.
-     * This is a one to many map with peptide sequence plus modifications as key and list of SII data as values.
+     * This is a one to many map with peptide sequence plus modifications as key
+     * and list of SII data as values.
      *
      * @return the peptide to spectrumIdentificationItems map.
      */
@@ -25,7 +26,8 @@ public interface MzidProcessor {
     //public Map getPeptideModStringToProtAccessionsMap();
     /**
      * Get retention time (minute) to spectumIdentificationItems map.
-     * This is a one to many map with retention time (round to minute) as key and SII data as values.
+     * This is a one to many map with retention time (round to minute) as key
+     * and SII data as values.
      *
      * @return retention time to spectrumIdentifications map.
      */
@@ -33,6 +35,7 @@ public interface MzidProcessor {
 
     /**
      * Get SearchDatabase element.
+     *
      * @return SearchDatabase
      */
     public SearchDatabase getSearchDatabase();

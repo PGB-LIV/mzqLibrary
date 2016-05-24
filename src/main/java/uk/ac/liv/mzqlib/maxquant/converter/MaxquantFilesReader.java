@@ -73,7 +73,9 @@ public class MaxquantFilesReader {
     /**
      * Constructor of MaxquantFilesReader
      * This constructor takes five files and one char as parameter.
-     * Five files refer to evidence.txt, peptides.txt, proteinGroups.txt, experimentalDesignTemplate.txt, summary.txt (the file names can be different).
+     * Five files refer to evidence.txt, peptides.txt, proteinGroups.txt,
+     * experimentalDesignTemplate.txt, summary.txt (the file names can be
+     * different).
      *
      * @param evidenceF                   evidence.txt file
      * @param peptidesF                   peptides.txt file
@@ -114,7 +116,9 @@ public class MaxquantFilesReader {
     /**
      * Constructor of MaxquantFilesReader
      * This constructor takes five files as parameters.
-     * Five files refer to evidence.txt, peptides.txt, proteinGroups.txt, experimentalDesignTemplate.txt, summary.txt (the file names can be different).
+     * Five files refer to evidence.txt, peptides.txt, proteinGroups.txt,
+     * experimentalDesignTemplate.txt, summary.txt (the file names can be
+     * different).
      * The files are tab-delimited by default.
      *
      * @param evidenceF                   evidence.txt file
@@ -131,13 +135,17 @@ public class MaxquantFilesReader {
                                File experimentalDesignTemplateF,
                                File summaryF)
             throws IOException {
-        this(evidenceF, peptidesF, proteinGroupsF, experimentalDesignTemplateF, summaryF, '\t');
+        this(evidenceF, peptidesF, proteinGroupsF, experimentalDesignTemplateF,
+             summaryF, '\t');
     }
 
     /**
      * Constructor of MaxquantFilesReader
-     * This constructor takes a folder and a char as parameter. The folder must contains five required files otherwise exception will be thrown.
-     * Five files refer to evidence.txt, peptides.txt, proteinGroups.txt, experimentalDesignTemplate.txt, summary.txt (the file names MUST be the same case-insensitive).
+     * This constructor takes a folder and a char as parameter. The folder must
+     * contains five required files otherwise exception will be thrown.
+     * Five files refer to evidence.txt, peptides.txt, proteinGroups.txt,
+     * experimentalDesignTemplate.txt, summary.txt (the file names MUST be the
+     * same case-insensitive).
      *
      * @param folderName the folder with input files
      * @param sep        the separator used by input files
@@ -150,7 +158,8 @@ public class MaxquantFilesReader {
 
         File path = new File(folderName);
         String[] fileList = path.list();
-        String[] requireList = {EVIDENCE, PEPTIDES, PROTEINGROUPS, DESIGN, SUMMARY};
+        String[] requireList = {EVIDENCE, PEPTIDES, PROTEINGROUPS, DESIGN,
+            SUMMARY};
 
         String parentPath = path.getPath();
 
@@ -164,16 +173,18 @@ public class MaxquantFilesReader {
             this.summaryFile = null;
             this.peptidesFile = null;
             this.experimentalDesignTemplateFile = null;
-            System.out.println("The selected folder doesn't contain one of the following files requried:");
-            System.out.println("(" + EVIDENCE + ", " + PEPTIDES + ", " + PROTEINGROUPS + ", " + DESIGN + ", " + SUMMARY + ").");
-        }
-        else {
+            System.out.println(
+                    "The selected folder doesn't contain one of the following files requried:");
+            System.out.println("(" + EVIDENCE + ", " + PEPTIDES + ", "
+                    + PROTEINGROUPS + ", " + DESIGN + ", " + SUMMARY + ").");
+        } else {
 
             this.evidenceFile = new File(parentPath + "//" + EVIDENCE);
             this.proteinGroupsFile = new File(parentPath + "//" + PROTEINGROUPS);
             this.summaryFile = new File(parentPath + "//" + SUMMARY);
             this.peptidesFile = new File(parentPath + "//" + PEPTIDES);
-            this.experimentalDesignTemplateFile = new File(parentPath + "//" + DESIGN);
+            this.experimentalDesignTemplateFile = new File(parentPath + "//"
+                    + DESIGN);
 
             /**
              * check if proteinGroups.txt exists in the path
@@ -205,8 +216,11 @@ public class MaxquantFilesReader {
 
     /**
      * Constructor of MaxquantFilesReader
-     * This constructor takes a folder as parameter. The folder must contains five required files otherwise exception will be thrown.
-     * Five files refer to evidence.txt, peptides.txt, proteinGroups.txt, experimentalDesignTemplate.txt, summary.txt (the file names MUST be the same case-insensitive).
+     * This constructor takes a folder as parameter. The folder must contains
+     * five required files otherwise exception will be thrown.
+     * Five files refer to evidence.txt, peptides.txt, proteinGroups.txt,
+     * experimentalDesignTemplate.txt, summary.txt (the file names MUST be the
+     * same case-insensitive).
      * The files are tab-delimited by default.
      *
      * @param folderName the folder with input files
@@ -220,15 +234,16 @@ public class MaxquantFilesReader {
 
     /**
      *
-     * Read from summary.txt to find out the type of the experiment (e.g label-free or SILAC).
-     * Set the value for multiplicity, isLabelFree flag. For label-free, multiplicity must be set to 0.
+     * Read from summary.txt to find out the type of the experiment (e.g
+     * label-free or SILAC).
+     * Set the value for multiplicity, isLabelFree flag. For label-free,
+     * multiplicity must be set to 0.
      */
     private void readSummaryFile()
             throws IOException {
         if (this.summaryFile == null) {
             //TODO
-        }
-        else {
+        } else {
             try {
                 String nextLine[];
                 multiplicity = 0;
@@ -249,18 +264,18 @@ public class MaxquantFilesReader {
                     if (multiplicity == 1) {
                         multiplicity = 0;
                         isLabelFree = true;
-                    }
-                    else {
+                    } else {
                         isLabelFree = false;
                     }
-                }
-                else {
+                } else {
                     throw new IllegalStateException("The file is empty.\n");
                 }
-            }
-            catch (FileNotFoundException ex) {
-                System.out.println("The " + this.summaryFile.getAbsolutePath() + " can not be found.");
-                throw new RuntimeException("The " + this.summaryFile.getAbsolutePath() + " can not be found: " + ex.getMessage() + ".\n");
+            } catch (FileNotFoundException ex) {
+                System.out.println("The " + this.summaryFile.getAbsolutePath()
+                        + " can not be found.");
+                throw new RuntimeException("The " + this.summaryFile.
+                        getAbsolutePath() + " can not be found: " + ex.
+                        getMessage() + ".\n");
             }
         }
 
@@ -268,11 +283,16 @@ public class MaxquantFilesReader {
 
     /**
      * Read from experimentalDesignTemplate.txt.
-     * The methods will build list of assays, experiments, rawFiles, and studyVars;
-     * map of rawFileExpMap, assayRawFileMap, primeStudyGroupMap, and studyGroupMap
-     * In label free case, the primeStudyGroupMap and sutdyGroupMap are the same. They both contain entries of study variable to list of assay names.
-     * In label based case (e.g. SILAC), the studyGroupMap contains more than primeStudyGroupMap.
-     * The studyGroupMap contains entries of study variable to list of assay names not only from experimentalDesignTemplate.txt,
+     * The methods will build list of assays, experiments, rawFiles, and
+     * studyVars;
+     * map of rawFileExpMap, assayRawFileMap, primeStudyGroupMap, and
+     * studyGroupMap
+     * In label free case, the primeStudyGroupMap and sutdyGroupMap are the
+     * same. They both contain entries of study variable to list of assay names.
+     * In label based case (e.g. SILAC), the studyGroupMap contains more than
+     * primeStudyGroupMap.
+     * The studyGroupMap contains entries of study variable to list of assay
+     * names not only from experimentalDesignTemplate.txt,
      * but also extra study variables based on label types.
      * Set groupNum to 1 if it is label free.
      */
@@ -280,8 +300,7 @@ public class MaxquantFilesReader {
             throws IOException {
         if (this.experimentalDesignTemplateFile == null) {
             // TODO
-        }
-        else {
+        } else {
             try {
                 String[] nextLine;
                 fis = new FileInputStream(this.experimentalDesignTemplateFile);
@@ -307,8 +326,7 @@ public class MaxquantFilesReader {
                         rawFileName = nextLine[0] + ".raw"; // AssayName plus '.raw' suffix is used as rawFileName
                         assays.add(assayName);
                         assayRawFileMap.put(assayName, rawFileName);
-                    }
-                    else if (multiplicity == 2) {
+                    } else if (multiplicity == 2) {
                         // Each raw file contains two assays
                         rawFileName = nextLine[0] + ".raw";
                         assayName = nextLine[0] + "_Light";
@@ -317,8 +335,7 @@ public class MaxquantFilesReader {
                         assayName = nextLine[0] + "_Heavy";
                         assays.add(assayName);
                         assayRawFileMap.put(assayName, rawFileName);
-                    }
-                    else if (multiplicity == 3) {
+                    } else if (multiplicity == 3) {
                         // Each raw file contains three assays
                         rawFileName = nextLine[0] + ".raw";
                         assayName = nextLine[0] + "_Light";
@@ -331,8 +348,7 @@ public class MaxquantFilesReader {
                         assayName = nextLine[0] + "_Heavy";
                         assays.add(assayName);
                         assayRawFileMap.put(assayName, rawFileName);
-                    }
-                    // This is very rare case when more than 2 labels are used.
+                    } // This is very rare case when more than 2 labels are used.
                     else {
                         for (int i = 0; i < multiplicity; i++) {
                             rawFileName = nextLine[0] + ".raw";
@@ -346,8 +362,7 @@ public class MaxquantFilesReader {
                         // In the case when the third column has no value, a number for experiment is given for the raw file and its assay(s)
                         // This will be treat as label free experiment
                         experiments.add(String.valueOf(expId++));
-                    }
-                    else {
+                    } else {
                         experiments.add(nextLine[2]);
                     }
                     rawFiles.add(nextLine[0] + ".raw");
@@ -370,38 +385,39 @@ public class MaxquantFilesReader {
                     studyV = "";
                     for (int j = 0; j < experiments.size(); j++) {
                         if (!(i == j)) {
-                            int tempLen = lengthOfPrefix((String) experiments.get(i), (String) experiments.get(j));
+                            int tempLen = lengthOfPrefix((String) experiments.
+                                    get(i), (String) experiments.get(j));
                             if ((tempLen > 0) && (prefixLen < tempLen)) {
                                 prefixLen = tempLen; // find the longest prefix. e.g. 'test1', 'test2', 'test12' TODO: bugs to be fixed
-                                studyV = ((String) experiments.get(i)).substring(0, prefixLen);
+                                studyV = ((String) experiments.get(i)).
+                                        substring(0, prefixLen);
                                 tempAssays.clear(); // clear previous assays if new longer prefix is found
 
                                 // TODO: can this if/else if/else block be shortened?
                                 if (isLabelFree) {
                                     tempAssays.add(assays.get(j));
-                                }
-                                else if (multiplicity == 2) {
+                                } else if (multiplicity == 2) {
                                     tempAssays.add(assays.get(j * multiplicity));
-                                    tempAssays.add(assays.get(j * multiplicity + 1));
-                                }
-                                else {
+                                    tempAssays.add(assays.get(j * multiplicity
+                                            + 1));
+                                } else {
                                     for (int n = 0; n < multiplicity; n++) {
-                                        tempAssays.add(assays.get(j * multiplicity + n));
+                                        tempAssays.add(assays.get(j
+                                                * multiplicity + n));
                                     }
                                 }
-                            }
-                            else if ((prefixLen > 0) && (prefixLen == tempLen)) {
+                            } else if ((prefixLen > 0) && (prefixLen == tempLen)) {
                                 // TODO: can this if/else if/else block be shortened?
                                 if (isLabelFree) {
                                     tempAssays.add(assays.get(j));
-                                }
-                                else if (multiplicity == 2) {
+                                } else if (multiplicity == 2) {
                                     tempAssays.add(assays.get(j * multiplicity));
-                                    tempAssays.add(assays.get(j * multiplicity + 1));
-                                }
-                                else {
+                                    tempAssays.add(assays.get(j * multiplicity
+                                            + 1));
+                                } else {
                                     for (int n = 0; n < multiplicity; n++) {
-                                        tempAssays.add(assays.get(j * multiplicity + n));
+                                        tempAssays.add(assays.get(j
+                                                * multiplicity + n));
                                     }
                                 }
                             }
@@ -412,18 +428,17 @@ public class MaxquantFilesReader {
                     }
                     if (isLabelFree) {
                         tempAssays.add(assays.get(i));
-                    }
-                    else if (multiplicity == 2) {
+                    } else if (multiplicity == 2) {
                         tempAssays.add(assays.get(i * multiplicity));
                         tempAssays.add(assays.get(i * multiplicity + 1));
-                    }
-                    else {
+                    } else {
                         for (int n = 0; n < multiplicity; n++) {
                             tempAssays.add(assays.get(i * multiplicity + n));
                         }
                     }
                     if (primeStudyGroupMap.get(studyV) == null) {
-                        primeStudyGroupMap.put(studyV, new ArrayList(tempAssays));
+                        primeStudyGroupMap.
+                                put(studyV, new ArrayList(tempAssays));
                     }
                     if (!primeStudyVars.contains(studyV)) {
                         primeStudyVars.add(studyV);
@@ -445,18 +460,18 @@ public class MaxquantFilesReader {
                         Iterator iV = value.iterator();
                         while (iV.hasNext()) {
                             String assName = (String) iV.next();
-                            if (assName.toLowerCase(Locale.ENGLISH).contains("light")) {
+                            if (assName.toLowerCase(Locale.ENGLISH).contains(
+                                    "light")) {
                                 assListLight.add(assName);
-                            }
-                            else if (assName.toLowerCase(Locale.ENGLISH).contains("heavy")) {
+                            } else if (assName.toLowerCase(Locale.ENGLISH).
+                                    contains("heavy")) {
                                 assListHeavy.add(assName);
                             }
                         }
                         studyGroupMap.put(studyV_L, new ArrayList(assListLight));
                         studyGroupMap.put(studyV_H, new ArrayList(assListHeavy));
                     }
-                }
-                else {
+                } else {
                     // TODO: more than 2 label cases
                 }
                 studyVars = new ArrayList(studyGroupMap.keySet());
@@ -469,20 +484,23 @@ public class MaxquantFilesReader {
                  * the intensity value of each assay location is show below
                  * (e.g. multiplicity=2, assay number=4):
                  * intensity of total assay + intensity of each label
-                 * + intensity of total from group 1 + intensity of each labeled assay from group 1
-                 * + intensity of total from group 2 + intensity of each labeled assay from group 2
+                 * + intensity of total from group 1 + intensity of each labeled
+                 * assay from group 1
+                 * + intensity of total from group 2 + intensity of each labeled
+                 * assay from group 2
                  * + and so on.
                  */
                 if (multiplicity != 0) {
                     groupNum = primeStudyGroupMap.size();
-                }
-                else {
+                } else {
                     groupNum = 1;
                 }
-            }
-            catch (FileNotFoundException ex) {
-                System.out.println("The " + this.experimentalDesignTemplateFile.getAbsolutePath() + " can not be found.");
-                throw new RuntimeException("The " + this.experimentalDesignTemplateFile.getAbsolutePath() + " can not be found: " + ex.getMessage() + ".\n");
+            } catch (FileNotFoundException ex) {
+                System.out.println("The " + this.experimentalDesignTemplateFile.
+                        getAbsolutePath() + " can not be found.");
+                throw new RuntimeException("The "
+                        + this.experimentalDesignTemplateFile.getAbsolutePath()
+                        + " can not be found: " + ex.getMessage() + ".\n");
             }
         }
 
@@ -495,8 +513,7 @@ public class MaxquantFilesReader {
             throws IOException {
         if (this.evidenceFile == null) {
             // TODO
-        }
-        else {
+        } else {
             try {
                 fis = new FileInputStream(this.evidenceFile);
                 br = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
@@ -505,43 +522,45 @@ public class MaxquantFilesReader {
                  * read the column title and acquire column number
                  */
                 String[] nextLine;
-                int posId = 0, posSeq = 0, posMod = 0, posProt = 0, posRaw = 0, posExp = 0, posChr = 0, posMz = 0, posRet = 0, posInt = 0;
+                int posId = 0, posSeq = 0, posMod = 0, posProt = 0, posRaw = 0, posExp
+                        = 0, posChr = 0, posMz = 0, posRet = 0, posInt = 0;
                 nextLine = csvReader.readNext();
                 for (int i = 0; i < nextLine.length; i++) {
                     if (nextLine[i].equalsIgnoreCase("id")) {
                         posId = i;
-                    }
-                    else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("sequence")) {
+                    } else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals(
+                            "sequence")) {
                         posSeq = i;
-                    }
-                    else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("modifications")) {
+                    } else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals(
+                            "modifications")) {
                         posMod = i;
-                    }
-                    else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("leading proteins")) {
+                    } else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals(
+                            "leading proteins")) {
                         posProt = i;
-                    }
-                    else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("raw file")) {
+                    } else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals(
+                            "raw file")) {
                         posRaw = i;
-                    }
-                    else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("experiment")) {
+                    } else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals(
+                            "experiment")) {
                         posExp = i;
-                    }
-                    else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("charge")) {
+                    } else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals(
+                            "charge")) {
                         posChr = i;
-                    }
-                    else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("m/z")) {
+                    } else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals(
+                            "m/z")) {
                         posMz = i;
-                    }
-                    else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("retention time")) {
+                    } else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals(
+                            "retention time")) {
                         posRet = i;
-                    }
-                    else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("intensity")) {
+                    } else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals(
+                            "intensity")) {
                         posInt = i;
                     }
                 }
 
                 /*
-                 * read specific column in to an intermediate HashMap with "id" as key, an array list as value
+                 * read specific column in to an intermediate HashMap with "id"
+                 * as key, an array list as value
                  */
                 evidenceMap = new TIntObjectHashMap<>();
 
@@ -550,19 +569,25 @@ public class MaxquantFilesReader {
                     /*
                      * The positions for features are: (0)Sequence,
                      * (1)Modifications, (2)Leading Proteins,
-                     * (3)Raw File, (4)Experiment, (5)Charge, (6)m/z, (7)Retention
+                     * (3)Raw File, (4)Experiment, (5)Charge, (6)m/z,
+                     * (7)Retention
                      * Time, (8)Intensity
                      * (9)Intensity L, (10)Intensity H (for 2 labels case)
                      */
                     List<String> valueList;
                     if (isLabelFree) {
-                        String[] values = {nextLine[posSeq], nextLine[posMod], nextLine[posProt], nextLine[posRaw], nextLine[posExp],
-                            nextLine[posChr], nextLine[posMz], nextLine[posRet], nextLine[posInt]};
+                        String[] values = {nextLine[posSeq], nextLine[posMod],
+                            nextLine[posProt], nextLine[posRaw],
+                            nextLine[posExp],
+                            nextLine[posChr], nextLine[posMz], nextLine[posRet],
+                            nextLine[posInt]};
                         valueList = Arrays.asList(values);
-                    }
-                    else {
-                        String[] values = {nextLine[posSeq], nextLine[posMod], nextLine[posProt], nextLine[posRaw], nextLine[posExp],
-                            nextLine[posChr], nextLine[posMz], nextLine[posRet], nextLine[posInt]};// nextLine[posInt + 1], nextLine[posInt + 2]};
+                    } else {
+                        String[] values = {nextLine[posSeq], nextLine[posMod],
+                            nextLine[posProt], nextLine[posRaw],
+                            nextLine[posExp],
+                            nextLine[posChr], nextLine[posMz], nextLine[posRet],
+                            nextLine[posInt]};// nextLine[posInt + 1], nextLine[posInt + 2]};
                         valueList = Arrays.asList(values);
                         // Add intensity bunch
                         for (int i = 0; i < multiplicity; i++) {
@@ -572,10 +597,12 @@ public class MaxquantFilesReader {
                     evidenceMap.put(key, valueList);
                 }
                 csvReader.close();
-            }
-            catch (FileNotFoundException ex) {
-                System.out.println("The " + this.evidenceFile.getAbsolutePath() + " can not be found. ");
-                throw new RuntimeException("The " + this.evidenceFile.getAbsolutePath() + " can not be found: " + ex.getMessage() + ".\n");
+            } catch (FileNotFoundException ex) {
+                System.out.println("The " + this.evidenceFile.getAbsolutePath()
+                        + " can not be found. ");
+                throw new RuntimeException("The " + this.evidenceFile.
+                        getAbsolutePath() + " can not be found: " + ex.
+                        getMessage() + ".\n");
             }
         }
     }
@@ -587,8 +614,7 @@ public class MaxquantFilesReader {
             throws IOException {
         if (this.proteinGroupsFile == null) {
             // TODO
-        }
-        else {
+        } else {
             try {
                 fis = new FileInputStream(this.proteinGroupsFile);
                 br = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
@@ -597,13 +623,14 @@ public class MaxquantFilesReader {
                 int posMajProtIds = 0, posProtInt = 0, posUniqPep = 0;
                 nextLine = csvReader.readNext();
                 for (int i = 0; i < nextLine.length; i++) {
-                    if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("majority protein ids")) {
+                    if (nextLine[i].toLowerCase(Locale.ENGLISH).equals(
+                            "majority protein ids")) {
                         posMajProtIds = i;
-                    }
-                    else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("intensity")) {
+                    } else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals(
+                            "intensity")) {
                         posProtInt = i;
-                    }
-                    else if (nextLine[i].toLowerCase(Locale.ENGLISH).contains("unique peptides")) {  // this is the position of the LAST column title containing "unique peptides";
+                    } else if (nextLine[i].toLowerCase(Locale.ENGLISH).contains(
+                            "unique peptides")) {  // this is the position of the LAST column title containing "unique peptides";
                         posUniqPep = i;
                     }
                 }
@@ -611,8 +638,7 @@ public class MaxquantFilesReader {
                 // this trick only works for Label free example as SILAC doesn't need to report "unique peptides" (not true, see Ian's data)
                 if (multiplicity == 0) {
                     posUniqPep = posUniqPep - assays.size();
-                }
-                else {
+                } else {
                     posUniqPep = posUniqPep - groupNum;
                 }
 
@@ -634,39 +660,48 @@ public class MaxquantFilesReader {
                     /*
                      * build a intensity list of each assay on each protein
                      * assay number comes from assays.size()
-                     * first id of major protein ids as the key, intensity list as value
-                     * The total intensity of each group or the whole assay is not recorded
+                     * first id of major protein ids as the key, intensity list
+                     * as value
+                     * The total intensity of each group or the whole assay is
+                     * not recorded
                      */
                     TDoubleList intList = new TDoubleArrayList();
 
                     if (isLabelFree) {
                         for (int i = 0; i < assays.size(); i++) {
-                            if (NumberUtils.isNumber(nextLine[posProtInt + i + 1])) {
-                                intList.add(Double.parseDouble(nextLine[posProtInt + i + 1]));
-                            }
-                            else {
-                                throw new RuntimeException("There is non number cell in one of the intensity columns.");
+                            if (NumberUtils.isNumber(
+                                    nextLine[posProtInt + i + 1])) {
+                                intList.add(Double.parseDouble(
+                                        nextLine[posProtInt + i + 1]));
+                            } else {
+                                throw new RuntimeException(
+                                        "There is non number cell in one of the intensity columns.");
                             }
                         }
-                    }
-                    else {
+                    } else {
                         int i = 0; // i is the count of assays
                         for (int j = 0; j < groupNum; j++) {  // j is the count of groups
                             int k = 0; // k is the count of labels in each group
                             while (k < multiplicity) {
                                 if (groupNum == 1) {
-                                    if (NumberUtils.isNumber(nextLine[posProtInt + multiplicity + (i + 1) + j])) {
-                                        intList.add(Double.parseDouble(nextLine[posProtInt + multiplicity + (i + 1) + j]));
+                                    if (NumberUtils.isNumber(nextLine[posProtInt
+                                            + multiplicity + (i + 1) + j])) {
+                                        intList.add(Double.parseDouble(
+                                                nextLine[posProtInt
+                                                + multiplicity + (i + 1) + j]));
+                                    } else {
+                                        throw new RuntimeException(
+                                                "There is non number cell in one of the intensity columns.");
                                     }
-                                    else {
-                                        throw new RuntimeException("There is non number cell in one of the intensity columns.");
-                                    }
-                                }
-                                else if (NumberUtils.isNumber(nextLine[posProtInt + multiplicity + (i + 1) + (j + 1)])) {
-                                    intList.add(Double.parseDouble(nextLine[posProtInt + multiplicity + (i + 1) + (j + 1)]));
-                                }
-                                else {
-                                    throw new RuntimeException("There is non number cell in one of the intensity columns.");
+                                } else if (NumberUtils.isNumber(
+                                        nextLine[posProtInt + multiplicity + (i
+                                        + 1) + (j + 1)])) {
+                                    intList.add(Double.parseDouble(
+                                            nextLine[posProtInt + multiplicity
+                                            + (i + 1) + (j + 1)]));
+                                } else {
+                                    throw new RuntimeException(
+                                            "There is non number cell in one of the intensity columns.");
                                 }
                                 i++;
                                 k++;
@@ -685,21 +720,25 @@ public class MaxquantFilesReader {
                     if (isLabelFree) {
                         TIntList uniqPepList = new TIntArrayList();
                         for (int j = 0; j < assays.size(); j++) {
-                            if (NumberUtils.isNumber(nextLine[posUniqPep + j + 1])) {
-                                uniqPepList.add(Integer.parseInt(nextLine[posUniqPep + j + 1]));
-                            }
-                            else {
-                                throw new RuntimeException("There is non number cell in one of the unique peptides columns.");
+                            if (NumberUtils.isNumber(
+                                    nextLine[posUniqPep + j + 1])) {
+                                uniqPepList.add(Integer.parseInt(
+                                        nextLine[posUniqPep + j + 1]));
+                            } else {
+                                throw new RuntimeException(
+                                        "There is non number cell in one of the unique peptides columns.");
                             }
                         }
                         proteinUniqPepMap.put(key, uniqPepList);
                     }
                     key++;
                 }
-            }
-            catch (FileNotFoundException ex) {
-                System.out.println("The " + this.proteinGroupsFile.getAbsolutePath() + " can not be found.");
-                throw new RuntimeException("The " + this.proteinGroupsFile.getAbsolutePath() + " can not be found: " + ex.getMessage() + ".\n");
+            } catch (FileNotFoundException ex) {
+                System.out.println("The " + this.proteinGroupsFile.
+                        getAbsolutePath() + " can not be found.");
+                throw new RuntimeException("The " + this.proteinGroupsFile.
+                        getAbsolutePath() + " can not be found: " + ex.
+                        getMessage() + ".\n");
             }
         }
     }
@@ -738,24 +777,26 @@ public class MaxquantFilesReader {
             peptideToRatioMap = new HashMap<>();
 
             for (int i = 0; i < nextLine.length; i++) {
-                if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("evidence ids")) {
+                if (nextLine[i].toLowerCase(Locale.ENGLISH).equals(
+                        "evidence ids")) {
                     posEvdId = i;
-                }
-                else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("sequence")) {
+                } else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals(
+                        "sequence")) {
                     posPepSeq = i;
-                }
-                else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("proteins")) {
+                } else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals(
+                        "proteins")) {
                     posProt = i;
-                }
-                else if (nextLine[i].toLowerCase(Locale.ENGLISH).contains("h/l")) {
+                } else if (nextLine[i].toLowerCase(Locale.ENGLISH).contains(
+                        "h/l")) {
                     for (int k = 0; k < primeStudyVars.size(); k++) {
-                        if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("ratio h/l " + (String) primeStudyVars.get(k))) {
+                        if (nextLine[i].toLowerCase(Locale.ENGLISH).equals(
+                                "ratio h/l " + (String) primeStudyVars.get(k))) {
                             posPepRatio[k] = i;
                             titlePepRatio[k] = nextLine[i];
                         }
                     }
-                }
-                else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals("intensity")) {
+                } else if (nextLine[i].toLowerCase(Locale.ENGLISH).equals(
+                        "intensity")) {
                     posPepInt = i;
                     //break;
                 }
@@ -765,7 +806,8 @@ public class MaxquantFilesReader {
 
             /*
              * A peptide sequence to feature ids HashMap<String, ArrayList>
-             * Using peptide sequence as key. It is not checked yet for every peptides.txt if it has unique peptide sequence in each row.
+             * Using peptide sequence as key. It is not checked yet for every
+             * peptides.txt if it has unique peptide sequence in each row.
              */
             peptideToEvdIdsMap = new HashMap<>();
             peptideToIntMap = new HashMap<>();
@@ -794,17 +836,17 @@ public class MaxquantFilesReader {
                     for (int i = 0; i < assays.size(); i++) {
                         intList.add(nextLine[posPepInt + i + 1]);
                     }
-                }
-                else {
+                } else {
                     int i = 0; // i is the count of assays
                     for (int j = 0; j < groupNum; j++) {  // j is the count of groups
                         int k = 0; // k is the count of labels in each group
                         while (k < multiplicity) {
                             if (groupNum == 1) {
-                                intList.add(nextLine[posPepInt + multiplicity + (i + 1) + j]);
-                            }
-                            else {
-                                intList.add(nextLine[posPepInt + multiplicity + (i + 1) + (j + 1)]);
+                                intList.add(nextLine[posPepInt + multiplicity
+                                        + (i + 1) + j]);
+                            } else {
+                                intList.add(nextLine[posPepInt + multiplicity
+                                        + (i + 1) + (j + 1)]);
                             }
                             i++;
                             k++;
@@ -826,7 +868,8 @@ public class MaxquantFilesReader {
                         ratioList = new ArrayList<>();
                         for (int i = 0; i < posPepRatio.length; i++) {
                             // TODO: treat empty cell as ZERO, correct?
-                            String ratioValue = (nextLine[posPepRatio[i]].isEmpty() ? "0" : nextLine[posPepRatio[i]]);
+                            String ratioValue = (nextLine[posPepRatio[i]].
+                                    isEmpty() ? "0" : nextLine[posPepRatio[i]]);
                             ratioList.add(ratioValue);
                         }
                     }
@@ -847,10 +890,12 @@ public class MaxquantFilesReader {
                 peptides.add(key);
             }
             csvReader.close();
-        }
-        catch (FileNotFoundException ex) {
-            System.out.println("The " + this.peptidesFile.getAbsolutePath() + " can not be found.");
-            throw new RuntimeException("The " + this.peptidesFile.getAbsolutePath() + " can not be found: " + ex.getMessage() + ".\n");
+        } catch (FileNotFoundException ex) {
+            System.out.println("The " + this.peptidesFile.getAbsolutePath()
+                    + " can not be found.");
+            throw new RuntimeException("The " + this.peptidesFile.
+                    getAbsolutePath() + " can not be found: " + ex.getMessage()
+                    + ".\n");
         }
 
     }
@@ -1045,7 +1090,8 @@ public class MaxquantFilesReader {
 
     /**
      * Get the length of same prefix string between two strings.
-     * For example: comparing two string 'fool' and 'foods', the return will be 3. 'fool' and 'wools' will return 0.
+     * For example: comparing two string 'fool' and 'foods', the return will be
+     * 3. 'fool' and 'wools' will return 0.
      *
      * @param a first input string
      * @param b second input string
@@ -1058,11 +1104,9 @@ public class MaxquantFilesReader {
         int len = 1;
         if ((length == 1) && (a.charAt(0) == b.charAt(0))) {
             len = 1;
-        }
-        else if ((a.charAt(0) != b.charAt(0))) {
+        } else if ((a.charAt(0) != b.charAt(0))) {
             len = 0;
-        }
-        else {
+        } else {
             len = len + lengthOfPrefix(a.substring(1), b.substring(1));
         }
         return len;
@@ -1077,7 +1121,8 @@ public class MaxquantFilesReader {
         Map<String, List<String>> mTr = new HashMap<>();
         Iterator iM = m.entrySet().iterator();
         while (iM.hasNext()) {
-            Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>) iM.next();
+            Map.Entry<String, ArrayList<String>> entry
+                    = (Map.Entry<String, ArrayList<String>>) iM.next();
             String key = entry.getKey();
             ArrayList val = entry.getValue();
             Iterator iVal = val.iterator();

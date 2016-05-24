@@ -9,35 +9,35 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane id="AnchorPane" prefHeight="200.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uk.ac.liv.mzqlib.view.ProgenesisConverterController">
-   <children>
-      <HBox layoutX="14.0" layoutY="14.0" spacing="10.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="15.0">
-         <children>
-            <VBox alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="115.0" prefWidth="272.0" spacing="20.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" HBox.hgrow="ALWAYS">
-               <children>
-                  <TextField fx:id="flFileTextField" layoutX="14.0" layoutY="14.0" />
-                  <TextField fx:id="plFileTextField" layoutX="14.0" layoutY="53.0" />
-                  <TextField fx:id="idFileTextField" layoutX="14.0" layoutY="95.0" />
-                  <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" scaleShape="false" text="Choose the separator of input files:" textAlignment="RIGHT">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-               </children>
-            </VBox>
-            <VBox alignment="CENTER_LEFT" layoutX="300.0" layoutY="14.0" prefHeight="115.0" prefWidth="144.0" spacing="20.0" AnchorPane.topAnchor="14.0" HBox.hgrow="SOMETIMES">
-               <children>
-                  <Button layoutX="300.0" layoutY="14.0" mnemonicParsing="false" onAction="#selectFeatureFile" prefHeight="25.0" prefWidth="135.0" text="Select feature file" />
-                  <Button layoutX="300.0" layoutY="59.0" mnemonicParsing="false" onAction="#selectProteinFile" prefHeight="25.0" prefWidth="135.0" text="Select protein file" />
-                  <Button layoutX="300.0" layoutY="104.0" mnemonicParsing="false" onAction="#selectProteinFile" prefWidth="135.0" text="Select id file [optional]" />
-                  <ComboBox fx:id="separatorBox" prefWidth="150.0" />
-               </children>
-            </VBox>
-            <Button mnemonicParsing="false" onAction="#convert" prefHeight="170.0" prefWidth="128.0" text="Convert">
-               <font>
-                  <Font name="System Bold" size="23.0" />
-               </font>
-            </Button>
-         </children>
-      </HBox>
-   </children>
+    <children>
+        <HBox layoutX="14.0" layoutY="14.0" spacing="10.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="15.0">
+            <children>
+                <VBox alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="115.0" prefWidth="272.0" spacing="20.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" HBox.hgrow="ALWAYS">
+                    <children>
+                        <TextField fx:id="flFileTextField" layoutX="14.0" layoutY="14.0" />
+                        <TextField fx:id="plFileTextField" layoutX="14.0" layoutY="53.0" />
+                        <TextField fx:id="idFileTextField" layoutX="14.0" layoutY="95.0" />
+                        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" scaleShape="false" text="Choose the separator of input files:" textAlignment="RIGHT">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
+                <VBox alignment="CENTER_LEFT" layoutX="300.0" layoutY="14.0" prefHeight="115.0" prefWidth="144.0" spacing="20.0" AnchorPane.topAnchor="14.0" HBox.hgrow="SOMETIMES">
+                    <children>
+                        <Button layoutX="300.0" layoutY="14.0" mnemonicParsing="false" onAction="#selectFeatureFile" prefHeight="25.0" prefWidth="135.0" text="Select feature file" />
+                        <Button layoutX="300.0" layoutY="59.0" mnemonicParsing="false" onAction="#selectProteinFile" prefHeight="25.0" prefWidth="135.0" text="Select protein file" />
+                        <Button layoutX="300.0" layoutY="104.0" mnemonicParsing="false" onAction="#selectProteinFile" prefWidth="135.0" text="Select id file [optional]" />
+                        <ComboBox fx:id="separatorBox" prefWidth="150.0" />
+                    </children>
+                </VBox>
+                <Button mnemonicParsing="false" onAction="#convert" prefHeight="170.0" prefWidth="128.0" text="Convert">
+                    <font>
+                        <Font name="System Bold" size="23.0" />
+                    </font>
+                </Button>
+            </children>
+        </HBox>
+    </children>
 </AnchorPane>

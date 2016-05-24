@@ -5,7 +5,6 @@
 // Generated on: 2015.05.15 at 04:56:02 PM BST 
 //
 
-
 package uk.ac.liv.mzqlib.openms.jaxb;
 
 import java.math.BigInteger;
@@ -23,12 +22,14 @@ import javax.xml.bind.annotation.XmlValue;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
- * <p>Java class for featureType complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p>
+ * Java class for featureType complex type.
+ *
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ *
  * <pre>
  * &lt;complexType name="featureType">
  *   &lt;complexContent>
@@ -183,8 +184,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "featureType", propOrder = {
@@ -221,25 +222,26 @@ public class FeatureType {
 
     /**
      * Gets the value of the position property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the position property.
-     * 
+     * This is why there is not a <CODE>set</CODE> method for the position
+     * property.
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getPosition().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link FeatureType.Position }
-     * 
-     * 
+     *
+     *
      */
     public List<FeatureType.Position> getPosition() {
         if (position == null) {
@@ -250,7 +252,7 @@ public class FeatureType {
 
     /**
      * Gets the value of the intensity property.
-     * 
+     *
      */
     public double getIntensity() {
         return intensity;
@@ -258,7 +260,7 @@ public class FeatureType {
 
     /**
      * Sets the value of the intensity property.
-     * 
+     *
      */
     public void setIntensity(double value) {
         this.intensity = value;
@@ -266,25 +268,26 @@ public class FeatureType {
 
     /**
      * Gets the value of the quality property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the quality property.
-     * 
+     * This is why there is not a <CODE>set</CODE> method for the quality
+     * property.
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getQuality().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link FeatureType.Quality }
-     * 
-     * 
+     *
+     *
      */
     public List<FeatureType.Quality> getQuality() {
         if (quality == null) {
@@ -295,11 +298,11 @@ public class FeatureType {
 
     /**
      * Gets the value of the overallquality property.
-     * 
+     *
      * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     *         possible object is
+     *         {@link Double }
+     *
      */
     public Double getOverallquality() {
         return overallquality;
@@ -307,11 +310,11 @@ public class FeatureType {
 
     /**
      * Sets the value of the overallquality property.
-     * 
+     *
      * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     *              allowed object is
+     *              {@link Double }
+     *
      */
     public void setOverallquality(Double value) {
         this.overallquality = value;
@@ -319,11 +322,11 @@ public class FeatureType {
 
     /**
      * Gets the value of the charge property.
-     * 
+     *
      * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     *         possible object is
+     *         {@link Double }
+     *
      */
     public Double getCharge() {
         return charge;
@@ -331,11 +334,11 @@ public class FeatureType {
 
     /**
      * Sets the value of the charge property.
-     * 
+     *
      * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     *              allowed object is
+     *              {@link Double }
+     *
      */
     public void setCharge(Double value) {
         this.charge = value;
@@ -343,11 +346,11 @@ public class FeatureType {
 
     /**
      * Gets the value of the model property.
-     * 
+     *
      * @return
-     *     possible object is
-     *     {@link FeatureType.Model }
-     *     
+     *         possible object is
+     *         {@link FeatureType.Model }
+     *
      */
     public FeatureType.Model getModel() {
         return model;
@@ -355,11 +358,11 @@ public class FeatureType {
 
     /**
      * Sets the value of the model property.
-     * 
+     *
      * @param value
-     *     allowed object is
-     *     {@link FeatureType.Model }
-     *     
+     *              allowed object is
+     *              {@link FeatureType.Model }
+     *
      */
     public void setModel(FeatureType.Model value) {
         this.model = value;
@@ -367,25 +370,26 @@ public class FeatureType {
 
     /**
      * Gets the value of the convexhull property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the convexhull property.
-     * 
+     * This is why there is not a <CODE>set</CODE> method for the convexhull
+     * property.
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getConvexhull().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link FeatureType.Convexhull }
-     * 
-     * 
+     *
+     *
      */
     public List<FeatureType.Convexhull> getConvexhull() {
         if (convexhull == null) {
@@ -396,11 +400,11 @@ public class FeatureType {
 
     /**
      * Gets the value of the subordinate property.
-     * 
+     *
      * @return
-     *     possible object is
-     *     {@link FeatureType.Subordinate }
-     *     
+     *         possible object is
+     *         {@link FeatureType.Subordinate }
+     *
      */
     public FeatureType.Subordinate getSubordinate() {
         return subordinate;
@@ -408,11 +412,11 @@ public class FeatureType {
 
     /**
      * Sets the value of the subordinate property.
-     * 
+     *
      * @param value
-     *     allowed object is
-     *     {@link FeatureType.Subordinate }
-     *     
+     *              allowed object is
+     *              {@link FeatureType.Subordinate }
+     *
      */
     public void setSubordinate(FeatureType.Subordinate value) {
         this.subordinate = value;
@@ -420,54 +424,57 @@ public class FeatureType {
 
     /**
      * Gets the value of the peptideIdentification property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the peptideIdentification property.
-     * 
+     * This is why there is not a <CODE>set</CODE> method for the
+     * peptideIdentification property.
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getPeptideIdentification().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link FeatureType.PeptideIdentification }
-     * 
-     * 
+     *
+     *
      */
     public List<FeatureType.PeptideIdentification> getPeptideIdentification() {
         if (peptideIdentification == null) {
-            peptideIdentification = new ArrayList<FeatureType.PeptideIdentification>();
+            peptideIdentification
+                    = new ArrayList<FeatureType.PeptideIdentification>();
         }
         return this.peptideIdentification;
     }
 
     /**
      * Gets the value of the userParam property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the userParam property.
-     * 
+     * This is why there is not a <CODE>set</CODE> method for the userParam
+     * property.
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getUserParam().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link UserParam }
-     * 
-     * 
+     *
+     *
      */
     public List<UserParam> getUserParam() {
         if (userParam == null) {
@@ -478,11 +485,11 @@ public class FeatureType {
 
     /**
      * Gets the value of the id property.
-     * 
+     *
      * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *         possible object is
+     *         {@link String }
+     *
      */
     public String getId() {
         return id;
@@ -490,22 +497,24 @@ public class FeatureType {
 
     /**
      * Sets the value of the id property.
-     * 
+     *
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *              allowed object is
+     *              {@link String }
+     *
      */
     public void setId(String value) {
         this.id = value;
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
-     * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
+     * <p>
+     * Java class for anonymous complex type.
+     *
+     * <p>
+     * The following schema fragment specifies the expected content contained
+     * within this class.
+     *
      * <pre>
      * &lt;complexType>
      *   &lt;complexContent>
@@ -546,8 +555,8 @@ public class FeatureType {
      *   &lt;/complexContent>
      * &lt;/complexType>
      * </pre>
-     * 
-     * 
+     *
+     *
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
@@ -564,25 +573,26 @@ public class FeatureType {
 
         /**
          * Gets the value of the hullpoint property.
-         * 
+         *
          * <p>
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the hullpoint property.
-         * 
+         * This is why there is not a <CODE>set</CODE> method for the hullpoint
+         * property.
+         *
          * <p>
          * For example, to add a new item, do as follows:
          * <pre>
          *    getHullpoint().add(newItem);
          * </pre>
-         * 
-         * 
+         *
+         *
          * <p>
          * Objects of the following type(s) are allowed in the list
          * {@link FeatureType.Convexhull.Hullpoint }
-         * 
-         * 
+         *
+         *
          */
         public List<FeatureType.Convexhull.Hullpoint> getHullpoint() {
             if (hullpoint == null) {
@@ -593,25 +603,26 @@ public class FeatureType {
 
         /**
          * Gets the value of the pt property.
-         * 
+         *
          * <p>
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the pt property.
-         * 
+         * This is why there is not a <CODE>set</CODE> method for the pt
+         * property.
+         *
          * <p>
          * For example, to add a new item, do as follows:
          * <pre>
          *    getPt().add(newItem);
          * </pre>
-         * 
-         * 
+         *
+         *
          * <p>
          * Objects of the following type(s) are allowed in the list
          * {@link FeatureType.Convexhull.Pt }
-         * 
-         * 
+         *
+         *
          */
         public List<FeatureType.Convexhull.Pt> getPt() {
             if (pt == null) {
@@ -622,11 +633,11 @@ public class FeatureType {
 
         /**
          * Gets the value of the nr property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         *         possible object is
+         *         {@link String }
+         *
          */
         public String getNr() {
             return nr;
@@ -634,22 +645,24 @@ public class FeatureType {
 
         /**
          * Sets the value of the nr property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *              allowed object is
+         *              {@link String }
+         *
          */
         public void setNr(String value) {
             this.nr = value;
         }
 
-
         /**
-         * <p>Java class for anonymous complex type.
-         * 
-         * <p>The following schema fragment specifies the expected content contained within this class.
-         * 
+         * <p>
+         * Java class for anonymous complex type.
+         *
+         * <p>
+         * The following schema fragment specifies the expected content
+         * contained within this class.
+         *
          * <pre>
          * &lt;complexType>
          *   &lt;complexContent>
@@ -669,8 +682,8 @@ public class FeatureType {
          *   &lt;/complexContent>
          * &lt;/complexType>
          * </pre>
-         * 
-         * 
+         *
+         *
          */
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "", propOrder = {
@@ -683,39 +696,43 @@ public class FeatureType {
 
             /**
              * Gets the value of the hposition property.
-             * 
+             *
              * <p>
              * This accessor method returns a reference to the live list,
              * not a snapshot. Therefore any modification you make to the
              * returned list will be present inside the JAXB object.
-             * This is why there is not a <CODE>set</CODE> method for the hposition property.
-             * 
+             * This is why there is not a <CODE>set</CODE> method for the
+             * hposition property.
+             *
              * <p>
              * For example, to add a new item, do as follows:
              * <pre>
              *    getHposition().add(newItem);
              * </pre>
-             * 
-             * 
+             *
+             *
              * <p>
              * Objects of the following type(s) are allowed in the list
              * {@link FeatureType.Convexhull.Hullpoint.Hposition }
-             * 
-             * 
+             *
+             *
              */
             public List<FeatureType.Convexhull.Hullpoint.Hposition> getHposition() {
                 if (hposition == null) {
-                    hposition = new ArrayList<FeatureType.Convexhull.Hullpoint.Hposition>();
+                    hposition
+                            = new ArrayList<FeatureType.Convexhull.Hullpoint.Hposition>();
                 }
                 return this.hposition;
             }
 
-
             /**
-             * <p>Java class for anonymous complex type.
-             * 
-             * <p>The following schema fragment specifies the expected content contained within this class.
-             * 
+             * <p>
+             * Java class for anonymous complex type.
+             *
+             * <p>
+             * The following schema fragment specifies the expected content
+             * contained within this class.
+             *
              * <pre>
              * &lt;complexType>
              *   &lt;simpleContent>
@@ -725,8 +742,8 @@ public class FeatureType {
              *   &lt;/simpleContent>
              * &lt;/complexType>
              * </pre>
-             * 
-             * 
+             *
+             *
              */
             @XmlAccessorType(XmlAccessType.FIELD)
             @XmlType(name = "", propOrder = {
@@ -743,11 +760,11 @@ public class FeatureType {
 
                 /**
                  * Gets the value of the value property.
-                 * 
+                 *
                  * @return
-                 *     possible object is
-                 *     {@link Object }
-                 *     
+                 *         possible object is
+                 *         {@link Object }
+                 *
                  */
                 public double getValue() {
                     return value;
@@ -755,11 +772,11 @@ public class FeatureType {
 
                 /**
                  * Sets the value of the value property.
-                 * 
+                 *
                  * @param value
-                 *     allowed object is
-                 *     {@link Object }
-                 *     
+                 *              allowed object is
+                 *              {@link Object }
+                 *
                  */
                 public void setValue(double value) {
                     this.value = value;
@@ -767,11 +784,11 @@ public class FeatureType {
 
                 /**
                  * Gets the value of the dim property.
-                 * 
+                 *
                  * @return
-                 *     possible object is
-                 *     {@link String }
-                 *     
+                 *         possible object is
+                 *         {@link String }
+                 *
                  */
                 public String getDim() {
                     return dim;
@@ -779,11 +796,11 @@ public class FeatureType {
 
                 /**
                  * Sets the value of the dim property.
-                 * 
+                 *
                  * @param value
-                 *     allowed object is
-                 *     {@link String }
-                 *     
+                 *              allowed object is
+                 *              {@link String }
+                 *
                  */
                 public void setDim(String value) {
                     this.dim = value;
@@ -793,12 +810,14 @@ public class FeatureType {
 
         }
 
-
         /**
-         * <p>Java class for anonymous complex type.
-         * 
-         * <p>The following schema fragment specifies the expected content contained within this class.
-         * 
+         * <p>
+         * Java class for anonymous complex type.
+         *
+         * <p>
+         * The following schema fragment specifies the expected content
+         * contained within this class.
+         *
          * <pre>
          * &lt;complexType>
          *   &lt;complexContent>
@@ -809,8 +828,8 @@ public class FeatureType {
          *   &lt;/complexContent>
          * &lt;/complexType>
          * </pre>
-         * 
-         * 
+         *
+         *
          */
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "")
@@ -823,7 +842,7 @@ public class FeatureType {
 
             /**
              * Gets the value of the x property.
-             * 
+             *
              */
             public double getX() {
                 return x;
@@ -831,7 +850,7 @@ public class FeatureType {
 
             /**
              * Sets the value of the x property.
-             * 
+             *
              */
             public void setX(double value) {
                 this.x = value;
@@ -839,7 +858,7 @@ public class FeatureType {
 
             /**
              * Gets the value of the y property.
-             * 
+             *
              */
             public double getY() {
                 return y;
@@ -847,7 +866,7 @@ public class FeatureType {
 
             /**
              * Sets the value of the y property.
-             * 
+             *
              */
             public void setY(double value) {
                 this.y = value;
@@ -857,12 +876,14 @@ public class FeatureType {
 
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
-     * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
+     * <p>
+     * Java class for anonymous complex type.
+     *
+     * <p>
+     * The following schema fragment specifies the expected content contained
+     * within this class.
+     *
      * <pre>
      * &lt;complexType>
      *   &lt;complexContent>
@@ -884,8 +905,8 @@ public class FeatureType {
      *   &lt;/complexContent>
      * &lt;/complexType>
      * </pre>
-     * 
-     * 
+     *
+     *
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
@@ -900,25 +921,26 @@ public class FeatureType {
 
         /**
          * Gets the value of the param property.
-         * 
+         *
          * <p>
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the param property.
-         * 
+         * This is why there is not a <CODE>set</CODE> method for the param
+         * property.
+         *
          * <p>
          * For example, to add a new item, do as follows:
          * <pre>
          *    getParam().add(newItem);
          * </pre>
-         * 
-         * 
+         *
+         *
          * <p>
          * Objects of the following type(s) are allowed in the list
          * {@link FeatureType.Model.Param }
-         * 
-         * 
+         *
+         *
          */
         public List<FeatureType.Model.Param> getParam() {
             if (param == null) {
@@ -929,11 +951,11 @@ public class FeatureType {
 
         /**
          * Gets the value of the name property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         *         possible object is
+         *         {@link String }
+         *
          */
         public String getName() {
             return name;
@@ -941,22 +963,24 @@ public class FeatureType {
 
         /**
          * Sets the value of the name property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *              allowed object is
+         *              {@link String }
+         *
          */
         public void setName(String value) {
             this.name = value;
         }
 
-
         /**
-         * <p>Java class for anonymous complex type.
-         * 
-         * <p>The following schema fragment specifies the expected content contained within this class.
-         * 
+         * <p>
+         * Java class for anonymous complex type.
+         *
+         * <p>
+         * The following schema fragment specifies the expected content
+         * contained within this class.
+         *
          * <pre>
          * &lt;complexType>
          *   &lt;complexContent>
@@ -967,8 +991,8 @@ public class FeatureType {
          *   &lt;/complexContent>
          * &lt;/complexType>
          * </pre>
-         * 
-         * 
+         *
+         *
          */
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "")
@@ -983,11 +1007,11 @@ public class FeatureType {
 
             /**
              * Gets the value of the name property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getName() {
                 return name;
@@ -995,11 +1019,11 @@ public class FeatureType {
 
             /**
              * Sets the value of the name property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setName(String value) {
                 this.name = value;
@@ -1007,11 +1031,11 @@ public class FeatureType {
 
             /**
              * Gets the value of the value property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getValue() {
                 return value;
@@ -1019,11 +1043,11 @@ public class FeatureType {
 
             /**
              * Sets the value of the value property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setValue(String value) {
                 this.value = value;
@@ -1033,12 +1057,14 @@ public class FeatureType {
 
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
-     * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
+     * <p>
+     * Java class for anonymous complex type.
+     *
+     * <p>
+     * The following schema fragment specifies the expected content contained
+     * within this class.
+     *
      * <pre>
      * &lt;complexType>
      *   &lt;complexContent>
@@ -1088,8 +1114,8 @@ public class FeatureType {
      *   &lt;/complexContent>
      * &lt;/complexType>
      * </pre>
-     * 
-     * 
+     *
+     *
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
@@ -1121,54 +1147,57 @@ public class FeatureType {
 
         /**
          * Gets the value of the peptideHit property.
-         * 
+         *
          * <p>
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the peptideHit property.
-         * 
+         * This is why there is not a <CODE>set</CODE> method for the peptideHit
+         * property.
+         *
          * <p>
          * For example, to add a new item, do as follows:
          * <pre>
          *    getPeptideHit().add(newItem);
          * </pre>
-         * 
-         * 
+         *
+         *
          * <p>
          * Objects of the following type(s) are allowed in the list
          * {@link FeatureType.PeptideIdentification.PeptideHit }
-         * 
-         * 
+         *
+         *
          */
         public List<FeatureType.PeptideIdentification.PeptideHit> getPeptideHit() {
             if (peptideHit == null) {
-                peptideHit = new ArrayList<FeatureType.PeptideIdentification.PeptideHit>();
+                peptideHit
+                        = new ArrayList<FeatureType.PeptideIdentification.PeptideHit>();
             }
             return this.peptideHit;
         }
 
         /**
          * Gets the value of the userParam property.
-         * 
+         *
          * <p>
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the userParam property.
-         * 
+         * This is why there is not a <CODE>set</CODE> method for the userParam
+         * property.
+         *
          * <p>
          * For example, to add a new item, do as follows:
          * <pre>
          *    getUserParam().add(newItem);
          * </pre>
-         * 
-         * 
+         *
+         *
          * <p>
          * Objects of the following type(s) are allowed in the list
          * {@link UserParam }
-         * 
-         * 
+         *
+         *
          */
         public List<UserParam> getUserParam() {
             if (userParam == null) {
@@ -1179,11 +1208,11 @@ public class FeatureType {
 
         /**
          * Gets the value of the identificationRunRef property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link Object }
-         *     
+         *         possible object is
+         *         {@link Object }
+         *
          */
         public Object getIdentificationRunRef() {
             return identificationRunRef;
@@ -1191,11 +1220,11 @@ public class FeatureType {
 
         /**
          * Sets the value of the identificationRunRef property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link Object }
-         *     
+         *              allowed object is
+         *              {@link Object }
+         *
          */
         public void setIdentificationRunRef(Object value) {
             this.identificationRunRef = value;
@@ -1203,11 +1232,11 @@ public class FeatureType {
 
         /**
          * Gets the value of the scoreType property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         *         possible object is
+         *         {@link String }
+         *
          */
         public String getScoreType() {
             return scoreType;
@@ -1215,11 +1244,11 @@ public class FeatureType {
 
         /**
          * Sets the value of the scoreType property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *              allowed object is
+         *              {@link String }
+         *
          */
         public void setScoreType(String value) {
             this.scoreType = value;
@@ -1227,7 +1256,7 @@ public class FeatureType {
 
         /**
          * Gets the value of the higherScoreBetter property.
-         * 
+         *
          */
         public boolean isHigherScoreBetter() {
             return higherScoreBetter;
@@ -1235,7 +1264,7 @@ public class FeatureType {
 
         /**
          * Sets the value of the higherScoreBetter property.
-         * 
+         *
          */
         public void setHigherScoreBetter(boolean value) {
             this.higherScoreBetter = value;
@@ -1243,11 +1272,11 @@ public class FeatureType {
 
         /**
          * Gets the value of the significanceThreshold property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link Float }
-         *     
+         *         possible object is
+         *         {@link Float }
+         *
          */
         public Float getSignificanceThreshold() {
             return significanceThreshold;
@@ -1255,11 +1284,11 @@ public class FeatureType {
 
         /**
          * Sets the value of the significanceThreshold property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link Float }
-         *     
+         *              allowed object is
+         *              {@link Float }
+         *
          */
         public void setSignificanceThreshold(Float value) {
             this.significanceThreshold = value;
@@ -1267,11 +1296,11 @@ public class FeatureType {
 
         /**
          * Gets the value of the spectrumReference property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link Long }
-         *     
+         *         possible object is
+         *         {@link Long }
+         *
          */
         public Long getSpectrumReference() {
             return spectrumReference;
@@ -1279,11 +1308,11 @@ public class FeatureType {
 
         /**
          * Sets the value of the spectrumReference property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link Long }
-         *     
+         *              allowed object is
+         *              {@link Long }
+         *
          */
         public void setSpectrumReference(Long value) {
             this.spectrumReference = value;
@@ -1291,11 +1320,11 @@ public class FeatureType {
 
         /**
          * Gets the value of the rt property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link Float }
-         *     
+         *         possible object is
+         *         {@link Float }
+         *
          */
         public Float getRT() {
             return rt;
@@ -1303,11 +1332,11 @@ public class FeatureType {
 
         /**
          * Sets the value of the rt property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link Float }
-         *     
+         *              allowed object is
+         *              {@link Float }
+         *
          */
         public void setRT(Float value) {
             this.rt = value;
@@ -1315,11 +1344,11 @@ public class FeatureType {
 
         /**
          * Gets the value of the mz property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link Float }
-         *     
+         *         possible object is
+         *         {@link Float }
+         *
          */
         public Float getMZ() {
             return mz;
@@ -1327,22 +1356,24 @@ public class FeatureType {
 
         /**
          * Sets the value of the mz property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link Float }
-         *     
+         *              allowed object is
+         *              {@link Float }
+         *
          */
         public void setMZ(Float value) {
             this.mz = value;
         }
 
-
         /**
-         * <p>Java class for anonymous complex type.
-         * 
-         * <p>The following schema fragment specifies the expected content contained within this class.
-         * 
+         * <p>
+         * Java class for anonymous complex type.
+         *
+         * <p>
+         * The following schema fragment specifies the expected content
+         * contained within this class.
+         *
          * <pre>
          * &lt;complexType>
          *   &lt;complexContent>
@@ -1374,8 +1405,8 @@ public class FeatureType {
          *   &lt;/complexContent>
          * &lt;/complexType>
          * </pre>
-         * 
-         * 
+         *
+         *
          */
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "", propOrder = {
@@ -1401,25 +1432,26 @@ public class FeatureType {
 
             /**
              * Gets the value of the userParam property.
-             * 
+             *
              * <p>
              * This accessor method returns a reference to the live list,
              * not a snapshot. Therefore any modification you make to the
              * returned list will be present inside the JAXB object.
-             * This is why there is not a <CODE>set</CODE> method for the userParam property.
-             * 
+             * This is why there is not a <CODE>set</CODE> method for the
+             * userParam property.
+             *
              * <p>
              * For example, to add a new item, do as follows:
              * <pre>
              *    getUserParam().add(newItem);
              * </pre>
-             * 
-             * 
+             *
+             *
              * <p>
              * Objects of the following type(s) are allowed in the list
              * {@link UserParam }
-             * 
-             * 
+             *
+             *
              */
             public List<UserParam> getUserParam() {
                 if (userParam == null) {
@@ -1430,11 +1462,11 @@ public class FeatureType {
 
             /**
              * Gets the value of the sequence property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getSequence() {
                 return sequence;
@@ -1442,11 +1474,11 @@ public class FeatureType {
 
             /**
              * Sets the value of the sequence property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setSequence(String value) {
                 this.sequence = value;
@@ -1454,11 +1486,11 @@ public class FeatureType {
 
             /**
              * Gets the value of the charge property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link BigInteger }
-             *     
+             *         possible object is
+             *         {@link BigInteger }
+             *
              */
             public BigInteger getCharge() {
                 return charge;
@@ -1466,11 +1498,11 @@ public class FeatureType {
 
             /**
              * Sets the value of the charge property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link BigInteger }
-             *     
+             *              allowed object is
+             *              {@link BigInteger }
+             *
              */
             public void setCharge(BigInteger value) {
                 this.charge = value;
@@ -1478,7 +1510,7 @@ public class FeatureType {
 
             /**
              * Gets the value of the score property.
-             * 
+             *
              */
             public float getScore() {
                 return score;
@@ -1486,7 +1518,7 @@ public class FeatureType {
 
             /**
              * Sets the value of the score property.
-             * 
+             *
              */
             public void setScore(float value) {
                 this.score = value;
@@ -1494,11 +1526,11 @@ public class FeatureType {
 
             /**
              * Gets the value of the aaBefore property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getAaBefore() {
                 return aaBefore;
@@ -1506,11 +1538,11 @@ public class FeatureType {
 
             /**
              * Sets the value of the aaBefore property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setAaBefore(String value) {
                 this.aaBefore = value;
@@ -1518,11 +1550,11 @@ public class FeatureType {
 
             /**
              * Gets the value of the aaAfter property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getAaAfter() {
                 return aaAfter;
@@ -1530,11 +1562,11 @@ public class FeatureType {
 
             /**
              * Sets the value of the aaAfter property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setAaAfter(String value) {
                 this.aaAfter = value;
@@ -1542,25 +1574,26 @@ public class FeatureType {
 
             /**
              * Gets the value of the proteinRefs property.
-             * 
+             *
              * <p>
              * This accessor method returns a reference to the live list,
              * not a snapshot. Therefore any modification you make to the
              * returned list will be present inside the JAXB object.
-             * This is why there is not a <CODE>set</CODE> method for the proteinRefs property.
-             * 
+             * This is why there is not a <CODE>set</CODE> method for the
+             * proteinRefs property.
+             *
              * <p>
              * For example, to add a new item, do as follows:
              * <pre>
              *    getProteinRefs().add(newItem);
              * </pre>
-             * 
-             * 
+             *
+             *
              * <p>
              * Objects of the following type(s) are allowed in the list
              * {@link Object }
-             * 
-             * 
+             *
+             *
              */
             public List<Object> getProteinRefs() {
                 if (proteinRefs == null) {
@@ -1573,12 +1606,14 @@ public class FeatureType {
 
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
-     * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
+     * <p>
+     * Java class for anonymous complex type.
+     *
+     * <p>
+     * The following schema fragment specifies the expected content contained
+     * within this class.
+     *
      * <pre>
      * &lt;complexType>
      *   &lt;simpleContent>
@@ -1588,8 +1623,8 @@ public class FeatureType {
      *   &lt;/simpleContent>
      * &lt;/complexType>
      * </pre>
-     * 
-     * 
+     *
+     *
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
@@ -1606,11 +1641,11 @@ public class FeatureType {
 
         /**
          * Gets the value of the value property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link Object }
-         *     
+         *         possible object is
+         *         {@link Object }
+         *
          */
         public double getValue() {
             return value;
@@ -1618,11 +1653,11 @@ public class FeatureType {
 
         /**
          * Sets the value of the value property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link Object }
-         *     
+         *              allowed object is
+         *              {@link Object }
+         *
          */
         public void setValue(double value) {
             this.value = value;
@@ -1630,11 +1665,11 @@ public class FeatureType {
 
         /**
          * Gets the value of the dim property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         *         possible object is
+         *         {@link String }
+         *
          */
         public String getDim() {
             return dim;
@@ -1642,11 +1677,11 @@ public class FeatureType {
 
         /**
          * Sets the value of the dim property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *              allowed object is
+         *              {@link String }
+         *
          */
         public void setDim(String value) {
             this.dim = value;
@@ -1654,12 +1689,14 @@ public class FeatureType {
 
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
-     * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
+     * <p>
+     * Java class for anonymous complex type.
+     *
+     * <p>
+     * The following schema fragment specifies the expected content contained
+     * within this class.
+     *
      * <pre>
      * &lt;complexType>
      *   &lt;simpleContent>
@@ -1669,8 +1706,8 @@ public class FeatureType {
      *   &lt;/simpleContent>
      * &lt;/complexType>
      * </pre>
-     * 
-     * 
+     *
+     *
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
@@ -1687,11 +1724,11 @@ public class FeatureType {
 
         /**
          * Gets the value of the value property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link Object }
-         *     
+         *         possible object is
+         *         {@link Object }
+         *
          */
         public double getValue() {
             return value;
@@ -1699,11 +1736,11 @@ public class FeatureType {
 
         /**
          * Sets the value of the value property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link Object }
-         *     
+         *              allowed object is
+         *              {@link Object }
+         *
          */
         public void setValue(double value) {
             this.value = value;
@@ -1711,11 +1748,11 @@ public class FeatureType {
 
         /**
          * Gets the value of the dim property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         *         possible object is
+         *         {@link String }
+         *
          */
         public String getDim() {
             return dim;
@@ -1723,11 +1760,11 @@ public class FeatureType {
 
         /**
          * Sets the value of the dim property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *              allowed object is
+         *              {@link String }
+         *
          */
         public void setDim(String value) {
             this.dim = value;
@@ -1735,12 +1772,14 @@ public class FeatureType {
 
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
-     * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
+     * <p>
+     * Java class for anonymous complex type.
+     *
+     * <p>
+     * The following schema fragment specifies the expected content contained
+     * within this class.
+     *
      * <pre>
      * &lt;complexType>
      *   &lt;complexContent>
@@ -1752,8 +1791,8 @@ public class FeatureType {
      *   &lt;/complexContent>
      * &lt;/complexType>
      * </pre>
-     * 
-     * 
+     *
+     *
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
@@ -1765,25 +1804,26 @@ public class FeatureType {
 
         /**
          * Gets the value of the feature property.
-         * 
+         *
          * <p>
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the feature property.
-         * 
+         * This is why there is not a <CODE>set</CODE> method for the feature
+         * property.
+         *
          * <p>
          * For example, to add a new item, do as follows:
          * <pre>
          *    getFeature().add(newItem);
          * </pre>
-         * 
-         * 
+         *
+         *
          * <p>
          * Objects of the following type(s) are allowed in the list
          * {@link FeatureType }
-         * 
-         * 
+         *
+         *
          */
         public List<FeatureType> getFeature() {
             if (feature == null) {

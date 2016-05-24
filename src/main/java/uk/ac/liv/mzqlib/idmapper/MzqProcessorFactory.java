@@ -31,7 +31,8 @@ import uk.ac.liv.mzqlib.utils.MzidToMzqElementConverter;
  */
 public class MzqProcessorFactory {
 
-    private static final MzqProcessorFactory instance = new MzqProcessorFactory();
+    private static final MzqProcessorFactory instance
+            = new MzqProcessorFactory();
 
     private MzqProcessorFactory() {
     }
@@ -52,14 +53,16 @@ public class MzqProcessorFactory {
      *
      * @param mzqUm        MzQuantMLUnmarshaller
      * @param rawToMzidMap map of raw file name to mzIdentML file name
-     * @param mzWin        the m/z window of feature measured from left to right in Da
-     * @param rtWin        the retention time of feature measured from top to bottom in
+     * @param mzWin        the m/z window of feature measured from left to right
+     *                     in Da
+     * @param rtWin        the retention time of feature measured from top to
+     *                     bottom in
      *                     second
      *
      * @return MzqProcessor
      *
      * @throws JAXBException jaxb exception
-     * @throws IOException io exception
+     * @throws IOException   io exception
      */
     public MzqProcessor buildMzqProcessor(MzQuantMLUnmarshaller mzqUm,
                                           Map<String, String> rawToMzidMap,
@@ -78,7 +81,7 @@ public class MzqProcessorFactory {
      * @return MzqProcessor
      *
      * @throws JAXBException jaxb exception
-     * @throws IOException io exception
+     * @throws IOException   io exception
      */
     public MzqProcessor buildMzqProcessor(MzQuantMLUnmarshaller mzqUm,
                                           Map<String, String> rawToMzidMap)
@@ -96,7 +99,8 @@ public class MzqProcessorFactory {
     private static class MzqProcessorImpl implements MzqProcessor {
 
         private MzQuantMLUnmarshaller mzqUm = null;
-        private FeatureSiiMatchManager matchManager = new FeatureSiiMatchManager();
+        private FeatureSiiMatchManager matchManager
+                = new FeatureSiiMatchManager();
         private SearchDatabase searchDB;
 
         private MzqProcessorImpl(MzQuantMLUnmarshaller mzqUm,
@@ -110,13 +114,15 @@ public class MzqProcessorFactory {
                                  Map<String, String> rawToMzidMap, double mzWin,
                                  double rtWin)
                 throws JAXBException, IOException {
-            this(mzqUm, rawToMzidMap, new Tolerance(mzWin / 2.0, ToleranceUnit.DALTON), rtWin);
+            this(mzqUm, rawToMzidMap, new Tolerance(mzWin / 2.0,
+                                                    ToleranceUnit.DALTON), rtWin);
         }
 
         private MzqProcessorImpl(MzQuantMLUnmarshaller mzqUm,
                                  Map<String, String> rawToMzidMap)
                 throws JAXBException, IOException {
-            this(mzqUm, rawToMzidMap, new Tolerance(0.1, ToleranceUnit.DALTON), 1.0 / 3.0);
+            this(mzqUm, rawToMzidMap, new Tolerance(0.1, ToleranceUnit.DALTON),
+                 1.0 / 3.0);
         }
 
         /*
@@ -130,98 +136,153 @@ public class MzqProcessorFactory {
 
             this.mzqUm = mzqUm;
 
-            Iterator<FeatureList> itFeatureList = this.mzqUm.unmarshalCollectionFromXpath(MzQuantMLElement.FeatureList);
+            Iterator<FeatureList> itFeatureList = this.mzqUm.
+                    unmarshalCollectionFromXpath(MzQuantMLElement.FeatureList);
             if (itFeatureList == null) {
-                throw new RuntimeException("There is no FeatureList in the mzq file.");
+                throw new RuntimeException(
+                        "There is no FeatureList in the mzq file.");
             }
 
             while (itFeatureList.hasNext()) {
                 FeatureList ftList = itFeatureList.next();
-                RawFilesGroup rg = (RawFilesGroup) this.mzqUm.unmarshal(uk.ac.liv.pgb.jmzqml.model.mzqml.RawFilesGroup.class, ftList.getRawFilesGroupRef());
+                RawFilesGroup rg = (RawFilesGroup) this.mzqUm.unmarshal(
+                        uk.ac.liv.pgb.jmzqml.model.mzqml.RawFilesGroup.class,
+                        ftList.getRawFilesGroupRef());
 
                 String rawFileName = "";
                 if (rg.getRawFile().get(0).getName() != null) {
                     rawFileName = rg.getRawFile().get(0).getName();
-                }
-                else if (rg.getRawFile().get(0).getLocation() != null) {
+                } else if (rg.getRawFile().get(0).getLocation() != null) {
                     rawFileName = rg.getRawFile().get(0).getLocation();
-                }
-                else {
+                } else {
                     continue;
                 }
 
                 String mzidFileName = rawToMzidMap.get(rawFileName);
                 if (mzidFileName == null || !(new File(mzidFileName).isFile())) {
-                    throw new RuntimeException("The raw file name \"" + rawFileName + "\" which appears in mzq file cannot be found in rawToMzidMap "
-                            + "or the related mzid file: \"" + mzidFileName + "\" is not exist.\n");
+                    throw new RuntimeException("The raw file name \""
+                            + rawFileName
+                            + "\" which appears in mzq file cannot be found in rawToMzidMap "
+                            + "or the related mzid file: \"" + mzidFileName
+                            + "\" is not exist.\n");
                 }
 
                 // corresponding mzIdentML processor 
-                MzidProcessor mzidProc = MzidProcessorFactory.getInstance().buildMzidProcessor(new File(mzidFileName));
+                MzidProcessor mzidProc = MzidProcessorFactory.getInstance().
+                        buildMzidProcessor(new File(mzidFileName));
 
-                TIntObjectMap<List<SIIData>> rtToSIIsMap = mzidProc.getRtToSIIsMap();
+                TIntObjectMap<List<SIIData>> rtToSIIsMap = mzidProc.
+                        getRtToSIIsMap();
 
-                rtToSIIsMap.valueCollection().stream().flatMap(p -> p.stream()).forEach(
-                        r -> {
-                            matchManager.registerIdentification(r, ftList.getId());
+                rtToSIIsMap.valueCollection().stream().flatMap(p -> p.stream()).
+                        forEach(
+                                r -> {
+                            matchManager.registerIdentification(r, ftList.
+                                                                getId());
                         });
 
                 if (searchDB == null) {
-                    searchDB = MzidToMzqElementConverter.convertMzidSDBToMzqSDB(mzidProc.getSearchDatabase());
+                    searchDB = MzidToMzqElementConverter.convertMzidSDBToMzqSDB(
+                            mzidProc.getSearchDatabase());
                 }
 
                 List<Feature> features = ftList.getFeature();
 
                 for (Feature ft : features) {
                     matchManager.registerFeature(ft, ftList.getId());
-                    ExtendedFeature exFt = new ExtendedFeature(ft, msTolerance, rtWin);
+                    ExtendedFeature exFt = new ExtendedFeature(ft, msTolerance,
+                                                               rtWin);
 
-                    for (int i = (int) exFt.getBRT(); i <= (int) exFt.getURT(); i++) {
+                    for (int i = (int) exFt.getBRT(); i <= (int) exFt.getURT();
+                            i++) {
                         List<SIIData> siiDataList = rtToSIIsMap.get(i);
                         if (siiDataList != null) {
                             for (SIIData sd : siiDataList) {
-                                double siiExpMz = sd.getExperimentalMassToCharge();
+                                double siiExpMz = sd.
+                                        getExperimentalMassToCharge();
                                 double siiRt = sd.getRetentionTime();
                                 int identCharge = sd.getCharge();
-                                if (identCharge != Integer.parseInt(exFt.getCharge())) {
+                                if (identCharge != Integer.parseInt(exFt.
+                                        getCharge())) {
                                     continue;
                                 }
 
                                 // determine if rt and mz of the SIIData is in the mass trace of the feature                                
-                                if (isInRange(siiExpMz, exFt.getLMZ(), exFt.getRMZ()) && isInRange(siiRt, exFt.getBRT(), exFt.getURT())) {
-                                    matchManager.registerMatch(ft, ftList.getId(), sd);
+                                if (isInRange(siiExpMz, exFt.getLMZ(), exFt.
+                                              getRMZ()) && isInRange(siiRt,
+                                                                     exFt.
+                                                                     getBRT(),
+                                                                     exFt.
+                                                                     getURT())) {
+                                    matchManager.registerMatch(ft, ftList.
+                                                               getId(), sd);
                                 }
                             }
                         }
                     }
                 }
 
-                long flFeaturesCount = matchManager.getFeatureCount(ftList.getId());
-                long flFeaturesWithMatchCount = matchManager.getFeaturesWithMatchCount(ftList.getId());
-                long flFeaturesWithoutMatchCount = flFeaturesCount - flFeaturesWithMatchCount;
-                long flFeaturesMultimapping = matchManager.getFeaturesMultimappingCount(ftList.getId());
-                long flIdentificationCount = matchManager.getIdentificationsCount(ftList.getId());
-                long flIdentificationsAssignedCount = matchManager.getIdentificationsAssignedCount(ftList.getId());
-                long flIdentificationsNotAssignedCount = flIdentificationCount - flIdentificationsAssignedCount;
-                long flIdentificationMultimapping = matchManager.getIdentificationsMultimappingCount(ftList.getId());
-                System.out.println("MzqProcessorFactory -- finish processing FeatureList: " + ftList.getId());
-                System.out.println("Matched features: " + flFeaturesWithMatchCount + ". Unmatched features: " + flFeaturesWithoutMatchCount + ". Total features: " + flFeaturesCount + ". Multimapping features: " + flFeaturesMultimapping + ".");
-                System.out.println("Assigned identifications: " + flIdentificationsAssignedCount + ". Unassigned identifications: " + flIdentificationsNotAssignedCount + ". Total identifications: " + flIdentificationCount + ".");
-                System.out.println("Multimapping identifications: " + flIdentificationMultimapping);
+                long flFeaturesCount = matchManager.getFeatureCount(ftList.
+                        getId());
+                long flFeaturesWithMatchCount = matchManager.
+                        getFeaturesWithMatchCount(ftList.getId());
+                long flFeaturesWithoutMatchCount = flFeaturesCount
+                        - flFeaturesWithMatchCount;
+                long flFeaturesMultimapping = matchManager.
+                        getFeaturesMultimappingCount(ftList.getId());
+                long flIdentificationCount = matchManager.
+                        getIdentificationsCount(ftList.getId());
+                long flIdentificationsAssignedCount = matchManager.
+                        getIdentificationsAssignedCount(ftList.getId());
+                long flIdentificationsNotAssignedCount = flIdentificationCount
+                        - flIdentificationsAssignedCount;
+                long flIdentificationMultimapping = matchManager.
+                        getIdentificationsMultimappingCount(ftList.getId());
+                System.out.println(
+                        "MzqProcessorFactory -- finish processing FeatureList: "
+                        + ftList.getId());
+                System.out.println("Matched features: "
+                        + flFeaturesWithMatchCount + ". Unmatched features: "
+                        + flFeaturesWithoutMatchCount + ". Total features: "
+                        + flFeaturesCount + ". Multimapping features: "
+                        + flFeaturesMultimapping + ".");
+                System.out.println("Assigned identifications: "
+                        + flIdentificationsAssignedCount
+                        + ". Unassigned identifications: "
+                        + flIdentificationsNotAssignedCount
+                        + ". Total identifications: " + flIdentificationCount
+                        + ".");
+                System.out.println("Multimapping identifications: "
+                        + flIdentificationMultimapping);
             }
 
             long featuresCount = matchManager.getFeatureCount();
-            long featuresWithMatchCount = matchManager.getFeaturesWithMatchCount();
-            long featuresWithoutMatchCount = featuresCount - featuresWithMatchCount;
-            long featuresMultimapping = matchManager.getFeaturesMultimappingCount();
+            long featuresWithMatchCount = matchManager.
+                    getFeaturesWithMatchCount();
+            long featuresWithoutMatchCount = featuresCount
+                    - featuresWithMatchCount;
+            long featuresMultimapping = matchManager.
+                    getFeaturesMultimappingCount();
             long identificationCount = matchManager.getIdentificationsCount();
-            long identificationsAssignedCount = matchManager.getIdentificationsAssignedCount();
-            long identificationsNotAssignedCount = identificationCount - identificationsAssignedCount;
-            long identificationMultimapping = matchManager.getIdentificationsMultimappingCount();
-            System.out.println("MzqProcessorFactory -- finish processing feature lists.");
-            System.out.println("Matched features: " + featuresWithMatchCount + ". Unmatched features: " + featuresWithoutMatchCount + ". Total features: " + featuresCount + ". Multimapping features: " + featuresMultimapping + ".");
-            System.out.println("Assigned identifications: " + identificationsAssignedCount + ". Unassigned identifications: " + identificationsNotAssignedCount + ". Total identifications: " + identificationCount + ".");
-            System.out.println("Multimapping identifications: " + identificationMultimapping);
+            long identificationsAssignedCount = matchManager.
+                    getIdentificationsAssignedCount();
+            long identificationsNotAssignedCount = identificationCount
+                    - identificationsAssignedCount;
+            long identificationMultimapping = matchManager.
+                    getIdentificationsMultimappingCount();
+            System.out.println(
+                    "MzqProcessorFactory -- finish processing feature lists.");
+            System.out.println("Matched features: " + featuresWithMatchCount
+                    + ". Unmatched features: " + featuresWithoutMatchCount
+                    + ". Total features: " + featuresCount
+                    + ". Multimapping features: " + featuresMultimapping + ".");
+            System.out.println("Assigned identifications: "
+                    + identificationsAssignedCount
+                    + ". Unassigned identifications: "
+                    + identificationsNotAssignedCount
+                    + ". Total identifications: " + identificationCount + ".");
+            System.out.println("Multimapping identifications: "
+                    + identificationMultimapping);
         }
 
         @Override
@@ -242,7 +303,8 @@ public class MzqProcessorFactory {
      * @param test           the double number to be test
      * @param rangeBoundary1 one side of the range boundary regardless left or
      *                       right side
-     * @param rangeBoundary2 the other side of the range boundary regardless left
+     * @param rangeBoundary2 the other side of the range boundary regardless
+     *                       left
      *                       or right side
      *
      * @return true if test double falls in the given range; false otherwise
@@ -251,8 +313,7 @@ public class MzqProcessorFactory {
                                      double rangeBoundary2) {
         if (rangeBoundary1 <= rangeBoundary2) {
             return test >= rangeBoundary1 && test <= rangeBoundary2;
-        }
-        else {
+        } else {
             return test <= rangeBoundary1 && test >= rangeBoundary2;
         }
     }

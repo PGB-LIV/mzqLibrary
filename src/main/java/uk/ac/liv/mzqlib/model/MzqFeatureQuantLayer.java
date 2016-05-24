@@ -31,7 +31,8 @@ public class MzqFeatureQuantLayer extends MzqQuantLayer {
         this.quantLayerType = new SimpleStringProperty("FeatureQuantLayer");
         this.listId = new SimpleStringProperty(listId);
         this.quantLayerId = new SimpleStringProperty(ftQuantLayer.getId());
-        this.listType = new SimpleStringProperty(MzqDataConstants.FEATURE_LIST_TYPE);
+        this.listType = new SimpleStringProperty(
+                MzqDataConstants.FEATURE_LIST_TYPE);
         this.dataType = new SimpleStringProperty("List in column titles");
 
         //set column names

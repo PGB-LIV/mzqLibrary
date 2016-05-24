@@ -5,7 +5,6 @@
 // Generated on: 2014.03.18 at 02:59:01 PM GMT 
 //
 
-
 package uk.ac.liv.mzqlib.openms.jaxb;
 
 import java.math.BigInteger;
@@ -24,12 +23,14 @@ import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-
 /**
- * <p>Java class for anonymous complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p>
+ * Java class for anonymous complex type.
+ *
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -245,8 +246,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -281,25 +282,26 @@ public class ConsensusXML {
 
     /**
      * Gets the value of the userParam property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the userParam property.
-     * 
+     * This is why there is not a <CODE>set</CODE> method for the userParam
+     * property.
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getUserParam().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link uk.ac.liv.consensusxmlmzquantmlconvertor.jaxb.UserParam }
-     * 
-     * 
+     *
+     *
      */
     public List<uk.ac.liv.mzqlib.openms.jaxb.UserParam> getUserParam() {
         if (userParam == null) {
@@ -310,25 +312,26 @@ public class ConsensusXML {
 
     /**
      * Gets the value of the dataProcessing property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the dataProcessing property.
-     * 
+     * This is why there is not a <CODE>set</CODE> method for the dataProcessing
+     * property.
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getDataProcessing().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link ConsensusXML.DataProcessing }
-     * 
-     * 
+     *
+     *
      */
     public List<ConsensusXML.DataProcessing> getDataProcessing() {
         if (dataProcessing == null) {
@@ -339,25 +342,26 @@ public class ConsensusXML {
 
     /**
      * Gets the value of the identificationRun property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the identificationRun property.
-     * 
+     * This is why there is not a <CODE>set</CODE> method for the
+     * identificationRun property.
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getIdentificationRun().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link ConsensusXML.IdentificationRun }
-     * 
-     * 
+     *
+     *
      */
     public List<ConsensusXML.IdentificationRun> getIdentificationRun() {
         if (identificationRun == null) {
@@ -368,25 +372,26 @@ public class ConsensusXML {
 
     /**
      * Gets the value of the unassignedPeptideIdentification property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the unassignedPeptideIdentification property.
-     * 
+     * This is why there is not a <CODE>set</CODE> method for the
+     * unassignedPeptideIdentification property.
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getUnassignedPeptideIdentification().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link ConsensusXML.UnassignedPeptideIdentification }
-     * 
-     * 
+     *
+     *
      */
     public List<ConsensusXML.UnassignedPeptideIdentification> getUnassignedPeptideIdentification() {
         if (unassignedPeptideIdentification == null) {
@@ -397,11 +402,11 @@ public class ConsensusXML {
 
     /**
      * Gets the value of the mapList property.
-     * 
+     *
      * @return
-     *     possible object is
-     *     {@link MapList }
-     *     
+     *         possible object is
+     *         {@link MapList }
+     *
      */
     public MapList getMapList() {
         return mapList;
@@ -409,11 +414,11 @@ public class ConsensusXML {
 
     /**
      * Sets the value of the mapList property.
-     * 
+     *
      * @param value
-     *     allowed object is
-     *     {@link MapList }
-     *     
+     *              allowed object is
+     *              {@link MapList }
+     *
      */
     public void setMapList(MapList value) {
         this.mapList = value;
@@ -421,11 +426,11 @@ public class ConsensusXML {
 
     /**
      * Gets the value of the consensusElementList property.
-     * 
+     *
      * @return
-     *     possible object is
-     *     {@link ConsensusElementList }
-     *     
+     *         possible object is
+     *         {@link ConsensusElementList }
+     *
      */
     public ConsensusElementList getConsensusElementList() {
         return consensusElementList;
@@ -433,11 +438,11 @@ public class ConsensusXML {
 
     /**
      * Sets the value of the consensusElementList property.
-     * 
+     *
      * @param value
-     *     allowed object is
-     *     {@link ConsensusElementList }
-     *     
+     *              allowed object is
+     *              {@link ConsensusElementList }
+     *
      */
     public void setConsensusElementList(ConsensusElementList value) {
         this.consensusElementList = value;
@@ -445,11 +450,11 @@ public class ConsensusXML {
 
     /**
      * Gets the value of the version property.
-     * 
+     *
      * @return
-     *     possible object is
-     *     {@link Float }
-     *     
+     *         possible object is
+     *         {@link Float }
+     *
      */
     public Float getVersion() {
         return version;
@@ -457,11 +462,11 @@ public class ConsensusXML {
 
     /**
      * Sets the value of the version property.
-     * 
+     *
      * @param value
-     *     allowed object is
-     *     {@link Float }
-     *     
+     *              allowed object is
+     *              {@link Float }
+     *
      */
     public void setVersion(Float value) {
         this.version = value;
@@ -469,11 +474,11 @@ public class ConsensusXML {
 
     /**
      * Gets the value of the experimentType property.
-     * 
+     *
      * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *         possible object is
+     *         {@link String }
+     *
      */
     public String getExperimentType() {
         return experimentType;
@@ -481,11 +486,11 @@ public class ConsensusXML {
 
     /**
      * Sets the value of the experimentType property.
-     * 
+     *
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *              allowed object is
+     *              {@link String }
+     *
      */
     public void setExperimentType(String value) {
         this.experimentType = value;
@@ -493,11 +498,11 @@ public class ConsensusXML {
 
     /**
      * Gets the value of the documentId property.
-     * 
+     *
      * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *         possible object is
+     *         {@link String }
+     *
      */
     public String getDocumentId() {
         return documentId;
@@ -505,11 +510,11 @@ public class ConsensusXML {
 
     /**
      * Sets the value of the documentId property.
-     * 
+     *
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *              allowed object is
+     *              {@link String }
+     *
      */
     public void setDocumentId(String value) {
         this.documentId = value;
@@ -517,11 +522,11 @@ public class ConsensusXML {
 
     /**
      * Gets the value of the id property.
-     * 
+     *
      * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *         possible object is
+     *         {@link String }
+     *
      */
     public String getId() {
         return id;
@@ -529,22 +534,24 @@ public class ConsensusXML {
 
     /**
      * Sets the value of the id property.
-     * 
+     *
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *              allowed object is
+     *              {@link String }
+     *
      */
     public void setId(String value) {
         this.id = value;
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
-     * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
+     * <p>
+     * Java class for anonymous complex type.
+     *
+     * <p>
+     * The following schema fragment specifies the expected content contained
+     * within this class.
+     *
      * <pre>
      * &lt;complexType>
      *   &lt;complexContent>
@@ -583,8 +590,8 @@ public class ConsensusXML {
      *   &lt;/complexContent>
      * &lt;/complexType>
      * </pre>
-     * 
-     * 
+     *
+     *
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
@@ -604,11 +611,11 @@ public class ConsensusXML {
 
         /**
          * Gets the value of the software property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link ConsensusXML.DataProcessing.Software }
-         *     
+         *         possible object is
+         *         {@link ConsensusXML.DataProcessing.Software }
+         *
          */
         public ConsensusXML.DataProcessing.Software getSoftware() {
             return software;
@@ -616,11 +623,11 @@ public class ConsensusXML {
 
         /**
          * Sets the value of the software property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link ConsensusXML.DataProcessing.Software }
-         *     
+         *              allowed object is
+         *              {@link ConsensusXML.DataProcessing.Software }
+         *
          */
         public void setSoftware(ConsensusXML.DataProcessing.Software value) {
             this.software = value;
@@ -628,25 +635,26 @@ public class ConsensusXML {
 
         /**
          * Gets the value of the processingAction property.
-         * 
+         *
          * <p>
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the processingAction property.
-         * 
+         * This is why there is not a <CODE>set</CODE> method for the
+         * processingAction property.
+         *
          * <p>
          * For example, to add a new item, do as follows:
          * <pre>
          *    getProcessingAction().add(newItem);
          * </pre>
-         * 
-         * 
+         *
+         *
          * <p>
          * Objects of the following type(s) are allowed in the list
          * {@link ConsensusXML.DataProcessing.ProcessingAction }
-         * 
-         * 
+         *
+         *
          */
         public List<ConsensusXML.DataProcessing.ProcessingAction> getProcessingAction() {
             if (processingAction == null) {
@@ -657,25 +665,26 @@ public class ConsensusXML {
 
         /**
          * Gets the value of the userParam property.
-         * 
+         *
          * <p>
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the userParam property.
-         * 
+         * This is why there is not a <CODE>set</CODE> method for the userParam
+         * property.
+         *
          * <p>
          * For example, to add a new item, do as follows:
          * <pre>
          *    getUserParam().add(newItem);
          * </pre>
-         * 
-         * 
+         *
+         *
          * <p>
          * Objects of the following type(s) are allowed in the list
          * {@link ConsensusXML.DataProcessing.UserParam }
-         * 
-         * 
+         *
+         *
          */
         public List<ConsensusXML.DataProcessing.UserParam> getUserParam() {
             if (userParam == null) {
@@ -686,11 +695,11 @@ public class ConsensusXML {
 
         /**
          * Gets the value of the completionTime property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link XMLGregorianCalendar }
-         *     
+         *         possible object is
+         *         {@link XMLGregorianCalendar }
+         *
          */
         public XMLGregorianCalendar getCompletionTime() {
             return completionTime;
@@ -698,22 +707,24 @@ public class ConsensusXML {
 
         /**
          * Sets the value of the completionTime property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link XMLGregorianCalendar }
-         *     
+         *              allowed object is
+         *              {@link XMLGregorianCalendar }
+         *
          */
         public void setCompletionTime(XMLGregorianCalendar value) {
             this.completionTime = value;
         }
 
-
         /**
-         * <p>Java class for anonymous complex type.
-         * 
-         * <p>The following schema fragment specifies the expected content contained within this class.
-         * 
+         * <p>
+         * Java class for anonymous complex type.
+         *
+         * <p>
+         * The following schema fragment specifies the expected content
+         * contained within this class.
+         *
          * <pre>
          * &lt;complexType>
          *   &lt;complexContent>
@@ -723,8 +734,8 @@ public class ConsensusXML {
          *   &lt;/complexContent>
          * &lt;/complexType>
          * </pre>
-         * 
-         * 
+         *
+         *
          */
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "")
@@ -735,11 +746,11 @@ public class ConsensusXML {
 
             /**
              * Gets the value of the name property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getName() {
                 return name;
@@ -747,11 +758,11 @@ public class ConsensusXML {
 
             /**
              * Sets the value of the name property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setName(String value) {
                 this.name = value;
@@ -759,12 +770,14 @@ public class ConsensusXML {
 
         }
 
-
         /**
-         * <p>Java class for anonymous complex type.
-         * 
-         * <p>The following schema fragment specifies the expected content contained within this class.
-         * 
+         * <p>
+         * Java class for anonymous complex type.
+         *
+         * <p>
+         * The following schema fragment specifies the expected content
+         * contained within this class.
+         *
          * <pre>
          * &lt;complexType>
          *   &lt;complexContent>
@@ -775,8 +788,8 @@ public class ConsensusXML {
          *   &lt;/complexContent>
          * &lt;/complexType>
          * </pre>
-         * 
-         * 
+         *
+         *
          */
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "")
@@ -789,11 +802,11 @@ public class ConsensusXML {
 
             /**
              * Gets the value of the name property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getName() {
                 return name;
@@ -801,11 +814,11 @@ public class ConsensusXML {
 
             /**
              * Sets the value of the name property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setName(String value) {
                 this.name = value;
@@ -813,11 +826,11 @@ public class ConsensusXML {
 
             /**
              * Gets the value of the version property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getVersion() {
                 return version;
@@ -825,11 +838,11 @@ public class ConsensusXML {
 
             /**
              * Sets the value of the version property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setVersion(String value) {
                 this.version = value;
@@ -837,12 +850,14 @@ public class ConsensusXML {
 
         }
 
-
         /**
-         * <p>Java class for anonymous complex type.
-         * 
-         * <p>The following schema fragment specifies the expected content contained within this class.
-         * 
+         * <p>
+         * Java class for anonymous complex type.
+         *
+         * <p>
+         * The following schema fragment specifies the expected content
+         * contained within this class.
+         *
          * <pre>
          * &lt;complexType>
          *   &lt;complexContent>
@@ -851,26 +866,26 @@ public class ConsensusXML {
          *   &lt;/complexContent>
          * &lt;/complexType>
          * </pre>
-         * 
-         * 
+         *
+         *
          */
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "")
         public static class UserParam
-            extends uk.ac.liv.mzqlib.openms.jaxb.UserParam
-        {
-
+                extends uk.ac.liv.mzqlib.openms.jaxb.UserParam {
 
         }
 
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
-     * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
+     * <p>
+     * Java class for anonymous complex type.
+     *
+     * <p>
+     * The following schema fragment specifies the expected content contained
+     * within this class.
+     *
      * <pre>
      * &lt;complexType>
      *   &lt;complexContent>
@@ -970,8 +985,8 @@ public class ConsensusXML {
      *   &lt;/complexContent>
      * &lt;/complexType>
      * </pre>
-     * 
-     * 
+     *
+     *
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
@@ -999,11 +1014,11 @@ public class ConsensusXML {
 
         /**
          * Gets the value of the searchParameters property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link ConsensusXML.IdentificationRun.SearchParameters }
-         *     
+         *         possible object is
+         *         {@link ConsensusXML.IdentificationRun.SearchParameters }
+         *
          */
         public ConsensusXML.IdentificationRun.SearchParameters getSearchParameters() {
             return searchParameters;
@@ -1011,23 +1026,24 @@ public class ConsensusXML {
 
         /**
          * Sets the value of the searchParameters property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link ConsensusXML.IdentificationRun.SearchParameters }
-         *     
+         *              allowed object is
+         *              {@link ConsensusXML.IdentificationRun.SearchParameters }
+         *
          */
-        public void setSearchParameters(ConsensusXML.IdentificationRun.SearchParameters value) {
+        public void setSearchParameters(
+                ConsensusXML.IdentificationRun.SearchParameters value) {
             this.searchParameters = value;
         }
 
         /**
          * Gets the value of the proteinIdentification property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link ConsensusXML.IdentificationRun.ProteinIdentification }
-         *     
+         *         possible object is
+         *         {@link ConsensusXML.IdentificationRun.ProteinIdentification }
+         *
          */
         public ConsensusXML.IdentificationRun.ProteinIdentification getProteinIdentification() {
             return proteinIdentification;
@@ -1035,23 +1051,24 @@ public class ConsensusXML {
 
         /**
          * Sets the value of the proteinIdentification property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link ConsensusXML.IdentificationRun.ProteinIdentification }
-         *     
+         *              allowed object is
+         *              {@link ConsensusXML.IdentificationRun.ProteinIdentification }
+         *
          */
-        public void setProteinIdentification(ConsensusXML.IdentificationRun.ProteinIdentification value) {
+        public void setProteinIdentification(
+                ConsensusXML.IdentificationRun.ProteinIdentification value) {
             this.proteinIdentification = value;
         }
 
         /**
          * Gets the value of the id property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         *         possible object is
+         *         {@link String }
+         *
          */
         public String getId() {
             return id;
@@ -1059,11 +1076,11 @@ public class ConsensusXML {
 
         /**
          * Sets the value of the id property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *              allowed object is
+         *              {@link String }
+         *
          */
         public void setId(String value) {
             this.id = value;
@@ -1071,11 +1088,11 @@ public class ConsensusXML {
 
         /**
          * Gets the value of the searchEngine property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         *         possible object is
+         *         {@link String }
+         *
          */
         public String getSearchEngine() {
             return searchEngine;
@@ -1083,11 +1100,11 @@ public class ConsensusXML {
 
         /**
          * Sets the value of the searchEngine property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *              allowed object is
+         *              {@link String }
+         *
          */
         public void setSearchEngine(String value) {
             this.searchEngine = value;
@@ -1095,11 +1112,11 @@ public class ConsensusXML {
 
         /**
          * Gets the value of the searchEngineVersion property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         *         possible object is
+         *         {@link String }
+         *
          */
         public String getSearchEngineVersion() {
             return searchEngineVersion;
@@ -1107,11 +1124,11 @@ public class ConsensusXML {
 
         /**
          * Sets the value of the searchEngineVersion property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *              allowed object is
+         *              {@link String }
+         *
          */
         public void setSearchEngineVersion(String value) {
             this.searchEngineVersion = value;
@@ -1119,11 +1136,11 @@ public class ConsensusXML {
 
         /**
          * Gets the value of the date property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link XMLGregorianCalendar }
-         *     
+         *         possible object is
+         *         {@link XMLGregorianCalendar }
+         *
          */
         public XMLGregorianCalendar getDate() {
             return date;
@@ -1131,22 +1148,24 @@ public class ConsensusXML {
 
         /**
          * Sets the value of the date property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link XMLGregorianCalendar }
-         *     
+         *              allowed object is
+         *              {@link XMLGregorianCalendar }
+         *
          */
         public void setDate(XMLGregorianCalendar value) {
             this.date = value;
         }
 
-
         /**
-         * <p>Java class for anonymous complex type.
-         * 
-         * <p>The following schema fragment specifies the expected content contained within this class.
-         * 
+         * <p>
+         * Java class for anonymous complex type.
+         *
+         * <p>
+         * The following schema fragment specifies the expected content
+         * contained within this class.
+         *
          * <pre>
          * &lt;complexType>
          *   &lt;complexContent>
@@ -1176,8 +1195,8 @@ public class ConsensusXML {
          *   &lt;/complexContent>
          * &lt;/complexType>
          * </pre>
-         * 
-         * 
+         *
+         *
          */
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "", propOrder = {
@@ -1198,25 +1217,27 @@ public class ConsensusXML {
 
             /**
              * Gets the value of the proteinHit property.
-             * 
+             *
              * <p>
              * This accessor method returns a reference to the live list,
              * not a snapshot. Therefore any modification you make to the
              * returned list will be present inside the JAXB object.
-             * This is why there is not a <CODE>set</CODE> method for the proteinHit property.
-             * 
+             * This is why there is not a <CODE>set</CODE> method for the
+             * proteinHit property.
+             *
              * <p>
              * For example, to add a new item, do as follows:
              * <pre>
              *    getProteinHit().add(newItem);
              * </pre>
-             * 
-             * 
+             *
+             *
              * <p>
              * Objects of the following type(s) are allowed in the list
-             * {@link ConsensusXML.IdentificationRun.ProteinIdentification.ProteinHit }
-             * 
-             * 
+             * {@link ConsensusXML.IdentificationRun.ProteinIdentification.ProteinHit
+             * }
+             *
+             *
              */
             public List<ConsensusXML.IdentificationRun.ProteinIdentification.ProteinHit> getProteinHit() {
                 if (proteinHit == null) {
@@ -1227,25 +1248,26 @@ public class ConsensusXML {
 
             /**
              * Gets the value of the userParam property.
-             * 
+             *
              * <p>
              * This accessor method returns a reference to the live list,
              * not a snapshot. Therefore any modification you make to the
              * returned list will be present inside the JAXB object.
-             * This is why there is not a <CODE>set</CODE> method for the userParam property.
-             * 
+             * This is why there is not a <CODE>set</CODE> method for the
+             * userParam property.
+             *
              * <p>
              * For example, to add a new item, do as follows:
              * <pre>
              *    getUserParam().add(newItem);
              * </pre>
-             * 
-             * 
+             *
+             *
              * <p>
              * Objects of the following type(s) are allowed in the list
              * {@link uk.ac.liv.consensusxmlmzquantmlconvertor.jaxb.UserParam }
-             * 
-             * 
+             *
+             *
              */
             public List<uk.ac.liv.mzqlib.openms.jaxb.UserParam> getUserParam() {
                 if (userParam == null) {
@@ -1256,11 +1278,11 @@ public class ConsensusXML {
 
             /**
              * Gets the value of the scoreType property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getScoreType() {
                 return scoreType;
@@ -1268,11 +1290,11 @@ public class ConsensusXML {
 
             /**
              * Sets the value of the scoreType property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setScoreType(String value) {
                 this.scoreType = value;
@@ -1280,7 +1302,7 @@ public class ConsensusXML {
 
             /**
              * Gets the value of the higherScoreBetter property.
-             * 
+             *
              */
             public boolean isHigherScoreBetter() {
                 return higherScoreBetter;
@@ -1288,7 +1310,7 @@ public class ConsensusXML {
 
             /**
              * Sets the value of the higherScoreBetter property.
-             * 
+             *
              */
             public void setHigherScoreBetter(boolean value) {
                 this.higherScoreBetter = value;
@@ -1296,11 +1318,11 @@ public class ConsensusXML {
 
             /**
              * Gets the value of the significanceThreshold property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link Float }
-             *     
+             *         possible object is
+             *         {@link Float }
+             *
              */
             public Float getSignificanceThreshold() {
                 return significanceThreshold;
@@ -1308,22 +1330,24 @@ public class ConsensusXML {
 
             /**
              * Sets the value of the significanceThreshold property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link Float }
-             *     
+             *              allowed object is
+             *              {@link Float }
+             *
              */
             public void setSignificanceThreshold(Float value) {
                 this.significanceThreshold = value;
             }
 
-
             /**
-             * <p>Java class for anonymous complex type.
-             * 
-             * <p>The following schema fragment specifies the expected content contained within this class.
-             * 
+             * <p>
+             * Java class for anonymous complex type.
+             *
+             * <p>
+             * The following schema fragment specifies the expected content
+             * contained within this class.
+             *
              * <pre>
              * &lt;complexType>
              *   &lt;complexContent>
@@ -1339,8 +1363,8 @@ public class ConsensusXML {
              *   &lt;/complexContent>
              * &lt;/complexType>
              * </pre>
-             * 
-             * 
+             *
+             *
              */
             @XmlAccessorType(XmlAccessType.FIELD)
             @XmlType(name = "", propOrder = {
@@ -1363,25 +1387,27 @@ public class ConsensusXML {
 
                 /**
                  * Gets the value of the userParam property.
-                 * 
+                 *
                  * <p>
                  * This accessor method returns a reference to the live list,
                  * not a snapshot. Therefore any modification you make to the
                  * returned list will be present inside the JAXB object.
-                 * This is why there is not a <CODE>set</CODE> method for the userParam property.
-                 * 
+                 * This is why there is not a <CODE>set</CODE> method for the
+                 * userParam property.
+                 *
                  * <p>
                  * For example, to add a new item, do as follows:
                  * <pre>
                  *    getUserParam().add(newItem);
                  * </pre>
-                 * 
-                 * 
+                 *
+                 *
                  * <p>
                  * Objects of the following type(s) are allowed in the list
-                 * {@link uk.ac.liv.consensusxmlmzquantmlconvertor.jaxb.UserParam }
-                 * 
-                 * 
+                 * {@link uk.ac.liv.consensusxmlmzquantmlconvertor.jaxb.UserParam
+                 * }
+                 *
+                 *
                  */
                 public List<uk.ac.liv.mzqlib.openms.jaxb.UserParam> getUserParam() {
                     if (userParam == null) {
@@ -1392,11 +1418,11 @@ public class ConsensusXML {
 
                 /**
                  * Gets the value of the id property.
-                 * 
+                 *
                  * @return
-                 *     possible object is
-                 *     {@link String }
-                 *     
+                 *         possible object is
+                 *         {@link String }
+                 *
                  */
                 public String getId() {
                     return id;
@@ -1404,11 +1430,11 @@ public class ConsensusXML {
 
                 /**
                  * Sets the value of the id property.
-                 * 
+                 *
                  * @param value
-                 *     allowed object is
-                 *     {@link String }
-                 *     
+                 *              allowed object is
+                 *              {@link String }
+                 *
                  */
                 public void setId(String value) {
                     this.id = value;
@@ -1416,11 +1442,11 @@ public class ConsensusXML {
 
                 /**
                  * Gets the value of the accession property.
-                 * 
+                 *
                  * @return
-                 *     possible object is
-                 *     {@link String }
-                 *     
+                 *         possible object is
+                 *         {@link String }
+                 *
                  */
                 public String getAccession() {
                     return accession;
@@ -1428,11 +1454,11 @@ public class ConsensusXML {
 
                 /**
                  * Sets the value of the accession property.
-                 * 
+                 *
                  * @param value
-                 *     allowed object is
-                 *     {@link String }
-                 *     
+                 *              allowed object is
+                 *              {@link String }
+                 *
                  */
                 public void setAccession(String value) {
                     this.accession = value;
@@ -1440,7 +1466,7 @@ public class ConsensusXML {
 
                 /**
                  * Gets the value of the score property.
-                 * 
+                 *
                  */
                 public float getScore() {
                     return score;
@@ -1448,7 +1474,7 @@ public class ConsensusXML {
 
                 /**
                  * Sets the value of the score property.
-                 * 
+                 *
                  */
                 public void setScore(float value) {
                     this.score = value;
@@ -1456,11 +1482,11 @@ public class ConsensusXML {
 
                 /**
                  * Gets the value of the sequence property.
-                 * 
+                 *
                  * @return
-                 *     possible object is
-                 *     {@link String }
-                 *     
+                 *         possible object is
+                 *         {@link String }
+                 *
                  */
                 public String getSequence() {
                     return sequence;
@@ -1468,11 +1494,11 @@ public class ConsensusXML {
 
                 /**
                  * Sets the value of the sequence property.
-                 * 
+                 *
                  * @param value
-                 *     allowed object is
-                 *     {@link String }
-                 *     
+                 *              allowed object is
+                 *              {@link String }
+                 *
                  */
                 public void setSequence(String value) {
                     this.sequence = value;
@@ -1482,12 +1508,14 @@ public class ConsensusXML {
 
         }
 
-
         /**
-         * <p>Java class for anonymous complex type.
-         * 
-         * <p>The following schema fragment specifies the expected content contained within this class.
-         * 
+         * <p>
+         * Java class for anonymous complex type.
+         *
+         * <p>
+         * The following schema fragment specifies the expected content
+         * contained within this class.
+         *
          * <pre>
          * &lt;complexType>
          *   &lt;complexContent>
@@ -1544,8 +1572,8 @@ public class ConsensusXML {
          *   &lt;/complexContent>
          * &lt;/complexType>
          * </pre>
-         * 
-         * 
+         *
+         *
          */
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "", propOrder = {
@@ -1582,25 +1610,27 @@ public class ConsensusXML {
 
             /**
              * Gets the value of the fixedModification property.
-             * 
+             *
              * <p>
              * This accessor method returns a reference to the live list,
              * not a snapshot. Therefore any modification you make to the
              * returned list will be present inside the JAXB object.
-             * This is why there is not a <CODE>set</CODE> method for the fixedModification property.
-             * 
+             * This is why there is not a <CODE>set</CODE> method for the
+             * fixedModification property.
+             *
              * <p>
              * For example, to add a new item, do as follows:
              * <pre>
              *    getFixedModification().add(newItem);
              * </pre>
-             * 
-             * 
+             *
+             *
              * <p>
              * Objects of the following type(s) are allowed in the list
-             * {@link ConsensusXML.IdentificationRun.SearchParameters.FixedModification }
-             * 
-             * 
+             * {@link ConsensusXML.IdentificationRun.SearchParameters.FixedModification
+             * }
+             *
+             *
              */
             public List<ConsensusXML.IdentificationRun.SearchParameters.FixedModification> getFixedModification() {
                 if (fixedModification == null) {
@@ -1611,25 +1641,27 @@ public class ConsensusXML {
 
             /**
              * Gets the value of the variableModification property.
-             * 
+             *
              * <p>
              * This accessor method returns a reference to the live list,
              * not a snapshot. Therefore any modification you make to the
              * returned list will be present inside the JAXB object.
-             * This is why there is not a <CODE>set</CODE> method for the variableModification property.
-             * 
+             * This is why there is not a <CODE>set</CODE> method for the
+             * variableModification property.
+             *
              * <p>
              * For example, to add a new item, do as follows:
              * <pre>
              *    getVariableModification().add(newItem);
              * </pre>
-             * 
-             * 
+             *
+             *
              * <p>
              * Objects of the following type(s) are allowed in the list
-             * {@link ConsensusXML.IdentificationRun.SearchParameters.VariableModification }
-             * 
-             * 
+             * {@link ConsensusXML.IdentificationRun.SearchParameters.VariableModification
+             * }
+             *
+             *
              */
             public List<ConsensusXML.IdentificationRun.SearchParameters.VariableModification> getVariableModification() {
                 if (variableModification == null) {
@@ -1640,25 +1672,26 @@ public class ConsensusXML {
 
             /**
              * Gets the value of the userParam property.
-             * 
+             *
              * <p>
              * This accessor method returns a reference to the live list,
              * not a snapshot. Therefore any modification you make to the
              * returned list will be present inside the JAXB object.
-             * This is why there is not a <CODE>set</CODE> method for the userParam property.
-             * 
+             * This is why there is not a <CODE>set</CODE> method for the
+             * userParam property.
+             *
              * <p>
              * For example, to add a new item, do as follows:
              * <pre>
              *    getUserParam().add(newItem);
              * </pre>
-             * 
-             * 
+             *
+             *
              * <p>
              * Objects of the following type(s) are allowed in the list
              * {@link uk.ac.liv.consensusxmlmzquantmlconvertor.jaxb.UserParam }
-             * 
-             * 
+             *
+             *
              */
             public List<uk.ac.liv.mzqlib.openms.jaxb.UserParam> getUserParam() {
                 if (userParam == null) {
@@ -1669,11 +1702,11 @@ public class ConsensusXML {
 
             /**
              * Gets the value of the db property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getDb() {
                 return db;
@@ -1681,11 +1714,11 @@ public class ConsensusXML {
 
             /**
              * Sets the value of the db property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setDb(String value) {
                 this.db = value;
@@ -1693,11 +1726,11 @@ public class ConsensusXML {
 
             /**
              * Gets the value of the dbVersion property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getDbVersion() {
                 return dbVersion;
@@ -1705,11 +1738,11 @@ public class ConsensusXML {
 
             /**
              * Sets the value of the dbVersion property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setDbVersion(String value) {
                 this.dbVersion = value;
@@ -1717,11 +1750,11 @@ public class ConsensusXML {
 
             /**
              * Gets the value of the taxonomy property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getTaxonomy() {
                 return taxonomy;
@@ -1729,11 +1762,11 @@ public class ConsensusXML {
 
             /**
              * Sets the value of the taxonomy property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setTaxonomy(String value) {
                 this.taxonomy = value;
@@ -1741,11 +1774,11 @@ public class ConsensusXML {
 
             /**
              * Gets the value of the massType property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link MassType }
-             *     
+             *         possible object is
+             *         {@link MassType }
+             *
              */
             public MassType getMassType() {
                 return massType;
@@ -1753,11 +1786,11 @@ public class ConsensusXML {
 
             /**
              * Sets the value of the massType property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link MassType }
-             *     
+             *              allowed object is
+             *              {@link MassType }
+             *
              */
             public void setMassType(MassType value) {
                 this.massType = value;
@@ -1765,11 +1798,11 @@ public class ConsensusXML {
 
             /**
              * Gets the value of the charges property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getCharges() {
                 return charges;
@@ -1777,11 +1810,11 @@ public class ConsensusXML {
 
             /**
              * Sets the value of the charges property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setCharges(String value) {
                 this.charges = value;
@@ -1789,11 +1822,11 @@ public class ConsensusXML {
 
             /**
              * Gets the value of the enzyme property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link DigestionEnzyme }
-             *     
+             *         possible object is
+             *         {@link DigestionEnzyme }
+             *
              */
             public DigestionEnzyme getEnzyme() {
                 return enzyme;
@@ -1801,11 +1834,11 @@ public class ConsensusXML {
 
             /**
              * Sets the value of the enzyme property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link DigestionEnzyme }
-             *     
+             *              allowed object is
+             *              {@link DigestionEnzyme }
+             *
              */
             public void setEnzyme(DigestionEnzyme value) {
                 this.enzyme = value;
@@ -1813,11 +1846,11 @@ public class ConsensusXML {
 
             /**
              * Gets the value of the missedCleavages property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link Long }
-             *     
+             *         possible object is
+             *         {@link Long }
+             *
              */
             public Long getMissedCleavages() {
                 return missedCleavages;
@@ -1825,11 +1858,11 @@ public class ConsensusXML {
 
             /**
              * Sets the value of the missedCleavages property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link Long }
-             *     
+             *              allowed object is
+             *              {@link Long }
+             *
              */
             public void setMissedCleavages(Long value) {
                 this.missedCleavages = value;
@@ -1837,7 +1870,7 @@ public class ConsensusXML {
 
             /**
              * Gets the value of the precursorPeakTolerance property.
-             * 
+             *
              */
             public float getPrecursorPeakTolerance() {
                 return precursorPeakTolerance;
@@ -1845,7 +1878,7 @@ public class ConsensusXML {
 
             /**
              * Sets the value of the precursorPeakTolerance property.
-             * 
+             *
              */
             public void setPrecursorPeakTolerance(float value) {
                 this.precursorPeakTolerance = value;
@@ -1853,7 +1886,7 @@ public class ConsensusXML {
 
             /**
              * Gets the value of the peakMassTolerance property.
-             * 
+             *
              */
             public float getPeakMassTolerance() {
                 return peakMassTolerance;
@@ -1861,18 +1894,20 @@ public class ConsensusXML {
 
             /**
              * Sets the value of the peakMassTolerance property.
-             * 
+             *
              */
             public void setPeakMassTolerance(float value) {
                 this.peakMassTolerance = value;
             }
 
-
             /**
-             * <p>Java class for anonymous complex type.
-             * 
-             * <p>The following schema fragment specifies the expected content contained within this class.
-             * 
+             * <p>
+             * Java class for anonymous complex type.
+             *
+             * <p>
+             * The following schema fragment specifies the expected content
+             * contained within this class.
+             *
              * <pre>
              * &lt;complexType>
              *   &lt;complexContent>
@@ -1891,8 +1926,8 @@ public class ConsensusXML {
              *   &lt;/complexContent>
              * &lt;/complexType>
              * </pre>
-             * 
-             * 
+             *
+             *
              */
             @XmlAccessorType(XmlAccessType.FIELD)
             @XmlType(name = "", propOrder = {
@@ -1906,25 +1941,27 @@ public class ConsensusXML {
 
                 /**
                  * Gets the value of the userParam property.
-                 * 
+                 *
                  * <p>
                  * This accessor method returns a reference to the live list,
                  * not a snapshot. Therefore any modification you make to the
                  * returned list will be present inside the JAXB object.
-                 * This is why there is not a <CODE>set</CODE> method for the userParam property.
-                 * 
+                 * This is why there is not a <CODE>set</CODE> method for the
+                 * userParam property.
+                 *
                  * <p>
                  * For example, to add a new item, do as follows:
                  * <pre>
                  *    getUserParam().add(newItem);
                  * </pre>
-                 * 
-                 * 
+                 *
+                 *
                  * <p>
                  * Objects of the following type(s) are allowed in the list
-                 * {@link uk.ac.liv.consensusxmlmzquantmlconvertor.jaxb.UserParam }
-                 * 
-                 * 
+                 * {@link uk.ac.liv.consensusxmlmzquantmlconvertor.jaxb.UserParam
+                 * }
+                 *
+                 *
                  */
                 public List<uk.ac.liv.mzqlib.openms.jaxb.UserParam> getUserParam() {
                     if (userParam == null) {
@@ -1935,11 +1972,11 @@ public class ConsensusXML {
 
                 /**
                  * Gets the value of the name property.
-                 * 
+                 *
                  * @return
-                 *     possible object is
-                 *     {@link String }
-                 *     
+                 *         possible object is
+                 *         {@link String }
+                 *
                  */
                 public String getName() {
                     return name;
@@ -1947,11 +1984,11 @@ public class ConsensusXML {
 
                 /**
                  * Sets the value of the name property.
-                 * 
+                 *
                  * @param value
-                 *     allowed object is
-                 *     {@link String }
-                 *     
+                 *              allowed object is
+                 *              {@link String }
+                 *
                  */
                 public void setName(String value) {
                     this.name = value;
@@ -1959,12 +1996,14 @@ public class ConsensusXML {
 
             }
 
-
             /**
-             * <p>Java class for anonymous complex type.
-             * 
-             * <p>The following schema fragment specifies the expected content contained within this class.
-             * 
+             * <p>
+             * Java class for anonymous complex type.
+             *
+             * <p>
+             * The following schema fragment specifies the expected content
+             * contained within this class.
+             *
              * <pre>
              * &lt;complexType>
              *   &lt;complexContent>
@@ -1983,8 +2022,8 @@ public class ConsensusXML {
              *   &lt;/complexContent>
              * &lt;/complexType>
              * </pre>
-             * 
-             * 
+             *
+             *
              */
             @XmlAccessorType(XmlAccessType.FIELD)
             @XmlType(name = "", propOrder = {
@@ -1998,25 +2037,27 @@ public class ConsensusXML {
 
                 /**
                  * Gets the value of the userParam property.
-                 * 
+                 *
                  * <p>
                  * This accessor method returns a reference to the live list,
                  * not a snapshot. Therefore any modification you make to the
                  * returned list will be present inside the JAXB object.
-                 * This is why there is not a <CODE>set</CODE> method for the userParam property.
-                 * 
+                 * This is why there is not a <CODE>set</CODE> method for the
+                 * userParam property.
+                 *
                  * <p>
                  * For example, to add a new item, do as follows:
                  * <pre>
                  *    getUserParam().add(newItem);
                  * </pre>
-                 * 
-                 * 
+                 *
+                 *
                  * <p>
                  * Objects of the following type(s) are allowed in the list
-                 * {@link uk.ac.liv.consensusxmlmzquantmlconvertor.jaxb.UserParam }
-                 * 
-                 * 
+                 * {@link uk.ac.liv.consensusxmlmzquantmlconvertor.jaxb.UserParam
+                 * }
+                 *
+                 *
                  */
                 public List<uk.ac.liv.mzqlib.openms.jaxb.UserParam> getUserParam() {
                     if (userParam == null) {
@@ -2027,11 +2068,11 @@ public class ConsensusXML {
 
                 /**
                  * Gets the value of the name property.
-                 * 
+                 *
                  * @return
-                 *     possible object is
-                 *     {@link String }
-                 *     
+                 *         possible object is
+                 *         {@link String }
+                 *
                  */
                 public String getName() {
                     return name;
@@ -2039,11 +2080,11 @@ public class ConsensusXML {
 
                 /**
                  * Sets the value of the name property.
-                 * 
+                 *
                  * @param value
-                 *     allowed object is
-                 *     {@link String }
-                 *     
+                 *              allowed object is
+                 *              {@link String }
+                 *
                  */
                 public void setName(String value) {
                     this.name = value;
@@ -2055,12 +2096,14 @@ public class ConsensusXML {
 
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
-     * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
+     * <p>
+     * Java class for anonymous complex type.
+     *
+     * <p>
+     * The following schema fragment specifies the expected content contained
+     * within this class.
+     *
      * <pre>
      * &lt;complexType>
      *   &lt;complexContent>
@@ -2110,8 +2153,8 @@ public class ConsensusXML {
      *   &lt;/complexContent>
      * &lt;/complexType>
      * </pre>
-     * 
-     * 
+     *
+     *
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
@@ -2143,25 +2186,26 @@ public class ConsensusXML {
 
         /**
          * Gets the value of the peptideHit property.
-         * 
+         *
          * <p>
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the peptideHit property.
-         * 
+         * This is why there is not a <CODE>set</CODE> method for the peptideHit
+         * property.
+         *
          * <p>
          * For example, to add a new item, do as follows:
          * <pre>
          *    getPeptideHit().add(newItem);
          * </pre>
-         * 
-         * 
+         *
+         *
          * <p>
          * Objects of the following type(s) are allowed in the list
          * {@link ConsensusXML.UnassignedPeptideIdentification.PeptideHit }
-         * 
-         * 
+         *
+         *
          */
         public List<ConsensusXML.UnassignedPeptideIdentification.PeptideHit> getPeptideHit() {
             if (peptideHit == null) {
@@ -2172,25 +2216,26 @@ public class ConsensusXML {
 
         /**
          * Gets the value of the userParam property.
-         * 
+         *
          * <p>
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the userParam property.
-         * 
+         * This is why there is not a <CODE>set</CODE> method for the userParam
+         * property.
+         *
          * <p>
          * For example, to add a new item, do as follows:
          * <pre>
          *    getUserParam().add(newItem);
          * </pre>
-         * 
-         * 
+         *
+         *
          * <p>
          * Objects of the following type(s) are allowed in the list
          * {@link uk.ac.liv.consensusxmlmzquantmlconvertor.jaxb.UserParam }
-         * 
-         * 
+         *
+         *
          */
         public List<uk.ac.liv.mzqlib.openms.jaxb.UserParam> getUserParam() {
             if (userParam == null) {
@@ -2201,11 +2246,11 @@ public class ConsensusXML {
 
         /**
          * Gets the value of the identificationRunRef property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link Object }
-         *     
+         *         possible object is
+         *         {@link Object }
+         *
          */
         public Object getIdentificationRunRef() {
             return identificationRunRef;
@@ -2213,11 +2258,11 @@ public class ConsensusXML {
 
         /**
          * Sets the value of the identificationRunRef property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link Object }
-         *     
+         *              allowed object is
+         *              {@link Object }
+         *
          */
         public void setIdentificationRunRef(Object value) {
             this.identificationRunRef = value;
@@ -2225,11 +2270,11 @@ public class ConsensusXML {
 
         /**
          * Gets the value of the scoreType property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         *         possible object is
+         *         {@link String }
+         *
          */
         public String getScoreType() {
             return scoreType;
@@ -2237,11 +2282,11 @@ public class ConsensusXML {
 
         /**
          * Sets the value of the scoreType property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *              allowed object is
+         *              {@link String }
+         *
          */
         public void setScoreType(String value) {
             this.scoreType = value;
@@ -2249,7 +2294,7 @@ public class ConsensusXML {
 
         /**
          * Gets the value of the higherScoreBetter property.
-         * 
+         *
          */
         public boolean isHigherScoreBetter() {
             return higherScoreBetter;
@@ -2257,7 +2302,7 @@ public class ConsensusXML {
 
         /**
          * Sets the value of the higherScoreBetter property.
-         * 
+         *
          */
         public void setHigherScoreBetter(boolean value) {
             this.higherScoreBetter = value;
@@ -2265,11 +2310,11 @@ public class ConsensusXML {
 
         /**
          * Gets the value of the significanceThreshold property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link Float }
-         *     
+         *         possible object is
+         *         {@link Float }
+         *
          */
         public Float getSignificanceThreshold() {
             return significanceThreshold;
@@ -2277,11 +2322,11 @@ public class ConsensusXML {
 
         /**
          * Sets the value of the significanceThreshold property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link Float }
-         *     
+         *              allowed object is
+         *              {@link Float }
+         *
          */
         public void setSignificanceThreshold(Float value) {
             this.significanceThreshold = value;
@@ -2289,11 +2334,11 @@ public class ConsensusXML {
 
         /**
          * Gets the value of the spectrumReference property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link Long }
-         *     
+         *         possible object is
+         *         {@link Long }
+         *
          */
         public Long getSpectrumReference() {
             return spectrumReference;
@@ -2301,11 +2346,11 @@ public class ConsensusXML {
 
         /**
          * Sets the value of the spectrumReference property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link Long }
-         *     
+         *              allowed object is
+         *              {@link Long }
+         *
          */
         public void setSpectrumReference(Long value) {
             this.spectrumReference = value;
@@ -2313,11 +2358,11 @@ public class ConsensusXML {
 
         /**
          * Gets the value of the rt property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link Float }
-         *     
+         *         possible object is
+         *         {@link Float }
+         *
          */
         public Float getRT() {
             return rt;
@@ -2325,11 +2370,11 @@ public class ConsensusXML {
 
         /**
          * Sets the value of the rt property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link Float }
-         *     
+         *              allowed object is
+         *              {@link Float }
+         *
          */
         public void setRT(Float value) {
             this.rt = value;
@@ -2337,11 +2382,11 @@ public class ConsensusXML {
 
         /**
          * Gets the value of the mz property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link Float }
-         *     
+         *         possible object is
+         *         {@link Float }
+         *
          */
         public Float getMZ() {
             return mz;
@@ -2349,22 +2394,24 @@ public class ConsensusXML {
 
         /**
          * Sets the value of the mz property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link Float }
-         *     
+         *              allowed object is
+         *              {@link Float }
+         *
          */
         public void setMZ(Float value) {
             this.mz = value;
         }
 
-
         /**
-         * <p>Java class for anonymous complex type.
-         * 
-         * <p>The following schema fragment specifies the expected content contained within this class.
-         * 
+         * <p>
+         * Java class for anonymous complex type.
+         *
+         * <p>
+         * The following schema fragment specifies the expected content
+         * contained within this class.
+         *
          * <pre>
          * &lt;complexType>
          *   &lt;complexContent>
@@ -2396,8 +2443,8 @@ public class ConsensusXML {
          *   &lt;/complexContent>
          * &lt;/complexType>
          * </pre>
-         * 
-         * 
+         *
+         *
          */
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "", propOrder = {
@@ -2423,25 +2470,26 @@ public class ConsensusXML {
 
             /**
              * Gets the value of the userParam property.
-             * 
+             *
              * <p>
              * This accessor method returns a reference to the live list,
              * not a snapshot. Therefore any modification you make to the
              * returned list will be present inside the JAXB object.
-             * This is why there is not a <CODE>set</CODE> method for the userParam property.
-             * 
+             * This is why there is not a <CODE>set</CODE> method for the
+             * userParam property.
+             *
              * <p>
              * For example, to add a new item, do as follows:
              * <pre>
              *    getUserParam().add(newItem);
              * </pre>
-             * 
-             * 
+             *
+             *
              * <p>
              * Objects of the following type(s) are allowed in the list
              * {@link uk.ac.liv.consensusxmlmzquantmlconvertor.jaxb.UserParam }
-             * 
-             * 
+             *
+             *
              */
             public List<uk.ac.liv.mzqlib.openms.jaxb.UserParam> getUserParam() {
                 if (userParam == null) {
@@ -2452,11 +2500,11 @@ public class ConsensusXML {
 
             /**
              * Gets the value of the sequence property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getSequence() {
                 return sequence;
@@ -2464,11 +2512,11 @@ public class ConsensusXML {
 
             /**
              * Sets the value of the sequence property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setSequence(String value) {
                 this.sequence = value;
@@ -2476,11 +2524,11 @@ public class ConsensusXML {
 
             /**
              * Gets the value of the charge property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link BigInteger }
-             *     
+             *         possible object is
+             *         {@link BigInteger }
+             *
              */
             public BigInteger getCharge() {
                 return charge;
@@ -2488,11 +2536,11 @@ public class ConsensusXML {
 
             /**
              * Sets the value of the charge property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link BigInteger }
-             *     
+             *              allowed object is
+             *              {@link BigInteger }
+             *
              */
             public void setCharge(BigInteger value) {
                 this.charge = value;
@@ -2500,7 +2548,7 @@ public class ConsensusXML {
 
             /**
              * Gets the value of the score property.
-             * 
+             *
              */
             public float getScore() {
                 return score;
@@ -2508,7 +2556,7 @@ public class ConsensusXML {
 
             /**
              * Sets the value of the score property.
-             * 
+             *
              */
             public void setScore(float value) {
                 this.score = value;
@@ -2516,11 +2564,11 @@ public class ConsensusXML {
 
             /**
              * Gets the value of the aaBefore property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getAaBefore() {
                 return aaBefore;
@@ -2528,11 +2576,11 @@ public class ConsensusXML {
 
             /**
              * Sets the value of the aaBefore property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setAaBefore(String value) {
                 this.aaBefore = value;
@@ -2540,11 +2588,11 @@ public class ConsensusXML {
 
             /**
              * Gets the value of the aaAfter property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getAaAfter() {
                 return aaAfter;
@@ -2552,11 +2600,11 @@ public class ConsensusXML {
 
             /**
              * Sets the value of the aaAfter property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setAaAfter(String value) {
                 this.aaAfter = value;
@@ -2564,25 +2612,26 @@ public class ConsensusXML {
 
             /**
              * Gets the value of the proteinRefs property.
-             * 
+             *
              * <p>
              * This accessor method returns a reference to the live list,
              * not a snapshot. Therefore any modification you make to the
              * returned list will be present inside the JAXB object.
-             * This is why there is not a <CODE>set</CODE> method for the proteinRefs property.
-             * 
+             * This is why there is not a <CODE>set</CODE> method for the
+             * proteinRefs property.
+             *
              * <p>
              * For example, to add a new item, do as follows:
              * <pre>
              *    getProteinRefs().add(newItem);
              * </pre>
-             * 
-             * 
+             *
+             *
              * <p>
              * Objects of the following type(s) are allowed in the list
              * {@link Object }
-             * 
-             * 
+             *
+             *
              */
             public List<Object> getProteinRefs() {
                 if (proteinRefs == null) {

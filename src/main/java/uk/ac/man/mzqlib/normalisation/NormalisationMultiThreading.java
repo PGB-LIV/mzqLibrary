@@ -19,7 +19,8 @@ import java.io.FileNotFoundException;
  */
 public class NormalisationMultiThreading {
 
-    final static String path = "C:\\Manchester\\work\\Puf3Study\\ProteoSuite\\Idenoutcomes\\Filtered_AJ_";
+    final static String path
+            = "C:\\Manchester\\work\\Puf3Study\\ProteoSuite\\Idenoutcomes\\Filtered_AJ_";
     final static String filter = "qvalue001";
     final static String fileName = "unlabeled_result_FLUQT_mapped_" + filter;
 
@@ -27,7 +28,8 @@ public class NormalisationMultiThreading {
             throws FileNotFoundException {
 
         String inputFile = path + filter + "\\mzq\\" + fileName + ".mzq";;
-        String outputFile = path + filter + "\\mzq\\consensusonly\\test\\" + fileName
+        String outputFile = path + filter + "\\mzq\\consensusonly\\test\\"
+                + fileName
                 + "_peptideNormalization_medianSelectedRefAssay_25Oct_feature1.mzq";
 //        String inputFile = "C:\\Manchester\\work\\ProteoSuite\\AndyPaper\\AllAges.mzq\\" + "AllAges.mzq";
 //        String outputFile = "C:\\Manchester\\work\\ProteoSuite\\AndyPaper\\" + "AllAges_featureNormalised116.mzq";
@@ -60,8 +62,7 @@ public class NormalisationMultiThreading {
             decoyTag = "XXX_";
 //            refNo = "1";
 
-        }
-        else if (processingLevel.equalsIgnoreCase("feature")) {
+        } else if (processingLevel.equalsIgnoreCase("feature")) {
             quantLayerType = "AssayQuantLayer";
             inDataTypeAccession = "MS:1001840"; //LC-MS feature intensity
             outDataTypeAccession = "MS:1001891"; //Progenesis:peptide normalised abundance
@@ -75,8 +76,7 @@ public class NormalisationMultiThreading {
                     + "input file, output file, processing level, quant layer type, "
                     + "input datatype CV accession, output datatype CV accession, "
                     + "output datatype CV name, prefix of decoy regex, reference number (optional).");
-        }
-        else if (args.length == 8) {
+        } else if (args.length == 8) {
             inputFile = args[0];
             outputFile = args[1];
             processingLevel = args[2];
@@ -85,8 +85,7 @@ public class NormalisationMultiThreading {
             outDataTypeAccession = args[5];
             outDataTypeName = args[6];
             decoyTag = args[7];
-        }
-        else if (args.length == 9) {
+        } else if (args.length == 9) {
             inputFile = args[0];
             outputFile = args[1];
             processingLevel = args[2];
@@ -104,9 +103,14 @@ public class NormalisationMultiThreading {
 //        PepProtAbundanceNormalisation workTask = new PepProtAbundanceNormalisation(inputFile,
 //                outputFile, processingLevel, quantLayerType, inDataTypeAccession, outDataTypeAccession, 
 //                decoyTag, assayMin, assayMax);
-        PepProtAbundanceNormalisation workTask = new PepProtAbundanceNormalisation(inputFile,
-                                                                                   outputFile, processingLevel, quantLayerType, inDataTypeAccession, outDataTypeAccession,
-                                                                                   outDataTypeName, decoyTag, refNo);
+        PepProtAbundanceNormalisation workTask
+                = new PepProtAbundanceNormalisation(inputFile,
+                                                    outputFile, processingLevel,
+                                                    quantLayerType,
+                                                    inDataTypeAccession,
+                                                    outDataTypeAccession,
+                                                    outDataTypeName, decoyTag,
+                                                    refNo);
         workTask.multithreadingCalc();
     }
 

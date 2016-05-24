@@ -33,7 +33,10 @@ public class Utils {
     private static final String MZQ_XSD = "mzQuantML_1_0_0.xsd";
 
     public static Param convertMztabParam(CvParam qParam) {
-        return new uk.ac.ebi.pride.jmztab.model.CVParam(qParam.getCvRef(), qParam.getAccession(), qParam.getName(), qParam.getValue());
+        return new uk.ac.ebi.pride.jmztab.model.CVParam(qParam.getCvRef(),
+                                                        qParam.getAccession(),
+                                                        qParam.getName(),
+                                                        qParam.getValue());
     }
 
     public static boolean validateMzqFile(String mzqFile) {
@@ -42,9 +45,12 @@ public class Utils {
 
     private static boolean validate(String xmlFile, String xsdFile) {
         try {
-            System.out.println(Utils.class.getClassLoader().getResource(xsdFile));
-            Source schemaFile = new StreamSource(Utils.class.getClassLoader().getResourceAsStream(xsdFile));
-            SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            System.out.
+                    println(Utils.class.getClassLoader().getResource(xsdFile));
+            Source schemaFile = new StreamSource(Utils.class.getClassLoader().
+                    getResourceAsStream(xsdFile));
+            SchemaFactory factory = SchemaFactory.newInstance(
+                    XMLConstants.W3C_XML_SCHEMA_NS_URI);
             Schema schema = factory.newSchema(schemaFile);
             Validator validator = schema.newValidator();
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -55,17 +61,15 @@ public class Utils {
             Document doc = db.parse(xmlFile);
             doc.getDocumentElement().normalize();
             validator.validate(new DOMSource(doc));
-        }
-        catch (SAXException ex) {
+        } catch (SAXException ex) {
             if (ex.getMessage().contains("schema_reference")) {
-                throw new IllegalStateException("ERROR: Can not find the specified xsd file "
+                throw new IllegalStateException(
+                        "ERROR: Can not find the specified xsd file "
                         + xsdFile + " to validate the XML file");
-            }
-            else {
+            } else {
                 throw new IllegalStateException(ex.getMessage());
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new IllegalStateException("Exception while validating \n" + e);
         }
         return true;
@@ -88,8 +92,7 @@ public class Utils {
         int middle = len / 2;
         if (len % 2 == 1) {
             return list.get(middle);
-        }
-        else {
+        } else {
             return (list.get(middle - 1) + list.get(middle)) / 2.0;
         }
     }
@@ -136,12 +139,13 @@ public class Utils {
             public void approveSelection() {
                 File f = getSelectedFile();
                 if (f.exists() && getDialogType() == SAVE_DIALOG) {
-                    int result = JOptionPane.showConfirmDialog(getTopLevelAncestor(),
-                                                               "The selected file already exists. "
-                                                               + "Do you want to overwrite it?",
-                                                               "The file already exists",
-                                                               JOptionPane.YES_NO_OPTION,
-                                                               JOptionPane.QUESTION_MESSAGE);
+                    int result = JOptionPane.showConfirmDialog(
+                            getTopLevelAncestor(),
+                            "The selected file already exists. "
+                            + "Do you want to overwrite it?",
+                            "The file already exists",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE);
                     switch (result) {
                         case JOptionPane.YES_OPTION:
                             super.approveSelection();

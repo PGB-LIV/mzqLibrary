@@ -185,21 +185,22 @@ public class SIIData implements Comparable<SIIData> {
     /**
      * SIIData is comparable base on the retention time value.
      */
-    public final static Comparator<SIIData> SIIDataRTComparator = new Comparator<SIIData>() {
+    public final static Comparator<SIIData> SIIDataRTComparator
+            = new Comparator<SIIData>() {
 
-        @Override
-        public int compare(SIIData siiData1, SIIData siiData2) {
-            double rt1 = siiData1.getRetentionTime();
-            double rt2 = siiData2.getRetentionTime();
+                @Override
+                public int compare(SIIData siiData1, SIIData siiData2) {
+                    double rt1 = siiData1.getRetentionTime();
+                    double rt2 = siiData2.getRetentionTime();
 
-            //ascending order
-            return Double.compare(rt1, rt2);
+                    //ascending order
+                    return Double.compare(rt1, rt2);
 
-            //descending order
-            //return Double.compare(rt2, rt1);
-        }
+                    //descending order
+                    //return Double.compare(rt2, rt1);
+                }
 
-    };
+            };
 
     @Override
     public boolean equals(Object obj) {
@@ -218,8 +219,10 @@ public class SIIData implements Comparable<SIIData> {
                 .append(this.getPeptideModString(), rhs.getPeptideModString())
                 .append(getId(), rhs.getId())
                 .append(getPeptideRef(), rhs.getPeptideRef())
-                .append(getCalculatedMassToCharge(), rhs.getCalculatedMassToCharge())
-                .append(getExperimentalMassToCharge(), rhs.getExperimentalMassToCharge())
+                .append(getCalculatedMassToCharge(), rhs.
+                        getCalculatedMassToCharge())
+                .append(getExperimentalMassToCharge(), rhs.
+                        getExperimentalMassToCharge())
                 .append(getCharge(), rhs.getCharge())
                 .append(getRank(), rhs.getRank())
                 .append(isPassThreshold(), rhs.isPassThreshold())
@@ -244,7 +247,8 @@ public class SIIData implements Comparable<SIIData> {
     /**
      * Create peptide mod string for this SIIData.
      * The modString contains peptide sequence and list of mods.
-     * Each mod contains mod accession and mod name, plus monoisotopicMassDelta and location.
+     * Each mod contains mod accession and mod name, plus monoisotopicMassDelta
+     * and location.
      * They all connected by '_'.
      *
      * @return
@@ -252,7 +256,8 @@ public class SIIData implements Comparable<SIIData> {
     private String createPeptideModString() {
         StringBuffer modString = new StringBuffer();
         try {
-            Peptide peptide = um.unmarshal(uk.ac.ebi.jmzidml.model.mzidml.Peptide.class, pepRef);
+            Peptide peptide = um.unmarshal(
+                    uk.ac.ebi.jmzidml.model.mzidml.Peptide.class, pepRef);
             String pepSeq = peptide.getPeptideSequence();
             this.setSequence(pepSeq);
             List<Modification> mods = peptide.getModification();
@@ -263,15 +268,17 @@ public class SIIData implements Comparable<SIIData> {
                 List<CvParam> cps = mod.getCvParam();
                 for (CvParam cp : cps) {
                     modString = modString.append(cp.getAccession()).append('_')
-                            .append(cp.getName()).append('_').append(mod.getMonoisotopicMassDelta())
+                            .append(cp.getName()).append('_').append(mod.
+                                    getMonoisotopicMassDelta())
                             .append('_').append(mod.getLocation()).append('_');
                 }
             }
             return modString.substring(0, modString.length() - 1); //remove the last '_'
-        }
-        catch (JAXBException ex) {
-            Logger.getLogger(SIIData.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Couldn't get peptide object: " + pepRef + " -- " + ex.getMessage());
+        } catch (JAXBException ex) {
+            Logger.getLogger(SIIData.class.getName()).
+                    log(Level.SEVERE, null, ex);
+            System.out.println("Couldn't get peptide object: " + pepRef + " -- "
+                    + ex.getMessage());
             return modString.toString();
         }
 

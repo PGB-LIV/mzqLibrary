@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package uk.ac.man.mzqlib.postprocessing;
 
 import java.util.HashMap;
@@ -298,7 +299,8 @@ public class ProteinGrouping {
 
                 for (String protein : proteins) {
 
-                    if (proToPep.get(protein).size() > proToPep.get(largestProtein).size()) {
+                    if (proToPep.get(protein).size() > proToPep.get(
+                            largestProtein).size()) {
                         largestProtein = protein;
                     }
 
@@ -313,7 +315,8 @@ public class ProteinGrouping {
                     }
                 }
             }
-            while (peptideCount != peptides.size() || proteinCount != proteins.size());
+            while (peptideCount != peptides.size() || proteinCount != proteins.
+                    size());
 
             if (proteins.size() == 1) {
                 continue;

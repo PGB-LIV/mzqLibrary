@@ -43,10 +43,12 @@ public class CsvConverter extends GenericConverter {
             pgs.add(pg);
         }
         outputAssayAndSV(sb, MzqData.PROTEIN_GROUP, pgs);
-        if (MzqLib.data.control.isRequired(MzqData.PROTEIN_GROUP, MzqData.RATIO, MzqData.RATIO_STRING)) {
+        if (MzqLib.data.control.isRequired(MzqData.PROTEIN_GROUP, MzqData.RATIO,
+                                           MzqData.RATIO_STRING)) {
             outputRatio(sb, MzqData.PROTEIN_GROUP, pgs);
         }
-        if (!MzqLib.data.control.getElements(MzqData.PROTEIN_GROUP, MzqData.GLOBAL).isEmpty()) {
+        if (!MzqLib.data.control.getElements(MzqData.PROTEIN_GROUP,
+                                             MzqData.GLOBAL).isEmpty()) {
             outputGlobal(sb, MzqData.PROTEIN_GROUP, pgs);
         }
         sb.append("\n");
@@ -57,12 +59,15 @@ public class CsvConverter extends GenericConverter {
             proteins.add(protein);
         }
         //not just the obj artificially created
-        if (proteins.size() > 1 || !MzqLib.data.getProteins().get(0).getAccession().equals(MzqData.ARTIFICIAL)) {
+        if (proteins.size() > 1 || !MzqLib.data.getProteins().get(0).
+                getAccession().equals(MzqData.ARTIFICIAL)) {
             outputAssayAndSV(sb, MzqData.PROTEIN, proteins);
-            if (MzqLib.data.control.isRequired(MzqData.PROTEIN, MzqData.RATIO, MzqData.RATIO_STRING)) {
+            if (MzqLib.data.control.isRequired(MzqData.PROTEIN, MzqData.RATIO,
+                                               MzqData.RATIO_STRING)) {
                 outputRatio(sb, MzqData.PROTEIN, proteins);
             }
-            if (!MzqLib.data.control.getElements(MzqData.PROTEIN, MzqData.GLOBAL).isEmpty()) {
+            if (!MzqLib.data.control.
+                    getElements(MzqData.PROTEIN, MzqData.GLOBAL).isEmpty()) {
                 outputGlobal(sb, MzqData.PROTEIN, proteins);
             }
         }
@@ -74,10 +79,12 @@ public class CsvConverter extends GenericConverter {
         }
         if (!peptides.isEmpty()) {
             outputAssayAndSV(sb, MzqData.PEPTIDE, peptides);
-            if (MzqLib.data.control.isRequired(MzqData.PEPTIDE, MzqData.RATIO, MzqData.RATIO_STRING)) {
+            if (MzqLib.data.control.isRequired(MzqData.PEPTIDE, MzqData.RATIO,
+                                               MzqData.RATIO_STRING)) {
                 outputRatio(sb, MzqData.PEPTIDE, peptides);
             }
-            if (!MzqLib.data.control.getElements(MzqData.PEPTIDE, MzqData.GLOBAL).isEmpty()) {
+            if (!MzqLib.data.control.
+                    getElements(MzqData.PEPTIDE, MzqData.GLOBAL).isEmpty()) {
                 outputGlobal(sb, MzqData.PEPTIDE, peptides);
             }
         }
@@ -88,35 +95,39 @@ public class CsvConverter extends GenericConverter {
         }
         if (!features.isEmpty()) {
             outputAssayAndSV(sb, MzqData.FEATURE, features);
-            if (MzqLib.data.control.isRequired(MzqData.FEATURE, MzqData.RATIO, MzqData.RATIO_STRING)) {
+            if (MzqLib.data.control.isRequired(MzqData.FEATURE, MzqData.RATIO,
+                                               MzqData.RATIO_STRING)) {
                 outputRatio(sb, MzqData.FEATURE, features);
             }
-            if (!MzqLib.data.control.getElements(MzqData.FEATURE, MzqData.GLOBAL).isEmpty()) {
+            if (!MzqLib.data.control.
+                    getElements(MzqData.FEATURE, MzqData.GLOBAL).isEmpty()) {
                 outputGlobal(sb, MzqData.FEATURE, features);
             }
         }
         BufferedWriter out = null;
         try {
-            out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outfile), "UTF-8"));
+            out = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(outfile), "UTF-8"));
             out.append(sb.toString());
-        }
-        catch (IOException e) {
-            System.out.println("Problems while closing file " + outfile + "!\n" + e);
-        }
-        finally {
+        } catch (IOException e) {
+            System.out.println("Problems while closing file " + outfile + "!\n"
+                    + e);
+        } finally {
             if (out != null) {
                 try {
                     out.close();
-                }
-                catch (IOException ex) {
-                    Logger.getLogger(CsvConverter.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(CsvConverter.class.getName()).log(
+                            Level.SEVERE, null, ex);
                 }
             }
         }
     }
 
     private void addHeaderLine(int level, StringBuilder sb, String quantityName) {
-        if (MzqLib.data.control.isRequired(level, MzqData.ASSAY, quantityName) || MzqLib.data.control.isRequired(level, MzqData.SV, quantityName)) {
+        if (MzqLib.data.control.isRequired(level, MzqData.ASSAY, quantityName)
+                || MzqLib.data.control.isRequired(level, MzqData.SV,
+                                                  quantityName)) {
             addEntityHeader(level, sb);
             addAssayHeader(level, sb, quantityName, SEPARATOR, "");
             addSvHeader(level, sb, quantityName, SEPARATOR, "");
@@ -131,13 +142,11 @@ public class CsvConverter extends GenericConverter {
             sb.append("Charge");
             sb.append(SEPARATOR);
             sb.append("Modification");
-        }
-        else if (level == MzqData.PROTEIN_GROUP) {
+        } else if (level == MzqData.PROTEIN_GROUP) {
             sb.append("Anchor protein");
             sb.append(SEPARATOR);
             sb.append("Ambiguity member");
-        }
-        else {
+        } else {
             sb.append("Entity");
         }
     }
@@ -177,7 +186,8 @@ public class CsvConverter extends GenericConverter {
 
     private void outputGlobal(StringBuilder sb, int level,
                               ArrayList<QuantitationLevel> objects) {
-        HashSet<String> globals = MzqLib.data.control.getElements(level, MzqData.GLOBAL);
+        HashSet<String> globals = MzqLib.data.control.getElements(level,
+                                                                  MzqData.GLOBAL);
         if (globals.size() > 0) {
             sb.append("Global\n");
             addEntityHeader(level, sb);
@@ -200,7 +210,8 @@ public class CsvConverter extends GenericConverter {
             case MzqData.PROTEIN_GROUP:
                 if (obj instanceof ProteinGroupData) {
                     ProteinGroupData pg = (ProteinGroupData) obj;
-                    sb.append(MzqLib.data.getProtein(pg.getAnchorProteinStr()).getAccession());
+                    sb.append(MzqLib.data.getProtein(pg.getAnchorProteinStr()).
+                            getAccession());
                     sb.append(SEPARATOR);
                     sb.append(pg.getAmbiguityMemberStr());
                 }

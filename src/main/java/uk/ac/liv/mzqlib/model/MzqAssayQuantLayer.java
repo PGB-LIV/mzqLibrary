@@ -20,7 +20,8 @@ public class MzqAssayQuantLayer extends MzqQuantLayer {
     /**
      *
      * @param um         the unmarshaller of the mzq file
-     * @param listId     the id of the list element (e.g. ProteinGroupList, ProteinList, PeptideConsensusList, etc.
+     * @param listId     the id of the list element (e.g. ProteinGroupList,
+     *                   ProteinList, PeptideConsensusList, etc.
      * @param quantLayer the QuantLayer object
      * @param listType   the list type (e.g. Protein, ProteinGroup, etc.)
      * @param dataType   the data type of the quant layer
@@ -43,7 +44,8 @@ public class MzqAssayQuantLayer extends MzqQuantLayer {
         this.columnNames = new ArrayList<>();
         List<String> columnIndex = quantLayer.getColumnIndex();
         for (String colId : columnIndex) {
-            Assay assay = mzqUm.unmarshal(uk.ac.liv.pgb.jmzqml.model.mzqml.Assay.class, colId);
+            Assay assay = mzqUm.unmarshal(
+                    uk.ac.liv.pgb.jmzqml.model.mzqml.Assay.class, colId);
             this.columnNames.add(new SimpleStringProperty(assay.getName()));
         }
     }

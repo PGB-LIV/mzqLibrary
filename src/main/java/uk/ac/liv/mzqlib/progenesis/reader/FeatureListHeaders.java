@@ -50,7 +50,8 @@ public class FeatureListHeaders {
     /**
      * The heading of "retention time window (min)".
      */
-    public static final String RETENTION_TIME_WINDOW = "retention time window (min)";
+    public static final String RETENTION_TIME_WINDOW
+            = "retention time window (min)";
 
     /**
      * The heading of "charge".

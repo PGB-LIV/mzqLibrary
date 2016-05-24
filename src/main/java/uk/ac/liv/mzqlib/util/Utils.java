@@ -18,7 +18,8 @@ import java.util.Map;
 public class Utils {
 
     /**
-     * Round a double value and keeping (at max) the given number of decimal places.
+     * Round a double value and keeping (at max) the given number of decimal
+     * places.
      *
      * @param value
      * @param numberOfDecimalPlaces
@@ -46,7 +47,8 @@ public class Utils {
             //Use the getResourceAsStream trick to read the file packaged in
             //the .jar .  This simplifies usage of the solution as no extra 
             //classpath or path configurations are needed: 
-            InputStream resourceAsStream = ClassLoader.getSystemClassLoader().getResourceAsStream("CV_psi-ms.obo.txt");
+            InputStream resourceAsStream = ClassLoader.getSystemClassLoader().
+                    getResourceAsStream("CV_psi-ms.obo.txt");
             Reader reader = new InputStreamReader(resourceAsStream, "UTF-8");
             in = new BufferedReader(reader);
             String inputLine;
@@ -60,7 +62,8 @@ public class Utils {
                 if (inputLine.startsWith("name:")) {
                     //validate:
                     if (key.equals("")) {
-                        throw new RuntimeException("Unexpected name: preceding id: entry in CV file");
+                        throw new RuntimeException(
+                                "Unexpected name: preceding id: entry in CV file");
                     }
                     value = inputLine.split("name:")[1].trim();
                     resultMap.put(key, value);
@@ -71,8 +74,7 @@ public class Utils {
             }
             return resultMap;
 
-        }
-        finally {
+        } finally {
             if (in != null) {
                 in.close();
             }
@@ -83,11 +85,13 @@ public class Utils {
     /**
      * Returns the value of a command-line parameter
      *
-     * @param args     : command-line arguments (assuming couples in the form "-argname", "argvalue" )
+     * @param args     : command-line arguments (assuming couples in the form
+     *                 "-argname", "argvalue" )
      * @param name     : the parameter 'name'
      * @param required
      *
-     * @return returns null if the parameter is not found (and is not required). If the parameter is not
+     * @return returns null if the parameter is not found (and is not required).
+     *         If the parameter is not
      *         found but is required, it throws an error.
      */
     public static String getCmdParameter(String[] args, String name,
@@ -99,14 +103,16 @@ public class Utils {
                 if (i + 1 < args.length) {
                     argValue = args[i + 1];
                 }
-                if (required && (argValue.trim().length() == 0 || argValue.startsWith("-"))) {
-                    System.err.println("Parameter value expected for " + argName);
-                    throw new RuntimeException("Expected parameter value not found: " + argName);
-                }
-                else if (argValue.trim().length() == 0 || argValue.startsWith("-")) {
+                if (required && (argValue.trim().length() == 0 || argValue.
+                        startsWith("-"))) {
+                    System.err.
+                            println("Parameter value expected for " + argName);
+                    throw new RuntimeException(
+                            "Expected parameter value not found: " + argName);
+                } else if (argValue.trim().length() == 0 || argValue.startsWith(
+                        "-")) {
                     return "";
-                }
-                else {
+                } else {
                     return argValue;
                 }
             }

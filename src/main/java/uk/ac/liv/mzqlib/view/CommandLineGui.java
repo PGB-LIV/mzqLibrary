@@ -47,8 +47,7 @@ public class CommandLineGui extends javax.swing.JFrame {
 
             }
 
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -252,7 +251,8 @@ public class CommandLineGui extends javax.swing.JFrame {
             output = "\"" + output + "\"";
 
             String selected = (String) jComboBox1.getSelectedItem();
-            String argsTemp = selected + " " + input + " " + output + " " + jTextField3.getText();
+            String argsTemp = selected + " " + input + " " + output + " "
+                    + jTextField3.getText();
             List<String> matchList = new ArrayList<String>();
             Pattern regex = Pattern.compile("[^\\s\"']+|\"[^\"]*\"|'[^']*'");           //split unless surrounded by double quotes
             Matcher regexMatcher = regex.matcher(argsTemp);
@@ -267,30 +267,31 @@ public class CommandLineGui extends javax.swing.JFrame {
                 String libFeedback = null;
                 try {
                     libFeedback = mzQuantMLLib.init(args);
-                }
-                catch (Exception ex) {
+                } catch (Exception ex) {
                     ex.printStackTrace();
                 }
 
                 if (libFeedback != null && libFeedback.equals("")) {
-                    JOptionPane.showMessageDialog(null, "Output written to " + output, "Result", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Output written to "
+                                                  + output, "Result",
+                                                  JOptionPane.INFORMATION_MESSAGE);
 
-                }
-                else {   //if any feeback is provided, must be an error
-                    JOptionPane.showMessageDialog(null, "Error running pipeline, see Feedback", "Result", JOptionPane.INFORMATION_MESSAGE);
+                } else {   //if any feeback is provided, must be an error
+                    JOptionPane.showMessageDialog(null,
+                                                  "Error running pipeline, see Feedback",
+                                                  "Result",
+                                                  JOptionPane.INFORMATION_MESSAGE);
                     jTextArea1.setText("Error message\n*******************\n"
                             + libFeedback + "\n*******************\n"
                             + "Please check you have entered the correct types of input / output files and parameters.\n If you think this is a bug, please log it here: http://code.google.com/p/mzidentml-lib/issues/list\n");
                 }
-            }
-            else {
+            } else {
                 jTextArea1.setText("Error message\n*******************\n"
                         + "Please check you have entered  of input and output files\n");
             }
 
             //TODO  - fix other error: out stream only closed on program exit!
         }
-
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -324,17 +325,13 @@ public class CommandLineGui extends javax.swing.JFrame {
 
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
-        }
-        catch (ClassNotFoundException ex) {
+        } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
-        }
-        catch (InstantiationException ex) {
+        } catch (InstantiationException ex) {
             ex.printStackTrace();
-        }
-        catch (IllegalAccessException ex) {
+        } catch (IllegalAccessException ex) {
             ex.printStackTrace();
-        }
-        catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             ex.printStackTrace();
         }
         //</editor-fold>
@@ -347,8 +344,7 @@ public class CommandLineGui extends javax.swing.JFrame {
             public void run() {
                 try {
                     new CommandLineGui().setVisible(true);
-                }
-                catch (ClassNotFoundException ex) {
+                } catch (ClassNotFoundException ex) {
                     ex.printStackTrace();
                 }
             }

@@ -1,3 +1,4 @@
+
 package uk.ac.liv.mzqlib.r;
 
 import java.awt.FileDialog;
@@ -29,11 +30,11 @@ public class RConsole implements RMainLoopCallbacks {
     public String rReadConsole(Rengine re, String prompt, int addToHistory) {
         System.out.print(prompt);
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    System.in));
             String s = br.readLine();
             return (s == null || s.length() == 0) ? s : s + "\n";
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("jriReadConsole exception: " + e.getMessage());
         }
         return null;
@@ -46,7 +47,10 @@ public class RConsole implements RMainLoopCallbacks {
 
     @Override
     public String rChooseFile(Rengine re, int newFile) {
-        FileDialog fd = new FileDialog(new Frame(), (newFile == 0) ? "Select a file" : "Select a new file", (newFile == 0) ? FileDialog.LOAD : FileDialog.SAVE);
+        FileDialog fd = new FileDialog(new Frame(), (newFile == 0)
+                                       ? "Select a file" : "Select a new file",
+                                       (newFile == 0) ? FileDialog.LOAD
+                                               : FileDialog.SAVE);
         fd.setVisible(true);
         String res = null;
         if (fd.getDirectory() != null) {

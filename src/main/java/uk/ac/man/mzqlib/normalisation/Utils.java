@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package uk.ac.man.mzqlib.normalisation;
 
 import java.util.Arrays;
@@ -14,18 +15,21 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.DataMatrix;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.Row;
 
 /**
- * 
+ *
  * @author man-mqbsshz2
  */
 public class Utils {
 
     /**
      * sort map entries with values
+     *
      * @param map - a hashmap
-     * @param dM - data matrix
-     * @return  sorted data matrix
+     * @param dM  - data matrix
+     *
+     * @return sorted data matrix
      */
-    public static DataMatrix sortedMap(Map<String, List<String>> map, DataMatrix dM) {
+    public static DataMatrix sortedMap(Map<String, List<String>> map,
+                                       DataMatrix dM) {
         Set s = map.entrySet();
 
         for (Iterator it = s.iterator(); it.hasNext();) {
@@ -33,7 +37,8 @@ public class Utils {
             String value = entry.getValue().toString();
 
             //remove the double quotation marks in front and rear
-            value = value.substring(1, value.length() - 1).replaceAll("[\\,]", " ");
+            value = value.substring(1, value.length() - 1).replaceAll("[\\,]",
+                                                                      " ");
 
             Row row = new Row();
             row.setObjectRef(entry.getKey().toString());
@@ -48,6 +53,7 @@ public class Utils {
      * get the median for a vector
      *
      * @param d - a double type data vector
+     *
      * @return a double value
      */
     public static double median(double[] d) {
@@ -60,9 +66,9 @@ public class Utils {
         } else {
             return d[middle];
         }
-       
+
     }
-    
+
 //    public static int findMedian(double[] a,int left,int right){ 
 //        int index = 0; 
 //        int mid = (left+right)/2; 
@@ -92,10 +98,11 @@ public class Utils {
 //        } 
 //        return pivot; 
 //    } 
-
     /**
      * calculate vector mean value
+     *
      * @param m - a double type data vector
+     *
      * @return a double value
      */
     public static double mean(double[] m) {
@@ -108,8 +115,10 @@ public class Utils {
 
     /**
      * resize an array
+     *
      * @param oldArray - old array
-     * @param newSize - new size
+     * @param newSize  - new size
+     *
      * @return a new array
      */
     public static Object resizeArray(Object oldArray, int newSize) {
@@ -123,4 +132,5 @@ public class Utils {
         }
         return newArray;
     }
+
 }

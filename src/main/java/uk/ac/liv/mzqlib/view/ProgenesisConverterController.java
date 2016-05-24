@@ -77,9 +77,9 @@ public class ProgenesisConverterController implements Initializable {
         if (currentDirectory == null) {
             try {
                 currentDirectory = new File(new File(".").getCanonicalPath());
-            }
-            catch (IOException ex) {
-                Logger.getLogger(ProgenesisConverterController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(ProgenesisConverterController.class.getName()).
+                        log(Level.SEVERE, null, ex);
             }
         }
 
@@ -105,9 +105,9 @@ public class ProgenesisConverterController implements Initializable {
         if (currentDirectory == null) {
             try {
                 currentDirectory = new File(new File(".").getCanonicalPath());
-            }
-            catch (IOException ex) {
-                Logger.getLogger(ProgenesisConverterController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(ProgenesisConverterController.class.getName()).
+                        log(Level.SEVERE, null, ex);
             }
         }
 
@@ -134,9 +134,9 @@ public class ProgenesisConverterController implements Initializable {
         if (currentDirectory == null) {
             try {
                 currentDirectory = new File(new File(".").getCanonicalPath());
-            }
-            catch (IOException ex) {
-                Logger.getLogger(ProgenesisConverterController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(ProgenesisConverterController.class.getName()).
+                        log(Level.SEVERE, null, ex);
             }
         }
 
@@ -160,7 +160,8 @@ public class ProgenesisConverterController implements Initializable {
     private void convert() {
 
         // Both peptide list and protein list files are missing
-        if (this.flFileTextField.getText().isEmpty() && this.plFileTextField.getText().isEmpty()) {
+        if (this.flFileTextField.getText().isEmpty() && this.plFileTextField.
+                getText().isEmpty()) {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("File missing");
             alert.setHeaderText(null);
@@ -171,14 +172,16 @@ public class ProgenesisConverterController implements Initializable {
 //                    .title("File missing")
 //                    .message("Please select at least one list csv file!")
 //                    .showError();
-        }
-        // Either of the file names is not end with ".csv"
-        else if ((((!this.flFileTextField.getText().isEmpty()) && !this.flFileTextField.getText().endsWith(".csv")))
-                || (((!this.plFileTextField.getText().isEmpty()) && !this.plFileTextField.getText().endsWith(".csv")))) {
+        } // Either of the file names is not end with ".csv"
+        else if ((((!this.flFileTextField.getText().isEmpty())
+                && !this.flFileTextField.getText().endsWith(".csv")))
+                || (((!this.plFileTextField.getText().isEmpty())
+                && !this.plFileTextField.getText().endsWith(".csv")))) {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Wrong file format");
             alert.setHeaderText(null);
-            alert.setContentText("The selected list file(s) is/are not in csv format! Please select the right format.");
+            alert.setContentText(
+                    "The selected list file(s) is/are not in csv format! Please select the right format.");
 
             alert.showAndWait();
 
@@ -186,32 +189,35 @@ public class ProgenesisConverterController implements Initializable {
 //                    .title("Wrong file format")
 //                    .message("The selected list file(s) is/are not in csv format! Please select the right format.")
 //                    .showError();
-        }
-        else {
+        } else {
             FileChooser fileChooser = new FileChooser();
 
             fileChooser.setTitle("Save the MzQuantML file");
             fileChooser.setInitialDirectory(currentDirectory);
 
             //... Applying file extension filters ...//
-            ExtensionFilter filter = new ExtensionFilter("MzQuantML (*.mzq)", "*.mzq");
+            ExtensionFilter filter = new ExtensionFilter("MzQuantML (*.mzq)",
+                                                         "*.mzq");
             fileChooser.getExtensionFilters().add(filter);
 
             File outputFile = fileChooser.showSaveDialog(null);
 
             if (outputFile != null) {
 
-                final String outputFn = outputFile.getAbsolutePath().endsWith("mzq") ? outputFile.getAbsolutePath() : outputFile.getAbsolutePath() + ".mzq";
+                final String outputFn = outputFile.getAbsolutePath().endsWith(
+                        "mzq") ? outputFile.getAbsolutePath() : outputFile.
+                                getAbsolutePath() + ".mzq";
 
                 // get the separator
                 Character separatorObject = ','; //Default is comma
-                if (separatorBox.getSelectionModel().getSelectedItem().equals(",")) {
+                if (separatorBox.getSelectionModel().getSelectedItem().equals(
+                        ",")) {
                     separatorObject = ',';
-                }
-                else if (separatorBox.getSelectionModel().getSelectedItem().equals(";")) {
+                } else if (separatorBox.getSelectionModel().getSelectedItem().
+                        equals(";")) {
                     separatorObject = ';';
-                }
-                else if (separatorBox.getSelectionModel().getSelectedItem().equals("Tab")) {
+                } else if (separatorBox.getSelectionModel().getSelectedItem().
+                        equals("Tab")) {
                     separatorObject = '\t';
                 }
 
@@ -227,7 +233,9 @@ public class ProgenesisConverterController implements Initializable {
                     protected String call()
                             throws IOException, DatatypeConfigurationException {
                         updateMessage("Start converting");
-                        ProgenMzquantmlConverter progenConv = new ProgenMzquantmlConverter(flFn, plFn, idFn, separator);
+                        ProgenMzquantmlConverter progenConv
+                                = new ProgenMzquantmlConverter(flFn, plFn, idFn,
+                                                               separator);
                         progenConv.convert(outputFn, true, null);
 
                         updateMessage("Converting finished");
@@ -242,7 +250,9 @@ public class ProgenesisConverterController implements Initializable {
                             Alert alert = new Alert(AlertType.INFORMATION);
                             alert.setTitle("Converting succeeded");
                             alert.setHeaderText(null);
-                            alert.setContentText("The mzQuantML file is stored in " + convertTask.getValue());
+                            alert.setContentText(
+                                    "The mzQuantML file is stored in "
+                                    + convertTask.getValue());
 
                             alert.showAndWait();
 
@@ -259,7 +269,8 @@ public class ProgenesisConverterController implements Initializable {
                         Alert alert = new Alert(AlertType.ERROR);
                         alert.setTitle("Convert failed");
                         alert.setHeaderText(null);
-                        alert.setContentText("There are exceptions during the conversion process:");
+                        alert.setContentText(
+                                "There are exceptions during the conversion process:");
 
                         StringWriter sw = new StringWriter();
                         PrintWriter pw = new PrintWriter(sw);

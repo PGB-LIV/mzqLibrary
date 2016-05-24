@@ -5,7 +5,6 @@
 // Generated on: 2014.03.18 at 02:59:01 PM GMT 
 //
 
-
 package uk.ac.liv.mzqlib.openms.jaxb;
 
 import java.math.BigInteger;
@@ -16,12 +15,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p>
+ * Java class for anonymous complex type.
+ *
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -36,8 +37,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
@@ -60,7 +61,7 @@ public class Element {
 
     /**
      * Gets the value of the map property.
-     * 
+     *
      */
     public long getMap() {
         return map;
@@ -68,7 +69,7 @@ public class Element {
 
     /**
      * Sets the value of the map property.
-     * 
+     *
      */
     public void setMap(long value) {
         this.map = value;
@@ -76,11 +77,11 @@ public class Element {
 
     /**
      * Gets the value of the id property.
-     * 
+     *
      * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *         possible object is
+     *         {@link String }
+     *
      */
     public String getId() {
         return id;
@@ -88,11 +89,11 @@ public class Element {
 
     /**
      * Sets the value of the id property.
-     * 
+     *
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *              allowed object is
+     *              {@link String }
+     *
      */
     public void setId(String value) {
         this.id = value;
@@ -100,7 +101,7 @@ public class Element {
 
     /**
      * Gets the value of the rt property.
-     * 
+     *
      */
     public double getRt() {
         return rt;
@@ -108,7 +109,7 @@ public class Element {
 
     /**
      * Sets the value of the rt property.
-     * 
+     *
      */
     public void setRt(double value) {
         this.rt = value;
@@ -116,7 +117,7 @@ public class Element {
 
     /**
      * Gets the value of the mz property.
-     * 
+     *
      */
     public double getMz() {
         return mz;
@@ -124,7 +125,7 @@ public class Element {
 
     /**
      * Sets the value of the mz property.
-     * 
+     *
      */
     public void setMz(double value) {
         this.mz = value;
@@ -132,7 +133,7 @@ public class Element {
 
     /**
      * Gets the value of the it property.
-     * 
+     *
      */
     public double getIt() {
         return it;
@@ -140,7 +141,7 @@ public class Element {
 
     /**
      * Sets the value of the it property.
-     * 
+     *
      */
     public void setIt(double value) {
         this.it = value;
@@ -148,11 +149,11 @@ public class Element {
 
     /**
      * Gets the value of the charge property.
-     * 
+     *
      * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     *         possible object is
+     *         {@link BigInteger }
+     *
      */
     public BigInteger getCharge() {
         return charge;
@@ -160,11 +161,11 @@ public class Element {
 
     /**
      * Sets the value of the charge property.
-     * 
+     *
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *              allowed object is
+     *              {@link BigInteger }
+     *
      */
     public void setCharge(BigInteger value) {
         this.charge = value;

@@ -38,7 +38,8 @@ public class XlsConverter extends GenericConverter {
 
     public XlsConverter(String filename, String outputFile) {
         super(filename, outputFile);
-        WritableFont boldFont = new WritableFont(WritableFont.ARIAL, 11, WritableFont.BOLD);
+        WritableFont boldFont = new WritableFont(WritableFont.ARIAL, 11,
+                                                 WritableFont.BOLD);
         boldFormat = new WritableCellFormat(boldFont);
         WritableFont normalFont = new WritableFont(WritableFont.ARIAL, 10);
         normalFormat = new WritableCellFormat(normalFont);
@@ -69,10 +70,14 @@ public class XlsConverter extends GenericConverter {
             if (!pgs.isEmpty()) {
                 int index = 0;
                 index = outputAssayAndSV(MzqData.PROTEIN_GROUP, pgSheet, pgs);
-                if (MzqLib.data.control.isRequired(MzqData.PROTEIN_GROUP, MzqData.RATIO, MzqData.RATIO_STRING)) {
-                    index = outputRatio(MzqData.PROTEIN_GROUP, pgSheet, pgs, index);
+                if (MzqLib.data.control.isRequired(MzqData.PROTEIN_GROUP,
+                                                   MzqData.RATIO,
+                                                   MzqData.RATIO_STRING)) {
+                    index = outputRatio(MzqData.PROTEIN_GROUP, pgSheet, pgs,
+                                        index);
                 }
-                if (!MzqLib.data.control.getElements(MzqData.PROTEIN_GROUP, MzqData.GLOBAL).isEmpty()) {
+                if (!MzqLib.data.control.getElements(MzqData.PROTEIN_GROUP,
+                                                     MzqData.GLOBAL).isEmpty()) {
                     outputGlobal(MzqData.PROTEIN_GROUP, pgSheet, pgs, index);
                 }
             }
@@ -82,13 +87,20 @@ public class XlsConverter extends GenericConverter {
                 proteins.add(protein);
             }
             //not just the protein artificially created
-            if (proteins.size() > 1 || !MzqLib.data.getProteins().get(0).getAccession().equals(MzqData.ARTIFICIAL)) {
+            if (proteins.size() > 1 || !MzqLib.data.getProteins().get(0).
+                    getAccession().equals(MzqData.ARTIFICIAL)) {
                 int index = 0;
-                index = outputAssayAndSV(MzqData.PROTEIN, proteinSheet, proteins);
-                if (MzqLib.data.control.isRequired(MzqData.PROTEIN, MzqData.RATIO, MzqData.RATIO_STRING)) {
-                    index = outputRatio(MzqData.PROTEIN, proteinSheet, proteins, index);
+                index
+                        = outputAssayAndSV(MzqData.PROTEIN, proteinSheet,
+                                           proteins);
+                if (MzqLib.data.control.isRequired(MzqData.PROTEIN,
+                                                   MzqData.RATIO,
+                                                   MzqData.RATIO_STRING)) {
+                    index = outputRatio(MzqData.PROTEIN, proteinSheet, proteins,
+                                        index);
                 }
-                if (!MzqLib.data.control.getElements(MzqData.PROTEIN, MzqData.GLOBAL).isEmpty()) {
+                if (!MzqLib.data.control.getElements(MzqData.PROTEIN,
+                                                     MzqData.GLOBAL).isEmpty()) {
                     outputGlobal(MzqData.PROTEIN, proteinSheet, proteins, index);
                 }
             }
@@ -100,11 +112,16 @@ public class XlsConverter extends GenericConverter {
             }
             if (!peptides.isEmpty()) {
                 int index = 0;
-                index = outputAssayAndSV(MzqData.PEPTIDE, peptideSheet, peptides);
-                if (MzqLib.data.control.isRequired(MzqData.PEPTIDE, MzqData.RATIO, MzqData.RATIO_STRING)) {
+                index
+                        = outputAssayAndSV(MzqData.PEPTIDE, peptideSheet,
+                                           peptides);
+                if (MzqLib.data.control.isRequired(MzqData.PEPTIDE,
+                                                   MzqData.RATIO,
+                                                   MzqData.RATIO_STRING)) {
                     outputRatio(MzqData.PEPTIDE, peptideSheet, peptides, index);
                 }
-                if (!MzqLib.data.control.getElements(MzqData.PEPTIDE, MzqData.GLOBAL).isEmpty()) {
+                if (!MzqLib.data.control.getElements(MzqData.PEPTIDE,
+                                                     MzqData.GLOBAL).isEmpty()) {
                     outputGlobal(MzqData.PEPTIDE, peptideSheet, peptides, index);
                 }
             }
@@ -116,20 +133,25 @@ public class XlsConverter extends GenericConverter {
             }
             if (!features.isEmpty()) {
                 int index = 0;
-                index = outputAssayAndSV(MzqData.FEATURE, featureSheet, features);
-                if (MzqLib.data.control.isRequired(MzqData.FEATURE, MzqData.RATIO, MzqData.RATIO_STRING)) {
+                index
+                        = outputAssayAndSV(MzqData.FEATURE, featureSheet,
+                                           features);
+                if (MzqLib.data.control.isRequired(MzqData.FEATURE,
+                                                   MzqData.RATIO,
+                                                   MzqData.RATIO_STRING)) {
                     outputRatio(MzqData.FEATURE, featureSheet, features, index);
                 }
-                if (!MzqLib.data.control.getElements(MzqData.FEATURE, MzqData.GLOBAL).isEmpty()) {
+                if (!MzqLib.data.control.getElements(MzqData.FEATURE,
+                                                     MzqData.GLOBAL).isEmpty()) {
                     outputGlobal(MzqData.FEATURE, featureSheet, features, index);
                 }
             }
 
             wb.write();
             wb.close();
-        }
-        catch (WriteException | IOException ex) {
-            Logger.getLogger(XlsConverter.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (WriteException | IOException ex) {
+            Logger.getLogger(XlsConverter.class.getName()).log(Level.SEVERE,
+                                                               null, ex);
         }
     }
 
@@ -142,17 +164,24 @@ public class XlsConverter extends GenericConverter {
         int rowCount = 0;
         int colCount = 1;
         for (String quantityName : MzqLib.data.getQuantitationNames()) {
-            if (MzqLib.data.control.isRequired(level, MzqData.ASSAY, quantityName) || MzqLib.data.control.isRequired(level, MzqData.SV, quantityName)) {
+            if (MzqLib.data.control.isRequired(level, MzqData.ASSAY,
+                                               quantityName)
+                    || MzqLib.data.control.isRequired(level, MzqData.SV,
+                                                      quantityName)) {
                 sheet.addCell(new Label(0, rowCount, quantityName, boldFormat));
-                if (MzqLib.data.control.isRequired(level, MzqData.ASSAY, quantityName)) {
+                if (MzqLib.data.control.isRequired(level, MzqData.ASSAY,
+                                                   quantityName)) {
                     for (String assayID : MzqLib.data.getAssayIDs()) {
-                        sheet.addCell(new Label(colCount, rowCount, assayID, boldFormat));
+                        sheet.addCell(new Label(colCount, rowCount, assayID,
+                                                boldFormat));
                         colCount++;
                     }
                 }
-                if (MzqLib.data.control.isRequired(level, MzqData.SV, quantityName)) {
+                if (MzqLib.data.control.isRequired(level, MzqData.SV,
+                                                   quantityName)) {
                     for (StudyVariable sv : MzqLib.data.getSvs()) {
-                        sheet.addCell(new Label(colCount, rowCount, sv.getId(), boldFormat));
+                        sheet.addCell(new Label(colCount, rowCount, sv.getId(),
+                                                boldFormat));
                         colCount++;
                     }
                 }
@@ -162,16 +191,20 @@ public class XlsConverter extends GenericConverter {
             for (QuantitationLevel obj : objects) {
                 if (obj.hasQuantitation(quantityName) || obj.hasSV(quantityName)) {
                     printQuantitationLevel(level, sheet, rowCount, obj);
-                    if (MzqLib.data.control.isRequired(level, MzqData.ASSAY, quantityName)) {
+                    if (MzqLib.data.control.isRequired(level, MzqData.ASSAY,
+                                                       quantityName)) {
                         for (String assayID : MzqLib.data.getAssayIDs()) {
-                            Double value = obj.getQuantity(quantityName, assayID);
+                            Double value = obj.
+                                    getQuantity(quantityName, assayID);
                             printValue(value, sheet, colCount, rowCount);
                             colCount++;
                         }
                     }
-                    if (MzqLib.data.control.isRequired(level, MzqData.SV, quantityName)) {
+                    if (MzqLib.data.control.isRequired(level, MzqData.SV,
+                                                       quantityName)) {
                         for (StudyVariable sv : MzqLib.data.getSvs()) {
-                            Double value = obj.getStudyVariableQuantity(quantityName, sv.getId());
+                            Double value = obj.getStudyVariableQuantity(
+                                    quantityName, sv.getId());
                             printValue(value, sheet, colCount, rowCount);
                             colCount++;
                         }
@@ -190,8 +223,7 @@ public class XlsConverter extends GenericConverter {
             throws WriteException, NumberFormatException {
         if (value == null) {
             sheet.addCell(new Label(colCount, rowCount, "null", normalFormat));
-        }
-        else {
+        } else {
             sheet.addCell(new Number(colCount, rowCount, value, normalFormat));
         }
     }
@@ -202,22 +234,27 @@ public class XlsConverter extends GenericConverter {
         switch (level) {
             case MzqData.PROTEIN_GROUP:
                 if (obj instanceof ProteinGroupData) {
-                    sheet.addCell(new Label(0, rowCount, ((ProteinGroupData) obj).getId(), normalFormat));
+                    sheet.addCell(new Label(0, rowCount,
+                                            ((ProteinGroupData) obj).getId(),
+                                            normalFormat));
                 }
                 break;
             case MzqData.PROTEIN:
                 if (obj instanceof ProteinData) {
-                    sheet.addCell(new Label(0, rowCount, ((ProteinData) obj).getId(), normalFormat));
+                    sheet.addCell(new Label(0, rowCount, ((ProteinData) obj).
+                                            getId(), normalFormat));
                 }
                 break;
             case MzqData.PEPTIDE:
                 if (obj instanceof PeptideData) {
-                    sheet.addCell(new Label(0, rowCount, ((PeptideData) obj).getId(), normalFormat));
+                    sheet.addCell(new Label(0, rowCount, ((PeptideData) obj).
+                                            getId(), normalFormat));
                 }
                 break;
             case MzqData.FEATURE:
                 if (obj instanceof FeatureData) {
-                    sheet.addCell(new Label(0, rowCount, ((FeatureData) obj).getId(), normalFormat));
+                    sheet.addCell(new Label(0, rowCount, ((FeatureData) obj).
+                                            getId(), normalFormat));
                 }
                 break;
             default:
@@ -257,7 +294,8 @@ public class XlsConverter extends GenericConverter {
             throws NumberFormatException, WriteException {
         sheet.addCell(new Label(0, rowCount, "Global", boldFormat));
         int colCount = 1;
-        for (String columnID : MzqLib.data.control.getElements(level, MzqData.GLOBAL)) {
+        for (String columnID : MzqLib.data.control.getElements(level,
+                                                               MzqData.GLOBAL)) {
             sheet.addCell(new Label(colCount, rowCount, columnID, boldFormat));
             colCount++;
         }
@@ -266,7 +304,8 @@ public class XlsConverter extends GenericConverter {
         for (QuantitationLevel object : objects) {
             if (object.hasGlobal()) {
                 printQuantitationLevel(level, sheet, rowCount, object);
-                for (String columnID : MzqLib.data.control.getElements(level, MzqData.GLOBAL)) {
+                for (String columnID : MzqLib.data.control.getElements(level,
+                                                                       MzqData.GLOBAL)) {
                     Double value = object.getGlobal(columnID);
                     printValue(value, sheet, colCount, rowCount);
                     colCount++;
@@ -281,12 +320,15 @@ public class XlsConverter extends GenericConverter {
             throws NumberFormatException, WriteException {
         int rowCount = 0;
         //analysis summary
-        metaSheet.addCell(new Label(0, rowCount, "Analysis Summary", boldFormat));
+        metaSheet.
+                addCell(new Label(0, rowCount, "Analysis Summary", boldFormat));
         rowCount++;
         for (CvParam cv : MzqLib.data.getAnalysisSummary().getCvParam()) {
             metaSheet.addCell(new Label(0, rowCount, cv.getName(), boldFormat));
-            if (cv.getValue() != null && cv.getValue().length() > 1 && (!cv.getValue().equalsIgnoreCase("null"))) {
-                metaSheet.addCell(new Label(1, rowCount, cv.getValue(), normalFormat));
+            if (cv.getValue() != null && cv.getValue().length() > 1 && (!cv.
+                    getValue().equalsIgnoreCase("null"))) {
+                metaSheet.addCell(new Label(1, rowCount, cv.getValue(),
+                                            normalFormat));
             }
             rowCount++;
         }
@@ -300,7 +342,8 @@ public class XlsConverter extends GenericConverter {
             sb.append(" (Version: ");
             sb.append(software.getVersion());
             sb.append(")");
-            metaSheet.addCell(new Label(0, rowCount, sb.toString(), normalFormat));
+            metaSheet.addCell(
+                    new Label(0, rowCount, sb.toString(), normalFormat));
             rowCount++;
         }
         rowCount++;
@@ -309,7 +352,8 @@ public class XlsConverter extends GenericConverter {
         rowCount++;
         for (Assay assay : MzqLib.data.getAssays()) {
             metaSheet.addCell(new Label(0, rowCount, assay.getId(), boldFormat));
-            metaSheet.addCell(new Label(1, rowCount, assay.getName(), normalFormat));
+            metaSheet.addCell(new Label(1, rowCount, assay.getName(),
+                                        normalFormat));
             rowCount++;
         }
         rowCount++;

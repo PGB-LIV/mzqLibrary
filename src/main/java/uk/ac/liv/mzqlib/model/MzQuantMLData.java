@@ -16,8 +16,10 @@ import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
 public class MzQuantMLData {
 
     private final MzQuantMLSummary mzQuantMLSummary = new MzQuantMLSummary();
-    private final ObservableList<MzqAssayQuantLayer> mzqAssayQuantLayerList = FXCollections.observableArrayList();
-    private final ObservableList<MzqFeatureQuantLayer> mzqFeatureQuantLayerList = FXCollections.observableArrayList();
+    private final ObservableList<MzqAssayQuantLayer> mzqAssayQuantLayerList
+            = FXCollections.observableArrayList();
+    private final ObservableList<MzqFeatureQuantLayer> mzqFeatureQuantLayerList
+            = FXCollections.observableArrayList();
     private MzQuantMLUnmarshaller mzQuantMLUnmarshaller;
 
     /**
@@ -33,7 +35,8 @@ public class MzQuantMLData {
      * @param mzqSum MzQuantMLSummary
      */
     public void setMzQuantMLSummary(MzQuantMLSummary mzqSum) {
-        mzQuantMLSummary.setProteinGroupListNumber(mzqSum.getProteinGroupListNumber());
+        mzQuantMLSummary.setProteinGroupListNumber(mzqSum.
+                getProteinGroupListNumber());
         mzQuantMLSummary.setProteinListNumber(mzqSum.getProteinListNumber());
         mzQuantMLSummary.setPeptideListNumber(mzqSum.getPeptideListNumber());
         mzQuantMLSummary.setFeatureListNumber(mzqSum.getFeatureListNumber());

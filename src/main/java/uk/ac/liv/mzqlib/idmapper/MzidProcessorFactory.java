@@ -21,7 +21,8 @@ import uk.ac.ebi.jmzidml.xml.io.MzIdentMLUnmarshaller;
 import uk.ac.liv.mzqlib.idmapper.data.SIIData;
 
 /**
- * The MzidProcessorFactory class parse the input mzIdentML file and create an MzidProcessor instance.
+ * The MzidProcessorFactory class parse the input mzIdentML file and create an
+ * MzidProcessor instance.
  *
  * @author Da Qi
  * @institute University of Liverpool
@@ -30,7 +31,8 @@ import uk.ac.liv.mzqlib.idmapper.data.SIIData;
 public class MzidProcessorFactory {
 
     //MzIdentMLUnmarshaller um;
-    private static final MzidProcessorFactory instance = new MzidProcessorFactory();
+    private static final MzidProcessorFactory instance
+            = new MzidProcessorFactory();
 
     private MzidProcessorFactory() {
     }
@@ -63,8 +65,10 @@ public class MzidProcessorFactory {
 
         private File mzidFile = null;
         private MzIdentMLUnmarshaller umarsh = null;
-        private final Map<String, List<SIIData>> pepModStringToSIIsMap = new HashMap<>();
-        private TIntObjectMap<List<SIIData>> RtToSIIsMap = new TIntObjectHashMap<>();
+        private final Map<String, List<SIIData>> pepModStringToSIIsMap
+                = new HashMap<>();
+        private TIntObjectMap<List<SIIData>> RtToSIIsMap
+                = new TIntObjectHashMap<>();
         private SearchDatabase searchDB;
         /*
          * Constructor
@@ -72,10 +76,13 @@ public class MzidProcessorFactory {
 
         private MzidProcessorImpl(File mzidFile) {
             if (mzidFile == null) {
-                throw new IllegalStateException("mzIdentML file must not be null");
+                throw new IllegalStateException(
+                        "mzIdentML file must not be null");
             }
             if (!mzidFile.exists()) {
-                throw new IllegalStateException("mzIdentML file does not exist: " + mzidFile.getAbsolutePath());
+                throw new IllegalStateException(
+                        "mzIdentML file does not exist: " + mzidFile.
+                        getAbsolutePath());
             }
 
             this.mzidFile = mzidFile;
@@ -84,7 +91,9 @@ public class MzidProcessorFactory {
 
             searchDB = umarsh.unmarshal(MzIdentMLElement.SearchDatabase);
 
-            Iterator<SpectrumIdentificationResult> itSIR = umarsh.unmarshalCollectionFromXpath(MzIdentMLElement.SpectrumIdentificationResult);
+            Iterator<SpectrumIdentificationResult> itSIR = umarsh.
+                    unmarshalCollectionFromXpath(
+                            MzIdentMLElement.SpectrumIdentificationResult);
 
             while (itSIR.hasNext()) {
                 SpectrumIdentificationResult sir = itSIR.next();
@@ -93,10 +102,13 @@ public class MzidProcessorFactory {
                 double rt = getRetentionTime(sir);
 
                 if (Double.isNaN(rt)) {
-                    throw new IllegalStateException("Cannot find retention time information in SpectrumIdentificationResult \"" + sir.getId() + "\"");
+                    throw new IllegalStateException(
+                            "Cannot find retention time information in SpectrumIdentificationResult \""
+                            + sir.getId() + "\"");
                 }
 
-                List<SpectrumIdentificationItem> siis = sir.getSpectrumIdentificationItem();
+                List<SpectrumIdentificationItem> siis = sir.
+                        getSpectrumIdentificationItem();
 
                 for (SpectrumIdentificationItem sii : siis) {
                     SIIData sd = new SIIData(sii, this.umarsh);
@@ -125,7 +137,8 @@ public class MzidProcessorFactory {
                         pepSiiDataList = pepModStringToSIIsMap.get(pepModString);
                         if (pepSiiDataList == null) {
                             pepSiiDataList = new ArrayList();
-                            pepModStringToSIIsMap.put(pepModString, pepSiiDataList);
+                            pepModStringToSIIsMap.put(pepModString,
+                                                      pepSiiDataList);
                         }
                         pepSiiDataList.add(sd);
 
@@ -166,7 +179,8 @@ public class MzidProcessorFactory {
      *
      * @param sir
      *
-     * @return retention time (in minute) in the cvParam of SpectrumIdentificationResult with accession="MS:1000016"
+     * @return retention time (in minute) in the cvParam of
+     *         SpectrumIdentificationResult with accession="MS:1000016"
      */
     private static double getRetentionTime(SpectrumIdentificationResult sir) {
         double rt = Double.NaN;

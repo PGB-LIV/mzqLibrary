@@ -5,7 +5,6 @@
 // Generated on: 2014.03.18 at 02:59:01 PM GMT 
 //
 
-
 package uk.ac.liv.mzqlib.openms.jaxb;
 
 import java.util.ArrayList;
@@ -17,12 +16,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p>
+ * Java class for anonymous complex type.
+ *
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -39,8 +40,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -65,25 +66,26 @@ public class Map {
 
     /**
      * Gets the value of the userParam property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the userParam property.
-     * 
+     * This is why there is not a <CODE>set</CODE> method for the userParam
+     * property.
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getUserParam().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link UserParam }
-     * 
-     * 
+     *
+     *
      */
     public List<UserParam> getUserParam() {
         if (userParam == null) {
@@ -94,11 +96,11 @@ public class Map {
 
     /**
      * Gets the value of the name property.
-     * 
+     *
      * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *         possible object is
+     *         {@link String }
+     *
      */
     public String getName() {
         return name;
@@ -106,11 +108,11 @@ public class Map {
 
     /**
      * Sets the value of the name property.
-     * 
+     *
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *              allowed object is
+     *              {@link String }
+     *
      */
     public void setName(String value) {
         this.name = value;
@@ -118,11 +120,11 @@ public class Map {
 
     /**
      * Gets the value of the uniqueId property.
-     * 
+     *
      * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *         possible object is
+     *         {@link String }
+     *
      */
     public String getUniqueId() {
         return uniqueId;
@@ -130,11 +132,11 @@ public class Map {
 
     /**
      * Sets the value of the uniqueId property.
-     * 
+     *
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *              allowed object is
+     *              {@link String }
+     *
      */
     public void setUniqueId(String value) {
         this.uniqueId = value;
@@ -142,7 +144,7 @@ public class Map {
 
     /**
      * Gets the value of the id property.
-     * 
+     *
      */
     public long getId() {
         return id;
@@ -150,7 +152,7 @@ public class Map {
 
     /**
      * Sets the value of the id property.
-     * 
+     *
      */
     public void setId(long value) {
         this.id = value;
@@ -158,11 +160,11 @@ public class Map {
 
     /**
      * Gets the value of the label property.
-     * 
+     *
      * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *         possible object is
+     *         {@link String }
+     *
      */
     public String getLabel() {
         return label;
@@ -170,11 +172,11 @@ public class Map {
 
     /**
      * Sets the value of the label property.
-     * 
+     *
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *              allowed object is
+     *              {@link String }
+     *
      */
     public void setLabel(String value) {
         this.label = value;
@@ -182,11 +184,11 @@ public class Map {
 
     /**
      * Gets the value of the size property.
-     * 
+     *
      * @return
-     *     possible object is
-     *     {@link Long }
-     *     
+     *         possible object is
+     *         {@link Long }
+     *
      */
     public Long getSize() {
         return size;
@@ -194,11 +196,11 @@ public class Map {
 
     /**
      * Sets the value of the size property.
-     * 
+     *
      * @param value
-     *     allowed object is
-     *     {@link Long }
-     *     
+     *              allowed object is
+     *              {@link Long }
+     *
      */
     public void setSize(Long value) {
         this.size = value;

@@ -47,8 +47,10 @@ public class ProgenesisProteinListReader implements Closeable {
     private List<String> stuVarList = new ArrayList<>();
     private List<String> assayList = new ArrayList<>();
     private TIntObjectMap<String> indexMap = new TIntObjectHashMap<>();
-    private TIntObjectMap<TDoubleList> normalizedAbundanceMap = new TIntObjectHashMap<>();
-    private TIntObjectMap<TDoubleList> rawAbundanceMap = new TIntObjectHashMap<>();
+    private TIntObjectMap<TDoubleList> normalizedAbundanceMap
+            = new TIntObjectHashMap<>();
+    private TIntObjectMap<TDoubleList> rawAbundanceMap
+            = new TIntObjectHashMap<>();
     private TIntDoubleMap confidenceMap = new TIntDoubleHashMap();
     private TIntDoubleMap anovaMap = new TIntDoubleHashMap();
     private TIntDoubleMap maxFoldChangeMap = new TIntDoubleHashMap();
@@ -70,10 +72,11 @@ public class ProgenesisProteinListReader implements Closeable {
         completeMap.put(ROW1, nextLine);
 
         for (int i = 0; i < nextLine.length; i++) {
-            if (nextLine[i].toLowerCase(Locale.ENGLISH).equals(ProteinListHeaders.NORMALIZED_ABUNDANCE)) {
+            if (nextLine[i].toLowerCase(Locale.ENGLISH).equals(
+                    ProteinListHeaders.NORMALIZED_ABUNDANCE)) {
                 normAbStart = i;
-            }
-            else if (nextLine[i].toLowerCase(Locale.ENGLISH).contains(ProteinListHeaders.RAW_ABUNDANCE)) {
+            } else if (nextLine[i].toLowerCase(Locale.ENGLISH).contains(
+                    ProteinListHeaders.RAW_ABUNDANCE)) {
                 rawAbStart = i;
                 rawAbEnd = rawAbStart + (rawAbStart - normAbStart);
                 break;
@@ -83,12 +86,11 @@ public class ProgenesisProteinListReader implements Closeable {
         // get the number of assay
         if (normAbStart != 0) {
             assayNum = getAssayNumber(normAbStart, nextLine);
-        }
-        else if (rawAbStart != 0) {
+        } else if (rawAbStart != 0) {
             assayNum = getAssayNumber(rawAbStart, nextLine);
-        }
-        else {
-            throw new IllegalStateException("No abundance data was found in protein file! Please check!");
+        } else {
+            throw new IllegalStateException(
+                    "No abundance data was found in protein file! Please check!");
         }
 
         // Read the second line
@@ -106,8 +108,7 @@ public class ProgenesisProteinListReader implements Closeable {
                 }
                 stuVarPosition[m] = i + 1;
             }
-        }
-        else if (rawAbStart != 0) {
+        } else if (rawAbStart != 0) {
             for (int i = rawAbStart; i < (rawAbStart + assayNum); i++) {
                 if (!nextLine[i].isEmpty()) {
                     stuVarList.add(nextLine[i]);
@@ -126,8 +127,7 @@ public class ProgenesisProteinListReader implements Closeable {
             for (int i = normAbStart; i < (normAbStart + assayNum); i++) {
                 assayList.add(nextLine[i]);
             }
-        }
-        else if (rawAbStart != 0) {
+        } else if (rawAbStart != 0) {
             for (int i = rawAbStart; i < (rawAbStart + assayNum); i++) {
                 assayList.add(nextLine[i]);
             }
@@ -144,15 +144,15 @@ public class ProgenesisProteinListReader implements Closeable {
 
         //get the position of confidence score, anova, max fold change
         for (int i = 0; i < nextLine.length; i++) {
-            String lowerCaseHeader = nextLine[i].trim().toLowerCase(Locale.ENGLISH);
+            String lowerCaseHeader = nextLine[i].trim().toLowerCase(
+                    Locale.ENGLISH);
 
             if (lowerCaseHeader.equals(ProteinListHeaders.CONFIDENCE_SCORE)) {
                 pos_conf = i;
-            }
-            else if (lowerCaseHeader.contains(ProteinListHeaders.ANOVA)) {
+            } else if (lowerCaseHeader.contains(ProteinListHeaders.ANOVA)) {
                 pos_anova = i;
-            }
-            else if (lowerCaseHeader.equals(ProteinListHeaders.MAX_FOLD_CHANGE)) {
+            } else if (lowerCaseHeader.
+                    equals(ProteinListHeaders.MAX_FOLD_CHANGE)) {
                 pos_mfc = i;
             }
         }
@@ -189,12 +189,12 @@ public class ProgenesisProteinListReader implements Closeable {
                 for (int i = normAbStart; i < (normAbStart + assayNum); i++) {
                     if (!NumberUtils.isNumber(nextLine[i])) {
                         currentV.add(0.0);
-                    }
-                    else {
+                    } else {
                         currentV.add(Double.parseDouble(nextLine[i]));
                     }
                 }
-                normalizedAbundanceMap.put(currentK, new TDoubleArrayList(currentV));
+                normalizedAbundanceMap.put(currentK, new TDoubleArrayList(
+                                           currentV));
                 currentV.clear();
             }
 
@@ -203,8 +203,7 @@ public class ProgenesisProteinListReader implements Closeable {
                 for (int i = rawAbStart; i < rawAbEnd; i++) {
                     if (!NumberUtils.isNumber(nextLine[i])) {
                         currentV.add(0.0);
-                    }
-                    else {
+                    } else {
                         currentV.add(Double.parseDouble(nextLine[i]));
                     }
                 }
@@ -220,8 +219,7 @@ public class ProgenesisProteinListReader implements Closeable {
         double value;
         try {
             value = Double.parseDouble(string);
-        }
-        catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex) {
             value = Double.NaN;
         }
 
@@ -330,8 +328,7 @@ public class ProgenesisProteinListReader implements Closeable {
         for (int i = start + 1; i < line.length; i++) {
             if (line[i].toLowerCase(Locale.ENGLISH).equals("")) {
                 ret++;
-            }
-            else {
+            } else {
                 break;
             }
         }
@@ -343,9 +340,9 @@ public class ProgenesisProteinListReader implements Closeable {
             throws IOException {
         try {
             br.close();
-        }
-        catch (IOException ex) {
-            throw new IOException("Fail to close protein list file: " + ex.getMessage());
+        } catch (IOException ex) {
+            throw new IOException("Fail to close protein list file: " + ex.
+                    getMessage());
         }
     }
 

@@ -30,11 +30,13 @@ public class ExtendedFeature extends Feature {
      * time window.
      *
      * @param ft          the base Feature
-     * @param msTolerance the m/z tolerance, can be expressed in Da or ppm, and is
+     * @param msTolerance the m/z tolerance, can be expressed in Da or ppm, and
+     *                    is
      *                    the measurement from the m/z value before and after the feature.
      *                    The MS tolerance is always calculated from the Tolerance object,
      *                    unless it is null or its value is 0.
-     * @param rtWin       the retention time measured from top to bottom in minutes. Only
+     * @param rtWin       the retention time measured from top to bottom in
+     *                    minutes. Only
      *                    used if the feature mass trace is null or empty.
      */
     public ExtendedFeature(Feature ft, Tolerance msTolerance, double rtWin) {
@@ -46,20 +48,24 @@ public class ExtendedFeature extends Feature {
             brt = (Double.valueOf(ft.getRt()) - rtWin / 2);
             urt = (Double.valueOf(ft.getRt()) + rtWin / 2);
 
-            double mzToleranceDaltons = msTolerance.getUnit() == ToleranceUnit.DALTON ? msTolerance.getTolerance() : (ft.getMz() / ((1 / msTolerance.getTolerance()) * 1000000.0));
+            double mzToleranceDaltons = msTolerance.getUnit()
+                    == ToleranceUnit.DALTON ? msTolerance.getTolerance() : (ft.
+                            getMz() / ((1 / msTolerance.getTolerance())
+                            * 1000000.0));
             lmz = ft.getMz() - mzToleranceDaltons;
             rmz = ft.getMz() + mzToleranceDaltons;
-        }
-        else {
+        } else {
             brt = massT.get(0);
             urt = massT.get(2);
 
             if (msTolerance != null && msTolerance.getTolerance() > 0.0) {
-                double mzToleranceDaltons = msTolerance.getUnit() == ToleranceUnit.DALTON ? msTolerance.getTolerance() : (ft.getMz() / ((1 / msTolerance.getTolerance()) * 1000000.0));
+                double mzToleranceDaltons = msTolerance.getUnit()
+                        == ToleranceUnit.DALTON ? msTolerance.getTolerance()
+                                : (ft.getMz()
+                                / ((1 / msTolerance.getTolerance()) * 1000000.0));
                 lmz = ft.getMz() - mzToleranceDaltons;
                 rmz = ft.getMz() + mzToleranceDaltons;
-            }
-            else {
+            } else {
                 lmz = massT.get(1);
                 rmz = massT.get(3);
             }
@@ -67,7 +73,8 @@ public class ExtendedFeature extends Feature {
     }
 
     /**
-     * Constructor of ExtendedFeature base on Feature and default m/z window (0.1
+     * Constructor of ExtendedFeature base on Feature and default m/z window
+     * (0.1
      * Da) and retention time window (20 second, 1/3 minute).
      *
      * @param ft Feature

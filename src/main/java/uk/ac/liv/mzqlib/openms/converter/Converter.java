@@ -19,14 +19,14 @@ public class Converter {
         String output = "CPTAC_study6_2400_3600_FLUQT.consensusXML.mzq";
 
         try {
-            ConsensusXMLProcessor conProc = ConsensusXMLProcessorFactory.getInstance().buildConsensusXMLProcessor(file);
+            ConsensusXMLProcessor conProc = ConsensusXMLProcessorFactory.
+                    getInstance().buildConsensusXMLProcessor(file);
             conProc.convert(output);
-        }
-        catch (IOException | JAXBException ex) {
-            Logger.getLogger(Converter.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException | JAXBException ex) {
+            Logger.getLogger(Converter.class.getName()).log(Level.SEVERE, null,
+                                                            ex);
             System.out.println(ex.getMessage());
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }

@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package uk.ac.cranfield.mzqlib.data;
 
 import java.util.HashMap;
@@ -14,9 +15,12 @@ import java.util.HashSet;
 public class MzqDataControl {
 
     private HashMap<Integer, MzqDataControlElement> pgLevel = new HashMap<>();
-    private HashMap<Integer, MzqDataControlElement> proteinLevel = new HashMap<>();
-    private HashMap<Integer, MzqDataControlElement> peptideLevel = new HashMap<>();
-    private HashMap<Integer, MzqDataControlElement> featureLevel = new HashMap<>();
+    private HashMap<Integer, MzqDataControlElement> proteinLevel
+            = new HashMap<>();
+    private HashMap<Integer, MzqDataControlElement> peptideLevel
+            = new HashMap<>();
+    private HashMap<Integer, MzqDataControlElement> featureLevel
+            = new HashMap<>();
 
     public void addElement(int level, int type, String element) {
         getControlElement(level, type).addElement(element);
@@ -49,7 +53,8 @@ public class MzqDataControl {
                 break;
         }
         if (map == null) {
-            throw new IllegalStateException("Unrecognized quantitation level, program exits in MzqDataControl.java");
+            throw new IllegalStateException(
+                    "Unrecognized quantitation level, program exits in MzqDataControl.java");
         }
 
         if (!map.containsKey(type)) {

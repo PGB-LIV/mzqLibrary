@@ -1,3 +1,4 @@
+
 package uk.ac.liv.mzqlib.task;
 
 import java.util.ArrayList;
@@ -18,7 +19,8 @@ import uk.ac.liv.mzqlib.model.MzqDataMatrixRow;
  */
 public class CreateRMatrixTask extends Task<HeatMapParam> {
 
-    private final ObservableList<MzqDataMatrixRow> rowList = FXCollections.observableArrayList();
+    private final ObservableList<MzqDataMatrixRow> rowList = FXCollections.
+            observableArrayList();
 
     public CreateRMatrixTask(ObservableList<MzqDataMatrixRow> list) {
         rowList.clear();
@@ -79,7 +81,8 @@ public class CreateRMatrixTask extends Task<HeatMapParam> {
                 String replaceV = String.valueOf(Math.log10(0.5));
                 if (NumberUtils.isNumber(value.get())) {
                     double logV = Math.log10(Double.parseDouble(value.get()));
-                    if (logV != Double.NEGATIVE_INFINITY && logV != Double.POSITIVE_INFINITY) {
+                    if (logV != Double.NEGATIVE_INFINITY && logV
+                            != Double.POSITIVE_INFINITY) {
                         logX = logX + String.valueOf(logV) + ",";
                         if (logV < logMin) {
                             logMin = logV;
@@ -87,12 +90,10 @@ public class CreateRMatrixTask extends Task<HeatMapParam> {
                         if (logV > logMax) {
                             logMax = logV;
                         }
-                    }
-                    else {
+                    } else {
                         logX = logX + replaceV + ",";
                     }
-                }
-                else {
+                } else {
                     logX = logX + replaceV + ",";
                 }
 

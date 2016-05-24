@@ -62,8 +62,10 @@ public class MzqInfoController {
      * after the fxml file has been loaded.
      */
     private void initialize() {
-        assayQLId.setCellValueFactory(cellData -> cellData.getValue().quantLayerId());
-        parentListId.setCellValueFactory(cellData -> cellData.getValue().listId());
+        assayQLId.setCellValueFactory(cellData -> cellData.getValue().
+                quantLayerId());
+        parentListId.setCellValueFactory(cellData -> cellData.getValue().
+                listId());
         dataType.setCellValueFactory(cellData -> cellData.getValue().dataType());
 
         // Clear person details.
@@ -82,10 +84,14 @@ public class MzqInfoController {
 
     public void showMzqSummary(MzQuantMLSummary sum) {
 
-        numberProteinGroupList.textProperty().bind(Bindings.format("%d", sum.proteinGroupListNumber()));
-        numberProteinList.textProperty().bind(Bindings.format("%d", sum.proteinListNumber()));
-        numberPeptideList.textProperty().bind(Bindings.format("%d", sum.peptideListNumber()));
-        numberFeatureList.textProperty().bind(Bindings.format("%d", sum.featureListNumber()));
+        numberProteinGroupList.textProperty().bind(Bindings.format("%d", sum.
+                                                                   proteinGroupListNumber()));
+        numberProteinList.textProperty().bind(Bindings.format("%d", sum.
+                                                              proteinListNumber()));
+        numberPeptideList.textProperty().bind(Bindings.format("%d", sum.
+                                                              peptideListNumber()));
+        numberFeatureList.textProperty().bind(Bindings.format("%d", sum.
+                                                              featureListNumber()));
         software.textProperty().bind(sum.getSoftware());
     }
 
@@ -108,38 +114,44 @@ public class MzqInfoController {
                 public void handle(Event event) {
                     try {
                         mainApp.showCurve();
-                    }
-                    catch (JAXBException ex) {
-                        Logger.getLogger(MzqInfoController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (JAXBException ex) {
+                        Logger.getLogger(MzqInfoController.class.getName()).log(
+                                Level.SEVERE, null, ex);
                     }
                 }
 
             });
 
             // Set selection mode
-            if (assayQL.getListType().equals(MzqDataConstants.PROTEIN_GROUP_LIST_TYPE) || assayQL.getListType().equals(MzqDataConstants.PROTEIN_LIST_TYPE)) {
-                dataMatrixTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-            }
-            else {
-                dataMatrixTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            if (assayQL.getListType().equals(
+                    MzqDataConstants.PROTEIN_GROUP_LIST_TYPE) || assayQL.
+                    getListType().equals(MzqDataConstants.PROTEIN_LIST_TYPE)) {
+                dataMatrixTable.getSelectionModel().setSelectionMode(
+                        SelectionMode.SINGLE);
+            } else {
+                dataMatrixTable.getSelectionModel().setSelectionMode(
+                        SelectionMode.MULTIPLE);
             }
             // The first column
             TableColumn<MzqDataMatrixRow, String> idCol = new TableColumn("Id");
-            idCol.setCellValueFactory(cellData -> cellData.getValue().getObjectValue());
+            idCol.setCellValueFactory(cellData -> cellData.getValue().
+                    getObjectValue());
 
             dataMatrixTable.getColumns().add(idCol);
 
             int i = 0;
             for (StringProperty colName : assayQL.getColumnNames()) {
                 final int j = i;
-                TableColumn<MzqDataMatrixRow, String> col = new TableColumn(colName.getValue());
-                col.setCellValueFactory(cellData -> cellData.getValue().value(j));
+                TableColumn<MzqDataMatrixRow, String> col = new TableColumn(
+                        colName.getValue());
+                col.
+                        setCellValueFactory(cellData -> cellData.getValue().
+                                value(j));
                 i++;
                 dataMatrixTable.getColumns().add(col);
             }
             dataMatrixTable.getItems().addAll(assayQL.getDmRows());
-        }
-        else {
+        } else {
             //remove all the text.
         }
         // Set table column resizable policy

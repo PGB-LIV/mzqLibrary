@@ -12,17 +12,18 @@ import org.rosuda.JRI.Rengine;
  * @time 30-Sep-2014 14:48:07
  */
 public class RExecutor {
-    
-    public static final Rengine re = new Rengine(new String[]{"--vanilla"}, false, null);
+
+    public static final Rengine re = new Rengine(new String[]{"--vanilla"},
+                                                 false, null);
     private final String command;
     private final String[] args;
     private StringBuilder error;
-    
+
     public RExecutor(String command, String[] args) {
         this.command = command;
         this.args = Arrays.copyOf(args, args.length);
     }
-    
+
     public void run() {
         StringBuilder runString = new StringBuilder();
         runString.append(command);
@@ -35,15 +36,15 @@ public class RExecutor {
             }
         }
         runString.append(")");
-        
+
         re.eval(runString.toString());
     }
-    
+
     public String getError() {
         if (error == null) {
             error = new StringBuilder();
         }
         return error.toString();
     }
-    
+
 }

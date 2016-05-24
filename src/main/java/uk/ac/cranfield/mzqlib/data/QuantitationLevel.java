@@ -17,10 +17,13 @@ public class QuantitationLevel {
 
     /**
      * The first map: keys are quantitation name
-     * The second map: keys are assay names and the values are the actual values (quantities, study variables or ratios)
+     * The second map: keys are assay names and the values are the actual values
+     * (quantities, study variables or ratios)
      */
-    private HashMap<String, HashMap<String, Double>> quantities = new HashMap<>();
-    private HashMap<String, HashMap<String, Double>> studyVariables = new HashMap<>();
+    private HashMap<String, HashMap<String, Double>> quantities
+            = new HashMap<>();
+    private HashMap<String, HashMap<String, Double>> studyVariables
+            = new HashMap<>();
     private HashMap<String, Double> ratios = new HashMap<>();
     private HashMap<String, Double> globals = new HashMap<>();
 //    private HashSet<String> quantitationFlags = new HashSet<String>();
@@ -35,7 +38,8 @@ public class QuantitationLevel {
     public static final int WEIGHTED_AVERAGE = 3;
 
     public Double getQuantity(String name, String assayID) {
-        if (quantities.containsKey(name) && quantities.get(name).containsKey(assayID)) {
+        if (quantities.containsKey(name) && quantities.get(name).containsKey(
+                assayID)) {
             return quantities.get(name).get(assayID);
         }
         return null;
@@ -50,7 +54,8 @@ public class QuantitationLevel {
     }
 
     public Double getStudyVariableQuantity(String name, String sv) {
-        if (studyVariables.containsKey(name) && studyVariables.get(name).containsKey(sv)) {
+        if (studyVariables.containsKey(name) && studyVariables.get(name).
+                containsKey(sv)) {
             return studyVariables.get(name).get(sv);
         }
         return null;
@@ -113,11 +118,15 @@ public class QuantitationLevel {
     public void calculateQuantitation(Set<String> quantitationNames,
                                       ArrayList<String> assayIDs, int type) {
         try {
-            Method m = this.getClass().getDeclaredMethod(misc.getMethodName(this.getClass()), new Class[0]);
-            ArrayList<QuantitationLevel> results = (ArrayList<QuantitationLevel>) m.invoke(this, new Object[0]);
+            Method m = this.getClass().getDeclaredMethod(misc.getMethodName(
+                    this.getClass()), new Class[0]);
+            ArrayList<QuantitationLevel> results
+                    = (ArrayList<QuantitationLevel>) m.invoke(this,
+                                                              new Object[0]);
             ArrayList<Integer> count = new ArrayList<>();
             for (String name : quantitationNames) {
-                ArrayList<HashMap<String, Double>> lowerLevelQuant = new ArrayList<>();
+                ArrayList<HashMap<String, Double>> lowerLevelQuant
+                        = new ArrayList<>();
                 for (QuantitationLevel one : results) {
                     if (type == WEIGHTED_AVERAGE) {
                         count.add(one.getCount());
@@ -127,25 +136,32 @@ public class QuantitationLevel {
                 HashMap<String, Double> quan = null;
                 switch (type) {
                     case SUM:
-                        quan = GenericInferenceMethod.sum(lowerLevelQuant, assayIDs);
+                        quan = GenericInferenceMethod.sum(lowerLevelQuant,
+                                                          assayIDs);
                         break;
                     case MEAN:
-                        quan = GenericInferenceMethod.mean(lowerLevelQuant, assayIDs);
+                        quan = GenericInferenceMethod.mean(lowerLevelQuant,
+                                                           assayIDs);
                         break;
                     case MEDIAN:
-                        quan = GenericInferenceMethod.median(lowerLevelQuant, assayIDs);
+                        quan = GenericInferenceMethod.median(lowerLevelQuant,
+                                                             assayIDs);
                         break;
                     case WEIGHTED_AVERAGE:
-                        quan = GenericInferenceMethod.weightedAverage(lowerLevelQuant, assayIDs, count);
+                        quan = GenericInferenceMethod.weightedAverage(
+                                lowerLevelQuant, assayIDs, count);
                         break;
                     default:
-                        throw new IllegalStateException("Unrecognized quantitation method, exit");
+                        throw new IllegalStateException(
+                                "Unrecognized quantitation method, exit");
                 }
                 this.setQuantities(name, quan);
             }
-        }
-        catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException ex) {
-            Logger.getLogger(QuantitationLevel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException | IllegalArgumentException |
+                InvocationTargetException | NoSuchMethodException |
+                SecurityException ex) {
+            Logger.getLogger(QuantitationLevel.class.getName()).
+                    log(Level.SEVERE, null, ex);
         }
     }
 

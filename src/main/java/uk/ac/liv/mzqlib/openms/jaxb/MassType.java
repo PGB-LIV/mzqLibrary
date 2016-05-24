@@ -5,28 +5,30 @@
 // Generated on: 2014.03.18 at 02:59:01 PM GMT 
 //
 
-
 package uk.ac.liv.mzqlib.openms.jaxb;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for MassType.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
- * <pre>
+ * Java class for MassType.
+ *
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * <p>
+ * <
+ * pre>
  * &lt;simpleType name="MassType">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="average"/>
- *     &lt;enumeration value="monoisotopic"/>
- *   &lt;/restriction>
+ * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
+ * &lt;enumeration value="average"/>
+ * &lt;enumeration value="monoisotopic"/>
+ * &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
- * 
+ *
  */
 @XmlType(name = "MassType")
 @XmlEnum
@@ -47,7 +49,7 @@ public enum MassType {
     }
 
     public static MassType fromValue(String v) {
-        for (MassType c: MassType.values()) {
+        for (MassType c : MassType.values()) {
             if (c.value.equals(v)) {
                 return c;
             }

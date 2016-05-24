@@ -42,10 +42,13 @@ import uk.ac.liv.mzqlib.openms.jaxb.MapList;
  */
 public class ConsensusXMLProcessorFactory {
 
-    private static final ConsensusXMLProcessorFactory instance = new ConsensusXMLProcessorFactory();
+    private static final ConsensusXMLProcessorFactory instance
+            = new ConsensusXMLProcessorFactory();
     private static final String CvIDPSIMS = "PSI-MS";
-    private static final String CvNamePSIMS = "Proteomics Standards Initiative Mass Spectrometry Vocabularies";
-    private static final String CvUriPSIMS = "http://psidev.cvs.sourceforge.net/viewvc/psidev/psi/psi-ms/"
+    private static final String CvNamePSIMS
+            = "Proteomics Standards Initiative Mass Spectrometry Vocabularies";
+    private static final String CvUriPSIMS
+            = "http://psidev.cvs.sourceforge.net/viewvc/psidev/psi/psi-ms/"
             + "mzML/controlledVocabulary/psi-ms.obo";
     private static final String CvVerPSIMS = "3.61.0";
 
@@ -82,22 +85,27 @@ public class ConsensusXMLProcessorFactory {
             ConsensusXMLProcessor {
 
         protected Unmarshaller unmarsh;
-        protected Map<String, FeatureList> rgIdToFeatureListMap = new HashMap<>();
+        protected Map<String, FeatureList> rgIdToFeatureListMap
+                = new HashMap<>();
         protected PeptideConsensusList pepConList = new PeptideConsensusList();
         protected AssayList assays = new AssayList();
         protected Cv cv;
         protected List<RawFilesGroup> rgList = new ArrayList();
         protected Map<String, Assay> rgIdToAssayMap = new HashMap<>();
         protected Map<String, RawFilesGroup> rgIdToRgObjectMap = new HashMap<>();
-        private Map<Integer, Map<String, MzRtArea>> featureAreasPreAligned = new HashMap<>();
-        private Map<Integer, Map<String, MzRtArea>> featureAreasPostAligned = new HashMap<>();
-        private final JAXBContext context = JAXBContext.newInstance(new Class[]{FeatureMap.class});
+        private Map<Integer, Map<String, MzRtArea>> featureAreasPreAligned
+                = new HashMap<>();
+        private Map<Integer, Map<String, MzRtArea>> featureAreasPostAligned
+                = new HashMap<>();
+        private final JAXBContext context = JAXBContext.newInstance(new Class[]{
+            FeatureMap.class});
         private Unmarshaller featureUnmarshaller = context.createUnmarshaller();
         private Map<File, Assay> filesToAssays = new HashMap<>();
 
         public ConsensusXMLProcessorImpl(File file)
                 throws JAXBException {
-            JAXBContext context = JAXBContext.newInstance(new Class[]{ConsensusXML.class});
+            JAXBContext context = JAXBContext.newInstance(new Class[]{
+                ConsensusXML.class});
             unmarsh = context.createUnmarshaller();
 
             cv = new Cv();
@@ -120,9 +128,11 @@ public class ConsensusXMLProcessorFactory {
             // root
             ConsensusXML consensus = (ConsensusXML) unmarsh.unmarshal(file);
 
-            ConsensusElementList conEleList = consensus.getConsensusElementList();
+            ConsensusElementList conEleList = consensus.
+                    getConsensusElementList();
 
-            List<ConsensusElement> conElements = conEleList.getConsensusElement();
+            List<ConsensusElement> conElements = conEleList.
+                    getConsensusElement();
 
             MapList mapList = consensus.getMapList();
             // number of mapping files
@@ -202,7 +212,8 @@ public class ConsensusXMLProcessorFactory {
                 row.setObjectRef(pepConId);
 
                 // groupedElementList to EvidencRefs
-                List<Element> elements = conElement.getGroupedElementList().getElement();
+                List<Element> elements = conElement.getGroupedElementList().
+                        getElement();
 
                 String[] values = new String[mapCount];
 
@@ -212,13 +223,15 @@ public class ConsensusXMLProcessorFactory {
 
                 for (Element element : elements) {
 
-                    columnIndex[(int) element.getMap()] = "ass_" + (int) element.getMap();
+                    columnIndex[(int) element.getMap()] = "ass_"
+                            + (int) element.getMap();
 
                     // charge of feature
                     String ftCharge = element.getCharge().toString();
 
                     // raw files group Id of feature
-                    String rawFilesGroupId = String.valueOf("rg_" + element.getMap());
+                    String rawFilesGroupId = String.valueOf("rg_" + element.
+                            getMap());
 
                     // intensity of feature, goes to AssayQuantLayer
                     double intensity = element.getIt();
@@ -234,12 +247,14 @@ public class ConsensusXMLProcessorFactory {
                     // retention time of feature
                     double ftRt = element.getRt();
 
-                    FeatureList featureList = rgIdToFeatureListMap.get(rawFilesGroupId);
+                    FeatureList featureList = rgIdToFeatureListMap.get(
+                            rawFilesGroupId);
 
                     if (featureList == null) {
                         featureList = new FeatureList();
                         rgIdToFeatureListMap.put(rawFilesGroupId, featureList);
-                        featureList.setRawFilesGroup(rgIdToRgObjectMap.get(rawFilesGroupId));
+                        featureList.setRawFilesGroup(rgIdToRgObjectMap.get(
+                                rawFilesGroupId));
                         featureList.setId("FList_" + element.getMap());
 
                         featureList.getCvParam().add(massTraceRectangleParam);
@@ -253,26 +268,42 @@ public class ConsensusXMLProcessorFactory {
                     feature.setMz(ftMz);
                     feature.setRt(String.valueOf(ftRt));
 
-                    Map<String, MzRtArea> featureAreaPreAligned = featureAreasPreAligned.get((int) element.getMap());
+                    Map<String, MzRtArea> featureAreaPreAligned
+                            = featureAreasPreAligned.get((int) element.getMap());
                     if (featureAreaPreAligned != null) {
-                        MzRtArea featureArea = featureAreaPreAligned.get(element.getId());
+                        MzRtArea featureArea = featureAreaPreAligned.get(
+                                element.getId());
                         if (featureArea != null) {
-                            feature.getMassTrace().addAll(featureArea.getMassTrace());
+                            feature.getMassTrace().addAll(featureArea.
+                                    getMassTrace());
                             feature.setMz(featureArea.getMzCentroid());
-                            feature.setRt(String.valueOf(featureArea.getRtCentroid()));
+                            feature.setRt(String.valueOf(featureArea.
+                                    getRtCentroid()));
                         }
                     }
 
-                    Map<String, MzRtArea> featureAreaPostAligned = featureAreasPostAligned.get((int) element.getMap());
+                    Map<String, MzRtArea> featureAreaPostAligned
+                            = featureAreasPostAligned.
+                            get((int) element.getMap());
                     if (featureAreaPostAligned != null) {
-                        MzRtArea featureArea = featureAreaPostAligned.get(element.getId());
+                        MzRtArea featureArea = featureAreaPostAligned.get(
+                                element.getId());
                         if (featureArea != null) {
                             UserParam rtCentroidParam = new UserParam();
-                            rtCentroidParam.setName("Retention time centroid: post-alignment");
-                            rtCentroidParam.setValue(String.valueOf(featureArea.getRtCentroid()));
+                            rtCentroidParam.setName(
+                                    "Retention time centroid: post-alignment");
+                            rtCentroidParam.setValue(String.valueOf(featureArea.
+                                    getRtCentroid()));
                             UserParam massTraceParam = new UserParam();
                             massTraceParam.setName("Mass trace: post-alignment");
-                            massTraceParam.setValue(String.join(" ", featureArea.getMassTrace().stream().map(p -> String.valueOf(p)).collect(Collectors.toList())));
+                            massTraceParam.setValue(String.join(" ",
+                                                                featureArea.
+                                                                getMassTrace().
+                                                                stream().map(p
+                                                                        -> String.
+                                                                        valueOf(p)).
+                                                                collect(Collectors.
+                                                                        toList())));
                             feature.getUserParam().add(rtCentroidParam);
                             feature.getUserParam().add(massTraceParam);
                         }
@@ -286,7 +317,8 @@ public class ConsensusXMLProcessorFactory {
 
                     evdRef.setFeature(feature);
 
-                    evdRef.getAssayRefs().add(rgIdToAssayMap.get(rawFilesGroupId).getId());
+                    evdRef.getAssayRefs().add(rgIdToAssayMap.
+                            get(rawFilesGroupId).getId());
 
                     pepCon.getEvidenceRef().add(evdRef);
                 }
@@ -324,13 +356,20 @@ public class ConsensusXMLProcessorFactory {
                 }
 
                 if (!featureXmlLocation.contains("_MAPC")) {
-                    readSingleFeatureXmlMzRtAreas(featureXmlFile, (int) featureXmlMap.getId(), featureAreasPreAligned);
-                }
-                else {
-                    readSingleFeatureXmlMzRtAreas(featureXmlFile, (int) featureXmlMap.getId(), featureAreasPostAligned);
-                    File featureXmlUnalignedFile = new File(featureXmlLocation.replace("_MAPC", ""));
+                    readSingleFeatureXmlMzRtAreas(featureXmlFile,
+                                                  (int) featureXmlMap.getId(),
+                                                  featureAreasPreAligned);
+                } else {
+                    readSingleFeatureXmlMzRtAreas(featureXmlFile,
+                                                  (int) featureXmlMap.getId(),
+                                                  featureAreasPostAligned);
+                    File featureXmlUnalignedFile = new File(featureXmlLocation.
+                            replace("_MAPC", ""));
                     if (featureXmlUnalignedFile.exists()) {
-                        readSingleFeatureXmlMzRtAreas(featureXmlUnalignedFile, (int) featureXmlMap.getId(), featureAreasPreAligned);
+                        readSingleFeatureXmlMzRtAreas(featureXmlUnalignedFile,
+                                                      (int) featureXmlMap.
+                                                      getId(),
+                                                      featureAreasPreAligned);
                     }
                 }
             }
@@ -340,7 +379,8 @@ public class ConsensusXMLProcessorFactory {
                                                    int mapNumber,
                                                    Map<Integer, Map<String, MzRtArea>> mzRtAreas)
                 throws JAXBException {
-            FeatureMap featureMap = (FeatureMap) featureUnmarshaller.unmarshal(featureXmlFile);
+            FeatureMap featureMap = (FeatureMap) featureUnmarshaller.unmarshal(
+                    featureXmlFile);
             Map<String, MzRtArea> featureAreas = new HashMap<>();
             for (FeatureType feature : featureMap.getFeatureList().getFeature()) {
                 List<Pt> allPts = new LinkedList<>();
@@ -348,11 +388,16 @@ public class ConsensusXMLProcessorFactory {
                     allPts.addAll(convexHull.getPt());
                 }
 
-                DoubleSummaryStatistics rtStats = allPts.stream().mapToDouble(p -> p.getX()).summaryStatistics();
-                DoubleSummaryStatistics mzStats = allPts.stream().mapToDouble(p -> p.getY()).summaryStatistics();
+                DoubleSummaryStatistics rtStats = allPts.stream().mapToDouble(p
+                        -> p.getX()).summaryStatistics();
+                DoubleSummaryStatistics mzStats = allPts.stream().mapToDouble(p
+                        -> p.getY()).summaryStatistics();
 
-                double mzCentroid = feature.getPosition().stream().filter(p -> p.getDim().equals("1")).findFirst().get().getValue();
-                double rtCentroid = feature.getPosition().stream().filter(p -> p.getDim().equals("0")).findFirst().get().getValue() / 60.0;
+                double mzCentroid = feature.getPosition().stream().filter(p
+                        -> p.getDim().equals("1")).findFirst().get().getValue();
+                double rtCentroid = feature.getPosition().stream().filter(p
+                        -> p.getDim().equals("0")).findFirst().get().getValue()
+                        / 60.0;
                 MzRtArea featureArea = new MzRtArea(mzCentroid, rtCentroid);
                 featureArea.getMassTrace().add(rtStats.getMin() / 60.0);
                 featureArea.getMassTrace().add(mzStats.getMin());
@@ -416,7 +461,8 @@ public class ConsensusXMLProcessorFactory {
             writer.write(m.createXmlHeader() + "\n");
 
             // mzQuantML start tag
-            writer.write(m.createMzQuantMLStartTag("consensusXML" + System.currentTimeMillis()) + "\n");
+            writer.write(m.createMzQuantMLStartTag("consensusXML" + System.
+                    currentTimeMillis()) + "\n");
 
             // CvList
             CvList cvs = new CvList();
@@ -426,21 +472,31 @@ public class ConsensusXMLProcessorFactory {
 
             // AnalysisSummary
             AnalysisSummary analysisSummary = new AnalysisSummary();
-            analysisSummary.getParamGroup().add(m.createCvParam("LC-MS label-free quantitation analysis", "PSI-MS", "MS:1001834"));
+            analysisSummary.getParamGroup().add(m.createCvParam(
+                    "LC-MS label-free quantitation analysis", "PSI-MS",
+                    "MS:1001834"));
 
-            CvParam analysisSummaryCv = m.createCvParam("label-free raw feature quantitation", "PSI-MS", "MS:1002019");
+            CvParam analysisSummaryCv = m.createCvParam(
+                    "label-free raw feature quantitation", "PSI-MS",
+                    "MS:1002019");
             analysisSummaryCv.setValue("false");
             analysisSummary.getParamGroup().add(analysisSummaryCv);
 
-            analysisSummaryCv = m.createCvParam("label-free peptide level quantitation", "PSI-MS", "MS:1002020");
+            analysisSummaryCv = m.createCvParam(
+                    "label-free peptide level quantitation", "PSI-MS",
+                    "MS:1002020");
             analysisSummaryCv.setValue("true");
             analysisSummary.getParamGroup().add(analysisSummaryCv);
 
-            analysisSummaryCv = m.createCvParam("label-free protein level quantitation", "PSI-MS", "MS:1002021");
+            analysisSummaryCv = m.createCvParam(
+                    "label-free protein level quantitation", "PSI-MS",
+                    "MS:1002021");
             analysisSummaryCv.setValue("false");
             analysisSummary.getParamGroup().add(analysisSummaryCv);
 
-            analysisSummaryCv = m.createCvParam("label-free proteingroup level quantitation", "PSI-MS", "MS:1002022");
+            analysisSummaryCv = m.createCvParam(
+                    "label-free proteingroup level quantitation", "PSI-MS",
+                    "MS:1002022");
             analysisSummaryCv.setValue("false");
             analysisSummary.getParamGroup().add(analysisSummaryCv);
 
@@ -459,7 +515,8 @@ public class ConsensusXMLProcessorFactory {
             softwareList.getSoftware().add(software);
             software.setId("OpenMS");
             software.setVersion("1.11.1");
-            software.getCvParam().add(m.createCvParam("TOPP software", "PSI-MS", "MS:1000752"));
+            software.getCvParam().add(m.createCvParam("TOPP software", "PSI-MS",
+                                                      "MS:1000752"));
             m.marshall(softwareList, writer);
             writer.write("\n");
 
@@ -468,13 +525,17 @@ public class ConsensusXMLProcessorFactory {
             writer.write("\n");
 
             // StudyVariableList
-            if (studyVariablesToFiles != null && studyVariablesToFiles.size() > 0) {
+            if (studyVariablesToFiles != null && studyVariablesToFiles.size()
+                    > 0) {
                 StudyVariableList studyVariables = new StudyVariableList();
-                for (Entry<String, ? extends Collection<File>> entry : studyVariablesToFiles.entrySet()) {
+                for (Entry<String, ? extends Collection<File>> entry
+                        : studyVariablesToFiles.entrySet()) {
                     StudyVariable variable = new StudyVariable();
                     variable.setId("std_var_" + entry.getKey());
                     variable.setName(entry.getKey());
-                    List<Assay> matchedAssays = entry.getValue().stream().map(file -> filesToAssays.get(file)).collect(Collectors.toList());
+                    List<Assay> matchedAssays = entry.getValue().stream().map(
+                            file -> filesToAssays.get(file)).collect(Collectors.
+                                    toList());
                     variable.setAssays(matchedAssays);
                     studyVariables.getStudyVariable().add(variable);
                 }
@@ -487,7 +548,8 @@ public class ConsensusXMLProcessorFactory {
             m.marshall(this.getPeptideConsensusList(), writer);
             writer.write("\n");
 
-            for (FeatureList ftList : this.getRawFilesGroupIdToFeatureListMap().values()) {
+            for (FeatureList ftList : this.getRawFilesGroupIdToFeatureListMap().
+                    values()) {
                 m.marshall(ftList, writer);
                 writer.write("\n");
             }

@@ -47,7 +47,9 @@ public class MzqLib {
         initialize();
         int type = getType(typeStr);
         if (type == 0) {
-            System.out.println("Unrecognized converter type. Please use one value in the collection of " + converterTypeMap.keySet().toString());
+            System.out.println(
+                    "Unrecognized converter type. Please use one value in the collection of "
+                    + converterTypeMap.keySet().toString());
             printUsage();
         }
         parseMzq(mzqFile);
@@ -80,7 +82,8 @@ public class MzqLib {
     private void parseMzq(String mzqFile) {
         File file = new File(mzqFile);
         if (!file.exists()) {
-            throw new IllegalStateException("Can not find the specified file:" + file.getAbsolutePath());
+            throw new IllegalStateException("Can not find the specified file:"
+                    + file.getAbsolutePath());
         }
         //boolean validFlag = Utils.validateMzqFile(mzqFile);
 //        if(!validFlag){
@@ -98,13 +101,16 @@ public class MzqLib {
         data.addRatios(unmarshaller.unmarshal(RatioList.class));
 
         List<FeatureList> features = new ArrayList<>();
-        Iterator<FeatureList> featureIterator = unmarshaller.unmarshalCollectionFromXpath(MzQuantMLElement.FeatureList);
+        Iterator<FeatureList> featureIterator = unmarshaller.
+                unmarshalCollectionFromXpath(MzQuantMLElement.FeatureList);
         while (featureIterator.hasNext()) {
             features.add(featureIterator.next());
         }
         data.addFeatures(features);
 
-        Iterator<PeptideConsensusList> peptideConsensusLists = unmarshaller.unmarshalCollectionFromXpath(MzQuantMLElement.PeptideConsensusList);
+        Iterator<PeptideConsensusList> peptideConsensusLists = unmarshaller.
+                unmarshalCollectionFromXpath(
+                        MzQuantMLElement.PeptideConsensusList);
         while (peptideConsensusLists.hasNext()) {
             PeptideConsensusList pcList = peptideConsensusLists.next();
             if (pcList.isFinalResult()) {
@@ -113,9 +119,11 @@ public class MzqLib {
             }
         }
 
-        ProteinList proteinList = unmarshaller.unmarshal(MzQuantMLElement.ProteinList);
+        ProteinList proteinList = unmarshaller.unmarshal(
+                MzQuantMLElement.ProteinList);
         data.addProteins(proteinList);
-        ProteinGroupList pgList = unmarshaller.unmarshal(MzQuantMLElement.ProteinGroupList);
+        ProteinGroupList pgList = unmarshaller.unmarshal(
+                MzQuantMLElement.ProteinGroupList);
         data.addProteinGroups(pgList);
 
 //	<xsd:element name="SoftwareList" type="SoftwareListType" minOccurs="1" maxOccurs="1"/>
@@ -172,11 +180,13 @@ public class MzqLib {
     }
 
     private static void printUsage() {
-        System.out.println("Usage: java -jar mzqlib.jar <converter type> <mzQuantML file> [output file]");
+        System.out.println(
+                "Usage: java -jar mzqlib.jar <converter type> <mzQuantML file> [output file]");
 //        System.out.println("There are two ways of using mzqlib jar file:");
 //        System.out.println("1. without options: it will present a GUI");
 //        System.out.println("2. with options: the first option must be the type of the output file type, now supports csv, mztab,html and xls\n\tthe second option is the mzquantml file which needs to be converted\n\tThe third option is optional, which defines the name of the output file");
-        System.out.println("The first parameter specifies the type of the output file type, now supports csv, mztab,html and xls.\nThe second parameter is the mzquantml file which needs to be converted\nThe third parameter is optional, which defines the name of the output file");
+        System.out.println(
+                "The first parameter specifies the type of the output file type, now supports csv, mztab,html and xls.\nThe second parameter is the mzquantml file which needs to be converted\nThe third parameter is optional, which defines the name of the output file");
         System.out.println("For example java -jar mzqlib.jar html example.mzq");
         //System.exit(0);
     }

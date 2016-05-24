@@ -25,7 +25,8 @@ public class MzidToMzqElementConverter {
         for (uk.ac.ebi.jmzidml.model.mzidml.Modification mzidMod : modifications) {
             Modification mzqMod = new Modification();
             List<CvParam> mzqCps;
-            List<uk.ac.ebi.jmzidml.model.mzidml.CvParam> mzidCps = mzidMod.getCvParam();
+            List<uk.ac.ebi.jmzidml.model.mzidml.CvParam> mzidCps = mzidMod.
+                    getCvParam();
             if (!mzidCps.isEmpty()) {
                 mzqCps = new ArrayList();
                 for (uk.ac.ebi.jmzidml.model.mzidml.CvParam mzidCp : mzidCps) {
@@ -126,7 +127,9 @@ public class MzidToMzqElementConverter {
         FileFormat mzqFF = new FileFormat();
 
         if (mzidFF.getCvParam() != null) {
-            mzqFF.setCvParam(convertMzidCvParamToMzqCvParam(mzidFF.getCvParam()));
+            mzqFF.
+                    setCvParam(convertMzidCvParamToMzqCvParam(mzidFF.
+                                    getCvParam()));
         }
 
         return mzqFF;
@@ -155,30 +158,37 @@ public class MzidToMzqElementConverter {
             sDB.setVersion(searchDatabase.getVersion());
         }
 
-        uk.ac.ebi.jmzidml.model.mzidml.Param mzidDBNameParam = searchDatabase.getDatabaseName();
+        uk.ac.ebi.jmzidml.model.mzidml.Param mzidDBNameParam = searchDatabase.
+                getDatabaseName();
         if (mzidDBNameParam != null) {
             Param mzqDBNameParam = new Param();
             if (mzidDBNameParam.getCvParam() != null) {
-                mzqDBNameParam.setParam(convertMzidCvParamToMzqCvParam(mzidDBNameParam.getCvParam()));
+                mzqDBNameParam.setParam(convertMzidCvParamToMzqCvParam(
+                        mzidDBNameParam.getCvParam()));
             }
             if (mzidDBNameParam.getUserParam() != null) {
-                mzqDBNameParam.setParam(convertMzidUserParamToMzqUserParam(mzidDBNameParam.getUserParam()));
+                mzqDBNameParam.setParam(convertMzidUserParamToMzqUserParam(
+                        mzidDBNameParam.getUserParam()));
             }
             sDB.setDatabaseName(mzqDBNameParam);
         }
 
-        if (searchDatabase.getCvParam() != null && !searchDatabase.getCvParam().isEmpty()) {
-            for (uk.ac.ebi.jmzidml.model.mzidml.CvParam cp : searchDatabase.getCvParam()) {
+        if (searchDatabase.getCvParam() != null && !searchDatabase.getCvParam().
+                isEmpty()) {
+            for (uk.ac.ebi.jmzidml.model.mzidml.CvParam cp : searchDatabase.
+                    getCvParam()) {
                 sDB.getCvParam().add(convertMzidCvParamToMzqCvParam(cp));
             }
         }
 
         // convert FileFormat
-        uk.ac.ebi.jmzidml.model.mzidml.FileFormat mzidFF = searchDatabase.getFileFormat();
+        uk.ac.ebi.jmzidml.model.mzidml.FileFormat mzidFF = searchDatabase.
+                getFileFormat();
 
         if (mzidFF != null) {
             //FileFormat mzqFF = 
-            MzidToMzqElementConverter.convertMzidFileFormatToMzqFileFormat(mzidFF);
+            MzidToMzqElementConverter.convertMzidFileFormatToMzqFileFormat(
+                    mzidFF);
         }
 
         return sDB;

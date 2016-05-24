@@ -1,3 +1,4 @@
+
 package uk.ac.liv.mzqlib.view;
 
 import java.io.File;
@@ -37,8 +38,10 @@ public class HeatMapPdfController {
     @FXML
     private void handleHeatMapinR() {
 
-        if (NumberUtils.isNumber(pdfH.getText()) && NumberUtils.isNumber(pdfW.getText())
-                && !pdfH.getText().trim().equals("0") && !pdfW.getText().trim().equals("0")) {
+        if (NumberUtils.isNumber(pdfH.getText()) && NumberUtils.isNumber(pdfW.
+                getText())
+                && !pdfH.getText().trim().equals("0") && !pdfW.getText().trim().
+                equals("0")) {
             //mainApp.showHeatMapinR(Double.parseDouble(pdfH.getText()),
             //                       Double.parseDouble(pdfW.getText()));
 
@@ -47,12 +50,13 @@ public class HeatMapPdfController {
 
             if (mainApp.getLastFilePath() != null) {
                 fileChooser.setInitialDirectory(mainApp.getLastFilePath());
-            }
-            else {
-                fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+            } else {
+                fileChooser.setInitialDirectory(new File(System.getProperty(
+                        "user.home")));
             }
             // Set extension filter
-            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF (*.pdf)", "*.pdf");
+            FileChooser.ExtensionFilter extFilter
+                    = new FileChooser.ExtensionFilter("PDF (*.pdf)", "*.pdf");
             fileChooser.getExtensionFilters().add(extFilter);
 
             // Set the title for file dialog
@@ -66,12 +70,12 @@ public class HeatMapPdfController {
                 double pdfWValue = Double.parseDouble(pdfW.getText().trim());
                 mainApp.saveHeatMapPdf(pdfFile, pdfHValue, pdfWValue);
             }
-        }
-        else {
+        } else {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Something wrong with the input demension!");
             alert.setHeaderText(null);
-            alert.setContentText("The input Height or Width is invalid or empty. They must be numbers.");
+            alert.setContentText(
+                    "The input Height or Width is invalid or empty. They must be numbers.");
             alert.showAndWait();
 //            Action response = Dialogs.create()
 //                    .title("Something wrong with the input demension!")

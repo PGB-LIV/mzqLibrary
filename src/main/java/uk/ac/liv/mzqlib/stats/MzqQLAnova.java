@@ -65,21 +65,24 @@ public class MzqQLAnova {
      * Constructor
      *
      * @param mzqFile       the input mzQuantML file
-     * @param listType      type of the list, e.g. "ProteinGroup", "Protein", or "Peptide"
+     * @param listType      type of the list, e.g. "ProteinGroup", "Protein", or
+     *                      "Peptide"
      * @param assayIDsGroup list of assay list to be in ANOVA calculation
      * @param qlDataType    CV accession identifying data type of QuantLayer
      */
     public MzqQLAnova(File mzqFile, String listType,
                       List<List<String>> assayIDsGroup,
                       String qlDataType) {
-        this(new MzQuantMLUnmarshaller(mzqFile), listType, assayIDsGroup, qlDataType);
+        this(new MzQuantMLUnmarshaller(mzqFile), listType, assayIDsGroup,
+             qlDataType);
     }
 
     /**
      * Constructor
      *
      * @param mzqFileName   the input mzQuantML file name
-     * @param listType      type of the list, e.g. "ProteinGroup", "Protein", or "Peptide"
+     * @param listType      type of the list, e.g. "ProteinGroup", "Protein", or
+     *                      "Peptide"
      * @param assayIDsGroup list of assay list to be in ANOVA calculation
      * @param qlDataType    CV accession identifying data type of QuantLayer
      */
@@ -93,41 +96,53 @@ public class MzqQLAnova {
      * Constructor
      *
      * @param um                  the input MzQuantMLUnmarshaller
-     * @param listType            type of the list, e.g. "ProteinGroup", "Protein", or "Peptide"
-     * @param assayIDsGroupString flat string of assay ids group to be in ANOVA calculation
-     * @param qlDataType          CV accession identifying data type of QuantLayer
+     * @param listType            type of the list, e.g. "ProteinGroup",
+     *                            "Protein", or "Peptide"
+     * @param assayIDsGroupString flat string of assay ids group to be in ANOVA
+     *                            calculation
+     * @param qlDataType          CV accession identifying data type of
+     *                            QuantLayer
      */
     public MzqQLAnova(MzQuantMLUnmarshaller um, String listType,
                       String assayIDsGroupString, String qlDataType) {
-        this(um, listType, assayIDsGroupConverter(assayIDsGroupString), qlDataType);
+        this(um, listType, assayIDsGroupConverter(assayIDsGroupString),
+             qlDataType);
     }
 
     /**
      * Constructor
      *
      * @param mzqFile             the input mzQuantML file
-     * @param listType            type of the list, e.g. "ProteinGroup", "Protein", or "Peptide"
-     * @param assayIDsGroupString flat string of assay ids group to be in ANOVA calculation
-     * @param qlDataType          CV accession identifying data type of QuantLayer
+     * @param listType            type of the list, e.g. "ProteinGroup",
+     *                            "Protein", or "Peptide"
+     * @param assayIDsGroupString flat string of assay ids group to be in ANOVA
+     *                            calculation
+     * @param qlDataType          CV accession identifying data type of
+     *                            QuantLayer
      */
     public MzqQLAnova(File mzqFile, String listType,
                       String assayIDsGroupString,
                       String qlDataType) {
-        this(new MzQuantMLUnmarshaller(mzqFile), listType, assayIDsGroupConverter(assayIDsGroupString), qlDataType);
+        this(new MzQuantMLUnmarshaller(mzqFile), listType,
+             assayIDsGroupConverter(assayIDsGroupString), qlDataType);
     }
 
     /**
      * Constructor
      *
      * @param mzqFileName         the input mzQuantML file name
-     * @param listType            type of the list, e.g. "ProteinGroup", "Protein", or "Peptide"
-     * @param assayIDsGroupString flat string of assay ids group to be in ANOVA calculation
-     * @param qlDataType          CV accession identifying data type of QuantLayer
+     * @param listType            type of the list, e.g. "ProteinGroup",
+     *                            "Protein", or "Peptide"
+     * @param assayIDsGroupString flat string of assay ids group to be in ANOVA
+     *                            calculation
+     * @param qlDataType          CV accession identifying data type of
+     *                            QuantLayer
      */
     public MzqQLAnova(String mzqFileName, String listType,
                       String assayIDsGroupString,
                       String qlDataType) {
-        this(new File(mzqFileName), listType, assayIDsGroupConverter(assayIDsGroupString), qlDataType);
+        this(new File(mzqFileName), listType, assayIDsGroupConverter(
+             assayIDsGroupString), qlDataType);
     }
 
     /**
@@ -147,17 +162,24 @@ public class MzqQLAnova {
         AnalysisSummary as = mzqUm.unmarshal(MzQuantMLElement.AnalysisSummary);
         InputFiles inputFiles = mzqUm.unmarshal(MzQuantMLElement.InputFiles);
         SoftwareList softList = mzqUm.unmarshal(MzQuantMLElement.SoftwareList);
-        DataProcessingList dpList = mzqUm.unmarshal(MzQuantMLElement.DataProcessingList);
+        DataProcessingList dpList = mzqUm.unmarshal(
+                MzQuantMLElement.DataProcessingList);
         Iterator<BibliographicReference> brIter
-                = mzqUm.unmarshalCollectionFromXpath(MzQuantMLElement.BibliographicReference);
+                = mzqUm.unmarshalCollectionFromXpath(
+                        MzQuantMLElement.BibliographicReference);
         AssayList assayList = mzqUm.unmarshal(MzQuantMLElement.AssayList);
-        StudyVariableList svList = mzqUm.unmarshal(MzQuantMLElement.StudyVariableList);
-        ProteinGroupList protGrpList = mzqUm.unmarshal(MzQuantMLElement.ProteinGroupList);
+        StudyVariableList svList = mzqUm.unmarshal(
+                MzQuantMLElement.StudyVariableList);
+        ProteinGroupList protGrpList = mzqUm.unmarshal(
+                MzQuantMLElement.ProteinGroupList);
         ProteinList protList = mzqUm.unmarshal(MzQuantMLElement.ProteinList);
         Iterator<PeptideConsensusList> pepConListIter
-                = mzqUm.unmarshalCollectionFromXpath(MzQuantMLElement.PeptideConsensusList);
-        Iterator<FeatureList> ftListIter = mzqUm.unmarshalCollectionFromXpath(MzQuantMLElement.FeatureList);
-        SmallMoleculeList smallMolList = mzqUm.unmarshal(MzQuantMLElement.SmallMoleculeList);
+                = mzqUm.unmarshalCollectionFromXpath(
+                        MzQuantMLElement.PeptideConsensusList);
+        Iterator<FeatureList> ftListIter = mzqUm.unmarshalCollectionFromXpath(
+                MzQuantMLElement.FeatureList);
+        SmallMoleculeList smallMolList = mzqUm.unmarshal(
+                MzQuantMLElement.SmallMoleculeList);
 
         // Add GlobaQuantLayer to designated list
         switch (listType) {
@@ -166,9 +188,9 @@ public class MzqQLAnova {
                     GlobalQuantLayer pgGQL = getAnovaGlobalQuantLayer();
                     pgGQL.setId("PG_GQL");
                     protGrpList.getGlobalQuantLayer().add(pgGQL);
-                }
-                else {
-                    throw new RuntimeException("There is no ProteinGroupList in the input mzQuantML file.");
+                } else {
+                    throw new RuntimeException(
+                            "There is no ProteinGroupList in the input mzQuantML file.");
                 }
                 break;
             case "Protein":
@@ -176,14 +198,15 @@ public class MzqQLAnova {
                     GlobalQuantLayer prGQL = getAnovaGlobalQuantLayer();
                     prGQL.setId("PR_GQL");
                     protList.getGlobalQuantLayer().add(prGQL);
-                }
-                else {
-                    throw new RuntimeException("There is no ProteinList in the input mzQuantML file.");
+                } else {
+                    throw new RuntimeException(
+                            "There is no ProteinList in the input mzQuantML file.");
                 }
                 break;
             default:
                 //TODO: do nothing or throw exception?
-                throw new RuntimeException("Please provide valid name of list type such as \"ProtienGroup\" or \"Protein\".");
+                throw new RuntimeException(
+                        "Please provide valid name of list type such as \"ProtienGroup\" or \"Protein\".");
         }
 
         OutputStreamWriter writer;
@@ -197,7 +220,8 @@ public class MzqQLAnova {
             writer.write(MzQuantMLMarshaller.createXmlHeader() + '\n');
 
             // mzQuantML start tag
-            writer.write(MzQuantMLMarshaller.createMzQuantMLStartTag(mzqId) + '\n');
+            writer.write(MzQuantMLMarshaller.createMzQuantMLStartTag(mzqId)
+                    + '\n');
 
             if (cvList != null) {
                 mzqMsh.marshall(cvList, writer);
@@ -267,9 +291,9 @@ public class MzqQLAnova {
 
             writer.write(MzQuantMLMarshaller.createMzQuantMLClosingTag());
             writer.close();
-        }
-        catch (IOException ex) {
-            Logger.getLogger(MzqQLAnova.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MzqQLAnova.class.getName()).log(Level.SEVERE, null,
+                                                             ex);
         }
     }
 
@@ -287,7 +311,9 @@ public class MzqQLAnova {
         ColumnDefinition colDef = new ColumnDefinition();
         Column col = new Column();
         CvParamRef cpRef = new CvParamRef();
-        cpRef.setCvParam(MzQuantMLMarshaller.createCvParam("ANOVA p-value", "PSI-MS", "MS:1001854"));
+        cpRef.setCvParam(MzQuantMLMarshaller.createCvParam("ANOVA p-value",
+                                                           "PSI-MS",
+                                                           "MS:1001854"));
         col.setDataType(cpRef);
         col.setIndex(BigInteger.ZERO);
         colDef.getColumn().add(col);
@@ -311,7 +337,8 @@ public class MzqQLAnova {
     /**
      * Get Anova p-value map from the existing settings from the constructor
      *
-     * @return map of object reference from each row to the calculated p-value (doulbe)
+     * @return map of object reference from each row to the calculated p-value
+     *         (doulbe)
      *
      * @throws JAXBException
      */
@@ -321,41 +348,51 @@ public class MzqQLAnova {
         boolean dataTypeFound = false;
         switch (listType) {
             case "ProteinGroup":
-                ProteinGroupList protGrpList = this.mzqUm.unmarshal(MzQuantMLElement.ProteinGroupList);
+                ProteinGroupList protGrpList = this.mzqUm.unmarshal(
+                        MzQuantMLElement.ProteinGroupList);
                 if (protGrpList != null) {
-                    List<QuantLayer<IdOnly>> assayQLs = protGrpList.getAssayQuantLayer();
+                    List<QuantLayer<IdOnly>> assayQLs = protGrpList.
+                            getAssayQuantLayer();
 
                     for (QuantLayer<IdOnly> assayQL : assayQLs) {
-                        if (assayQL.getDataType().getCvParam().getAccession().equals(qlDataType)) {
+                        if (assayQL.getDataType().getCvParam().getAccession().
+                                equals(qlDataType)) {
                             dataTypeFound = true;
                             anovaPValueMap = calculatePValueFromQL(assayQL);
                         }
                     }
                     if (!dataTypeFound) {
-                        throw new RuntimeException("Cannot find the QuantLayer with data type of: " + qlDataType);
+                        throw new RuntimeException(
+                                "Cannot find the QuantLayer with data type of: "
+                                + qlDataType);
                     }
-                }
-                else {
-                    throw new RuntimeException("There is no ProteinGroupList in the input mzQuantML file.");
+                } else {
+                    throw new RuntimeException(
+                            "There is no ProteinGroupList in the input mzQuantML file.");
                 }
                 break;
             case "Protein":
-                ProteinList protList = this.mzqUm.unmarshal(MzQuantMLElement.ProteinList);
+                ProteinList protList = this.mzqUm.unmarshal(
+                        MzQuantMLElement.ProteinList);
                 if (protList != null) {
-                    List<QuantLayer<IdOnly>> assayQLs = protList.getAssayQuantLayer();
+                    List<QuantLayer<IdOnly>> assayQLs = protList.
+                            getAssayQuantLayer();
 
                     for (QuantLayer<IdOnly> assayQL : assayQLs) {
-                        if (assayQL.getDataType().getCvParam().getName().equals(qlDataType)) {
+                        if (assayQL.getDataType().getCvParam().getName().equals(
+                                qlDataType)) {
                             dataTypeFound = true;
                             anovaPValueMap = calculatePValueFromQL(assayQL);
                         }
                     }
                     if (!dataTypeFound) {
-                        throw new RuntimeException("Cannot find the QuantLayer with data type of: " + qlDataType);
+                        throw new RuntimeException(
+                                "Cannot find the QuantLayer with data type of: "
+                                + qlDataType);
                     }
-                }
-                else {
-                    throw new RuntimeException("There is no ProteinList in the input mzQuantML file.");
+                } else {
+                    throw new RuntimeException(
+                            "There is no ProteinList in the input mzQuantML file.");
                 }
                 break;
 //            case "Peptide":
@@ -363,18 +400,22 @@ public class MzqQLAnova {
 //                break;
             default:
                 //TODO: do nothing or throw exception?
-                throw new RuntimeException("Please provide valid name of list type such as \"ProtienGroup\" or \"Protein\".");
+                throw new RuntimeException(
+                        "Please provide valid name of list type such as \"ProtienGroup\" or \"Protein\".");
         }
 
         return anovaPValueMap;
     }
 
     /**
-     * Calculate the Anova p-value based on the existing setting from a single QuantLayer
+     * Calculate the Anova p-value based on the existing setting from a single
+     * QuantLayer
      *
-     * @param assayQL the QuantLayer (AssayQuantLayer) to be used for Anova p-value calculation
+     * @param assayQL the QuantLayer (AssayQuantLayer) to be used for Anova
+     *                p-value calculation
      *
-     * @return map of object reference from each row to the calculated p-value (doulbe)
+     * @return map of object reference from each row to the calculated p-value
+     *         (doulbe)
      */
     private TObjectDoubleMap<String> calculatePValueFromQL(
             QuantLayer<IdOnly> assayQL) {
@@ -389,9 +430,9 @@ public class MzqQLAnova {
             for (String assayID : assayIDs) {
                 if (assayQL.getColumnIndex().indexOf(assayID) != -1) {
                     assayPosList.add(assayQL.getColumnIndex().indexOf(assayID));
-                }
-                else {
-                    throw new RuntimeException("Cannot find " + assayID + " in ColumnIndex.");
+                } else {
+                    throw new RuntimeException("Cannot find " + assayID
+                            + " in ColumnIndex.");
                 }
             }
             assayPosListList.add(assayPosList);
@@ -418,9 +459,9 @@ public class MzqQLAnova {
                             numberOfZero.increment();
                         }
                         doubleList.add(Math.log10(valueD));
-                    }
-                    else {
-                        throw new RuntimeException(valueString + " is not a number.");
+                    } else {
+                        throw new RuntimeException(valueString
+                                + " is not a number.");
                     }
 
                     return true;
@@ -450,7 +491,8 @@ public class MzqQLAnova {
 
     /**
      * Convert input flat assay ids group into list of assay id list.
-     * The whole string is divided into groups which are separated by ";" (semicolon)
+     * The whole string is divided into groups which are separated by ";"
+     * (semicolon)
      * and in each group, the member assay ids are separated by "," (comma).
      *
      * @param assayIDsGroupString the input string of assay ids groups

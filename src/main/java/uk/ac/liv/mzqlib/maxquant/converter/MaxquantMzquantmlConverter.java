@@ -104,40 +104,36 @@ public class MaxquantMzquantmlConverter {
         // Initialise evidenceFile
         if (!evidenceFn.isEmpty()) {
             evidenceFile = new File(evidenceFn);
-        }
-        else {
+        } else {
             evidenceFile = null;
         }
 
         // Initialise peptidesFile
         if (!peptidesFn.isEmpty()) {
             peptidesFile = new File(peptidesFn);
-        }
-        else {
+        } else {
             peptidesFile = null;
         }
 
         // Initialise proteinGroupsFile
         if (!proteinGroupsFn.isEmpty()) {
             proteinGroupsFile = new File(proteinGroupsFn);
-        }
-        else {
+        } else {
             proteinGroupsFile = null;
         }
 
         // Initialise experimentalDesignTemplateFile
         if (!experimentalDesignTemplateFn.isEmpty()) {
-            experimentalDesignTemplateFile = new File(experimentalDesignTemplateFn);
-        }
-        else {
+            experimentalDesignTemplateFile = new File(
+                    experimentalDesignTemplateFn);
+        } else {
             experimentalDesignTemplateFile = null;
         }
 
         // Initialise parametersFile
         if (!summaryFn.isEmpty()) {
             summaryFile = new File(summaryFn);
-        }
-        else {
+        } else {
             summaryFile = null;
         }
         this.maxRd = new MaxquantFilesReader(evidenceFile,
@@ -154,8 +150,10 @@ public class MaxquantMzquantmlConverter {
         // psi-ms
         cv = new Cv();
         cv.setId("PSI-MS");
-        cv.setUri("http://psidev.cvs.sourceforge.net/viewvc/*checkout*/psidev/psi/psi-ms/mzML/controlledVocabulary/psi-ms.obo");
-        cv.setFullName("Proteomics Standards Initiative Mass Spectrometry Vocabularies");
+        cv.setUri(
+                "http://psidev.cvs.sourceforge.net/viewvc/*checkout*/psidev/psi/psi-ms/mzML/controlledVocabulary/psi-ms.obo");
+        cv.setFullName(
+                "Proteomics Standards Initiative Mass Spectrometry Vocabularies");
         cv.setVersion("2.25.0");
         cvs.add(cv);
 
@@ -169,8 +167,10 @@ public class MaxquantMzquantmlConverter {
         //psi-mod
         cv_mod = new Cv();
         cv_mod.setId("PSI-MOD");
-        cv_mod.setUri("http://psidev.cvs.sourceforge.net/psidev/psi/mod/data/PSI-MOD.obo");
-        cv_mod.setFullName("Proteomics Standards Initiative Protein Modifications Vocabularies");
+        cv_mod.setUri(
+                "http://psidev.cvs.sourceforge.net/psidev/psi/mod/data/PSI-MOD.obo");
+        cv_mod.setFullName(
+                "Proteomics Standards Initiative Protein Modifications Vocabularies");
         cvs.add(cv_mod);
 
         label = new Label();
@@ -189,40 +189,58 @@ public class MaxquantMzquantmlConverter {
 
         if (maxRd.isLabelFree()) {
 
-            as.getParamGroup().add(createCvParam("LC-MS label-free quantitation analysis", "PSI-MS", "MS:1001834"));
+            as.getParamGroup().add(createCvParam(
+                    "LC-MS label-free quantitation analysis", "PSI-MS",
+                    "MS:1001834"));
 
-            CvParam analysisSummaryCv = createCvParam("label-free raw feature quantitation", "PSI-MS", "MS:1002019");
+            CvParam analysisSummaryCv = createCvParam(
+                    "label-free raw feature quantitation", "PSI-MS",
+                    "MS:1002019");
             analysisSummaryCv.setValue("true");
             as.getParamGroup().add(analysisSummaryCv);
 
-            analysisSummaryCv = createCvParam("label-free peptide level quantitation", "PSI-MS", "MS:1002020");
+            analysisSummaryCv = createCvParam(
+                    "label-free peptide level quantitation", "PSI-MS",
+                    "MS:1002020");
             analysisSummaryCv.setValue("true");
             as.getParamGroup().add(analysisSummaryCv);
 
-            analysisSummaryCv = createCvParam("label-free protein level quantitation", "PSI-MS", "MS:1002021");
+            analysisSummaryCv = createCvParam(
+                    "label-free protein level quantitation", "PSI-MS",
+                    "MS:1002021");
             analysisSummaryCv.setValue("true");
             as.getParamGroup().add(analysisSummaryCv);
 
-            analysisSummaryCv = createCvParam("label-free proteingroup level quantitation", "PSI-MS", "MS:1002022");
+            analysisSummaryCv = createCvParam(
+                    "label-free proteingroup level quantitation", "PSI-MS",
+                    "MS:1002022");
             analysisSummaryCv.setValue("false");
             as.getParamGroup().add(analysisSummaryCv);
-        }
-        else {
-            as.getParamGroup().add(createCvParam("MS1 label-based analysis", "PSI-MS", "MS:1002018"));
+        } else {
+            as.getParamGroup().add(createCvParam("MS1 label-based analysis",
+                                                 "PSI-MS", "MS:1002018"));
 
-            CvParam analysisSummaryCv = createCvParam("MS1 label-based raw feature quantitation", "PSI-MS", "MS:1002001");
+            CvParam analysisSummaryCv = createCvParam(
+                    "MS1 label-based raw feature quantitation", "PSI-MS",
+                    "MS:1002001");
             analysisSummaryCv.setValue("true");
             as.getParamGroup().add(analysisSummaryCv);
 
-            analysisSummaryCv = createCvParam("MS1 label-based peptide level quantitation", "PSI-MS", "MS:1002002");
+            analysisSummaryCv = createCvParam(
+                    "MS1 label-based peptide level quantitation", "PSI-MS",
+                    "MS:1002002");
             analysisSummaryCv.setValue("true");
             as.getParamGroup().add(analysisSummaryCv);
 
-            analysisSummaryCv = createCvParam("MS1 label-based protein level quantitation", "PSI-MS", "MS:1002003");
+            analysisSummaryCv = createCvParam(
+                    "MS1 label-based protein level quantitation", "PSI-MS",
+                    "MS:1002003");
             analysisSummaryCv.setValue("true");
             as.getParamGroup().add(analysisSummaryCv);
 
-            analysisSummaryCv = createCvParam("MS1 label-based proteingroup level quantitation", "PSI-MS", "MS:1002004");
+            analysisSummaryCv = createCvParam(
+                    "MS1 label-based proteingroup level quantitation", "PSI-MS",
+                    "MS:1002004");
             analysisSummaryCv.setValue("false");
             as.getParamGroup().add(analysisSummaryCv);
         }
@@ -261,7 +279,8 @@ public class MaxquantMzquantmlConverter {
         softList.getSoftware().add(software);
         software.setId("MaxQuant");
         software.setVersion("1.2.0.18");
-        software.getCvParam().add(createCvParam("MaxQuant", "PSI-MS", "MS:1001583"));
+        software.getCvParam().add(createCvParam("MaxQuant", "PSI-MS",
+                                                "MS:1001583"));
     }
 
     private void createInputFiles() {
@@ -339,8 +358,10 @@ public class MaxquantMzquantmlConverter {
              * find the corresponding rawFilesGroup from inputFiles
              */
             RawFilesGroup rawFilesGroup = new RawFilesGroup();
-            String rawFileName = (String) maxRd.getAssayRawFileMap().get(assName);
-            rawFilesGroup.setId("rg_" + rawFileNameIdMap.get(rawFileName).substring(4));
+            String rawFileName = (String) maxRd.getAssayRawFileMap().
+                    get(assName);
+            rawFilesGroup.setId("rg_" + rawFileNameIdMap.get(rawFileName).
+                    substring(4));
 
             assay.setRawFilesGroup(rawFilesGroup);
 
@@ -352,35 +373,34 @@ public class MaxquantMzquantmlConverter {
             else //TODO: this is fixed label modification just used for example file
             //TODO: need to find a better way to form this later
             //find out if it is light or heavy label assay
-             if (assName.toLowerCase(Locale.ENGLISH).contains("light")) {
-                    assay.setLabel(label);
-                    assays.add(assay);
-                }
-                else if (assName.toLowerCase(Locale.ENGLISH).contains("heavy")) {
-                    Label label_heavy = new Label();
-                    CvParam label_lysine = new CvParam();
-                    label_lysine.setAccession("MOD:00582");
-                    label_lysine.setName("6x(13)C,2x(15)N labeled L-lysine");
-                    label_lysine.setCv(cv_mod);
-                    label_lysine.setValue("Lys8");
+            if (assName.toLowerCase(Locale.ENGLISH).contains("light")) {
+                assay.setLabel(label);
+                assays.add(assay);
+            } else if (assName.toLowerCase(Locale.ENGLISH).contains("heavy")) {
+                Label label_heavy = new Label();
+                CvParam label_lysine = new CvParam();
+                label_lysine.setAccession("MOD:00582");
+                label_lysine.setName("6x(13)C,2x(15)N labeled L-lysine");
+                label_lysine.setCv(cv_mod);
+                label_lysine.setValue("Lys8");
 
-                    CvParam label_arginine = new CvParam();
-                    label_arginine.setAccession("MOD:00587");
-                    label_arginine.setName("6x(13)C,4x(15)N labeled L-arginine");
-                    label_arginine.setCv(cv_mod);
-                    label_arginine.setValue("Arg10");
+                CvParam label_arginine = new CvParam();
+                label_arginine.setAccession("MOD:00587");
+                label_arginine.setName("6x(13)C,4x(15)N labeled L-arginine");
+                label_arginine.setCv(cv_mod);
+                label_arginine.setValue("Arg10");
 
-                    ModParam modParam_lysine = new ModParam();
-                    modParam_lysine.setCvParam(label_lysine);
-                    label_heavy.getModification().add(modParam_lysine);
+                ModParam modParam_lysine = new ModParam();
+                modParam_lysine.setCvParam(label_lysine);
+                label_heavy.getModification().add(modParam_lysine);
 
-                    ModParam modParam_arginine = new ModParam();
-                    modParam_arginine.setCvParam(label_arginine);
-                    label_heavy.getModification().add(modParam_arginine);
+                ModParam modParam_arginine = new ModParam();
+                modParam_arginine.setCvParam(label_arginine);
+                label_heavy.getModification().add(modParam_arginine);
 
-                    assay.setLabel(label_heavy);
-                    assays.add(assay);
-                }
+                assay.setLabel(label_heavy);
+                assays.add(assay);
+            }
             ass_i++;
         }
     }
@@ -407,7 +427,8 @@ public class MaxquantMzquantmlConverter {
                 assay.setId(id);
                 assayRefList.add(id);
             }
-            CvParam cvParam = createCvParam("technical replicate", "PSI-MS", "MS:1001808");
+            CvParam cvParam = createCvParam("technical replicate", "PSI-MS",
+                                            "MS:1001808");
             studyVariable.getCvParam().add(cvParam);
             studyVariables.add(studyVariable);
         }
@@ -415,22 +436,26 @@ public class MaxquantMzquantmlConverter {
 
     private void createRatioList() {
         ratioList = new RatioList();
-        List<String> ratioTitles = (List<String>) maxRd.getPeptideRatioMap().get("0");
+        List<String> ratioTitles = (List<String>) maxRd.getPeptideRatioMap().
+                get("0");
         for (int i = 0; i < ratioTitles.size(); i++) {
             Ratio ratio = new Ratio();
             String ratioTitle = (String) ratioTitles.get(i);
             ratio.setId(ratioTitle.replace(' ', '_').replace('/', '_'));
 
             ParamList ratioCalculations = new ParamList();
-            ratioCalculations.getCvParam().add(createCvParam("simple ratio of two values", "PSI-MS", "MS:1001848"));
+            ratioCalculations.getCvParam().add(createCvParam(
+                    "simple ratio of two values", "PSI-MS", "MS:1001848"));
             ratio.setRatioCalculation(ratioCalculations);
 
             CvParamRef denom_ref = new CvParamRef();
-            denom_ref.setCvParam(createCvParam("MaxQuant:feature intensity", "PSI-MS", "MS:1001903"));
+            denom_ref.setCvParam(createCvParam("MaxQuant:feature intensity",
+                                               "PSI-MS", "MS:1001903"));
             ratio.setDenominatorDataType(denom_ref);
 
             CvParamRef numer_ref = new CvParamRef();
-            numer_ref.setCvParam(createCvParam("MaxQuant:feature intensity", "PSI-MS", "MS:1001903"));
+            numer_ref.setCvParam(createCvParam("MaxQuant:feature intensity",
+                                               "PSI-MS", "MS:1001903"));
             ratio.setNumeratorDataType(numer_ref);
 
             // TODO: a not very smart way to map denominator_ref and numerator_ref
@@ -443,8 +468,7 @@ public class MaxquantMzquantmlConverter {
                     for (StudyVariable sv : svList.getStudyVariable()) {
                         if (sv.getId().contains(primeStudyVar + "_H")) {
                             ratio.setNumerator(sv);
-                        }
-                        else if (sv.getId().contains(primeStudyVar + "_L")) {
+                        } else if (sv.getId().contains(primeStudyVar + "_L")) {
                             ratio.setDenominator(sv);
                         }
                     }
@@ -455,7 +479,8 @@ public class MaxquantMzquantmlConverter {
     }
 
     private void createProteinList() {
-        Map<String, List<String>> proteinPeptidesMap = maxRd.getProteinPeptidesMap();
+        Map<String, List<String>> proteinPeptidesMap = maxRd.
+                getProteinPeptidesMap();
 
         protList = new ProteinList();
         List<Protein> proteins = protList.getProtein();
@@ -483,7 +508,8 @@ public class MaxquantMzquantmlConverter {
 
             if (pepSequences != null) {
                 Iterator iPep = pepSequences.iterator();
-                List<String> peptideConsensusRefList = protein.getPeptideConsensusRefs();
+                List<String> peptideConsensusRefList = protein.
+                        getPeptideConsensusRefs();
                 List<String> pepIds = new ArrayList<>();
                 while (iPep.hasNext()) {
                     PeptideConsensus peptideConsensus = new PeptideConsensus();
@@ -513,7 +539,8 @@ public class MaxquantMzquantmlConverter {
             QuantLayer assayQL_prot_int = new QuantLayer();
             assayQL_prot_int.setId("Prot_Assay_QL1");
             CvParamRef cvParamRef_prot_int = new CvParamRef();
-            cvParamRef_prot_int.setCvParam(createCvParam("MaxQuant:feature intensity", "PSI-MS", "MS:1001903"));
+            cvParamRef_prot_int.setCvParam(createCvParam(
+                    "MaxQuant:feature intensity", "PSI-MS", "MS:1001903"));
             assayQL_prot_int.setDataType(cvParamRef_prot_int);
 
             Iterator iAss = maxRd.getAssayList().iterator();
@@ -526,7 +553,8 @@ public class MaxquantMzquantmlConverter {
             }
 
             DataMatrix protIntDM = new DataMatrix();
-            TIntObjectIterator<TDoubleList> iProtInt = maxRd.getProteinIntensityMap().iterator();
+            TIntObjectIterator<TDoubleList> iProtInt = maxRd.
+                    getProteinIntensityMap().iterator();
             while (iProtInt.hasNext()) {
                 iProtInt.advance();
                 int key = iProtInt.key();
@@ -558,7 +586,8 @@ public class MaxquantMzquantmlConverter {
             QuantLayer assayQL_prot_int = new QuantLayer();
             assayQL_prot_int.setId("Prot_StudyVariable_QL1");
             CvParamRef cvParamRef_prot_int = new CvParamRef();
-            cvParamRef_prot_int.setCvParam(createCvParam("MaxQuant:feature intensity", "PSI-MS", "MS:1001903"));
+            cvParamRef_prot_int.setCvParam(createCvParam(
+                    "MaxQuant:feature intensity", "PSI-MS", "MS:1001903"));
             assayQL_prot_int.setDataType(cvParamRef_prot_int);
 
             Iterator iPrimeStu = maxRd.getPrimeStudyVariableList().iterator();
@@ -575,7 +604,8 @@ public class MaxquantMzquantmlConverter {
             }
 
             DataMatrix protIntDM = new DataMatrix();
-            TIntObjectIterator<TDoubleList> iProtInt = maxRd.getProteinIntensityMap().iterator();
+            TIntObjectIterator<TDoubleList> iProtInt = maxRd.
+                    getProteinIntensityMap().iterator();
             while (iProtInt.hasNext()) {
                 iProtInt.advance();
                 int key = iProtInt.key();
@@ -605,7 +635,8 @@ public class MaxquantMzquantmlConverter {
             QuantLayer assayQL_prot_uniqpep = new QuantLayer();
             assayQL_prot_uniqpep.setId("Prot_Assay_QL2");
             CvParamRef cvParamRef_prot_uniqpep = new CvParamRef();
-            cvParamRef_prot_uniqpep.setCvParam(createCvParam("MaxQuant:peptide counts (unique)", "PSI-MS", "MS:1001897"));
+            cvParamRef_prot_uniqpep.setCvParam(createCvParam(
+                    "MaxQuant:peptide counts (unique)", "PSI-MS", "MS:1001897"));
             assayQL_prot_uniqpep.setDataType(cvParamRef_prot_uniqpep);
 
             Iterator iAss = maxRd.getAssayList().iterator();
@@ -618,7 +649,8 @@ public class MaxquantMzquantmlConverter {
             }
 
             DataMatrix protUniqPepDM = new DataMatrix();
-            TIntObjectIterator<TIntList> iProtUniqPep = maxRd.getProteinUniquePeptiedsMap().iterator();
+            TIntObjectIterator<TIntList> iProtUniqPep = maxRd.
+                    getProteinUniquePeptiedsMap().iterator();
             while (iProtUniqPep.hasNext()) {
                 iProtUniqPep.advance();
                 int key = iProtUniqPep.key();
@@ -706,7 +738,8 @@ public class MaxquantMzquantmlConverter {
                     fList.add(feature);
                 }
 
-                String rgId = "rg_" + rawFileNameIdMap.get(rfn + ".raw").substring(4);
+                String rgId = "rg_" + rawFileNameIdMap.get(rfn + ".raw").
+                        substring(4);
 
                 // create peptide sequence to assay id HashMap: peptideAssaysMap
                 String assayId = assayNameIdMap.get(rfn);
@@ -733,7 +766,8 @@ public class MaxquantMzquantmlConverter {
                     ftListList.add(featureList);
 
                     // create feature QuantLayer for label free
-                    List<GlobalQuantLayer> featureQuantLayerList = featureList.getFeatureQuantLayer();
+                    List<GlobalQuantLayer> featureQuantLayerList = featureList.
+                            getFeatureQuantLayer();
                     GlobalQuantLayer featureQuantLayer = new GlobalQuantLayer();
                     featureQuantLayerList.add(featureQuantLayer);
                     featureQuantLayer.setId("FQL_" + fListId.substring(6));
@@ -742,7 +776,9 @@ public class MaxquantMzquantmlConverter {
 
                     // cvParam for intensity
                     Column featureColumn_int
-                            = createColumn(0, createCvParam("MaxQuant:feature intensity", "PSI-MS", "MS:1001903"));
+                            = createColumn(0, createCvParam(
+                                                   "MaxQuant:feature intensity",
+                                                   "PSI-MS", "MS:1001903"));
                     featureColumnIndex.getColumn().add(featureColumn_int);
 
                     Row row = new Row();
@@ -752,17 +788,16 @@ public class MaxquantMzquantmlConverter {
                     DataMatrix dataMatrix = new DataMatrix();
                     dataMatrix.getRow().add(row);
                     featureQuantLayer.setDataMatrix(dataMatrix);
-                }
-                else {
+                } else {
                     Row row = new Row();
                     row.setObject(feature);
                     row.getValue().add(intensity);
-                    featureList.getFeatureQuantLayer().get(0).getDataMatrix().getRow().add(row);
+                    featureList.getFeatureQuantLayer().get(0).getDataMatrix().
+                            getRow().add(row);
                 }
                 featureList.getFeature().add(feature);
                 featureAssNameMap.put(feature.getId(), rfn);
-            }
-            /**
+            } /**
              * *
              * not label free
              */
@@ -807,7 +842,8 @@ public class MaxquantMzquantmlConverter {
                 // heavey label feature
                 //TODO: this mass shift is artificial 
                 double massShift = 18;
-                double mz_H = Double.parseDouble(mz) + massShift / Double.parseDouble(chr);
+                double mz_H = Double.parseDouble(mz) + massShift / Double.
+                        parseDouble(chr);
                 feature_H.setMz(mz_H);
 
                 //TODO: retention time is also artifical
@@ -830,7 +866,8 @@ public class MaxquantMzquantmlConverter {
                     fList.add(feature_H);
                 }
 
-                String rgId = "rg_" + rawFileNameIdMap.get(rfn + ".raw").substring(4);
+                String rgId = "rg_" + rawFileNameIdMap.get(rfn + ".raw").
+                        substring(4);
 
                 String assayId = assayNameIdMap.get(rfn + "_Light");
                 if (pepSeq != null) {
@@ -870,7 +907,8 @@ public class MaxquantMzquantmlConverter {
                     ftListList.add(featureList);
 
                     // create feature QuantLayer for non label free
-                    List<GlobalQuantLayer> featureQuantLayerList = featureList.getFeatureQuantLayer();
+                    List<GlobalQuantLayer> featureQuantLayerList = featureList.
+                            getFeatureQuantLayer();
                     GlobalQuantLayer featureQuantLayer = new GlobalQuantLayer();
                     featureQuantLayerList.add(featureQuantLayer);
                     featureQuantLayer.setId("FQL_" + fListId.substring(6));
@@ -879,7 +917,9 @@ public class MaxquantMzquantmlConverter {
 
                     // cvParam for intensity
                     Column featureColumn_int
-                            = createColumn(0, createCvParam("MaxQuant:feature intensity", "PSI-MS", "MS:1001903"));
+                            = createColumn(0, createCvParam(
+                                                   "MaxQuant:feature intensity",
+                                                   "PSI-MS", "MS:1001903"));
                     featureColumnIndex.getColumn().add(featureColumn_int);
 
                     Row row_L = new Row();
@@ -895,18 +935,19 @@ public class MaxquantMzquantmlConverter {
                     dataMatrix.getRow().add(row_L);
                     dataMatrix.getRow().add(row_H);
                     featureQuantLayer.setDataMatrix(dataMatrix);
-                }
-                else {
+                } else {
                     Row row_L = new Row();
                     row_L.setObject(feature_L);
                     row_L.getValue().add(intensityL);
-                    featureList.getFeatureQuantLayer().get(0).getDataMatrix().getRow().add(row_L);
+                    featureList.getFeatureQuantLayer().get(0).getDataMatrix().
+                            getRow().add(row_L);
 
                     //TODO: this is artificial row for heavy label
                     Row row_H = new Row();
                     row_H.setObject(feature_H);
                     row_H.getValue().add(intensityH);
-                    featureList.getFeatureQuantLayer().get(0).getDataMatrix().getRow().add(row_H);
+                    featureList.getFeatureQuantLayer().get(0).getDataMatrix().
+                            getRow().add(row_H);
                 }
                 featureList.getFeature().add(feature_L);
                 featureList.getFeature().add(feature_H);
@@ -920,10 +961,12 @@ public class MaxquantMzquantmlConverter {
         pepConListList = new ArrayList();
         PeptideConsensusList peptideConsensusList = new PeptideConsensusList();
 
-        List<PeptideConsensus> peptideList = peptideConsensusList.getPeptideConsensus();
+        List<PeptideConsensus> peptideList = peptideConsensusList.
+                getPeptideConsensus();
 
         Iterator iPep = maxRd.getPeptideList().iterator();
-        Map<String, List<String>> peptideFeatureIdsMap = maxRd.getPeptideEvidenceIdsMap();
+        Map<String, List<String>> peptideFeatureIdsMap = maxRd.
+                getPeptideEvidenceIdsMap();
 
         DataMatrix pep_IntDM = new DataMatrix();
         DataMatrix pep_RatioDM = new DataMatrix();
@@ -945,8 +988,10 @@ public class MaxquantMzquantmlConverter {
                         String chrKey = iChr.next();
                         String charge = null;
                         if (NumberUtils.isNumber(chrKey)) {
-                            if (evidenceMap.get(Integer.parseInt(chrKey)) != null) {
-                                charge = evidenceMap.get(Integer.parseInt(chrKey)).get(5);
+                            if (evidenceMap.get(Integer.parseInt(chrKey))
+                                    != null) {
+                                charge = evidenceMap.get(Integer.
+                                        parseInt(chrKey)).get(5);
                             }
                         }
 
@@ -980,7 +1025,8 @@ public class MaxquantMzquantmlConverter {
                     }
 
                     // create DataMatrix of AssayQuantLayer for intensity
-                    List<String> intKeys = (ArrayList) maxRd.getPeptideIntensityMap().get(key);
+                    List<String> intKeys = (ArrayList) maxRd.
+                            getPeptideIntensityMap().get(key);
                     Iterator iInt = intKeys.iterator();
                     Row row = new Row();
                     row.setObject(peptideConsensus);
@@ -998,7 +1044,8 @@ public class MaxquantMzquantmlConverter {
 
                 // create DataMatrix of RatioQuantLayer for non label free example
                 if (!maxRd.isLabelFree()) {
-                    Map<String, List<String>> peptideToRatioMap = maxRd.getPeptideRatioMap();
+                    Map<String, List<String>> peptideToRatioMap = maxRd.
+                            getPeptideRatioMap();
                     List<String> ratioValues = peptideToRatioMap.get(key);
                     Row row_ratio = new Row();
                     row_ratio.setObject(peptideConsensus);
@@ -1016,7 +1063,8 @@ public class MaxquantMzquantmlConverter {
         QuantLayer pepAQL_int = new QuantLayer();
         pepAQL_int.setId("Pep_AQL_1");
         CvParamRef cvParamRef_pep_aql_int = new CvParamRef();
-        cvParamRef_pep_aql_int.setCvParam(createCvParam("MaxQuant:feature intensity", "PSI-MS", "MS:1001903"));
+        cvParamRef_pep_aql_int.setCvParam(createCvParam(
+                "MaxQuant:feature intensity", "PSI-MS", "MS:1001903"));
         pepAQL_int.setDataType(cvParamRef_pep_aql_int);
 
         Iterator iAss = maxRd.getAssayList().iterator();
@@ -1059,7 +1107,8 @@ public class MaxquantMzquantmlConverter {
         dataProcessing.setOrder(BigInteger.ONE);
         ProcessingMethod processingMethod = new ProcessingMethod();
         processingMethod.setOrder(BigInteger.ONE);
-        processingMethod.getParamGroup().add(createCvParam("quantification data processing", "PSI-MS", "MS:1001861"));
+        processingMethod.getParamGroup().add(createCvParam(
+                "quantification data processing", "PSI-MS", "MS:1001861"));
         dataProcessing.getProcessingMethod().add(processingMethod);
 
         dpList.getDataProcessing().add(dataProcessing);
@@ -1086,12 +1135,14 @@ public class MaxquantMzquantmlConverter {
              */
             String mzqId;
             if (maxRd.isLabelFree()) {
-                mzqId = "MaxQuant-Label-Free-" + String.valueOf(day) + String.valueOf(month) + String.valueOf(year);
+                mzqId = "MaxQuant-Label-Free-" + String.valueOf(day) + String.
+                        valueOf(month) + String.valueOf(year);
+            } else {
+                mzqId = "MaxQuant-SILAC-" + String.valueOf(day) + String.
+                        valueOf(month) + String.valueOf(year);
             }
-            else {
-                mzqId = "MaxQuant-SILAC-" + String.valueOf(day) + String.valueOf(month) + String.valueOf(year);
-            }
-            writer.write(MzQuantMLMarshaller.createMzQuantMLStartTag(mzqId) + "\n");
+            writer.write(MzQuantMLMarshaller.createMzQuantMLStartTag(mzqId)
+                    + "\n");
 
             if (cvList != null) {
                 mzqMsh.marshall(cvList, writer);
@@ -1157,18 +1208,17 @@ public class MaxquantMzquantmlConverter {
             }
 
             writer.write(MzQuantMLMarshaller.createMzQuantMLClosingTag());
-        }
-        catch (IOException ex) {
-            Logger.getLogger(MaxquantMzquantmlConverter.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally {
+        } catch (IOException ex) {
+            Logger.getLogger(MaxquantMzquantmlConverter.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        } finally {
             try {
                 if (writer != null) {
                     writer.close();
                 }
-            }
-            catch (IOException ex) {
-                Logger.getLogger(MaxquantMzquantmlConverter.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(MaxquantMzquantmlConverter.class.getName()).
+                        log(Level.SEVERE, null, ex);
             }
         }
     }

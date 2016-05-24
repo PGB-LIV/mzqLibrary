@@ -7,49 +7,49 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uk.ac.liv.mzqlib.view.RootLayoutController">
-   <top>
-      <MenuBar BorderPane.alignment="CENTER">
-        <menus>
-          <Menu text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#handleOpen" text="Open file" />
-                  <Menu mnemonicParsing="false" text="Converter">
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <menus>
+                <Menu text="File">
                     <items>
-                      <MenuItem mnemonicParsing="false" onAction="#showProgenesisConverterWindow" text="Progenesis converter" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleOpen" text="Open file" />
+                        <Menu mnemonicParsing="false" text="Converter">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#showProgenesisConverterWindow" text="Progenesis converter" />
+                            </items>
+                        </Menu>
+                        <MenuItem fx:id="closeFile" mnemonicParsing="false" onAction="#handleClose" text="Close file" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
                     </items>
-                  </Menu>
-                  <MenuItem fx:id="closeFile" mnemonicParsing="false" onAction="#handleClose" text="Close file" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
-            </items>
-          </Menu>
-          <Menu fx:id="statistics" mnemonicParsing="false" text="Statistics">
-            <items>
-                  <Menu mnemonicParsing="false" text="Heatmap">
-                     <items>
-                    <MenuItem mnemonicParsing="false" onAction="#handleHeatMapinR" text="Plot in R console" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleHeatMapPdf" text="Save as pdf" />
-                     </items>
-                  </Menu>
-                  <MenuItem mnemonicParsing="false" onAction="#handleCurve" text="Line plot" />
-                  <MenuItem mnemonicParsing="false" onAction="#handlePCA" text="Principle Component Analysis" />
-            </items>
-          </Menu>
-            <Menu mnemonicParsing="false" text="Command Line GUI">
-              <items>
-                <MenuItem mnemonicParsing="false" onAction="#showGui" text="Run GUI" />
-              </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="R packages">
-              <items>
-                <MenuItem mnemonicParsing="false" onAction="#handleInstallRequiredPackages" text="Install required packages" />
-              </items>
-            </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#showAbout" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-   </top>
+                </Menu>
+                <Menu fx:id="statistics" mnemonicParsing="false" text="Statistics">
+                    <items>
+                        <Menu mnemonicParsing="false" text="Heatmap">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#handleHeatMapinR" text="Plot in R console" />
+                                <MenuItem mnemonicParsing="false" onAction="#handleHeatMapPdf" text="Save as pdf" />
+                            </items>
+                        </Menu>
+                        <MenuItem mnemonicParsing="false" onAction="#handleCurve" text="Line plot" />
+                        <MenuItem mnemonicParsing="false" onAction="#handlePCA" text="Principle Component Analysis" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Command Line GUI">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#showGui" text="Run GUI" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="R packages">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleInstallRequiredPackages" text="Install required packages" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#showAbout" text="About" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
 </BorderPane>

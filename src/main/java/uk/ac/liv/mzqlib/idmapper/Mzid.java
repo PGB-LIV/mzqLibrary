@@ -39,13 +39,16 @@ public class Mzid {
     public Map<String, SIIData> getPeptideSIIData() {
         Map<String, SIIData> retMap = new HashMap();
 
-        Iterator<SpectrumIdentificationResult> sirIter = um.unmarshalCollectionFromXpath(MzIdentMLElement.SpectrumIdentificationResult);
+        Iterator<SpectrumIdentificationResult> sirIter = um.
+                unmarshalCollectionFromXpath(
+                        MzIdentMLElement.SpectrumIdentificationResult);
         while (sirIter.hasNext()) {
             SpectrumIdentificationResult sir = sirIter.next();
 
             // retrive retention time from cvParam of SpectrumIdentificationResult -- MS:1000796
             double rt = getRetentionTime(sir);
-            List<SpectrumIdentificationItem> siiList = sir.getSpectrumIdentificationItem();
+            List<SpectrumIdentificationItem> siiList = sir.
+                    getSpectrumIdentificationItem();
             for (SpectrumIdentificationItem sii : siiList) {
                 // retrieve peptide sequence from each SpectrumIdentificationItem
                 String pepSeq = sii.getPeptide().getPeptideSequence();
@@ -58,8 +61,7 @@ public class Mzid {
 
                 if (retMap.get(pepSeq) == null) {
                     retMap.put(pepSeq, siiData);
-                }
-                else {
+                } else {
                     System.out.println("same peptide sequence has different ");
                 }
             }
@@ -76,8 +78,7 @@ public class Mzid {
             double mz = sii.getExperimentalMassToCharge();
             String id = sii.getId();
             return new SIIData(charge, mz, 0, id);
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -86,7 +87,8 @@ public class Mzid {
      *
      * @param sir
      *
-     * @return retention time in the cvParam of SpectrumIdentificationResult with accession="MS:1000796"
+     * @return retention time in the cvParam of SpectrumIdentificationResult
+     *         with accession="MS:1000796"
      */
     private double getRetentionTime(SpectrumIdentificationResult sir) {
         throw new UnsupportedOperationException("Not yet implemented");

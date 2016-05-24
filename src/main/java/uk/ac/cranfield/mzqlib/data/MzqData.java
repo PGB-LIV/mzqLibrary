@@ -1,3 +1,4 @@
+
 package uk.ac.cranfield.mzqlib.data;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.StudyVariableList;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.AnalysisSummary;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinGroup;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinGroupList;
+
 /**
  *
  * @author Jun Fan@qmul
@@ -41,7 +43,8 @@ public class MzqData {
     public static final String ARTIFICIAL = "artificial";
     public static final String RATIO_STRING = "Ratio";
     /**
-     * The list of mzq files loaded, not useful at all now as currently focused on one file only
+     * The list of mzq files loaded, not useful at all now as currently focused
+     * on one file only
      */
 //    private ArrayList<String> mzqFiles = new ArrayList<String>();
     /**
@@ -172,7 +175,8 @@ public class MzqData {
                 parseQuantLayer(ql, SV, FEATURE);
             }
             if (featureList.getMS2RatioQuantLayer() != null) {
-                parseRatioQuantLayer(featureList.getMS2RatioQuantLayer(), FEATURE);
+                parseRatioQuantLayer(featureList.getMS2RatioQuantLayer(),
+                                     FEATURE);
             }
             for (GlobalQuantLayer gql : featureList.getFeatureQuantLayer()) {
                 parseGlobalQuantLayer(gql, FEATURE);
@@ -200,9 +204,11 @@ public class MzqData {
         }
     }
 
-    public void addProteinGroups (ProteinGroupList pgList){
-        if (pgList == null) return;
-        for (ProteinGroup pg: pgList.getProteinGroup()){
+    public void addProteinGroups(ProteinGroupList pgList) {
+        if (pgList == null) {
+            return;
+        }
+        for (ProteinGroup pg : pgList.getProteinGroup()) {
             ProteinGroupData pgData = new ProteinGroupData(pg);
             String id = pg.getId();
             pgIds.add(id);
@@ -221,7 +227,7 @@ public class MzqData {
             parseGlobalQuantLayer(gql, PROTEIN_GROUP);
         }
     }
-    
+
     public void addProteins(ProteinList proteinList) {
         //the data structure localMapping holds the relationship between the ids from the current proteinList (keys) and the ids from the existing protein list in the memory (values)
         //will be useful if merging multiple mzq files
@@ -305,8 +311,8 @@ public class MzqData {
             for (int i = 0; i < ids.size(); i++) {
                 String assayID = ids.get(i);
 //                try{
-                    Double value = parseDoubleValue(row.getValue().get(i));
-                    quantities.put(assayID, value);
+                Double value = parseDoubleValue(row.getValue().get(i));
+                quantities.put(assayID, value);
 //                }catch(Exception e){
 //                    System.out.println(row.getValue());
 //                    System.out.println(row.getValue().get(i));
@@ -321,11 +327,20 @@ public class MzqData {
             }
         }
     }
-    private Double parseDoubleValue(String str){
-        if (str == null) return null;
-        if (str.equalsIgnoreCase("null")) return null;
-        if (str.equalsIgnoreCase("INF")) return Double.POSITIVE_INFINITY;
-        if (str.equalsIgnoreCase("NaN")) return Double.NaN;
+
+    private Double parseDoubleValue(String str) {
+        if (str == null) {
+            return null;
+        }
+        if (str.equalsIgnoreCase("null")) {
+            return null;
+        }
+        if (str.equalsIgnoreCase("INF")) {
+            return Double.POSITIVE_INFINITY;
+        }
+        if (str.equalsIgnoreCase("NaN")) {
+            return Double.NaN;
+        }
         return Double.parseDouble(str);
     }
 
@@ -395,7 +410,7 @@ public class MzqData {
         modifications.add(modStr);
         return modifications.size();
     }
-    
+
     //for modification in PeptideConsensus, not modification in Label which is of ModParamType type
     private String getModificationString(Modification mod) {
 //        <xsd:element name="cvParam" type="CVParamType" minOccurs="1" maxOccurs="unbounded">
@@ -405,14 +420,14 @@ public class MzqData {
         return null;
     }
 
-    public ArrayList<ProteinGroupData> getProteinGroups(){
+    public ArrayList<ProteinGroupData> getProteinGroups() {
         ArrayList<ProteinGroupData> values = new ArrayList<>();
-        for (String id : pgIds){
+        for (String id : pgIds) {
             values.add(pgs.get(id));
         }
         return values;
     }
-    
+
     public ArrayList<ProteinData> getProteins() {
         ArrayList<ProteinData> values = new ArrayList<>();
         for (String id : proteinIds) {
@@ -455,7 +470,8 @@ public class MzqData {
         }
         //then by accession number
         for (ProteinData proteinData : proteins.values()) {
-            if (protein.getAccession().equalsIgnoreCase(proteinData.getAccession())) {
+            if (protein.getAccession().equalsIgnoreCase(proteinData.
+                    getAccession())) {
                 return proteinData.getProtein().getId();
             }
         }
@@ -506,13 +522,14 @@ public class MzqData {
         }
         for (PeptideData peptide : peptides.values()) {
             for (EvidenceRef evidence : peptide.getPeptide().getEvidenceRef()) {
-                FeatureData feature = unsolvedFeatures.get(evidence.getFeatureRef());
+                FeatureData feature = unsolvedFeatures.get(evidence.
+                        getFeatureRef());
                 unsolvedFeatures.remove(evidence.getFeatureRef());
                 peptide.addFeature(feature);
             }
         }
         for (ProteinData protein : proteins.values()) {
-            for(String id:protein.getProtein().getPeptideConsensusRefs()){
+            for (String id : protein.getProtein().getPeptideConsensusRefs()) {
                 PeptideData peptide = peptides.get(id);
                 unsolvedPeptides.remove(id);
                 //TODO not sure whether one peptide related to multiple proteins case will cause bug here
@@ -524,7 +541,8 @@ public class MzqData {
         for (String peptideID : unsolvedPeptides) {
             boolean guessed = false;
             for (ProteinData protein : proteins.values()) {
-                if (peptideID.contains(protein.getId()) || peptideID.contains(protein.getAccession())) {
+                if (peptideID.contains(protein.getId()) || peptideID.contains(
+                        protein.getAccession())) {
                     guessed = true;
                     PeptideData peptide = peptides.get(peptideID);
                     protein.addPeptide(peptide);
@@ -555,9 +573,10 @@ public class MzqData {
     }
 
     public ProteinData getProtein(String anchorProteinStr) {
-        if (proteins.containsKey(anchorProteinStr)){
+        if (proteins.containsKey(anchorProteinStr)) {
             return proteins.get(anchorProteinStr);
         }
         return null;
     }
+
 }

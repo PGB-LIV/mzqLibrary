@@ -14,7 +14,8 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensusList;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.RawFilesGroup;
 
 /**
- * The interface of ConsensusXMLProcessor that provides methods of creating mzQuantML elements from consensusxml file.
+ * The interface of ConsensusXMLProcessor that provides methods of creating
+ * mzQuantML elements from consensusxml file.
  *
  * @author Da Qi
  * @institute University of Liverpool

@@ -1,3 +1,4 @@
+
 package uk.ac.liv.mzqlib.view;
 
 import java.io.File;
@@ -43,20 +44,21 @@ public class RootLayoutController {
 //    public Stage getStage() {
 //        return newStage;
 //    }
-
     @FXML
     private void handleOpen() {
         FileChooser fileChooser = new FileChooser();
 
-        if (mainApp.getLastFilePath() != null && mainApp.getLastFilePath().exists()) {
+        if (mainApp.getLastFilePath() != null && mainApp.getLastFilePath().
+                exists()) {
             fileChooser.setInitialDirectory(mainApp.getLastFilePath());
-        }
-        else {
-            fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        } else {
+            fileChooser.setInitialDirectory(new File(System.getProperty(
+                    "user.home")));
         }
 
         // Set extension filter
-        ExtensionFilter extFilter = new ExtensionFilter("mzQuantML file (*.mzq)", "*.mzq");
+        ExtensionFilter extFilter
+                = new ExtensionFilter("mzQuantML file (*.mzq)", "*.mzq");
         fileChooser.getExtensionFilters().add(extFilter);
 
         // Set the title for file dialog
@@ -96,11 +98,11 @@ public class RootLayoutController {
     private void showProgenesisConverterWindow() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(RootLayoutController.class.getClassLoader().getResource("ProgenesisConverter.fxml"));
+            loader.setLocation(RootLayoutController.class.getClassLoader().
+                    getResource("ProgenesisConverter.fxml"));
             AnchorPane progenConvt = (AnchorPane) loader.load();
 
             //ProgenesisConverterController controller = loader.getController();
-
             Scene scene = new Scene(progenConvt);
             Stage progStage = new Stage();
             progStage.initModality(Modality.APPLICATION_MODAL);
@@ -108,9 +110,9 @@ public class RootLayoutController {
             progStage.setTitle("Progenesis to MzQuantML Converter");
             progStage.setScene(scene);
             progStage.show();
-        }
-        catch (IOException ex) {
-            Logger.getLogger(RootLayoutController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(RootLayoutController.class.getName()).log(
+                    Level.SEVERE, null, ex);
         }
     }
 

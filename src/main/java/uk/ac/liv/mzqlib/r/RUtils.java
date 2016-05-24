@@ -47,7 +47,8 @@ public class RUtils {
             Alert alert = new Alert(AlertType.CONFIRMATION);
             alert.setTitle("Install " + packageName + " package?");
             alert.setHeaderText(null);
-            alert.setContentText("mzqLibrary is going to install R package \"" + packageName + "\"");
+            alert.setContentText("mzqLibrary is going to install R package \""
+                    + packageName + "\"");
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -70,8 +71,7 @@ public class RUtils {
                 if (uninstalled.isTRUE()) {
                     installed = false;
                     //showUninstallWarningDialog(packageName);
-                }
-                else {
+                } else {
                     installed = true;
                     showPackageInstalledDialog(packageName);
                 }
@@ -81,8 +81,7 @@ public class RUtils {
 //                installed = false;
 //                showUninstallWarningDialog(packageName);
 //            }
-        }
-        else {
+        } else {
             installed = true;
         }
         return installed;

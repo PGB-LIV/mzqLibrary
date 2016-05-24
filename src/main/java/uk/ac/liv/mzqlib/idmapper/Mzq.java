@@ -46,7 +46,9 @@ public class Mzq {
 
         Map<String, List<SimpleFeature>> retMap = new HashMap();
 
-        Iterator<PeptideConsensusList> pepConListIter = this.um.unmarshalCollectionFromXpath(MzQuantMLElement.PeptideConsensusList);
+        Iterator<PeptideConsensusList> pepConListIter = this.um.
+                unmarshalCollectionFromXpath(
+                        MzQuantMLElement.PeptideConsensusList);
         while (pepConListIter.hasNext()) {
             PeptideConsensusList pepConList = pepConListIter.next();
             List<PeptideConsensus> pepCons = pepConList.getPeptideConsensus();
@@ -60,7 +62,9 @@ public class Mzq {
 
                     String ftRef = eviRef.getFeatureRef();
 
-                    Feature ft = this.um.unmarshal(uk.ac.liv.pgb.jmzqml.model.mzqml.Feature.class, ftRef);
+                    Feature ft = this.um.unmarshal(
+                            uk.ac.liv.pgb.jmzqml.model.mzqml.Feature.class,
+                            ftRef);
                     double mz = ft.getMz();
                     double rw = this.getRetentionWindow(ft.getMassTrace());
 
@@ -81,7 +85,8 @@ public class Mzq {
     /**
      * The inner static class SimpleFeature.
      *
-     * SimpleFeature contains charge,feature id, m/z value and retention time window.
+     * SimpleFeature contains charge,feature id, m/z value and retention time
+     * window.
      */
     public static class SimpleFeature {
 

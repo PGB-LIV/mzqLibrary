@@ -23,7 +23,8 @@ public class Gzipper {
         FileOutputStream fos = null;
         try {
             gin = new GZIPInputStream(new FileInputStream(zipped_file));
-            outFile = File.createTempFile("tmp_" + new Random().toString(), ".mzq");
+            outFile = File.createTempFile("tmp_" + new Random().toString(),
+                                          ".mzq");
             //outFile = new File(zipped_file.getParent(), "tmp_" + zipped_file.getName().replaceAll("\\.gz$", ""));
             fos = new FileOutputStream(outFile);
             byte[] buf = new byte[100000];
@@ -31,11 +32,10 @@ public class Gzipper {
             while ((len = gin.read(buf)) > 0) {
                 fos.write(buf, 0, len);
             }
-        }
-        catch (IOException ex) {
-            Logger.getLogger(Gzipper.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally {
+        } catch (IOException ex) {
+            Logger.getLogger(Gzipper.class.getName()).
+                    log(Level.SEVERE, null, ex);
+        } finally {
             if (gin != null) {
                 gin.close();
             }
@@ -51,8 +51,7 @@ public class Gzipper {
         if (!success) {
             System.out.println(file.getAbsolutePath() + " Deletion failed.");
             //System.exit(0);
-        }
-        else {
+        } else {
             System.out.println(file.getAbsolutePath() + " File deleted.");
 
         }
@@ -74,8 +73,7 @@ public class Gzipper {
                     System.out.println("the file is in now gzip format");
                 }
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.out.println("Exception is" + e);
             Logger.getLogger(Gzipper.class.getName()).log(Level.SEVERE, null, e);
 

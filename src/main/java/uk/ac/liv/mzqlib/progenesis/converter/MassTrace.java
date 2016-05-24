@@ -50,7 +50,8 @@ public class MassTrace {
      * @param rtWin  retention time window value
      */
     public MassTrace(String mz, String charge, String rt, String rtWin) {
-        this(Double.parseDouble(mz), Double.parseDouble(charge), Double.parseDouble(rt), Double.parseDouble(rtWin));
+        this(Double.parseDouble(mz), Double.parseDouble(charge), Double.
+             parseDouble(rt), Double.parseDouble(rtWin));
     }
 
     /**
@@ -82,7 +83,8 @@ public class MassTrace {
      */
     public MassTrace(String mz, String charge, String rt, String rtWin,
                      DecimalFormat df) {
-        this(Double.parseDouble(mz), Double.parseDouble(charge), Double.parseDouble(rt), Double.parseDouble(rtWin), df);
+        this(Double.parseDouble(mz), Double.parseDouble(charge), Double.
+             parseDouble(rt), Double.parseDouble(rtWin), df);
     }
 
     /**

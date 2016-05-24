@@ -5,7 +5,6 @@
 // Generated on: 2014.03.18 at 02:59:01 PM GMT 
 //
 
-
 package uk.ac.liv.mzqlib.openms.jaxb;
 
 import java.math.BigInteger;
@@ -23,12 +22,14 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 /**
- * <p>Java class for anonymous complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p>
+ * Java class for anonymous complex type.
+ *
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -94,8 +95,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -126,11 +127,11 @@ public class ConsensusElement {
 
     /**
      * Gets the value of the centroid property.
-     * 
+     *
      * @return
-     *     possible object is
-     *     {@link Centroid }
-     *     
+     *         possible object is
+     *         {@link Centroid }
+     *
      */
     public Centroid getCentroid() {
         return centroid;
@@ -138,11 +139,11 @@ public class ConsensusElement {
 
     /**
      * Sets the value of the centroid property.
-     * 
+     *
      * @param value
-     *     allowed object is
-     *     {@link Centroid }
-     *     
+     *              allowed object is
+     *              {@link Centroid }
+     *
      */
     public void setCentroid(Centroid value) {
         this.centroid = value;
@@ -150,11 +151,11 @@ public class ConsensusElement {
 
     /**
      * Gets the value of the groupedElementList property.
-     * 
+     *
      * @return
-     *     possible object is
-     *     {@link GroupedElementList }
-     *     
+     *         possible object is
+     *         {@link GroupedElementList }
+     *
      */
     public GroupedElementList getGroupedElementList() {
         return groupedElementList;
@@ -162,11 +163,11 @@ public class ConsensusElement {
 
     /**
      * Sets the value of the groupedElementList property.
-     * 
+     *
      * @param value
-     *     allowed object is
-     *     {@link GroupedElementList }
-     *     
+     *              allowed object is
+     *              {@link GroupedElementList }
+     *
      */
     public void setGroupedElementList(GroupedElementList value) {
         this.groupedElementList = value;
@@ -174,25 +175,26 @@ public class ConsensusElement {
 
     /**
      * Gets the value of the peptideIdentification property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the peptideIdentification property.
-     * 
+     * This is why there is not a <CODE>set</CODE> method for the
+     * peptideIdentification property.
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getPeptideIdentification().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link ConsensusElement.PeptideIdentification }
-     * 
-     * 
+     *
+     *
      */
     public List<ConsensusElement.PeptideIdentification> getPeptideIdentification() {
         if (peptideIdentification == null) {
@@ -203,25 +205,26 @@ public class ConsensusElement {
 
     /**
      * Gets the value of the userParam property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the userParam property.
-     * 
+     * This is why there is not a <CODE>set</CODE> method for the userParam
+     * property.
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getUserParam().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link UserParam }
-     * 
-     * 
+     *
+     *
      */
     public List<UserParam> getUserParam() {
         if (userParam == null) {
@@ -232,11 +235,11 @@ public class ConsensusElement {
 
     /**
      * Gets the value of the id property.
-     * 
+     *
      * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *         possible object is
+     *         {@link String }
+     *
      */
     public String getId() {
         return id;
@@ -244,11 +247,11 @@ public class ConsensusElement {
 
     /**
      * Sets the value of the id property.
-     * 
+     *
      * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *              allowed object is
+     *              {@link String }
+     *
      */
     public void setId(String value) {
         this.id = value;
@@ -256,11 +259,11 @@ public class ConsensusElement {
 
     /**
      * Gets the value of the quality property.
-     * 
+     *
      * @return
-     *     possible object is
-     *     {@link Double }
-     *     
+     *         possible object is
+     *         {@link Double }
+     *
      */
     public Double getQuality() {
         return quality;
@@ -268,11 +271,11 @@ public class ConsensusElement {
 
     /**
      * Sets the value of the quality property.
-     * 
+     *
      * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
+     *              allowed object is
+     *              {@link Double }
+     *
      */
     public void setQuality(Double value) {
         this.quality = value;
@@ -280,11 +283,11 @@ public class ConsensusElement {
 
     /**
      * Gets the value of the charge property.
-     * 
+     *
      * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     *         possible object is
+     *         {@link BigInteger }
+     *
      */
     public BigInteger getCharge() {
         return charge;
@@ -292,22 +295,24 @@ public class ConsensusElement {
 
     /**
      * Sets the value of the charge property.
-     * 
+     *
      * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *              allowed object is
+     *              {@link BigInteger }
+     *
      */
     public void setCharge(BigInteger value) {
         this.charge = value;
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
-     * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
+     * <p>
+     * Java class for anonymous complex type.
+     *
+     * <p>
+     * The following schema fragment specifies the expected content contained
+     * within this class.
+     *
      * <pre>
      * &lt;complexType>
      *   &lt;complexContent>
@@ -357,8 +362,8 @@ public class ConsensusElement {
      *   &lt;/complexContent>
      * &lt;/complexType>
      * </pre>
-     * 
-     * 
+     *
+     *
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
@@ -390,25 +395,26 @@ public class ConsensusElement {
 
         /**
          * Gets the value of the peptideHit property.
-         * 
+         *
          * <p>
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the peptideHit property.
-         * 
+         * This is why there is not a <CODE>set</CODE> method for the peptideHit
+         * property.
+         *
          * <p>
          * For example, to add a new item, do as follows:
          * <pre>
          *    getPeptideHit().add(newItem);
          * </pre>
-         * 
-         * 
+         *
+         *
          * <p>
          * Objects of the following type(s) are allowed in the list
          * {@link ConsensusElement.PeptideIdentification.PeptideHit }
-         * 
-         * 
+         *
+         *
          */
         public List<ConsensusElement.PeptideIdentification.PeptideHit> getPeptideHit() {
             if (peptideHit == null) {
@@ -419,25 +425,26 @@ public class ConsensusElement {
 
         /**
          * Gets the value of the userParam property.
-         * 
+         *
          * <p>
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the userParam property.
-         * 
+         * This is why there is not a <CODE>set</CODE> method for the userParam
+         * property.
+         *
          * <p>
          * For example, to add a new item, do as follows:
          * <pre>
          *    getUserParam().add(newItem);
          * </pre>
-         * 
-         * 
+         *
+         *
          * <p>
          * Objects of the following type(s) are allowed in the list
          * {@link UserParam }
-         * 
-         * 
+         *
+         *
          */
         public List<UserParam> getUserParam() {
             if (userParam == null) {
@@ -448,11 +455,11 @@ public class ConsensusElement {
 
         /**
          * Gets the value of the identificationRunRef property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link Object }
-         *     
+         *         possible object is
+         *         {@link Object }
+         *
          */
         public Object getIdentificationRunRef() {
             return identificationRunRef;
@@ -460,11 +467,11 @@ public class ConsensusElement {
 
         /**
          * Sets the value of the identificationRunRef property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link Object }
-         *     
+         *              allowed object is
+         *              {@link Object }
+         *
          */
         public void setIdentificationRunRef(Object value) {
             this.identificationRunRef = value;
@@ -472,11 +479,11 @@ public class ConsensusElement {
 
         /**
          * Gets the value of the scoreType property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         *         possible object is
+         *         {@link String }
+         *
          */
         public String getScoreType() {
             return scoreType;
@@ -484,11 +491,11 @@ public class ConsensusElement {
 
         /**
          * Sets the value of the scoreType property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         *              allowed object is
+         *              {@link String }
+         *
          */
         public void setScoreType(String value) {
             this.scoreType = value;
@@ -496,7 +503,7 @@ public class ConsensusElement {
 
         /**
          * Gets the value of the higherScoreBetter property.
-         * 
+         *
          */
         public boolean isHigherScoreBetter() {
             return higherScoreBetter;
@@ -504,7 +511,7 @@ public class ConsensusElement {
 
         /**
          * Sets the value of the higherScoreBetter property.
-         * 
+         *
          */
         public void setHigherScoreBetter(boolean value) {
             this.higherScoreBetter = value;
@@ -512,11 +519,11 @@ public class ConsensusElement {
 
         /**
          * Gets the value of the significanceThreshold property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link Float }
-         *     
+         *         possible object is
+         *         {@link Float }
+         *
          */
         public Float getSignificanceThreshold() {
             return significanceThreshold;
@@ -524,11 +531,11 @@ public class ConsensusElement {
 
         /**
          * Sets the value of the significanceThreshold property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link Float }
-         *     
+         *              allowed object is
+         *              {@link Float }
+         *
          */
         public void setSignificanceThreshold(Float value) {
             this.significanceThreshold = value;
@@ -536,11 +543,11 @@ public class ConsensusElement {
 
         /**
          * Gets the value of the spectrumReference property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link Long }
-         *     
+         *         possible object is
+         *         {@link Long }
+         *
          */
         public Long getSpectrumReference() {
             return spectrumReference;
@@ -548,11 +555,11 @@ public class ConsensusElement {
 
         /**
          * Sets the value of the spectrumReference property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link Long }
-         *     
+         *              allowed object is
+         *              {@link Long }
+         *
          */
         public void setSpectrumReference(Long value) {
             this.spectrumReference = value;
@@ -560,11 +567,11 @@ public class ConsensusElement {
 
         /**
          * Gets the value of the rt property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link Float }
-         *     
+         *         possible object is
+         *         {@link Float }
+         *
          */
         public Float getRT() {
             return rt;
@@ -572,11 +579,11 @@ public class ConsensusElement {
 
         /**
          * Sets the value of the rt property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link Float }
-         *     
+         *              allowed object is
+         *              {@link Float }
+         *
          */
         public void setRT(Float value) {
             this.rt = value;
@@ -584,11 +591,11 @@ public class ConsensusElement {
 
         /**
          * Gets the value of the mz property.
-         * 
+         *
          * @return
-         *     possible object is
-         *     {@link Float }
-         *     
+         *         possible object is
+         *         {@link Float }
+         *
          */
         public Float getMZ() {
             return mz;
@@ -596,22 +603,24 @@ public class ConsensusElement {
 
         /**
          * Sets the value of the mz property.
-         * 
+         *
          * @param value
-         *     allowed object is
-         *     {@link Float }
-         *     
+         *              allowed object is
+         *              {@link Float }
+         *
          */
         public void setMZ(Float value) {
             this.mz = value;
         }
 
-
         /**
-         * <p>Java class for anonymous complex type.
-         * 
-         * <p>The following schema fragment specifies the expected content contained within this class.
-         * 
+         * <p>
+         * Java class for anonymous complex type.
+         *
+         * <p>
+         * The following schema fragment specifies the expected content
+         * contained within this class.
+         *
          * <pre>
          * &lt;complexType>
          *   &lt;complexContent>
@@ -643,8 +652,8 @@ public class ConsensusElement {
          *   &lt;/complexContent>
          * &lt;/complexType>
          * </pre>
-         * 
-         * 
+         *
+         *
          */
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "", propOrder = {
@@ -670,25 +679,26 @@ public class ConsensusElement {
 
             /**
              * Gets the value of the userParam property.
-             * 
+             *
              * <p>
              * This accessor method returns a reference to the live list,
              * not a snapshot. Therefore any modification you make to the
              * returned list will be present inside the JAXB object.
-             * This is why there is not a <CODE>set</CODE> method for the userParam property.
-             * 
+             * This is why there is not a <CODE>set</CODE> method for the
+             * userParam property.
+             *
              * <p>
              * For example, to add a new item, do as follows:
              * <pre>
              *    getUserParam().add(newItem);
              * </pre>
-             * 
-             * 
+             *
+             *
              * <p>
              * Objects of the following type(s) are allowed in the list
              * {@link UserParam }
-             * 
-             * 
+             *
+             *
              */
             public List<UserParam> getUserParam() {
                 if (userParam == null) {
@@ -699,11 +709,11 @@ public class ConsensusElement {
 
             /**
              * Gets the value of the sequence property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getSequence() {
                 return sequence;
@@ -711,11 +721,11 @@ public class ConsensusElement {
 
             /**
              * Sets the value of the sequence property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setSequence(String value) {
                 this.sequence = value;
@@ -723,11 +733,11 @@ public class ConsensusElement {
 
             /**
              * Gets the value of the charge property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link BigInteger }
-             *     
+             *         possible object is
+             *         {@link BigInteger }
+             *
              */
             public BigInteger getCharge() {
                 return charge;
@@ -735,11 +745,11 @@ public class ConsensusElement {
 
             /**
              * Sets the value of the charge property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link BigInteger }
-             *     
+             *              allowed object is
+             *              {@link BigInteger }
+             *
              */
             public void setCharge(BigInteger value) {
                 this.charge = value;
@@ -747,7 +757,7 @@ public class ConsensusElement {
 
             /**
              * Gets the value of the score property.
-             * 
+             *
              */
             public float getScore() {
                 return score;
@@ -755,7 +765,7 @@ public class ConsensusElement {
 
             /**
              * Sets the value of the score property.
-             * 
+             *
              */
             public void setScore(float value) {
                 this.score = value;
@@ -763,11 +773,11 @@ public class ConsensusElement {
 
             /**
              * Gets the value of the aaBefore property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getAaBefore() {
                 return aaBefore;
@@ -775,11 +785,11 @@ public class ConsensusElement {
 
             /**
              * Sets the value of the aaBefore property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setAaBefore(String value) {
                 this.aaBefore = value;
@@ -787,11 +797,11 @@ public class ConsensusElement {
 
             /**
              * Gets the value of the aaAfter property.
-             * 
+             *
              * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *         possible object is
+             *         {@link String }
+             *
              */
             public String getAaAfter() {
                 return aaAfter;
@@ -799,11 +809,11 @@ public class ConsensusElement {
 
             /**
              * Sets the value of the aaAfter property.
-             * 
+             *
              * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *              allowed object is
+             *              {@link String }
+             *
              */
             public void setAaAfter(String value) {
                 this.aaAfter = value;
@@ -811,25 +821,26 @@ public class ConsensusElement {
 
             /**
              * Gets the value of the proteinRefs property.
-             * 
+             *
              * <p>
              * This accessor method returns a reference to the live list,
              * not a snapshot. Therefore any modification you make to the
              * returned list will be present inside the JAXB object.
-             * This is why there is not a <CODE>set</CODE> method for the proteinRefs property.
-             * 
+             * This is why there is not a <CODE>set</CODE> method for the
+             * proteinRefs property.
+             *
              * <p>
              * For example, to add a new item, do as follows:
              * <pre>
              *    getProteinRefs().add(newItem);
              * </pre>
-             * 
-             * 
+             *
+             *
              * <p>
              * Objects of the following type(s) are allowed in the list
              * {@link Object }
-             * 
-             * 
+             *
+             *
              */
             public List<Object> getProteinRefs() {
                 if (proteinRefs == null) {

@@ -15,12 +15,14 @@ import javax.xml.bind.JAXBException;
 public interface MzqMzIdMapper {
 
     /**
-     * Generate the output mzQuantML file from input mzQuantML file and related mzIdentML files.
-     * The mzIdentML files provide spectrum identification item as the EvidenceRef based on the matching of feature retention time and m/z
+     * Generate the output mzQuantML file from input mzQuantML file and related
+     * mzIdentML files.
+     * The mzIdentML files provide spectrum identification item as the
+     * EvidenceRef based on the matching of feature retention time and m/z
      *
      * @param outputFile output file name
      *
-     * @throws JAXBException jaxb exception
+     * @throws JAXBException       jaxb exception
      * @throws java.io.IOException io exception
      */
     public void createMappedFile(File outputFile)

@@ -9,6 +9,7 @@ import java.util.HashMap;
  * @author Jun Fan<j.fan@cranfield.ac.uk>
  */
 public class PeptideSequenceData {
+
     private String sequence;
 //    private ArrayList<String> protein = new ArrayList<String>();
     private HashMap<String, PeptideData> peptides;
@@ -20,7 +21,6 @@ public class PeptideSequenceData {
 //    public void assignProtein(String proteinID){
 //        protein.add(proteinID);
 //    }
-
     public PeptideSequenceData(String sequence) {
         this.sequence = sequence;
         peptides = new HashMap<>();
@@ -29,17 +29,18 @@ public class PeptideSequenceData {
     public String getSequence() {
         return sequence;
     }
-    
-    public Collection<PeptideData> getPeptides(){
+
+    public Collection<PeptideData> getPeptides() {
         return peptides.values();
     }
-    
-    public void addPeptideData(PeptideData peptide){
+
+    public void addPeptideData(PeptideData peptide) {
         String modStr = peptide.getModString();
-        if(peptides.containsKey(modStr)){
+        if (peptides.containsKey(modStr)) {
             peptides.get(modStr).mergeAnotherPeptideData(peptide);
-        }else{
+        } else {
             peptides.put(modStr, peptide);
         }
     }
+
 }

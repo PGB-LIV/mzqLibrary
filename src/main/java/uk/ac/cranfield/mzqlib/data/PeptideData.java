@@ -19,7 +19,8 @@ public class PeptideData extends QuantitationLevel {
     private String modifications = "";
     /**
      * features are rawFilesGroup specific, which is corresponding to msrun
-     * so suitable for a hash map: keys are msrun id and values are the list of features
+     * so suitable for a hash map: keys are msrun id and values are the list of
+     * features
      */
 //    private HashMap<String,ArrayList<FeatureData>> features;
     private ArrayList<FeatureData> features = new ArrayList<>();
@@ -97,7 +98,8 @@ public class PeptideData extends QuantitationLevel {
         if (!assignedByPeptideRef) {
             setAssignedByPeptideRef(another.isAssignedByPeptideRef());
         }
-        this.peptide.getEvidenceRef().addAll(another.getPeptide().getEvidenceRef());
+        this.peptide.getEvidenceRef().addAll(another.getPeptide().
+                getEvidenceRef());
         //TODO more things need to be added here when merging two or more mzq files, e.g. searchDatabaseRef
     }
 

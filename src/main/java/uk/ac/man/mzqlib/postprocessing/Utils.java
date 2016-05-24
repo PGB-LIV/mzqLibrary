@@ -16,17 +16,21 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.Row;
 
 /**
  * Utilities used
+ *
  * @author man-mqbsshz2
  */
 public class Utils {
-    
+
     /**
      * Make the records of DataMatrix in order
+     *
      * @param map - a hashmap
-     * @param dM - data matrix
+     * @param dM  - data matrix
+     *
      * @return a data matrix
      */
-    public static DataMatrix sortedMap(Map<String, List<String>> map, DataMatrix dM) {
+    public static DataMatrix sortedMap(Map<String, List<String>> map,
+                                       DataMatrix dM) {
         Set s = map.entrySet();
 
         for (Iterator it = s.iterator(); it.hasNext();) {
@@ -34,7 +38,8 @@ public class Utils {
 //            String key = (String) entry.getKey();
             String value = entry.getValue().toString();
             //remove the double quotation marks in front and rear
-            value = value.substring(1, value.length() - 2).replaceAll("[\\,]", " ");
+            value = value.substring(1, value.length() - 2).replaceAll("[\\,]",
+                                                                      " ");
             //remove the last 5 characters of groupId
             value = value.substring(0, value.length() - 5);
             Row row = new Row();
@@ -44,13 +49,15 @@ public class Utils {
         }
         return dM;
     }
-    
+
     /**
      * calculate the column sum in a two-dimensional array
+     *
      * @param arr - a 2-d array
+     *
      * @return a 1-d array
      */
-     public static double[] columnSum(double[][] arr) {
+    public static double[] columnSum(double[][] arr) {
         int index = 0;
         double[] temp = new double[arr[index].length];
         for (int i = 0; i < arr[0].length; i++) {
@@ -65,11 +72,13 @@ public class Utils {
         return temp;
     }
 
-     /**
-      * get the median for a vector
-      * @param d - a 1-d array
-      * @return a double value
-      */
+    /**
+     * get the median for a vector
+     *
+     * @param d - a 1-d array
+     *
+     * @return a double value
+     */
     public static double median(double[] d) {
         Arrays.sort(d);
         int middle = d.length / 2;
@@ -81,5 +90,5 @@ public class Utils {
             return d[middle];
         }
     }
-    
+
 }

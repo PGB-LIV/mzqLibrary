@@ -5,7 +5,6 @@
 // Generated on: 2014.03.18 at 02:59:01 PM GMT 
 //
 
-
 package uk.ac.liv.mzqlib.openms.jaxb;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,12 +13,14 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for anonymous complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p>
+ * Java class for anonymous complex type.
+ *
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -31,8 +32,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
@@ -48,7 +49,7 @@ public class Centroid {
 
     /**
      * Gets the value of the rt property.
-     * 
+     *
      */
     public double getRt() {
         return rt;
@@ -56,7 +57,7 @@ public class Centroid {
 
     /**
      * Sets the value of the rt property.
-     * 
+     *
      */
     public void setRt(double value) {
         this.rt = value;
@@ -64,7 +65,7 @@ public class Centroid {
 
     /**
      * Gets the value of the mz property.
-     * 
+     *
      */
     public double getMz() {
         return mz;
@@ -72,7 +73,7 @@ public class Centroid {
 
     /**
      * Sets the value of the mz property.
-     * 
+     *
      */
     public void setMz(double value) {
         this.mz = value;
@@ -80,7 +81,7 @@ public class Centroid {
 
     /**
      * Gets the value of the it property.
-     * 
+     *
      */
     public double getIt() {
         return it;
@@ -88,7 +89,7 @@ public class Centroid {
 
     /**
      * Sets the value of the it property.
-     * 
+     *
      */
     public void setIt(double value) {
         this.it = value;

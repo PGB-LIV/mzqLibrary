@@ -5,32 +5,34 @@
 // Generated on: 2014.03.18 at 02:59:01 PM GMT 
 //
 
-
 package uk.ac.liv.mzqlib.openms.jaxb;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for DigestionEnzyme.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
- * <pre>
+ * Java class for DigestionEnzyme.
+ *
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * <p>
+ * <
+ * pre>
  * &lt;simpleType name="DigestionEnzyme">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="pepsin_a"/>
- *     &lt;enumeration value="chymotrypsin"/>
- *     &lt;enumeration value="proteinase_k"/>
- *     &lt;enumeration value="trypsin"/>
- *     &lt;enumeration value="no_enzyme"/>
- *     &lt;enumeration value="unknown_enzyme"/>
- *   &lt;/restriction>
+ * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
+ * &lt;enumeration value="pepsin_a"/>
+ * &lt;enumeration value="chymotrypsin"/>
+ * &lt;enumeration value="proteinase_k"/>
+ * &lt;enumeration value="trypsin"/>
+ * &lt;enumeration value="no_enzyme"/>
+ * &lt;enumeration value="unknown_enzyme"/>
+ * &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
- * 
+ *
  */
 @XmlType(name = "DigestionEnzyme")
 @XmlEnum
@@ -59,7 +61,7 @@ public enum DigestionEnzyme {
     }
 
     public static DigestionEnzyme fromValue(String v) {
-        for (DigestionEnzyme c: DigestionEnzyme.values()) {
+        for (DigestionEnzyme c : DigestionEnzyme.values()) {
             if (c.value.equals(v)) {
                 return c;
             }

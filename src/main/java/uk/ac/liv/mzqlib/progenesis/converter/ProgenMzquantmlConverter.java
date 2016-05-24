@@ -299,9 +299,9 @@ public class ProgenMzquantmlConverter {
 
         //read identification csv file
         final Map<String, String> psmidSeqMap = new HashMap<>();
-        final Map<String, String> psmidModMap = new HashMap<>();
-        final Map<String, String> psmidChrMap = new HashMap<>();
-        final Map<String, String> psmidMzMap = new HashMap<>();
+        //final Map<String, String> psmidModMap = new HashMap<>();
+        //final Map<String, String> psmidChrMap = new HashMap<>();
+        //final Map<String, String> psmidMzMap = new HashMap<>();
         psmidAssMap = new HashMap<>();
         seqPsmidMap = new HashMap<>();
 
@@ -327,9 +327,9 @@ public class ProgenMzquantmlConverter {
              */
             while ((nextLine = reader.readNext()) != null) {
                 psmidSeqMap.put(nextLine[4], nextLine[10]);
-                psmidModMap.put(nextLine[4], nextLine[11]);
-                psmidChrMap.put(nextLine[4], nextLine[9]);
-                psmidMzMap.put(nextLine[4], nextLine[7]); //Calc m/z
+                //psmidModMap.put(nextLine[4], nextLine[11]);
+                //psmidChrMap.put(nextLine[4], nextLine[9]);
+                //psmidMzMap.put(nextLine[4], nextLine[7]); //Calc m/z
                 psmidAssMap.put(nextLine[4], nextLine[2].substring(0,
                                                                    nextLine[2].
                                                                    indexOf('.')));
@@ -1567,8 +1567,10 @@ public class ProgenMzquantmlConverter {
             /**
              * parsing protein list file
              */
+            FileInputStream fis = new FileInputStream(flFn);
             try (ProgenesisProteinListReader pplr
-                    = new ProgenesisProteinListReader(new FileReader(plFn),
+                    = new ProgenesisProteinListReader(new InputStreamReader(fis,
+                                                                            "UTF-8"),
                                                       separator)) {
                 proteinAccessionsMap.putAll(pplr.getInexMap());
                 confidenceMap = pplr.getConfidenceMap();

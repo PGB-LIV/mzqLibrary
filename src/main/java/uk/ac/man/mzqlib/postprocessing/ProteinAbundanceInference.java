@@ -850,9 +850,9 @@ public final class ProteinAbundanceInference {
             /**
              * generate the protein-to-peptide map
              */
-            HashSet<String> setOfPeptides = new HashSet<String>();
+            //HashSet<String> setOfPeptides = new HashSet<>();
             for (String pepCon : pepConRefs) {
-                setOfPeptides.add(pepCon);
+                //setOfPeptides.add(pepCon);
 
                 /*
                  * Accession or ID for protein
@@ -1423,8 +1423,8 @@ public final class ProteinAbundanceInference {
 
 //                        cvParam.setName(anchorProtein);
                         cvParam.setName("anchor protein");
-                        CvParamRef cvParamRef = new CvParamRef();
-                        cvParamRef.setCvParam(cvParam);
+                        //CvParamRef cvParamRef = new CvParamRef();
+                        //cvParamRef.setCvParam(cvParam);
                         cvParams.add(cvParam);
                         protRefs.add(protRef);
                     }

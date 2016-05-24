@@ -833,8 +833,8 @@ public class PepProtAbundanceNormalisation {
     private Map<String, List<String>> normalisedAssayValue(String ref,
                                                            Map<String, List<String>> PAV) {
         Map<String, List<String>> normalisedPAV
-                = new HashMap<String, List<String>>();
-        Map<String, List<String>> ratioPAV = new HashMap<String, List<String>>();
+                = new HashMap<>();
+        Map<String, List<String>> ratioPAV = new HashMap<>();
 //        Set<Entry<String, List<String>>> entrys = peptideAssayValues.entrySet();
         Set<Entry<String, List<String>>> entrys = PAV.entrySet();
 
@@ -863,7 +863,7 @@ public class PepProtAbundanceNormalisation {
         //adjust zeros and calculate the ratios
         for (Map.Entry<String, List<String>> entry : entrys) {
             int sig_ignore = 0;
-            List<String> ratioVals = new ArrayList<String>();
+            List<String> ratioVals = new ArrayList<>();
             String key = entry.getKey();
             String vRef = entry.getValue().get(refNo);
 
@@ -991,7 +991,7 @@ public class PepProtAbundanceNormalisation {
         for (Map.Entry<String, List<String>> entry : entrys) {
             int sig_ignore_null = 0;
 
-            List<String> valArrRowList = new ArrayList<String>();
+            List<String> valArrRowList = new ArrayList<>();
             String key = entry.getKey();
             List<String> values = entry.getValue();
 

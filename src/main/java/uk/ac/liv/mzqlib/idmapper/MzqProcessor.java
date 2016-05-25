@@ -18,13 +18,13 @@ public interface MzqProcessor {
      *
      * @return Map
      */
-    public Map getFeatureToSIIsMap();
+    Map getFeatureToSIIsMap();
 
     /**
      * Get search database.
      *
      * @return SearchDatabase
      */
-    public SearchDatabase getSearchDatabase();
+    SearchDatabase getSearchDatabase();
 
 }

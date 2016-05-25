@@ -693,7 +693,7 @@ public class PepProtAbundanceNormalisation {
                                     for (String pepRef : pepRefs) {
                                         if (pepRef.equalsIgnoreCase(pepId)
                                                 && !(protAcc.contains(tagDecoy))) {
-                                                //
+                                            //
 
                                             //original
 //                                                peptideAssayValues.put(peptideRef, values);
@@ -905,7 +905,7 @@ public class PepProtAbundanceNormalisation {
         }
 
 //calculate the scaling factor for each assay
-        int run = 0;
+        //int run = 0;
         for (int col = 0; col < vSize; col++) {
             int nonZero = 0;
             double[] objCol = new double[entryNo];
@@ -971,7 +971,7 @@ public class PepProtAbundanceNormalisation {
                 nonZero = nonZeroTmp;
                 if (check == true) {
                     scalingFactor[col] = Math.pow(10, Utils.mean(logRatioTmp));
-                    run++;
+                    //run++;
                     break;
                 }
             }
@@ -990,11 +990,11 @@ public class PepProtAbundanceNormalisation {
 //        }
         //normalising the entries without the "null" value
         for (Map.Entry<String, List<String>> entry : entrys) {
-            int sig_ignore_null = 0;
+            //int sig_ignore_null = 0;
 
             List<String> valArrRowList = new ArrayList<>();
             String key = entry.getKey();
-            List<String> values = entry.getValue();
+            //List<String> values = entry.getValue();
 
             //remove entries with "null"
 //            for (String val : values) {
@@ -1347,18 +1347,18 @@ public class PepProtAbundanceNormalisation {
     private static final Function<Future<ScaleFactorCalculationResult>, ScaleFactorCalculationResult> mapResultFunction
             = new Function<Future<ScaleFactorCalculationResult>, ScaleFactorCalculationResult>() {
 
-                @Override
-                public ScaleFactorCalculationResult apply(
-                        Future<ScaleFactorCalculationResult> t) {
-                            try {
-                                return t.get();
-                            } catch (InterruptedException | ExecutionException ex) {
-                                Logger.getLogger(
-                                        PepProtAbundanceNormalisation.class.
-                                        getName()).log(Level.SEVERE, null, ex);
-                                return null;
-                            }
-                        }
+        @Override
+        public ScaleFactorCalculationResult apply(
+                Future<ScaleFactorCalculationResult> t) {
+            try {
+                return t.get();
+            } catch (InterruptedException | ExecutionException ex) {
+                Logger.getLogger(
+                        PepProtAbundanceNormalisation.class.
+                        getName()).log(Level.SEVERE, null, ex);
+                return null;
+            }
+        }
 
-            };
+    };
 }

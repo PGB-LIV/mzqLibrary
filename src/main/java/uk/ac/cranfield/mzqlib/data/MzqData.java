@@ -413,9 +413,13 @@ public class MzqData {
 
     //for modification in PeptideConsensus, not modification in Label which is of ModParamType type
     private String getModificationString(Modification mod) {
-//        <xsd:element name="cvParam" type="CVParamType" minOccurs="1" maxOccurs="unbounded">
+        //<xsd:element name="cvParam" type="CVParamType" minOccurs="1" maxOccurs="unbounded">           
         for (CvParam cv : mod.getCvParam()) {
-            return cv.getName();
+            if (cv.getName() == null) {
+                continue;
+            } else {
+                return cv.getName();
+            }
         }
         return null;
     }

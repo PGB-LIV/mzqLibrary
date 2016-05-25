@@ -21,7 +21,7 @@ public interface MzidProcessor {
      *
      * @return the peptide to spectrumIdentificationItems map.
      */
-    public Map getPeptideModStringToSIIsMap();
+    Map getPeptideModStringToSIIsMap();
 
     //public Map getPeptideModStringToProtAccessionsMap();
     /**
@@ -31,13 +31,13 @@ public interface MzidProcessor {
      *
      * @return retention time to spectrumIdentifications map.
      */
-    public TIntObjectMap getRtToSIIsMap();
+    TIntObjectMap getRtToSIIsMap();
 
     /**
      * Get SearchDatabase element.
      *
      * @return SearchDatabase
      */
-    public SearchDatabase getSearchDatabase();
+    SearchDatabase getSearchDatabase();
 
 }

@@ -292,18 +292,21 @@ public class MzQuantMLLib implements Serializable {
                     if (args[0].equals("CsvConverter")) {
                         MzqLib mzqlib = new MzqLib("csv", inputFileName,
                                                    outputFileName);
+                        mzqlib.toString(); //fix UnusedLocalVariable warnings
                     } else if (args[0].equals("XlsConverter")) {
                         MzqLib mzqlib = new MzqLib("xls", inputFileName,
                                                    outputFileName);
+                        mzqlib.toString(); //fix UnusedLocalVariable warnings
                     } else if (args[0].equals("HtmlConverter")) {
                         MzqLib mzqlib = new MzqLib("html", inputFileName,
                                                    outputFileName);
+                        mzqlib.toString(); //fix UnusedLocalVariable warnings
                     } else if (args[0].equals("ConsensusXMLConverter")) {
                         try {
                             ConsensusXMLProcessor conProc
                                     = ConsensusXMLProcessorFactory.getInstance().
                                     buildConsensusXMLProcessor(new File(
-                                                    inputFileName));
+                                            inputFileName));
                             conProc.convert(outputFileName);
                         } catch (JAXBException | IOException ex) {
                             System.out.println(
@@ -317,6 +320,7 @@ public class MzQuantMLLib implements Serializable {
                     } else if (args[0].equals("MzTabConverter")) {
                         MzqLib mzqlib = new MzqLib("mztab", inputFileName,
                                                    outputFileName);
+                        mzqlib.toString(); //fix UnusedLocalVariable warnings
                     } else if (args[0].equals("MzqMzIdMapping")) {
                         String rawToMzidMapString = Utils.getCmdParameter(args,
                                                                           "rawToMzidMap",
@@ -340,6 +344,7 @@ public class MzQuantMLLib implements Serializable {
                                                              listType,
                                                              assayIdsGroupString,
                                                              qlDTCA);
+                        mzqAnova.writeMzQuantMLFile(outputFileName);
                     } else if (args[0].equals("Normalisation")) {
                         String normLevel = Utils.
                                 getCmdParameter(args, "normLvl", true);

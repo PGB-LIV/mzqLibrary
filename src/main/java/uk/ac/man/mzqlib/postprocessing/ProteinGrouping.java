@@ -258,12 +258,10 @@ public class ProteinGrouping {
             boolean isComplete = true;
             for (String peptide : peptides) {
                 for (String protein : entry.getValue()) {
-                    if (pepToPro.get(peptide).contains(protein)) {
-                        continue;
+                    if (!pepToPro.get(peptide).contains(protein)) {
+                        isComplete = false;
+                        break;
                     }
-
-                    isComplete = false;
-                    break;
                 }
             }
             if (isComplete) {
@@ -324,11 +322,10 @@ public class ProteinGrouping {
 
             boolean isComplete = true;
             for (String peptide : peptides) {
-                if (proToPep.get(largestProtein).contains(peptide)) {
-                    continue;
+                if (!proToPep.get(largestProtein).contains(peptide)) {
+                    isComplete = false;
+                    break;
                 }
-                isComplete = false;
-                break;
             }
 
             if (!isComplete) {
@@ -338,12 +335,10 @@ public class ProteinGrouping {
             isComplete = true;
             for (String peptide : peptides) {
                 for (String protein : proteins) {
-                    if (pepToPro.get(peptide).contains(protein)) {
-                        continue;
+                    if (!pepToPro.get(peptide).contains(protein)) {
+                        isComplete = false;
+                        break;
                     }
-
-                    isComplete = false;
-                    break;
                 }
             }
 

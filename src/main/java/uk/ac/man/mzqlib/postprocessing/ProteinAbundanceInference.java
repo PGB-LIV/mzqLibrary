@@ -3,7 +3,6 @@ package uk.ac.man.mzqlib.postprocessing;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import static java.lang.System.exit;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -15,9 +14,30 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+
 import javax.xml.bind.JAXBException;
+
 import uk.ac.liv.pgb.jmzqml.MzQuantMLElement;
-import uk.ac.liv.pgb.jmzqml.model.mzqml.*;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Cv;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.CvParam;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.CvParamRef;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.DataMatrix;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.IdOnly;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.IdentificationFile;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.IdentificationRef;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.MzQuantML;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensus;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensusList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Protein;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinGroup;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinGroupList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinRef;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.QuantLayer;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Row;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.SearchDatabase;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.UserParam;
+
 import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLMarshaller;
 import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
 
@@ -672,7 +692,7 @@ public final class ProteinAbundanceInference {
      */
     private Map<String, List<String>> peptideAssayValues(
             MzQuantMLUnmarshaller in_file_um, String inputPepDTCA) {
-        boolean first_list = false;
+        //boolean first_list = false;
         Map<String, List<String>> peptideAV
                 = new HashMap<>();
 
@@ -699,7 +719,7 @@ public final class ProteinAbundanceInference {
                 }
                 //use the first AQL encountered even if there are multiple AQLs with the same data type
 //                System.out.println("Peptide Assay Values: " + peptideAssayValues);
-                first_list = true;
+                //first_list = true;
                 break;
             }
         }
@@ -717,7 +737,7 @@ public final class ProteinAbundanceInference {
      */
     private Map<String, List<String>> peptideValidAssayValues(
             MzQuantMLUnmarshaller in_file_um, String inputPepDTCA) {
-        boolean first_list = false;
+        //boolean first_list = false;
         Map<String, List<String>> peptideAV
                 = new HashMap<>();
 
@@ -759,7 +779,7 @@ public final class ProteinAbundanceInference {
                 }
                 //use the first AQL encountered even if there are multiple AQLs with the same data type
 //                System.out.println("Peptide Assay Values: " + peptideAssayValues);
-                first_list = true;
+                //first_list = true;
                 break;
             }
         }
@@ -804,8 +824,8 @@ public final class ProteinAbundanceInference {
             proteinToPeptide.put(protein.getId(), setOfPeptides);
 
             // Check if the peptide consensus ref is in the peptide list.
-            pepConRefs.stream().filter((pepConRef) -> !(!peptideList.contains(
-                    pepConRef))).forEach((pepConRef) -> {
+            pepConRefs.stream().filter((pepConRef) -> peptideList.contains(
+                    pepConRef)).forEach((pepConRef) -> {
                 if (!excludeConflictingPeptides) {
                     setOfPeptides.add(pepConRef);
                 } else {
@@ -850,9 +870,9 @@ public final class ProteinAbundanceInference {
             /**
              * generate the protein-to-peptide map
              */
-            //HashSet<String> setOfPeptides = new HashSet<>();
+            Set<String> setOfPeptides = new HashSet<>();
             for (String pepCon : pepConRefs) {
-                //setOfPeptides.add(pepCon);
+                setOfPeptides.add(pepCon);
 
                 /*
                  * Accession or ID for protein
@@ -1122,8 +1142,8 @@ public final class ProteinAbundanceInference {
                             || componentValue.equals("nan")
                             || componentValue.equals("Null") || componentValue.
                             equals("null")
-                                    ? Double.parseDouble("0") : Double.
-                                    parseDouble(componentValue);
+                            ? Double.parseDouble("0") : Double.
+                            parseDouble(componentValue);
 //                        sumOfpepValues[j] = sumOfpepValues[j] + temp;
                     matrixPepValue[tempNo][j] = temp;
                 }
@@ -1216,8 +1236,8 @@ public final class ProteinAbundanceInference {
                      */
                     double temp = componentValue.equalsIgnoreCase("nan")
                             || componentValue.equalsIgnoreCase("null")
-                                    ? Double.parseDouble("0") : Double.
-                                    parseDouble(componentValue);
+                            ? Double.parseDouble("0") : Double.
+                            parseDouble(componentValue);
                     matrixPepValue[tempNo][j] = temp;
                 }
                 tempNo++;
@@ -1309,8 +1329,8 @@ public final class ProteinAbundanceInference {
                             || componentValue.equals("nan")
                             || componentValue.equals("Null") || componentValue.
                             equals("null")
-                                    ? Double.parseDouble("0") : Double.
-                                    parseDouble(componentValue);
+                            ? Double.parseDouble("0") : Double.
+                            parseDouble(componentValue);
                     matrixPepValue[tempNo][j] = temp;
                 }
                 tempNo++;

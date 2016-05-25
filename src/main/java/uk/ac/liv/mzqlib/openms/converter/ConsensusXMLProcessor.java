@@ -28,42 +28,42 @@ public interface ConsensusXMLProcessor {
      *
      * @return PeptideConsensusList
      */
-    public PeptideConsensusList getPeptideConsensusList();
+    PeptideConsensusList getPeptideConsensusList();
 
     /**
      * Get map of rawFilesGroup's id to FeatureList.
      *
      * @return Map<String, FeatureList>
      */
-    public Map<String, FeatureList> getRawFilesGroupIdToFeatureListMap();
+    Map<String, FeatureList> getRawFilesGroupIdToFeatureListMap();
 
     /**
      * Get Cv element.
      *
      * @return Cv
      */
-    public Cv getCv();
+    Cv getCv();
 
     /**
      * Get AssayList element.
      *
      * @return AssayList
      */
-    public AssayList getAssayList();
+    AssayList getAssayList();
 
     /**
      * Get map of rawFilesGroup to Assay.
      *
      * @return Map<String, Assay>
      */
-    public Map<String, Assay> getRawFilesGroupAssayMap();
+    Map<String, Assay> getRawFilesGroupAssayMap();
 
     /**
      * Get list of rawFilesGroup.
      *
      * @return List<RawFilesGroup>
      */
-    public List<RawFilesGroup> getRawFilesGroupList();
+    List<RawFilesGroup> getRawFilesGroupList();
 
     /**
      * Convert to mzQuantML file.
@@ -72,10 +72,10 @@ public interface ConsensusXMLProcessor {
      *
      * @throws IOException io exception
      */
-    public void convert(String outputFn)
+    void convert(String outputFn)
             throws IOException;
 
-    public void convert(String outputFn,
+    void convert(String outputFn,
                         Map<String, ? extends Collection<File>> studyVariablesToFiles)
             throws IOException;
 

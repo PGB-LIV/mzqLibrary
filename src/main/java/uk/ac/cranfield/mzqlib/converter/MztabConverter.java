@@ -3,7 +3,6 @@ package uk.ac.cranfield.mzqlib.converter;
 
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.URL;
@@ -108,16 +107,16 @@ public class MztabConverter extends GenericConverter {
             ArrayList<String> ratioIDs = MzqLib.data.getRatios();
             //mandatory fields in all cases: mzTab-version, mzTab-mode, mzTab-type
             MZTabDescription tabDesc;
-            boolean isComplete;
+            //boolean isComplete;
             //convert from mzq file, so assume quantification type all the time
             if (proCvParam == null && pepCvParam == null) {
                 tabDesc = new MZTabDescription(MZTabDescription.Mode.Summary,
                                                MZTabDescription.Type.Quantification);
-                isComplete = false;
+                //isComplete = false;
             } else {
                 tabDesc = new MZTabDescription(MZTabDescription.Mode.Complete,
                                                MZTabDescription.Type.Quantification);
-                isComplete = true;
+                //isComplete = true;
             }
             tabDesc.setVersion("1.0.0");
             //optional fields in all cases: mzTab-ID, title
@@ -295,9 +294,9 @@ public class MztabConverter extends GenericConverter {
                         equals("MS:1001836")) {//label free 
                     tabAssay.setQuantificationReagent(
                             new CVParam(msCVstr,
-                                                                     "MS:1002038",
-                                                                     "unlabeled sample",
-                                                                     null));
+                                        "MS:1002038",
+                                        "unlabeled sample",
+                                        null));
                 } else if (methodAccession.equals("MS:1002018")) { //MS1 labeled
 //                    for (ModParam mod : assay.getLabel().getModification()) {
                     ModParam mod = assay.getLabel().getModification().get(0);

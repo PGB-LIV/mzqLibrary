@@ -13,13 +13,62 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.math.BigInteger;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
-import uk.ac.liv.pgb.jmzqml.model.mzqml.*;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.AnalysisSummary;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Assay;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.AssayList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.AuditCollection;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.BibliographicReference;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Column;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.ColumnDefinition;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Cv;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.CvList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.CvParam;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.CvParamRef;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.DataMatrix;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.DataProcessing;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.DataProcessingList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.EvidenceRef;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Feature;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.FeatureList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.GlobalQuantLayer;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.InputFiles;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Label;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.ModParam;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Param;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.ParamList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensus;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensusList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.ProcessingMethod;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Protein;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinGroupList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.QuantLayer;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Ratio;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.RatioList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.RatioQuantLayer;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.RawFile;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.RawFilesGroup;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Row;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.SearchDatabase;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.SmallMoleculeList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Software;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.SoftwareList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.StudyVariable;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.StudyVariableList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.UserParam;
 import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLMarshaller;
 
 /**
@@ -373,34 +422,34 @@ public class MaxquantMzquantmlConverter {
             else //TODO: this is fixed label modification just used for example file
             //TODO: need to find a better way to form this later
             //find out if it is light or heavy label assay
-            if (assName.toLowerCase(Locale.ENGLISH).contains("light")) {
-                assay.setLabel(label);
-                assays.add(assay);
-            } else if (assName.toLowerCase(Locale.ENGLISH).contains("heavy")) {
-                Label label_heavy = new Label();
-                CvParam label_lysine = new CvParam();
-                label_lysine.setAccession("MOD:00582");
-                label_lysine.setName("6x(13)C,2x(15)N labeled L-lysine");
-                label_lysine.setCv(cv_mod);
-                label_lysine.setValue("Lys8");
+             if (assName.toLowerCase(Locale.ENGLISH).contains("light")) {
+                    assay.setLabel(label);
+                    assays.add(assay);
+                } else if (assName.toLowerCase(Locale.ENGLISH).contains("heavy")) {
+                    Label label_heavy = new Label();
+                    CvParam label_lysine = new CvParam();
+                    label_lysine.setAccession("MOD:00582");
+                    label_lysine.setName("6x(13)C,2x(15)N labeled L-lysine");
+                    label_lysine.setCv(cv_mod);
+                    label_lysine.setValue("Lys8");
 
-                CvParam label_arginine = new CvParam();
-                label_arginine.setAccession("MOD:00587");
-                label_arginine.setName("6x(13)C,4x(15)N labeled L-arginine");
-                label_arginine.setCv(cv_mod);
-                label_arginine.setValue("Arg10");
+                    CvParam label_arginine = new CvParam();
+                    label_arginine.setAccession("MOD:00587");
+                    label_arginine.setName("6x(13)C,4x(15)N labeled L-arginine");
+                    label_arginine.setCv(cv_mod);
+                    label_arginine.setValue("Arg10");
 
-                ModParam modParam_lysine = new ModParam();
-                modParam_lysine.setCvParam(label_lysine);
-                label_heavy.getModification().add(modParam_lysine);
+                    ModParam modParam_lysine = new ModParam();
+                    modParam_lysine.setCvParam(label_lysine);
+                    label_heavy.getModification().add(modParam_lysine);
 
-                ModParam modParam_arginine = new ModParam();
-                modParam_arginine.setCvParam(label_arginine);
-                label_heavy.getModification().add(modParam_arginine);
+                    ModParam modParam_arginine = new ModParam();
+                    modParam_arginine.setCvParam(label_arginine);
+                    label_heavy.getModification().add(modParam_arginine);
 
-                assay.setLabel(label_heavy);
-                assays.add(assay);
-            }
+                    assay.setLabel(label_heavy);
+                    assays.add(assay);
+                }
             ass_i++;
         }
     }
@@ -582,7 +631,7 @@ public class MaxquantMzquantmlConverter {
 
         // StudyVariableQuantLayer for protein intensity if it is NOT label free example
         if (!maxRd.isLabelFree()) {
-            int labelNum = maxRd.getLabelNumber();
+            //int labelNum = maxRd.getLabelNumber();
             QuantLayer assayQL_prot_int = new QuantLayer();
             assayQL_prot_int.setId("Prot_StudyVariable_QL1");
             CvParamRef cvParamRef_prot_int = new CvParamRef();
@@ -777,8 +826,8 @@ public class MaxquantMzquantmlConverter {
                     // cvParam for intensity
                     Column featureColumn_int
                             = createColumn(0, createCvParam(
-                                                   "MaxQuant:feature intensity",
-                                                   "PSI-MS", "MS:1001903"));
+                                           "MaxQuant:feature intensity",
+                                           "PSI-MS", "MS:1001903"));
                     featureColumnIndex.getColumn().add(featureColumn_int);
 
                     Row row = new Row();
@@ -918,8 +967,8 @@ public class MaxquantMzquantmlConverter {
                     // cvParam for intensity
                     Column featureColumn_int
                             = createColumn(0, createCvParam(
-                                                   "MaxQuant:feature intensity",
-                                                   "PSI-MS", "MS:1001903"));
+                                           "MaxQuant:feature intensity",
+                                           "PSI-MS", "MS:1001903"));
                     featureColumnIndex.getColumn().add(featureColumn_int);
 
                     Row row_L = new Row();

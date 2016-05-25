@@ -835,7 +835,7 @@ public class PepProtAbundanceNormalisation {
                                                            Map<String, List<String>> PAV) {
         Map<String, List<String>> normalisedPAV
                 = new HashMap<>();
-        Map<String, List<String>> ratioPAV = new HashMap<>();
+        //Map<String, List<String>> ratioPAV = new HashMap<>();
 //        Set<Entry<String, List<String>>> entrys = peptideAssayValues.entrySet();
         Set<Entry<String, List<String>>> entrys = PAV.entrySet();
 
@@ -857,7 +857,7 @@ public class PepProtAbundanceNormalisation {
 //        System.out.println("entry no: " + entryNo);
         double[][] valArr = new double[entryNo][vSize];
         String[] valArrRow = new String[vSize];
-        String[] valArr_key = new String[entryNo];
+        //String[] valArr_key = new String[entryNo];
         double[] refCol = new double[entryNo];
         int refNo = Integer.parseInt(ref) - 1;
 
@@ -899,8 +899,8 @@ public class PepProtAbundanceNormalisation {
                 continue;
             }
 
-            valArr_key[entryRow] = key;
-            ratioPAV.put(key, ratioVals);
+            //valArr_key[entryRow] = key;
+            //ratioPAV.put(key, ratioVals);
             entryRow++;
         }
 

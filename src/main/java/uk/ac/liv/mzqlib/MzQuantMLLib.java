@@ -292,15 +292,12 @@ public class MzQuantMLLib implements Serializable {
                     if (args[0].equals("CsvConverter")) {
                         MzqLib mzqlib = new MzqLib("csv", inputFileName,
                                                    outputFileName);
-                        mzqlib.toString(); //fix UnusedLocalVariable warnings
                     } else if (args[0].equals("XlsConverter")) {
                         MzqLib mzqlib = new MzqLib("xls", inputFileName,
                                                    outputFileName);
-                        mzqlib.toString(); //fix UnusedLocalVariable warnings
                     } else if (args[0].equals("HtmlConverter")) {
                         MzqLib mzqlib = new MzqLib("html", inputFileName,
                                                    outputFileName);
-                        mzqlib.toString(); //fix UnusedLocalVariable warnings
                     } else if (args[0].equals("ConsensusXMLConverter")) {
                         try {
                             ConsensusXMLProcessor conProc
@@ -320,7 +317,6 @@ public class MzQuantMLLib implements Serializable {
                     } else if (args[0].equals("MzTabConverter")) {
                         MzqLib mzqlib = new MzqLib("mztab", inputFileName,
                                                    outputFileName);
-                        mzqlib.toString(); //fix UnusedLocalVariable warnings
                     } else if (args[0].equals("MzqMzIdMapping")) {
                         String rawToMzidMapString = Utils.getCmdParameter(args,
                                                                           "rawToMzidMap",

@@ -1500,8 +1500,8 @@ public final class ProteinAbundanceInference {
                             } else {
                                 cvParam.setName("sequence same-set protein");
                             }
-                            CvParamRef cvParamRef = new CvParamRef();
-                            cvParamRef.setCvParam(cvParam);
+                            //CvParamRef cvParamRef = new CvParamRef();
+                            //cvParamRef.setCvParam(cvParam);
                             cvParams.add(cvParam);
                             protRefs.add(protRef);
                         }

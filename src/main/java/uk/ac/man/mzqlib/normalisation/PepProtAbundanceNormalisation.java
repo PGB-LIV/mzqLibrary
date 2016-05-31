@@ -862,7 +862,7 @@ public class PepProtAbundanceNormalisation {
         //adjust zeros and calculate the ratios
         for (Map.Entry<String, List<String>> entry : entrys) {
             int sig_ignore = 0;
-            List<String> ratioVals = new ArrayList<>();
+            //List<String> ratioVals = new ArrayList<>();
             //String key = entry.getKey();
             String vRef = entry.getValue().get(refNo);
 
@@ -889,7 +889,7 @@ public class PepProtAbundanceNormalisation {
                 double ratioVal = Double.parseDouble(vRef) / Double.parseDouble(
                         vj);
 
-                ratioVals.add(col, Double.toString(ratioVal));
+                //ratioVals.add(col, Double.toString(ratioVal));
                 valArr[entryRow][col] = Double.parseDouble(vj);
             }
 

@@ -386,7 +386,7 @@ public final class ProteinAbundanceInference {
         this.outputRawProteinGroupDTAccession = outputRawProteinGroupDTAccession;
         this.outputRawProteinGroupDTName = outputRawProteinGroupDTName;
         this.quantLayerType = QuantLayerType;
-        this.conflictPeptideExcluded = conflictPeptideExcluded;
+        ProteinAbundanceInference.conflictPeptideExcluded = conflictPeptideExcluded;
 
     }
 
@@ -527,9 +527,12 @@ public final class ProteinAbundanceInference {
 
         boolean pipeline_flag = true;
 
-        MzQuantMLUnmarshaller infile_um = null;
+        MzQuantMLUnmarshaller infile_um;
         try {
             infile_um = mzqFileInput(in_file);
+            //remove the previous protein group list if existing
+            checkProteinGroupList(infile_um);
+            pipeline_flag = pipeline_executor(infile_um, signalConflict);
         } catch (IllegalStateException ex) {
             System.out.println(
                     "****************************************************");
@@ -539,11 +542,6 @@ public final class ProteinAbundanceInference {
             System.out.println(
                     "****************************************************");
         }
-
-        //remove the previous protein group list if existing
-        checkProteinGroupList(infile_um);
-        //
-        pipeline_flag = pipeline_executor(infile_um, signalConflict);
 
         System.out.println(
                 "****************************************************");
@@ -865,18 +863,10 @@ public final class ProteinAbundanceInference {
         for (Protein protein : proteins) {
             List<String> pepConRefs = protein.getPeptideConsensusRefs();
 
-            /**
-             * generate the protein-to-peptide map
+            /*
+             * Accession or ID for protein
              */
-            Set<String> setOfPeptides = new HashSet<>();
-            for (String pepCon : pepConRefs) {
-                setOfPeptides.add(pepCon);
-
-                /*
-                 * Accession or ID for protein
-                 */
-                proteinToAccession.put(protein.getId(), protein.getAccession());
-            }
+            proteinToAccession.put(protein.getId(), protein.getAccession());
         }
         return proteinToAccession;
     }
@@ -1549,8 +1539,8 @@ public final class ProteinAbundanceInference {
                             } else {
                                 cvParam.setName("sequence sub-set protein");
                             }
-                            CvParamRef cvParamRef = new CvParamRef();
-                            cvParamRef.setCvParam(cvParam);
+                            //CvParamRef cvParamRef = new CvParamRef();
+                            //cvParamRef.setCvParam(cvParam);
                             cvParams.add(cvParam);
                             protRefs.add(protRef);
                         }

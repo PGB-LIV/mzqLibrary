@@ -32,9 +32,9 @@ public class HeatMapPdfController {
         this.mainApp = mainApp;
     }
 
-    public void setCaller(RootLayoutController c) {
-        this.rootController = c;
-    }
+//    public void setCaller(RootLayoutController c) {
+//        this.rootController = c;
+//    }
 
     @FXML
     @SuppressWarnings("unused")

@@ -1248,9 +1248,10 @@ public class ProgenMzquantmlConverter {
         final DataMatrix pep_RabDM = new DataMatrix();
         final DataMatrix pep_scoreDM = new DataMatrix();
 
-        for (final String seq : peptideMap.keySet()) {
+        for (Map.Entry<String, TIntSet> entry : peptideMap.entrySet()) {
+            String seq = entry.getKey();
             if (!seq.isEmpty()) {
-                TIntSet keys = peptideMap.get(seq);
+                TIntSet keys = entry.getValue();
 
                 final Set<String> tempPepList = new HashSet<>();
                 keys.forEach(new TIntProcedure() {
@@ -1388,14 +1389,12 @@ public class ProgenMzquantmlConverter {
                                     pep_scoreDM.getRow().add(row);
                                 }
                             }
-
                             peptideConsensuses.add(peptideConsensus);
                         }
                         return true;
                     }
 
                 });
-
             }
         }
 

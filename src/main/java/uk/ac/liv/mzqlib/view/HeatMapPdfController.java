@@ -19,7 +19,7 @@ public class HeatMapPdfController {
 
     //Reference to the main application
     private MainApp mainApp;
-    private RootLayoutController rootController;
+    //private RootLayoutController rootController;
 
     @FXML
     @SuppressWarnings("unused")
@@ -35,7 +35,6 @@ public class HeatMapPdfController {
 //    public void setCaller(RootLayoutController c) {
 //        this.rootController = c;
 //    }
-
     @FXML
     @SuppressWarnings("unused")
     private void handleHeatMapinR() {

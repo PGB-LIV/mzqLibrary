@@ -129,7 +129,7 @@ public class MzidToMzqElementConverter {
         if (mzidFF.getCvParam() != null) {
             mzqFF.
                     setCvParam(convertMzidCvParamToMzqCvParam(mzidFF.
-                                    getCvParam()));
+                            getCvParam()));
         }
 
         return mzqFF;

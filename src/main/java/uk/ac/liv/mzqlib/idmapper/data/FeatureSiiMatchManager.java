@@ -91,7 +91,7 @@ public class FeatureSiiMatchManager {
     public Map<String, List<SIIData>> getMatchMap() {
         return featureListFeatureMatches.entrySet().stream().flatMap(p -> p.
                 getValue().entrySet().stream()).collect(Collectors.toMap(entry
-                                -> entry.getKey().getId(), entry -> entry.
+                -> entry.getKey().getId(), entry -> entry.
                                                                          getValue(),
                                                                          mergeListsOperator));
     }
@@ -221,13 +221,13 @@ public class FeatureSiiMatchManager {
     private static final BinaryOperator<List<SIIData>> mergeListsOperator
             = new BinaryOperator<List<SIIData>>() {
 
-                @Override
-                public List<SIIData> apply(List<SIIData> t, List<SIIData> u) {
-                    List<SIIData> newList = new LinkedList<>();
-                    newList.addAll(t);
-                    newList.addAll(u);
-                    return newList;
-                }
+        @Override
+        public List<SIIData> apply(List<SIIData> t, List<SIIData> u) {
+            List<SIIData> newList = new LinkedList<>();
+            newList.addAll(t);
+            newList.addAll(u);
+            return newList;
+        }
 
-            };
+    };
 }

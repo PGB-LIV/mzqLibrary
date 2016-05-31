@@ -13,10 +13,11 @@ package uk.ac.liv.mzqlib.progenesis.reader;
  * @time 02-Dec-2013 15:22:59
  */
 public class ProteinListHeaders {
+
     /*
      * All use lower case
      */
-    /*
+ /*
      * These are the first row headers
      */
 

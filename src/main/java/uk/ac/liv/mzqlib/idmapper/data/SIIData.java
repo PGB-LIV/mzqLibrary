@@ -188,19 +188,19 @@ public class SIIData implements Comparable<SIIData> {
     public final static Comparator<SIIData> SIIDataRTComparator
             = new Comparator<SIIData>() {
 
-                @Override
-                public int compare(SIIData siiData1, SIIData siiData2) {
-                    double rt1 = siiData1.getRetentionTime();
-                    double rt2 = siiData2.getRetentionTime();
+        @Override
+        public int compare(SIIData siiData1, SIIData siiData2) {
+            double rt1 = siiData1.getRetentionTime();
+            double rt2 = siiData2.getRetentionTime();
 
-                    //ascending order
-                    return Double.compare(rt1, rt2);
+            //ascending order
+            return Double.compare(rt1, rt2);
 
-                    //descending order
-                    //return Double.compare(rt2, rt1);
-                }
+            //descending order
+            //return Double.compare(rt2, rt1);
+        }
 
-            };
+    };
 
     @Override
     public boolean equals(Object obj) {
@@ -269,7 +269,7 @@ public class SIIData implements Comparable<SIIData> {
                 for (CvParam cp : cps) {
                     modString = modString.append(cp.getAccession()).append('_')
                             .append(cp.getName()).append('_').append(mod.
-                                    getMonoisotopicMassDelta())
+                            getMonoisotopicMassDelta())
                             .append('_').append(mod.getLocation()).append('_');
                 }
             }

@@ -70,6 +70,7 @@ public class MzidProcessorFactory {
         private TIntObjectMap<List<SIIData>> RtToSIIsMap
                 = new TIntObjectHashMap<>();
         private SearchDatabase searchDB;
+
         /*
          * Constructor
          */

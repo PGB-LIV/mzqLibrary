@@ -624,9 +624,7 @@ public final class ProteinAbundanceInference {
                                                   subSetGroup,
                                                   peptideRawAssayValues);
 
-            mzqOutput(infile_um, mzq, assayQLs, abundanceOperation, uniSetGroup,
-                      sameSetGroup,
-                      subSetGroup, outputAssayQuantLayerID, inputAssayQLID,
+            mzqOutput(mzq, assayQLs, outputAssayQuantLayerID, inputAssayQLID,
                       outputRawAssayQuantLayerID,
                       inputRawAssayQLID, out_file, proteinAbundance,
                       rawProteinAbundance);
@@ -986,10 +984,6 @@ public final class ProteinAbundanceInference {
      *
      * @param mzq              - MzQuantML object file
      * @param assayQLs         - assay quant layer list
-     * @param operation        - calculation operator
-     * @param uniSetGr         - unique set group map
-     * @param sameSetGr        - sameset group map
-     * @param subSetGr         - subset group map
      * @param assayQlId        - assay quant layer ID
      * @param inPepQLID        - input peptide quant layer ID
      * @param outRawPQlId      - output raw peptide quant layer ID
@@ -1000,12 +994,7 @@ public final class ProteinAbundanceInference {
      *
      * @return - true/false
      */
-    private boolean mzqOutput(MzQuantMLUnmarshaller um,
-                              MzQuantML mzq, List<QuantLayer<IdOnly>> assayQLs,
-                              String operation,
-                              Map<String, Set<String>> uniSetGr,
-                              Map<String, Set<String>> sameSetGr,
-                              Map<String, Set<String>> subSetGr,
+    private boolean mzqOutput(MzQuantML mzq, List<QuantLayer<IdOnly>> assayQLs,
                               String assayQlId, String inPepQLID,
                               String outRawPQlId, String inRawPepQLID,
                               String outFile,
@@ -1456,7 +1445,7 @@ public final class ProteinAbundanceInference {
                         Set<String> protsId = peptideToProtein.get(pepSel);
                         //sort proteins
 //                        Set<String> protIds = new TreeSet<String>(protsId);
-                        TreeSet<String> protIds = new TreeSet<String>(protsId);
+                        Set<String> protIds = new TreeSet<>(protsId);
                         Iterator<String> protIdsIter = protIds.iterator();
 
                         int sig = 0;
@@ -1647,7 +1636,7 @@ public final class ProteinAbundanceInference {
          * make the records in order when outputing
          */
         Map<String, List<String>> proteinAbundanceTmp
-                = new HashMap<String, List<String>>();
+                = new HashMap<>();
         for (Map.Entry<String, List<String>> entry : protAbun.entrySet()) {
             String key = entry.getKey();
             List<String> values = entry.getValue();
@@ -1662,7 +1651,7 @@ public final class ProteinAbundanceInference {
          */
 //        Map<String, List<String>> treeMap = new TreeMap<String, List<String>>(pa);
 //        DataMatrix dMatrix = SortedMap(treeMap, dm, groupInOrder);
-        Map<String, List<String>> treeMap = new TreeMap<String, List<String>>(
+        Map<String, List<String>> treeMap = new TreeMap<>(
                 proteinAbundanceTmp);
         DataMatrix dMatrix = Utils.sortedMap(treeMap, dm);
 

@@ -151,9 +151,10 @@ public class MzqInfoController {
                 dataMatrixTable.getColumns().add(col);
             }
             dataMatrixTable.getItems().addAll(assayQL.getDmRows());
-        } else {
-            //remove all the text.
         }
+//        else {
+//            //remove all the text.
+//        }
         // Set table column resizable policy
         dataMatrixTable.setColumnResizePolicy(CONSTRAINED_RESIZE_POLICY);
     }

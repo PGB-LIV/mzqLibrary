@@ -981,7 +981,6 @@ public class ProgenMzquantmlConverter {
                                         "mass trace reporting: rectangles",
                                         "PSI-MS", "MS:1001826"));
                                 ftListList.add(features);
-                            } else {
                             }
                             features.getFeature().add(feature);
                             featureAssNameMap.put(feature.getId(), assName);
@@ -1090,7 +1089,6 @@ public class ProgenMzquantmlConverter {
                                         "mass trace reporting: rectangles",
                                         "PSI-MS", "MS:1001826"));
                                 ftListList.add(features);
-                            } else {
                             }
                             features.getFeature().add(feature);
                             featureAssNameMap.put(feature.getId(), assName);
@@ -1215,12 +1213,6 @@ public class ProgenMzquantmlConverter {
 //                                DataMatrixType dataMatrix = new DataMatrixType();
 //                                dataMatrix.getRow().add(row);
 //                                featureQuantLayer.setDataMatrix(dataMatrix);
-                            } else {
-//                                RowType row = new RowType();
-//                                row.setObjectRef(feature);
-//                                row.getValue().add(rawAb);
-//                                row.getValue().add(normAb);
-//                                features.getFeatureQuantLayer().get(0).getDataMatrix().getRow().add(row);
                             }
                             features.getFeature().add(feature);
                             featureAssNameMap.put(feature.getId(), assName);

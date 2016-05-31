@@ -498,8 +498,7 @@ public class MzqData {
 
     public ArrayList<FeatureData> getFeatures() {
         ArrayList<FeatureData> values = new ArrayList<>();
-        if (needAutoAssignment) {
-        } else {
+        if (!needAutoAssignment) {
             ArrayList<String> idList = new ArrayList<>();
             for (String id : unsolvedFeatures.keySet()) {
                 idList.add(id);

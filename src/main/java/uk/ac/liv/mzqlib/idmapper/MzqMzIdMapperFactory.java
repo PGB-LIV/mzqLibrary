@@ -20,9 +20,10 @@ import java.util.logging.Logger;
 
 import javax.xml.bind.JAXBException;
 
-import uk.ac.ebi.jmzidml.model.mzidml.*;
+import uk.ac.ebi.jmzidml.model.mzidml.DBSequence;
+import uk.ac.ebi.jmzidml.model.mzidml.PeptideEvidence;
+import uk.ac.ebi.jmzidml.model.mzidml.PeptideEvidenceRef;
 import uk.ac.liv.pgb.jmzqml.MzQuantMLElement;
-import uk.ac.liv.pgb.jmzqml.model.mzqml.*;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.AuditCollection;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.BibliographicReference;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.Cv;
@@ -38,6 +39,27 @@ import uk.ac.liv.mzqlib.constants.MzqDataConstants;
 import uk.ac.liv.mzqlib.idmapper.data.SIIData;
 import uk.ac.liv.mzqlib.idmapper.data.Tolerance;
 import uk.ac.liv.mzqlib.idmapper.data.Tolerance.ToleranceUnit;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.AnalysisSummary;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.AssayList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.DataProcessingList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.EvidenceRef;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.FeatureList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.GlobalQuantLayer;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.IdOnly;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.IdentificationFile;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.IdentificationFiles;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.InputFiles;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensus;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensusList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Protein;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.QuantLayer;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.RatioList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.RatioQuantLayer;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Row;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.SmallMoleculeList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.SoftwareList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.StudyVariableList;
 
 /**
  * The MzqMzIdMapperFactory class create an MzqMzIdMapper instance from
@@ -520,7 +542,7 @@ public class MzqMzIdMapperFactory {
 
             // retrieve every attributes and elements from the mzQuantML file
             String mzqId = mzqUm.getMzQuantMLId();
-      //String mzqName = mzqUm.getMzQuantMLName();
+            //String mzqName = mzqUm.getMzQuantMLName();
             //String mzqVersion = mzqUm.getMzQuantMLVersion();
 
             // three ways of unmarshalling an mzQuantML element: 

@@ -243,7 +243,7 @@ public class MaxquantFilesReader {
     private void readSummaryFile()
             throws IOException {
         if (this.summaryFile == null) {
-            //TODO
+            throw new IllegalStateException("The summary.txt doesn't exist.");
         } else {
             try {
                 String nextLine[];
@@ -300,7 +300,8 @@ public class MaxquantFilesReader {
     private void readExperimentalDesignTemplateFile()
             throws IOException {
         if (this.experimentalDesignTemplateFile == null) {
-            // TODO
+            throw new IllegalStateException(
+                    "The experimentalDesignTemplate.txt doesn't exist.");
         } else {
             try {
                 String[] nextLine;
@@ -473,7 +474,8 @@ public class MaxquantFilesReader {
                         studyGroupMap.put(studyV_H, new ArrayList(assListHeavy));
                     }
                 } else {
-                    // TODO: more than 2 label cases
+                    throw new IllegalStateException(
+                            "Doesn't support more than two labels condition.");
                 }
                 studyVars = new ArrayList(studyGroupMap.keySet());
 
@@ -513,7 +515,7 @@ public class MaxquantFilesReader {
     private void readEvidenceFile()
             throws IOException {
         if (this.evidenceFile == null) {
-            // TODO
+            throw new IllegalStateException("The evidence.txt doesn't exist.");
         } else {
             try {
                 fis = new FileInputStream(this.evidenceFile);
@@ -614,7 +616,8 @@ public class MaxquantFilesReader {
     private void readProteinGroupsFile()
             throws IOException {
         if (this.proteinGroupsFile == null) {
-            // TODO
+            throw new IllegalStateException(
+                    "The proteinGroups.txt doesn't exist.");
         } else {
             try {
                 fis = new FileInputStream(this.proteinGroupsFile);

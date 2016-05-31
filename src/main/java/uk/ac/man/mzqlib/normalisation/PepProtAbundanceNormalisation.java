@@ -57,7 +57,7 @@ public class PepProtAbundanceNormalisation {
             = new HashMap<>();
     private Map<String, List<String>> assayVals
             = new HashMap<>();
-    private Map<String, List<String>> proteinAssayValues;
+    //private Map<String, List<String>> proteinAssayValues;
 
     final static double thresholdConfidence = 2;
     final static double coefficientMAD = 1.4826; //scale factor, 
@@ -81,8 +81,8 @@ public class PepProtAbundanceNormalisation {
 //    private int referenceNumber;
     private String userRef;
     private String setType;
-    private Map<String, List<String>> scalingFactor;
-    private String preferedRef;
+    //private Map<String, List<String>> scalingFactor;
+    //private String preferedRef;
 
     private MzQuantMLUnmarshaller inFileUM;
     private int assNo;
@@ -158,7 +158,7 @@ public class PepProtAbundanceNormalisation {
      * @param idType - ID type
      */
     public void setIDType(String idType) {
-        setType = idType;
+        this.setType = idType;
     }
 
     /**
@@ -217,9 +217,8 @@ public class PepProtAbundanceNormalisation {
         cvParamId = "PSI-MS";
 
 //        normalisedPeptideAssayValues = new HashMap<String, List<String>>();
-        proteinAssayValues = new HashMap<>();
+        //proteinAssayValues = new HashMap<>();
 //        normalisedProteinAssayValues = new HashMap<String, List<String>>();
-
         String cvAccessionPrefix = "MS:";
         int cvAccssionLength = 10;
         int cvAccessionLastSevenNumMax = 1002437;
@@ -291,8 +290,7 @@ public class PepProtAbundanceNormalisation {
         boolean flag_labelFree = true;
         boolean flag_assVal = true;
 
-        scalingFactor = new HashMap<String, List<String>>();
-
+        //scalingFactor = new HashMap<>();
         try {
 
             assNo = getAssNo();

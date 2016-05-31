@@ -19,14 +19,21 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -465,7 +472,7 @@ public class ProgenMzquantmlConverter {
         }
     }
 
-    private void createProteinList(String rawPlusNorm)
+    private void createProteinList()
             throws IOException {
         protList = new ProteinList();
         List<Protein> proteins = protList.getProtein();
@@ -876,7 +883,7 @@ public class ProgenMzquantmlConverter {
         protGrpList.setId("ProteinGroupList1");
     }
 
-    private void createFeatureListList(String rawPlusNorm) {
+    private void createFeatureListList() {
 
         ftListList = new ArrayList<>();
 
@@ -1589,11 +1596,11 @@ public class ProgenMzquantmlConverter {
 
         createStudyVariableList();
 
-        createProteinList(rawPlusNorm);
+        createProteinList();
 
         createProteinGroupList(rawPlusNorm);
 
-        createFeatureListList(rawPlusNorm);
+        createFeatureListList();
 
         createPeptideListList(rawPlusNorm);
 

@@ -1104,7 +1104,7 @@ public class MaxquantFilesReader {
      */
     private int lengthOfPrefix(String a, String b) {
         // Compare length is based on the shortest length of two strings.
-        int length = (a.length() < b.length()) ? a.length() : b.length();
+        int length = a.length() < b.length() ? a.length() : b.length();
         int len = 1;
         if (length == 1 && a.charAt(0) == b.charAt(0)) {
             len = 1;

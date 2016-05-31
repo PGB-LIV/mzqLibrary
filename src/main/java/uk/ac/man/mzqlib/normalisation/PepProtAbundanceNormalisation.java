@@ -645,7 +645,7 @@ public class PepProtAbundanceNormalisation {
 //        boolean first_list = false;
 
         Map<String, List<String>> assayValues
-                = new HashMap<>();;
+                = new HashMap<>();
         ProteinList protList = inFileUM.unmarshal(MzQuantMLElement.ProteinList);
         List<Protein> prots = protList.getProtein();
 
@@ -863,7 +863,7 @@ public class PepProtAbundanceNormalisation {
         for (Map.Entry<String, List<String>> entry : entrys) {
             int sig_ignore = 0;
             List<String> ratioVals = new ArrayList<>();
-            String key = entry.getKey();
+            //String key = entry.getKey();
             String vRef = entry.getValue().get(refNo);
 
 //            if (vRef.equalsIgnoreCase("null")) {
@@ -1288,34 +1288,31 @@ public class PepProtAbundanceNormalisation {
             Map<String, List<String>> normalisedPepAssayVal;
             List<String> sf;
 
-            if (quantLayerType.equalsIgnoreCase("AssayQuantLayer")) {
-                if (normalisedLevel.equalsIgnoreCase("peptide")
-                        || normalisedLevel.equalsIgnoreCase("feature")) {
-
+            if (quantLayerType.equalsIgnoreCase("AssayQuantLayer")
+                    && (normalisedLevel.equalsIgnoreCase("peptide")
+                    || normalisedLevel.equalsIgnoreCase("feature"))) {
 //                    pepSize = peptideAssayValues.entrySet().iterator().next().getValue().size();
-                    pepSize = assayVals.entrySet().iterator().next().getValue().
-                            size();
+                pepSize = assayVals.entrySet().iterator().next().getValue().
+                        size();
 
-                    if (!(referenceNumber >= 0) || !(referenceNumber <= pepSize)) {
-                        throw new IllegalArgumentException(
-                                "Wrongly select the reference number!!! "
-                                + "It should be an integer in [1 " + pepSize
-                                + "]");
-                    }
+                if (!(referenceNumber >= 0) || !(referenceNumber <= pepSize)) {
+                    throw new IllegalArgumentException(
+                            "Wrongly select the reference number!!! "
+                            + "It should be an integer in [1 " + pepSize
+                            + "]");
+                }
 
 //                    normalisedPepAssayVal = normalisedAssayValue(Integer.toString(referenceNumber));
-                    normalisedPepAssayVal = normalisedAssayValue(Integer.
-                            toString(referenceNumber), assayVals);
-                    sf = normalisedPepAssayVal.get("scalingfactor");
-                    scaleFactor.put("scalingfactor", sf);
+                normalisedPepAssayVal = normalisedAssayValue(Integer.
+                        toString(referenceNumber), assayVals);
+                sf = normalisedPepAssayVal.get("scalingfactor");
+                scaleFactor.put("scalingfactor", sf);
 
-                    List<String> vals = scaleFactor.get("scalingfactor");
+                List<String> vals = scaleFactor.get("scalingfactor");
 
-                    return new ScaleFactorCalculationResult(referenceNumber,
-                                                            vals);
-                }
+                return new ScaleFactorCalculationResult(referenceNumber,
+                                                        vals);
             }
-
             return null;
         }
 

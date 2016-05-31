@@ -27,7 +27,7 @@ public class NormalisationMultiThreading {
     public static void main(String[] args)
             throws FileNotFoundException {
 
-        String inputFile = path + filter + "\\mzq\\" + fileName + ".mzq";;
+        String inputFile = path + filter + "\\mzq\\" + fileName + ".mzq";
         String outputFile = path + filter + "\\mzq\\consensusonly\\test\\"
                 + fileName
                 + "_peptideNormalization_medianSelectedRefAssay_25Oct_feature1.mzq";

@@ -275,16 +275,14 @@ public class MztabConverter extends GenericConverter {
             CVParam ms1Heavy = new CVParam("PRIDE", "PRIDE:0000325",
                                            "SILAC heavy", null);
 //            CVParam ms1Medium;
-            if (methodAccession.equals("MS:1002018")) {
-                if (!hasPRIDEcv) {
-                    CV tabCv = new CV(cvs.size() + 1);
+            if (methodAccession.equals("MS:1002018") && !hasPRIDEcv) {
+                CV tabCv = new CV(cvs.size() + 1);
 //                  tabCv.setFullName();
-                    tabCv.setLabel("PRIDE");
-                    tabCv.setVersion("1.2");
-                    tabCv.setUrl(
-                            "https://code.google.com/p/ebi-pride/source/browse/trunk/pride-core/schema/pride_cv.obo");
-                    mtd.addCV(tabCv);
-                }
+                tabCv.setLabel("PRIDE");
+                tabCv.setVersion("1.2");
+                tabCv.setUrl(
+                        "https://code.google.com/p/ebi-pride/source/browse/trunk/pride-core/schema/pride_cv.obo");
+                mtd.addCV(tabCv);
             }
             for (int i = 0; i < assays.size(); i++) {
                 Assay assay = assays.get(i);

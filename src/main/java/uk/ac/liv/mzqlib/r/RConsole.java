@@ -57,7 +57,7 @@ public class RConsole implements RMainLoopCallbacks {
             res = fd.getDirectory();
         }
         if (fd.getFile() != null) {
-            res = res == null ? fd.getFile() : (res + fd.getFile());
+            res = res == null ? fd.getFile() : res + fd.getFile();
         }
         return res;
     }

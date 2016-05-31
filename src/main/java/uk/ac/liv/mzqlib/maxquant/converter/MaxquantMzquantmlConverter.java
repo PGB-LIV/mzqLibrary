@@ -422,7 +422,8 @@ public class MaxquantMzquantmlConverter {
             else //TODO: this is fixed label modification just used for example file
             //TODO: need to find a better way to form this later
             //find out if it is light or heavy label assay
-             if (assName.toLowerCase(Locale.ENGLISH).contains("light")) {
+            {
+                if (assName.toLowerCase(Locale.ENGLISH).contains("light")) {
                     assay.setLabel(label);
                     assays.add(assay);
                 } else if (assName.toLowerCase(Locale.ENGLISH).contains("heavy")) {
@@ -450,6 +451,7 @@ public class MaxquantMzquantmlConverter {
                     assay.setLabel(label_heavy);
                     assays.add(assay);
                 }
+            }
             ass_i++;
         }
     }
@@ -1036,12 +1038,10 @@ public class MaxquantMzquantmlConverter {
                     while (iChr.hasNext()) {
                         String chrKey = iChr.next();
                         String charge = null;
-                        if (NumberUtils.isNumber(chrKey)) {
-                            if (evidenceMap.get(Integer.parseInt(chrKey))
-                                    != null) {
-                                charge = evidenceMap.get(Integer.
-                                        parseInt(chrKey)).get(5);
-                            }
+                        if (NumberUtils.isNumber(chrKey) && evidenceMap.get(
+                                Integer.parseInt(chrKey)) != null) {
+                            charge = evidenceMap.get(Integer.
+                                    parseInt(chrKey)).get(5);
                         }
 
                         if (!peptideConsensus.getCharge().contains(charge)) {

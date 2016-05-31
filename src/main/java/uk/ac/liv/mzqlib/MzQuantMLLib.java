@@ -278,26 +278,24 @@ public class MzQuantMLLib implements Serializable {
                     if (compress == null) {
                         compress = "false";
                     }
-                    if (Boolean.valueOf(compress)) {
-                        if (outputFileName.endsWith(".gz")) {
-                            outputFileName = outputFileName.substring(0,
-                                                                      outputFileName.
-                                                                      length()
-                                                                      - 3);
-                        }
-
+                    if (Boolean.valueOf(compress) && outputFileName.endsWith(
+                            ".gz")) {
+                        outputFileName = outputFileName.substring(0,
+                                                                  outputFileName.
+                                                                  length()
+                                                                  - 3);
                     }
                     // Added by FG check if path is folder
 
                     if (args[0].equals("CsvConverter")) {
-                        MzqLib mzqlib = new MzqLib("csv", inputFileName,
-                                                   outputFileName);
+                        new MzqLib("csv", inputFileName,
+                                   outputFileName);
                     } else if (args[0].equals("XlsConverter")) {
-                        MzqLib mzqlib = new MzqLib("xls", inputFileName,
-                                                   outputFileName);
+                        new MzqLib("xls", inputFileName,
+                                   outputFileName);
                     } else if (args[0].equals("HtmlConverter")) {
-                        MzqLib mzqlib = new MzqLib("html", inputFileName,
-                                                   outputFileName);
+                        new MzqLib("html", inputFileName,
+                                   outputFileName);
                     } else if (args[0].equals("ConsensusXMLConverter")) {
                         try {
                             ConsensusXMLProcessor conProc
@@ -315,8 +313,8 @@ public class MzQuantMLLib implements Serializable {
                                     + ex.getMessage();
                         }
                     } else if (args[0].equals("MzTabConverter")) {
-                        MzqLib mzqlib = new MzqLib("mztab", inputFileName,
-                                                   outputFileName);
+                        new MzqLib("mztab", inputFileName,
+                                   outputFileName);
                     } else if (args[0].equals("MzqMzIdMapping")) {
                         String rawToMzidMapString = Utils.getCmdParameter(args,
                                                                           "rawToMzidMap",

@@ -29,11 +29,7 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.chart.*;
-import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.*;
-import javafx.stage.*;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -45,6 +41,21 @@ import org.controlsfx.dialog.ProgressDialog;
 
 import org.rosuda.JRI.Rengine;
 
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import uk.ac.liv.pgb.jmzqml.MzQuantMLElement;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.DataMatrix;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.IdOnly;
@@ -57,11 +68,22 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.QuantLayer;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.Row;
 import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
 import uk.ac.liv.mzqlib.constants.MzqDataConstants;
-import uk.ac.liv.mzqlib.model.*;
+import uk.ac.liv.mzqlib.model.MzQuantMLData;
+import uk.ac.liv.mzqlib.model.MzQuantMLSummary;
+import uk.ac.liv.mzqlib.model.MzqAssayQuantLayer;
+import uk.ac.liv.mzqlib.model.MzqDataMatrixRow;
+import uk.ac.liv.mzqlib.model.MzqFeatureQuantLayer;
+import uk.ac.liv.mzqlib.model.MzqQuantLayer;
+
 import uk.ac.liv.mzqlib.r.RUtils;
 import uk.ac.liv.mzqlib.r.RequiredPackages;
-import uk.ac.liv.mzqlib.task.*;
-import uk.ac.liv.mzqlib.view.*;
+import uk.ac.liv.mzqlib.task.CreateRMatrixTask;
+import uk.ac.liv.mzqlib.task.InitialREngineTask;
+import uk.ac.liv.mzqlib.task.LoadMzQuantMLDataTask;
+import uk.ac.liv.mzqlib.view.CommandLineGui;
+import uk.ac.liv.mzqlib.view.HeatMapPdfController;
+import uk.ac.liv.mzqlib.view.MzqInfoController;
+import uk.ac.liv.mzqlib.view.RootLayoutController;
 
 public class MainApp extends Application {
 
@@ -392,7 +414,7 @@ public class MainApp extends Application {
 
                 HeatMapPdfController controller = loader.getController();
                 controller.setMainApp(this);
-                controller.setCaller(rootLayoutController);
+                //controller.setCaller(rootLayoutController);
 
                 Scene scene = new Scene(heatMapPdf);
                 newStage = new Stage();
@@ -789,7 +811,7 @@ public class MainApp extends Application {
                                 contains("normalised")
                                 && assayQL.getDataType().getCvParam().getName().
                                 toLowerCase(Locale.ENGLISH).contains(
-                                        "normalised")) {
+                                "normalised")) {
                             peptideDM = assayQL.getDataMatrix();
                             break;
                         }

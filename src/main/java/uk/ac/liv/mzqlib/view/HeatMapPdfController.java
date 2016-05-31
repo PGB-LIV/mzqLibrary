@@ -22,6 +22,7 @@ public class HeatMapPdfController {
     private RootLayoutController rootController;
 
     @FXML
+    @SuppressWarnings("unused")
     TextField pdfH;
 
     @FXML
@@ -36,6 +37,7 @@ public class HeatMapPdfController {
     }
 
     @FXML
+    @SuppressWarnings("unused")
     private void handleHeatMapinR() {
 
         if (NumberUtils.isNumber(pdfH.getText()) && NumberUtils.isNumber(pdfW.

@@ -70,6 +70,7 @@ public class ProgenesisConverterController implements Initializable {
     }
 
     @FXML
+    @SuppressWarnings("unused")
     private void selectFeatureFile() {
 
         FileChooser fileChooser = new FileChooser();
@@ -99,6 +100,7 @@ public class ProgenesisConverterController implements Initializable {
     }
 
     @FXML
+    @SuppressWarnings("unused")
     private void selectProteinFile() {
         FileChooser fileChooser = new FileChooser();
 
@@ -128,6 +130,7 @@ public class ProgenesisConverterController implements Initializable {
     }
 
     @FXML
+    @SuppressWarnings("unused")
     private void selectIdentFile() {
         FileChooser fileChooser = new FileChooser();
 
@@ -157,6 +160,7 @@ public class ProgenesisConverterController implements Initializable {
     }
 
     @FXML
+    @SuppressWarnings("unused")
     private void convert() {
 
         // Both peptide list and protein list files are missing

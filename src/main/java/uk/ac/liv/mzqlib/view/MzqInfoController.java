@@ -42,6 +42,7 @@ public class MzqInfoController {
     @FXML
     private TableView<MzqDataMatrixRow> dataMatrixTable;
     @FXML
+    @SuppressWarnings("unused")
     private Label techniqueUsed;
     @FXML
     private Label software;
@@ -61,6 +62,7 @@ public class MzqInfoController {
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
      */
+    @SuppressWarnings("unused")
     private void initialize() {
         assayQLId.setCellValueFactory(cellData -> cellData.getValue().
                 quantLayerId());

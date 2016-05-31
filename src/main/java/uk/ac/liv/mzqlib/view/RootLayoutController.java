@@ -45,6 +45,7 @@ public class RootLayoutController {
 //        return newStage;
 //    }
     @FXML
+    @SuppressWarnings("unused")
     private void handleOpen() {
         FileChooser fileChooser = new FileChooser();
 
@@ -75,26 +76,31 @@ public class RootLayoutController {
     }
 
     @FXML
+    @SuppressWarnings("unused")
     private void handleClose() {
         mainApp.closeMzqInfo();
     }
 
     @FXML
+    @SuppressWarnings("unused")
     private void handleHeatMapinR() {
         mainApp.showHeatMapinR();
     }
 
     @FXML
+    @SuppressWarnings("unused")
     private void handleHeatMapPdf() {
         mainApp.showHeatMapPdfWindow();
     }
 
     @FXML
+    @SuppressWarnings("unused")
     private void handlePCA() {
         mainApp.showPCAPlot();
     }
 
     @FXML
+    @SuppressWarnings("unused")
     private void showProgenesisConverterWindow() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -117,6 +123,7 @@ public class RootLayoutController {
     }
 
     @FXML
+    @SuppressWarnings("unused")
     private void handleCurve()
             throws JAXBException {
         mainApp.showCurve();
@@ -126,6 +133,7 @@ public class RootLayoutController {
      * Closes the application.
      */
     @FXML
+    @SuppressWarnings("unused")
     private void handleExit() {
         System.exit(0);
     }
@@ -141,16 +149,19 @@ public class RootLayoutController {
     }
 
     @FXML
+    @SuppressWarnings("unused")
     private void showGui() {
         mainApp.showGui();
     }
 
     @FXML
+    @SuppressWarnings("unused")
     private void showAbout() {
         mainApp.showAbout();
     }
 
     @FXML
+    @SuppressWarnings("unused")
     private void handleInstallRequiredPackages() {
         mainApp.installRequiredPackages();
     }

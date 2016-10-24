@@ -62,6 +62,7 @@ public class MzqInfoController {
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
      */
+    @FXML
     @SuppressWarnings("unused")
     private void initialize() {
         assayQLId.setCellValueFactory(cellData -> cellData.getValue().

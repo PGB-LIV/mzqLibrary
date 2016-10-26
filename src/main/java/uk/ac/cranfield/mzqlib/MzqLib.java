@@ -34,7 +34,7 @@ public class MzqLib {
     private final static int MZTAB = 2;
     private final static int HTML = 3;
     private final static int XLS = 4;
-    public static final MzqData data = new MzqData();
+    public static final MzqData DATA = new MzqData();
     private HashMap<String, Integer> converterTypeMap = new HashMap<>();
 
     //call the GUI
@@ -57,23 +57,23 @@ public class MzqLib {
         switch (type) {
             case CSV:
                 converter = new CsvConverter(mzqFile, outputFile);
-                data.setNeedAutoAssignment(false);
+                DATA.setNeedAutoAssignment(false);
                 break;
             case MZTAB:
                 converter = new MztabConverter(mzqFile, outputFile);
-                data.setNeedAutoAssignment(true);//feature_ref is needed to get m/z and rt for peptide from features
+                DATA.setNeedAutoAssignment(true);//feature_ref is needed to get m/z and rt for peptide from features
                 break;
             case HTML:
                 converter = new HtmlConverter(mzqFile, outputFile);
-                data.setNeedAutoAssignment(true);
+                DATA.setNeedAutoAssignment(true);
                 break;
             case XLS:
                 converter = new XlsConverter(mzqFile, outputFile);
-                data.setNeedAutoAssignment(false);
+                DATA.setNeedAutoAssignment(false);
                 break;
             default:
         }
-        data.autoAssign();
+        DATA.autoAssign();
         if (converter != null) {
             converter.convert();
         }
@@ -95,10 +95,10 @@ public class MzqLib {
         MzQuantMLUnmarshaller unmarshaller = new MzQuantMLUnmarshaller(file);
 
 //	<xsd:element name="AssayList" type="AssayListType" minOccurs="1" maxOccurs="1"/>
-        data.addAssays(unmarshaller.unmarshal(AssayList.class));
+        DATA.addAssays(unmarshaller.unmarshal(AssayList.class));
 //	<xsd:element name="StudyVariableList" type="StudyVariableListType" minOccurs="0" maxOccurs="1"/>
-        data.addStudyVariables(unmarshaller.unmarshal(StudyVariableList.class));
-        data.addRatios(unmarshaller.unmarshal(RatioList.class));
+        DATA.addStudyVariables(unmarshaller.unmarshal(StudyVariableList.class));
+        DATA.addRatios(unmarshaller.unmarshal(RatioList.class));
 
         List<FeatureList> features = new ArrayList<>();
         Iterator<FeatureList> featureIterator = unmarshaller.
@@ -106,7 +106,7 @@ public class MzqLib {
         while (featureIterator.hasNext()) {
             features.add(featureIterator.next());
         }
-        data.addFeatures(features);
+        DATA.addFeatures(features);
 
         Iterator<PeptideConsensusList> peptideConsensusLists = unmarshaller.
                 unmarshalCollectionFromXpath(
@@ -114,28 +114,28 @@ public class MzqLib {
         while (peptideConsensusLists.hasNext()) {
             PeptideConsensusList pcList = peptideConsensusLists.next();
             if (pcList.isFinalResult()) {
-                data.addPeptides(pcList);
+                DATA.addPeptides(pcList);
                 break;
             }
         }
 
         ProteinList proteinList = unmarshaller.unmarshal(
                 MzQuantMLElement.ProteinList);
-        data.addProteins(proteinList);
+        DATA.addProteins(proteinList);
         ProteinGroupList pgList = unmarshaller.unmarshal(
                 MzQuantMLElement.ProteinGroupList);
-        data.addProteinGroups(pgList);
+        DATA.addProteinGroups(pgList);
 
 //	<xsd:element name="SoftwareList" type="SoftwareListType" minOccurs="1" maxOccurs="1"/>
-        data.setSoftwareList(unmarshaller.unmarshal(SoftwareList.class));
+        DATA.setSoftwareList(unmarshaller.unmarshal(SoftwareList.class));
 //	<xsd:element name="AnalysisSummary" type="ParamListType" minOccurs="1" maxOccurs="1">
-        data.setAnalysisSummary(unmarshaller.unmarshal(AnalysisSummary.class));
+        DATA.setAnalysisSummary(unmarshaller.unmarshal(AnalysisSummary.class));
 //	<xsd:element name="InputFiles" type="InputFilesType" minOccurs="1" maxOccurs="1"/>
-        data.setInputFiles(unmarshaller.unmarshal(InputFiles.class));
+        DATA.setInputFiles(unmarshaller.unmarshal(InputFiles.class));
 //	<xsd:element name="CvList" type="CvListType" minOccurs="1" maxOccurs="1"/>
-        data.setCvList(unmarshaller.unmarshal(CvList.class));
-        data.setMzqID(unmarshaller.getMzQuantMLId());
-        data.setMzqName(unmarshaller.getMzQuantMLName());
+        DATA.setCvList(unmarshaller.unmarshal(CvList.class));
+        DATA.setMzqID(unmarshaller.getMzQuantMLId());
+        DATA.setMzqName(unmarshaller.getMzQuantMLName());
     }
 
 //    private static void batch() {

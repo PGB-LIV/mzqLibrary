@@ -39,7 +39,7 @@ public class ProteinGroupData extends QuantitationLevel {
         StringBuilder sb = new StringBuilder();
         for (int i = 1; i < proteinRefs.size(); i++) {
             ProteinRef ref = proteinRefs.get(i);
-            ProteinData protein = MzqLib.data.getProtein(ref.getProteinRef());
+            ProteinData protein = MzqLib.DATA.getProtein(ref.getProteinRef());
             sb.append(protein.getAccession());
             sb.append(SEPARATOR);
         }

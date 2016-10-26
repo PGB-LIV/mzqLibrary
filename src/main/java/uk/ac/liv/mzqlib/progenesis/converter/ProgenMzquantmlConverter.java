@@ -41,12 +41,53 @@ import javax.xml.datatype.DatatypeConfigurationException;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
-import uk.ac.liv.pgb.jmzqml.model.mzqml.*;
 import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLMarshaller;
 import uk.ac.liv.mzqlib.constants.MzqDataConstants;
 import uk.ac.liv.mzqlib.maxquant.converter.MaxquantMzquantmlConverter;
 import uk.ac.liv.mzqlib.progenesis.reader.ProgenesisFeatureListReader;
 import uk.ac.liv.mzqlib.progenesis.reader.ProgenesisProteinListReader;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.AnalysisSummary;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Assay;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.AssayList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.BibliographicReference;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Column;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.ColumnDefinition;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Cv;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.CvList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.CvParam;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.CvParamRef;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.DataMatrix;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.DataProcessing;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.DataProcessingList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.EvidenceRef;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Feature;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.FeatureList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.GlobalQuantLayer;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.IdentificationFile;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.IdentificationFiles;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.InputFiles;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Label;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.ModParam;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Modification;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Param;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensus;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensusList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.ProcessingMethod;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Protein;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinGroup;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinGroupList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinRef;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.QuantLayer;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.RawFile;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.RawFilesGroup;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Row;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.SearchDatabase;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Software;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.SoftwareList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.StudyVariable;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.StudyVariableList;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.UserParam;
 
 /**
  *
@@ -100,7 +141,7 @@ public class ProgenMzquantmlConverter {
     Label label;
     Map<String, Set<String>> studyGroupMap;
     Map<String, String> assayNameIdMap;
-    final TIntObjectMap<String> proteinAccessionsMap = new TIntObjectHashMap<>();
+    TIntObjectMap<String> proteinAccessionsMap = new TIntObjectHashMap<>();
     Map<String, Set<String>> proteinPeptidesMap;
     SearchDatabase db;
     Map<String, TIntSet> peptideMap;
@@ -133,6 +174,24 @@ public class ProgenMzquantmlConverter {
     private String plFn;
     private String idFn;
     private char separator;
+
+    final static Set<String> plProteinL = new HashSet<>(); //proteins from protein list file
+
+    static class ProteinAccessionsTIntObjectProcedure implements
+            TIntObjectProcedure<String> {
+
+        @Override
+        public boolean execute(int id, String accession) {
+
+            Set<String> accessionSet = new HashSet(Arrays.asList(accession.
+                    split(";")));
+            for (String acc : accessionSet) {
+                plProteinL.add(acc);
+            }
+            return true;
+        }
+
+    }
 
     /**
      * Constructor of ProgenMzquantmlConverter with input parameters.
@@ -477,22 +536,8 @@ public class ProgenMzquantmlConverter {
         protList = new ProteinList();
         List<Protein> proteins = protList.getProtein();
 
-        final Set<String> plProteinL = new HashSet<>(); //proteins from protein list file
-
-        proteinAccessionsMap.forEachEntry(new TIntObjectProcedure<String>() {
-
-            @Override
-            public boolean execute(int id, String accession) {
-
-                Set<String> accessionSet = new HashSet(Arrays.asList(accession.
-                        split(";")));
-                for (String acc : accessionSet) {
-                    plProteinL.add(acc);
-                }
-                return true;
-            }
-
-        });
+        proteinAccessionsMap.forEachEntry(
+                new ProteinAccessionsTIntObjectProcedure());
 
         Set<String> flProteinL = proteinPeptidesMap.keySet(); // proteins from feature list file
 
@@ -1380,8 +1425,8 @@ public class ProgenMzquantmlConverter {
                             // create datamatrix for global quant layer Mascot ion score
                             if (!scoreMap.isEmpty()) {
                                 Integer scoreKey = key;
-                                if (scoreMap.get(scoreKey) != scoreMap.
-                                        getNoEntryValue()) {
+                                if (Math.abs(scoreMap.get(scoreKey) - scoreMap.
+                                        getNoEntryValue()) > 0.0000000001) {
                                     Row row = new Row();
                                     row.setObject(peptideConsensus);
                                     row.getValue().add(String.valueOf(scoreMap.

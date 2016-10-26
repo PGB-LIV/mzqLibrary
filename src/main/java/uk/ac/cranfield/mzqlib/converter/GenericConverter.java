@@ -31,8 +31,8 @@ abstract public class GenericConverter {
     protected void addSvHeader(int level, StringBuilder sb,
                                String quantitationName, String prefix,
                                String suffix) {
-        if (MzqLib.data.control.isRequired(level, MzqData.SV, quantitationName)) {
-            for (StudyVariable sv : MzqLib.data.getSvs()) {
+        if (MzqLib.DATA.control.isRequired(level, MzqData.SV, quantitationName)) {
+            for (StudyVariable sv : MzqLib.DATA.getSvs()) {
                 sb.append(prefix);
                 sb.append(quantitationName);
                 sb.append("_");
@@ -45,9 +45,9 @@ abstract public class GenericConverter {
     protected void addAssayHeader(int level, StringBuilder sb,
                                   String quantitationName, String prefix,
                                   String suffix) {
-        if (MzqLib.data.control.isRequired(level, MzqData.ASSAY,
+        if (MzqLib.DATA.control.isRequired(level, MzqData.ASSAY,
                                            quantitationName)) {
-            for (String assayID : MzqLib.data.getAssayIDs()) {
+            for (String assayID : MzqLib.DATA.getAssayIDs()) {
                 sb.append(prefix);
                 sb.append(quantitationName);
                 sb.append("_");
@@ -59,9 +59,9 @@ abstract public class GenericConverter {
 
     protected void addRatioHeader(int level, StringBuilder sb, String prefix,
                                   String suffix) {
-        if (MzqLib.data.control.isRequired(level, MzqData.RATIO,
+        if (MzqLib.DATA.control.isRequired(level, MzqData.RATIO,
                                            MzqData.RATIO_STRING)) {
-            for (String ratioID : MzqLib.data.getRatios()) {
+            for (String ratioID : MzqLib.DATA.getRatios()) {
                 sb.append(prefix);
                 sb.append(ratioID);
                 sb.append(suffix);
@@ -83,8 +83,8 @@ abstract public class GenericConverter {
 //    }
     protected void addSvValue(int level, StringBuilder sb, QuantitationLevel obj,
                               String seperator, String quantityName) {
-        if (MzqLib.data.control.isRequired(level, MzqData.SV, quantityName)) {
-            for (StudyVariable sv : MzqLib.data.getSvs()) {
+        if (MzqLib.DATA.control.isRequired(level, MzqData.SV, quantityName)) {
+            for (StudyVariable sv : MzqLib.DATA.getSvs()) {
                 sb.append(seperator);
                 Double value = obj.getStudyVariableQuantity(quantityName, sv.
                                                             getId());
@@ -96,8 +96,8 @@ abstract public class GenericConverter {
     protected void addAssayValue(int level, StringBuilder sb,
                                  QuantitationLevel obj, String seperator,
                                  String quantityName) {
-        if (MzqLib.data.control.isRequired(level, MzqData.ASSAY, quantityName)) {
-            for (String assayID : MzqLib.data.getAssayIDs()) {
+        if (MzqLib.DATA.control.isRequired(level, MzqData.ASSAY, quantityName)) {
+            for (String assayID : MzqLib.DATA.getAssayIDs()) {
                 sb.append(seperator);
                 Double value = obj.getQuantity(quantityName, assayID);
                 appendValue(sb, value);
@@ -115,9 +115,9 @@ abstract public class GenericConverter {
 
     protected void addRatioValue(int level, StringBuilder sb,
                                  QuantitationLevel obj, String seperator) {
-        if (MzqLib.data.control.isRequired(level, MzqData.RATIO,
+        if (MzqLib.DATA.control.isRequired(level, MzqData.RATIO,
                                            MzqData.RATIO_STRING)) {
-            for (String ratioID : MzqLib.data.getRatios()) {
+            for (String ratioID : MzqLib.DATA.getRatios()) {
                 sb.append(seperator);
                 Double value = obj.getRatio(ratioID);
                 appendValue(sb, value);

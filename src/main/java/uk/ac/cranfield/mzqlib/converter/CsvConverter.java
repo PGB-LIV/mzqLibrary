@@ -39,15 +39,15 @@ public class CsvConverter extends GenericConverter {
         StringBuilder sb = new StringBuilder();
         //deal with protein groups
         ArrayList<QuantitationLevel> pgs = new ArrayList<>();
-        for (ProteinGroupData pg : MzqLib.data.getProteinGroups()) {
+        for (ProteinGroupData pg : MzqLib.DATA.getProteinGroups()) {
             pgs.add(pg);
         }
         outputAssayAndSV(sb, MzqData.PROTEIN_GROUP, pgs);
-        if (MzqLib.data.control.isRequired(MzqData.PROTEIN_GROUP, MzqData.RATIO,
+        if (MzqLib.DATA.control.isRequired(MzqData.PROTEIN_GROUP, MzqData.RATIO,
                                            MzqData.RATIO_STRING)) {
             outputRatio(sb, MzqData.PROTEIN_GROUP, pgs);
         }
-        if (!MzqLib.data.control.getElements(MzqData.PROTEIN_GROUP,
+        if (!MzqLib.DATA.control.getElements(MzqData.PROTEIN_GROUP,
                                              MzqData.GLOBAL).isEmpty()) {
             outputGlobal(sb, MzqData.PROTEIN_GROUP, pgs);
         }
@@ -55,18 +55,18 @@ public class CsvConverter extends GenericConverter {
 
         //deal with proteins
         ArrayList<QuantitationLevel> proteins = new ArrayList<>();
-        for (ProteinData protein : MzqLib.data.getProteins()) {
+        for (ProteinData protein : MzqLib.DATA.getProteins()) {
             proteins.add(protein);
         }
         //not just the obj artificially created
-        if (proteins.size() > 1 || !MzqLib.data.getProteins().get(0).
+        if (proteins.size() > 1 || !MzqLib.DATA.getProteins().get(0).
                 getAccession().equals(MzqData.ARTIFICIAL)) {
             outputAssayAndSV(sb, MzqData.PROTEIN, proteins);
-            if (MzqLib.data.control.isRequired(MzqData.PROTEIN, MzqData.RATIO,
+            if (MzqLib.DATA.control.isRequired(MzqData.PROTEIN, MzqData.RATIO,
                                                MzqData.RATIO_STRING)) {
                 outputRatio(sb, MzqData.PROTEIN, proteins);
             }
-            if (!MzqLib.data.control.
+            if (!MzqLib.DATA.control.
                     getElements(MzqData.PROTEIN, MzqData.GLOBAL).isEmpty()) {
                 outputGlobal(sb, MzqData.PROTEIN, proteins);
             }
@@ -74,32 +74,32 @@ public class CsvConverter extends GenericConverter {
         sb.append("\n");
         //deal with peptide
         ArrayList<QuantitationLevel> peptides = new ArrayList<>();
-        for (PeptideData peptide : MzqLib.data.getPeptides()) {
+        for (PeptideData peptide : MzqLib.DATA.getPeptides()) {
             peptides.add(peptide);
         }
         if (!peptides.isEmpty()) {
             outputAssayAndSV(sb, MzqData.PEPTIDE, peptides);
-            if (MzqLib.data.control.isRequired(MzqData.PEPTIDE, MzqData.RATIO,
+            if (MzqLib.DATA.control.isRequired(MzqData.PEPTIDE, MzqData.RATIO,
                                                MzqData.RATIO_STRING)) {
                 outputRatio(sb, MzqData.PEPTIDE, peptides);
             }
-            if (!MzqLib.data.control.
+            if (!MzqLib.DATA.control.
                     getElements(MzqData.PEPTIDE, MzqData.GLOBAL).isEmpty()) {
                 outputGlobal(sb, MzqData.PEPTIDE, peptides);
             }
         }
         //deal with features
         ArrayList<QuantitationLevel> features = new ArrayList<>();
-        for (FeatureData feature : MzqLib.data.getFeatures()) {
+        for (FeatureData feature : MzqLib.DATA.getFeatures()) {
             features.add(feature);
         }
         if (!features.isEmpty()) {
             outputAssayAndSV(sb, MzqData.FEATURE, features);
-            if (MzqLib.data.control.isRequired(MzqData.FEATURE, MzqData.RATIO,
+            if (MzqLib.DATA.control.isRequired(MzqData.FEATURE, MzqData.RATIO,
                                                MzqData.RATIO_STRING)) {
                 outputRatio(sb, MzqData.FEATURE, features);
             }
-            if (!MzqLib.data.control.
+            if (!MzqLib.DATA.control.
                     getElements(MzqData.FEATURE, MzqData.GLOBAL).isEmpty()) {
                 outputGlobal(sb, MzqData.FEATURE, features);
             }
@@ -125,8 +125,8 @@ public class CsvConverter extends GenericConverter {
     }
 
     private void addHeaderLine(int level, StringBuilder sb, String quantityName) {
-        if (MzqLib.data.control.isRequired(level, MzqData.ASSAY, quantityName)
-                || MzqLib.data.control.isRequired(level, MzqData.SV,
+        if (MzqLib.DATA.control.isRequired(level, MzqData.ASSAY, quantityName)
+                || MzqLib.DATA.control.isRequired(level, MzqData.SV,
                                                   quantityName)) {
             addEntityHeader(level, sb);
             addAssayHeader(level, sb, quantityName, SEPARATOR, "");
@@ -154,7 +154,7 @@ public class CsvConverter extends GenericConverter {
     private void outputAssayAndSV(StringBuilder sb, int level,
                                   ArrayList<QuantitationLevel> objects) {
         printQuantitationLevelHeader(sb, level);
-        for (String quantityName : MzqLib.data.getQuantitationNames()) {
+        for (String quantityName : MzqLib.DATA.getQuantitationNames()) {
             addHeaderLine(level, sb, quantityName);
             for (QuantitationLevel obj : objects) {
                 if (obj.hasQuantitation(quantityName) || obj.hasSV(quantityName)) {
@@ -186,7 +186,7 @@ public class CsvConverter extends GenericConverter {
 
     private void outputGlobal(StringBuilder sb, int level,
                               ArrayList<QuantitationLevel> objects) {
-        HashSet<String> globals = MzqLib.data.control.getElements(level,
+        HashSet<String> globals = MzqLib.DATA.control.getElements(level,
                                                                   MzqData.GLOBAL);
         if (globals.size() > 0) {
             sb.append("Global\n");
@@ -210,7 +210,7 @@ public class CsvConverter extends GenericConverter {
             case MzqData.PROTEIN_GROUP:
                 if (obj instanceof ProteinGroupData) {
                     ProteinGroupData pg = (ProteinGroupData) obj;
-                    sb.append(MzqLib.data.getProtein(pg.getAnchorProteinStr()).
+                    sb.append(MzqLib.DATA.getProtein(pg.getAnchorProteinStr()).
                             getAccession());
                     sb.append(SEPARATOR);
                     sb.append(pg.getAmbiguityMemberStr());

@@ -42,7 +42,7 @@ public class PeptideData extends QuantitationLevel {
         for (Modification mod : pc.getModification()) {
             modSb.append(mod.getCvParam().get(0).getName());
             modSb.append(" ");
-            int index = MzqLib.data.getModificationIndex(mod);
+            int index = MzqLib.DATA.getModificationIndex(mod);
             modIndice.add(index);
         }
         if (modSb.length() > 0) {

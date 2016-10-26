@@ -81,6 +81,7 @@ public class MaxquantMzquantmlConverter {
     /**
      * @param args the command line arguments
      */
+    private final static String MAXQUANT_VERSION = "1.2.0.18";
     private final MaxquantFilesReader maxRd;
 
     // MzQuantML elements
@@ -327,7 +328,7 @@ public class MaxquantMzquantmlConverter {
         software = new Software();
         softList.getSoftware().add(software);
         software.setId("MaxQuant");
-        software.setVersion("1.2.0.18");
+        software.setVersion(MAXQUANT_VERSION);
         software.getCvParam().add(createCvParam("MaxQuant", "PSI-MS",
                                                 "MS:1001583"));
     }

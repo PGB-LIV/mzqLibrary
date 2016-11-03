@@ -50,16 +50,39 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "map")
 public class Map {
 
+    /**
+     *
+     */
     protected List<UserParam> userParam;
+
+    /**
+     *
+     */
     @XmlAttribute(name = "name", required = true)
     protected String name;
+
+    /**
+     *
+     */
     @XmlAttribute(name = "unique_id")
     protected String uniqueId;
+
+    /**
+     *
+     */
     @XmlAttribute(name = "id", required = true)
     @XmlSchemaType(name = "unsignedInt")
     protected long id;
+
+    /**
+     *
+     */
     @XmlAttribute(name = "label")
     protected String label;
+
+    /**
+     *
+     */
     @XmlAttribute(name = "size")
     @XmlSchemaType(name = "unsignedInt")
     protected Long size;
@@ -86,6 +109,7 @@ public class Map {
      * {@link UserParam }
      *
      *
+     * @return UserParam list.
      */
     public List<UserParam> getUserParam() {
         if (userParam == null) {
@@ -145,6 +169,7 @@ public class Map {
     /**
      * Gets the value of the id property.
      *
+     * @return value of id. 
      */
     public long getId() {
         return id;
@@ -153,6 +178,7 @@ public class Map {
     /**
      * Sets the value of the id property.
      *
+     * @param value value of id.
      */
     public void setId(long value) {
         this.id = value;

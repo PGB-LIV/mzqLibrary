@@ -75,6 +75,14 @@ public interface ConsensusXMLProcessor {
     void convert(String outputFn)
             throws IOException;
 
+    /**
+     * Convert method.
+     *
+     * @param outputFn              output file name.
+     * @param studyVariablesToFiles study variables to files map.
+     *
+     * @throws IOException io exception.
+     */
     void convert(String outputFn,
                  Map<String, ? extends Collection<File>> studyVariablesToFiles)
             throws IOException;

@@ -92,6 +92,19 @@ public class MzqProcessorFactory {
         return new MzqProcessorImpl(mzqUm, rawToMzidMap);
     }
 
+    /**
+     * The method builds a MzqProcessor instance from an input mzQuantML
+     * unmarshaller and other parameters.
+     *
+     * @param mzqUm        MzQuantMLUnmarshaller
+     * @param rawToMzidMap map of raw file name to mzIdentML file name
+     * @param msTolerance  ms tolerance window
+     *
+     * @return MzqProcessor
+     *
+     * @throws JAXBException jaxb exception
+     * @throws IOException   io exception
+     */
     public MzqProcessor buildMzqProcessor(MzQuantMLUnmarshaller mzqUm,
                                           Map<String, String> rawToMzidMap,
                                           Tolerance msTolerance)

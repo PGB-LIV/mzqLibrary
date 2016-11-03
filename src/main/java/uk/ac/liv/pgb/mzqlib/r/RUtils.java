@@ -18,6 +18,13 @@ import org.rosuda.JRI.Rengine;
  */
 public class RUtils {
 
+    /**
+     * Install required R packages.
+     *
+     * @param re R engine.
+     *
+     * @return true if the packages are installed successfully.
+     */
     public static boolean installRequiredPackages(Rengine re) {
 
         boolean allInstalled = true;
@@ -35,6 +42,14 @@ public class RUtils {
         return allInstalled;
     }
 
+    /**
+     * Install specified R package.
+     *
+     * @param re          R engine.
+     * @param packageName package name.
+     *
+     * @return true if the package is successfully installed.
+     */
     public static boolean installPackage(Rengine re, String packageName) {
 
         boolean installed = false;

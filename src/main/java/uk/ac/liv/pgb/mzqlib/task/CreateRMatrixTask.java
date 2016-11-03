@@ -25,6 +25,11 @@ public class CreateRMatrixTask extends Task<HeatMapParam> {
     private final ObservableList<MzqDataMatrixRow> rowList = FXCollections.
             observableArrayList();
 
+    /**
+     * Constructor.
+     *
+     * @param list list of MzqDataMatrixRow.
+     */
     public CreateRMatrixTask(ObservableList<MzqDataMatrixRow> list) {
         rowList.clear();
         rowList.addAll(list);

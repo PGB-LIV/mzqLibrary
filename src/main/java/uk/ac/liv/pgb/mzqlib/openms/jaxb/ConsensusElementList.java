@@ -44,6 +44,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "consensusElementList")
 public class ConsensusElementList {
 
+    /**
+     *
+     */
     @XmlElement(required = true)
     protected List<ConsensusElement> consensusElement;
 
@@ -70,6 +73,7 @@ public class ConsensusElementList {
      * {@link ConsensusElement }
      *
      *
+     * @return ConsensusElement list.
      */
     public List<ConsensusElement> getConsensusElement() {
         if (consensusElement == null) {

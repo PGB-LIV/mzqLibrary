@@ -59,6 +59,9 @@ public class MzqInfoController {
     @FXML
     private Label numberFeatureList;
 
+    /**
+     * Constructor.
+     */
     public MzqInfoController() {
     }
 
@@ -83,12 +86,22 @@ public class MzqInfoController {
 
     }
 
+    /**
+     * Set main app.
+     *
+     * @param mainApp main app.
+     */
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
         quantLayerTable.getItems().addAll(mainApp.getMzqAssayQuantLayerData());
         quantLayerTable.getItems().addAll(mainApp.getMzqFeatureQuantLayerData());
     }
 
+    /**
+     * Utility method to show mzq summary.
+     *
+     * @param sum mzq summary.
+     */
     public void showMzqSummary(MzQuantMLSummary sum) {
 
         numberProteinGroupList.textProperty().bind(Bindings.format("%d", sum.
@@ -166,10 +179,20 @@ public class MzqInfoController {
         dataMatrixTable.setColumnResizePolicy(CONSTRAINED_RESIZE_POLICY);
     }
 
+    /**
+     * Get DataMatrix table.
+     *
+     * @return data matrix table view.
+     */
     public TableView<MzqDataMatrixRow> getDataMatrixTable() {
         return dataMatrixTable;
     }
 
+    /**
+     * Get QuantLayer table.
+     *
+     * @return quant layer table view.
+     */
     public TableView<MzqQuantLayer> getQuantLayerTable() {
         return quantLayerTable;
     }

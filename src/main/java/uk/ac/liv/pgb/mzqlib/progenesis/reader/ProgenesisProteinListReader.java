@@ -59,6 +59,14 @@ public class ProgenesisProteinListReader implements Closeable {
 
     ////////// ////////// //////////
     // Constructor
+    /**
+     * Constructor.
+     *
+     * @param rd        reader.
+     * @param separator separator character.
+     *
+     * @throws IOException io exception.
+     */
     public ProgenesisProteinListReader(Reader rd, char separator)
             throws IOException {
         br = new BufferedReader(rd);
@@ -226,47 +234,107 @@ public class ProgenesisProteinListReader implements Closeable {
         return value;
     }
 
+    /**
+     * Constructor.
+     *
+     * @param rd reader.
+     *
+     * @throws IOException io exception.
+     */
     public ProgenesisProteinListReader(Reader rd)
             throws IOException {
         this(rd, ',');
     }
 
+    /**
+     * Get confidence value map.
+     *
+     * @return confidence value map.
+     */
     public TIntDoubleMap getConfidenceMap() {
         return confidenceMap;
     }
 
+    /**
+     * Get ANOVA value map.
+     *
+     * @return ANOVA value map.
+     */
     public TIntDoubleMap getAnovaMap() {
         return anovaMap;
     }
 
+    /**
+     * Get MaxFoldChange value map.
+     *
+     * @return max fold change value map.
+     */
     public TIntDoubleMap getMaxFoldChangeMap() {
         return maxFoldChangeMap;
     }
 
+    /**
+     * Get normalized abundance value map.
+     *
+     * @return norm abundance value map.
+     */
     public TIntObjectMap<TDoubleList> getNormalizedAbundanceMap() {
         return normalizedAbundanceMap;
     }
 
+    /**
+     * Get raw abundance value map.
+     *
+     * @return raw abundance value map.
+     */
     public TIntObjectMap<TDoubleList> getRawAbundanceMap() {
         return rawAbundanceMap;
     }
 
+    /**
+     * Get study variable list.
+     *
+     * @return study variable list.
+     */
     public List<String> getStuVarList() {
         return stuVarList;
     }
 
+    /**
+     * Get assay list.
+     *
+     * @return assay list.
+     */
     public List<String> getAssayList() {
         return assayList;
     }
 
+    /**
+     * Get study grouping map.
+     *
+     * @return study grouping map.
+     */
     public Map<String, Set<String>> getStudyGroupMap() {
         return studyGroupMap;
     }
 
+    /**
+     * Get index map.
+     *
+     * @return index map.
+     */
     public TIntObjectMap<String> getInexMap() {
         return indexMap;
     }
 
+    /**
+     * Get multiple column value map from start to end column.
+     *
+     * @param startCol start column position.
+     * @param endCol   end column position.
+     *
+     * @return multiple column value map.
+     */
     public TIntObjectMap<List<String>> getMultipleColumn(final int startCol,
                                                          final int endCol) {
 
@@ -286,6 +354,13 @@ public class ProgenesisProteinListReader implements Closeable {
         return retMap;
     }
 
+    /**
+     * Get single column value map.
+     *
+     * @param col column index.
+     *
+     * @return single column value map.
+     */
     public TIntObjectMap<String> getSingleColumn(final int col) {
 
         final TIntObjectMap<String> retMap = new TIntObjectHashMap<>();
@@ -335,6 +410,11 @@ public class ProgenesisProteinListReader implements Closeable {
         return ret;
     }
 
+    /**
+     * Override close method.
+     *
+     * @throws IOException io exception.
+     */
     @Override
     public void close()
             throws IOException {

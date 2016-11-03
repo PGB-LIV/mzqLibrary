@@ -85,6 +85,11 @@ import uk.ac.liv.pgb.mzqlib.view.HeatMapPdfController;
 import uk.ac.liv.pgb.mzqlib.view.MzqInfoController;
 import uk.ac.liv.pgb.mzqlib.view.RootLayoutController;
 
+/**
+ * MainApp class.
+ *
+ * @author Da Qi
+ */
 public class MainApp extends Application {
 
     private Stage primaryStage;
@@ -101,14 +106,29 @@ public class MainApp extends Application {
 
     private MzQuantMLData mzqData = new MzQuantMLData();
 
+    /**
+     * Get observable list of MzqAssayQuantLayer.
+     *
+     * @return the list of MzqAssayQuantLayer.
+     */
     public ObservableList<MzqAssayQuantLayer> getMzqAssayQuantLayerData() {
         return mzqData.getMzqAssayQuantLayerList();
     }
 
+    /**
+     * Get observable list of MzqFeatureQuantLayer.
+     *
+     * @return the list of MzqFeatureQuantLayer.
+     */
     public ObservableList<MzqFeatureQuantLayer> getMzqFeatureQuantLayerData() {
         return mzqData.getMzqFeatureQuantLayerList();
     }
 
+    /**
+     * Get MzQuantMLSummary.
+     *
+     * @return MzQuantMLSummary.
+     */
     public MzQuantMLSummary getMzQuantMLSummary() {
         return mzqData.getMzQuantMLSummary();
     }
@@ -213,7 +233,7 @@ public class MainApp extends Application {
     }
 
     /**
-     * Returns the main stage.
+     * Get the main stage.
      *
      * @return main stage
      */
@@ -221,10 +241,20 @@ public class MainApp extends Application {
         return primaryStage;
     }
 
+    /**
+     * Gets the new stage.
+     *
+     * @return new stage.
+     */
     public Stage getNewStage() {
         return newStage;
     }
 
+    /**
+     * Load mzq file with detail.
+     *
+     * @param mzqFile input mzq file.
+     */
     public void loadMzqFile(File mzqFile) {
 
         closeMzqInfo();
@@ -287,16 +317,29 @@ public class MainApp extends Application {
         loadMzqDataTh.start();
     }
 
+    /**
+     * Get mzq unmarshaller.
+     *
+     * @return MzQuantMLUnmarshaller.
+     */
     public MzQuantMLUnmarshaller getUnmarshaller() {
         return mzqData.getMzQuantMLUnmarshaller();
     }
 
+    /**
+     * Close mzq information window.
+     */
     public void closeMzqInfo() {
         rootLayout.setCenter(null);
         rootLayoutController.disbbleMenus();
         primaryStage.setTitle(WINDOW_TITLE);
     }
 
+    /**
+     * Record last opened file path.
+     *
+     * @param file last opened file.
+     */
     public void setLastFilePath(File file) {
         Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
         if (file != null) {
@@ -306,16 +349,30 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Get parent path of last opened file.
+     *
+     * @return parent path.
+     */
     public File getLastFilePath() {
         Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
         String filePath = prefs.get("lastFilePath", null);
+
         if (filePath != null) {
-            return new File(filePath);
+            File res = new File(filePath);
+            if (res.exists()) {
+                return new File(filePath);
+            } else {
+                return null;
+            }
         } else {
             return null;
         }
     }
 
+    /**
+     * Utility method to show PCA plot.
+     */
     public void showPCAPlot() {
 
         //TODO: PCA plot does not need gplots. The initialREngine() method include install gplots as required package
@@ -400,6 +457,9 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Utility method to show heat map pdf creation window.
+     */
     public void showHeatMapPdfWindow() {
         if (re == null) {
             initialREngine();
@@ -431,6 +491,13 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Utility method to save heat map plot to pdf file.
+     *
+     * @param pdfFile   pdf file.
+     * @param pdfHValue pdf file height value.
+     * @param pdfWValue pdf file width value.
+     */
     public void saveHeatMapPdf(File pdfFile, double pdfHValue, double pdfWValue) {
         newStage.hide();
 
@@ -588,6 +655,9 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Utility method to show heat map in R window.
+     */
     public void showHeatMapinR() {
 
         if (re == null) {
@@ -728,6 +798,11 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Utility method to show curve plot.
+     *
+     * @throws JAXBException exceptions.
+     */
     public void showCurve()
             throws JAXBException {
         Stage curveStage = new Stage();
@@ -961,6 +1036,9 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Utility method to show GUI.
+     */
     public void showGui() {
 
         SwingUtilities.invokeLater(() -> {
@@ -982,6 +1060,9 @@ public class MainApp extends Application {
 
     }
 
+    /**
+     * Show about window.
+     */
     public void showAbout() {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("About");
@@ -1199,6 +1280,9 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Utility method to install required R packages.
+     */
     public void installRequiredPackages() {
         if (re == null) {
             initialREngine();
@@ -1279,6 +1363,15 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Create exception dialog.
+     *
+     * @param title     dialog title.
+     * @param content   dialog content.
+     * @param exception dialog exception.
+     *
+     * @return Alert dialog.
+     */
     protected Alert exceptionDialogCreate(String title,
                                           String content,
                                           Throwable exception) {

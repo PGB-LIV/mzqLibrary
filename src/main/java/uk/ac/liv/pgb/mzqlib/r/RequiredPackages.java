@@ -11,15 +11,23 @@ public enum RequiredPackages {
 
     //list of required R pakcages
     //R_JAVA("rJava"),
+    /**
+     *
+     */
     GPLOTS("gplots");
     //R_COLOR_BREWER("RColorBrewer");
     //variables
-    private String packageName;
+    private final String packageName;
 
     private RequiredPackages(String pkName) {
         this.packageName = pkName;
     }
 
+    /**
+     * Get package name.
+     *
+     * @return package name.
+     */
     public String getPackageName() {
         return packageName;
     }

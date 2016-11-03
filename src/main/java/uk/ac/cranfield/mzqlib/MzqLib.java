@@ -28,21 +28,38 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.SoftwareList;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.StudyVariableList;
 import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
 
+/**
+ * MzqLib class.
+ * @author Jun Fan
+ */
 public class MzqLib {
 
     private final static int CSV = 1;
     private final static int MZTAB = 2;
     private final static int HTML = 3;
     private final static int XLS = 4;
+
+    /**
+     * Static MzqData instance.
+     */
     public static final MzqData DATA = new MzqData();
     private HashMap<String, Integer> converterTypeMap = new HashMap<>();
 
     //call the GUI
+
+    /**
+     * Constructor.
+     */
     public MzqLib() {
 
     }
 
-    //call the converter
+    /**
+     * Call the converter.
+     * @param typeStr File format of the output file from converter. 
+     * @param mzqFile Input mzq file name.
+     * @param outputFile Output file name.
+     */
     public MzqLib(String typeStr, String mzqFile, String outputFile) {
         initialize();
         int type = getType(typeStr);
@@ -151,11 +168,16 @@ public class MzqLib {
 //        }
 //        //System.exit(0);
 //    }
+
+    /**
+     * Main class.
+     * @param args input argument array.
+     */
     public static void main(String[] args) {
 //        new MzqLib("csv","maxquant-silac.mzq","");
 //        new MzqLib("mztab","iTraq3standards.mzq","");
 //        new MzqLib("mztab","CPTAC-Progenesis-small-example.mzq","");
-        new MzqLib("mztab", "AllAgesPeptideNormalised_proteins_pvalues.mzq", "");
+//        new MzqLib("mztab", "AllAgesPeptideNormalised_proteins_pvalues.mzq", "");
 //        new MzqLib("csv","AllAgesPeptideNormalised_proteins_pvalues.mzq","");
 //        new MzqLib("xls","AllAgesPeptideNormalised_proteins_pvalues.mzq","");
         //System.exit(0);

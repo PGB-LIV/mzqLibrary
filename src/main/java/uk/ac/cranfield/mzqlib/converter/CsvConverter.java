@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,17 +20,26 @@ import uk.ac.cranfield.mzqlib.data.ProteinGroupData;
 import uk.ac.cranfield.mzqlib.data.QuantitationLevel;
 
 /**
- *
+ * CsvConverter is to convert mzq file to csv file.
  * @author Jun Fan@cranfield
  */
 public class CsvConverter extends GenericConverter {
 
     final static String SEPARATOR = ",";
 
+    /**
+     * Constructor.
+     * @param filename input mzq file name.
+     * @param outputFile output csv file name.
+     */
     public CsvConverter(String filename, String outputFile) {
         super(filename, outputFile);
     }
 
+    /**
+     * Convert method. Convert mzq file to csv file.
+     * Override the method in GenericConverter.
+     */
     @Override
     public void convert() {
         if (outfile.length() == 0) {
@@ -186,7 +195,7 @@ public class CsvConverter extends GenericConverter {
 
     private void outputGlobal(StringBuilder sb, int level,
                               ArrayList<QuantitationLevel> objects) {
-        HashSet<String> globals = MzqLib.DATA.control.getElements(level,
+        Set<String> globals = MzqLib.DATA.control.getElements(level,
                                                                   MzqData.GLOBAL);
         if (globals.size() > 0) {
             sb.append("Global\n");

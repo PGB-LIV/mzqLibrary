@@ -3,6 +3,9 @@ package uk.ac.cranfield.mzqlib.data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import uk.ac.liv.pgb.jmzqml.model.mzqml.Param;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.Protein;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.SearchDatabase;
@@ -21,35 +24,50 @@ public class ProteinData extends QuantitationLevel {
     /**
      * the list of peptides
      */
-    private HashMap<String, PeptideSequenceData> peptides;
+    private Map<String, PeptideSequenceData> peptides;
 
+    /**
+     * Constructor of ProteinData class.
+     *
+     * @param pro input Protein.
+     */
     public ProteinData(Protein pro) {
         protein = pro;
         peptides = new HashMap<>();
     }
 
     /**
-     * Get the protein mzQuantML element
+     * Get the protein mzQuantML element.
      *
-     * @return the protein mzQuantML element
+     * @return the protein mzQuantML element.
      */
     public Protein getProtein() {
         return protein;
     }
 
     /**
-     * Get the accession of the protein
+     * Get the accession of the protein.
      *
-     * @return the accession
+     * @return the accession.
      */
     public String getAccession() {
         return protein.getAccession();
     }
 
+    /**
+     * Get the protein id.
+     *
+     * @return protein id.
+     */
     public String getId() {
         return protein.getId();
     }
 
+    /**
+     * Get the SearchDatabase.
+     *
+     * @return searchDatabase.
+     */
     public String getSearchDatabase() {
 //        Param databaseName = ((SearchDatabase)protein.getSearchDatabaseRef()).getDatabaseName();
         Param databaseName = ((SearchDatabase) protein.getSearchDatabase()).
@@ -61,10 +79,22 @@ public class ProteinData extends QuantitationLevel {
         }
     }
 
+    /**
+     * Get version of SearchDatabase.
+     *
+     * @return version.
+     */
     public String getSearchDatabaseVersion() {
         return ((SearchDatabase) protein.getSearchDatabase()).getVersion();
     }
 
+    /**
+     * Equal method.
+     *
+     * @param obj the object to be compared with.
+     *
+     * @return true if two objects are equal.
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -80,6 +110,11 @@ public class ProteinData extends QuantitationLevel {
         return false;
     }
 
+    /**
+     * Override hashCode method.
+     *
+     * @return hash code.
+     */
     @Override
     public int hashCode() {
         int hash = 7;
@@ -88,13 +123,22 @@ public class ProteinData extends QuantitationLevel {
         return hash;
     }
 
+    /**
+     * Get number of peptides in the Protein.
+     *
+     * @return peptide size.
+     */
     @Override
     public int getCount() {
         return peptides.size();
     }
 
-    public ArrayList<PeptideData> getPeptides() {
-        ArrayList<PeptideData> result = new ArrayList<>();
+    /**
+     * Get list of PeptideData.
+     * @return list of PeptideData.
+     */
+    public List<PeptideData> getPeptides() {
+        List<PeptideData> result = new ArrayList<>();
         for (PeptideSequenceData psData : peptides.values()) {
             result.addAll(psData.getPeptides());
         }

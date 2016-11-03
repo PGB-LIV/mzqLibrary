@@ -27,7 +27,7 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.Software;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.StudyVariable;
 
 /**
- *
+ * XlsConverter is to convert mzq file to xls file.
  * @author Jun Fan<j.fan@cranfield.ac.uk>
  */
 public class XlsConverter extends GenericConverter {
@@ -36,6 +36,11 @@ public class XlsConverter extends GenericConverter {
     private WritableCellFormat boldFormat;
     private WritableCellFormat normalFormat;
 
+    /**
+     * Constructor.
+     * @param filename input mzq file name.
+     * @param outputFile output xls file name.
+     */
     public XlsConverter(String filename, String outputFile) {
         super(filename, outputFile);
         WritableFont boldFont = new WritableFont(WritableFont.ARIAL, 11,
@@ -45,6 +50,10 @@ public class XlsConverter extends GenericConverter {
         normalFormat = new WritableCellFormat(normalFont);
     }
 
+    /**
+     * Convert method. Convert mzq file to xls file.
+     * Override the method in GenericConverter.
+     */
     @Override
     public void convert() {
         if (outfile.length() == 0) {

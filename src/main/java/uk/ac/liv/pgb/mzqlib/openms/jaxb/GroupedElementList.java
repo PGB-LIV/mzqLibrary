@@ -44,6 +44,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "groupedElementList")
 public class GroupedElementList {
 
+    /**
+     *
+     */
     @XmlElement(required = true)
     protected List<Element> element;
 
@@ -69,6 +72,7 @@ public class GroupedElementList {
      * {@link Element }
      *
      *
+     * @return Element list.
      */
     public List<Element> getElement() {
         if (element == null) {

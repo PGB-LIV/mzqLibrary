@@ -3,11 +3,14 @@ package uk.ac.cranfield.mzqlib.data;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
 import uk.ac.cranfield.mzqlib.MzqLib;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.Modification;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensus;
 
 /**
+ * PeptideData contains all the data about PeptideConsensus.
  *
  * @author Jun Fan<j.fan@cranfield.ac.uk>
  */
@@ -23,21 +26,36 @@ public class PeptideData extends QuantitationLevel {
      * features
      */
 //    private HashMap<String,ArrayList<FeatureData>> features;
-    private ArrayList<FeatureData> features = new ArrayList<>();
+    private List<FeatureData> features = new ArrayList<>();
     private boolean assignedByPeptideRef = false;
 
+    /**
+     * Get the value of assignedBypeptideRef.
+     *
+     * @return assignedByPeptideRef.
+     */
     public boolean isAssignedByPeptideRef() {
         return assignedByPeptideRef;
     }
 
+    /**
+     * Set the value of assignedByPeptideRef.
+     *
+     * @param assignedByPeptideRef assignedByPeptideRef.
+     */
     public void setAssignedByPeptideRef(boolean assignedByPeptideRef) {
         this.assignedByPeptideRef = assignedByPeptideRef;
     }
 
+    /**
+     * Constructor of PeptideData.
+     *
+     * @param pc PeptiedConsensus value.
+     */
     public PeptideData(PeptideConsensus pc) {
         peptide = pc;
 //        ArrayList<Character> modIndice = new ArrayList<Character>();
-        ArrayList<Integer> modIndice = new ArrayList<>();
+        List<Integer> modIndice = new ArrayList<>();
         StringBuilder modSb = new StringBuilder();
         for (Modification mod : pc.getModification()) {
             modSb.append(mod.getCvParam().get(0).getName());
@@ -58,30 +76,57 @@ public class PeptideData extends QuantitationLevel {
     /**
      * Get the peptide sequence.
      *
-     * @return peptide sequence string
+     * @return peptide sequence string.
      */
     public String getSeq() {
         return peptide.getPeptideSequence();
     }
 
+    /**
+     * Get peptide id.
+     *
+     * @return peptide id.
+     */
     public String getId() {
         return peptide.getId();
     }
 
+    /**
+     * Get modifications.
+     *
+     * @return modifications.
+     */
     public String getModifications() {
         return modifications;
     }
 
+    /**
+     * Get PeptideConsensus.
+     *
+     * @return PeptideConsensus.
+     */
     public PeptideConsensus getPeptide() {
         return peptide;
     }
 
-    public ArrayList<FeatureData> getFeatures() {
+    /**
+     * Get list of FeatureData.
+     *
+     * @return list of FeatureData.
+     */
+    public List<FeatureData> getFeatures() {
         return features;
     }
 
-    public ArrayList<FeatureData> getFeaturesWithCharge(int charge) {
-        ArrayList<FeatureData> values = new ArrayList<>();
+    /**
+     * Get list of FeatureData with specified charge.
+     *
+     * @param charge charge state.
+     *
+     * @return list of FeatureData.
+     */
+    public List<FeatureData> getFeaturesWithCharge(int charge) {
+        List<FeatureData> values = new ArrayList<>();
         for (FeatureData feature : features) {
             String value = feature.getFeature().getCharge();//<xsd:attribute name="charge" type="integerOrNullType" use="required">
             if (value != null && !value.equalsIgnoreCase("null") && charge
@@ -92,6 +137,11 @@ public class PeptideData extends QuantitationLevel {
         return values;
     }
 
+    /**
+     * Merge to PeptideDatas.
+     *
+     * @param another the second PeptideData to be merged.
+     */
     public void mergeAnotherPeptideData(PeptideData another) {
         this.features.addAll(another.getFeatures());
         if (!assignedByPeptideRef) {
@@ -102,10 +152,20 @@ public class PeptideData extends QuantitationLevel {
         //TODO more things need to be added here when merging two or more mzq files, e.g. searchDatabaseRef
     }
 
+    /**
+     * Get modification string.
+     *
+     * @return modification string.
+     */
     public String getModString() {
         return modStr;
     }
 
+    /**
+     * Get array of charges.
+     *
+     * @return array of charges.
+     */
     public int[] getCharges() {
         int[] charges = new int[peptide.getCharge().size()];
         for (int i = 0; i < peptide.getCharge().size(); i++) {
@@ -136,6 +196,11 @@ public class PeptideData extends QuantitationLevel {
 //        }
 //        return ret;
 //    }
+    /**
+     * Get number of features.
+     *
+     * @return size.
+     */
     @Override
     public int getCount() {
 //        return getAllFeatures().size();

@@ -46,10 +46,21 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class UserParam {
 
+    /**
+     *
+     */
     @XmlAttribute(name = "type", required = true)
     protected UserParamType type;
+
+    /**
+     *
+     */
     @XmlAttribute(name = "name", required = true)
     protected String name;
+
+    /**
+     *
+     */
     @XmlAttribute(name = "value", required = true)
     @XmlSchemaType(name = "anySimpleType")
     protected String value;

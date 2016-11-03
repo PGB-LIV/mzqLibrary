@@ -16,16 +16,38 @@ import org.rosuda.JRI.Rengine;
  */
 public class RConsole implements RMainLoopCallbacks {
 
+    /**
+     * Override rWriteConsole method.
+     *
+     * @param re    R engine.
+     * @param text  message text.
+     * @param oType output type.
+     */
     @Override
     public void rWriteConsole(Rengine re, String text, int oType) {
         System.out.print(text);
     }
 
+    /**
+     * Override rBusy method.
+     *
+     * @param re    R engine.
+     * @param which which.
+     */
     @Override
     public void rBusy(Rengine re, int which) {
         System.out.println("rBusy(" + which + ")");
     }
 
+    /**
+     * Override rReadConsole method.
+     *
+     * @param re           R engine.
+     * @param prompt       prompt message.
+     * @param addToHistory add to history value.
+     *
+     * @return result messages.
+     */
     @Override
     public String rReadConsole(Rengine re, String prompt, int addToHistory) {
         System.out.print(prompt);
@@ -40,11 +62,25 @@ public class RConsole implements RMainLoopCallbacks {
         return null;
     }
 
+    /**
+     * Override rShowMessage method.
+     *
+     * @param re      R engine.
+     * @param message message text.
+     */
     @Override
     public void rShowMessage(Rengine re, String message) {
         System.out.println("rShowMessage \"" + message + "\"");
     }
 
+    /**
+     * Override rChooseFile method.
+     *
+     * @param re      R engine.
+     * @param newFile new file.
+     *
+     * @return result message.
+     */
     @Override
     public String rChooseFile(Rengine re, int newFile) {
         FileDialog fd = new FileDialog(new Frame(), (newFile == 0)
@@ -62,14 +98,31 @@ public class RConsole implements RMainLoopCallbacks {
         return res;
     }
 
+    /**
+     * Override rFlushConsole method.
+     *
+     * @param re R engine.
+     */
     @Override
     public void rFlushConsole(Rengine re) {
     }
 
+    /**
+     * Override rLoadHistory method.
+     *
+     * @param re       R engine.
+     * @param filename file name.
+     */
     @Override
     public void rLoadHistory(Rengine re, String filename) {
     }
 
+    /**
+     * Override rSaveHistory method.
+     *
+     * @param re       R engine.
+     * @param filename file name.
+     */
     @Override
     public void rSaveHistory(Rengine re, String filename) {
     }

@@ -774,6 +774,10 @@ public class ProgenesisFeatureListReader implements Closeable {
         }
     }
 
+    /**
+     * Close reader.
+     * @throws IOException io exception
+     */
     @Override
     public void close()
             throws IOException {

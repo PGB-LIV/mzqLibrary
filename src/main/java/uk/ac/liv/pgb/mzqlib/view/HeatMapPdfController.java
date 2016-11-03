@@ -31,6 +31,11 @@ public class HeatMapPdfController {
     @FXML
     TextField pdfW;
 
+    /**
+     * Set main app.
+     *
+     * @param mainApp main app.
+     */
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }

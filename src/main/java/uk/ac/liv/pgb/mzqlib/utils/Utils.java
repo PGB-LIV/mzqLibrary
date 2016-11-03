@@ -1,5 +1,5 @@
 
-package uk.ac.liv.pgb.mzqlib.util;
+package uk.ac.liv.pgb.mzqlib.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;

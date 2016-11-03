@@ -38,6 +38,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link ConsensusElement }
      *
+     * @return ConsensusElement.
      */
     public ConsensusElement createConsensusElement() {
         return new ConsensusElement();
@@ -46,6 +47,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link ConsensusXML }
      *
+     * @return ConsensusXML.
      */
     public ConsensusXML createConsensusXML() {
         return new ConsensusXML();
@@ -55,6 +57,7 @@ public class ObjectFactory {
      * Create an instance of {@link ConsensusXML.UnassignedPeptideIdentification
      * }
      *
+     * @return UnassignedPeptideIdentification.
      */
     public ConsensusXML.UnassignedPeptideIdentification createConsensusXMLUnassignedPeptideIdentification() {
         return new ConsensusXML.UnassignedPeptideIdentification();
@@ -63,6 +66,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link ConsensusXML.IdentificationRun }
      *
+     * @return IdentificationRun.
      */
     public ConsensusXML.IdentificationRun createConsensusXMLIdentificationRun() {
         return new ConsensusXML.IdentificationRun();
@@ -72,6 +76,7 @@ public class ObjectFactory {
      * Create an instance of {@link ConsensusXML.IdentificationRun.ProteinIdentification
      * }
      *
+     * @return ProteinIdentification.
      */
     public ConsensusXML.IdentificationRun.ProteinIdentification createConsensusXMLIdentificationRunProteinIdentification() {
         return new ConsensusXML.IdentificationRun.ProteinIdentification();
@@ -81,6 +86,7 @@ public class ObjectFactory {
      * Create an instance of {@link ConsensusXML.IdentificationRun.SearchParameters
      * }
      *
+     * @return SearchParameters.
      */
     public ConsensusXML.IdentificationRun.SearchParameters createConsensusXMLIdentificationRunSearchParameters() {
         return new ConsensusXML.IdentificationRun.SearchParameters();
@@ -89,6 +95,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link ConsensusXML.DataProcessing }
      *
+     * @return DataProcessing.
      */
     public ConsensusXML.DataProcessing createConsensusXMLDataProcessing() {
         return new ConsensusXML.DataProcessing();
@@ -97,6 +104,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link ConsensusElement.PeptideIdentification }
      *
+     * @return PeptideIdentification.
      */
     public ConsensusElement.PeptideIdentification createConsensusElementPeptideIdentification() {
         return new ConsensusElement.PeptideIdentification();
@@ -105,6 +113,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link Centroid }
      *
+     * @return Centroid.
      */
     public Centroid createCentroid() {
         return new Centroid();
@@ -113,6 +122,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link GroupedElementList }
      *
+     * @return GroupedElementList.
      */
     public GroupedElementList createGroupedElementList() {
         return new GroupedElementList();
@@ -121,6 +131,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link Element }
      *
+     * @return Element.
      */
     public Element createElement() {
         return new Element();
@@ -129,6 +140,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam }
      *
+     * @return UserParam.
      */
     public uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam createUserParam() {
         return new uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam();
@@ -137,6 +149,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link ConsensusElementList }
      *
+     * @return ConsensusElementList.
      */
     public ConsensusElementList createConsensusElementList() {
         return new ConsensusElementList();
@@ -145,6 +158,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link MapList }
      *
+     * @return MapList.
      */
     public MapList createMapList() {
         return new MapList();
@@ -153,6 +167,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link Map }
      *
+     * @return Map.
      */
     public Map createMap() {
         return new Map();
@@ -162,6 +177,7 @@ public class ObjectFactory {
      * Create an instance of {@link ConsensusXML.UnassignedPeptideIdentification.PeptideHit
      * }
      *
+     * @return PeptideHit.
      */
     public ConsensusXML.UnassignedPeptideIdentification.PeptideHit createConsensusXMLUnassignedPeptideIdentificationPeptideHit() {
         return new ConsensusXML.UnassignedPeptideIdentification.PeptideHit();
@@ -171,6 +187,7 @@ public class ObjectFactory {
      * Create an instance of {@link ConsensusXML.IdentificationRun.ProteinIdentification.ProteinHit
      * }
      *
+     * @return ProteinHit.
      */
     public ConsensusXML.IdentificationRun.ProteinIdentification.ProteinHit createConsensusXMLIdentificationRunProteinIdentificationProteinHit() {
         return new ConsensusXML.IdentificationRun.ProteinIdentification.ProteinHit();
@@ -180,6 +197,7 @@ public class ObjectFactory {
      * Create an instance of {@link ConsensusXML.IdentificationRun.SearchParameters.FixedModification
      * }
      *
+     * @return FixedModification.
      */
     public ConsensusXML.IdentificationRun.SearchParameters.FixedModification createConsensusXMLIdentificationRunSearchParametersFixedModification() {
         return new ConsensusXML.IdentificationRun.SearchParameters.FixedModification();
@@ -189,6 +207,7 @@ public class ObjectFactory {
      * Create an instance of {@link ConsensusXML.IdentificationRun.SearchParameters.VariableModification
      * }
      *
+     * @return VariableModification.
      */
     public ConsensusXML.IdentificationRun.SearchParameters.VariableModification createConsensusXMLIdentificationRunSearchParametersVariableModification() {
         return new ConsensusXML.IdentificationRun.SearchParameters.VariableModification();
@@ -197,6 +216,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link ConsensusXML.DataProcessing.Software }
      *
+     * @return Software.
      */
     public ConsensusXML.DataProcessing.Software createConsensusXMLDataProcessingSoftware() {
         return new ConsensusXML.DataProcessing.Software();
@@ -206,6 +226,7 @@ public class ObjectFactory {
      * Create an instance of {@link ConsensusXML.DataProcessing.ProcessingAction
      * }
      *
+     * @return ProcessingAction.
      */
     public ConsensusXML.DataProcessing.ProcessingAction createConsensusXMLDataProcessingProcessingAction() {
         return new ConsensusXML.DataProcessing.ProcessingAction();
@@ -214,6 +235,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link ConsensusXML.DataProcessing.UserParam }
      *
+     * @return UserParam.
      */
     public ConsensusXML.DataProcessing.UserParam createConsensusXMLDataProcessingUserParam() {
         return new ConsensusXML.DataProcessing.UserParam();
@@ -223,6 +245,7 @@ public class ObjectFactory {
      * Create an instance of {@link ConsensusElement.PeptideIdentification.PeptideHit
      * }
      *
+     * @return PeptideHit.
      */
     public ConsensusElement.PeptideIdentification.PeptideHit createConsensusElementPeptideIdentificationPeptideHit() {
         return new ConsensusElement.PeptideIdentification.PeptideHit();
@@ -231,6 +254,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link FeatureMap }
      *
+     * @return FeatureMap.
      */
     public FeatureMap createFeatureMap() {
         return new FeatureMap();
@@ -239,6 +263,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link FeatureType }
      *
+     * @return FeatureType.
      */
     public FeatureType createFeatureType() {
         return new FeatureType();
@@ -247,6 +272,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link FeatureType.PeptideIdentification }
      *
+     * @return PeptideIdentification.
      */
     public FeatureType.PeptideIdentification createFeatureTypePeptideIdentification() {
         return new FeatureType.PeptideIdentification();
@@ -255,6 +281,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link FeatureType.Convexhull }
      *
+     * @return Convexhull.
      */
     public FeatureType.Convexhull createFeatureTypeConvexhull() {
         return new FeatureType.Convexhull();
@@ -263,6 +290,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link FeatureType.Convexhull.Hullpoint }
      *
+     * @return Hullpoint.
      */
     public FeatureType.Convexhull.Hullpoint createFeatureTypeConvexhullHullpoint() {
         return new FeatureType.Convexhull.Hullpoint();
@@ -271,6 +299,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link FeatureType.Model }
      *
+     * @return Model.
      */
     public FeatureType.Model createFeatureTypeModel() {
         return new FeatureType.Model();
@@ -279,6 +308,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link FeatureMap.UnassignedPeptideIdentification }
      *
+     * @return UnassignedPeptideIdentification.
      */
     public FeatureMap.UnassignedPeptideIdentification createFeatureMapUnassignedPeptideIdentification() {
         return new FeatureMap.UnassignedPeptideIdentification();
@@ -287,6 +317,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link FeatureMap.IdentificationRun }
      *
+     * @return Identification.
      */
     public FeatureMap.IdentificationRun createFeatureMapIdentificationRun() {
         return new FeatureMap.IdentificationRun();
@@ -296,6 +327,7 @@ public class ObjectFactory {
      * Create an instance of {@link FeatureMap.IdentificationRun.ProteinIdentification
      * }
      *
+     * @return ProetinIdentification.
      */
     public FeatureMap.IdentificationRun.ProteinIdentification createFeatureMapIdentificationRunProteinIdentification() {
         return new FeatureMap.IdentificationRun.ProteinIdentification();
@@ -305,6 +337,7 @@ public class ObjectFactory {
      * Create an instance of {@link FeatureMap.IdentificationRun.SearchParameters
      * }
      *
+     * @return SearchParameters.
      */
     public FeatureMap.IdentificationRun.SearchParameters createFeatureMapIdentificationRunSearchParameters() {
         return new FeatureMap.IdentificationRun.SearchParameters();
@@ -313,6 +346,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link FeatureMap.DataProcessing }
      *
+     * @return DataProcessing.
      */
     public FeatureMap.DataProcessing createFeatureMapDataProcessing() {
         return new FeatureMap.DataProcessing();
@@ -321,6 +355,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link FeatureMap.FeatureList }
      *
+     * @return FeatureList.
      */
     public FeatureMap.FeatureList createFeatureMapFeatureList() {
         return new FeatureMap.FeatureList();
@@ -329,6 +364,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link FeatureType.Position }
      *
+     * @return Position.
      */
     public FeatureType.Position createFeatureTypePosition() {
         return new FeatureType.Position();
@@ -337,6 +373,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link FeatureType.Quality }
      *
+     * @return Quality.
      */
     public FeatureType.Quality createFeatureTypeQuality() {
         return new FeatureType.Quality();
@@ -345,6 +382,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link FeatureType.Subordinate }
      *
+     * @return Subordinate.
      */
     public FeatureType.Subordinate createFeatureTypeSubordinate() {
         return new FeatureType.Subordinate();
@@ -354,6 +392,7 @@ public class ObjectFactory {
      * Create an instance of {@link FeatureType.PeptideIdentification.PeptideHit
      * }
      *
+     * @return PeptideHit.
      */
     public FeatureType.PeptideIdentification.PeptideHit createFeatureTypePeptideIdentificationPeptideHit() {
         return new FeatureType.PeptideIdentification.PeptideHit();
@@ -362,6 +401,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link FeatureType.Convexhull.Pt }
      *
+     * @return Pt.
      */
     public FeatureType.Convexhull.Pt createFeatureTypeConvexhullPt() {
         return new FeatureType.Convexhull.Pt();
@@ -370,6 +410,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link FeatureType.Convexhull.Hullpoint.Hposition }
      *
+     * @return Hposition.
      */
     public FeatureType.Convexhull.Hullpoint.Hposition createFeatureTypeConvexhullHullpointHposition() {
         return new FeatureType.Convexhull.Hullpoint.Hposition();
@@ -378,6 +419,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link FeatureType.Model.Param }
      *
+     * @return Param.
      */
     public FeatureType.Model.Param createFeatureTypeModelParam() {
         return new FeatureType.Model.Param();
@@ -387,6 +429,7 @@ public class ObjectFactory {
      * Create an instance of {@link FeatureMap.UnassignedPeptideIdentification.PeptideHit
      * }
      *
+     * @return PeptideHit.
      */
     public FeatureMap.UnassignedPeptideIdentification.PeptideHit createFeatureMapUnassignedPeptideIdentificationPeptideHit() {
         return new FeatureMap.UnassignedPeptideIdentification.PeptideHit();
@@ -396,6 +439,7 @@ public class ObjectFactory {
      * Create an instance of {@link FeatureMap.IdentificationRun.ProteinIdentification.ProteinHit
      * }
      *
+     * @return ProteinHit.
      */
     public FeatureMap.IdentificationRun.ProteinIdentification.ProteinHit createFeatureMapIdentificationRunProteinIdentificationProteinHit() {
         return new FeatureMap.IdentificationRun.ProteinIdentification.ProteinHit();
@@ -405,6 +449,7 @@ public class ObjectFactory {
      * Create an instance of {@link FeatureMap.IdentificationRun.SearchParameters.FixedModification
      * }
      *
+     * @return FixedModification.
      */
     public FeatureMap.IdentificationRun.SearchParameters.FixedModification createFeatureMapIdentificationRunSearchParametersFixedModification() {
         return new FeatureMap.IdentificationRun.SearchParameters.FixedModification();
@@ -414,6 +459,7 @@ public class ObjectFactory {
      * Create an instance of {@link FeatureMap.IdentificationRun.SearchParameters.VariableModification
      * }
      *
+     * @return VariableModification.
      */
     public FeatureMap.IdentificationRun.SearchParameters.VariableModification createFeatureMapIdentificationRunSearchParametersVariableModification() {
         return new FeatureMap.IdentificationRun.SearchParameters.VariableModification();
@@ -422,6 +468,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link FeatureMap.DataProcessing.Software }
      *
+     * @return Software.
      */
     public FeatureMap.DataProcessing.Software createFeatureMapDataProcessingSoftware() {
         return new FeatureMap.DataProcessing.Software();
@@ -430,6 +477,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link FeatureMap.DataProcessing.ProcessingAction }
      *
+     * @return ProcessingAction.
      */
     public FeatureMap.DataProcessing.ProcessingAction createFeatureMapDataProcessingProcessingAction() {
         return new FeatureMap.DataProcessing.ProcessingAction();
@@ -438,6 +486,7 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link FeatureMap.DataProcessing.UserParam }
      *
+     * @return UserParam.
      */
     public FeatureMap.DataProcessing.UserParam createFeatureMapDataProcessingUserParam() {
         return new FeatureMap.DataProcessing.UserParam();

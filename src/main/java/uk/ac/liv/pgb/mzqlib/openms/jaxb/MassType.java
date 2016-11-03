@@ -34,8 +34,15 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum MassType {
 
+    /**
+     *
+     */
     @XmlEnumValue("average")
     AVERAGE("average"),
+
+    /**
+     *
+     */
     @XmlEnumValue("monoisotopic")
     MONOISOTOPIC("monoisotopic");
     private final String value;
@@ -44,10 +51,22 @@ public enum MassType {
         value = v;
     }
 
+    /**
+     * Get mass type value.
+     *
+     * @return value.
+     */
     public String value() {
         return value;
     }
 
+    /**
+     * Get mass type by value.
+     *
+     * @param v value.
+     *
+     * @return mass type.
+     */
     public static MassType fromValue(String v) {
         for (MassType c : MassType.values()) {
             if (c.value.equals(v)) {

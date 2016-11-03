@@ -108,20 +108,47 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlRootElement(name = "consensusElement")
 public class ConsensusElement {
 
+    /**
+     *
+     */
     @XmlElement(required = true)
     protected Centroid centroid;
+
+    /**
+     *
+     */
     @XmlElement(required = true)
     protected GroupedElementList groupedElementList;
+
+    /**
+     *
+     */
     @XmlElement(name = "PeptideIdentification")
     protected List<ConsensusElement.PeptideIdentification> peptideIdentification;
+
+    /**
+     *
+     */
     protected List<UserParam> userParam;
+
+    /**
+     *
+     */
     @XmlAttribute(name = "id", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlID
     @XmlSchemaType(name = "ID")
     protected String id;
+
+    /**
+     *
+     */
     @XmlAttribute(name = "quality")
     protected Double quality;
+
+    /**
+     *
+     */
     @XmlAttribute(name = "charge")
     protected BigInteger charge;
 
@@ -195,6 +222,7 @@ public class ConsensusElement {
      * {@link ConsensusElement.PeptideIdentification }
      *
      *
+     * @return PeptideIdentification list.
      */
     public List<ConsensusElement.PeptideIdentification> getPeptideIdentification() {
         if (peptideIdentification == null) {
@@ -225,6 +253,7 @@ public class ConsensusElement {
      * {@link UserParam }
      *
      *
+     * @return UserParam list.
      */
     public List<UserParam> getUserParam() {
         if (userParam == null) {
@@ -372,24 +401,59 @@ public class ConsensusElement {
     })
     public static class PeptideIdentification {
 
+        /**
+         *
+         */
         @XmlElement(name = "PeptideHit")
         protected List<ConsensusElement.PeptideIdentification.PeptideHit> peptideHit;
+
+        /**
+         *
+         */
         protected List<UserParam> userParam;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "identification_run_ref", required = true)
         @XmlIDREF
         @XmlSchemaType(name = "IDREF")
         protected Object identificationRunRef;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "score_type", required = true)
         protected String scoreType;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "higher_score_better", required = true)
         protected boolean higherScoreBetter;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "significance_threshold")
         protected Float significanceThreshold;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "spectrum_reference")
         @XmlSchemaType(name = "unsignedInt")
         protected Long spectrumReference;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "RT")
         protected Float rt;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "MZ")
         protected Float mz;
 
@@ -415,6 +479,7 @@ public class ConsensusElement {
          * {@link ConsensusElement.PeptideIdentification.PeptideHit }
          *
          *
+         * @return PeptideHit list.
          */
         public List<ConsensusElement.PeptideIdentification.PeptideHit> getPeptideHit() {
             if (peptideHit == null) {
@@ -445,6 +510,7 @@ public class ConsensusElement {
          * {@link UserParam }
          *
          *
+         * @return UserParam list.
          */
         public List<UserParam> getUserParam() {
             if (userParam == null) {
@@ -504,6 +570,7 @@ public class ConsensusElement {
         /**
          * Gets the value of the higherScoreBetter property.
          *
+         * @return true if higher score is better.
          */
         public boolean isHigherScoreBetter() {
             return higherScoreBetter;
@@ -512,6 +579,7 @@ public class ConsensusElement {
         /**
          * Sets the value of the higherScoreBetter property.
          *
+         * @param value value of the higherScoreBetter.
          */
         public void setHigherScoreBetter(boolean value) {
             this.higherScoreBetter = value;
@@ -661,17 +729,44 @@ public class ConsensusElement {
         })
         public static class PeptideHit {
 
+            /**
+             *
+             */
             protected List<UserParam> userParam;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "sequence", required = true)
             protected String sequence;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "charge", required = true)
             protected BigInteger charge;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "score", required = true)
             protected float score;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "aa_before")
             protected String aaBefore;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "aa_after")
             protected String aaAfter;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "protein_refs")
             @XmlIDREF
             @XmlSchemaType(name = "IDREFS")
@@ -699,6 +794,7 @@ public class ConsensusElement {
              * {@link UserParam }
              *
              *
+             * @return UserParam list.
              */
             public List<UserParam> getUserParam() {
                 if (userParam == null) {
@@ -758,6 +854,7 @@ public class ConsensusElement {
             /**
              * Gets the value of the score property.
              *
+             * @return score value.
              */
             public float getScore() {
                 return score;
@@ -766,6 +863,7 @@ public class ConsensusElement {
             /**
              * Sets the value of the score property.
              *
+             * @param value score value.
              */
             public void setScore(float value) {
                 this.score = value;
@@ -841,6 +939,7 @@ public class ConsensusElement {
              * {@link Object }
              *
              *
+             * @return ProteinRef list.
              */
             public List<Object> getProteinRefs() {
                 if (proteinRefs == null) {

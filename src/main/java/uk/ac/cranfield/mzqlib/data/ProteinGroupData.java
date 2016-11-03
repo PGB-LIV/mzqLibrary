@@ -7,6 +7,7 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinGroup;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinRef;
 
 /**
+ * ProteinGroupData class.
  *
  * @author Jun
  */
@@ -15,22 +16,39 @@ public class ProteinGroupData extends QuantitationLevel {
     private ProteinGroup pg;
     private final static String SEPARATOR = ";";
 
+    /**
+     * Constructor of ProteinGroupData.
+     *
+     * @param proteinGroup ProteinGroup.
+     */
     public ProteinGroupData(ProteinGroup proteinGroup) {
         pg = proteinGroup;
     }
 
-//    public ProteinGroup getPg() {
-//        return pg;
-//    }
+    /**
+     * Get ProteinGroup id.
+     *
+     * @return id.
+     */
     public String getId() {
         return pg.getId();
     }
 
+    /**
+     * Get Anchor Protein String.
+     *
+     * @return anchor protein string.
+     */
     public String getAnchorProteinStr() {
         ProteinRef lead = pg.getProteinRef().get(0);//ProteinRef 1:n
         return lead.getProteinRef();
     }
 
+    /**
+     * Get ambiguity protein members in one String.
+     *
+     * @return ambiguity proteins.
+     */
     public String getAmbiguityMemberStr() {
         List<ProteinRef> proteinRefs = pg.getProteinRef();
         if (proteinRefs.size() == 1) {

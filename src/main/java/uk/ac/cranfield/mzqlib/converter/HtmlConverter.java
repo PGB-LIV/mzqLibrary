@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,19 +23,28 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.CvParam;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.Software;
 
 /**
- *
+ * HtmlConverter is to convert mzq file to html file.
  * @author Jun Fan@cranfield
  */
 public class HtmlConverter extends GenericConverter {
 
     private static final String SEPERATOR = "</td><td>";
     final private String TEMPLATE = "htmlTemplate.txt";
-    static private HashMap<String, String> templates = new HashMap<>();
+    private static final HashMap<String, String> templates = new HashMap<>();
 
+    /**
+     * Constructor.
+     * @param filename input mzq file name.
+     * @param outputFile output html file name.
+     */
     public HtmlConverter(String filename, String outputFile) {
         super(filename, outputFile);
     }
 
+    /**
+     * Convert method. Convert mzq file to html file.
+     * Override the method in GenericConverter.
+     */
     @Override
     public void convert() {
         if (outfile.length() == 0) {
@@ -128,11 +138,11 @@ public class HtmlConverter extends GenericConverter {
         addHeader(MzqData.PROTEIN, sb);
         sb.append(templates.get("PROTEIN_HEADER_END"));
 
-        HashSet<String> proteinGlobalNames = MzqLib.DATA.control.getElements(
+        Set<String> proteinGlobalNames = MzqLib.DATA.control.getElements(
                 MzqData.PROTEIN, MzqData.GLOBAL);
-        HashSet<String> peptideGlobalNames = MzqLib.DATA.control.getElements(
+        Set<String> peptideGlobalNames = MzqLib.DATA.control.getElements(
                 MzqData.PEPTIDE, MzqData.GLOBAL);
-        HashSet<String> featureGlobalNames = MzqLib.DATA.control.getElements(
+        Set<String> featureGlobalNames = MzqLib.DATA.control.getElements(
                 MzqData.FEATURE, MzqData.GLOBAL);
         int proteinAssaySize = MzqLib.DATA.control.getElements(MzqData.PROTEIN,
                                                                MzqData.ASSAY).
@@ -291,7 +301,7 @@ public class HtmlConverter extends GenericConverter {
         } else {
             addRatioHeader(level, sb, "<th>", "</th>");
         }
-        HashSet<String> names = MzqLib.DATA.control.getElements(level,
+        Set<String> names = MzqLib.DATA.control.getElements(level,
                                                                 MzqData.GLOBAL);
         if (names.size() > 0) {
             if (level == MzqData.FEATURE) {

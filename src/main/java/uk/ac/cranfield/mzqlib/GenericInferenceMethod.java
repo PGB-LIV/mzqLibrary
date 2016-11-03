@@ -3,6 +3,8 @@ package uk.ac.cranfield.mzqlib;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -14,12 +16,12 @@ public class GenericInferenceMethod {
      * assign the middle data structure by the quantitation values from the
      * lower level
      */
-    private static HashMap<String, ArrayList<Double>> assignMiddleStructure(
-            ArrayList<String> assayIDs,
-            ArrayList<HashMap<String, Double>> lowLevelQuant) {
-        HashMap<String, ArrayList<Double>> tmp = initializeMiddleStructure(
+    private static Map<String, List<Double>> assignMiddleStructure(
+            List<String> assayIDs,
+            List<Map<String, Double>> lowLevelQuant) {
+        Map<String, List<Double>> tmp = initializeMiddleStructure(
                 assayIDs);
-        for (HashMap<String, Double> quant : lowLevelQuant) {
+        for (Map<String, Double> quant : lowLevelQuant) {
             for (String assayID : assayIDs) {
                 if (quant.containsKey(assayID)) {
                     tmp.get(assayID).add(quant.get(assayID));
@@ -35,11 +37,11 @@ public class GenericInferenceMethod {
      * initialize the middle data structure, keys are assay IDs and values are
      * the list of related values
      */
-    private static HashMap<String, ArrayList<Double>> initializeMiddleStructure(
-            ArrayList<String> assayIDs) {
-        HashMap<String, ArrayList<Double>> tmp = new HashMap<>();
+    private static Map<String, List<Double>> initializeMiddleStructure(
+            List<String> assayIDs) {
+        Map<String, List<Double>> tmp = new HashMap<>();
         for (String assayID : assayIDs) {
-            ArrayList<Double> value = new ArrayList<>();
+            List<Double> value = new ArrayList<>();
             tmp.put(assayID, value);
         }
         return tmp;
@@ -48,8 +50,8 @@ public class GenericInferenceMethod {
     /**
      * initialize the ret value
      */
-    private static HashMap<String, Double> initializeRet(ArrayList<String> names) {
-        HashMap<String, Double> ret = new HashMap<>();
+    private static Map<String, Double> initializeRet(List<String> names) {
+        Map<String, Double> ret = new HashMap<>();
         for (String name : names) {
             ret.put(name, 0d);
         }
@@ -64,14 +66,14 @@ public class GenericInferenceMethod {
      *
      * @return sum
      */
-    public static HashMap<String, Double> sum(
-            ArrayList<HashMap<String, Double>> lowLevelQuant,
-            ArrayList<String> assayIDs) {
-        HashMap<String, Double> ret = initializeRet(assayIDs);
-        HashMap<String, ArrayList<Double>> tmp = assignMiddleStructure(assayIDs,
-                                                                       lowLevelQuant);
+    public static Map<String, Double> sum(
+            List<Map<String, Double>> lowLevelQuant,
+            List<String> assayIDs) {
+        Map<String, Double> ret = initializeRet(assayIDs);
+        Map<String, List<Double>> tmp = assignMiddleStructure(assayIDs,
+                                                              lowLevelQuant);
         for (String assayID : assayIDs) {
-            ArrayList<Double> list = tmp.get(assayID);
+            List<Double> list = tmp.get(assayID);
             ret.put(assayID, Utils.sum(list));
         }
         return ret;
@@ -85,15 +87,15 @@ public class GenericInferenceMethod {
      *
      * @return median
      */
-    public static HashMap<String, Double> median(
-            ArrayList<HashMap<String, Double>> lowLevelQuant,
-            ArrayList<String> assayIDs) {
-        HashMap<String, Double> ret = initializeRet(assayIDs);
-        HashMap<String, ArrayList<Double>> tmp = assignMiddleStructure(assayIDs,
-                                                                       lowLevelQuant);
+    public static Map<String, Double> median(
+            List<Map<String, Double>> lowLevelQuant,
+            List<String> assayIDs) {
+        Map<String, Double> ret = initializeRet(assayIDs);
+        Map<String, List<Double>> tmp = assignMiddleStructure(assayIDs,
+                                                              lowLevelQuant);
         //assayID, quantitation
         for (String assayID : assayIDs) {
-            ArrayList<Double> list = tmp.get(assayID);
+            List<Double> list = tmp.get(assayID);
             ret.put(assayID, Utils.median(list));
         }
         return ret;
@@ -107,14 +109,14 @@ public class GenericInferenceMethod {
      *
      * @return mean
      */
-    public static HashMap<String, Double> mean(
-            ArrayList<HashMap<String, Double>> lowLevelQuant,
-            ArrayList<String> assayIDs) {
-        HashMap<String, Double> ret = initializeRet(assayIDs);
-        HashMap<String, ArrayList<Double>> tmp = assignMiddleStructure(assayIDs,
-                                                                       lowLevelQuant);
+    public static Map<String, Double> mean(
+            List<Map<String, Double>> lowLevelQuant,
+            List<String> assayIDs) {
+        Map<String, Double> ret = initializeRet(assayIDs);
+        Map<String, List<Double>> tmp = assignMiddleStructure(assayIDs,
+                                                              lowLevelQuant);
         for (String assayID : assayIDs) {
-            ArrayList<Double> list = tmp.get(assayID);
+            List<Double> list = tmp.get(assayID);
             ret.put(assayID, Utils.sum(list) / list.size());
         }
         return ret;
@@ -129,14 +131,14 @@ public class GenericInferenceMethod {
      *
      * @return weighted mean
      */
-    public static HashMap<String, Double> weightedAverage(
-            ArrayList<HashMap<String, Double>> lowLevelQuant,
-            ArrayList<String> assayIDs, ArrayList<Integer> count) {
-        HashMap<String, Double> ret = initializeRet(assayIDs);
-        HashMap<String, ArrayList<Double>> tmp = initializeMiddleStructure(
+    public static Map<String, Double> weightedAverage(
+            List<Map<String, Double>> lowLevelQuant,
+            List<String> assayIDs, List<Integer> count) {
+        Map<String, Double> ret = initializeRet(assayIDs);
+        Map<String, List<Double>> tmp = initializeMiddleStructure(
                 assayIDs);
         for (int i = 0; i < lowLevelQuant.size(); i++) {
-            HashMap<String, Double> quant = lowLevelQuant.get(i);
+            Map<String, Double> quant = lowLevelQuant.get(i);
             for (String assayID : assayIDs) {
                 if (quant.containsKey(assayID)) {
                     tmp.get(assayID).add(quant.get(assayID) * count.get(i));
@@ -150,7 +152,7 @@ public class GenericInferenceMethod {
         }
 
         for (String assayID : assayIDs) {
-            ArrayList<Double> list = tmp.get(assayID);
+            List<Double> list = tmp.get(assayID);
             int len = list.size();
             if (len == 0) {
                 continue;

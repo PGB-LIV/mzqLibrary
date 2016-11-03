@@ -261,22 +261,61 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @XmlRootElement(name = "consensusXML")
 public class ConsensusXML {
 
+    /**
+     *
+     */
     protected List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> userParam;
+
+    /**
+     *
+     */
     protected List<ConsensusXML.DataProcessing> dataProcessing;
+
+    /**
+     *
+     */
     @XmlElement(name = "IdentificationRun")
     protected List<ConsensusXML.IdentificationRun> identificationRun;
+
+    /**
+     *
+     */
     @XmlElement(name = "UnassignedPeptideIdentification")
     protected List<ConsensusXML.UnassignedPeptideIdentification> unassignedPeptideIdentification;
+
+    /**
+     *
+     */
     @XmlElement(required = true)
     protected MapList mapList;
+
+    /**
+     *
+     */
     @XmlElement(required = true)
     protected ConsensusElementList consensusElementList;
+
+    /**
+     *
+     */
     @XmlAttribute(name = "version")
     protected Float version;
+
+    /**
+     *
+     */
     @XmlAttribute(name = "experiment_type")
     protected String experimentType;
+
+    /**
+     *
+     */
     @XmlAttribute(name = "document_id")
     protected String documentId;
+
+    /**
+     *
+     */
     @XmlAttribute(name = "id")
     protected String id;
 
@@ -302,6 +341,7 @@ public class ConsensusXML {
      * {@link uk.ac.liv.consensusxmlmzquantmlconvertor.jaxb.UserParam }
      *
      *
+     * @return UserParamList.
      */
     public List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> getUserParam() {
         if (userParam == null) {
@@ -332,6 +372,7 @@ public class ConsensusXML {
      * {@link ConsensusXML.DataProcessing }
      *
      *
+     * @return DataProcessing list.
      */
     public List<ConsensusXML.DataProcessing> getDataProcessing() {
         if (dataProcessing == null) {
@@ -362,6 +403,7 @@ public class ConsensusXML {
      * {@link ConsensusXML.IdentificationRun }
      *
      *
+     * @return IdentificationRun list.
      */
     public List<ConsensusXML.IdentificationRun> getIdentificationRun() {
         if (identificationRun == null) {
@@ -392,6 +434,7 @@ public class ConsensusXML {
      * {@link ConsensusXML.UnassignedPeptideIdentification }
      *
      *
+     * @return UnassignedPeptideIdentification list.
      */
     public List<ConsensusXML.UnassignedPeptideIdentification> getUnassignedPeptideIdentification() {
         if (unassignedPeptideIdentification == null) {
@@ -601,10 +644,25 @@ public class ConsensusXML {
     })
     public static class DataProcessing {
 
+        /**
+         *
+         */
         @XmlElement(required = true)
         protected ConsensusXML.DataProcessing.Software software;
+
+        /**
+         *
+         */
         protected List<ConsensusXML.DataProcessing.ProcessingAction> processingAction;
+
+        /**
+         *
+         */
         protected List<ConsensusXML.DataProcessing.UserParam> userParam;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "completion_time", required = true)
         @XmlSchemaType(name = "dateTime")
         protected XMLGregorianCalendar completionTime;
@@ -655,6 +713,7 @@ public class ConsensusXML {
          * {@link ConsensusXML.DataProcessing.ProcessingAction }
          *
          *
+         * @return ProcessingAction list.
          */
         public List<ConsensusXML.DataProcessing.ProcessingAction> getProcessingAction() {
             if (processingAction == null) {
@@ -685,6 +744,7 @@ public class ConsensusXML {
          * {@link ConsensusXML.DataProcessing.UserParam }
          *
          *
+         * @return UserParam list.
          */
         public List<ConsensusXML.DataProcessing.UserParam> getUserParam() {
             if (userParam == null) {
@@ -741,6 +801,9 @@ public class ConsensusXML {
         @XmlType(name = "")
         public static class ProcessingAction {
 
+            /**
+             *
+             */
             @XmlAttribute(name = "name", required = true)
             protected String name;
 
@@ -795,8 +858,15 @@ public class ConsensusXML {
         @XmlType(name = "")
         public static class Software {
 
+            /**
+             *
+             */
             @XmlAttribute(name = "name", required = true)
             protected String name;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "version", required = true)
             protected String version;
 
@@ -995,19 +1065,42 @@ public class ConsensusXML {
     })
     public static class IdentificationRun {
 
+        /**
+         *
+         */
         @XmlElement(name = "SearchParameters", required = true)
         protected ConsensusXML.IdentificationRun.SearchParameters searchParameters;
+
+        /**
+         *
+         */
         @XmlElement(name = "ProteinIdentification")
         protected ConsensusXML.IdentificationRun.ProteinIdentification proteinIdentification;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "id", required = true)
         @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
         @XmlID
         @XmlSchemaType(name = "ID")
         protected String id;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "search_engine", required = true)
         protected String searchEngine;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "search_engine_version", required = true)
         protected String searchEngineVersion;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "date", required = true)
         @XmlSchemaType(name = "dateTime")
         protected XMLGregorianCalendar date;
@@ -1205,13 +1298,32 @@ public class ConsensusXML {
         })
         public static class ProteinIdentification {
 
+            /**
+             *
+             */
             @XmlElement(name = "ProteinHit")
             protected List<ConsensusXML.IdentificationRun.ProteinIdentification.ProteinHit> proteinHit;
+
+            /**
+             *
+             */
             protected List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> userParam;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "score_type", required = true)
             protected String scoreType;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "higher_score_better", required = true)
             protected boolean higherScoreBetter;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "significance_threshold")
             protected Float significanceThreshold;
 
@@ -1238,6 +1350,7 @@ public class ConsensusXML {
              * }
              *
              *
+             * @return ProteinHit list.
              */
             public List<ConsensusXML.IdentificationRun.ProteinIdentification.ProteinHit> getProteinHit() {
                 if (proteinHit == null) {
@@ -1268,6 +1381,7 @@ public class ConsensusXML {
              * {@link uk.ac.liv.consensusxmlmzquantmlconvertor.jaxb.UserParam }
              *
              *
+             * @return UserParam list.
              */
             public List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> getUserParam() {
                 if (userParam == null) {
@@ -1303,6 +1417,7 @@ public class ConsensusXML {
             /**
              * Gets the value of the higherScoreBetter property.
              *
+             * @return ture if higher score is better.
              */
             public boolean isHigherScoreBetter() {
                 return higherScoreBetter;
@@ -1311,6 +1426,7 @@ public class ConsensusXML {
             /**
              * Sets the value of the higherScoreBetter property.
              *
+             * @param value value of the higherScoreBetter.
              */
             public void setHigherScoreBetter(boolean value) {
                 this.higherScoreBetter = value;
@@ -1372,16 +1488,35 @@ public class ConsensusXML {
             })
             public static class ProteinHit {
 
+                /**
+                 *
+                 */
                 protected List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> userParam;
+
+                /**
+                 *
+                 */
                 @XmlAttribute(name = "id", required = true)
                 @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
                 @XmlID
                 @XmlSchemaType(name = "ID")
                 protected String id;
+
+                /**
+                 *
+                 */
                 @XmlAttribute(name = "accession", required = true)
                 protected String accession;
+
+                /**
+                 *
+                 */
                 @XmlAttribute(name = "score", required = true)
                 protected float score;
+
+                /**
+                 *
+                 */
                 @XmlAttribute(name = "sequence")
                 protected String sequence;
 
@@ -1408,6 +1543,7 @@ public class ConsensusXML {
                  * }
                  *
                  *
+                 * @return UserParam list.
                  */
                 public List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> getUserParam() {
                     if (userParam == null) {
@@ -1467,6 +1603,7 @@ public class ConsensusXML {
                 /**
                  * Gets the value of the score property.
                  *
+                 * @return score value.
                  */
                 public float getScore() {
                     return score;
@@ -1475,6 +1612,7 @@ public class ConsensusXML {
                 /**
                  * Sets the value of the score property.
                  *
+                 * @param value score value.
                  */
                 public void setScore(float value) {
                     this.score = value;
@@ -1583,28 +1721,75 @@ public class ConsensusXML {
         })
         public static class SearchParameters {
 
+            /**
+             *
+             */
             @XmlElement(name = "FixedModification")
             protected List<ConsensusXML.IdentificationRun.SearchParameters.FixedModification> fixedModification;
+
+            /**
+             *
+             */
             @XmlElement(name = "VariableModification")
             protected List<ConsensusXML.IdentificationRun.SearchParameters.VariableModification> variableModification;
+
+            /**
+             *
+             */
             protected List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> userParam;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "db", required = true)
             protected String db;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "db_version", required = true)
             protected String dbVersion;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "taxonomy")
             protected String taxonomy;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "mass_type", required = true)
             protected MassType massType;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "charges", required = true)
             protected String charges;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "enzyme")
             protected DigestionEnzyme enzyme;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "missed_cleavages")
             @XmlSchemaType(name = "unsignedInt")
             protected Long missedCleavages;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "precursor_peak_tolerance", required = true)
             protected float precursorPeakTolerance;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "peak_mass_tolerance", required = true)
             protected float peakMassTolerance;
 
@@ -1631,6 +1816,7 @@ public class ConsensusXML {
              * }
              *
              *
+             * @return FixedModification list.
              */
             public List<ConsensusXML.IdentificationRun.SearchParameters.FixedModification> getFixedModification() {
                 if (fixedModification == null) {
@@ -1662,6 +1848,7 @@ public class ConsensusXML {
              * }
              *
              *
+             * @return VariableModification list.
              */
             public List<ConsensusXML.IdentificationRun.SearchParameters.VariableModification> getVariableModification() {
                 if (variableModification == null) {
@@ -1692,6 +1879,7 @@ public class ConsensusXML {
              * {@link uk.ac.liv.consensusxmlmzquantmlconvertor.jaxb.UserParam }
              *
              *
+             * @return UserParam list.
              */
             public List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> getUserParam() {
                 if (userParam == null) {
@@ -1871,6 +2059,7 @@ public class ConsensusXML {
             /**
              * Gets the value of the precursorPeakTolerance property.
              *
+             * @return value of the precursorPeakTolerance.
              */
             public float getPrecursorPeakTolerance() {
                 return precursorPeakTolerance;
@@ -1879,6 +2068,7 @@ public class ConsensusXML {
             /**
              * Sets the value of the precursorPeakTolerance property.
              *
+             * @param value value of the precursorPeakTolerance.
              */
             public void setPrecursorPeakTolerance(float value) {
                 this.precursorPeakTolerance = value;
@@ -1887,6 +2077,7 @@ public class ConsensusXML {
             /**
              * Gets the value of the peakMassTolerance property.
              *
+             * @return value of peakMassTolerance.
              */
             public float getPeakMassTolerance() {
                 return peakMassTolerance;
@@ -1895,6 +2086,7 @@ public class ConsensusXML {
             /**
              * Sets the value of the peakMassTolerance property.
              *
+             * @param value value of peakMassTolerance.
              */
             public void setPeakMassTolerance(float value) {
                 this.peakMassTolerance = value;
@@ -1935,7 +2127,14 @@ public class ConsensusXML {
             })
             public static class FixedModification {
 
+                /**
+                 *
+                 */
                 protected List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> userParam;
+
+                /**
+                 *
+                 */
                 @XmlAttribute(name = "name", required = true)
                 protected String name;
 
@@ -1962,6 +2161,7 @@ public class ConsensusXML {
                  * }
                  *
                  *
+                 * @return UserParam list.
                  */
                 public List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> getUserParam() {
                     if (userParam == null) {
@@ -2031,7 +2231,14 @@ public class ConsensusXML {
             })
             public static class VariableModification {
 
+                /**
+                 *
+                 */
                 protected List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> userParam;
+
+                /**
+                 *
+                 */
                 @XmlAttribute(name = "name", required = true)
                 protected String name;
 
@@ -2058,6 +2265,7 @@ public class ConsensusXML {
                  * }
                  *
                  *
+                 * @return UserParam list.
                  */
                 public List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> getUserParam() {
                     if (userParam == null) {
@@ -2163,24 +2371,59 @@ public class ConsensusXML {
     })
     public static class UnassignedPeptideIdentification {
 
+        /**
+         *
+         */
         @XmlElement(name = "PeptideHit")
         protected List<ConsensusXML.UnassignedPeptideIdentification.PeptideHit> peptideHit;
+
+        /**
+         *
+         */
         protected List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> userParam;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "identification_run_ref", required = true)
         @XmlIDREF
         @XmlSchemaType(name = "IDREF")
         protected Object identificationRunRef;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "score_type", required = true)
         protected String scoreType;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "higher_score_better", required = true)
         protected boolean higherScoreBetter;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "significance_threshold")
         protected Float significanceThreshold;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "spectrum_reference")
         @XmlSchemaType(name = "unsignedInt")
         protected Long spectrumReference;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "RT")
         protected Float rt;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "MZ")
         protected Float mz;
 
@@ -2206,6 +2449,7 @@ public class ConsensusXML {
          * {@link ConsensusXML.UnassignedPeptideIdentification.PeptideHit }
          *
          *
+         * @return PeptideHit list.
          */
         public List<ConsensusXML.UnassignedPeptideIdentification.PeptideHit> getPeptideHit() {
             if (peptideHit == null) {
@@ -2236,6 +2480,7 @@ public class ConsensusXML {
          * {@link uk.ac.liv.consensusxmlmzquantmlconvertor.jaxb.UserParam }
          *
          *
+         * @return UserParam list.
          */
         public List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> getUserParam() {
             if (userParam == null) {
@@ -2295,6 +2540,7 @@ public class ConsensusXML {
         /**
          * Gets the value of the higherScoreBetter property.
          *
+         * @return ture if higher score is better.
          */
         public boolean isHigherScoreBetter() {
             return higherScoreBetter;
@@ -2303,6 +2549,7 @@ public class ConsensusXML {
         /**
          * Sets the value of the higherScoreBetter property.
          *
+         * @param value value of the higherScoreBetter.
          */
         public void setHigherScoreBetter(boolean value) {
             this.higherScoreBetter = value;
@@ -2452,17 +2699,44 @@ public class ConsensusXML {
         })
         public static class PeptideHit {
 
+            /**
+             *
+             */
             protected List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> userParam;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "sequence", required = true)
             protected String sequence;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "charge", required = true)
             protected BigInteger charge;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "score", required = true)
             protected float score;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "aa_before")
             protected String aaBefore;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "aa_after")
             protected String aaAfter;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "protein_refs")
             @XmlIDREF
             @XmlSchemaType(name = "IDREFS")
@@ -2490,6 +2764,7 @@ public class ConsensusXML {
              * {@link uk.ac.liv.consensusxmlmzquantmlconvertor.jaxb.UserParam }
              *
              *
+             * @return UserParam list.
              */
             public List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> getUserParam() {
                 if (userParam == null) {
@@ -2549,6 +2824,7 @@ public class ConsensusXML {
             /**
              * Gets the value of the score property.
              *
+             * @return score value.
              */
             public float getScore() {
                 return score;
@@ -2557,6 +2833,7 @@ public class ConsensusXML {
             /**
              * Sets the value of the score property.
              *
+             * @param value score value.
              */
             public void setScore(float value) {
                 this.score = value;
@@ -2632,6 +2909,7 @@ public class ConsensusXML {
              * {@link Object }
              *
              *
+             * @return ProteinRef list.
              */
             public List<Object> getProteinRefs() {
                 if (proteinRefs == null) {

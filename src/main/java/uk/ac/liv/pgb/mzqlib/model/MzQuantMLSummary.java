@@ -39,7 +39,7 @@ public class MzQuantMLSummary {
     /**
      * Set list of technique used in mzQuantML file.
      *
-     * @param List<StringProperty>
+     * @param techList list of techniques.
      */
     public void setTechniquesUsed(List<StringProperty> techList) {
         this.techniquesUsed.clear();

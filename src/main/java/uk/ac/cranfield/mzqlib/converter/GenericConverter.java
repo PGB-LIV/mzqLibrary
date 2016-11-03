@@ -2,12 +2,15 @@
 package uk.ac.cranfield.mzqlib.converter;
 
 import java.util.HashSet;
+import java.util.Set;
+
 import uk.ac.cranfield.mzqlib.MzqLib;
 import uk.ac.cranfield.mzqlib.data.MzqData;
 import uk.ac.cranfield.mzqlib.data.QuantitationLevel;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.StudyVariable;
 
 /**
+ * Generic converter to be extended into different format converters.
  *
  * @author Jun Fan@cranfield
  */
@@ -16,6 +19,12 @@ abstract public class GenericConverter {
     String filename;
     String outfile;
 
+    /**
+     * Constructor.
+     *
+     * @param filename   input mzq file name.
+     * @param outputFile output file name.
+     */
     public GenericConverter(String filename, String outputFile) {
         this.filename = filename;
         this.outfile = outputFile;
@@ -26,8 +35,20 @@ abstract public class GenericConverter {
         return filename.substring(0, idx);
     }
 
+    /**
+     * Abstract convert method.
+     */
     abstract public void convert();
 
+    /**
+     * Utility method to add study variable header.
+     *
+     * @param level            level of data, such as peptide, protein, etc.
+     * @param sb               StringBuilder.
+     * @param quantitationName quantitation name.
+     * @param prefix           prefix of the study variable.
+     * @param suffix           suffix of the study variable.
+     */
     protected void addSvHeader(int level, StringBuilder sb,
                                String quantitationName, String prefix,
                                String suffix) {
@@ -42,6 +63,15 @@ abstract public class GenericConverter {
         }
     }
 
+    /**
+     * Utility method to add assay header.
+     *
+     * @param level            level of data, such as peptide, protein, etc.
+     * @param sb               StringBuilder.
+     * @param quantitationName quantitation name.
+     * @param prefix           prefix of the assay.
+     * @param suffix           suffix of the assay.
+     */
     protected void addAssayHeader(int level, StringBuilder sb,
                                   String quantitationName, String prefix,
                                   String suffix) {
@@ -57,6 +87,14 @@ abstract public class GenericConverter {
         }
     }
 
+    /**
+     * Utility method to add ratio header
+     *
+     * @param level  level of data, such as peptide, protein, etc.
+     * @param sb     StringBuilder.
+     * @param prefix prefix of the ratio.
+     * @param suffix suffix of the ratio.
+     */
     protected void addRatioHeader(int level, StringBuilder sb, String prefix,
                                   String suffix) {
         if (MzqLib.DATA.control.isRequired(level, MzqData.RATIO,
@@ -69,8 +107,16 @@ abstract public class GenericConverter {
         }
     }
 
+    /**
+     * Utility method to add global quantitation header.
+     *
+     * @param sb     String builder.
+     * @param prefix prefix of global quantitation.
+     * @param suffix suffix of global quantitation.
+     * @param names  set of names.
+     */
     protected void addGlobalHeader(StringBuilder sb, String prefix,
-                                   String suffix, HashSet<String> names) {
+                                   String suffix, Set<String> names) {
         for (String columnID : names) {
             sb.append(prefix);
             sb.append(columnID);
@@ -78,9 +124,15 @@ abstract public class GenericConverter {
         }
     }
 
-//    private void appendValue(StringBuilder sb,Double value){
-//        
-//    }
+    /**
+     * Utility method to add study variable values.
+     *
+     * @param level        level of data, such as peptide, protein, etc.
+     * @param sb           StringBuilder.
+     * @param obj          quantitation level.
+     * @param seperator    file separator.
+     * @param quantityName quantity name.
+     */
     protected void addSvValue(int level, StringBuilder sb, QuantitationLevel obj,
                               String seperator, String quantityName) {
         if (MzqLib.DATA.control.isRequired(level, MzqData.SV, quantityName)) {
@@ -93,6 +145,15 @@ abstract public class GenericConverter {
         }
     }
 
+    /**
+     * Utility method to add assay values.
+     *
+     * @param level        level of data, such as peptide, protein, etc.
+     * @param sb           StringBuilder.
+     * @param obj          quantitation level.
+     * @param seperator    file separator.
+     * @param quantityName quantity name.
+     */
     protected void addAssayValue(int level, StringBuilder sb,
                                  QuantitationLevel obj, String seperator,
                                  String quantityName) {
@@ -105,6 +166,12 @@ abstract public class GenericConverter {
         }
     }
 
+    /**
+     * Append values.
+     *
+     * @param sb    StringBilder.
+     * @param value the double value to be appended.
+     */
     private void appendValue(StringBuilder sb, Double value) {
         if (value == null) {
             sb.append("null");
@@ -113,6 +180,14 @@ abstract public class GenericConverter {
         }
     }
 
+    /**
+     * Utility method to add ratio value.
+     *
+     * @param level     level of data, such as peptide, protein, etc.
+     * @param sb        StringBuilder.
+     * @param obj       quantitation level.
+     * @param seperator file separator.
+     */
     protected void addRatioValue(int level, StringBuilder sb,
                                  QuantitationLevel obj, String seperator) {
         if (MzqLib.DATA.control.isRequired(level, MzqData.RATIO,
@@ -125,9 +200,18 @@ abstract public class GenericConverter {
         }
     }
 
+    /**
+     * Utility to add global quantitation values.
+     *
+     * @param level     level of data, such as peptide, protein, etc.
+     * @param sb        StringBuilder.
+     * @param obj       quantitation level.
+     * @param seperator file separator.
+     * @param names     set of names.
+     */
     protected void addGlobalValue(int level, StringBuilder sb,
                                   QuantitationLevel obj, String seperator,
-                                  HashSet<String> names) {
+                                  Set<String> names) {
         for (String columnID : names) {
             sb.append(seperator);
             Double value = obj.getGlobal(columnID);

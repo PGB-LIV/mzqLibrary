@@ -49,6 +49,11 @@ public class LoadMzQuantMLDataTask extends Task<MzQuantMLData> {
 
     private final File mzqFile;
 
+    /**
+     * Constructor.
+     *
+     * @param f input mzq file.
+     */
     public LoadMzQuantMLDataTask(File f) {
         mzqFile = f;
     }

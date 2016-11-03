@@ -45,23 +45,47 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "element")
 public class Element {
 
+    /**
+     *
+     */
     @XmlAttribute(name = "map", required = true)
     @XmlSchemaType(name = "unsignedInt")
     protected long map;
+
+    /**
+     *
+     */
     @XmlAttribute(name = "id", required = true)
     protected String id;
+
+    /**
+     *
+     */
     @XmlAttribute(name = "rt", required = true)
     protected double rt;
+
+    /**
+     *
+     */
     @XmlAttribute(name = "mz", required = true)
     protected double mz;
+
+    /**
+     *
+     */
     @XmlAttribute(name = "it", required = true)
     protected double it;
+
+    /**
+     *
+     */
     @XmlAttribute(name = "charge")
     protected BigInteger charge;
 
     /**
      * Gets the value of the map property.
      *
+     * @return value of map.
      */
     public long getMap() {
         return map;
@@ -70,6 +94,7 @@ public class Element {
     /**
      * Sets the value of the map property.
      *
+     * @param value value of map.
      */
     public void setMap(long value) {
         this.map = value;
@@ -102,6 +127,7 @@ public class Element {
     /**
      * Gets the value of the rt property.
      *
+     * @return rt value.
      */
     public double getRt() {
         return rt;
@@ -110,6 +136,7 @@ public class Element {
     /**
      * Sets the value of the rt property.
      *
+     * @param value rt value.
      */
     public void setRt(double value) {
         this.rt = value;
@@ -118,6 +145,7 @@ public class Element {
     /**
      * Gets the value of the mz property.
      *
+     * @return mz value.
      */
     public double getMz() {
         return mz;
@@ -126,6 +154,7 @@ public class Element {
     /**
      * Sets the value of the mz property.
      *
+     * @param value mz value.
      */
     public void setMz(double value) {
         this.mz = value;
@@ -134,6 +163,7 @@ public class Element {
     /**
      * Gets the value of the it property.
      *
+     * @return it value.
      */
     public double getIt() {
         return it;
@@ -142,6 +172,7 @@ public class Element {
     /**
      * Sets the value of the it property.
      *
+     * @param value it value.
      */
     public void setIt(double value) {
         this.it = value;

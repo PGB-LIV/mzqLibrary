@@ -13,6 +13,11 @@ import javax.xml.bind.JAXBException;
  */
 public class Converter {
 
+    /**
+     * Main class.
+     *
+     * @param args input arguments.
+     */
     public static void main(String[] args) {
 
         File file = new File("CPTAC_study6_2400_3600_FLUQT.consensusXML");

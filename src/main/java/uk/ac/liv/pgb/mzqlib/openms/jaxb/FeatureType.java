@@ -202,18 +202,61 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 })
 public class FeatureType {
 
+    /**
+     *
+     */
     @XmlElement(required = true)
     protected List<FeatureType.Position> position;
+
+    /**
+     *
+     */
     protected double intensity;
+
+    /**
+     *
+     */
     protected List<FeatureType.Quality> quality;
+
+    /**
+     *
+     */
     protected Double overallquality;
+
+    /**
+     *
+     */
     protected Double charge;
+
+    /**
+     *
+     */
     protected FeatureType.Model model;
+
+    /**
+     *
+     */
     protected List<FeatureType.Convexhull> convexhull;
+
+    /**
+     *
+     */
     protected FeatureType.Subordinate subordinate;
+
+    /**
+     *
+     */
     @XmlElement(name = "PeptideIdentification")
     protected List<FeatureType.PeptideIdentification> peptideIdentification;
+
+    /**
+     *
+     */
     protected List<UserParam> userParam;
+
+    /**
+     *
+     */
     @XmlAttribute(name = "id", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlID
@@ -242,10 +285,11 @@ public class FeatureType {
      * {@link FeatureType.Position }
      *
      *
+     * @return Position list.
      */
     public List<FeatureType.Position> getPosition() {
         if (position == null) {
-            position = new ArrayList<FeatureType.Position>();
+            position = new ArrayList<>();
         }
         return this.position;
     }
@@ -253,6 +297,7 @@ public class FeatureType {
     /**
      * Gets the value of the intensity property.
      *
+     * @return value of intensity.
      */
     public double getIntensity() {
         return intensity;
@@ -261,6 +306,7 @@ public class FeatureType {
     /**
      * Sets the value of the intensity property.
      *
+     * @param value value of intensity.
      */
     public void setIntensity(double value) {
         this.intensity = value;
@@ -288,10 +334,11 @@ public class FeatureType {
      * {@link FeatureType.Quality }
      *
      *
+     * @return Quality list.
      */
     public List<FeatureType.Quality> getQuality() {
         if (quality == null) {
-            quality = new ArrayList<FeatureType.Quality>();
+            quality = new ArrayList<>();
         }
         return this.quality;
     }
@@ -390,10 +437,11 @@ public class FeatureType {
      * {@link FeatureType.Convexhull }
      *
      *
+     * @return Convexhull list.
      */
     public List<FeatureType.Convexhull> getConvexhull() {
         if (convexhull == null) {
-            convexhull = new ArrayList<FeatureType.Convexhull>();
+            convexhull = new ArrayList<>();
         }
         return this.convexhull;
     }
@@ -444,11 +492,12 @@ public class FeatureType {
      * {@link FeatureType.PeptideIdentification }
      *
      *
+     * @return PeptideIdentification list.
      */
     public List<FeatureType.PeptideIdentification> getPeptideIdentification() {
         if (peptideIdentification == null) {
             peptideIdentification
-                    = new ArrayList<FeatureType.PeptideIdentification>();
+                    = new ArrayList<>();
         }
         return this.peptideIdentification;
     }
@@ -475,10 +524,11 @@ public class FeatureType {
      * {@link UserParam }
      *
      *
+     * @return UserParam list.
      */
     public List<UserParam> getUserParam() {
         if (userParam == null) {
-            userParam = new ArrayList<UserParam>();
+            userParam = new ArrayList<>();
         }
         return this.userParam;
     }
@@ -565,8 +615,19 @@ public class FeatureType {
     })
     public static class Convexhull {
 
+        /**
+         *
+         */
         protected List<FeatureType.Convexhull.Hullpoint> hullpoint;
+
+        /**
+         *
+         */
         protected List<FeatureType.Convexhull.Pt> pt;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "nr")
         @XmlSchemaType(name = "anySimpleType")
         protected String nr;
@@ -593,10 +654,11 @@ public class FeatureType {
          * {@link FeatureType.Convexhull.Hullpoint }
          *
          *
+         * @return Hullpoint list.
          */
         public List<FeatureType.Convexhull.Hullpoint> getHullpoint() {
             if (hullpoint == null) {
-                hullpoint = new ArrayList<FeatureType.Convexhull.Hullpoint>();
+                hullpoint = new ArrayList<>();
             }
             return this.hullpoint;
         }
@@ -623,10 +685,11 @@ public class FeatureType {
          * {@link FeatureType.Convexhull.Pt }
          *
          *
+         * @return Pt list.
          */
         public List<FeatureType.Convexhull.Pt> getPt() {
             if (pt == null) {
-                pt = new ArrayList<FeatureType.Convexhull.Pt>();
+                pt = new ArrayList<>();
             }
             return this.pt;
         }
@@ -691,6 +754,9 @@ public class FeatureType {
         })
         public static class Hullpoint {
 
+            /**
+             *
+             */
             @XmlElement(required = true)
             protected List<FeatureType.Convexhull.Hullpoint.Hposition> hposition;
 
@@ -716,11 +782,12 @@ public class FeatureType {
              * {@link FeatureType.Convexhull.Hullpoint.Hposition }
              *
              *
+             * @return Hposition list.
              */
             public List<FeatureType.Convexhull.Hullpoint.Hposition> getHposition() {
                 if (hposition == null) {
                     hposition
-                            = new ArrayList<FeatureType.Convexhull.Hullpoint.Hposition>();
+                            = new ArrayList<>();
                 }
                 return this.hposition;
             }
@@ -751,9 +818,16 @@ public class FeatureType {
             })
             public static class Hposition {
 
+                /**
+                 *
+                 */
                 @XmlValue
                 @XmlSchemaType(name = "anySimpleType")
                 protected double value;
+
+                /**
+                 *
+                 */
                 @XmlAttribute(name = "dim", required = true)
                 @XmlSchemaType(name = "anySimpleType")
                 protected String dim;
@@ -835,14 +909,22 @@ public class FeatureType {
         @XmlType(name = "")
         public static class Pt {
 
+            /**
+             *
+             */
             @XmlAttribute(name = "x", required = true)
             protected double x;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "y", required = true)
             protected double y;
 
             /**
              * Gets the value of the x property.
              *
+             * @return x value.
              */
             public double getX() {
                 return x;
@@ -851,6 +933,7 @@ public class FeatureType {
             /**
              * Sets the value of the x property.
              *
+             * @param value x value.
              */
             public void setX(double value) {
                 this.x = value;
@@ -859,6 +942,7 @@ public class FeatureType {
             /**
              * Gets the value of the y property.
              *
+             * @return y value.
              */
             public double getY() {
                 return y;
@@ -867,6 +951,7 @@ public class FeatureType {
             /**
              * Sets the value of the y property.
              *
+             * @param value y value.
              */
             public void setY(double value) {
                 this.y = value;
@@ -914,7 +999,14 @@ public class FeatureType {
     })
     public static class Model {
 
+        /**
+         *
+         */
         protected List<FeatureType.Model.Param> param;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "name", required = true)
         @XmlSchemaType(name = "anySimpleType")
         protected String name;
@@ -941,10 +1033,11 @@ public class FeatureType {
          * {@link FeatureType.Model.Param }
          *
          *
+         * @return Param list.
          */
         public List<FeatureType.Model.Param> getParam() {
             if (param == null) {
-                param = new ArrayList<FeatureType.Model.Param>();
+                param = new ArrayList<>();
             }
             return this.param;
         }
@@ -998,9 +1091,16 @@ public class FeatureType {
         @XmlType(name = "")
         public static class Param {
 
+            /**
+             *
+             */
             @XmlAttribute(name = "name", required = true)
             @XmlSchemaType(name = "anySimpleType")
             protected String name;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "value", required = true)
             @XmlSchemaType(name = "anySimpleType")
             protected String value;
@@ -1124,24 +1224,59 @@ public class FeatureType {
     })
     public static class PeptideIdentification {
 
+        /**
+         *
+         */
         @XmlElement(name = "PeptideHit")
         protected List<FeatureType.PeptideIdentification.PeptideHit> peptideHit;
+
+        /**
+         *
+         */
         protected List<UserParam> userParam;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "identification_run_ref", required = true)
         @XmlIDREF
         @XmlSchemaType(name = "IDREF")
         protected Object identificationRunRef;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "score_type", required = true)
         protected String scoreType;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "higher_score_better", required = true)
         protected boolean higherScoreBetter;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "significance_threshold")
         protected Float significanceThreshold;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "spectrum_reference")
         @XmlSchemaType(name = "unsignedInt")
         protected Long spectrumReference;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "RT")
         protected Float rt;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "MZ")
         protected Float mz;
 
@@ -1167,11 +1302,12 @@ public class FeatureType {
          * {@link FeatureType.PeptideIdentification.PeptideHit }
          *
          *
+         * @return PeptideHit list.
          */
         public List<FeatureType.PeptideIdentification.PeptideHit> getPeptideHit() {
             if (peptideHit == null) {
                 peptideHit
-                        = new ArrayList<FeatureType.PeptideIdentification.PeptideHit>();
+                        = new ArrayList<>();
             }
             return this.peptideHit;
         }
@@ -1198,10 +1334,11 @@ public class FeatureType {
          * {@link UserParam }
          *
          *
+         * @return UserParam list.
          */
         public List<UserParam> getUserParam() {
             if (userParam == null) {
-                userParam = new ArrayList<UserParam>();
+                userParam = new ArrayList<>();
             }
             return this.userParam;
         }
@@ -1257,6 +1394,7 @@ public class FeatureType {
         /**
          * Gets the value of the higherScoreBetter property.
          *
+         * @return true if higher score is better.
          */
         public boolean isHigherScoreBetter() {
             return higherScoreBetter;
@@ -1265,6 +1403,7 @@ public class FeatureType {
         /**
          * Sets the value of the higherScoreBetter property.
          *
+         * @param value value of the higherScoreBetter.
          */
         public void setHigherScoreBetter(boolean value) {
             this.higherScoreBetter = value;
@@ -1414,17 +1553,44 @@ public class FeatureType {
         })
         public static class PeptideHit {
 
+            /**
+             *
+             */
             protected List<UserParam> userParam;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "sequence", required = true)
             protected String sequence;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "charge", required = true)
             protected BigInteger charge;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "score", required = true)
             protected float score;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "aa_before")
             protected String aaBefore;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "aa_after")
             protected String aaAfter;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "protein_refs")
             @XmlIDREF
             @XmlSchemaType(name = "IDREFS")
@@ -1452,10 +1618,11 @@ public class FeatureType {
              * {@link UserParam }
              *
              *
+             * @return UserParam list.
              */
             public List<UserParam> getUserParam() {
                 if (userParam == null) {
-                    userParam = new ArrayList<UserParam>();
+                    userParam = new ArrayList<>();
                 }
                 return this.userParam;
             }
@@ -1511,6 +1678,7 @@ public class FeatureType {
             /**
              * Gets the value of the score property.
              *
+             * @return score value.
              */
             public float getScore() {
                 return score;
@@ -1519,6 +1687,7 @@ public class FeatureType {
             /**
              * Sets the value of the score property.
              *
+             * @param value score value.
              */
             public void setScore(float value) {
                 this.score = value;
@@ -1594,10 +1763,11 @@ public class FeatureType {
              * {@link Object }
              *
              *
+             * @return ProteinRef list.
              */
             public List<Object> getProteinRefs() {
                 if (proteinRefs == null) {
-                    proteinRefs = new ArrayList<Object>();
+                    proteinRefs = new ArrayList<>();
                 }
                 return this.proteinRefs;
             }
@@ -1632,9 +1802,16 @@ public class FeatureType {
     })
     public static class Position {
 
+        /**
+         *
+         */
         @XmlValue
         @XmlSchemaType(name = "anySimpleType")
         protected double value;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "dim", required = true)
         @XmlSchemaType(name = "anySimpleType")
         protected String dim;
@@ -1715,9 +1892,16 @@ public class FeatureType {
     })
     public static class Quality {
 
+        /**
+         *
+         */
         @XmlValue
         @XmlSchemaType(name = "anySimpleType")
         protected double value;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "dim", required = true)
         @XmlSchemaType(name = "anySimpleType")
         protected String dim;
@@ -1800,6 +1984,9 @@ public class FeatureType {
     })
     public static class Subordinate {
 
+        /**
+         *
+         */
         protected List<FeatureType> feature;
 
         /**
@@ -1824,10 +2011,11 @@ public class FeatureType {
          * {@link FeatureType }
          *
          *
+         * @return FeatureType list.
          */
         public List<FeatureType> getFeature() {
             if (feature == null) {
-                feature = new ArrayList<FeatureType>();
+                feature = new ArrayList<>();
             }
             return this.feature;
         }

@@ -32,6 +32,11 @@ public class Utils {
 
     private static final String MZQ_XSD = "mzQuantML_1_0_0.xsd";
 
+    /**
+     * Convert mzq CvParam to mzTab CvParam.
+     * @param qParam CvParam from mzq file.
+     * @return CvParam of mzTab.
+     */
     public static Param convertMztabParam(CvParam qParam) {
         return new uk.ac.ebi.pride.jmztab.model.CVParam(qParam.getCvRef(),
                                                         qParam.getAccession(),
@@ -39,6 +44,11 @@ public class Utils {
                                                         qParam.getValue());
     }
 
+    /**
+     * Validate mzq file.
+     * @param mzqFile mzq file name.
+     * @return true if the mzq file is valid.
+     */
     public static boolean validateMzqFile(String mzqFile) {
         return validate(mzqFile, MZQ_XSD);
     }
@@ -75,6 +85,11 @@ public class Utils {
         return true;
     }
 
+    /**
+     * Calculate the mean of list of double.
+     * @param list list of double.
+     * @return the mean of the list of double.
+     */
     public static double mean(List<Double> list) {
         if (list.isEmpty()) {
             return Double.NaN;
@@ -82,6 +97,11 @@ public class Utils {
         return sum(list) / list.size();
     }
 
+    /**
+     * Calculate the median of list of double.
+     * @param list list of double.
+     * @return the median of the list of double.
+     */
     public static double median(List<Double> list) {
         Collections.sort(list);
         int len = list.size();
@@ -97,6 +117,11 @@ public class Utils {
         }
     }
 
+    /**
+     * Calculate the sum of list of double.
+     * @param list list of double.
+     * @return the sum of the list of double.
+     */
     public static double sum(List<Double> list) {
         double ret = 0;
         for (double d : list) {

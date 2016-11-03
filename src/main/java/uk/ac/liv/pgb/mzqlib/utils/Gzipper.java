@@ -16,6 +16,15 @@ import java.util.zip.GZIPOutputStream;
  */
 public class Gzipper {
 
+    /**
+     * Utility method to extract zip file.
+     *
+     * @param zipped_file zip file.
+     *
+     * @return unzipped file.
+     *
+     * @throws IOException io exceptions.
+     */
     public static File extractFile(File zipped_file)
             throws IOException {
         GZIPInputStream gin = null;
@@ -32,16 +41,25 @@ public class Gzipper {
             while ((len = gin.read(buf)) > 0) {
                 fos.write(buf, 0, len);
             }
-            fos.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Gzipper.class.getName()).
+                    log(Level.SEVERE, null, ex);
         } finally {
             if (gin != null) {
                 gin.close();
             }
+            if (fos != null) {
+                fos.close();
+            }
         }
         return outFile;
-
     }
 
+    /**
+     * Utility method to delete a file.
+     *
+     * @param file file to be deleted.
+     */
     public static void deleteFile(File file) {
         boolean success = file.delete();
         if (!success) {
@@ -54,6 +72,11 @@ public class Gzipper {
 
     }
 
+    /**
+     * Utility method to compress a file.
+     *
+     * @param file file to be compressed.
+     */
     public static void compressFile(File file) {
         try {
 

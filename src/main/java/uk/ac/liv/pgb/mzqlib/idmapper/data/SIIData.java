@@ -171,6 +171,13 @@ public class SIIData implements Comparable<SIIData> {
         return this.rt;
     }
 
+    /**
+     * Overrided compareTo method.
+     *
+     * @param compareSIIData SIIData to be compared
+     *
+     * @return compare result.
+     */
     @Override
     public int compareTo(SIIData compareSIIData) {
         String compareModString = compareSIIData.getPeptideModString();
@@ -202,6 +209,13 @@ public class SIIData implements Comparable<SIIData> {
 
     };
 
+    /**
+     * Overrided equals method.
+     *
+     * @param obj object to be compared.
+     *
+     * @return true if both are equal.
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -229,6 +243,11 @@ public class SIIData implements Comparable<SIIData> {
                 .isEquals();
     }
 
+    /**
+     * Override hashCode calculation method.
+     *
+     * @return hash code.
+     */
     @Override
     public int hashCode() {
         int hash = 59;

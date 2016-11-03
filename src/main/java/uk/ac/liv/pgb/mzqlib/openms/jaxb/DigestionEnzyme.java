@@ -38,16 +38,39 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum DigestionEnzyme {
 
+    /**
+     *
+     */
     @XmlEnumValue("pepsin_a")
     PEPSIN_A("pepsin_a"),
+
+    /**
+     *
+     */
     @XmlEnumValue("chymotrypsin")
     CHYMOTRYPSIN("chymotrypsin"),
+
+    /**
+     *
+     */
     @XmlEnumValue("proteinase_k")
     PROTEINASE_K("proteinase_k"),
+
+    /**
+     *
+     */
     @XmlEnumValue("trypsin")
     TRYPSIN("trypsin"),
+
+    /**
+     *
+     */
     @XmlEnumValue("no_enzyme")
     NO_ENZYME("no_enzyme"),
+
+    /**
+     *
+     */
     @XmlEnumValue("unknown_enzyme")
     UNKNOWN_ENZYME("unknown_enzyme");
     private final String value;
@@ -56,10 +79,22 @@ public enum DigestionEnzyme {
         value = v;
     }
 
+    /**
+     * Get value.
+     *
+     * @return value.
+     */
     public String value() {
         return value;
     }
 
+    /**
+     * Get digestion enzyme from value.
+     *
+     * @param v value
+     *
+     * @return digestion enzyme.
+     */
     public static DigestionEnzyme fromValue(String v) {
         for (DigestionEnzyme c : DigestionEnzyme.values()) {
             if (c.value.equals(v)) {

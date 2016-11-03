@@ -87,6 +87,21 @@ public class MzqMzIdMapperFactory {
         return instance;
     }
 
+    /**
+     * The method builds a MzqMzidMapper instance from an input mzQuantML
+     * unmarshaller and a parameter string.
+     *
+     * @param mzqUm           MzQuantMLUnmarshaller
+     * @param rawToMzidString String contains the relationship between raw file
+     *                        names and corresponding mzIdentML files. The raw file name and mzIdentML
+     *                        file name are separated by semi-column(;) and arranged in alternative
+     *                        manner.
+     *
+     * @return MzqMzIdMapper
+     *
+     * @throws JAXBException jaxb exception
+     * @throws IOException   io exception
+     */
     public MzqMzIdMapper buildMzqMzIdMapper(MzQuantMLUnmarshaller mzqUm,
                                             String rawToMzidString)
             throws JAXBException, IOException {
@@ -157,6 +172,19 @@ public class MzqMzIdMapperFactory {
                                                                      ToleranceUnit.DALTON));
     }
 
+    /**
+     * The method builds a MzqMzidMapper instance from an input mzQuantML
+     * unmarshaller and a parameter map.
+     *
+     * @param mzqUm        MzQuantMLUnmarshaller
+     * @param rawToMzidMap map of raw file to mzIdentML file
+     * @param msTolerance  ms tolerance window
+     *
+     * @return MzqMzIdMapper
+     *
+     * @throws JAXBException jaxb exception
+     * @throws IOException   io exception
+     */
     public MzqMzIdMapper buildMzqMzIdMapper(MzQuantMLUnmarshaller mzqUm,
                                             Map<String, String> rawToMzidMap,
                                             Tolerance msTolerance)

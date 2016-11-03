@@ -40,6 +40,11 @@ public class RootLayoutController {
     @FXML
     private MenuItem closeFile;
 
+    /**
+     * Set main app.
+     *
+     * @param mainApp main app.
+     */
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
@@ -141,11 +146,17 @@ public class RootLayoutController {
         System.exit(0);
     }
 
+    /**
+     * Enable specified menus.
+     */
     public void enableMenus() {
         statistics.setDisable(false);
         closeFile.setDisable(false);
     }
 
+    /**
+     * Disable specified menus.
+     */
     public void disbbleMenus() {
         statistics.setDisable(true);
         closeFile.setDisable(true);

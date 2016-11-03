@@ -40,16 +40,28 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "centroid")
 public class Centroid {
 
+    /**
+     *
+     */
     @XmlAttribute(name = "rt", required = true)
     protected double rt;
+
+    /**
+     *
+     */
     @XmlAttribute(name = "mz", required = true)
     protected double mz;
+
+    /**
+     *
+     */
     @XmlAttribute(name = "it", required = true)
     protected double it;
 
     /**
      * Gets the value of the rt property.
      *
+     * @return rt value.
      */
     public double getRt() {
         return rt;
@@ -58,6 +70,7 @@ public class Centroid {
     /**
      * Sets the value of the rt property.
      *
+     * @param value rt value.
      */
     public void setRt(double value) {
         this.rt = value;
@@ -66,6 +79,7 @@ public class Centroid {
     /**
      * Gets the value of the mz property.
      *
+     * @return mz value.
      */
     public double getMz() {
         return mz;
@@ -74,6 +88,7 @@ public class Centroid {
     /**
      * Sets the value of the mz property.
      *
+     * @param value mz value.
      */
     public void setMz(double value) {
         this.mz = value;
@@ -82,6 +97,7 @@ public class Centroid {
     /**
      * Gets the value of the it property.
      *
+     * @return it value.
      */
     public double getIt() {
         return it;
@@ -90,6 +106,7 @@ public class Centroid {
     /**
      * Sets the value of the it property.
      *
+     * @param value it value.
      */
     public void setIt(double value) {
         this.it = value;

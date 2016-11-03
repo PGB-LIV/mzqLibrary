@@ -47,8 +47,15 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "mapList")
 public class MapList {
 
+    /**
+     *
+     */
     @XmlElement(required = true)
     protected List<Map> map;
+
+    /**
+     *
+     */
     @XmlAttribute(name = "count", required = true)
     @XmlSchemaType(name = "unsignedInt")
     protected long count;
@@ -74,6 +81,7 @@ public class MapList {
      * {@link Map }
      *
      *
+     * @return Map list.
      */
     public List<Map> getMap() {
         if (map == null) {
@@ -85,6 +93,7 @@ public class MapList {
     /**
      * Gets the value of the count property.
      *
+     * @return value of count.
      */
     public long getCount() {
         return count;
@@ -93,6 +102,7 @@ public class MapList {
     /**
      * Sets the value of the count property.
      *
+     * @param value value of count.
      */
     public void setCount(long value) {
         this.count = value;

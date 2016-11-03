@@ -22,6 +22,13 @@ public class Mapper {
     private static Map<String, String> rawToMzidMap;
     private static MzQuantMLUnmarshaller umarsh;
 
+    /**
+     * Main class.
+     *
+     * @param args input arguments.
+     *
+     * @throws IOException I/O exceptions.
+     */
     public static void main(String args[])
             throws IOException {
 

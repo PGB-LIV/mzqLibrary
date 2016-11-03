@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package uk.ac.liv.pgb.mzqlib.utils;
 
@@ -23,6 +19,14 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.UserParam;
  */
 public class MzidToMzqElementConverter {
 
+    /**
+     * Utility method to convert mzIdentML modifications to mzQuantML
+     * modifications.
+     *
+     * @param modifications list of mzIdentML modifications.
+     *
+     * @return list of mzQuantML modifications.
+     */
     public static List<Modification> convertMzidModsToMzqMods(
             List<uk.ac.ebi.jmzidml.model.mzidml.Modification> modifications) {
         List<Modification> mzqMods = new ArrayList();
@@ -46,6 +50,13 @@ public class MzidToMzqElementConverter {
         return mzqMods;
     }
 
+    /**
+     * Utility method to convert mzIdentML CvParam to mzQuantML CvParam.
+     *
+     * @param mzidCp mzIdentML CvParam.
+     *
+     * @return mzQuantML CvParam.
+     */
     public static CvParam convertMzidCvParamToMzqCvParam(
             uk.ac.ebi.jmzidml.model.mzidml.CvParam mzidCp) {
         CvParam mzqCp = new CvParam();
@@ -79,6 +90,14 @@ public class MzidToMzqElementConverter {
         return mzqCp;
     }
 
+    /**
+     *
+     * Utility method to convert mzIdentML UserParam to mzQuantML UserParam.
+     *
+     * @param mzidUp mzIdentML UserParam.
+     *
+     * @return mzQuantML UserParam.
+     */
     public static UserParam convertMzidUserParamToMzqUserParam(
             uk.ac.ebi.jmzidml.model.mzidml.UserParam mzidUp) {
         UserParam mzqUp = new UserParam();
@@ -103,6 +122,13 @@ public class MzidToMzqElementConverter {
         return mzqUp;
     }
 
+    /**
+     * Utility method to convert mzIdentML CV to mzQuantML CV.
+     *
+     * @param mzidCv mzIdentML CV.
+     *
+     * @return mzQuantML CV.
+     */
     public static Cv convertMzidCvToMzqCv(
             uk.ac.ebi.jmzidml.model.mzidml.Cv mzidCv) {
         Cv mzqCv = new Cv();
@@ -126,6 +152,13 @@ public class MzidToMzqElementConverter {
         return mzqCv;
     }
 
+    /**
+     * Utility method to convert mzIdentML FileFormat to mzQuantML FileFormat.
+     *
+     * @param mzidFF mzIdentMl FileFormat.
+     *
+     * @return mzQuantML FileFormat.
+     */
     public static FileFormat convertMzidFileFormatToMzqFileFormat(
             uk.ac.ebi.jmzidml.model.mzidml.FileFormat mzidFF) {
         FileFormat mzqFF = new FileFormat();
@@ -139,6 +172,14 @@ public class MzidToMzqElementConverter {
         return mzqFF;
     }
 
+    /**
+     * Utility method to convert mzIdentML SearchDatabase to mzQuantML
+     * SearchDatabase.
+     *
+     * @param searchDatabase mzIdentML SearchDatabase.
+     *
+     * @return mzQuantML SearchDatabase.
+     */
     public static SearchDatabase convertMzidSDBToMzqSDB(
             uk.ac.ebi.jmzidml.model.mzidml.SearchDatabase searchDatabase) {
         SearchDatabase sDB = new SearchDatabase();

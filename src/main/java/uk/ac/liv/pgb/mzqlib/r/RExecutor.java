@@ -13,17 +13,29 @@ import org.rosuda.JRI.Rengine;
  */
 public class RExecutor {
 
+    /**
+     * Constant.
+     */
     public static final Rengine re = new Rengine(new String[]{"--vanilla"},
                                                  false, null);
     private final String command;
     private final String[] args;
     private StringBuilder error;
 
+    /**
+     * Constructor of RExecutor class.
+     *
+     * @param command command string.
+     * @param args    input argument.
+     */
     public RExecutor(String command, String[] args) {
         this.command = command;
         this.args = Arrays.copyOf(args, args.length);
     }
 
+    /**
+     * Run R scripts.
+     */
     public void run() {
         StringBuilder runString = new StringBuilder();
         runString.append(command);
@@ -40,6 +52,11 @@ public class RExecutor {
         re.eval(runString.toString());
     }
 
+    /**
+     * Get error messages.
+     *
+     * @return errors.
+     */
     public String getError() {
         if (error == null) {
             error = new StringBuilder();

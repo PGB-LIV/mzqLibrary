@@ -35,10 +35,21 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum UserParamType {
 
+    /**
+     *
+     */
     @XmlEnumValue("int")
     INT("int"),
+
+    /**
+     *
+     */
     @XmlEnumValue("float")
     FLOAT("float"),
+
+    /**
+     *
+     */
     @XmlEnumValue("string")
     STRING("string");
     private final String value;
@@ -47,10 +58,22 @@ public enum UserParamType {
         value = v;
     }
 
+    /**
+     * Get UserParam type value.
+     *
+     * @return value.
+     */
     public String value() {
         return value;
     }
 
+    /**
+     * Get UserParam type from value.
+     *
+     * @param v value.
+     *
+     * @return UserParam type.
+     */
     public static UserParamType fromValue(String v) {
         for (UserParamType c : UserParamType.values()) {
             if (c.value.equals(v)) {

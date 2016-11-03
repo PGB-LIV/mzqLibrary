@@ -28,6 +28,8 @@ public class CommandLineGui extends JFrame {
 
     /**
      * Creates new form LibGui
+     *
+     * @throws java.lang.ClassNotFoundException class not found exceptions.
      */
     public CommandLineGui()
             throws ClassNotFoundException {

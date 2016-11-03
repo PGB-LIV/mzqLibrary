@@ -255,17 +255,44 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @XmlRootElement(name = "featureMap")
 public class FeatureMap {
 
+    /**
+     *
+     */
     protected List<FeatureMap.DataProcessing> dataProcessing;
+
+    /**
+     *
+     */
     @XmlElement(name = "IdentificationRun")
     protected List<FeatureMap.IdentificationRun> identificationRun;
+
+    /**
+     *
+     */
     @XmlElement(name = "UnassignedPeptideIdentification")
     protected List<FeatureMap.UnassignedPeptideIdentification> unassignedPeptideIdentification;
+
+    /**
+     *
+     */
     @XmlElement(required = true)
     protected FeatureMap.FeatureList featureList;
+
+    /**
+     *
+     */
     @XmlAttribute(name = "version")
     protected Float version;
+
+    /**
+     *
+     */
     @XmlAttribute(name = "document_id")
     protected String documentId;
+
+    /**
+     *
+     */
     @XmlAttribute(name = "id")
     protected String id;
 
@@ -291,10 +318,11 @@ public class FeatureMap {
      * {@link FeatureMap.DataProcessing }
      *
      *
+     * @return DataProcessing list.
      */
     public List<FeatureMap.DataProcessing> getDataProcessing() {
         if (dataProcessing == null) {
-            dataProcessing = new ArrayList<FeatureMap.DataProcessing>();
+            dataProcessing = new ArrayList<>();
         }
         return this.dataProcessing;
     }
@@ -321,10 +349,11 @@ public class FeatureMap {
      * {@link FeatureMap.IdentificationRun }
      *
      *
+     * @return IdentificationRun list.
      */
     public List<FeatureMap.IdentificationRun> getIdentificationRun() {
         if (identificationRun == null) {
-            identificationRun = new ArrayList<FeatureMap.IdentificationRun>();
+            identificationRun = new ArrayList<>();
         }
         return this.identificationRun;
     }
@@ -351,11 +380,12 @@ public class FeatureMap {
      * {@link FeatureMap.UnassignedPeptideIdentification }
      *
      *
+     * @return UnassignedPeptideIdentification list.
      */
     public List<FeatureMap.UnassignedPeptideIdentification> getUnassignedPeptideIdentification() {
         if (unassignedPeptideIdentification == null) {
             unassignedPeptideIdentification
-                    = new ArrayList<FeatureMap.UnassignedPeptideIdentification>();
+                    = new ArrayList<>();
         }
         return this.unassignedPeptideIdentification;
     }
@@ -513,10 +543,25 @@ public class FeatureMap {
     })
     public static class DataProcessing {
 
+        /**
+         *
+         */
         @XmlElement(required = true)
         protected FeatureMap.DataProcessing.Software software;
+
+        /**
+         *
+         */
         protected List<FeatureMap.DataProcessing.ProcessingAction> processingAction;
+
+        /**
+         *
+         */
         protected List<FeatureMap.DataProcessing.UserParam> userParam;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "completion_time", required = true)
         @XmlSchemaType(name = "dateTime")
         protected XMLGregorianCalendar completionTime;
@@ -567,11 +612,12 @@ public class FeatureMap {
          * {@link FeatureMap.DataProcessing.ProcessingAction }
          *
          *
+         * @return ProcessingAction list.
          */
         public List<FeatureMap.DataProcessing.ProcessingAction> getProcessingAction() {
             if (processingAction == null) {
                 processingAction
-                        = new ArrayList<FeatureMap.DataProcessing.ProcessingAction>();
+                        = new ArrayList<>();
             }
             return this.processingAction;
         }
@@ -598,10 +644,11 @@ public class FeatureMap {
          * {@link FeatureMap.DataProcessing.UserParam }
          *
          *
+         * @return UserParam list.
          */
         public List<FeatureMap.DataProcessing.UserParam> getUserParam() {
             if (userParam == null) {
-                userParam = new ArrayList<FeatureMap.DataProcessing.UserParam>();
+                userParam = new ArrayList<>();
             }
             return this.userParam;
         }
@@ -654,6 +701,9 @@ public class FeatureMap {
         @XmlType(name = "")
         public static class ProcessingAction {
 
+            /**
+             *
+             */
             @XmlAttribute(name = "name", required = true)
             protected String name;
 
@@ -708,8 +758,15 @@ public class FeatureMap {
         @XmlType(name = "")
         public static class Software {
 
+            /**
+             *
+             */
             @XmlAttribute(name = "name", required = true)
             protected String name;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "version", required = true)
             protected String version;
 
@@ -820,7 +877,14 @@ public class FeatureMap {
     })
     public static class FeatureList {
 
+        /**
+         *
+         */
         protected List<FeatureType> feature;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "count", required = true)
         protected BigInteger count;
 
@@ -846,10 +910,11 @@ public class FeatureMap {
          * {@link FeatureType }
          *
          *
+         * @return FeatureType list.
          */
         public List<FeatureType> getFeature() {
             if (feature == null) {
-                feature = new ArrayList<FeatureType>();
+                feature = new ArrayList<>();
             }
             return this.feature;
         }
@@ -997,19 +1062,42 @@ public class FeatureMap {
     })
     public static class IdentificationRun {
 
+        /**
+         *
+         */
         @XmlElement(name = "SearchParameters", required = true)
         protected FeatureMap.IdentificationRun.SearchParameters searchParameters;
+
+        /**
+         *
+         */
         @XmlElement(name = "ProteinIdentification")
         protected FeatureMap.IdentificationRun.ProteinIdentification proteinIdentification;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "id", required = true)
         @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
         @XmlID
         @XmlSchemaType(name = "ID")
         protected String id;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "search_engine", required = true)
         protected String searchEngine;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "search_engine_version", required = true)
         protected String searchEngineVersion;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "date", required = true)
         @XmlSchemaType(name = "dateTime")
         protected XMLGregorianCalendar date;
@@ -1207,13 +1295,32 @@ public class FeatureMap {
         })
         public static class ProteinIdentification {
 
+            /**
+             *
+             */
             @XmlElement(name = "ProteinHit")
             protected List<FeatureMap.IdentificationRun.ProteinIdentification.ProteinHit> proteinHit;
+
+            /**
+             *
+             */
             protected List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> userParam;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "score_type", required = true)
             protected String scoreType;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "higher_score_better", required = true)
             protected boolean higherScoreBetter;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "significance_threshold")
             protected Float significanceThreshold;
 
@@ -1240,11 +1347,12 @@ public class FeatureMap {
              * }
              *
              *
+             * @return ProteinHit list.
              */
             public List<FeatureMap.IdentificationRun.ProteinIdentification.ProteinHit> getProteinHit() {
                 if (proteinHit == null) {
                     proteinHit
-                            = new ArrayList<FeatureMap.IdentificationRun.ProteinIdentification.ProteinHit>();
+                            = new ArrayList<>();
                 }
                 return this.proteinHit;
             }
@@ -1271,11 +1379,12 @@ public class FeatureMap {
              * {@link uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam }
              *
              *
+             * @return UserParam list.
              */
             public List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> getUserParam() {
                 if (userParam == null) {
                     userParam
-                            = new ArrayList<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam>();
+                            = new ArrayList<>();
                 }
                 return this.userParam;
             }
@@ -1307,6 +1416,7 @@ public class FeatureMap {
             /**
              * Gets the value of the higherScoreBetter property.
              *
+             * @return true if higher score is better.
              */
             public boolean isHigherScoreBetter() {
                 return higherScoreBetter;
@@ -1315,6 +1425,7 @@ public class FeatureMap {
             /**
              * Sets the value of the higherScoreBetter property.
              *
+             * @param value value of the higherScoreBetter.
              */
             public void setHigherScoreBetter(boolean value) {
                 this.higherScoreBetter = value;
@@ -1376,16 +1487,35 @@ public class FeatureMap {
             })
             public static class ProteinHit {
 
+                /**
+                 *
+                 */
                 protected List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> userParam;
+
+                /**
+                 *
+                 */
                 @XmlAttribute(name = "id", required = true)
                 @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
                 @XmlID
                 @XmlSchemaType(name = "ID")
                 protected String id;
+
+                /**
+                 *
+                 */
                 @XmlAttribute(name = "accession", required = true)
                 protected String accession;
+
+                /**
+                 *
+                 */
                 @XmlAttribute(name = "score", required = true)
                 protected float score;
+
+                /**
+                 *
+                 */
                 @XmlAttribute(name = "sequence")
                 protected String sequence;
 
@@ -1411,11 +1541,12 @@ public class FeatureMap {
                  * {@link uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam }
                  *
                  *
+                 * @return UserParam list.
                  */
                 public List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> getUserParam() {
                     if (userParam == null) {
                         userParam
-                                = new ArrayList<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam>();
+                                = new ArrayList<>();
                     }
                     return this.userParam;
                 }
@@ -1471,6 +1602,7 @@ public class FeatureMap {
                 /**
                  * Gets the value of the score property.
                  *
+                 * @return score value.
                  */
                 public float getScore() {
                     return score;
@@ -1479,6 +1611,7 @@ public class FeatureMap {
                 /**
                  * Sets the value of the score property.
                  *
+                 * @param value score value.
                  */
                 public void setScore(float value) {
                     this.score = value;
@@ -1587,28 +1720,75 @@ public class FeatureMap {
         })
         public static class SearchParameters {
 
+            /**
+             *
+             */
             @XmlElement(name = "FixedModification")
             protected List<FeatureMap.IdentificationRun.SearchParameters.FixedModification> fixedModification;
+
+            /**
+             *
+             */
             @XmlElement(name = "VariableModification")
             protected List<FeatureMap.IdentificationRun.SearchParameters.VariableModification> variableModification;
+
+            /**
+             *
+             */
             protected List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> userParam;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "db", required = true)
             protected String db;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "db_version", required = true)
             protected String dbVersion;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "taxonomy")
             protected String taxonomy;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "mass_type", required = true)
             protected MassType massType;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "charges", required = true)
             protected String charges;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "enzyme")
             protected DigestionEnzyme enzyme;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "missed_cleavages")
             @XmlSchemaType(name = "unsignedInt")
             protected Long missedCleavages;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "precursor_peak_tolerance", required = true)
             protected float precursorPeakTolerance;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "peak_mass_tolerance", required = true)
             protected float peakMassTolerance;
 
@@ -1635,11 +1815,12 @@ public class FeatureMap {
              * }
              *
              *
+             * @return FixedModification list.
              */
             public List<FeatureMap.IdentificationRun.SearchParameters.FixedModification> getFixedModification() {
                 if (fixedModification == null) {
                     fixedModification
-                            = new ArrayList<FeatureMap.IdentificationRun.SearchParameters.FixedModification>();
+                            = new ArrayList<>();
                 }
                 return this.fixedModification;
             }
@@ -1667,11 +1848,12 @@ public class FeatureMap {
              * }
              *
              *
+             * @return VariableModification list.
              */
             public List<FeatureMap.IdentificationRun.SearchParameters.VariableModification> getVariableModification() {
                 if (variableModification == null) {
                     variableModification
-                            = new ArrayList<FeatureMap.IdentificationRun.SearchParameters.VariableModification>();
+                            = new ArrayList<>();
                 }
                 return this.variableModification;
             }
@@ -1698,11 +1880,12 @@ public class FeatureMap {
              * {@link uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam }
              *
              *
+             * @return UserParam list.
              */
             public List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> getUserParam() {
                 if (userParam == null) {
                     userParam
-                            = new ArrayList<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam>();
+                            = new ArrayList<>();
                 }
                 return this.userParam;
             }
@@ -1878,6 +2061,7 @@ public class FeatureMap {
             /**
              * Gets the value of the precursorPeakTolerance property.
              *
+             * @return PrecursorPeakTolerance value.
              */
             public float getPrecursorPeakTolerance() {
                 return precursorPeakTolerance;
@@ -1886,6 +2070,7 @@ public class FeatureMap {
             /**
              * Sets the value of the precursorPeakTolerance property.
              *
+             * @param value PrecursorPeakTolerance value.
              */
             public void setPrecursorPeakTolerance(float value) {
                 this.precursorPeakTolerance = value;
@@ -1894,6 +2079,7 @@ public class FeatureMap {
             /**
              * Gets the value of the peakMassTolerance property.
              *
+             * @return value of the peakMassTolerance.
              */
             public float getPeakMassTolerance() {
                 return peakMassTolerance;
@@ -1902,6 +2088,7 @@ public class FeatureMap {
             /**
              * Sets the value of the peakMassTolerance property.
              *
+             * @param value value of the peakMassTolerance.
              */
             public void setPeakMassTolerance(float value) {
                 this.peakMassTolerance = value;
@@ -1942,7 +2129,14 @@ public class FeatureMap {
             })
             public static class FixedModification {
 
+                /**
+                 *
+                 */
                 protected List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> userParam;
+
+                /**
+                 *
+                 */
                 @XmlAttribute(name = "name", required = true)
                 protected String name;
 
@@ -1968,11 +2162,12 @@ public class FeatureMap {
                  * {@link uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam }
                  *
                  *
+                 * @return UserParam list.
                  */
                 public List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> getUserParam() {
                     if (userParam == null) {
                         userParam
-                                = new ArrayList<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam>();
+                                = new ArrayList<>();
                     }
                     return this.userParam;
                 }
@@ -2038,7 +2233,14 @@ public class FeatureMap {
             })
             public static class VariableModification {
 
+                /**
+                 *
+                 */
                 protected List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> userParam;
+
+                /**
+                 *
+                 */
                 @XmlAttribute(name = "name", required = true)
                 protected String name;
 
@@ -2064,11 +2266,12 @@ public class FeatureMap {
                  * {@link uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam }
                  *
                  *
+                 * @return UserParam list.
                  */
                 public List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> getUserParam() {
                     if (userParam == null) {
                         userParam
-                                = new ArrayList<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam>();
+                                = new ArrayList<>();
                     }
                     return this.userParam;
                 }
@@ -2170,24 +2373,59 @@ public class FeatureMap {
     })
     public static class UnassignedPeptideIdentification {
 
+        /**
+         *
+         */
         @XmlElement(name = "PeptideHit")
         protected List<FeatureMap.UnassignedPeptideIdentification.PeptideHit> peptideHit;
+
+        /**
+         *
+         */
         protected List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> userParam;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "identification_run_ref", required = true)
         @XmlIDREF
         @XmlSchemaType(name = "IDREF")
         protected Object identificationRunRef;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "score_type", required = true)
         protected String scoreType;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "higher_score_better", required = true)
         protected boolean higherScoreBetter;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "significance_threshold")
         protected Float significanceThreshold;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "spectrum_reference")
         @XmlSchemaType(name = "unsignedInt")
         protected Long spectrumReference;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "RT")
         protected Float rt;
+
+        /**
+         *
+         */
         @XmlAttribute(name = "MZ")
         protected Float mz;
 
@@ -2213,11 +2451,12 @@ public class FeatureMap {
          * {@link FeatureMap.UnassignedPeptideIdentification.PeptideHit }
          *
          *
+         * @return PeptideHit list.
          */
         public List<FeatureMap.UnassignedPeptideIdentification.PeptideHit> getPeptideHit() {
             if (peptideHit == null) {
                 peptideHit
-                        = new ArrayList<FeatureMap.UnassignedPeptideIdentification.PeptideHit>();
+                        = new ArrayList<>();
             }
             return this.peptideHit;
         }
@@ -2244,11 +2483,12 @@ public class FeatureMap {
          * {@link uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam }
          *
          *
+         * @return UserParam list.
          */
         public List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> getUserParam() {
             if (userParam == null) {
                 userParam
-                        = new ArrayList<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam>();
+                        = new ArrayList<>();
             }
             return this.userParam;
         }
@@ -2304,6 +2544,7 @@ public class FeatureMap {
         /**
          * Gets the value of the higherScoreBetter property.
          *
+         * @return true if higher score is better.
          */
         public boolean isHigherScoreBetter() {
             return higherScoreBetter;
@@ -2312,6 +2553,7 @@ public class FeatureMap {
         /**
          * Sets the value of the higherScoreBetter property.
          *
+         * @param value value of the higherScoreBetter.
          */
         public void setHigherScoreBetter(boolean value) {
             this.higherScoreBetter = value;
@@ -2461,17 +2703,44 @@ public class FeatureMap {
         })
         public static class PeptideHit {
 
+            /**
+             *
+             */
             protected List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> userParam;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "sequence", required = true)
             protected String sequence;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "charge", required = true)
             protected BigInteger charge;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "score", required = true)
             protected float score;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "aa_before")
             protected String aaBefore;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "aa_after")
             protected String aaAfter;
+
+            /**
+             *
+             */
             @XmlAttribute(name = "protein_refs")
             @XmlIDREF
             @XmlSchemaType(name = "IDREFS")
@@ -2499,11 +2768,12 @@ public class FeatureMap {
              * {@link uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam }
              *
              *
+             * @return UserParam list.
              */
             public List<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam> getUserParam() {
                 if (userParam == null) {
                     userParam
-                            = new ArrayList<uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam>();
+                            = new ArrayList<>();
                 }
                 return this.userParam;
             }
@@ -2559,6 +2829,7 @@ public class FeatureMap {
             /**
              * Gets the value of the score property.
              *
+             * @return score value.
              */
             public float getScore() {
                 return score;
@@ -2567,6 +2838,7 @@ public class FeatureMap {
             /**
              * Sets the value of the score property.
              *
+             * @param value score value.
              */
             public void setScore(float value) {
                 this.score = value;
@@ -2642,10 +2914,11 @@ public class FeatureMap {
              * {@link Object }
              *
              *
+             * @return ProteinRef list.
              */
             public List<Object> getProteinRefs() {
                 if (proteinRefs == null) {
-                    proteinRefs = new ArrayList<Object>();
+                    proteinRefs = new ArrayList<>();
                 }
                 return this.proteinRefs;
             }

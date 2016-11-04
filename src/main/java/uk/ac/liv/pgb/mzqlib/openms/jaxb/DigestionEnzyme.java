@@ -19,18 +19,17 @@ import javax.xml.bind.annotation.XmlType;
  * The following schema fragment specifies the expected content contained within
  * this class.
  * <p>
- * <
- * pre>
- * &lt;simpleType name="DigestionEnzyme">
- * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- * &lt;enumeration value="pepsin_a"/>
- * &lt;enumeration value="chymotrypsin"/>
- * &lt;enumeration value="proteinase_k"/>
- * &lt;enumeration value="trypsin"/>
- * &lt;enumeration value="no_enzyme"/>
- * &lt;enumeration value="unknown_enzyme"/>
- * &lt;/restriction>
- * &lt;/simpleType>
+ * <pre>
+ * &lt;simpleType name="DigestionEnzyme"&gt;
+ * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ * &lt;enumeration value="pepsin_a"/&gt;
+ * &lt;enumeration value="chymotrypsin"/&gt;
+ * &lt;enumeration value="proteinase_k"/&gt;
+ * &lt;enumeration value="trypsin"/&gt;
+ * &lt;enumeration value="no_enzyme"/&gt;
+ * &lt;enumeration value="unknown_enzyme"/&gt;
+ * &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  *
  */

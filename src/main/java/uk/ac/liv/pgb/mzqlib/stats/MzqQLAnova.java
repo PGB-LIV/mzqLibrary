@@ -34,8 +34,7 @@ import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
 /**
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 23-Oct-2014 11:32:27
+ * @since 23-Oct-2014 11:32:27
  */
 public class MzqQLAnova {
 
@@ -146,10 +145,11 @@ public class MzqQLAnova {
     }
 
     /**
+     * Write mzQuantML file.
      *
-     * @param outputFileName
+     * @param outputFileName output file name.
      *
-     * @throws JAXBException
+     * @throws JAXBException jaxb exceptions.
      */
     public void writeMzQuantMLFile(String outputFileName)
             throws JAXBException {
@@ -301,7 +301,7 @@ public class MzqQLAnova {
      *
      * @return GlobalQuantLayer for the anova p-value result
      *
-     * @throws JAXBException
+     * @throws JAXBException jaxb exceptions.
      */
     public GlobalQuantLayer getAnovaGlobalQuantLayer()
             throws JAXBException {
@@ -340,7 +340,7 @@ public class MzqQLAnova {
      * @return map of object reference from each row to the calculated p-value
      *         (doulbe)
      *
-     * @throws JAXBException
+     * @throws JAXBException jaxb exceptions.
      */
     public TObjectDoubleMap<String> getAnovaPValueMap()
             throws JAXBException {

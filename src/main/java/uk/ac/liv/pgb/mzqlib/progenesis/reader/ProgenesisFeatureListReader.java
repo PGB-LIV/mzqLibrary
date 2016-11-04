@@ -98,7 +98,7 @@ public class ProgenesisFeatureListReader implements Closeable {
      * @param rd        input Reader
      * @param separator separator of input file
      *
-     * @throws IOException
+     * @throws IOException io exceptions.
      */
     public ProgenesisFeatureListReader(Reader rd, char separator)
             throws IOException {

@@ -596,42 +596,42 @@ public class ConsensusXML {
      * within this class.
      *
      * <pre>
-     * &lt;complexType>
-     *   &lt;complexContent>
-     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *       &lt;sequence>
-     *         &lt;element name="software">
-     *           &lt;complexType>
-     *             &lt;complexContent>
-     *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *                 &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-     *                 &lt;attribute name="version" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-     *               &lt;/restriction>
-     *             &lt;/complexContent>
-     *           &lt;/complexType>
-     *         &lt;/element>
-     *         &lt;element name="processingAction" maxOccurs="unbounded" minOccurs="0">
-     *           &lt;complexType>
-     *             &lt;complexContent>
-     *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *                 &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-     *               &lt;/restriction>
-     *             &lt;/complexContent>
-     *           &lt;/complexType>
-     *         &lt;/element>
-     *         &lt;element name="userParam" maxOccurs="unbounded" minOccurs="0">
-     *           &lt;complexType>
-     *             &lt;complexContent>
-     *               &lt;extension base="{}userParam">
-     *               &lt;/extension>
-     *             &lt;/complexContent>
-     *           &lt;/complexType>
-     *         &lt;/element>
-     *       &lt;/sequence>
-     *       &lt;attribute name="completion_time" use="required" type="{http://www.w3.org/2001/XMLSchema}dateTime" />
-     *     &lt;/restriction>
-     *   &lt;/complexContent>
-     * &lt;/complexType>
+     * &lt;complexType&gt;
+     *   &lt;complexContent&gt;
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+     *       &lt;sequence&gt;
+     *         &lt;element name="software"&gt;
+     *           &lt;complexType&gt;
+     *             &lt;complexContent&gt;
+     *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+     *                 &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+     *                 &lt;attribute name="version" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+     *               &lt;/restriction&gt;
+     *             &lt;/complexContent&gt;
+     *           &lt;/complexType&gt;
+     *         &lt;/element&gt;
+     *         &lt;element name="processingAction" maxOccurs="unbounded" minOccurs="0"&gt;
+     *           &lt;complexType&gt;
+     *             &lt;complexContent&gt;
+     *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+     *                 &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+     *               &lt;/restriction&gt;
+     *             &lt;/complexContent&gt;
+     *           &lt;/complexType&gt;
+     *         &lt;/element&gt;
+     *         &lt;element name="userParam" maxOccurs="unbounded" minOccurs="0"&gt;
+     *           &lt;complexType&gt;
+     *             &lt;complexContent&gt;
+     *               &lt;extension base="{}userParam"&gt;
+     *               &lt;/extension&gt;
+     *             &lt;/complexContent&gt;
+     *           &lt;/complexType&gt;
+     *         &lt;/element&gt;
+     *       &lt;/sequence&gt;
+     *       &lt;attribute name="completion_time" use="required" type="{http://www.w3.org/2001/XMLSchema}dateTime" /&gt;
+     *     &lt;/restriction&gt;
+     *   &lt;/complexContent&gt;
+     * &lt;/complexType&gt;
      * </pre>
      *
      *
@@ -786,13 +786,13 @@ public class ConsensusXML {
          * contained within this class.
          *
          * <pre>
-         * &lt;complexType>
-         *   &lt;complexContent>
-         *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-         *       &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-         *     &lt;/restriction>
-         *   &lt;/complexContent>
-         * &lt;/complexType>
+         * &lt;complexType&gt;
+         *   &lt;complexContent&gt;
+         *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+         *       &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+         *     &lt;/restriction&gt;
+         *   &lt;/complexContent&gt;
+         * &lt;/complexType&gt;
          * </pre>
          *
          *
@@ -842,14 +842,14 @@ public class ConsensusXML {
          * contained within this class.
          *
          * <pre>
-         * &lt;complexType>
-         *   &lt;complexContent>
-         *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-         *       &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-         *       &lt;attribute name="version" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-         *     &lt;/restriction>
-         *   &lt;/complexContent>
-         * &lt;/complexType>
+         * &lt;complexType&gt;
+         *   &lt;complexContent&gt;
+         *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+         *       &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+         *       &lt;attribute name="version" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+         *     &lt;/restriction&gt;
+         *   &lt;/complexContent&gt;
+         * &lt;/complexType&gt;
          * </pre>
          *
          *
@@ -929,12 +929,12 @@ public class ConsensusXML {
          * contained within this class.
          *
          * <pre>
-         * &lt;complexType>
-         *   &lt;complexContent>
-         *     &lt;extension base="{}userParam">
-         *     &lt;/extension>
-         *   &lt;/complexContent>
-         * &lt;/complexType>
+         * &lt;complexType&gt;
+         *   &lt;complexContent&gt;
+         *     &lt;extension base="{}userParam"&gt;
+         *     &lt;/extension&gt;
+         *   &lt;/complexContent&gt;
+         * &lt;/complexType&gt;
          * </pre>
          *
          *
@@ -957,103 +957,103 @@ public class ConsensusXML {
      * within this class.
      *
      * <pre>
-     * &lt;complexType>
-     *   &lt;complexContent>
-     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *       &lt;sequence>
-     *         &lt;element name="SearchParameters">
-     *           &lt;complexType>
-     *             &lt;complexContent>
-     *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *                 &lt;sequence>
-     *                   &lt;element name="FixedModification" maxOccurs="unbounded" minOccurs="0">
-     *                     &lt;complexType>
-     *                       &lt;complexContent>
-     *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *                           &lt;sequence minOccurs="0">
-     *                             &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/>
-     *                           &lt;/sequence>
-     *                           &lt;attribute name="name" use="required">
-     *                             &lt;simpleType>
-     *                               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-     *                                 &lt;minLength value="1"/>
-     *                               &lt;/restriction>
-     *                             &lt;/simpleType>
-     *                           &lt;/attribute>
-     *                         &lt;/restriction>
-     *                       &lt;/complexContent>
-     *                     &lt;/complexType>
-     *                   &lt;/element>
-     *                   &lt;element name="VariableModification" maxOccurs="unbounded" minOccurs="0">
-     *                     &lt;complexType>
-     *                       &lt;complexContent>
-     *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *                           &lt;sequence minOccurs="0">
-     *                             &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/>
-     *                           &lt;/sequence>
-     *                           &lt;attribute name="name" use="required">
-     *                             &lt;simpleType>
-     *                               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-     *                                 &lt;minLength value="1"/>
-     *                               &lt;/restriction>
-     *                             &lt;/simpleType>
-     *                           &lt;/attribute>
-     *                         &lt;/restriction>
-     *                       &lt;/complexContent>
-     *                     &lt;/complexType>
-     *                   &lt;/element>
-     *                   &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/>
-     *                 &lt;/sequence>
-     *                 &lt;attribute name="db" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-     *                 &lt;attribute name="db_version" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-     *                 &lt;attribute name="taxonomy" type="{http://www.w3.org/2001/XMLSchema}string" />
-     *                 &lt;attribute name="mass_type" use="required" type="{}MassType" />
-     *                 &lt;attribute name="charges" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-     *                 &lt;attribute name="enzyme" type="{}DigestionEnzyme" />
-     *                 &lt;attribute name="missed_cleavages" type="{http://www.w3.org/2001/XMLSchema}unsignedInt" />
-     *                 &lt;attribute name="precursor_peak_tolerance" use="required" type="{http://www.w3.org/2001/XMLSchema}float" />
-     *                 &lt;attribute name="peak_mass_tolerance" use="required" type="{http://www.w3.org/2001/XMLSchema}float" />
-     *               &lt;/restriction>
-     *             &lt;/complexContent>
-     *           &lt;/complexType>
-     *         &lt;/element>
-     *         &lt;element name="ProteinIdentification" minOccurs="0">
-     *           &lt;complexType>
-     *             &lt;complexContent>
-     *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *                 &lt;sequence>
-     *                   &lt;element name="ProteinHit" maxOccurs="unbounded" minOccurs="0">
-     *                     &lt;complexType>
-     *                       &lt;complexContent>
-     *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *                           &lt;sequence minOccurs="0">
-     *                             &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/>
-     *                           &lt;/sequence>
-     *                           &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}ID" />
-     *                           &lt;attribute name="accession" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-     *                           &lt;attribute name="score" use="required" type="{http://www.w3.org/2001/XMLSchema}float" />
-     *                           &lt;attribute name="sequence" type="{http://www.w3.org/2001/XMLSchema}string" />
-     *                         &lt;/restriction>
-     *                       &lt;/complexContent>
-     *                     &lt;/complexType>
-     *                   &lt;/element>
-     *                   &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/>
-     *                 &lt;/sequence>
-     *                 &lt;attribute name="score_type" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-     *                 &lt;attribute name="higher_score_better" use="required" type="{http://www.w3.org/2001/XMLSchema}boolean" />
-     *                 &lt;attribute name="significance_threshold" type="{http://www.w3.org/2001/XMLSchema}float" />
-     *               &lt;/restriction>
-     *             &lt;/complexContent>
-     *           &lt;/complexType>
-     *         &lt;/element>
-     *       &lt;/sequence>
-     *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}ID" />
-     *       &lt;attribute name="search_engine" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-     *       &lt;attribute name="search_engine_version" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-     *       &lt;attribute name="date" use="required" type="{http://www.w3.org/2001/XMLSchema}dateTime" />
-     *     &lt;/restriction>
-     *   &lt;/complexContent>
-     * &lt;/complexType>
+     * &lt;complexType&gt;
+     *   &lt;complexContent&gt;
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+     *       &lt;sequence&gt;
+     *         &lt;element name="SearchParameters"&gt;
+     *           &lt;complexType&gt;
+     *             &lt;complexContent&gt;
+     *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+     *                 &lt;sequence&gt;
+     *                   &lt;element name="FixedModification" maxOccurs="unbounded" minOccurs="0"&gt;
+     *                     &lt;complexType&gt;
+     *                       &lt;complexContent&gt;
+     *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+     *                           &lt;sequence minOccurs="0"&gt;
+     *                             &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/&gt;
+     *                           &lt;/sequence&gt;
+     *                           &lt;attribute name="name" use="required"&gt;
+     *                             &lt;simpleType&gt;
+     *                               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+     *                                 &lt;minLength value="1"/&gt;
+     *                               &lt;/restriction&gt;
+     *                             &lt;/simpleType&gt;
+     *                           &lt;/attribute&gt;
+     *                         &lt;/restriction&gt;
+     *                       &lt;/complexContent&gt;
+     *                     &lt;/complexType&gt;
+     *                   &lt;/element&gt;
+     *                   &lt;element name="VariableModification" maxOccurs="unbounded" minOccurs="0"&gt;
+     *                     &lt;complexType&gt;
+     *                       &lt;complexContent&gt;
+     *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+     *                           &lt;sequence minOccurs="0"&gt;
+     *                             &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/&gt;
+     *                           &lt;/sequence&gt;
+     *                           &lt;attribute name="name" use="required"&gt;
+     *                             &lt;simpleType&gt;
+     *                               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+     *                                 &lt;minLength value="1"/&gt;
+     *                               &lt;/restriction&gt;
+     *                             &lt;/simpleType&gt;
+     *                           &lt;/attribute&gt;
+     *                         &lt;/restriction&gt;
+     *                       &lt;/complexContent&gt;
+     *                     &lt;/complexType&gt;
+     *                   &lt;/element&gt;
+     *                   &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/&gt;
+     *                 &lt;/sequence&gt;
+     *                 &lt;attribute name="db" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+     *                 &lt;attribute name="db_version" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+     *                 &lt;attribute name="taxonomy" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+     *                 &lt;attribute name="mass_type" use="required" type="{}MassType" /&gt;
+     *                 &lt;attribute name="charges" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+     *                 &lt;attribute name="enzyme" type="{}DigestionEnzyme" /&gt;
+     *                 &lt;attribute name="missed_cleavages" type="{http://www.w3.org/2001/XMLSchema}unsignedInt" /&gt;
+     *                 &lt;attribute name="precursor_peak_tolerance" use="required" type="{http://www.w3.org/2001/XMLSchema}float" /&gt;
+     *                 &lt;attribute name="peak_mass_tolerance" use="required" type="{http://www.w3.org/2001/XMLSchema}float" /&gt;
+     *               &lt;/restriction&gt;
+     *             &lt;/complexContent&gt;
+     *           &lt;/complexType&gt;
+     *         &lt;/element&gt;
+     *         &lt;element name="ProteinIdentification" minOccurs="0"&gt;
+     *           &lt;complexType&gt;
+     *             &lt;complexContent&gt;
+     *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+     *                 &lt;sequence&gt;
+     *                   &lt;element name="ProteinHit" maxOccurs="unbounded" minOccurs="0"&gt;
+     *                     &lt;complexType&gt;
+     *                       &lt;complexContent&gt;
+     *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+     *                           &lt;sequence minOccurs="0"&gt;
+     *                             &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/&gt;
+     *                           &lt;/sequence&gt;
+     *                           &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}ID" /&gt;
+     *                           &lt;attribute name="accession" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+     *                           &lt;attribute name="score" use="required" type="{http://www.w3.org/2001/XMLSchema}float" /&gt;
+     *                           &lt;attribute name="sequence" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+     *                         &lt;/restriction&gt;
+     *                       &lt;/complexContent&gt;
+     *                     &lt;/complexType&gt;
+     *                   &lt;/element&gt;
+     *                   &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/&gt;
+     *                 &lt;/sequence&gt;
+     *                 &lt;attribute name="score_type" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+     *                 &lt;attribute name="higher_score_better" use="required" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+     *                 &lt;attribute name="significance_threshold" type="{http://www.w3.org/2001/XMLSchema}float" /&gt;
+     *               &lt;/restriction&gt;
+     *             &lt;/complexContent&gt;
+     *           &lt;/complexType&gt;
+     *         &lt;/element&gt;
+     *       &lt;/sequence&gt;
+     *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}ID" /&gt;
+     *       &lt;attribute name="search_engine" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+     *       &lt;attribute name="search_engine_version" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+     *       &lt;attribute name="date" use="required" type="{http://www.w3.org/2001/XMLSchema}dateTime" /&gt;
+     *     &lt;/restriction&gt;
+     *   &lt;/complexContent&gt;
+     * &lt;/complexType&gt;
      * </pre>
      *
      *
@@ -1260,33 +1260,33 @@ public class ConsensusXML {
          * contained within this class.
          *
          * <pre>
-         * &lt;complexType>
-         *   &lt;complexContent>
-         *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-         *       &lt;sequence>
-         *         &lt;element name="ProteinHit" maxOccurs="unbounded" minOccurs="0">
-         *           &lt;complexType>
-         *             &lt;complexContent>
-         *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-         *                 &lt;sequence minOccurs="0">
-         *                   &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/>
-         *                 &lt;/sequence>
-         *                 &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}ID" />
-         *                 &lt;attribute name="accession" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-         *                 &lt;attribute name="score" use="required" type="{http://www.w3.org/2001/XMLSchema}float" />
-         *                 &lt;attribute name="sequence" type="{http://www.w3.org/2001/XMLSchema}string" />
-         *               &lt;/restriction>
-         *             &lt;/complexContent>
-         *           &lt;/complexType>
-         *         &lt;/element>
-         *         &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/>
-         *       &lt;/sequence>
-         *       &lt;attribute name="score_type" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-         *       &lt;attribute name="higher_score_better" use="required" type="{http://www.w3.org/2001/XMLSchema}boolean" />
-         *       &lt;attribute name="significance_threshold" type="{http://www.w3.org/2001/XMLSchema}float" />
-         *     &lt;/restriction>
-         *   &lt;/complexContent>
-         * &lt;/complexType>
+         * &lt;complexType&gt;
+         *   &lt;complexContent&gt;
+         *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+         *       &lt;sequence&gt;
+         *         &lt;element name="ProteinHit" maxOccurs="unbounded" minOccurs="0"&gt;
+         *           &lt;complexType&gt;
+         *             &lt;complexContent&gt;
+         *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+         *                 &lt;sequence minOccurs="0"&gt;
+         *                   &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/&gt;
+         *                 &lt;/sequence&gt;
+         *                 &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}ID" /&gt;
+         *                 &lt;attribute name="accession" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+         *                 &lt;attribute name="score" use="required" type="{http://www.w3.org/2001/XMLSchema}float" /&gt;
+         *                 &lt;attribute name="sequence" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+         *               &lt;/restriction&gt;
+         *             &lt;/complexContent&gt;
+         *           &lt;/complexType&gt;
+         *         &lt;/element&gt;
+         *         &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/&gt;
+         *       &lt;/sequence&gt;
+         *       &lt;attribute name="score_type" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+         *       &lt;attribute name="higher_score_better" use="required" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+         *       &lt;attribute name="significance_threshold" type="{http://www.w3.org/2001/XMLSchema}float" /&gt;
+         *     &lt;/restriction&gt;
+         *   &lt;/complexContent&gt;
+         * &lt;/complexType&gt;
          * </pre>
          *
          *
@@ -1465,19 +1465,19 @@ public class ConsensusXML {
              * contained within this class.
              *
              * <pre>
-             * &lt;complexType>
-             *   &lt;complexContent>
-             *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-             *       &lt;sequence minOccurs="0">
-             *         &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/>
-             *       &lt;/sequence>
-             *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}ID" />
-             *       &lt;attribute name="accession" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-             *       &lt;attribute name="score" use="required" type="{http://www.w3.org/2001/XMLSchema}float" />
-             *       &lt;attribute name="sequence" type="{http://www.w3.org/2001/XMLSchema}string" />
-             *     &lt;/restriction>
-             *   &lt;/complexContent>
-             * &lt;/complexType>
+             * &lt;complexType&gt;
+             *   &lt;complexContent&gt;
+             *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+             *       &lt;sequence minOccurs="0"&gt;
+             *         &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/&gt;
+             *       &lt;/sequence&gt;
+             *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}ID" /&gt;
+             *       &lt;attribute name="accession" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+             *       &lt;attribute name="score" use="required" type="{http://www.w3.org/2001/XMLSchema}float" /&gt;
+             *       &lt;attribute name="sequence" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+             *     &lt;/restriction&gt;
+             *   &lt;/complexContent&gt;
+             * &lt;/complexType&gt;
              * </pre>
              *
              *
@@ -1655,60 +1655,60 @@ public class ConsensusXML {
          * contained within this class.
          *
          * <pre>
-         * &lt;complexType>
-         *   &lt;complexContent>
-         *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-         *       &lt;sequence>
-         *         &lt;element name="FixedModification" maxOccurs="unbounded" minOccurs="0">
-         *           &lt;complexType>
-         *             &lt;complexContent>
-         *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-         *                 &lt;sequence minOccurs="0">
-         *                   &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/>
-         *                 &lt;/sequence>
-         *                 &lt;attribute name="name" use="required">
-         *                   &lt;simpleType>
-         *                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-         *                       &lt;minLength value="1"/>
-         *                     &lt;/restriction>
-         *                   &lt;/simpleType>
-         *                 &lt;/attribute>
-         *               &lt;/restriction>
-         *             &lt;/complexContent>
-         *           &lt;/complexType>
-         *         &lt;/element>
-         *         &lt;element name="VariableModification" maxOccurs="unbounded" minOccurs="0">
-         *           &lt;complexType>
-         *             &lt;complexContent>
-         *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-         *                 &lt;sequence minOccurs="0">
-         *                   &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/>
-         *                 &lt;/sequence>
-         *                 &lt;attribute name="name" use="required">
-         *                   &lt;simpleType>
-         *                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-         *                       &lt;minLength value="1"/>
-         *                     &lt;/restriction>
-         *                   &lt;/simpleType>
-         *                 &lt;/attribute>
-         *               &lt;/restriction>
-         *             &lt;/complexContent>
-         *           &lt;/complexType>
-         *         &lt;/element>
-         *         &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/>
-         *       &lt;/sequence>
-         *       &lt;attribute name="db" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-         *       &lt;attribute name="db_version" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-         *       &lt;attribute name="taxonomy" type="{http://www.w3.org/2001/XMLSchema}string" />
-         *       &lt;attribute name="mass_type" use="required" type="{}MassType" />
-         *       &lt;attribute name="charges" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-         *       &lt;attribute name="enzyme" type="{}DigestionEnzyme" />
-         *       &lt;attribute name="missed_cleavages" type="{http://www.w3.org/2001/XMLSchema}unsignedInt" />
-         *       &lt;attribute name="precursor_peak_tolerance" use="required" type="{http://www.w3.org/2001/XMLSchema}float" />
-         *       &lt;attribute name="peak_mass_tolerance" use="required" type="{http://www.w3.org/2001/XMLSchema}float" />
-         *     &lt;/restriction>
-         *   &lt;/complexContent>
-         * &lt;/complexType>
+         * &lt;complexType&gt;
+         *   &lt;complexContent&gt;
+         *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+         *       &lt;sequence&gt;
+         *         &lt;element name="FixedModification" maxOccurs="unbounded" minOccurs="0"&gt;
+         *           &lt;complexType&gt;
+         *             &lt;complexContent&gt;
+         *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+         *                 &lt;sequence minOccurs="0"&gt;
+         *                   &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/&gt;
+         *                 &lt;/sequence&gt;
+         *                 &lt;attribute name="name" use="required"&gt;
+         *                   &lt;simpleType&gt;
+         *                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+         *                       &lt;minLength value="1"/&gt;
+         *                     &lt;/restriction&gt;
+         *                   &lt;/simpleType&gt;
+         *                 &lt;/attribute&gt;
+         *               &lt;/restriction&gt;
+         *             &lt;/complexContent&gt;
+         *           &lt;/complexType&gt;
+         *         &lt;/element&gt;
+         *         &lt;element name="VariableModification" maxOccurs="unbounded" minOccurs="0"&gt;
+         *           &lt;complexType&gt;
+         *             &lt;complexContent&gt;
+         *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+         *                 &lt;sequence minOccurs="0"&gt;
+         *                   &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/&gt;
+         *                 &lt;/sequence&gt;
+         *                 &lt;attribute name="name" use="required"&gt;
+         *                   &lt;simpleType&gt;
+         *                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+         *                       &lt;minLength value="1"/&gt;
+         *                     &lt;/restriction&gt;
+         *                   &lt;/simpleType&gt;
+         *                 &lt;/attribute&gt;
+         *               &lt;/restriction&gt;
+         *             &lt;/complexContent&gt;
+         *           &lt;/complexType&gt;
+         *         &lt;/element&gt;
+         *         &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/&gt;
+         *       &lt;/sequence&gt;
+         *       &lt;attribute name="db" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+         *       &lt;attribute name="db_version" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+         *       &lt;attribute name="taxonomy" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+         *       &lt;attribute name="mass_type" use="required" type="{}MassType" /&gt;
+         *       &lt;attribute name="charges" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+         *       &lt;attribute name="enzyme" type="{}DigestionEnzyme" /&gt;
+         *       &lt;attribute name="missed_cleavages" type="{http://www.w3.org/2001/XMLSchema}unsignedInt" /&gt;
+         *       &lt;attribute name="precursor_peak_tolerance" use="required" type="{http://www.w3.org/2001/XMLSchema}float" /&gt;
+         *       &lt;attribute name="peak_mass_tolerance" use="required" type="{http://www.w3.org/2001/XMLSchema}float" /&gt;
+         *     &lt;/restriction&gt;
+         *   &lt;/complexContent&gt;
+         * &lt;/complexType&gt;
          * </pre>
          *
          *
@@ -2101,22 +2101,22 @@ public class ConsensusXML {
              * contained within this class.
              *
              * <pre>
-             * &lt;complexType>
-             *   &lt;complexContent>
-             *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-             *       &lt;sequence minOccurs="0">
-             *         &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/>
-             *       &lt;/sequence>
-             *       &lt;attribute name="name" use="required">
-             *         &lt;simpleType>
-             *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-             *             &lt;minLength value="1"/>
-             *           &lt;/restriction>
-             *         &lt;/simpleType>
-             *       &lt;/attribute>
-             *     &lt;/restriction>
-             *   &lt;/complexContent>
-             * &lt;/complexType>
+             * &lt;complexType&gt;
+             *   &lt;complexContent&gt;
+             *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+             *       &lt;sequence minOccurs="0"&gt;
+             *         &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/&gt;
+             *       &lt;/sequence&gt;
+             *       &lt;attribute name="name" use="required"&gt;
+             *         &lt;simpleType&gt;
+             *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+             *             &lt;minLength value="1"/&gt;
+             *           &lt;/restriction&gt;
+             *         &lt;/simpleType&gt;
+             *       &lt;/attribute&gt;
+             *     &lt;/restriction&gt;
+             *   &lt;/complexContent&gt;
+             * &lt;/complexType&gt;
              * </pre>
              *
              *
@@ -2205,22 +2205,22 @@ public class ConsensusXML {
              * contained within this class.
              *
              * <pre>
-             * &lt;complexType>
-             *   &lt;complexContent>
-             *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-             *       &lt;sequence minOccurs="0">
-             *         &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/>
-             *       &lt;/sequence>
-             *       &lt;attribute name="name" use="required">
-             *         &lt;simpleType>
-             *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-             *             &lt;minLength value="1"/>
-             *           &lt;/restriction>
-             *         &lt;/simpleType>
-             *       &lt;/attribute>
-             *     &lt;/restriction>
-             *   &lt;/complexContent>
-             * &lt;/complexType>
+             * &lt;complexType&gt;
+             *   &lt;complexContent&gt;
+             *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+             *       &lt;sequence minOccurs="0"&gt;
+             *         &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/&gt;
+             *       &lt;/sequence&gt;
+             *       &lt;attribute name="name" use="required"&gt;
+             *         &lt;simpleType&gt;
+             *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+             *             &lt;minLength value="1"/&gt;
+             *           &lt;/restriction&gt;
+             *         &lt;/simpleType&gt;
+             *       &lt;/attribute&gt;
+             *     &lt;/restriction&gt;
+             *   &lt;/complexContent&gt;
+             * &lt;/complexType&gt;
              * </pre>
              *
              *
@@ -2313,53 +2313,53 @@ public class ConsensusXML {
      * within this class.
      *
      * <pre>
-     * &lt;complexType>
-     *   &lt;complexContent>
-     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *       &lt;sequence>
-     *         &lt;element name="PeptideHit" maxOccurs="unbounded" minOccurs="0">
-     *           &lt;complexType>
-     *             &lt;complexContent>
-     *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *                 &lt;sequence minOccurs="0">
-     *                   &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/>
-     *                 &lt;/sequence>
-     *                 &lt;attribute name="sequence" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-     *                 &lt;attribute name="charge" use="required" type="{http://www.w3.org/2001/XMLSchema}integer" />
-     *                 &lt;attribute name="score" use="required" type="{http://www.w3.org/2001/XMLSchema}float" />
-     *                 &lt;attribute name="aa_before">
-     *                   &lt;simpleType>
-     *                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-     *                       &lt;minLength value="0"/>
-     *                       &lt;maxLength value="1"/>
-     *                     &lt;/restriction>
-     *                   &lt;/simpleType>
-     *                 &lt;/attribute>
-     *                 &lt;attribute name="aa_after">
-     *                   &lt;simpleType>
-     *                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-     *                       &lt;minLength value="0"/>
-     *                       &lt;maxLength value="1"/>
-     *                     &lt;/restriction>
-     *                   &lt;/simpleType>
-     *                 &lt;/attribute>
-     *                 &lt;attribute name="protein_refs" type="{http://www.w3.org/2001/XMLSchema}IDREFS" />
-     *               &lt;/restriction>
-     *             &lt;/complexContent>
-     *           &lt;/complexType>
-     *         &lt;/element>
-     *         &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/>
-     *       &lt;/sequence>
-     *       &lt;attribute name="identification_run_ref" use="required" type="{http://www.w3.org/2001/XMLSchema}IDREF" />
-     *       &lt;attribute name="score_type" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-     *       &lt;attribute name="higher_score_better" use="required" type="{http://www.w3.org/2001/XMLSchema}boolean" />
-     *       &lt;attribute name="significance_threshold" type="{http://www.w3.org/2001/XMLSchema}float" />
-     *       &lt;attribute name="spectrum_reference" type="{http://www.w3.org/2001/XMLSchema}unsignedInt" />
-     *       &lt;attribute name="RT" type="{http://www.w3.org/2001/XMLSchema}float" />
-     *       &lt;attribute name="MZ" type="{http://www.w3.org/2001/XMLSchema}float" />
-     *     &lt;/restriction>
-     *   &lt;/complexContent>
-     * &lt;/complexType>
+     * &lt;complexType&gt;
+     *   &lt;complexContent&gt;
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+     *       &lt;sequence&gt;
+     *         &lt;element name="PeptideHit" maxOccurs="unbounded" minOccurs="0"&gt;
+     *           &lt;complexType&gt;
+     *             &lt;complexContent&gt;
+     *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+     *                 &lt;sequence minOccurs="0"&gt;
+     *                   &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/&gt;
+     *                 &lt;/sequence&gt;
+     *                 &lt;attribute name="sequence" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+     *                 &lt;attribute name="charge" use="required" type="{http://www.w3.org/2001/XMLSchema}integer" /&gt;
+     *                 &lt;attribute name="score" use="required" type="{http://www.w3.org/2001/XMLSchema}float" /&gt;
+     *                 &lt;attribute name="aa_before"&gt;
+     *                   &lt;simpleType&gt;
+     *                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+     *                       &lt;minLength value="0"/&gt;
+     *                       &lt;maxLength value="1"/&gt;
+     *                     &lt;/restriction&gt;
+     *                   &lt;/simpleType&gt;
+     *                 &lt;/attribute&gt;
+     *                 &lt;attribute name="aa_after"&gt;
+     *                   &lt;simpleType&gt;
+     *                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+     *                       &lt;minLength value="0"/&gt;
+     *                       &lt;maxLength value="1"/&gt;
+     *                     &lt;/restriction&gt;
+     *                   &lt;/simpleType&gt;
+     *                 &lt;/attribute&gt;
+     *                 &lt;attribute name="protein_refs" type="{http://www.w3.org/2001/XMLSchema}IDREFS" /&gt;
+     *               &lt;/restriction&gt;
+     *             &lt;/complexContent&gt;
+     *           &lt;/complexType&gt;
+     *         &lt;/element&gt;
+     *         &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/&gt;
+     *       &lt;/sequence&gt;
+     *       &lt;attribute name="identification_run_ref" use="required" type="{http://www.w3.org/2001/XMLSchema}IDREF" /&gt;
+     *       &lt;attribute name="score_type" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+     *       &lt;attribute name="higher_score_better" use="required" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+     *       &lt;attribute name="significance_threshold" type="{http://www.w3.org/2001/XMLSchema}float" /&gt;
+     *       &lt;attribute name="spectrum_reference" type="{http://www.w3.org/2001/XMLSchema}unsignedInt" /&gt;
+     *       &lt;attribute name="RT" type="{http://www.w3.org/2001/XMLSchema}float" /&gt;
+     *       &lt;attribute name="MZ" type="{http://www.w3.org/2001/XMLSchema}float" /&gt;
+     *     &lt;/restriction&gt;
+     *   &lt;/complexContent&gt;
+     * &lt;/complexType&gt;
      * </pre>
      *
      *
@@ -2660,35 +2660,35 @@ public class ConsensusXML {
          * contained within this class.
          *
          * <pre>
-         * &lt;complexType>
-         *   &lt;complexContent>
-         *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-         *       &lt;sequence minOccurs="0">
-         *         &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/>
-         *       &lt;/sequence>
-         *       &lt;attribute name="sequence" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-         *       &lt;attribute name="charge" use="required" type="{http://www.w3.org/2001/XMLSchema}integer" />
-         *       &lt;attribute name="score" use="required" type="{http://www.w3.org/2001/XMLSchema}float" />
-         *       &lt;attribute name="aa_before">
-         *         &lt;simpleType>
-         *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-         *             &lt;minLength value="0"/>
-         *             &lt;maxLength value="1"/>
-         *           &lt;/restriction>
-         *         &lt;/simpleType>
-         *       &lt;/attribute>
-         *       &lt;attribute name="aa_after">
-         *         &lt;simpleType>
-         *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-         *             &lt;minLength value="0"/>
-         *             &lt;maxLength value="1"/>
-         *           &lt;/restriction>
-         *         &lt;/simpleType>
-         *       &lt;/attribute>
-         *       &lt;attribute name="protein_refs" type="{http://www.w3.org/2001/XMLSchema}IDREFS" />
-         *     &lt;/restriction>
-         *   &lt;/complexContent>
-         * &lt;/complexType>
+         * &lt;complexType&gt;
+         *   &lt;complexContent&gt;
+         *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+         *       &lt;sequence minOccurs="0"&gt;
+         *         &lt;element name="userParam" type="{}userParam" maxOccurs="unbounded" minOccurs="0"/&gt;
+         *       &lt;/sequence&gt;
+         *       &lt;attribute name="sequence" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+         *       &lt;attribute name="charge" use="required" type="{http://www.w3.org/2001/XMLSchema}integer" /&gt;
+         *       &lt;attribute name="score" use="required" type="{http://www.w3.org/2001/XMLSchema}float" /&gt;
+         *       &lt;attribute name="aa_before"&gt;
+         *         &lt;simpleType&gt;
+         *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+         *             &lt;minLength value="0"/&gt;
+         *             &lt;maxLength value="1"/&gt;
+         *           &lt;/restriction&gt;
+         *         &lt;/simpleType&gt;
+         *       &lt;/attribute&gt;
+         *       &lt;attribute name="aa_after"&gt;
+         *         &lt;simpleType&gt;
+         *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+         *             &lt;minLength value="0"/&gt;
+         *             &lt;maxLength value="1"/&gt;
+         *           &lt;/restriction&gt;
+         *         &lt;/simpleType&gt;
+         *       &lt;/attribute&gt;
+         *       &lt;attribute name="protein_refs" type="{http://www.w3.org/2001/XMLSchema}IDREFS" /&gt;
+         *     &lt;/restriction&gt;
+         *   &lt;/complexContent&gt;
+         * &lt;/complexType&gt;
          * </pre>
          *
          *

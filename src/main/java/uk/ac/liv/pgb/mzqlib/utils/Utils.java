@@ -21,8 +21,8 @@ public class Utils {
      * Round a double value and keeping (at max) the given number of decimal
      * places.
      *
-     * @param value
-     * @param numberOfDecimalPlaces
+     * @param value                 value to be rounded.
+     * @param numberOfDecimalPlaces number of decimal places.
      *
      * @return
      */
@@ -34,15 +34,15 @@ public class Utils {
     /**
      * Initialized the CV map based on the /resources/CV_psi-ms.obo.txt CV file.
      *
-     * @return
+     * @return CV map.
      *
-     * @throws IOException
+     * @throws IOException io exceptions.
      */
     public static Map<String, String> getInitializedCVMap()
             throws IOException {
         //Read resource file and build up map:
         BufferedReader in = null;
-        Map<String, String> resultMap = new HashMap<String, String>();
+        Map<String, String> resultMap = new HashMap<>();
         try {
             //Use the getResourceAsStream trick to read the file packaged in
             //the .jar .  This simplifies usage of the solution as no extra 
@@ -88,7 +88,7 @@ public class Utils {
      * @param args     : command-line arguments (assuming couples in the form
      *                 "-argname", "argvalue" )
      * @param name     : the parameter 'name'
-     * @param required
+     * @param required required flag.
      *
      * @return returns null if the parameter is not found (and is not required).
      *         If the parameter is not

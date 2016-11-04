@@ -19,15 +19,14 @@ import javax.xml.bind.annotation.XmlType;
  * The following schema fragment specifies the expected content contained within
  * this class.
  * <p>
- * <
- * pre>
- * &lt;simpleType name="UserParamType">
- * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- * &lt;enumeration value="int"/>
- * &lt;enumeration value="float"/>
- * &lt;enumeration value="string"/>
- * &lt;/restriction>
- * &lt;/simpleType>
+ * <pre>
+ * &lt;simpleType name="UserParamType"&gt;
+ * &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ * &lt;enumeration value="int"/&gt;
+ * &lt;enumeration value="float"/&gt;
+ * &lt;enumeration value="string"/&gt;
+ * &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  *
  */

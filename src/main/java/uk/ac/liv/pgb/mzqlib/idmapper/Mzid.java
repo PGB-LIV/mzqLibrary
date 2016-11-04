@@ -15,8 +15,7 @@ import uk.ac.ebi.jmzidml.xml.io.MzIdentMLUnmarshaller;
  * This is the wrapper class for mzIdentML file.
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 24-Jun-2013 14:07:02
+ * @since 24-Jun-2013 14:07:02
  */
 public class Mzid {
 
@@ -34,7 +33,7 @@ public class Mzid {
     /**
      * Get map of peptide sequence to SIIData.
      *
-     * @return Map<String, SIIData>
+     * @return Map&lt;String, SIIData&gt;
      */
     public Map<String, SIIData> getPeptideSIIData() {
         Map<String, SIIData> retMap = new HashMap();

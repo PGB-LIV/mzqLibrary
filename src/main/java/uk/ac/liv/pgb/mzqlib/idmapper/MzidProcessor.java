@@ -9,8 +9,7 @@ import uk.ac.ebi.jmzidml.model.mzidml.SearchDatabase;
  * Interface of MzidProcessor
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 03-Mar-2014 16:55:27
+ * @since 03-Mar-2014 16:55:27
  */
 public interface MzidProcessor {
 

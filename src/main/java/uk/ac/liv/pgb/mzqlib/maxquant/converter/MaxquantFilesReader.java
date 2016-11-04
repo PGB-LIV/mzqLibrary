@@ -988,7 +988,7 @@ public class MaxquantFilesReader {
     /**
      * Get map of index to a list of various values from evidence.txt.
      *
-     * @return TIntObjectMap<List<String>>
+     * @return TIntObjectMap&lt;List&lt;String&gt;&gt;
      */
     public TIntObjectMap<List<String>> getEvidenceMap() {
         return this.evidenceMap;
@@ -1024,7 +1024,7 @@ public class MaxquantFilesReader {
     /**
      * Get map of index to list of protein intensity value.
      *
-     * @return TIntObjectMap<TDoubleList>
+     * @return TIntObjectMap&lt;TDoubleList&gt;
      */
     public TIntObjectMap<TDoubleList> getProteinIntensityMap() {
         return this.proteinIntMap;
@@ -1033,7 +1033,7 @@ public class MaxquantFilesReader {
     /**
      * Get map of protein id to list of unique peptide ids.
      *
-     * @return TIntObjectMap<TIntList>
+     * @return TIntObjectMap&lt;TIntList&gt;
      */
     public TIntObjectMap<TIntList> getProteinUniquePeptiedsMap() {
         return this.proteinUniqPepMap;
@@ -1147,7 +1147,7 @@ public class MaxquantFilesReader {
     /**
      * Get map of majorirty protein id.
      *
-     * @return TIntObjectMap<String>
+     * @return TIntObjectMap&lt;String&gt;
      */
     public TIntObjectMap<String> getMajorityProteinIDMap() {
         return majorityProteinIDMap;

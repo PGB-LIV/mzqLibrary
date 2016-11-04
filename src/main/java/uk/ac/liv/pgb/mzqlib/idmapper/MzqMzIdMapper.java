@@ -9,8 +9,7 @@ import javax.xml.bind.JAXBException;
  * Interface of MzqMzidMapper.
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 06-Mar-2014 12:11:43
+ * @since 06-Mar-2014 12:11:43
  */
 public interface MzqMzIdMapper {
 

@@ -12,7 +12,7 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensus;
 /**
  * PeptideData contains all the data about PeptideConsensus.
  *
- * @author Jun Fan<j.fan@cranfield.ac.uk>
+ * @author Jun Fan
  */
 public class PeptideData extends QuantitationLevel {
 

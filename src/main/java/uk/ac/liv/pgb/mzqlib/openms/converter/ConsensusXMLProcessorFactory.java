@@ -37,8 +37,7 @@ import uk.ac.liv.pgb.mzqlib.openms.jaxb.MapList;
  * create a ConsensusXMLProcessor instance.
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 18-Mar-2014 15:17:53
+ * @since 18-Mar-2014 15:17:53
  */
 public class ConsensusXMLProcessorFactory {
 

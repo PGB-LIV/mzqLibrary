@@ -8,8 +8,7 @@ import java.util.List;
  * The class to store the parameters for plotting heat map.
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 12-Sep-2014 11:16:22
+ * @since 12-Sep-2014 11:16:22
  */
 public class HeatMapParam {
 

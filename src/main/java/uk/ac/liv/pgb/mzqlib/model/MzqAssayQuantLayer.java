@@ -12,8 +12,7 @@ import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
 /**
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 23-Jul-2014 15:16:04
+ * @since 23-Jul-2014 15:16:04
  */
 public class MzqAssayQuantLayer extends MzqQuantLayer {
 

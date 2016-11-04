@@ -10,8 +10,7 @@ import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
  * Wrapper class from MzQuantML class.
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 10-Sep-2014 12:24:23
+ * @since 10-Sep-2014 12:24:23
  */
 public class MzQuantMLData {
 
@@ -46,7 +45,7 @@ public class MzQuantMLData {
     /**
      * Set list of MzqAssayQuantLayer.
      *
-     * @param mzqAQLList ObservableList<MzqAssayQuantLayer>
+     * @param mzqAQLList ObservableList&lt;MzqAssayQuantLayer&gt;
      */
     public void setMzqAssayQuantLayerList(
             ObservableList<MzqAssayQuantLayer> mzqAQLList) {
@@ -66,7 +65,7 @@ public class MzQuantMLData {
     /**
      * Get list of MzqAssayQuantLayer.
      *
-     * @return ObservableList<MzqAssayQuantLayer>
+     * @return ObservableList&lt;MzqAssayQuantLayer&gt;
      */
     public ObservableList<MzqAssayQuantLayer> getMzqAssayQuantLayerList() {
         return mzqAssayQuantLayerList;
@@ -93,7 +92,7 @@ public class MzQuantMLData {
     /**
      * Get list of MzqFeatureQuantLayer.
      *
-     * @return ObservableList<MzqFeatureQuantLayer>
+     * @return ObservableList&lt;MzqFeatureQuantLayer&gt;
      */
     public ObservableList<MzqFeatureQuantLayer> getMzqFeatureQuantLayerList() {
         return mzqFeatureQuantLayerList;
@@ -102,7 +101,7 @@ public class MzQuantMLData {
     /**
      * Set list of MzqFeatureQuantLayer.
      *
-     * @param mzqFeatureQuantLayerList ObservableList<MzqFeatureQuantLayer>
+     * @param mzqFeatureQuantLayerList ObservableList&lt;MzqFeatureQuantLayer&gt;
      */
     public void setMzqFeatureQuantLayerList(
             ObservableList<MzqFeatureQuantLayer> mzqFeatureQuantLayerList) {

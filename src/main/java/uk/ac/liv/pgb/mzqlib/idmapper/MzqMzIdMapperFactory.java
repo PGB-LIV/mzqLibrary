@@ -66,8 +66,7 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.StudyVariableList;
  * mzQuantML file and map of raw file name to mzIdentML file name.
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 24-Jun-2013 14:06:09
+ * @since 24-Jun-2013 14:06:09
  */
 public class MzqMzIdMapperFactory {
 

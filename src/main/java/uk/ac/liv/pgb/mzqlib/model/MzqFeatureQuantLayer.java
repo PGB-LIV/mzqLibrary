@@ -13,8 +13,7 @@ import uk.ac.liv.pgb.mzqlib.constants.MzqDataConstants;
 /**
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 26-Jan-2015 15:25:29
+ * @since 26-Jan-2015 15:25:29
  */
 public class MzqFeatureQuantLayer extends MzqQuantLayer {
 

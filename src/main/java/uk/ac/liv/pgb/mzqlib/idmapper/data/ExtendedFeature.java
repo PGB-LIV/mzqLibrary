@@ -14,8 +14,7 @@ import uk.ac.liv.pgb.mzqlib.idmapper.data.Tolerance.ToleranceUnit;
  * Subclass of Feature
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 06-Mar-2014 11:24:28
+ * @scince 06-Mar-2014 11:24:28
  */
 public class ExtendedFeature extends Feature {
 

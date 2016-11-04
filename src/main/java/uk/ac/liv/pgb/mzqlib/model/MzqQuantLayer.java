@@ -9,8 +9,7 @@ import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
 /**
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 26-Jan-2015 15:34:59
+ * @since 26-Jan-2015 15:34:59
  */
 public class MzqQuantLayer {
 

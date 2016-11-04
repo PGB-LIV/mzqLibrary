@@ -18,8 +18,7 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.RawFilesGroup;
  * mzQuantML elements from consensusxml file.
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 18-Mar-2014 15:17:10
+ * @since 18-Mar-2014 15:17:10
  */
 public interface ConsensusXMLProcessor {
 
@@ -33,7 +32,7 @@ public interface ConsensusXMLProcessor {
     /**
      * Get map of rawFilesGroup's id to FeatureList.
      *
-     * @return Map<String, FeatureList>
+     * @return Map&lt;String, FeatureList&gt;
      */
     Map<String, FeatureList> getRawFilesGroupIdToFeatureListMap();
 
@@ -54,14 +53,14 @@ public interface ConsensusXMLProcessor {
     /**
      * Get map of rawFilesGroup to Assay.
      *
-     * @return Map<String, Assay>
+     * @return Map&lt;String, Assay&gt;
      */
     Map<String, Assay> getRawFilesGroupAssayMap();
 
     /**
      * Get list of rawFilesGroup.
      *
-     * @return List<RawFilesGroup>
+     * @return List&lt;RawFilesGroup&gt;
      */
     List<RawFilesGroup> getRawFilesGroupList();
 

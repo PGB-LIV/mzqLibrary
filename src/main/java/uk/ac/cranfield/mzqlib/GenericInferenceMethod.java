@@ -127,7 +127,7 @@ public class GenericInferenceMethod {
      *
      * @param lowLevelQuant low level quantlayer
      * @param assayIDs      id list of assay
-     * @param count
+     * @param count         count
      *
      * @return weighted mean
      */

@@ -51,7 +51,7 @@ public class MzqDataControl {
      * @param level the level in consideration.
      * @param type  the type of elements.
      *
-     * @return
+     * @return set of elements.
      */
     public Set<String> getElements(int level, int type) {
         return getControlElement(level, type).getElements();

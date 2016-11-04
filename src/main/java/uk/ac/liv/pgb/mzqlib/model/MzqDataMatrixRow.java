@@ -9,8 +9,7 @@ import javafx.collections.FXCollections;
 /**
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 29-Jul-2014 12:34:12
+ * @since 29-Jul-2014 12:34:12
  */
 public class MzqDataMatrixRow {
 

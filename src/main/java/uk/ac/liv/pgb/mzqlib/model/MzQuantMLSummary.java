@@ -12,8 +12,7 @@ import javafx.beans.property.StringProperty;
  * Wrapper class of AnalysisSummary class.
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 18-Jul-2014 02:13:36
+ * @since 18-Jul-2014 02:13:36
  */
 public class MzQuantMLSummary {
 

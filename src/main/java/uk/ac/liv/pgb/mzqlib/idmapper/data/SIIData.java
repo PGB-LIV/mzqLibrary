@@ -15,8 +15,7 @@ import uk.ac.ebi.jmzidml.xml.io.MzIdentMLUnmarshaller;
  * Wrapper class for SpectrumIdentificationItem element.
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 03-Mar-2014 17:20:15
+ * @since 03-Mar-2014 17:20:15
  */
 public class SIIData implements Comparable<SIIData> {
 

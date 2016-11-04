@@ -18,8 +18,7 @@ import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
  * The wrapper class for mzQuantML file.
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 24-Jun-2013 14:06:51
+ * @since 24-Jun-2013 14:06:51
  */
 public class Mzq {
 
@@ -37,7 +36,7 @@ public class Mzq {
     /**
      * Get map of PeptideConsensus id to list of SimpleFeature.
      *
-     * @return Map<String, List<SimpleFeature>>
+     * @return Map&lt;String, List&lt;SimpleFeature&gt;&gt;
      *
      * @throws JAXBException jaxb exception
      */

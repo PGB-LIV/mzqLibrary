@@ -4,8 +4,7 @@ package uk.ac.liv.pgb.mzqlib.constants;
 /**
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 30-Oct-2014 13:49:46
+ * @since 30-Oct-2014 13:49:46
  */
 public class MzqDataConstants {
 

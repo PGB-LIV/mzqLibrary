@@ -1550,8 +1550,8 @@ public class ProgenMzquantmlConverter {
      * @param rawPlusNorm flag indicates which type of abundance is in the
      *                    output file.
      *
-     * @throws IOException
-     * @throws DatatypeConfigurationException
+     * @throws IOException io exceptions.
+     * @throws DatatypeConfigurationException data type configuration exceptions.
      */
     public void convert(String outFn, boolean protGrpList, String rawPlusNorm)
             throws IOException, DatatypeConfigurationException {

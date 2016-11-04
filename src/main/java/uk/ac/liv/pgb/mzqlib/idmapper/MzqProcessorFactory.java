@@ -29,8 +29,7 @@ import uk.ac.liv.pgb.mzqlib.utils.MzidToMzqElementConverter;
  * MzqProcessor instance.
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 24-Jun-2013 14:06:51
+ * @since 24-Jun-2013 14:06:51
  */
 public class MzqProcessorFactory {
 

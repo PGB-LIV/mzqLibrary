@@ -8,8 +8,7 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.SearchDatabase;
  * Interface of MzqProcessor
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 05-Mar-2014 11:25:22
+ * @since 05-Mar-2014 11:25:22
  */
 public interface MzqProcessor {
 

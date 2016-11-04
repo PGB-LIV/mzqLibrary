@@ -25,8 +25,7 @@ import uk.ac.liv.pgb.mzqlib.idmapper.data.SIIData;
  * MzidProcessor instance.
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 24-Jun-2013 14:07:02
+ * @since 24-Jun-2013 14:07:02
  */
 public class MzidProcessorFactory {
 

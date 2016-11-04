@@ -7,7 +7,7 @@ import java.util.HashMap;
 /**
  * PeptideSequenceData.
  *
- * @author Jun Fan<j.fan@cranfield.ac.uk>
+ * @author Jun Fan
  */
 public class PeptideSequenceData {
 

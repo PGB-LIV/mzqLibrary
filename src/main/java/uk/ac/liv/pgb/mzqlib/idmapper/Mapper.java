@@ -13,8 +13,7 @@ import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
 /**
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 07-Mar-2014 10:27:50
+ * @since 07-Mar-2014 10:27:50
  */
 public class Mapper {
 

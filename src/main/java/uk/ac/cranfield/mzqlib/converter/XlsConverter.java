@@ -28,7 +28,7 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.StudyVariable;
 
 /**
  * XlsConverter is to convert mzq file to xls file.
- * @author Jun Fan<j.fan@cranfield.ac.uk>
+ * @author Jun Fan
  */
 public class XlsConverter extends GenericConverter {
 

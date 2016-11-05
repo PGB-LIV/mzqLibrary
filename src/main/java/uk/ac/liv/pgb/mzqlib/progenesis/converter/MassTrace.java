@@ -90,7 +90,7 @@ public class MassTrace {
     /**
      * Get list of mass trace value.
      *
-     * @return List<Double>
+     * @return List&lt;Double&gt;
      */
     public List<Double> getMassTraceDoubleList() {
         List<Double> mtDList = new ArrayList<>();

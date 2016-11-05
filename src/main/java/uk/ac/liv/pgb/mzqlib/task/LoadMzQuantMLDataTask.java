@@ -42,8 +42,7 @@ import uk.ac.liv.pgb.mzqlib.model.MzqFeatureQuantLayer;
 /**
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 09-Sep-2014 17:57:19
+ * @since 09-Sep-2014 17:57:19
  */
 public class LoadMzQuantMLDataTask extends Task<MzQuantMLData> {
 

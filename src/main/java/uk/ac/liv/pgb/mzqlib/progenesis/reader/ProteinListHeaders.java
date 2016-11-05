@@ -5,8 +5,7 @@ package uk.ac.liv.pgb.mzqlib.progenesis.reader;
  * This class stores the header constant strings from protein list file
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 02-Dec-2013 15:22:59
+ * @since 02-Dec-2013 15:22:59
  */
 public class ProteinListHeaders {
 

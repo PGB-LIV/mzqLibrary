@@ -11,8 +11,7 @@ import java.util.zip.GZIPOutputStream;
 /**
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 06-Nov-2013 14:55:14
+ * @since 06-Nov-2013 14:55:14
  */
 public class Gzipper {
 

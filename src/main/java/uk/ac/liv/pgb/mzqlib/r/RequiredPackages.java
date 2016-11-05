@@ -4,8 +4,7 @@ package uk.ac.liv.pgb.mzqlib.r;
 /**
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 21-Nov-2014 10:34:23
+ * @since 21-Nov-2014 10:34:23
  */
 public enum RequiredPackages {
 

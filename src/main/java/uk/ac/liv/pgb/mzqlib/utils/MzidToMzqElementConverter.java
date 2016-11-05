@@ -14,8 +14,7 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.UserParam;
 /**
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 18-Mar-2014 13:57:49
+ * @since 18-Mar-2014 13:57:49
  */
 public class MzidToMzqElementConverter {
 

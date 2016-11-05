@@ -8,8 +8,7 @@ import org.rosuda.JRI.Rengine;
 /**
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 30-Sep-2014 14:48:07
+ * @since 30-Sep-2014 14:48:07
  */
 public class RExecutor {
 

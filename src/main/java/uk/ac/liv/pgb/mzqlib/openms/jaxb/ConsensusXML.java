@@ -338,7 +338,7 @@ public class ConsensusXML {
      *
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link uk.ac.liv.consensusxmlmzquantmlconvertor.jaxb.UserParam }
+     * {@link uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam }
      *
      *
      * @return UserParamList.
@@ -1378,7 +1378,7 @@ public class ConsensusXML {
              *
              * <p>
              * Objects of the following type(s) are allowed in the list
-             * {@link uk.ac.liv.consensusxmlmzquantmlconvertor.jaxb.UserParam }
+             * {@link uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam }
              *
              *
              * @return UserParam list.
@@ -1539,7 +1539,7 @@ public class ConsensusXML {
                  *
                  * <p>
                  * Objects of the following type(s) are allowed in the list
-                 * {@link uk.ac.liv.consensusxmlmzquantmlconvertor.jaxb.UserParam
+                 * {@link uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam
                  * }
                  *
                  *
@@ -1876,7 +1876,7 @@ public class ConsensusXML {
              *
              * <p>
              * Objects of the following type(s) are allowed in the list
-             * {@link uk.ac.liv.consensusxmlmzquantmlconvertor.jaxb.UserParam }
+             * {@link uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam }
              *
              *
              * @return UserParam list.
@@ -2157,7 +2157,7 @@ public class ConsensusXML {
                  *
                  * <p>
                  * Objects of the following type(s) are allowed in the list
-                 * {@link uk.ac.liv.consensusxmlmzquantmlconvertor.jaxb.UserParam
+                 * {@link uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam
                  * }
                  *
                  *
@@ -2261,7 +2261,7 @@ public class ConsensusXML {
                  *
                  * <p>
                  * Objects of the following type(s) are allowed in the list
-                 * {@link uk.ac.liv.consensusxmlmzquantmlconvertor.jaxb.UserParam
+                 * {@link uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam
                  * }
                  *
                  *
@@ -2477,7 +2477,7 @@ public class ConsensusXML {
          *
          * <p>
          * Objects of the following type(s) are allowed in the list
-         * {@link uk.ac.liv.consensusxmlmzquantmlconvertor.jaxb.UserParam }
+         * {@link uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam }
          *
          *
          * @return UserParam list.
@@ -2761,7 +2761,7 @@ public class ConsensusXML {
              *
              * <p>
              * Objects of the following type(s) are allowed in the list
-             * {@link uk.ac.liv.consensusxmlmzquantmlconvertor.jaxb.UserParam }
+             * {@link uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam }
              *
              *
              * @return UserParam list.

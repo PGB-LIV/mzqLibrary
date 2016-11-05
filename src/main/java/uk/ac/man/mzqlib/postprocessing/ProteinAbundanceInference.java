@@ -174,7 +174,7 @@ public final class ProteinAbundanceInference {
      *                                         name
      * @param QuantLayerType                   - quant layer type
      *
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException file not found exceptions.
      */
     public ProteinAbundanceInference(final String in_file,
                                      final String out_file,
@@ -292,7 +292,7 @@ public final class ProteinAbundanceInference {
      * @param QuantLayerType                   - quant layer type
      * @param conflictPeptideExcluded          - remove conflicting peptides
      *
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException file not found exceptions.
      */
     public ProteinAbundanceInference(final String in_file,
                                      final String out_file,
@@ -398,11 +398,11 @@ public final class ProteinAbundanceInference {
      *
      * @param args - parameters for command line
      *
-     * @throws JAXBException
-     * @throws InstantiationException
-     * @throws IllegalAccessException
-     * @throws IllegalStateException
-     * @throws FileNotFoundException
+     * @throws JAXBException          jaxb exceptions.
+     * @throws InstantiationException instantiation exceptions.
+     * @throws IllegalAccessException illegal access exceptions.
+     * @throws IllegalStateException  illegal state exceptions.
+     * @throws FileNotFoundException  file not found exception.
      */
     public static void main(final String[] args)
             throws JAXBException, InstantiationException,
@@ -511,7 +511,7 @@ public final class ProteinAbundanceInference {
     /**
      * protein inference method
      *
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException file not found exceptions.
      */
     public void proteinInference()
             throws FileNotFoundException {
@@ -523,7 +523,7 @@ public final class ProteinAbundanceInference {
      *
      * @param signalConflict: with/without conflicting peptides
      *
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException file not found exceptions.
      */
     public void proteinInference(final boolean signalConflict)
             throws FileNotFoundException {
@@ -670,8 +670,8 @@ public final class ProteinAbundanceInference {
      *
      * @return - unmarshalled mzq Java object file
      *
-     * @throws IllegalStateException
-     * @throws FileNotFoundException
+     * @throws IllegalStateException illegal state exceptions.
+     * @throws FileNotFoundException file not found exceptions.
      */
     public static MzQuantMLUnmarshaller mzqFileInput(final String infile)
             throws IllegalStateException, FileNotFoundException {

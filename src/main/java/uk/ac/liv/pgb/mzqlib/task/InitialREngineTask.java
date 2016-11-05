@@ -11,8 +11,7 @@ import uk.ac.liv.pgb.mzqlib.r.RUtils;
 /**
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 11-Sep-2014 15:13:21
+ * @since 11-Sep-2014 15:13:21
  */
 public class InitialREngineTask extends Task<Rengine> {
 

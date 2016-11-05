@@ -185,7 +185,7 @@ public class PepProtAbundanceNormalisation {
      * @param tagDecoy                - tag for decoy data
      * @param userRef                 - reference number that users prefer to
      *
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException file not found exceptions.
      */
     public PepProtAbundanceNormalisation(String in_file, String out_file,
                                          String normalisedLevel,
@@ -343,7 +343,7 @@ public class PepProtAbundanceNormalisation {
     /**
      * multi-threading calculation
      *
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException file not found exceptions.
      */
     public void multithreadingCalc()
             throws FileNotFoundException {
@@ -607,12 +607,10 @@ public class PepProtAbundanceNormalisation {
     /**
      * unmarshal xml to java object
      *
-     * @param infile
-     *
      * @return Java object
      *
-     * @throws IllegalStateException
-     * @throws FileNotFoundException
+     * @throws IllegalStateException illegal state exceptions.
+     * @throws FileNotFoundException file not found exceptions.
      */
     public MzQuantMLUnmarshaller mzqFileInput()
             throws IllegalStateException,

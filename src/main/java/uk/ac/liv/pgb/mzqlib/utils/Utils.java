@@ -24,7 +24,7 @@ public class Utils {
      * @param value                 value to be rounded.
      * @param numberOfDecimalPlaces number of decimal places.
      *
-     * @return
+     * @return rounded double.
      */
     public static double round(double value, int numberOfDecimalPlaces) {
         double multipicationFactor = Math.pow(10, numberOfDecimalPlaces);

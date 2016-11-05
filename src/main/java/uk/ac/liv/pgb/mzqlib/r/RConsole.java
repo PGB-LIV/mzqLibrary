@@ -11,8 +11,7 @@ import org.rosuda.JRI.Rengine;
 /**
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 30-Jul-2014 15:48:16
+ * @since 30-Jul-2014 15:48:16
  */
 public class RConsole implements RMainLoopCallbacks {
 

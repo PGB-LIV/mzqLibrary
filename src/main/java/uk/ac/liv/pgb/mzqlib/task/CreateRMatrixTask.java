@@ -17,8 +17,7 @@ import uk.ac.liv.pgb.mzqlib.model.MzqDataMatrixRow;
 /**
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 12-Sep-2014 11:10:08
+ * @since 12-Sep-2014 11:10:08
  */
 public class CreateRMatrixTask extends Task<HeatMapParam> {
 

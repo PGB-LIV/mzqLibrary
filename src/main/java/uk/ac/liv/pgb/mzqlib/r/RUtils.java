@@ -13,8 +13,7 @@ import org.rosuda.JRI.Rengine;
 /**
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 21-Nov-2014 11:13:05
+ * @since 21-Nov-2014 11:13:05
  */
 public class RUtils {
 

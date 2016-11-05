@@ -6,8 +6,7 @@ package uk.ac.liv.pgb.mzqlib.progenesis.reader;
  * All use lower case.
  *
  * @author Da Qi
- * @institute University of Liverpool
- * @time 02-Dec-2013 15:02:27
+ * @since 02-Dec-2013 15:02:27
  */
 public class FeatureListHeaders {
 

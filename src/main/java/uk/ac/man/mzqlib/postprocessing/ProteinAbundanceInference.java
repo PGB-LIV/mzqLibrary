@@ -865,7 +865,7 @@ public final class ProteinAbundanceInference {
                 unmarshal(MzQuantMLElement.ProteinList);
         List<Protein> proteins = protList.getProtein();
         for (Protein protein : proteins) {
-            List<String> pepConRefs = protein.getPeptideConsensusRefs();
+            //List<String> pepConRefs = protein.getPeptideConsensusRefs();
 
             /*
              * Accession or ID for protein

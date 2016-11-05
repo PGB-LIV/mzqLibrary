@@ -884,8 +884,8 @@ public class PepProtAbundanceNormalisation {
                     break;
                 }
 
-                double ratioVal = Double.parseDouble(vRef) / Double.parseDouble(
-                        vj);
+//                double ratioVal = Double.parseDouble(vRef) / Double.parseDouble(
+//                        vj);
 
                 //ratioVals.add(col, Double.toString(ratioVal));
                 valArr[entryRow][col] = Double.parseDouble(vj);

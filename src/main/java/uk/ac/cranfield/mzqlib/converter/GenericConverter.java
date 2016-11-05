@@ -1,7 +1,6 @@
 
 package uk.ac.cranfield.mzqlib.converter;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import uk.ac.cranfield.mzqlib.MzqLib;

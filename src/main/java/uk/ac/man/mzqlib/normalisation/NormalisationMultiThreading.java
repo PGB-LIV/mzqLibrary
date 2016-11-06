@@ -25,7 +25,7 @@ public class NormalisationMultiThreading {
     final static String fileName = "unlabeled_result_FLUQT_mapped_" + filter;
 
     public static void main(String[] args)
-            throws FileNotFoundException {
+            throws FileNotFoundException, InterruptedException {
 
         String inputFile = path + filter + "\\mzq\\" + fileName + ".mzq";
         String outputFile = path + filter + "\\mzq\\consensusonly\\test\\"

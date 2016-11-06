@@ -495,7 +495,7 @@ public final class ProteinAbundanceInference {
                                                     outputRawProteinGCN, quantLT,
                                                     signalConflictPeptideExcluded);
             pai.proteinInference(conflictPeptideExcluded);
-        } else if (!signalConflictPeptideExcluded) {
+        } else {
             ProteinAbundanceInference pai
                     = new ProteinAbundanceInference(infile, outfile, operator,
                                                     inputPeptideDTCA,

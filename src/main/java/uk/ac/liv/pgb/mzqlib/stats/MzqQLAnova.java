@@ -454,7 +454,7 @@ public class MzqQLAnova {
                     if (NumberUtils.isNumber(valueString)) {
                         double valueD = Double.parseDouble(valueString);
                         // Do log on valueD
-                        if (valueD == 0) {
+                        if (Double.compare(valueD, 0.0) == 0) {
                             valueD = 0.5;
                             numberOfZero.increment();
                         }

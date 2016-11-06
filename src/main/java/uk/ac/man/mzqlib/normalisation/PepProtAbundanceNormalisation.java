@@ -385,8 +385,8 @@ public class PepProtAbundanceNormalisation {
             try {
                 futures = service.invokeAll(calculations);
             } catch (InterruptedException ex) {
-                Logger.getLogger(PepProtAbundanceNormalisation.class.getName()).
-                        log(Level.SEVERE, null, ex);
+//                Logger.getLogger(PepProtAbundanceNormalisation.class.getName()).
+//                        log(Level.SEVERE, null, ex);
                 throw new RuntimeException(
                         "Error running scaling factor calculations.", ex);
             }
@@ -772,8 +772,9 @@ public class PepProtAbundanceNormalisation {
                 throw new IllegalStateException(
                         "The given quant layer is not found in the mzq file!!! "
                         + "Please check the input data type accession.");
-            } catch (IllegalStateException e) {
-                System.out.println(e.getMessage());
+            } catch (IllegalStateException ex) {
+                Logger.getLogger(PepProtAbundanceNormalisation.class.getName()).
+                        log(Level.SEVERE, null, ex);
             }
         }
 //        System.out.println("Peptide Assay: " + peptideAssayValues);
@@ -886,7 +887,6 @@ public class PepProtAbundanceNormalisation {
 
 //                double ratioVal = Double.parseDouble(vRef) / Double.parseDouble(
 //                        vj);
-
                 //ratioVals.add(col, Double.toString(ratioVal));
                 valArr[entryRow][col] = Double.parseDouble(vj);
             }
@@ -909,7 +909,8 @@ public class PepProtAbundanceNormalisation {
             for (int row = 0; row < entryNo; row++) {
                 objCol[row] = valArr[row][col];
 
-                if (!(refCol[row] == 0) && !(objCol[row] == 0)) {
+                if (Double.compare(refCol[row], 0.0) != 0 && Double.compare(
+                        objCol[row], 0) != 0) {
                     logRatio[nonZero] = Math.log10(refCol[row] / objCol[row]);
 //                    System.out.println("Log Ratio " + nonZero + " " + col + ": " + logRatio[nonZero]);
                     nonZero++;

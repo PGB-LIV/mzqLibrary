@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -54,7 +56,8 @@ public class CommandLineGui extends JFrame {
             }
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Logger.getLogger(CommandLineGui.class.getName()).log(
+                    Level.SEVERE, null, ex);
         }
     }
 
@@ -274,7 +277,8 @@ public class CommandLineGui extends JFrame {
                 try {
                     libFeedback = mzQuantMLLib.init(args);
                 } catch (Exception ex) {
-                    ex.printStackTrace();
+                    Logger.getLogger(CommandLineGui.class.getName()).log(
+                            Level.SEVERE, null, ex);
                 }
 
                 if (libFeedback != null && libFeedback.equals("")) {
@@ -331,15 +335,14 @@ public class CommandLineGui extends JFrame {
 
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (InstantiationException ex) {
-            ex.printStackTrace();
-        } catch (IllegalAccessException ex) {
-            ex.printStackTrace();
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            ex.printStackTrace();
+        } catch (ClassNotFoundException | InstantiationException |
+                IllegalAccessException |
+                javax.swing.UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(CommandLineGui.class.getName()).log(
+                    Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+
         //</editor-fold>
 
         /*
@@ -347,11 +350,13 @@ public class CommandLineGui extends JFrame {
          */
         java.awt.EventQueue.invokeLater(new Runnable() {
 
+            @Override
             public void run() {
                 try {
                     new CommandLineGui().setVisible(true);
                 } catch (ClassNotFoundException ex) {
-                    ex.printStackTrace();
+                    Logger.getLogger(CommandLineGui.class.getName()).log(
+                            Level.SEVERE, null, ex);
                 }
             }
 

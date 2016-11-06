@@ -344,9 +344,10 @@ public class PepProtAbundanceNormalisation {
      * multi-threading calculation
      *
      * @throws FileNotFoundException file not found exceptions.
+     * @throws InterruptedException  interrupted exceptions.
      */
     public void multithreadingCalc()
-            throws FileNotFoundException {
+            throws FileNotFoundException, InterruptedException {
 
 //        Map<String, List<String>> assayVals = new HashMap<String, List<String>>();
         init();
@@ -387,15 +388,15 @@ public class PepProtAbundanceNormalisation {
             } catch (InterruptedException ex) {
 //                Logger.getLogger(PepProtAbundanceNormalisation.class.getName()).
 //                        log(Level.SEVERE, null, ex);
-                throw new RuntimeException(
-                        "Error running scaling factor calculations.", ex);
+                throw new InterruptedException(
+                        "Error running scaling factor calculations.");
             }
 
             Set<ScaleFactorCalculationResult> result = futures.stream().map(
                     mapResultFunction)
                     .collect(Collectors.toSet());
             if (result.stream().anyMatch(p -> p == null)) {
-                throw new RuntimeException(
+                throw new IllegalStateException(
                         "Error retrieving scaling factor calculations.");
             }
 

@@ -278,7 +278,7 @@ public class MaxquantFilesReader {
                         Level.SEVERE, null, ex);
                 System.out.println("The " + this.summaryFile.getAbsolutePath()
                         + " can not be found.");
-                throw new RuntimeException("The " + this.summaryFile.
+                throw new FileNotFoundException("The " + this.summaryFile.
                         getAbsolutePath() + " can not be found: " + ex.
                         getMessage() + ".\n");
             }
@@ -507,7 +507,7 @@ public class MaxquantFilesReader {
                         Level.SEVERE, null, ex);
                 System.out.println("The " + this.experimentalDesignTemplateFile.
                         getAbsolutePath() + " can not be found.");
-                throw new RuntimeException("The "
+                throw new FileNotFoundException("The "
                         + this.experimentalDesignTemplateFile.getAbsolutePath()
                         + " can not be found: " + ex.getMessage() + ".\n");
             }
@@ -611,7 +611,7 @@ public class MaxquantFilesReader {
                         Level.SEVERE, null, ex);
                 System.out.println("The " + this.evidenceFile.getAbsolutePath()
                         + " can not be found. ");
-                throw new RuntimeException("The " + this.evidenceFile.
+                throw new FileNotFoundException("The " + this.evidenceFile.
                         getAbsolutePath() + " can not be found: " + ex.
                         getMessage() + ".\n");
             }
@@ -686,7 +686,7 @@ public class MaxquantFilesReader {
                                 intList.add(Double.parseDouble(
                                         nextLine[posProtInt + i + 1]));
                             } else {
-                                throw new RuntimeException(
+                                throw new IllegalStateException(
                                         "There is non number cell in one of the intensity columns.");
                             }
                         }
@@ -702,7 +702,7 @@ public class MaxquantFilesReader {
                                                 nextLine[posProtInt
                                                 + multiplicity + (i + 1) + j]));
                                     } else {
-                                        throw new RuntimeException(
+                                        throw new IllegalStateException(
                                                 "There is non number cell in one of the intensity columns.");
                                     }
                                 } else if (NumberUtils.isNumber(
@@ -712,7 +712,7 @@ public class MaxquantFilesReader {
                                             nextLine[posProtInt + multiplicity
                                             + (i + 1) + (j + 1)]));
                                 } else {
-                                    throw new RuntimeException(
+                                    throw new IllegalStateException(
                                             "There is non number cell in one of the intensity columns.");
                                 }
                                 i++;
@@ -737,7 +737,7 @@ public class MaxquantFilesReader {
                                 uniqPepList.add(Integer.parseInt(
                                         nextLine[posUniqPep + j + 1]));
                             } else {
-                                throw new RuntimeException(
+                                throw new IllegalStateException(
                                         "There is non number cell in one of the unique peptides columns.");
                             }
                         }
@@ -750,7 +750,7 @@ public class MaxquantFilesReader {
                         Level.SEVERE, null, ex);
                 System.out.println("The " + this.proteinGroupsFile.
                         getAbsolutePath() + " can not be found.");
-                throw new RuntimeException("The " + this.proteinGroupsFile.
+                throw new FileNotFoundException("The " + this.proteinGroupsFile.
                         getAbsolutePath() + " can not be found: " + ex.
                         getMessage() + ".\n");
             }
@@ -909,7 +909,7 @@ public class MaxquantFilesReader {
                     Level.SEVERE, null, ex);
             System.out.println("The " + this.peptidesFile.getAbsolutePath()
                     + " can not be found.");
-            throw new RuntimeException("The " + this.peptidesFile.
+            throw new FileNotFoundException("The " + this.peptidesFile.
                     getAbsolutePath() + " can not be found: " + ex.getMessage()
                     + ".\n");
         }

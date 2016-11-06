@@ -62,7 +62,7 @@ public class Utils {
                 if (inputLine.startsWith("name:")) {
                     //validate:
                     if (key.equals("")) {
-                        throw new RuntimeException(
+                        throw new IllegalStateException(
                                 "Unexpected name: preceding id: entry in CV file");
                     }
                     value = inputLine.split("name:")[1].trim();
@@ -107,7 +107,7 @@ public class Utils {
                         startsWith("-"))) {
                     System.err.
                             println("Parameter value expected for " + argName);
-                    throw new RuntimeException(
+                    throw new IllegalArgumentException(
                             "Expected parameter value not found: " + argName);
                 } else if (argValue.trim().length() == 0 || argValue.startsWith(
                         "-")) {
@@ -120,7 +120,8 @@ public class Utils {
         //Nothing found, if required, throw error, else return "";
         if (required) {
             System.err.println("Parameter -" + name + " expected ");
-            throw new RuntimeException("Expected parameter not found: " + name);
+            throw new IllegalArgumentException("Expected parameter not found: "
+                    + name);
         }
 
         return null;

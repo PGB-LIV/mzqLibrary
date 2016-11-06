@@ -189,7 +189,7 @@ public class MzqQLAnova {
                     pgGQL.setId("PG_GQL");
                     protGrpList.getGlobalQuantLayer().add(pgGQL);
                 } else {
-                    throw new RuntimeException(
+                    throw new IllegalStateException(
                             "There is no ProteinGroupList in the input mzQuantML file.");
                 }
                 break;
@@ -199,13 +199,13 @@ public class MzqQLAnova {
                     prGQL.setId("PR_GQL");
                     protList.getGlobalQuantLayer().add(prGQL);
                 } else {
-                    throw new RuntimeException(
+                    throw new IllegalStateException(
                             "There is no ProteinList in the input mzQuantML file.");
                 }
                 break;
             default:
                 //TODO: do nothing or throw exception?
-                throw new RuntimeException(
+                throw new IllegalStateException(
                         "Please provide valid name of list type such as \"ProtienGroup\" or \"Protein\".");
         }
 
@@ -362,12 +362,12 @@ public class MzqQLAnova {
                         }
                     }
                     if (!dataTypeFound) {
-                        throw new RuntimeException(
+                        throw new IllegalStateException(
                                 "Cannot find the QuantLayer with data type of: "
                                 + qlDataType);
                     }
                 } else {
-                    throw new RuntimeException(
+                    throw new IllegalStateException(
                             "There is no ProteinGroupList in the input mzQuantML file.");
                 }
                 break;
@@ -386,12 +386,12 @@ public class MzqQLAnova {
                         }
                     }
                     if (!dataTypeFound) {
-                        throw new RuntimeException(
+                        throw new IllegalStateException(
                                 "Cannot find the QuantLayer with data type of: "
                                 + qlDataType);
                     }
                 } else {
-                    throw new RuntimeException(
+                    throw new IllegalStateException(
                             "There is no ProteinList in the input mzQuantML file.");
                 }
                 break;
@@ -400,7 +400,7 @@ public class MzqQLAnova {
 //                break;
             default:
                 //TODO: do nothing or throw exception?
-                throw new RuntimeException(
+                throw new IllegalStateException(
                         "Please provide valid name of list type such as \"ProtienGroup\" or \"Protein\".");
         }
 
@@ -431,7 +431,7 @@ public class MzqQLAnova {
                 if (assayQL.getColumnIndex().indexOf(assayID) != -1) {
                     assayPosList.add(assayQL.getColumnIndex().indexOf(assayID));
                 } else {
-                    throw new RuntimeException("Cannot find " + assayID
+                    throw new IllegalStateException("Cannot find " + assayID
                             + " in ColumnIndex.");
                 }
             }
@@ -460,7 +460,7 @@ public class MzqQLAnova {
                         }
                         doubleList.add(Math.log10(valueD));
                     } else {
-                        throw new RuntimeException(valueString
+                        throw new NumberFormatException(valueString
                                 + " is not a number.");
                     }
 

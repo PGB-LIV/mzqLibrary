@@ -60,13 +60,13 @@ public class FeatureSiiMatchManager {
         Map<Feature, List<SIIData>> featureMatches = featureListFeatureMatches.
                 get(featureListName);
         if (featureMatches == null) {
-            throw new RuntimeException(
+            throw new IllegalStateException(
                     "Feature must be registered using \"registerFeature\" before a match can be registered.");
         }
 
         List<SIIData> featureMatch = featureMatches.get(feature);
         if (featureMatch == null) {
-            throw new RuntimeException(
+            throw new IllegalStateException(
                     "Feature must be registered using \"registerFeature\" before a match can be registered.");
         }
 
@@ -75,13 +75,13 @@ public class FeatureSiiMatchManager {
         Map<SIIData, List<Feature>> identificationMatches
                 = featureListIdentificationMatches.get(featureListName);
         if (identificationMatches == null) {
-            throw new RuntimeException(
+            throw new IllegalStateException(
                     "Identification must be registered using \"registerIdentification\" before a match can be registered.");
         }
 
         List<Feature> identificationMatch = identificationMatches.get(data);
         if (identificationMatch == null) {
-            throw new RuntimeException(
+            throw new IllegalStateException(
                     "Identification must be registered using \"registerIdentification\" before a match can be registered.");
         }
 
@@ -100,7 +100,7 @@ public class FeatureSiiMatchManager {
         Map<Feature, List<SIIData>> featureMatches = featureListFeatureMatches.
                 get(featureListName);
         if (featureMatches == null) {
-            throw new RuntimeException("No such feature list name: "
+            throw new IllegalStateException("No such feature list name: "
                     + featureListName);
         }
 
@@ -131,7 +131,7 @@ public class FeatureSiiMatchManager {
         Map<Feature, List<SIIData>> featureMatches = featureListFeatureMatches.
                 get(featureListName);
         if (featureMatches == null) {
-            throw new RuntimeException("No such feature list name: "
+            throw new IllegalStateException("No such feature list name: "
                     + featureListName);
         }
 
@@ -148,7 +148,7 @@ public class FeatureSiiMatchManager {
         Map<SIIData, List<Feature>> identificationMatches
                 = featureListIdentificationMatches.get(featureListName);
         if (identificationMatches == null) {
-            throw new RuntimeException("No such feature list name: "
+            throw new IllegalStateException("No such feature list name: "
                     + featureListName);
         }
 
@@ -194,7 +194,7 @@ public class FeatureSiiMatchManager {
         Map<SIIData, List<Feature>> identificationMatches
                 = featureListIdentificationMatches.get(featureListName);
         if (identificationMatches == null) {
-            throw new RuntimeException("No such feature list name: "
+            throw new IllegalStateException("No such feature list name: "
                     + featureListName);
         }
 

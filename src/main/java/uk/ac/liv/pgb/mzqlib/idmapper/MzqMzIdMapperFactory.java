@@ -132,7 +132,7 @@ public class MzqMzIdMapperFactory {
         Map<String, String> rawToMzidMap = new HashMap<>();
         if (rawToMzidMapArray.length % 2 != 0) {
             //System.err.println("Expected raw file name and mzid file in pairs: " + rawToMzidMap);
-            throw new RuntimeException(
+            throw new IllegalStateException(
                     "Expected raw file name and mzid file in pairs: "
                     + rawToMzidMap);
         } else {
@@ -143,7 +143,7 @@ public class MzqMzIdMapperFactory {
                 if (mzidFile.toLowerCase(Locale.ENGLISH).endsWith("mzid")) {
                     rawToMzidMap.put(rawFile, mzidFile);
                 } else {
-                    throw new RuntimeException(
+                    throw new IllegalStateException(
                             "There is a non mzid file in the argument.");
                 }
                 i++;
@@ -242,7 +242,7 @@ public class MzqMzIdMapperFactory {
             searchDB = this.mzqProc.getSearchDatabase();
 
             if (itPepConList == null) {
-                throw new RuntimeException(
+                throw new IllegalStateException(
                         "There is no PeptideConsensusList in the mzq file.");
             }
             while (itPepConList.hasNext()) {

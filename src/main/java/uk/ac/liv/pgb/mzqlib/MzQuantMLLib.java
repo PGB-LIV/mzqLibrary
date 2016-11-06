@@ -2,6 +2,7 @@
 package uk.ac.liv.pgb.mzqlib;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -26,6 +27,8 @@ import uk.ac.man.mzqlib.postprocessing.ProteinAbundanceInference;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.xml.datatype.DatatypeConfigurationException;
 
 /**
  * @author Da Qi, adapted from MzIdentMLLib.java
@@ -416,10 +419,16 @@ public class MzQuantMLLib implements Serializable {
      *
      * @return messages.
      *
-     * @throws Exception exceptions.
+     * @throws IOException                    io exceptions.
+     * @throws JAXBException                  jaxb exceptions.
+     * @throws FileNotFoundException          file not found exceptions.
+     * @throws DatatypeConfigurationException data type configuration
+     *                                        exceptions.
+     * @throws InterruptedException           interrupted exceptions.
      */
     public String init(String[] args)
-            throws Exception {
+            throws IOException, JAXBException, FileNotFoundException,
+            DatatypeConfigurationException, InterruptedException {
         String inputFileName = "";
         String outputFileName = "";
 
@@ -623,7 +632,7 @@ public class MzQuantMLLib implements Serializable {
                                                    rawPlusNorm);
                             }
                         } else if (sep != null && sep.length() != 1) {
-                            throw new RuntimeException(
+                            throw new IllegalArgumentException(
                                     "The input sepearator must be a single character.");
                         } else {
                             ProgenMzquantmlConverter progenConv

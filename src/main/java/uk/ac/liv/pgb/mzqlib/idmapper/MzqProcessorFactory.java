@@ -154,7 +154,7 @@ public class MzqProcessorFactory {
             Iterator<FeatureList> itFeatureList = this.mzqUm.
                     unmarshalCollectionFromXpath(MzQuantMLElement.FeatureList);
             if (itFeatureList == null) {
-                throw new RuntimeException(
+                throw new IllegalStateException(
                         "There is no FeatureList in the mzq file.");
             }
 
@@ -175,7 +175,7 @@ public class MzqProcessorFactory {
 
                 String mzidFileName = rawToMzidMap.get(rawFileName);
                 if (mzidFileName == null || !(new File(mzidFileName).isFile())) {
-                    throw new RuntimeException("The raw file name \""
+                    throw new IllegalStateException("The raw file name \""
                             + rawFileName
                             + "\" which appears in mzq file cannot be found in rawToMzidMap "
                             + "or the related mzid file: \"" + mzidFileName

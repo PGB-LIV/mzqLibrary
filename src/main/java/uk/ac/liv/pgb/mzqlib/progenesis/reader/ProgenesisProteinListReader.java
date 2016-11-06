@@ -422,7 +422,7 @@ public class ProgenesisProteinListReader implements Closeable {
             br.close();
         } catch (IOException ex) {
             throw new IOException("Fail to close protein list file: " + ex.
-                    getMessage());
+                    getMessage(), ex);
         }
     }
 

@@ -31,8 +31,6 @@ public class Converter {
             Logger.getLogger(Converter.class.getName()).log(Level.SEVERE, null,
                                                             ex);
             System.out.println(ex.getMessage());
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
         }
     }
 

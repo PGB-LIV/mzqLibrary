@@ -22,6 +22,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -272,6 +274,8 @@ public class MaxquantFilesReader {
                     throw new IllegalStateException("The file is empty.\n");
                 }
             } catch (FileNotFoundException ex) {
+                Logger.getLogger(MaxquantFilesReader.class.getName()).log(
+                        Level.SEVERE, null, ex);
                 System.out.println("The " + this.summaryFile.getAbsolutePath()
                         + " can not be found.");
                 throw new RuntimeException("The " + this.summaryFile.
@@ -499,6 +503,8 @@ public class MaxquantFilesReader {
                     groupNum = 1;
                 }
             } catch (FileNotFoundException ex) {
+                Logger.getLogger(MaxquantFilesReader.class.getName()).log(
+                        Level.SEVERE, null, ex);
                 System.out.println("The " + this.experimentalDesignTemplateFile.
                         getAbsolutePath() + " can not be found.");
                 throw new RuntimeException("The "
@@ -601,6 +607,8 @@ public class MaxquantFilesReader {
                 }
                 csvReader.close();
             } catch (FileNotFoundException ex) {
+                Logger.getLogger(MaxquantFilesReader.class.getName()).log(
+                        Level.SEVERE, null, ex);
                 System.out.println("The " + this.evidenceFile.getAbsolutePath()
                         + " can not be found. ");
                 throw new RuntimeException("The " + this.evidenceFile.
@@ -738,6 +746,8 @@ public class MaxquantFilesReader {
                     key++;
                 }
             } catch (FileNotFoundException ex) {
+                Logger.getLogger(MaxquantFilesReader.class.getName()).log(
+                        Level.SEVERE, null, ex);
                 System.out.println("The " + this.proteinGroupsFile.
                         getAbsolutePath() + " can not be found.");
                 throw new RuntimeException("The " + this.proteinGroupsFile.
@@ -895,6 +905,8 @@ public class MaxquantFilesReader {
             }
             csvReader.close();
         } catch (FileNotFoundException ex) {
+            Logger.getLogger(MaxquantFilesReader.class.getName()).log(
+                    Level.SEVERE, null, ex);
             System.out.println("The " + this.peptidesFile.getAbsolutePath()
                     + " can not be found.");
             throw new RuntimeException("The " + this.peptidesFile.

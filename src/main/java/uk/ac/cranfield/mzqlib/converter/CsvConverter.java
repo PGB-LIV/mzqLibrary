@@ -21,6 +21,7 @@ import uk.ac.cranfield.mzqlib.data.QuantitationLevel;
 
 /**
  * CsvConverter is to convert mzq file to csv file.
+ *
  * @author Jun Fan@cranfield
  */
 public class CsvConverter extends GenericConverter {
@@ -29,7 +30,8 @@ public class CsvConverter extends GenericConverter {
 
     /**
      * Constructor.
-     * @param filename input mzq file name.
+     *
+     * @param filename   input mzq file name.
      * @param outputFile output csv file name.
      */
     public CsvConverter(String filename, String outputFile) {
@@ -114,9 +116,11 @@ public class CsvConverter extends GenericConverter {
             }
         }
         BufferedWriter out = null;
+        FileOutputStream fos = null;
         try {
+            fos = new FileOutputStream(outfile);
             out = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(outfile), "UTF-8"));
+                    fos, "UTF-8"));
             out.append(sb.toString());
         } catch (IOException e) {
             System.out.println("Problems while closing file " + outfile + "!\n"
@@ -128,6 +132,14 @@ public class CsvConverter extends GenericConverter {
                 } catch (IOException ex) {
                     Logger.getLogger(CsvConverter.class.getName()).log(
                             Level.SEVERE, null, ex);
+                }
+            }
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(CsvConverter.class.getName()).
+                            log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -196,7 +208,7 @@ public class CsvConverter extends GenericConverter {
     private void outputGlobal(StringBuilder sb, int level,
                               ArrayList<QuantitationLevel> objects) {
         Set<String> globals = MzqLib.DATA.control.getElements(level,
-                                                                  MzqData.GLOBAL);
+                                                              MzqData.GLOBAL);
         if (globals.size() > 0) {
             sb.append("Global\n");
             addEntityHeader(level, sb);

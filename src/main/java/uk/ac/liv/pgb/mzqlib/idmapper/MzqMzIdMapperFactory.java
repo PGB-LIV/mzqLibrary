@@ -747,8 +747,9 @@ public class MzqMzIdMapperFactory {
                     writer.write("\n");
                 }
                 writer.write(MzQuantMLMarshaller.createMzQuantMLClosingTag());
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
+            } catch (IOException ex) {
+                Logger.getLogger(MzqMzIdMapperFactory.class.getName()).log(
+                        Level.SEVERE, null, ex);
             } finally {
                 if (writer != null) {
                     try {

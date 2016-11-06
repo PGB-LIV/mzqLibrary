@@ -24,6 +24,9 @@ import uk.ac.liv.pgb.mzqlib.utils.Gzipper;
 import uk.ac.man.mzqlib.normalisation.PepProtAbundanceNormalisation;
 import uk.ac.man.mzqlib.postprocessing.ProteinAbundanceInference;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * @author Da Qi, adapted from MzIdentMLLib.java
  * @author Fawaz Ghali, University of Liverpool, 2011
@@ -401,7 +404,8 @@ public class MzQuantMLLib implements Serializable {
             mzqLib.init(args);
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Logger.getLogger(MzQuantMLLib.class.getName()).log(
+                    Level.SEVERE, null, ex);
         }
     }
 
@@ -490,6 +494,8 @@ public class MzQuantMLLib implements Serializable {
                                     = "Error running ConsensusXMLConverter: "
                                     + consensusXMLConverterUsage + "\n"
                                     + ex.getMessage();
+                            Logger.getLogger(MzQuantMLLib.class.getName()).log(
+                                    Level.SEVERE, null, ex);
                         }
                     } else if (args[0].equals("MzTabConverter")) {
                         new MzqLib("mztab", inputFileName,

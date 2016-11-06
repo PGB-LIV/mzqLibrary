@@ -626,12 +626,16 @@ public class MainApp extends Application {
 
                 // open the saved pdf file after generation
                 if (Desktop.isDesktopSupported()) {
-                    try {
 
+                    try {
                         Desktop.getDesktop().open(pdfFile);
-                    } catch (IOException ex) {
+
                         // no application registered for PDFs
+                    } catch (IOException ex) {
+                        Logger.getLogger(MainApp.class.getName()).
+                                log(Level.SEVERE, null, ex);
                     }
+
                 }
             });
 
@@ -1054,7 +1058,8 @@ public class MainApp extends Application {
                         log(Level.SEVERE, null, ex);
             } catch (InstantiationException | IllegalAccessException |
                     javax.swing.UnsupportedLookAndFeelException ex) {
-                ex.printStackTrace();
+                Logger.getLogger(MainApp.class.getName()).
+                        log(Level.SEVERE, null, ex);
             }
         });
 
@@ -1317,7 +1322,8 @@ public class MainApp extends Application {
 
             return re;
         } catch (UnsatisfiedLinkError ex) {
-            System.out.println(ex.getLocalizedMessage());
+            Logger.getLogger(MainApp.class.getName()).log(
+                    Level.SEVERE, null, ex);
         }
 
         return null;

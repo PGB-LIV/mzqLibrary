@@ -34,7 +34,9 @@ public class Utils {
 
     /**
      * Convert mzq CvParam to mzTab CvParam.
+     *
      * @param qParam CvParam from mzq file.
+     *
      * @return CvParam of mzTab.
      */
     public static Param convertMztabParam(CvParam qParam) {
@@ -46,7 +48,9 @@ public class Utils {
 
     /**
      * Validate mzq file.
+     *
      * @param mzqFile mzq file name.
+     *
      * @return true if the mzq file is valid.
      */
     public static boolean validateMzqFile(String mzqFile) {
@@ -75,19 +79,22 @@ public class Utils {
             if (ex.getMessage().contains("schema_reference")) {
                 throw new IllegalStateException(
                         "ERROR: Can not find the specified xsd file "
-                        + xsdFile + " to validate the XML file");
+                        + xsdFile + " to validate the XML file", ex);
             } else {
-                throw new IllegalStateException(ex.getMessage());
+                throw new IllegalStateException(ex.getMessage(), ex);
             }
         } catch (Exception e) {
-            throw new IllegalStateException("Exception while validating \n" + e);
+            throw new IllegalStateException("Exception while validating \n" + e,
+                                            e);
         }
         return true;
     }
 
     /**
      * Calculate the mean of list of double.
+     *
      * @param list list of double.
+     *
      * @return the mean of the list of double.
      */
     public static double mean(List<Double> list) {
@@ -99,7 +106,9 @@ public class Utils {
 
     /**
      * Calculate the median of list of double.
+     *
      * @param list list of double.
+     *
      * @return the median of the list of double.
      */
     public static double median(List<Double> list) {
@@ -119,7 +128,9 @@ public class Utils {
 
     /**
      * Calculate the sum of list of double.
+     *
      * @param list list of double.
+     *
      * @return the sum of the list of double.
      */
     public static double sum(List<Double> list) {

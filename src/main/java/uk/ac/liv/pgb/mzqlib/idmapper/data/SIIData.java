@@ -272,7 +272,7 @@ public class SIIData implements Comparable<SIIData> {
      * @return
      */
     private String createPeptideModString() {
-        StringBuffer modString = new StringBuffer();
+        StringBuilder modString = new StringBuilder();
         try {
             Peptide peptide = um.unmarshal(
                     Peptide.class, pepRef);

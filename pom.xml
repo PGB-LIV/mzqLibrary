@@ -93,7 +93,7 @@
                             <header>
                                <![CDATA[<p align="center"><b>${project.name} <br>${project.version}</b></p>]]>
                             </header>      
-                            <reportOutputDirectory>src\docs</reportOutputDirectory>
+                            <reportOutputDirectory>javadocs</reportOutputDirectory>
                             <destDir>api</destDir>                           
                             <nosince>true</nosince>
                             <tags>

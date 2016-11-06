@@ -23,6 +23,7 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.Software;
 
 /**
  * HtmlConverter is to convert mzq file to html file.
+ *
  * @author Jun Fan@cranfield
  */
 public class HtmlConverter extends GenericConverter {
@@ -33,7 +34,8 @@ public class HtmlConverter extends GenericConverter {
 
     /**
      * Constructor.
-     * @param filename input mzq file name.
+     *
+     * @param filename   input mzq file name.
      * @param outputFile output html file name.
      */
     public HtmlConverter(String filename, String outputFile) {
@@ -79,7 +81,8 @@ public class HtmlConverter extends GenericConverter {
 
             } catch (IOException ioe) {
                 throw new IllegalStateException(
-                        "Can not find the template file: " + ioe.getMessage());
+                        "Can not find the template file: " + ioe.getMessage(),
+                        ioe);
             } finally {
                 if (reader != null) {
                     try {
@@ -261,9 +264,11 @@ public class HtmlConverter extends GenericConverter {
         sb.append(templates.get("MAIN_FOOTER"));
 
         BufferedWriter out = null;
+        FileOutputStream fos = null;
         try {
+            fos = new FileOutputStream(outfile);
             out = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(outfile), "UTF-8"));
+                    fos, "UTF-8"));
             out.append(sb.toString());
         } catch (IOException e) {
             System.out.println("Problems while closing file " + outfile + "!\n"
@@ -275,6 +280,14 @@ public class HtmlConverter extends GenericConverter {
                 } catch (IOException ex) {
                     Logger.getLogger(CsvConverter.class.getName()).log(
                             Level.SEVERE, null, ex);
+                }
+            }
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(HtmlConverter.class.getName()).
+                            log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -301,7 +314,7 @@ public class HtmlConverter extends GenericConverter {
             addRatioHeader(level, sb, "<th>", "</th>");
         }
         Set<String> names = MzqLib.DATA.control.getElements(level,
-                                                                MzqData.GLOBAL);
+                                                            MzqData.GLOBAL);
         if (names.size() > 0) {
             if (level == MzqData.FEATURE) {
                 addGlobalHeader(sb, "<th class=\"table-sortable:numeric\">",

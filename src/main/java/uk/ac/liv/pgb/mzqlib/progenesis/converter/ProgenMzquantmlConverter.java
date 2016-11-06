@@ -1550,8 +1550,9 @@ public class ProgenMzquantmlConverter {
      * @param rawPlusNorm flag indicates which type of abundance is in the
      *                    output file.
      *
-     * @throws IOException io exceptions.
-     * @throws DatatypeConfigurationException data type configuration exceptions.
+     * @throws IOException                    io exceptions.
+     * @throws DatatypeConfigurationException data type configuration
+     *                                        exceptions.
      */
     public void convert(String outFn, boolean protGrpList, String rawPlusNorm)
             throws IOException, DatatypeConfigurationException {
@@ -1604,6 +1605,8 @@ public class ProgenMzquantmlConverter {
                 useInQuantMap.putAll(pflr.getUseInQuantMap());
                 assayListFrReader = pflr.getAssayList();
                 flIndexMap.putAll(pflr.getIndexMap());
+            } finally {
+                fis.close();
             }
         }
         if (!plFn.isEmpty()) {
@@ -1625,6 +1628,8 @@ public class ProgenMzquantmlConverter {
                     assayListFrReader = pplr.getAssayList();
                     studyGroupMap = pplr.getStudyGroupMap();
                 }
+            } finally {
+                fis.close();
             }
         }
 

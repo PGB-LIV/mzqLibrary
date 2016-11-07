@@ -22,14 +22,14 @@ import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
  */
 public class Mzq {
 
-    private MzQuantMLUnmarshaller um;
+    private final MzQuantMLUnmarshaller um;
 
     /**
      * Constructor of Mzq class.
      *
      * @param mzqUm the instance of MzQuantMLUnmarshaller
      */
-    public Mzq(MzQuantMLUnmarshaller mzqUm) {
+    public Mzq(final MzQuantMLUnmarshaller mzqUm) {
         this.um = mzqUm;
     }
 
@@ -117,7 +117,8 @@ public class Mzq {
          * @param mz   feature m/z
          * @param rw   feature retention time window
          */
-        public SimpleFeature(String chr, String ftId, double mz, double rw) {
+        public SimpleFeature(final String chr, final String ftId,
+                             final double mz, final double rw) {
             this.charge = chr;
             this.ftId = ftId;
             this.mz = mz;
@@ -134,7 +135,7 @@ public class Mzq {
         /**
          * @param charge the charge to set
          */
-        public void setCharge(String charge) {
+        public void setCharge(final String charge) {
             this.charge = charge;
         }
 
@@ -148,7 +149,7 @@ public class Mzq {
         /**
          * @param ftId the ftId to set
          */
-        public void setFtId(String ftId) {
+        public void setFtId(final String ftId) {
             this.ftId = ftId;
         }
 
@@ -162,7 +163,7 @@ public class Mzq {
         /**
          * @param mz the mz to set
          */
-        public void setMz(double mz) {
+        public void setMz(final double mz) {
             this.mz = mz;
         }
 
@@ -176,13 +177,13 @@ public class Mzq {
         /**
          * @param retWin the retWin to set
          */
-        public void setRetWin(double retWin) {
+        public void setRetWin(final double retWin) {
             this.retWin = retWin;
         }
 
     }
 
-    private double getRetentionWindow(List<Double> massTrace) {
+    private double getRetentionWindow(final List<Double> massTrace) {
         return Math.abs(massTrace.get(0) - massTrace.get(2));
     }
 

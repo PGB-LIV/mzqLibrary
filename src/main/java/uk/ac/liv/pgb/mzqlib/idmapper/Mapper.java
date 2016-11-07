@@ -28,7 +28,7 @@ public class Mapper {
      *
      * @throws IOException I/O exceptions.
      */
-    public static void main(String args[])
+    public static void main(final String args[])
             throws IOException {
 
         //String outMzFn = "CPTAC-Progenesis-after-mapper.mzq";                

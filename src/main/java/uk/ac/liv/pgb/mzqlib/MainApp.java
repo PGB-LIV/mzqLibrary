@@ -134,7 +134,7 @@ public class MainApp extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(final Stage primaryStage) {
 
         //setUserAgentStylesheet(STYLESHEET_CASPIAN);
         setUserAgentStylesheet(STYLESHEET_MODENA);
@@ -176,7 +176,7 @@ public class MainApp extends Application {
         }
     }
 
-    private String getResourceFileText(String resourceRelativePath) {
+    private String getResourceFileText(final String resourceRelativePath) {
         BufferedReader reader;
         try {
             InputStream stream = getClass().getClassLoader().
@@ -193,7 +193,7 @@ public class MainApp extends Application {
         return "";
     }
 
-    private static List<String> readAllLines(BufferedReader reader)
+    private static List<String> readAllLines(final BufferedReader reader)
             throws IOException {
         List<String> lines = new LinkedList<>();
         String line;
@@ -255,7 +255,7 @@ public class MainApp extends Application {
      *
      * @param mzqFile input mzq file.
      */
-    public void loadMzqFile(File mzqFile) {
+    public void loadMzqFile(final File mzqFile) {
 
         closeMzqInfo();
 
@@ -340,7 +340,7 @@ public class MainApp extends Application {
      *
      * @param file last opened file.
      */
-    public void setLastFilePath(File file) {
+    public void setLastFilePath(final File file) {
         Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
         if (file != null) {
             prefs.put("lastFilePath", file.getParent());
@@ -498,7 +498,8 @@ public class MainApp extends Application {
      * @param pdfHValue pdf file height value.
      * @param pdfWValue pdf file width value.
      */
-    public void saveHeatMapPdf(File pdfFile, double pdfHValue, double pdfWValue) {
+    public void saveHeatMapPdf(final File pdfFile, final double pdfHValue,
+                               final double pdfWValue) {
         newStage.hide();
 
         if (re == null) {
@@ -1091,7 +1092,7 @@ public class MainApp extends Application {
      *
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         launch(args);
     }
 
@@ -1105,10 +1106,10 @@ public class MainApp extends Application {
      *
      * @throws JAXBException
      */
-    private void showProteinPeptideLinePlot(MzqDataMatrixRow protRow,
-                                            String dataType,
-                                            ObservableList<TableColumn<MzqDataMatrixRow, ?>> columns,
-                                            LineChart<String, Number> lineChart)
+    private void showProteinPeptideLinePlot(final MzqDataMatrixRow protRow,
+                                            final String dataType,
+                                            final ObservableList<TableColumn<MzqDataMatrixRow, ?>> columns,
+                                            final LineChart<String, Number> lineChart)
             throws JAXBException {
 
         //Get the first PeptideConsensusList and AssayQuantLayer regardless of the finalResult value
@@ -1246,7 +1247,7 @@ public class MainApp extends Application {
      * @return a HashMap contains the same information as in DataMatrix
      */
     private Map<String, List<StringProperty>> convertDataMatrixToHashMap(
-            DataMatrix peptideDM) {
+            final DataMatrix peptideDM) {
         if (peptideDM == null) {
             return null;
         } else {
@@ -1273,7 +1274,7 @@ public class MainApp extends Application {
      *
      * @return a list of StringProperty
      */
-    private List<StringProperty> listStringProperty(List<String> values) {
+    private List<StringProperty> listStringProperty(final List<String> values) {
         if (values == null) {
             return null;
         } else {
@@ -1378,9 +1379,9 @@ public class MainApp extends Application {
      *
      * @return Alert dialog.
      */
-    protected Alert exceptionDialogCreate(String title,
-                                          String content,
-                                          Throwable exception) {
+    protected Alert exceptionDialogCreate(final String title,
+                                          final String content,
+                                          final Throwable exception) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(null);

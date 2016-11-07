@@ -13,12 +13,12 @@ import java.util.Set;
  */
 public class MzqDataControl {
 
-    private Map<Integer, MzqDataControlElement> pgLevel = new HashMap<>();
-    private Map<Integer, MzqDataControlElement> proteinLevel
+    private final Map<Integer, MzqDataControlElement> pgLevel = new HashMap<>();
+    private final Map<Integer, MzqDataControlElement> proteinLevel
             = new HashMap<>();
-    private Map<Integer, MzqDataControlElement> peptideLevel
+    private final Map<Integer, MzqDataControlElement> peptideLevel
             = new HashMap<>();
-    private Map<Integer, MzqDataControlElement> featureLevel
+    private final Map<Integer, MzqDataControlElement> featureLevel
             = new HashMap<>();
 
     /**
@@ -28,7 +28,7 @@ public class MzqDataControl {
      * @param type    the type of the element.
      * @param element the element to be added.
      */
-    public void addElement(int level, int type, String element) {
+    public void addElement(final int level, final int type, final String element) {
         getControlElement(level, type).addElement(element);
     }
 
@@ -41,7 +41,8 @@ public class MzqDataControl {
      *
      * @return ture if specified element is required.
      */
-    public boolean isRequired(int level, int type, String quantityName) {
+    public boolean isRequired(final int level, final int type,
+                              final String quantityName) {
         return getControlElement(level, type).isRequired(quantityName);
     }
 
@@ -53,11 +54,12 @@ public class MzqDataControl {
      *
      * @return set of elements.
      */
-    public Set<String> getElements(int level, int type) {
+    public Set<String> getElements(final int level, final int type) {
         return getControlElement(level, type).getElements();
     }
 
-    private MzqDataControlElement getControlElement(int level, int type) {
+    private MzqDataControlElement getControlElement(final int level,
+                                                    final int type) {
         Map<Integer, MzqDataControlElement> map = null;
         switch (level) {
             case MzqData.PROTEIN_GROUP:
@@ -91,9 +93,9 @@ public class MzqDataControl {
 
 class MzqDataControlElement {
 
-    private Set<String> elements = new HashSet<>();
+    private final Set<String> elements = new HashSet<>();
 
-    boolean isRequired(String quantityName) {
+    boolean isRequired(final String quantityName) {
         if (elements.isEmpty()) {
             return false;
         }
@@ -107,7 +109,7 @@ class MzqDataControlElement {
         return elements;
     }
 
-    void addElement(String element) {
+    void addElement(final String element) {
         elements.add(element);
     }
 

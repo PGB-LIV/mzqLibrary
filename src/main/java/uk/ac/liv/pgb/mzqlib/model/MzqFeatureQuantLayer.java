@@ -24,8 +24,9 @@ public class MzqFeatureQuantLayer extends MzqQuantLayer {
      * @param listId       the specific id of list
      * @param ftQuantLayer the GlobalQuantLayer
      */
-    public MzqFeatureQuantLayer(MzQuantMLUnmarshaller um, String listId,
-                                GlobalQuantLayer ftQuantLayer) {
+    public MzqFeatureQuantLayer(final MzQuantMLUnmarshaller um,
+                                final String listId,
+                                final GlobalQuantLayer ftQuantLayer) {
 
         this.mzqUm = um;
         this.quantLayerType = new SimpleStringProperty("FeatureQuantLayer");

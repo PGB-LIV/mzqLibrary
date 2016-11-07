@@ -56,7 +56,7 @@ public class MzidProcessorFactory {
      *
      * @return the MzidProcessor instance
      */
-    public MzidProcessor buildMzidProcessor(File mzidFile) {
+    public MzidProcessor buildMzidProcessor(final File mzidFile) {
         return new MzidProcessorImpl(mzidFile);
     }
 
@@ -66,15 +66,14 @@ public class MzidProcessorFactory {
         private MzIdentMLUnmarshaller umarsh = null;
         private final Map<String, List<SIIData>> pepModStringToSIIsMap
                 = new HashMap<>();
-        private TIntObjectMap<List<SIIData>> RtToSIIsMap
+        private final TIntObjectMap<List<SIIData>> RtToSIIsMap
                 = new TIntObjectHashMap<>();
         private SearchDatabase searchDB;
 
         /*
          * Constructor
          */
-
-        private MzidProcessorImpl(File mzidFile) {
+        private MzidProcessorImpl(final File mzidFile) {
             if (mzidFile == null) {
                 throw new IllegalStateException(
                         "mzIdentML file must not be null");
@@ -182,7 +181,8 @@ public class MzidProcessorFactory {
      * @return retention time (in minute) in the cvParam of
      *         SpectrumIdentificationResult with accession="MS:1000016"
      */
-    private static double getRetentionTime(SpectrumIdentificationResult sir) {
+    private static double getRetentionTime(
+            final SpectrumIdentificationResult sir) {
         double rt = Double.NaN;
 
         List<CvParam> cvParams = sir.getCvParam();

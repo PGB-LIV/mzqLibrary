@@ -3,6 +3,7 @@ package uk.ac.cranfield.mzqlib.data;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * PeptideSequenceData.
@@ -11,23 +12,15 @@ import java.util.HashMap;
  */
 public class PeptideSequenceData {
 
-    private String sequence;
-//    private ArrayList<String> protein = new ArrayList<String>();
-    private HashMap<String, PeptideData> peptides;
+    private final String sequence;
+    private final Map<String, PeptideData> peptides;
 
-//    public ArrayList<String> getProtein() {
-//        return protein;
-//    }
-//    
-//    public void assignProtein(String proteinID){
-//        protein.add(proteinID);
-//    }
     /**
      * Constructor of PeptideSequenceData.
      *
      * @param sequence peptide sequence.
      */
-    public PeptideSequenceData(String sequence) {
+    public PeptideSequenceData(final String sequence) {
         this.sequence = sequence;
         peptides = new HashMap<>();
     }
@@ -55,7 +48,7 @@ public class PeptideSequenceData {
      *
      * @param peptide new PeptideData.
      */
-    public void addPeptideData(PeptideData peptide) {
+    public void addPeptideData(final PeptideData peptide) {
         String modStr = peptide.getModString();
         if (peptides.containsKey(modStr)) {
             peptides.get(modStr).mergeAnotherPeptideData(peptide);

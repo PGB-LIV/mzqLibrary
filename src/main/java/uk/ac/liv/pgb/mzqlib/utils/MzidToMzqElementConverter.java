@@ -27,7 +27,7 @@ public class MzidToMzqElementConverter {
      * @return list of mzQuantML modifications.
      */
     public static List<Modification> convertMzidModsToMzqMods(
-            List<uk.ac.ebi.jmzidml.model.mzidml.Modification> modifications) {
+            final List<uk.ac.ebi.jmzidml.model.mzidml.Modification> modifications) {
         List<Modification> mzqMods = new ArrayList();
         for (uk.ac.ebi.jmzidml.model.mzidml.Modification mzidMod : modifications) {
             Modification mzqMod = new Modification();
@@ -57,7 +57,7 @@ public class MzidToMzqElementConverter {
      * @return mzQuantML CvParam.
      */
     public static CvParam convertMzidCvParamToMzqCvParam(
-            uk.ac.ebi.jmzidml.model.mzidml.CvParam mzidCp) {
+            final uk.ac.ebi.jmzidml.model.mzidml.CvParam mzidCp) {
         CvParam mzqCp = new CvParam();
 
         if (mzidCp.getAccession() != null) {
@@ -98,7 +98,7 @@ public class MzidToMzqElementConverter {
      * @return mzQuantML UserParam.
      */
     public static UserParam convertMzidUserParamToMzqUserParam(
-            uk.ac.ebi.jmzidml.model.mzidml.UserParam mzidUp) {
+            final uk.ac.ebi.jmzidml.model.mzidml.UserParam mzidUp) {
         UserParam mzqUp = new UserParam();
 
         if (mzidUp.getName() != null) {
@@ -129,7 +129,7 @@ public class MzidToMzqElementConverter {
      * @return mzQuantML CV.
      */
     public static Cv convertMzidCvToMzqCv(
-            uk.ac.ebi.jmzidml.model.mzidml.Cv mzidCv) {
+            final uk.ac.ebi.jmzidml.model.mzidml.Cv mzidCv) {
         Cv mzqCv = new Cv();
 
         if (mzidCv.getFullName() != null) {
@@ -159,7 +159,7 @@ public class MzidToMzqElementConverter {
      * @return mzQuantML FileFormat.
      */
     public static FileFormat convertMzidFileFormatToMzqFileFormat(
-            uk.ac.ebi.jmzidml.model.mzidml.FileFormat mzidFF) {
+            final uk.ac.ebi.jmzidml.model.mzidml.FileFormat mzidFF) {
         FileFormat mzqFF = new FileFormat();
 
         if (mzidFF.getCvParam() != null) {
@@ -180,7 +180,7 @@ public class MzidToMzqElementConverter {
      * @return mzQuantML SearchDatabase.
      */
     public static SearchDatabase convertMzidSDBToMzqSDB(
-            uk.ac.ebi.jmzidml.model.mzidml.SearchDatabase searchDatabase) {
+            final uk.ac.ebi.jmzidml.model.mzidml.SearchDatabase searchDatabase) {
         SearchDatabase sDB = new SearchDatabase();
         if (searchDatabase.getId() != null) {
             sDB.setId(searchDatabase.getId());

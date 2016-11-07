@@ -66,9 +66,9 @@ public class MzqProcessorFactory {
      * @throws JAXBException jaxb exception
      * @throws IOException   io exception
      */
-    public MzqProcessor buildMzqProcessor(MzQuantMLUnmarshaller mzqUm,
-                                          Map<String, String> rawToMzidMap,
-                                          double mzWin, double rtWin)
+    public MzqProcessor buildMzqProcessor(final MzQuantMLUnmarshaller mzqUm,
+                                          final Map<String, String> rawToMzidMap,
+                                          final double mzWin, final double rtWin)
             throws JAXBException, IOException {
         return new MzqProcessorImpl(mzqUm, rawToMzidMap, mzWin, rtWin);
     }
@@ -85,8 +85,8 @@ public class MzqProcessorFactory {
      * @throws JAXBException jaxb exception
      * @throws IOException   io exception
      */
-    public MzqProcessor buildMzqProcessor(MzQuantMLUnmarshaller mzqUm,
-                                          Map<String, String> rawToMzidMap)
+    public MzqProcessor buildMzqProcessor(final MzQuantMLUnmarshaller mzqUm,
+                                          final Map<String, String> rawToMzidMap)
             throws JAXBException, IOException, JAXBException, JAXBException {
         return new MzqProcessorImpl(mzqUm, rawToMzidMap);
     }
@@ -104,9 +104,9 @@ public class MzqProcessorFactory {
      * @throws JAXBException jaxb exception
      * @throws IOException   io exception
      */
-    public MzqProcessor buildMzqProcessor(MzQuantMLUnmarshaller mzqUm,
-                                          Map<String, String> rawToMzidMap,
-                                          Tolerance msTolerance)
+    public MzqProcessor buildMzqProcessor(final MzQuantMLUnmarshaller mzqUm,
+                                          final Map<String, String> rawToMzidMap,
+                                          final Tolerance msTolerance)
             throws JAXBException, IOException {
         return new MzqProcessorImpl(mzqUm, rawToMzidMap, msTolerance);
     }
@@ -118,23 +118,24 @@ public class MzqProcessorFactory {
                 = new FeatureSiiMatchManager();
         private SearchDatabase searchDB;
 
-        private MzqProcessorImpl(MzQuantMLUnmarshaller mzqUm,
-                                 Map<String, String> rawToMzidMap,
-                                 Tolerance msTolerance)
+        private MzqProcessorImpl(final MzQuantMLUnmarshaller mzqUm,
+                                 final Map<String, String> rawToMzidMap,
+                                 final Tolerance msTolerance)
                 throws JAXBException, IOException {
             this(mzqUm, rawToMzidMap, msTolerance, 1.0 / 3.0);
         }
 
-        private MzqProcessorImpl(MzQuantMLUnmarshaller mzqUm,
-                                 Map<String, String> rawToMzidMap, double mzWin,
-                                 double rtWin)
+        private MzqProcessorImpl(final MzQuantMLUnmarshaller mzqUm,
+                                 final Map<String, String> rawToMzidMap,
+                                 final double mzWin,
+                                 final double rtWin)
                 throws JAXBException, IOException {
             this(mzqUm, rawToMzidMap, new Tolerance(mzWin / 2.0,
                                                     ToleranceUnit.DALTON), rtWin);
         }
 
-        private MzqProcessorImpl(MzQuantMLUnmarshaller mzqUm,
-                                 Map<String, String> rawToMzidMap)
+        private MzqProcessorImpl(final MzQuantMLUnmarshaller mzqUm,
+                                 final Map<String, String> rawToMzidMap)
                 throws JAXBException, IOException {
             this(mzqUm, rawToMzidMap, new Tolerance(0.1, ToleranceUnit.DALTON),
                  1.0 / 3.0);
@@ -143,10 +144,10 @@ public class MzqProcessorFactory {
         /*
          * Constructor
          */
-        private MzqProcessorImpl(MzQuantMLUnmarshaller mzqUm,
-                                 Map<String, String> rawToMzidMap,
-                                 Tolerance msTolerance,
-                                 double rtWin)
+        private MzqProcessorImpl(final MzQuantMLUnmarshaller mzqUm,
+                                 final Map<String, String> rawToMzidMap,
+                                 final Tolerance msTolerance,
+                                 final double rtWin)
                 throws JAXBException, IOException {
 
             this.mzqUm = mzqUm;
@@ -324,8 +325,9 @@ public class MzqProcessorFactory {
      *
      * @return true if test double falls in the given range; false otherwise
      */
-    private static boolean isInRange(double test, double rangeBoundary1,
-                                     double rangeBoundary2) {
+    private static boolean isInRange(final double test,
+                                     final double rangeBoundary1,
+                                     final double rangeBoundary2) {
         if (rangeBoundary1 <= rangeBoundary2) {
             return test >= rangeBoundary1 && test <= rangeBoundary2;
         } else {

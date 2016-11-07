@@ -101,8 +101,8 @@ public class MzqMzIdMapperFactory {
      * @throws JAXBException jaxb exception
      * @throws IOException   io exception
      */
-    public MzqMzIdMapper buildMzqMzIdMapper(MzQuantMLUnmarshaller mzqUm,
-                                            String rawToMzidString)
+    public MzqMzIdMapper buildMzqMzIdMapper(final MzQuantMLUnmarshaller mzqUm,
+                                            final String rawToMzidString)
             throws JAXBException, IOException {
         return buildMzqMzIdMapper(mzqUm, rawToMzidString, new Tolerance(0.1,
                                                                         ToleranceUnit.DALTON));
@@ -124,9 +124,9 @@ public class MzqMzIdMapperFactory {
      * @throws JAXBException jaxb exception
      * @throws IOException   io exception
      */
-    public MzqMzIdMapper buildMzqMzIdMapper(MzQuantMLUnmarshaller mzqUm,
-                                            String rawToMzidString,
-                                            Tolerance msTolerance)
+    public MzqMzIdMapper buildMzqMzIdMapper(final MzQuantMLUnmarshaller mzqUm,
+                                            final String rawToMzidString,
+                                            final Tolerance msTolerance)
             throws JAXBException, IOException {
         String[] rawToMzidMapArray = rawToMzidString.split(";");
         Map<String, String> rawToMzidMap = new HashMap<>();
@@ -164,8 +164,8 @@ public class MzqMzIdMapperFactory {
      * @throws JAXBException jaxb exception
      * @throws IOException   io exception
      */
-    public MzqMzIdMapper buildMzqMzIdMapper(MzQuantMLUnmarshaller mzqUm,
-                                            Map<String, String> rawToMzidMap)
+    public MzqMzIdMapper buildMzqMzIdMapper(final MzQuantMLUnmarshaller mzqUm,
+                                            final Map<String, String> rawToMzidMap)
             throws JAXBException, IOException {
         return buildMzqMzIdMapper(mzqUm, rawToMzidMap, new Tolerance(0.1,
                                                                      ToleranceUnit.DALTON));
@@ -184,9 +184,9 @@ public class MzqMzIdMapperFactory {
      * @throws JAXBException jaxb exception
      * @throws IOException   io exception
      */
-    public MzqMzIdMapper buildMzqMzIdMapper(MzQuantMLUnmarshaller mzqUm,
-                                            Map<String, String> rawToMzidMap,
-                                            Tolerance msTolerance)
+    public MzqMzIdMapper buildMzqMzIdMapper(final MzQuantMLUnmarshaller mzqUm,
+                                            final Map<String, String> rawToMzidMap,
+                                            final Tolerance msTolerance)
             throws JAXBException, IOException {
         return new MzqMzIdMapperImpl(mzqUm, rawToMzidMap, msTolerance);
     }
@@ -199,24 +199,25 @@ public class MzqMzIdMapperFactory {
         // Map of PeptideConsensus ID to possible peptide sequence list
         //private Map<String, List<String>> pepConOldToPepSeqsMap = new HashMap<>();
         //private Map<String, List<String>> protToPepSeqsMap = new HashMap<>();
-        private Map<String, List<String>> pepConOldToPepModStringsMap
+        private final Map<String, List<String>> pepConOldToPepModStringsMap
                 = new HashMap<>();
-        private Map<String, String> pepConOldIdToNewIdMap = new HashMap<>();
+        private final Map<String, String> pepConOldIdToNewIdMap
+                = new HashMap<>();
         private Map<String, String> rawToMzidMap = new HashMap<>();
-        private Map<String, String> mzidFnToFileIdMap = new HashMap<>();
-        private List<PeptideConsensusList> pepConLists = new ArrayList();
-        private Map<String, List<String>> pepConNewIdToProtAccsMap
+        private final Map<String, String> mzidFnToFileIdMap = new HashMap<>();
+        private final List<PeptideConsensusList> pepConLists = new ArrayList();
+        private final Map<String, List<String>> pepConNewIdToProtAccsMap
                 = new HashMap<>();
-        private Map<String, List<String>> protAccToPepConNewIdsMap
+        private final Map<String, List<String>> protAccToPepConNewIdsMap
                 = new HashMap<>();
         private SearchDatabase searchDB = new SearchDatabase();
 
         /*
          * Constructor
          */
-        private MzqMzIdMapperImpl(MzQuantMLUnmarshaller mzqUm,
-                                  Map<String, String> rawToMzidMap,
-                                  Tolerance msTolerance)
+        private MzqMzIdMapperImpl(final MzQuantMLUnmarshaller mzqUm,
+                                  final Map<String, String> rawToMzidMap,
+                                  final Tolerance msTolerance)
                 throws JAXBException, IOException {
 
             this.mzqUm = mzqUm;
@@ -554,8 +555,8 @@ public class MzqMzIdMapperFactory {
 
             @Override
             // descending 
-            public int compare(Entry<String, List<String>> o1,
-                               Entry<String, List<String>> o2) {
+            public int compare(final Entry<String, List<String>> o1,
+                               final Entry<String, List<String>> o2) {
                 List<String> key1 = o1.getValue();
                 List<String> key2 = o2.getValue();
                 return key2.size() - key1.size();
@@ -564,7 +565,7 @@ public class MzqMzIdMapperFactory {
         }
 
         @Override
-        public void createMappedFile(File outputFile)
+        public void createMappedFile(final File outputFile)
                 throws JAXBException, IOException {
 
             // retrieve every attributes and elements from the mzQuantML file

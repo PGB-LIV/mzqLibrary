@@ -91,7 +91,7 @@ public class MzqInfoController {
      *
      * @param mainApp main app.
      */
-    public void setMainApp(MainApp mainApp) {
+    public void setMainApp(final MainApp mainApp) {
         this.mainApp = mainApp;
         quantLayerTable.getItems().addAll(mainApp.getMzqAssayQuantLayerData());
         quantLayerTable.getItems().addAll(mainApp.getMzqFeatureQuantLayerData());
@@ -102,7 +102,7 @@ public class MzqInfoController {
      *
      * @param sum mzq summary.
      */
-    public void showMzqSummary(MzQuantMLSummary sum) {
+    public void showMzqSummary(final MzQuantMLSummary sum) {
 
         numberProteinGroupList.textProperty().bind(Bindings.format("%d", sum.
                                                                    proteinGroupListNumber()));
@@ -115,7 +115,7 @@ public class MzqInfoController {
         software.textProperty().bind(sum.getSoftware());
     }
 
-    private void showAssayQLDetails(MzqQuantLayer assayQL) {
+    private void showAssayQLDetails(final MzqQuantLayer assayQL) {
         if (assayQL != null) {
             //if (assayQL.getListId())
             // Clear the table
@@ -131,7 +131,7 @@ public class MzqInfoController {
             curveMenuItem.setOnAction(new EventHandler() {
 
                 @Override
-                public void handle(Event event) {
+                public void handle(final Event event) {
                     try {
                         mainApp.showCurve();
                     } catch (JAXBException ex) {

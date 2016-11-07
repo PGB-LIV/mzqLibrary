@@ -123,7 +123,7 @@ public class MaxquantMzquantmlConverter {
      *
      * @throws IOException io exception
      */
-    public MaxquantMzquantmlConverter(String inputFolder)
+    public MaxquantMzquantmlConverter(final String inputFolder)
             throws IOException {
         this.maxRd = new MaxquantFilesReader(inputFolder);
     }
@@ -139,11 +139,11 @@ public class MaxquantMzquantmlConverter {
      *
      * @throws IOException io exception
      */
-    public MaxquantMzquantmlConverter(String evidenceFn,
-                                      String peptidesFn,
-                                      String proteinGroupsFn,
-                                      String experimentalDesignTemplateFn,
-                                      String summaryFn)
+    public MaxquantMzquantmlConverter(final String evidenceFn,
+                                      final String peptidesFn,
+                                      final String proteinGroupsFn,
+                                      final String experimentalDesignTemplateFn,
+                                      final String summaryFn)
             throws IOException {
 
         File evidenceFile;
@@ -423,7 +423,8 @@ public class MaxquantMzquantmlConverter {
             else //TODO: this is fixed label modification just used for example file
             //TODO: need to find a better way to form this later
             //find out if it is light or heavy label assay
-             if (assName.toLowerCase(Locale.ENGLISH).contains("light")) {
+            {
+                if (assName.toLowerCase(Locale.ENGLISH).contains("light")) {
                     assay.setLabel(label);
                     assays.add(assay);
                 } else if (assName.toLowerCase(Locale.ENGLISH).contains("heavy")) {
@@ -451,6 +452,7 @@ public class MaxquantMzquantmlConverter {
                     assay.setLabel(label_heavy);
                     assays.add(assay);
                 }
+            }
             ass_i++;
         }
     }
@@ -1162,7 +1164,7 @@ public class MaxquantMzquantmlConverter {
         dpList.getDataProcessing().add(dataProcessing);
     }
 
-    private void writeMzqFile(String out) {
+    private void writeMzqFile(final String out) {
         OutputStreamWriter writer = null;
         try {
             MzQuantMLMarshaller mzqMsh = new MzQuantMLMarshaller();
@@ -1278,7 +1280,7 @@ public class MaxquantMzquantmlConverter {
      *
      * @throws IOException io exception
      */
-    public void convert(String outputFn)
+    public void convert(final String outputFn)
             throws IOException {
 
         /**
@@ -1322,8 +1324,8 @@ public class MaxquantMzquantmlConverter {
         writeMzqFile(outputFn);
     }
 
-    private static CvParam createCvParam(String name, String cvRef,
-                                         String accession) {
+    private static CvParam createCvParam(final String name, final String cvRef,
+                                         final String accession) {
         CvParam cp = new CvParam();
         cp.setName(name);
         Cv cv = new Cv();
@@ -1333,7 +1335,7 @@ public class MaxquantMzquantmlConverter {
         return cp;
     }
 
-    private static Column createColumn(long index, CvParam cvParam) {
+    private static Column createColumn(final long index, final CvParam cvParam) {
         Column column = new Column();
         column.setIndex(BigInteger.valueOf(index));
         CvParamRef cvParamRef = new CvParamRef();

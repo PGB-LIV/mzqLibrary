@@ -17,8 +17,8 @@ public class GenericInferenceMethod {
      * lower level
      */
     private static Map<String, List<Double>> assignMiddleStructure(
-            List<String> assayIDs,
-            List<Map<String, Double>> lowLevelQuant) {
+            final List<String> assayIDs,
+            final List<Map<String, Double>> lowLevelQuant) {
         Map<String, List<Double>> tmp = initializeMiddleStructure(
                 assayIDs);
         for (Map<String, Double> quant : lowLevelQuant) {
@@ -38,7 +38,7 @@ public class GenericInferenceMethod {
      * the list of related values
      */
     private static Map<String, List<Double>> initializeMiddleStructure(
-            List<String> assayIDs) {
+            final List<String> assayIDs) {
         Map<String, List<Double>> tmp = new HashMap<>();
         for (String assayID : assayIDs) {
             List<Double> value = new ArrayList<>();
@@ -50,7 +50,7 @@ public class GenericInferenceMethod {
     /**
      * initialize the ret value
      */
-    private static Map<String, Double> initializeRet(List<String> names) {
+    private static Map<String, Double> initializeRet(final List<String> names) {
         Map<String, Double> ret = new HashMap<>();
         for (String name : names) {
             ret.put(name, 0d);
@@ -67,8 +67,8 @@ public class GenericInferenceMethod {
      * @return sum
      */
     public static Map<String, Double> sum(
-            List<Map<String, Double>> lowLevelQuant,
-            List<String> assayIDs) {
+            final List<Map<String, Double>> lowLevelQuant,
+            final List<String> assayIDs) {
         Map<String, Double> ret = initializeRet(assayIDs);
         Map<String, List<Double>> tmp = assignMiddleStructure(assayIDs,
                                                               lowLevelQuant);
@@ -88,8 +88,8 @@ public class GenericInferenceMethod {
      * @return median
      */
     public static Map<String, Double> median(
-            List<Map<String, Double>> lowLevelQuant,
-            List<String> assayIDs) {
+            final List<Map<String, Double>> lowLevelQuant,
+            final List<String> assayIDs) {
         Map<String, Double> ret = initializeRet(assayIDs);
         Map<String, List<Double>> tmp = assignMiddleStructure(assayIDs,
                                                               lowLevelQuant);
@@ -110,8 +110,8 @@ public class GenericInferenceMethod {
      * @return mean
      */
     public static Map<String, Double> mean(
-            List<Map<String, Double>> lowLevelQuant,
-            List<String> assayIDs) {
+            final List<Map<String, Double>> lowLevelQuant,
+            final List<String> assayIDs) {
         Map<String, Double> ret = initializeRet(assayIDs);
         Map<String, List<Double>> tmp = assignMiddleStructure(assayIDs,
                                                               lowLevelQuant);
@@ -132,8 +132,8 @@ public class GenericInferenceMethod {
      * @return weighted mean
      */
     public static Map<String, Double> weightedAverage(
-            List<Map<String, Double>> lowLevelQuant,
-            List<String> assayIDs, List<Integer> count) {
+            final List<Map<String, Double>> lowLevelQuant,
+            final List<String> assayIDs, final List<Integer> count) {
         Map<String, Double> ret = initializeRet(assayIDs);
         Map<String, List<Double>> tmp = initializeMiddleStructure(
                 assayIDs);

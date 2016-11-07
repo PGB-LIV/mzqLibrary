@@ -26,7 +26,8 @@ public class Utils {
      *
      * @return rounded double.
      */
-    public static double round(double value, int numberOfDecimalPlaces) {
+    public static double round(final double value,
+                               final int numberOfDecimalPlaces) {
         double multipicationFactor = Math.pow(10, numberOfDecimalPlaces);
         return Math.round(value * multipicationFactor) / multipicationFactor;
     }
@@ -94,8 +95,8 @@ public class Utils {
      *         If the parameter is not
      *         found but is required, it throws an error.
      */
-    public static String getCmdParameter(String[] args, String name,
-                                         boolean required) {
+    public static String getCmdParameter(final String[] args, final String name,
+                                         final boolean required) {
         for (int i = 0; i < args.length; i++) {
             String argName = args[i];
             if (argName.equals("-" + name)) {

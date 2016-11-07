@@ -39,7 +39,8 @@ public class ExtendedFeature extends Feature {
      *                    minutes. Only
      *                    used if the feature mass trace is null or empty.
      */
-    public ExtendedFeature(Feature ft, Tolerance msTolerance, double rtWin) {
+    public ExtendedFeature(final Feature ft, final Tolerance msTolerance,
+                           final double rtWin) {
         super();
         feature = ft;
         List<Double> massT = feature.getMassTrace();
@@ -79,7 +80,7 @@ public class ExtendedFeature extends Feature {
      *
      * @param ft Feature
      */
-    public ExtendedFeature(Feature ft) {
+    public ExtendedFeature(final Feature ft) {
         this(ft, new Tolerance(0.1, ToleranceUnit.DALTON), 1.0 / 3.0);
     }
 

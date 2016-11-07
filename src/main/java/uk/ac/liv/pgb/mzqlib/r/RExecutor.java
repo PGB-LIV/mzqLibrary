@@ -27,7 +27,7 @@ public class RExecutor {
      * @param command command string.
      * @param args    input argument.
      */
-    public RExecutor(String command, String[] args) {
+    public RExecutor(final String command, final String[] args) {
         this.command = command;
         this.args = Arrays.copyOf(args, args.length);
     }

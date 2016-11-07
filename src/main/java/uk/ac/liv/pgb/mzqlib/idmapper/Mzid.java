@@ -26,7 +26,7 @@ public class Mzid {
      *
      * @param mzidUm MzIdentMLUnmarshaller instance
      */
-    public Mzid(MzIdentMLUnmarshaller mzidUm) {
+    public Mzid(final MzIdentMLUnmarshaller mzidUm) {
         this.um = mzidUm;
     }
 
@@ -68,7 +68,7 @@ public class Mzid {
         return retMap;
     }
 
-    private SIIData getSIIData(SpectrumIdentificationItem sii) {
+    private SIIData getSIIData(final SpectrumIdentificationItem sii) {
 
         int rank = sii.getRank();
         boolean passTh = sii.isPassThreshold();
@@ -83,14 +83,14 @@ public class Mzid {
     }
 
     /**
-     * 
+     *
      * @param sir
      *
      * @return retention time in the cvParam of SpectrumIdentificationResult
      *         with accession="MS:1000796"
      */
     @SuppressWarnings("unused")
-    private double getRetentionTime(SpectrumIdentificationResult sir) {
+    private double getRetentionTime(final SpectrumIdentificationResult sir) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
@@ -127,7 +127,8 @@ public class Mzid {
          * @param rt     retention time
          * @param siiID  SpectrumIdentification id
          */
-        public SIIData(String charge, double mz, double rt, String siiID) {
+        public SIIData(final String charge, final double mz, final double rt,
+                       final String siiID) {
             this.charge = charge;
             this.mz = mz;
             this.rt = rt;
@@ -144,7 +145,7 @@ public class Mzid {
         /**
          * @param charge the charge to set
          */
-        public void setCharge(String charge) {
+        public void setCharge(final String charge) {
             this.charge = charge;
         }
 
@@ -158,7 +159,7 @@ public class Mzid {
         /**
          * @param mz the mz to set
          */
-        public void setMz(double mz) {
+        public void setMz(final double mz) {
             this.mz = mz;
         }
 
@@ -172,7 +173,7 @@ public class Mzid {
         /**
          * @param rt the rt to set
          */
-        public void setRt(double rt) {
+        public void setRt(final double rt) {
             this.rt = rt;
         }
 
@@ -186,7 +187,7 @@ public class Mzid {
         /**
          * @param siiID the siiID to set
          */
-        public void setSiiID(String siiID) {
+        public void setSiiID(final String siiID) {
             this.siiID = siiID;
         }
 

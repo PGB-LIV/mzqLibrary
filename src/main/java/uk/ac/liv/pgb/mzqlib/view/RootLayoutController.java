@@ -45,7 +45,7 @@ public class RootLayoutController {
      *
      * @param mainApp main app.
      */
-    public void setMainApp(MainApp mainApp) {
+    public void setMainApp(final MainApp mainApp) {
         this.mainApp = mainApp;
     }
 

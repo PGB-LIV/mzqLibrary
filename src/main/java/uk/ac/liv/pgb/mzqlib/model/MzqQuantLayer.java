@@ -170,7 +170,7 @@ public class MzqQuantLayer {
      * @param columnNames the columnNames to set
      */
     public void setColumnNames(
-            List<StringProperty> columnNames) {
+            final List<StringProperty> columnNames) {
         this.columnNames = columnNames;
     }
 
@@ -192,7 +192,7 @@ public class MzqQuantLayer {
      * @param dmRows the dmRows to set
      */
     public void setDmRows(
-            List<MzqDataMatrixRow> dmRows) {
+            final List<MzqDataMatrixRow> dmRows) {
         this.dmRows = dmRows;
     }
 

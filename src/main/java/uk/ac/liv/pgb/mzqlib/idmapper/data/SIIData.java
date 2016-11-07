@@ -39,7 +39,8 @@ public class SIIData implements Comparable<SIIData> {
      * @param sii    SpectrumIdentificationItem
      * @param umarsh MzIdentMLUnmarshaller
      */
-    public SIIData(SpectrumIdentificationItem sii, MzIdentMLUnmarshaller umarsh) {
+    public SIIData(final SpectrumIdentificationItem sii,
+                   final MzIdentMLUnmarshaller umarsh) {
 
         this.um = umarsh;
         this.pepRef = sii.getPeptideRef();
@@ -157,7 +158,7 @@ public class SIIData implements Comparable<SIIData> {
      *
      * @param rt retention time in double value
      */
-    public void setRetentionTime(double rt) {
+    public void setRetentionTime(final double rt) {
         this.rt = rt;
     }
 
@@ -178,7 +179,7 @@ public class SIIData implements Comparable<SIIData> {
      * @return compare result.
      */
     @Override
-    public int compareTo(SIIData compareSIIData) {
+    public int compareTo(final SIIData compareSIIData) {
         String compareModString = compareSIIData.getPeptideModString();
 
         //ascending order
@@ -195,7 +196,7 @@ public class SIIData implements Comparable<SIIData> {
             = new Comparator<SIIData>() {
 
         @Override
-        public int compare(SIIData siiData1, SIIData siiData2) {
+        public int compare(final SIIData siiData1, final SIIData siiData2) {
             double rt1 = siiData1.getRetentionTime();
             double rt2 = siiData2.getRetentionTime();
 
@@ -216,7 +217,7 @@ public class SIIData implements Comparable<SIIData> {
      * @return true if both are equal.
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == null) {
             return false;
         }
@@ -316,7 +317,7 @@ public class SIIData implements Comparable<SIIData> {
      *
      * @param mzidFn the mzIdentML file name
      */
-    public void setMzidFn(String mzidFn) {
+    public void setMzidFn(final String mzidFn) {
         this.mzidFn = mzidFn;
     }
 
@@ -326,7 +327,7 @@ public class SIIData implements Comparable<SIIData> {
      *
      * @param sequence peptide sequence
      */
-    public void setSequence(String sequence) {
+    public void setSequence(final String sequence) {
         this.sequence = sequence;
     }
 

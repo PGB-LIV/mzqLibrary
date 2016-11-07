@@ -63,8 +63,8 @@ public class PepProtAbundanceNormalisation {
     final static double coefficientMAD = 1.4826; //scale factor, 
 
     private int maximumThreads = 4;
-    private String in_file;
-    private String out_file;
+    private final String in_file;
+    private final String out_file;
     private String normalisedLevel;
     private String quantLayerType;
     private String inputDataTypeAccession;
@@ -73,13 +73,13 @@ public class PepProtAbundanceNormalisation {
 //    private int assMin;
 //    private int assMax;
 
-    private String cvParamId;
+    private final String cvParamId;
     private String outputDataTypeName;
     private String inputQuantLayerID;
     private String outputQuantLayerID;
 
 //    private int referenceNumber;
-    private String userRef;
+    private final String userRef;
     //private String setType;
     //private Map<String, List<String>> scalingFactor;
     //private String preferedRef;
@@ -94,7 +94,7 @@ public class PepProtAbundanceNormalisation {
      *
      * @param maximumThreads - Number of maximum threads
      */
-    public void setMaximumThreads(int maximumThreads) {
+    public void setMaximumThreads(final int maximumThreads) {
         this.maximumThreads = maximumThreads;
     }
 
@@ -103,7 +103,7 @@ public class PepProtAbundanceNormalisation {
      *
      * @param normLev - normalised level
      */
-    public void setNormLevel(String normLev) {
+    public void setNormLevel(final String normLev) {
         normalisedLevel = normLev;
     }
 
@@ -112,7 +112,7 @@ public class PepProtAbundanceNormalisation {
      *
      * @param qlt - quant layer type
      */
-    public void setQuantLT(String qlt) {
+    public void setQuantLT(final String qlt) {
         quantLayerType = qlt;
     }
 
@@ -121,7 +121,7 @@ public class PepProtAbundanceNormalisation {
      *
      * @param inDTA - data type accession for input
      */
-    public void setInDTAcc(String inDTA) {
+    public void setInDTAcc(final String inDTA) {
         inputDataTypeAccession = inDTA;
     }
 
@@ -130,7 +130,7 @@ public class PepProtAbundanceNormalisation {
      *
      * @param outDTA - data type accession for output
      */
-    public void setOutDTAcc(String outDTA) {
+    public void setOutDTAcc(final String outDTA) {
         outputDataTypeAccession = outDTA;
     }
 
@@ -139,7 +139,7 @@ public class PepProtAbundanceNormalisation {
      *
      * @param td - decoy tag
      */
-    public void setTagDecoy(String td) {
+    public void setTagDecoy(final String td) {
         tagDecoy = td;
     }
 
@@ -148,7 +148,7 @@ public class PepProtAbundanceNormalisation {
      *
      * @param outDTCN - output data type CV name
      */
-    public void setOutputAssayDTCN(String outDTCN) {
+    public void setOutputAssayDTCN(final String outDTCN) {
         outputDataTypeName = outDTCN;
     }
 
@@ -160,13 +160,12 @@ public class PepProtAbundanceNormalisation {
 //    public void setIDType(String idType) {
 //        this.setType = idType;
 //    }
-
     /**
      * set unmarshalling file for mzQuantML object
      *
      * @param um - unmarshalling input file
      */
-    public void setUMInfile(MzQuantMLUnmarshaller um) {
+    public void setUMInfile(final MzQuantMLUnmarshaller um) {
         inFileUM = um;
     }
 
@@ -187,13 +186,15 @@ public class PepProtAbundanceNormalisation {
      *
      * @throws FileNotFoundException file not found exceptions.
      */
-    public PepProtAbundanceNormalisation(String in_file, String out_file,
-                                         String normalisedLevel,
-                                         String quantLayerType,
-                                         String inputDataTypeAccession,
-                                         String outputDataTypeAccession,
-                                         String outputDataTypeName,
-                                         String tagDecoy, String userRef)
+    public PepProtAbundanceNormalisation(final String in_file,
+                                         final String out_file,
+                                         final String normalisedLevel,
+                                         final String quantLayerType,
+                                         final String inputDataTypeAccession,
+                                         final String outputDataTypeAccession,
+                                         final String outputDataTypeName,
+                                         final String tagDecoy,
+                                         final String userRef)
             throws FileNotFoundException {
 
         this.in_file = in_file;
@@ -457,7 +458,7 @@ public class PepProtAbundanceNormalisation {
      * @return normalised assay values
      */
     public Map<String, List<String>> getNormalisationValues(
-            String[] scalingFactors) {
+            final String[] scalingFactors) {
         Map<String, List<String>> normalisedFeatureAssayVal
                 = normalisedFeatureAssayValue(scalingFactors);
         return normalisedFeatureAssayVal;
@@ -470,8 +471,8 @@ public class PepProtAbundanceNormalisation {
      *
      * @return scaling factors
      */
-    private String[] getScalingFactors(int referenceNumber,
-                                       Map<String, List<String>> AV) {
+    private String[] getScalingFactors(final int referenceNumber,
+                                       final Map<String, List<String>> AV) {
         Map<String, List<String>> normalisedPepAssayVal = normalisedAssayValue(
                 String.valueOf(referenceNumber), AV);
         List<String> sf = normalisedPepAssayVal.get("scalingfactor");
@@ -491,7 +492,7 @@ public class PepProtAbundanceNormalisation {
      * @return reference number
      */
     private int getPreferredReferenceFile(
-            Set<ScaleFactorCalculationResult> results) {
+            final Set<ScaleFactorCalculationResult> results) {
         double[] std = new double[results.size()];
 
         for (ScaleFactorCalculationResult result : results) {
@@ -529,7 +530,7 @@ public class PepProtAbundanceNormalisation {
      *
      * @return true/false
      */
-    private boolean checkLFcvParam(MzQuantMLUnmarshaller um) {
+    private boolean checkLFcvParam(final MzQuantMLUnmarshaller um) {
         boolean flag_lf = false;
 //        MzQuantML mzq = um.unmarshal(MzQuantMLElement.MzQuantML);
         AnalysisSummary analysisSummary = um.unmarshal(
@@ -638,7 +639,7 @@ public class PepProtAbundanceNormalisation {
      *
      * @return peptide assay values
      */
-    private Map<String, List<String>> peptideAssayValue(String st) {
+    private Map<String, List<String>> peptideAssayValue(final String st) {
 //    private boolean PeptideAssayValue(MzQuantMLUnmarshaller in_file_um, String aql_id, String set_type) {
 //        boolean first_list = false;
 
@@ -828,8 +829,8 @@ public class PepProtAbundanceNormalisation {
      *
      * @return the map with the normalised values
      */
-    private Map<String, List<String>> normalisedAssayValue(String ref,
-                                                           Map<String, List<String>> PAV) {
+    private Map<String, List<String>> normalisedAssayValue(final String ref,
+                                                           final Map<String, List<String>> PAV) {
         Map<String, List<String>> normalisedPAV
                 = new HashMap<>();
         //Map<String, List<String>> ratioPAV = new HashMap<>();
@@ -1038,7 +1039,7 @@ public class PepProtAbundanceNormalisation {
      * @return normalised feature assay value
      */
     private Map<String, List<String>> normalisedFeatureAssayValue(
-            String[] scalingFactor) {
+            final String[] scalingFactor) {
         Map<String, List<String>> normalisedFAV
                 = new HashMap<>();
         Set<Entry<String, List<String>>> featureEntrys = featureAssayValues.
@@ -1119,7 +1120,7 @@ public class PepProtAbundanceNormalisation {
      * @param normalisedPepAssayVal - normalised peptide assay values
      */
     private void outputMzqPeptideNormalisation(
-            Map<String, List<String>> normalisedPepAssayVal) {
+            final Map<String, List<String>> normalisedPepAssayVal) {
         PeptideConsensusList pepConList = inFileUM.unmarshal(
                 MzQuantMLElement.PeptideConsensusList);
         List<QuantLayer<IdOnly>> assayQLs = pepConList.getAssayQuantLayer();
@@ -1275,7 +1276,7 @@ public class PepProtAbundanceNormalisation {
 
         private final int referenceNumber;
 
-        public ScaleFactorCalculation(int referenceNumber) {
+        public ScaleFactorCalculation(final int referenceNumber) {
             this.referenceNumber = referenceNumber;
         }
 
@@ -1322,8 +1323,8 @@ public class PepProtAbundanceNormalisation {
         private final int referenceNumber;
         private final List<String> scalingFactors;
 
-        public ScaleFactorCalculationResult(int referenceNumber,
-                                            List<String> scalingFactors) {
+        public ScaleFactorCalculationResult(final int referenceNumber,
+                                            final List<String> scalingFactors) {
             this.referenceNumber = referenceNumber;
             this.scalingFactors = scalingFactors;
         }
@@ -1343,7 +1344,7 @@ public class PepProtAbundanceNormalisation {
 
         @Override
         public ScaleFactorCalculationResult apply(
-                Future<ScaleFactorCalculationResult> t) {
+                final Future<ScaleFactorCalculationResult> t) {
             try {
                 return t.get();
             } catch (InterruptedException | ExecutionException ex) {

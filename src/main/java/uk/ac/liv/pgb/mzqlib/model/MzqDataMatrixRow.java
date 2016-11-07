@@ -15,7 +15,7 @@ public class MzqDataMatrixRow {
 
     private StringProperty objectId;
     private StringProperty objectValue; // Sequence or accession
-    private List<StringProperty> values;
+    private final List<StringProperty> values;
 
     /**
      * Constructor of MzqDataMatrixRow.
@@ -60,7 +60,7 @@ public class MzqDataMatrixRow {
      *
      * @return the value of specific position in the list
      */
-    public StringProperty value(int i) {
+    public StringProperty value(final int i) {
         return values.get(i);
     }
 
@@ -69,7 +69,7 @@ public class MzqDataMatrixRow {
      *
      * @param objectId the objectId to set
      */
-    public void setObjectId(StringProperty objectId) {
+    public void setObjectId(final StringProperty objectId) {
         this.objectId = objectId;
     }
 
@@ -79,7 +79,7 @@ public class MzqDataMatrixRow {
      * @param values the values to set
      */
     public void setValues(
-            List<String> values) {
+            final List<String> values) {
         for (String value : values) {
             this.values.add(new SimpleStringProperty(value));
         }
@@ -99,7 +99,7 @@ public class MzqDataMatrixRow {
      *
      * @param objectValue the objectValue to set
      */
-    public void setObjectValue(StringProperty objectValue) {
+    public void setObjectValue(final StringProperty objectValue) {
         this.objectValue = objectValue;
     }
 

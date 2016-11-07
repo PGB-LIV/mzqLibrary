@@ -181,7 +181,7 @@ public class ProgenMzquantmlConverter {
             TIntObjectProcedure<String> {
 
         @Override
-        public boolean execute(int id, String accession) {
+        public boolean execute(final int id, final String accession) {
 
             Set<String> accessionSet = new HashSet(Arrays.asList(accession.
                     split(";")));
@@ -201,7 +201,8 @@ public class ProgenMzquantmlConverter {
      * @param plFn protein result file name
      * @param idFn mzIdentML file name
      */
-    public ProgenMzquantmlConverter(String flFn, String plFn, String idFn) {
+    public ProgenMzquantmlConverter(final String flFn, final String plFn,
+                                    final String idFn) {
         this(flFn, plFn, idFn, ',');
     }
 
@@ -214,8 +215,9 @@ public class ProgenMzquantmlConverter {
      * @param idFn mzIdentML file name
      * @param sep  separator of input files
      */
-    public ProgenMzquantmlConverter(String flFn, String plFn, String idFn,
-                                    char sep) {
+    public ProgenMzquantmlConverter(final String flFn, final String plFn,
+                                    final String idFn,
+                                    final char sep) {
         this.flFn = flFn;
         this.plFn = plFn;
         this.idFn = idFn;
@@ -598,7 +600,7 @@ public class ProgenMzquantmlConverter {
                         keys.forEach(new TIntProcedure() {
 
                             @Override
-                            public boolean execute(int id) {
+                            public boolean execute(final int id) {
                                 //only the peptide with true value of use in quantitation column to be added in protein
                                 Boolean useInQuant = useInQuantMap.get(id);
                                 if (useInQuant == null || useInQuant.equals(
@@ -634,7 +636,7 @@ public class ProgenMzquantmlConverter {
         protList.setId("ProtList1");
     }
 
-    private void createProteinGroupList(String rawPlusNorm) {
+    private void createProteinGroupList(final String rawPlusNorm) {
 
         protGrpList = new ProteinGroupList();
         final List<ProteinGroup> proteinGrps = protGrpList.getProteinGroup();
@@ -648,7 +650,7 @@ public class ProgenMzquantmlConverter {
             int protGroupId = 0; // start counting the id of proteinGroup
 
             @Override
-            public boolean execute(int index, String accession) {
+            public boolean execute(final int index, final String accession) {
                 // split the group accession (if not, single accession will keep as one string) into list of individual accession
                 Set<String> protsInGroup = new HashSet(Arrays.asList(accession.
                         split(";")));
@@ -770,7 +772,7 @@ public class ProgenMzquantmlConverter {
             confidenceMap.forEachEntry(new TIntDoubleProcedure() {
 
                 @Override
-                public boolean execute(int id, double value) {
+                public boolean execute(final int id, final double value) {
                     String protGrpAccession = proteinAccessionsMap.get(id);
 
                     ProteinGroup protGrp = new ProteinGroup();
@@ -834,7 +836,8 @@ public class ProgenMzquantmlConverter {
             normAbMap.forEachEntry(new TIntObjectProcedure<TDoubleList>() {
 
                 @Override
-                public boolean execute(int id, TDoubleList normAbValues) {
+                public boolean execute(final int id,
+                                       final TDoubleList normAbValues) {
                     String protGrpAccession = proteinAccessionsMap.get(id);
                     ProteinGroup protGrp = new ProteinGroup();
                     if (proteinGroupNameIdMap.get(protGrpAccession) != null) {
@@ -846,7 +849,7 @@ public class ProgenMzquantmlConverter {
                         normAbValues.forEach(new TDoubleProcedure() {
 
                             @Override
-                            public boolean execute(double value) {
+                            public boolean execute(final double value) {
                                 row.getValue().add(format.format(value));
                                 return true;
                             }
@@ -890,7 +893,8 @@ public class ProgenMzquantmlConverter {
             rawAbMap.forEachEntry(new TIntObjectProcedure<TDoubleList>() {
 
                 @Override
-                public boolean execute(int id, TDoubleList rawAbValues) {
+                public boolean execute(final int id,
+                                       final TDoubleList rawAbValues) {
                     String protGrpAccession = proteinAccessionsMap.get(id);
 
                     ProteinGroup protGrp = new ProteinGroup();
@@ -903,7 +907,7 @@ public class ProgenMzquantmlConverter {
                         rawAbValues.forEach(new TDoubleProcedure() {
 
                             @Override
-                            public boolean execute(double value) {
+                            public boolean execute(final double value) {
                                 row.getValue().add(format.format(value));
                                 return true;
                             }
@@ -943,13 +947,13 @@ public class ProgenMzquantmlConverter {
             nabMap.forEachEntry(new TIntObjectProcedure<TDoubleList>() {
 
                 @Override
-                public boolean execute(final int id, TDoubleList nabValues) {
+                public boolean execute(final int id, final TDoubleList nabValues) {
                     final MutableInt pos = new MutableInt(0);
                     //final int index = id;
                     nabValues.forEach(new TDoubleProcedure() {
 
                         @Override
-                        public boolean execute(double value) {
+                        public boolean execute(final double value) {
                             Feature feature = new Feature();
                             //Double normAb = nabV;
                             double mz = mzMap.get(id);
@@ -1050,13 +1054,13 @@ public class ProgenMzquantmlConverter {
             rabMap.forEachEntry(new TIntObjectProcedure<TDoubleList>() {
 
                 @Override
-                public boolean execute(final int id, TDoubleList rabValues) {
+                public boolean execute(final int id, final TDoubleList rabValues) {
                     final MutableInt pos = new MutableInt(0);
 
                     rabValues.forEach(new TDoubleProcedure() {
 
                         @Override
-                        public boolean execute(double value) {
+                        public boolean execute(final double value) {
                             Feature feature = new Feature();
                             //Double rawAb = rabV;
                             double mz = mzMap.get(id);
@@ -1160,12 +1164,12 @@ public class ProgenMzquantmlConverter {
             retenMap.forEachEntry(new TIntObjectProcedure<TDoubleList>() {
 
                 @Override
-                public boolean execute(final int id, TDoubleList retValues) {
+                public boolean execute(final int id, final TDoubleList retValues) {
                     final MutableInt pos = new MutableInt(0);
                     retValues.forEach(new TDoubleProcedure() {
 
                         @Override
-                        public boolean execute(double value) {
+                        public boolean execute(final double value) {
                             Feature feature = new Feature();
 
                             double mz = mzMap.get(id);
@@ -1284,7 +1288,7 @@ public class ProgenMzquantmlConverter {
         }
     }
 
-    private void createPeptideListList(String rawPlusNorm) {
+    private void createPeptideListList(final String rawPlusNorm) {
         pepConListList = new ArrayList<>();
         PeptideConsensusList peptideConsensusList = new PeptideConsensusList();
         List<PeptideConsensus> peptideConsensuses = peptideConsensusList.
@@ -1302,7 +1306,7 @@ public class ProgenMzquantmlConverter {
                 keys.forEach(new TIntProcedure() {
 
                     @Override
-                    public boolean execute(int key) {
+                    public boolean execute(final int key) {
                         if (useInQuantMap.get(key) == null || useInQuantMap.get(
                                 key).equals(Boolean.TRUE)) {
                             PeptideConsensus peptideConsensus
@@ -1392,7 +1396,7 @@ public class ProgenMzquantmlConverter {
                                 nabValues.forEach(new TDoubleProcedure() {
 
                                     @Override
-                                    public boolean execute(double value) {
+                                    public boolean execute(final double value) {
                                         nabrow.getValue().add(format.format(
                                                 value));
                                         return true;
@@ -1411,7 +1415,7 @@ public class ProgenMzquantmlConverter {
                                 rabValues.forEach(new TDoubleProcedure() {
 
                                     @Override
-                                    public boolean execute(double value) {
+                                    public boolean execute(final double value) {
                                         rabrow.getValue().add(format.format(
                                                 value));
                                         return true;
@@ -1554,7 +1558,8 @@ public class ProgenMzquantmlConverter {
      * @throws DatatypeConfigurationException data type configuration
      *                                        exceptions.
      */
-    public void convert(String outFn, boolean protGrpList, String rawPlusNorm)
+    public void convert(final String outFn, final boolean protGrpList,
+                        final String rawPlusNorm)
             throws IOException, DatatypeConfigurationException {
 
         assayListFrReader = new ArrayList<>();
@@ -1660,7 +1665,7 @@ public class ProgenMzquantmlConverter {
         writeMzqFile(outFn, protGrpList);
     }
 
-    private void writeMzqFile(String out, boolean pgl) {
+    private void writeMzqFile(final String out, final boolean pgl) {
         OutputStreamWriter writer = null;
 
         try {
@@ -1767,8 +1772,8 @@ public class ProgenMzquantmlConverter {
     }
 
     // create a CVParamType instance
-    private static CvParam createCvParam(String name, String cvRef,
-                                         String accession) {
+    private static CvParam createCvParam(final String name, final String cvRef,
+                                         final String accession) {
         CvParam cp = new CvParam();
         cp.setName(name);
         Cv cv = new Cv();
@@ -1778,7 +1783,7 @@ public class ProgenMzquantmlConverter {
         return cp;
     }
 
-    private static List<String> getAssayIdList(List<Assay> assays) {
+    private static List<String> getAssayIdList(final List<Assay> assays) {
         List<String> assayIds = new ArrayList<>();
         for (Assay assay : assays) {
             assayIds.add(assay.getId());

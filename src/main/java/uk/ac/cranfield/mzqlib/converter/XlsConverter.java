@@ -4,8 +4,10 @@ package uk.ac.cranfield.mzqlib.converter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import jxl.Workbook;
 import jxl.write.Label;
 import jxl.write.Number;
@@ -28,6 +30,7 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.StudyVariable;
 
 /**
  * XlsConverter is to convert mzq file to xls file.
+ *
  * @author Jun Fan
  */
 public class XlsConverter extends GenericConverter {
@@ -38,10 +41,11 @@ public class XlsConverter extends GenericConverter {
 
     /**
      * Constructor.
-     * @param filename input mzq file name.
+     *
+     * @param filename   input mzq file name.
      * @param outputFile output xls file name.
      */
-    public XlsConverter(String filename, String outputFile) {
+    public XlsConverter(final String filename, final String outputFile) {
         super(filename, outputFile);
         WritableFont boldFont = new WritableFont(WritableFont.ARIAL, 11,
                                                  WritableFont.BOLD);
@@ -164,8 +168,8 @@ public class XlsConverter extends GenericConverter {
         }
     }
 
-    private int outputAssayAndSV(int level, WritableSheet sheet,
-                                 ArrayList<QuantitationLevel> objects)
+    private int outputAssayAndSV(final int level, final WritableSheet sheet,
+                                 final List<QuantitationLevel> objects)
             throws NumberFormatException, WriteException {
         //reference to CsvConverter
         //when sb.append("\n"), it should be rowCount++ and colCount=1 here
@@ -227,8 +231,9 @@ public class XlsConverter extends GenericConverter {
         return rowCount;
     }
 
-    private void printValue(Double value, WritableSheet sheet, int colCount,
-                            int rowCount)
+    private void printValue(final Double value, final WritableSheet sheet,
+                            final int colCount,
+                            final int rowCount)
             throws WriteException, NumberFormatException {
         if (value == null) {
             sheet.addCell(new Label(colCount, rowCount, "null", normalFormat));
@@ -237,8 +242,10 @@ public class XlsConverter extends GenericConverter {
         }
     }
 
-    private void printQuantitationLevel(int level, WritableSheet sheet,
-                                        int rowCount, QuantitationLevel obj)
+    private void printQuantitationLevel(final int level,
+                                        final WritableSheet sheet,
+                                        final int rowCount,
+                                        final QuantitationLevel obj)
             throws WriteException {
         switch (level) {
             case MzqData.PROTEIN_GROUP:
@@ -271,8 +278,8 @@ public class XlsConverter extends GenericConverter {
         }
     }
 
-    private int outputRatio(int level, WritableSheet sheet,
-                            ArrayList<QuantitationLevel> objects, int rowCount)
+    private int outputRatio(final int level, final WritableSheet sheet,
+                            final List<QuantitationLevel> objects, int rowCount)
             throws NumberFormatException, WriteException {
         sheet.addCell(new Label(0, rowCount, "Ratios", boldFormat));
         int colCount = 1;
@@ -298,8 +305,9 @@ public class XlsConverter extends GenericConverter {
         return rowCount;
     }
 
-    private void outputGlobal(int level, WritableSheet sheet,
-                              ArrayList<QuantitationLevel> objects, int rowCount)
+    private void outputGlobal(final int level, final WritableSheet sheet,
+                              final List<QuantitationLevel> objects,
+                              int rowCount)
             throws NumberFormatException, WriteException {
         sheet.addCell(new Label(0, rowCount, "Global", boldFormat));
         int colCount = 1;
@@ -325,7 +333,7 @@ public class XlsConverter extends GenericConverter {
         }
     }
 
-    private void outputMetadata(WritableSheet metaSheet)
+    private void outputMetadata(final WritableSheet metaSheet)
             throws NumberFormatException, WriteException {
         int rowCount = 0;
         //analysis summary

@@ -67,7 +67,7 @@ public class ProgenesisProteinListReader implements Closeable {
      *
      * @throws IOException io exception.
      */
-    public ProgenesisProteinListReader(Reader rd, char separator)
+    public ProgenesisProteinListReader(final Reader rd, final char separator)
             throws IOException {
         br = new BufferedReader(rd);
 
@@ -223,7 +223,7 @@ public class ProgenesisProteinListReader implements Closeable {
         }
     }
 
-    private static double getDoubleOrNaN(String string) {
+    private static double getDoubleOrNaN(final String string) {
         double value;
         try {
             value = Double.parseDouble(string);
@@ -241,7 +241,7 @@ public class ProgenesisProteinListReader implements Closeable {
      *
      * @throws IOException io exception.
      */
-    public ProgenesisProteinListReader(Reader rd)
+    public ProgenesisProteinListReader(final Reader rd)
             throws IOException {
         this(rd, ',');
     }
@@ -343,7 +343,7 @@ public class ProgenesisProteinListReader implements Closeable {
         completeMap.forEachEntry(new TIntObjectProcedure<String[]>() {
 
             @Override
-            public boolean execute(int id, String[] values) {
+            public boolean execute(final int id, final String[] values) {
                 if (!isFirstThreeRow(id)) {
                     retMap.put(id, getArrayPart(values, startCol, endCol));
                 }
@@ -368,7 +368,7 @@ public class ProgenesisProteinListReader implements Closeable {
         completeMap.forEachEntry(new TIntObjectProcedure<String[]>() {
 
             @Override
-            public boolean execute(int id, String[] values) {
+            public boolean execute(final int id, final String[] values) {
                 if (!isFirstThreeRow(id)) {
                     retMap.put(id, values[col]);
                 }
@@ -381,7 +381,7 @@ public class ProgenesisProteinListReader implements Closeable {
 
     //private function
     // isFirstThreeRow determine whether an entry is from the title row
-    private boolean isFirstThreeRow(Integer i) {
+    private boolean isFirstThreeRow(final Integer i) {
         boolean b = false;
         if (i == ROW1 || i == ROW2 || i == ROW3) {
             b = true;
@@ -389,7 +389,8 @@ public class ProgenesisProteinListReader implements Closeable {
         return b;
     }
 
-    private List<String> getArrayPart(String[] array, int start, int end) {
+    private List<String> getArrayPart(final String[] array, final int start,
+                                      final int end) {
         List<String> retList = new ArrayList<>();
         for (int i = start; i < end + 1; i++) {
             retList.add(array[i]);
@@ -397,7 +398,7 @@ public class ProgenesisProteinListReader implements Closeable {
         return retList;
     }
 
-    private int getAssayNumber(int start, String[] line) {
+    private int getAssayNumber(final int start, final String[] line) {
         int ret = 1;
 
         for (int i = start + 1; i < line.length; i++) {

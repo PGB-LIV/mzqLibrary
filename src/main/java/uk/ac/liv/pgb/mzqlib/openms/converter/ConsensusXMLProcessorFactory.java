@@ -75,7 +75,7 @@ public class ConsensusXMLProcessorFactory {
      *
      * @throws JAXBException jaxb exception
      */
-    public ConsensusXMLProcessor buildConsensusXMLProcessor(File xmlFile)
+    public ConsensusXMLProcessor buildConsensusXMLProcessor(final File xmlFile)
             throws JAXBException {
         return new ConsensusXMLProcessorImpl(xmlFile);
     }
@@ -92,19 +92,20 @@ public class ConsensusXMLProcessorFactory {
         protected List<RawFilesGroup> rgList = new ArrayList();
         protected Map<String, Assay> rgIdToAssayMap = new HashMap<>();
         protected Map<String, RawFilesGroup> rgIdToRgObjectMap = new HashMap<>();
-        private Map<Integer, Map<String, MzRtArea>> featureAreasPreAligned
+        private final Map<Integer, Map<String, MzRtArea>> featureAreasPreAligned
                 = new HashMap<>();
-        private Map<Integer, Map<String, MzRtArea>> featureAreasPostAligned
+        private final Map<Integer, Map<String, MzRtArea>> featureAreasPostAligned
                 = new HashMap<>();
         private final JAXBContext context = JAXBContext.newInstance(new Class[]{
             FeatureMap.class});
-        private Unmarshaller featureUnmarshaller = context.createUnmarshaller();
-        private Map<File, Assay> filesToAssays = new HashMap<>();
+        private final Unmarshaller featureUnmarshaller = context.
+                createUnmarshaller();
+        private final Map<File, Assay> filesToAssays = new HashMap<>();
 
-        public ConsensusXMLProcessorImpl(File file)
+        public ConsensusXMLProcessorImpl(final File file)
                 throws JAXBException {
-            JAXBContext context = JAXBContext.newInstance(new Class[]{
-                ConsensusXML.class});
+//            JAXBContext context = JAXBContext.newInstance(new Class[]{
+//                ConsensusXML.class});
             unmarsh = context.createUnmarshaller();
 
             cv = new Cv();
@@ -345,9 +346,10 @@ public class ConsensusXMLProcessorFactory {
         }
 
         private void readFeatureXmlMzRtAreas(
-                List<uk.ac.liv.pgb.mzqlib.openms.jaxb.Map> featureXmlMaps)
+                final List<uk.ac.liv.pgb.mzqlib.openms.jaxb.Map> featureXmlMaps)
                 throws JAXBException {
-            for (uk.ac.liv.pgb.mzqlib.openms.jaxb.Map featureXmlMap : featureXmlMaps) {
+            for (uk.ac.liv.pgb.mzqlib.openms.jaxb.Map featureXmlMap
+                    : featureXmlMaps) {
                 String featureXmlLocation = featureXmlMap.getName();
                 File featureXmlFile = new File(featureXmlLocation);
                 if (!featureXmlFile.exists()) {
@@ -374,9 +376,9 @@ public class ConsensusXMLProcessorFactory {
             }
         }
 
-        private void readSingleFeatureXmlMzRtAreas(File featureXmlFile,
-                                                   int mapNumber,
-                                                   Map<Integer, Map<String, MzRtArea>> mzRtAreas)
+        private void readSingleFeatureXmlMzRtAreas(final File featureXmlFile,
+                                                   final int mapNumber,
+                                                   final Map<Integer, Map<String, MzRtArea>> mzRtAreas)
                 throws JAXBException {
             FeatureMap featureMap = (FeatureMap) featureUnmarshaller.unmarshal(
                     featureXmlFile);
@@ -439,14 +441,14 @@ public class ConsensusXMLProcessorFactory {
         }
 
         @Override
-        public void convert(String outputFileName)
+        public void convert(final String outputFileName)
                 throws IOException {
             convert(outputFileName, new HashMap<>());
         }
 
         @Override
-        public void convert(String outputFileName,
-                            Map<String, ? extends Collection<File>> studyVariablesToFiles)
+        public void convert(final String outputFileName,
+                            final Map<String, ? extends Collection<File>> studyVariablesToFiles)
                 throws IOException {
             //File file = new File("CPTAC_study6_2400_3600_FLUQT.consensusXML");
             //String output = "CPTAC_study6_2400_3600_FLUQT.consensusXML.mzq";
@@ -457,10 +459,11 @@ public class ConsensusXMLProcessorFactory {
 
             //ConsensusXMLProcessor conProc = ConsensusXMLProcessorFactory.getInstance().buildConsensusXMLProcessor(file);
             // XML header
-            writer.write(m.createXmlHeader() + "\n");
+            writer.write(MzQuantMLMarshaller.createXmlHeader() + "\n");
 
             // mzQuantML start tag
-            writer.write(m.createMzQuantMLStartTag("consensusXML" + System.
+            writer.write(MzQuantMLMarshaller.createMzQuantMLStartTag(
+                    "consensusXML" + System.
                     currentTimeMillis()) + "\n");
 
             // CvList
@@ -471,29 +474,30 @@ public class ConsensusXMLProcessorFactory {
 
             // AnalysisSummary
             AnalysisSummary analysisSummary = new AnalysisSummary();
-            analysisSummary.getParamGroup().add(m.createCvParam(
-                    "LC-MS label-free quantitation analysis", "PSI-MS",
-                    "MS:1001834"));
+            analysisSummary.getParamGroup().add(MzQuantMLMarshaller.
+                    createCvParam(
+                            "LC-MS label-free quantitation analysis", "PSI-MS",
+                            "MS:1001834"));
 
-            CvParam analysisSummaryCv = m.createCvParam(
+            CvParam analysisSummaryCv = MzQuantMLMarshaller.createCvParam(
                     "label-free raw feature quantitation", "PSI-MS",
                     "MS:1002019");
             analysisSummaryCv.setValue("false");
             analysisSummary.getParamGroup().add(analysisSummaryCv);
 
-            analysisSummaryCv = m.createCvParam(
+            analysisSummaryCv = MzQuantMLMarshaller.createCvParam(
                     "label-free peptide level quantitation", "PSI-MS",
                     "MS:1002020");
             analysisSummaryCv.setValue("true");
             analysisSummary.getParamGroup().add(analysisSummaryCv);
 
-            analysisSummaryCv = m.createCvParam(
+            analysisSummaryCv = MzQuantMLMarshaller.createCvParam(
                     "label-free protein level quantitation", "PSI-MS",
                     "MS:1002021");
             analysisSummaryCv.setValue("false");
             analysisSummary.getParamGroup().add(analysisSummaryCv);
 
-            analysisSummaryCv = m.createCvParam(
+            analysisSummaryCv = MzQuantMLMarshaller.createCvParam(
                     "label-free proteingroup level quantitation", "PSI-MS",
                     "MS:1002022");
             analysisSummaryCv.setValue("false");
@@ -514,8 +518,9 @@ public class ConsensusXMLProcessorFactory {
             softwareList.getSoftware().add(software);
             software.setId("OpenMS");
             software.setVersion("1.11.1");
-            software.getCvParam().add(m.createCvParam("TOPP software", "PSI-MS",
-                                                      "MS:1000752"));
+            software.getCvParam().add(MzQuantMLMarshaller.createCvParam(
+                    "TOPP software", "PSI-MS",
+                    "MS:1000752"));
             m.marshall(softwareList, writer);
             writer.write("\n");
 
@@ -554,7 +559,7 @@ public class ConsensusXMLProcessorFactory {
             }
 
             // mzQuantML closing tag
-            writer.write(m.createMzQuantMLClosingTag());
+            writer.write(MzQuantMLMarshaller.createMzQuantMLClosingTag());
 
             writer.close();
         }
@@ -563,11 +568,11 @@ public class ConsensusXMLProcessorFactory {
 
     private static class MzRtArea {
 
-        private double mzCentroid;
-        private double rtCentroid;
-        private List<Double> massTrace = new LinkedList<>();
+        private final double mzCentroid;
+        private final double rtCentroid;
+        private final List<Double> massTrace = new LinkedList<>();
 
-        public MzRtArea(double mzCentroid, double rtCentroid) {
+        public MzRtArea(final double mzCentroid, final double rtCentroid) {
             this.mzCentroid = mzCentroid;
             this.rtCentroid = rtCentroid;
         }

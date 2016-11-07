@@ -18,7 +18,7 @@ public class Converter {
      *
      * @param args input arguments.
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
 
         File file = new File("CPTAC_study6_2400_3600_FLUQT.consensusXML");
         String output = "CPTAC_study6_2400_3600_FLUQT.consensusXML.mzq";

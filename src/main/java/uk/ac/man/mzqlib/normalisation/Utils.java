@@ -28,8 +28,8 @@ public class Utils {
      *
      * @return sorted data matrix
      */
-    public static DataMatrix sortedMap(Map<String, List<String>> map,
-                                       DataMatrix dM) {
+    public static DataMatrix sortedMap(final Map<String, List<String>> map,
+                                       final DataMatrix dM) {
         Set s = map.entrySet();
 
         for (Iterator it = s.iterator(); it.hasNext();) {
@@ -56,7 +56,7 @@ public class Utils {
      *
      * @return a double value
      */
-    public static double median(double[] d) {
+    public static double median(final double[] d) {
         Arrays.sort(d);
         int middle = d.length / 2;
         if (d.length % 2 == 0) {
@@ -105,7 +105,7 @@ public class Utils {
      *
      * @return a double value
      */
-    public static double mean(double[] m) {
+    public static double mean(final double[] m) {
         double sum = 0;
         for (int i = 0; i < m.length; i++) {
             sum += m[i];
@@ -121,7 +121,7 @@ public class Utils {
      *
      * @return a new array
      */
-    public static Object resizeArray(Object oldArray, int newSize) {
+    public static Object resizeArray(final Object oldArray, final int newSize) {
         int oldSize = java.lang.reflect.Array.getLength(oldArray);
         Class elementType = oldArray.getClass().getComponentType();
         Object newArray = java.lang.reflect.Array.newInstance(

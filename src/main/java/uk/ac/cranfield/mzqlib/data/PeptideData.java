@@ -16,7 +16,7 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensus;
  */
 public class PeptideData extends QuantitationLevel {
 
-    private PeptideConsensus peptide;
+    private final PeptideConsensus peptide;
 //    private String peptideID;
     private String modStr = "";
     private String modifications = "";
@@ -26,7 +26,7 @@ public class PeptideData extends QuantitationLevel {
      * features
      */
 //    private HashMap<String,ArrayList<FeatureData>> features;
-    private List<FeatureData> features = new ArrayList<>();
+    private final List<FeatureData> features = new ArrayList<>();
     private boolean assignedByPeptideRef = false;
 
     /**
@@ -43,7 +43,7 @@ public class PeptideData extends QuantitationLevel {
      *
      * @param assignedByPeptideRef assignedByPeptideRef.
      */
-    public void setAssignedByPeptideRef(boolean assignedByPeptideRef) {
+    public void setAssignedByPeptideRef(final boolean assignedByPeptideRef) {
         this.assignedByPeptideRef = assignedByPeptideRef;
     }
 
@@ -52,7 +52,7 @@ public class PeptideData extends QuantitationLevel {
      *
      * @param pc PeptiedConsensus value.
      */
-    public PeptideData(PeptideConsensus pc) {
+    public PeptideData(final PeptideConsensus pc) {
         peptide = pc;
 //        ArrayList<Character> modIndice = new ArrayList<Character>();
         List<Integer> modIndice = new ArrayList<>();
@@ -125,7 +125,7 @@ public class PeptideData extends QuantitationLevel {
      *
      * @return list of FeatureData.
      */
-    public List<FeatureData> getFeaturesWithCharge(int charge) {
+    public List<FeatureData> getFeaturesWithCharge(final int charge) {
         List<FeatureData> values = new ArrayList<>();
         for (FeatureData feature : features) {
             String value = feature.getFeature().getCharge();//<xsd:attribute name="charge" type="integerOrNullType" use="required">
@@ -142,7 +142,7 @@ public class PeptideData extends QuantitationLevel {
      *
      * @param another the second PeptideData to be merged.
      */
-    public void mergeAnotherPeptideData(PeptideData another) {
+    public void mergeAnotherPeptideData(final PeptideData another) {
         this.features.addAll(another.getFeatures());
         if (!assignedByPeptideRef) {
             setAssignedByPeptideRef(another.isAssignedByPeptideRef());
@@ -174,28 +174,6 @@ public class PeptideData extends QuantitationLevel {
         return charges;
     }
 
-//    /**
-//     * Get all features for a specific msrun
-//     * @param msrun
-//     * @return 
-//     */
-//    public ArrayList<FeatureData> getFeatures(String msrun) {
-//        if(features.containsKey(msrun)){
-//            return features.get(msrun);
-//        }
-//        return null;
-//    }
-//    /**
-//     * Get all features from all runs
-//     * @return 
-//     */
-//    public ArrayList<FeatureData> getAllFeatures(){
-//        ArrayList<FeatureData> ret = new ArrayList<FeatureData>();
-//        for(ArrayList<FeatureData> one:features.values()){
-//            ret.addAll(one);
-//        }
-//        return ret;
-//    }
     /**
      * Get number of features.
      *
@@ -207,7 +185,7 @@ public class PeptideData extends QuantitationLevel {
         return features.size();
     }
 
-    void addFeature(FeatureData feature) {
+    void addFeature(final FeatureData feature) {
         features.add(feature);
     }
 

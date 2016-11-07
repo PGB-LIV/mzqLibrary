@@ -690,7 +690,7 @@ public final class ProteinAbundanceInference {
      * @return - peptide assay values
      */
     private Map<String, List<String>> peptideAssayValues(
-            MzQuantMLUnmarshaller in_file_um, String inputPepDTCA) {
+            final MzQuantMLUnmarshaller in_file_um, final String inputPepDTCA) {
         //boolean first_list = false;
         Map<String, List<String>> peptideAV
                 = new HashMap<>();

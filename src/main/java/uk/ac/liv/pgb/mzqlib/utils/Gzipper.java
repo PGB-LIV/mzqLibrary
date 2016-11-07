@@ -24,7 +24,7 @@ public class Gzipper {
      *
      * @throws IOException io exceptions.
      */
-    public static File extractFile(File zipped_file)
+    public static File extractFile(final File zipped_file)
             throws IOException {
         GZIPInputStream gin = null;
         File outFile = null;
@@ -59,7 +59,7 @@ public class Gzipper {
      *
      * @param file file to be deleted.
      */
-    public static void deleteFile(File file) {
+    public static void deleteFile(final File file) {
         boolean success = file.delete();
         if (!success) {
             System.out.println(file.getAbsolutePath() + " Deletion failed.");
@@ -76,7 +76,7 @@ public class Gzipper {
      *
      * @param file file to be compressed.
      */
-    public static void compressFile(File file) {
+    public static void compressFile(final File file) {
         try {
 
             FileOutputStream fos = new FileOutputStream(file + ".gz");

@@ -32,8 +32,9 @@ public class HeatMapParam {
      * @param rowN   the list of row names of data.frame
      * @param colN   the list of column names of data.frame
      */
-    public HeatMapParam(double min, double max, int number, String x,
-                        List<String> rowN, List<String> colN) {
+    public HeatMapParam(final double min, final double max, final int number,
+                        final String x,
+                        final List<String> rowN, final List<String> colN) {
         this.min = min;
         this.max = max;
         this.rowNumber = number;
@@ -63,7 +64,7 @@ public class HeatMapParam {
      *
      * @param min the min to set
      */
-    public void setMin(double min) {
+    public void setMin(final double min) {
         this.min = min;
     }
 
@@ -81,7 +82,7 @@ public class HeatMapParam {
      *
      * @param max the max to set
      */
-    public void setMax(double max) {
+    public void setMax(final double max) {
         this.max = max;
     }
 
@@ -99,7 +100,7 @@ public class HeatMapParam {
      *
      * @param rowNumber the rowNumber to set
      */
-    public void setRowNumber(int rowNumber) {
+    public void setRowNumber(final int rowNumber) {
         this.rowNumber = rowNumber;
     }
 
@@ -117,7 +118,7 @@ public class HeatMapParam {
      *
      * @param matrix the matrix to set
      */
-    public void setMatrix(String matrix) {
+    public void setMatrix(final String matrix) {
         this.matrix = matrix;
     }
 
@@ -135,7 +136,7 @@ public class HeatMapParam {
      *
      * @param rowNames the rowNames to set
      */
-    public void setRowNames(List<String> rowNames) {
+    public void setRowNames(final List<String> rowNames) {
         this.rowNames = rowNames;
     }
 
@@ -153,7 +154,7 @@ public class HeatMapParam {
      *
      * @param colNames the colNames to set
      */
-    public void setColNames(List<String> colNames) {
+    public void setColNames(final List<String> colNames) {
         this.colNames = colNames;
     }
 
@@ -171,7 +172,7 @@ public class HeatMapParam {
      *
      * @param logMatrix the logMatrix to set
      */
-    public void setLogMatrix(String logMatrix) {
+    public void setLogMatrix(final String logMatrix) {
         this.logMatrix = logMatrix;
     }
 
@@ -189,7 +190,7 @@ public class HeatMapParam {
      *
      * @param logMin the logMin to set
      */
-    public void setLogMin(double logMin) {
+    public void setLogMin(final double logMin) {
         this.logMin = logMin;
     }
 
@@ -207,7 +208,7 @@ public class HeatMapParam {
      *
      * @param logMax the logMax to set
      */
-    public void setLogMax(double logMax) {
+    public void setLogMax(final double logMax) {
         this.logMax = logMax;
     }
 

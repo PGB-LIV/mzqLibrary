@@ -29,8 +29,8 @@ public class Utils {
      *
      * @return a data matrix
      */
-    public static DataMatrix sortedMap(Map<String, List<String>> map,
-                                       DataMatrix dM) {
+    public static DataMatrix sortedMap(final Map<String, List<String>> map,
+                                       final DataMatrix dM) {
         Set s = map.entrySet();
 
         for (Iterator it = s.iterator(); it.hasNext();) {
@@ -57,7 +57,7 @@ public class Utils {
      *
      * @return a 1-d array
      */
-    public static double[] columnSum(double[][] arr) {
+    public static double[] columnSum(final double[][] arr) {
         int index = 0;
         double[] temp = new double[arr[index].length];
         for (int i = 0; i < arr[0].length; i++) {
@@ -79,7 +79,7 @@ public class Utils {
      *
      * @return a double value
      */
-    public static double median(double[] d) {
+    public static double median(final double[] d) {
         Arrays.sort(d);
         int middle = d.length / 2;
         if (d.length % 2 == 0) {

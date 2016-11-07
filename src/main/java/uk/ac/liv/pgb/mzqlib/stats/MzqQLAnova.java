@@ -51,9 +51,9 @@ public class MzqQLAnova {
      * @param assayIDsGroup list of assay list to be in ANOVA calculation
      * @param qlDataType    CV accession identifying data type of QuantLayer
      */
-    public MzqQLAnova(MzQuantMLUnmarshaller um, String listType,
-                      List<List<String>> assayIDsGroup,
-                      String qlDataType) {
+    public MzqQLAnova(final MzQuantMLUnmarshaller um, final String listType,
+                      final List<List<String>> assayIDsGroup,
+                      final String qlDataType) {
         this.mzqUm = um;
         this.assayIDsGroup = assayIDsGroup;
         this.listType = listType;
@@ -69,9 +69,9 @@ public class MzqQLAnova {
      * @param assayIDsGroup list of assay list to be in ANOVA calculation
      * @param qlDataType    CV accession identifying data type of QuantLayer
      */
-    public MzqQLAnova(File mzqFile, String listType,
-                      List<List<String>> assayIDsGroup,
-                      String qlDataType) {
+    public MzqQLAnova(final File mzqFile, final String listType,
+                      final List<List<String>> assayIDsGroup,
+                      final String qlDataType) {
         this(new MzQuantMLUnmarshaller(mzqFile), listType, assayIDsGroup,
              qlDataType);
     }
@@ -85,9 +85,9 @@ public class MzqQLAnova {
      * @param assayIDsGroup list of assay list to be in ANOVA calculation
      * @param qlDataType    CV accession identifying data type of QuantLayer
      */
-    public MzqQLAnova(String mzqFileName, String listType,
-                      List<List<String>> assayIDsGroup,
-                      String qlDataType) {
+    public MzqQLAnova(final String mzqFileName, final String listType,
+                      final List<List<String>> assayIDsGroup,
+                      final String qlDataType) {
         this(new File(mzqFileName), listType, assayIDsGroup, qlDataType);
     }
 
@@ -102,8 +102,8 @@ public class MzqQLAnova {
      * @param qlDataType          CV accession identifying data type of
      *                            QuantLayer
      */
-    public MzqQLAnova(MzQuantMLUnmarshaller um, String listType,
-                      String assayIDsGroupString, String qlDataType) {
+    public MzqQLAnova(final MzQuantMLUnmarshaller um, final String listType,
+                      final String assayIDsGroupString, final String qlDataType) {
         this(um, listType, assayIDsGroupConverter(assayIDsGroupString),
              qlDataType);
     }
@@ -119,9 +119,9 @@ public class MzqQLAnova {
      * @param qlDataType          CV accession identifying data type of
      *                            QuantLayer
      */
-    public MzqQLAnova(File mzqFile, String listType,
-                      String assayIDsGroupString,
-                      String qlDataType) {
+    public MzqQLAnova(final File mzqFile, final String listType,
+                      final String assayIDsGroupString,
+                      final String qlDataType) {
         this(new MzQuantMLUnmarshaller(mzqFile), listType,
              assayIDsGroupConverter(assayIDsGroupString), qlDataType);
     }
@@ -137,9 +137,9 @@ public class MzqQLAnova {
      * @param qlDataType          CV accession identifying data type of
      *                            QuantLayer
      */
-    public MzqQLAnova(String mzqFileName, String listType,
-                      String assayIDsGroupString,
-                      String qlDataType) {
+    public MzqQLAnova(final String mzqFileName, final String listType,
+                      final String assayIDsGroupString,
+                      final String qlDataType) {
         this(new File(mzqFileName), listType, assayIDsGroupConverter(
              assayIDsGroupString), qlDataType);
     }
@@ -151,7 +151,7 @@ public class MzqQLAnova {
      *
      * @throws JAXBException jaxb exceptions.
      */
-    public void writeMzQuantMLFile(String outputFileName)
+    public void writeMzQuantMLFile(final String outputFileName)
             throws JAXBException {
         // retrieve every attributes and elements from the mzQuantML file
         String mzqId = mzqUm.getMzQuantMLId();
@@ -418,7 +418,7 @@ public class MzqQLAnova {
      *         (doulbe)
      */
     private TObjectDoubleMap<String> calculatePValueFromQL(
-            QuantLayer<IdOnly> assayQL) {
+            final QuantLayer<IdOnly> assayQL) {
 
         TObjectDoubleMap<String> ret = new TObjectDoubleHashMap<>();
 
@@ -500,7 +500,7 @@ public class MzqQLAnova {
      * @return the list of assay id list
      */
     private static List<List<String>> assayIDsGroupConverter(
-            String assayIDsGroupString) {
+            final String assayIDsGroupString) {
         List<List<String>> ret = new ArrayList();
         String[] assayIDsGroupArray = assayIDsGroupString.split(";");
 

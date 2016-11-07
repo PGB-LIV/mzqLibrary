@@ -399,14 +399,15 @@ public class MzQuantMLLib implements Serializable {
      *
      * @param args the command line arguments.
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
 
         MzQuantMLLib mzqLib = new MzQuantMLLib();
         try {
 
             mzqLib.init(args);
 
-        } catch (Exception ex) {
+        } catch (IOException | JAXBException | DatatypeConfigurationException |
+                InterruptedException ex) {
             Logger.getLogger(MzQuantMLLib.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
@@ -426,7 +427,7 @@ public class MzQuantMLLib implements Serializable {
      *                                        exceptions.
      * @throws InterruptedException           interrupted exceptions.
      */
-    public String init(String[] args)
+    public String init(final String[] args)
             throws IOException, JAXBException, FileNotFoundException,
             DatatypeConfigurationException, InterruptedException {
         String inputFileName = "";

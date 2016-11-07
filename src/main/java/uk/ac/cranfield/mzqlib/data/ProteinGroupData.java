@@ -21,7 +21,7 @@ public class ProteinGroupData extends QuantitationLevel {
      *
      * @param proteinGroup ProteinGroup.
      */
-    public ProteinGroupData(ProteinGroup proteinGroup) {
+    public ProteinGroupData(final ProteinGroup proteinGroup) {
         pg = proteinGroup;
     }
 

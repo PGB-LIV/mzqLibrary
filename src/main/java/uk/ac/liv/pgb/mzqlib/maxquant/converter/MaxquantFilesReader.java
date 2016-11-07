@@ -1,7 +1,6 @@
 
 package uk.ac.liv.pgb.mzqlib.maxquant.converter;
 
-import au.com.bytecode.opencsv.*;
 import gnu.trove.list.TDoubleList;
 import gnu.trove.list.TIntList;
 import gnu.trove.list.array.TDoubleArrayList;
@@ -26,6 +25,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.lang3.math.NumberUtils;
+
+import au.com.bytecode.opencsv.CSVReader;
 
 /**
  * Read MaxQuant output files and parse them for converting to mzQuantML format.
@@ -88,12 +89,12 @@ public class MaxquantFilesReader {
      *
      * @throws IOException io exception
      */
-    public MaxquantFilesReader(File evidenceF,
-                               File peptidesF,
-                               File proteinGroupsF,
-                               File experimentalDesignTemplateF,
-                               File summaryF,
-                               char sep)
+    public MaxquantFilesReader(final File evidenceF,
+                               final File peptidesF,
+                               final File proteinGroupsF,
+                               final File experimentalDesignTemplateF,
+                               final File summaryF,
+                               final char sep)
             throws IOException {
         this.evidenceFile = evidenceF;
         this.peptidesFile = peptidesF;
@@ -131,11 +132,11 @@ public class MaxquantFilesReader {
      *
      * @throws IOException io exception
      */
-    public MaxquantFilesReader(File evidenceF,
-                               File peptidesF,
-                               File proteinGroupsF,
-                               File experimentalDesignTemplateF,
-                               File summaryF)
+    public MaxquantFilesReader(final File evidenceF,
+                               final File peptidesF,
+                               final File proteinGroupsF,
+                               final File experimentalDesignTemplateF,
+                               final File summaryF)
             throws IOException {
         this(evidenceF, peptidesF, proteinGroupsF, experimentalDesignTemplateF,
              summaryF, '\t');
@@ -154,7 +155,7 @@ public class MaxquantFilesReader {
      *
      * @throws IOException io exception
      */
-    public MaxquantFilesReader(String folderName, char sep)
+    public MaxquantFilesReader(final String folderName, final char sep)
             throws IOException {
         this.separator = sep;
 
@@ -230,7 +231,7 @@ public class MaxquantFilesReader {
      *
      * @throws IOException io exception
      */
-    public MaxquantFilesReader(String folderName)
+    public MaxquantFilesReader(final String folderName)
             throws IOException {
         this(folderName, '\t');
     }
@@ -1087,7 +1088,7 @@ public class MaxquantFilesReader {
         return this.multiplicity;
     }
 
-    private boolean containsAll(String[] list, String[] require) {
+    private boolean containsAll(final String[] list, final String[] require) {
         boolean contain = true;
         List<String> aList = Arrays.asList(list);
         List<String> aListLowerCase = new ArrayList();
@@ -1114,7 +1115,7 @@ public class MaxquantFilesReader {
      *
      * @return the length of same prefix between two strings.
      */
-    private int lengthOfPrefix(String a, String b) {
+    private int lengthOfPrefix(final String a, final String b) {
         // Compare length is based on the shortest length of two strings.
         int length = a.length() < b.length() ? a.length() : b.length();
         int len = 1;
@@ -1133,7 +1134,7 @@ public class MaxquantFilesReader {
      * ArrayList<String>>
      */
     private Map<String, List<String>> mapTranspose(
-            Map<String, List<String>> m) {
+            final Map<String, List<String>> m) {
         Map<String, List<String>> mTr = new HashMap<>();
         Iterator iM = m.entrySet().iterator();
         while (iM.hasNext()) {

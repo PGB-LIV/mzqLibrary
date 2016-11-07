@@ -62,7 +62,7 @@ public class ProgenesisConverterController implements Initializable {
      * @param rb  resource bundle
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(final URL url, final ResourceBundle rb) {
         ObservableList<String> options
                 = FXCollections.observableArrayList(
                         ",",

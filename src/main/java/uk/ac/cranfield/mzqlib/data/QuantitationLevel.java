@@ -1,8 +1,10 @@
 
 package uk.ac.cranfield.mzqlib.data;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
-import java.lang.reflect.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +65,7 @@ public class QuantitationLevel {
      *
      * @return the quantity value.
      */
-    public Double getQuantity(String name, String assayID) {
+    public Double getQuantity(final String name, final String assayID) {
         if (quantities.containsKey(name) && quantities.get(name).containsKey(
                 assayID)) {
             return quantities.get(name).get(assayID);
@@ -78,7 +80,7 @@ public class QuantitationLevel {
      *
      * @return quantity value map.
      */
-    public Map<String, Double> getQuantities(String name) {
+    public Map<String, Double> getQuantities(final String name) {
         return quantities.get(name);
     }
 
@@ -89,7 +91,7 @@ public class QuantitationLevel {
      *
      * @return quantity value map.
      */
-    public Map<String, Double> getStudyVariableQuantities(String name) {
+    public Map<String, Double> getStudyVariableQuantities(final String name) {
         return studyVariables.get(name);
     }
 
@@ -101,7 +103,7 @@ public class QuantitationLevel {
      *
      * @return study variable value.
      */
-    public Double getStudyVariableQuantity(String name, String sv) {
+    public Double getStudyVariableQuantity(final String name, final String sv) {
         if (studyVariables.containsKey(name) && studyVariables.get(name).
                 containsKey(sv)) {
             return studyVariables.get(name).get(sv);
@@ -116,7 +118,7 @@ public class QuantitationLevel {
      *
      * @return ratio value.
      */
-    public Double getRatio(String name) {
+    public Double getRatio(final String name) {
         if (ratios.containsKey(name)) {
             return ratios.get(name);
         }
@@ -130,7 +132,7 @@ public class QuantitationLevel {
      *
      * @return global value.
      */
-    public Double getGlobal(String name) {
+    public Double getGlobal(final String name) {
         if (globals.containsKey(name)) {
             return globals.get(name);
         }
@@ -143,7 +145,8 @@ public class QuantitationLevel {
      * @param name        name.
      * @param quantitions quantity map.
      */
-    public void setQuantities(String name, Map<String, Double> quantitions) {
+    public void setQuantities(final String name,
+                              final Map<String, Double> quantitions) {
         quantities.put(name, quantitions);
     }
 
@@ -153,7 +156,8 @@ public class QuantitationLevel {
      * @param name     name.
      * @param svValues study variable value map.
      */
-    public void setStudyVariables(String name, Map<String, Double> svValues) {
+    public void setStudyVariables(final String name,
+                                  final Map<String, Double> svValues) {
         studyVariables.put(name, svValues);
     }
 
@@ -163,7 +167,7 @@ public class QuantitationLevel {
      * @param name  name.
      * @param ratio ratio value.
      */
-    public void setRatios(String name, Double ratio) {
+    public void setRatios(final String name, final Double ratio) {
         ratios.put(name, ratio);
         hasRatio = true;
     }
@@ -174,7 +178,7 @@ public class QuantitationLevel {
      * @param name  name.
      * @param ratio global value.
      */
-    public void setGlobal(String name, Double ratio) {
+    public void setGlobal(final String name, final Double ratio) {
         globals.put(name, ratio);
         hasGlobal = true;
     }
@@ -186,7 +190,7 @@ public class QuantitationLevel {
      *
      * @return true if specified quantitation exists.
      */
-    public boolean hasQuantitation(String quantitationName) {
+    public boolean hasQuantitation(final String quantitationName) {
         if (quantities.containsKey(quantitationName)) {
             return true;
         }
@@ -200,7 +204,7 @@ public class QuantitationLevel {
      *
      * @return true if specified quantitation has study variables.
      */
-    public boolean hasSV(String quantitationName) {
+    public boolean hasSV(final String quantitationName) {
         if (studyVariables.containsKey(quantitationName)) {
             return true;
         }
@@ -232,8 +236,9 @@ public class QuantitationLevel {
      * @param assayIDs          assay id.
      * @param type              type.
      */
-    public void calculateQuantitation(Set<String> quantitationNames,
-                                      List<String> assayIDs, int type) {
+    public void calculateQuantitation(final Set<String> quantitationNames,
+                                      final List<String> assayIDs,
+                                      final int type) {
         try {
             Method m = this.getClass().getDeclaredMethod(misc.getMethodName(
                     this.getClass()), new Class[0]);
@@ -291,99 +296,11 @@ public class QuantitationLevel {
         return 1;
     }
 
-//    public void calculateForSV(){
-//        //calculate quantitation for SV
-//        for (String name:quantities.keySet()){
-//            HashMap<String,Double> values = new HashMap<String, Double>();
-//            for(StudyVariable sv:xTracker.study.getMzQuantML().getStudyVariableList().getStudyVariable()){
-//                ArrayList<Double> assayValues = new ArrayList<Double>();
-//                for(Object obj:sv.getAssayRefs()){
-//                    assayValues.add(quantities.get(name).get(((Assay)obj).getId()));
-//                }
-//                double result = 0d;
-//                
-//                switch (xTracker.SV_ASSAY_INFERENCE) {
-//                    case MEAN:
-//                    case WEIGHTED_AVERAGE:
-//                        result = Utils.mean(assayValues);
-//                        break;
-//                    case MEDIAN:
-//                        result = Utils.median(assayValues);
-//                        break;
-//                    case SUM:
-//                        result = Utils.sum(assayValues);
-//                        break;
-//                    default:
-//                        System.out.println("Unrecognized calculation method for SV calculation");
-//                        System.exit(1);
-//                }
-//                values.put(sv.getId(), result);
-//            }
-//            studyVariables.put(name, values);
-//        }
-//        //calculate ratio for SV
-//        for (String name : quantities.keySet()) {
-//            HashMap <String,Double> ratioValues = ratios.get(name);
-//            if (ratioValues == null) ratioValues = new HashMap<String, Double>();
-//            for (xRatio ratio : xTracker.study.getRatios()) {
-//                if(ratio.getType().equals(xRatio.ASSAY)) continue;
-//            //ratio for SV
-//                HashMap <String,Double> svValues = studyVariables.get(name);
-//                double numerator = svValues.get(ratio.getNumerator());
-//                double denominator = svValues.get(ratio.getDenominator());
-//                double ratioValue;
-//                if (denominator == 0) {
-//                    ratioValue = Double.NaN;
-//                } else {
-//                    ratioValue = numerator / denominator;
-//                }
-//                ratioValues.put(ratio.getId(), ratioValue);
-//            }
-//            ratios.put(name, ratioValues);
-//        }
-//    }
-//    public void calculateRatioDirectlyFromQuantities(HashSet<String> quantitationNames){
-//        for (String quantitationName : quantitationNames) {
-//            HashMap<String, Double> ratioValues = new HashMap<String, Double>();
-//            for (xRatio ratio : xTracker.study.getRatios()) {
-//                if (ratio.getType().equals(xRatio.STUDY_VARIABLE)) continue;
-//                double numerator = getQuantity(quantitationName, ratio.getNumerator());
-//                double denominator = getQuantity(quantitationName, ratio.getDenominator());
-//                double ratioValue;
-//                if (denominator == 0) {
-//                    ratioValue = Double.NaN;
-//                } else {
-//                    ratioValue = numerator / denominator;
-//                }
-//                ratioValues.put(ratio.getId(), ratioValue);
-//            }
-//            setRatios(quantitationName, ratioValues);
-//        }
-//    }
-//    public void calculateRatioFromPeptideRatios(HashSet<String> quantitationNames){
-//        if(this instanceof ProteinData){
-//            ProteinData pro = (ProteinData)this;
-//            ArrayList<PeptideData> peptides = pro.getAllPeptides();
-//            ArrayList<String> ratioIDs = new ArrayList<String>();
-//            for (xRatio ratio : xTracker.study.getRatios()) {
-//                if (ratio.getType().equals(xRatio.ASSAY)) ratioIDs.add(ratio.getId());
-//            }
-//            for (String quantitationName : quantitationNames) {
-//
-//                ArrayList<HashMap<String, Double>> ratioValues = new ArrayList<HashMap<String, Double>>();
-//                for(PeptideData peptide:peptides){
-//                    ratioValues.add(peptide.getRatios(quantitationName));
-//                }
-//                HashMap<String,Double> proRatios = GenericInferenceMethod.median(ratioValues, ratioIDs);
-//                setRatios(quantitationName, proRatios);
-//            }
-//        }
-//    }
 }
 
 class QuantitationMisc {
 
-    private Map<Class, String> methods = new HashMap<>();
+    private final Map<Class, String> methods = new HashMap<>();
 
     public QuantitationMisc() {
         methods.put(ProteinData.class, "getPeptides");
@@ -394,7 +311,7 @@ class QuantitationMisc {
 //        methods.put(FeatureData.class, "getIdentifications");
     }
 
-    String getMethodName(Class clazz) {
+    String getMethodName(final Class clazz) {
 //        if(clazz == PeptideData.class && xTracker.study.getPipelineType() == Study.MS2_TYPE) return "getAllIdentifications";
         return methods.get(clazz);
     }

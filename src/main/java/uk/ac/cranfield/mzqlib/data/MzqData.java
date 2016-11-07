@@ -6,6 +6,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import uk.ac.liv.pgb.jmzqml.model.mzqml.Assay;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.AssayList;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.Column;
@@ -54,47 +57,46 @@ public class MzqData {
     /**
      * the map between protein group id and the corresponding protein group data
      */
-    private HashMap<String, ProteinGroupData> pgs = new HashMap<>();
+    private final Map<String, ProteinGroupData> pgs = new HashMap<>();
     /**
      * the list of protein group ids
      */
-    private ArrayList<String> pgIds = new ArrayList<>();
+    private final List<String> pgIds = new ArrayList<>();
     /**
      * the map between protein id and the corresponding protein data
      */
-    private HashMap<String, ProteinData> proteins = new HashMap<>();
+    private final HashMap<String, ProteinData> proteins = new HashMap<>();
     /**
      * the list of protein ids
      */
-    private ArrayList<String> proteinIds = new ArrayList<>();
+    private final List<String> proteinIds = new ArrayList<>();
     /**
      * the list of assayIDs
      */
-    private ArrayList<String> assayIDs = new ArrayList<>();
+    private final List<String> assayIDs = new ArrayList<>();
     /**
      * the list of assayIDs
      */
-    private ArrayList<Assay> assays = new ArrayList<>();
+    private final List<Assay> assays = new ArrayList<>();
     /**
      * the list of study variables
      */
-    private List<StudyVariable> svs = new ArrayList<>();
+    private final List<StudyVariable> svs = new ArrayList<>();
     /**
      * the list of ratios
      */
-    private ArrayList<String> ratios = new ArrayList<>();
+    private final List<String> ratios = new ArrayList<>();
 
     //the map between the name of the quantitation value (e.g. intensity, peak area) and the corresponding CV terms 
-    private HashMap<String, CvParam> cvParams = new HashMap<>();
+    private final Map<String, CvParam> cvParams = new HashMap<>();
     //the list of quantitation names
-    private ArrayList<String> quantitationNames = new ArrayList<>();
-//    private HashMap<String,Character> modificationIndice = new HashMap<String, Character>(); 
-//    private ArrayList<Modification> modifications = new ArrayList<Modification>();
+    private final List<String> quantitationNames = new ArrayList<>();
+
     /**
      * the list of modification names. Ideally should be list of Modification
      * objects, due to lack of equal function in the class, use this alternative
      */
-    private ArrayList<String> modifications = new ArrayList<>();
+    private final List<String> modifications = new ArrayList<>();
     /**
      * populate when reading the peptide consensus list to contain all peptide
      * consensus elements the entry will be removed when assigned to the protein
@@ -103,9 +105,9 @@ public class MzqData {
      * assign to the ARTIFICIAL protein after loading one mzq file, this
      * structure will be empty
      */
-    private HashMap<String, PeptideData> peptides = new HashMap<>();
-    private HashSet<String> unsolvedPeptides = new HashSet<>();
-    private HashMap<String, FeatureData> unsolvedFeatures = new HashMap<>();
+    private final Map<String, PeptideData> peptides = new HashMap<>();
+    private final Set<String> unsolvedPeptides = new HashSet<>();
+    private final Map<String, FeatureData> unsolvedFeatures = new HashMap<>();
     private SoftwareList softwareList;
     private AnalysisSummary analysisSummary;
     private InputFiles inputFiles;
@@ -174,7 +176,7 @@ public class MzqData {
      *
      * @param mzqName mzq file name.
      */
-    public void setMzqName(String mzqName) {
+    public void setMzqName(final String mzqName) {
         this.mzqName = mzqName;
     }
 
@@ -192,7 +194,7 @@ public class MzqData {
      *
      * @param mzqID mzq id.
      */
-    public void setMzqID(String mzqID) {
+    public void setMzqID(final String mzqID) {
         this.mzqID = mzqID;
     }
 
@@ -210,7 +212,7 @@ public class MzqData {
      *
      * @param inputFiles inputFiles.
      */
-    public void setInputFiles(InputFiles inputFiles) {
+    public void setInputFiles(final InputFiles inputFiles) {
         this.inputFiles = inputFiles;
     }
 
@@ -228,7 +230,7 @@ public class MzqData {
      *
      * @param analysisSummary analysisSummary.
      */
-    public void setAnalysisSummary(AnalysisSummary analysisSummary) {
+    public void setAnalysisSummary(final AnalysisSummary analysisSummary) {
         this.analysisSummary = analysisSummary;
     }
 
@@ -246,7 +248,7 @@ public class MzqData {
      *
      * @param softwareList softwareList
      */
-    public void setSoftwareList(SoftwareList softwareList) {
+    public void setSoftwareList(final SoftwareList softwareList) {
         this.softwareList = softwareList;
     }
 
@@ -255,7 +257,7 @@ public class MzqData {
      *
      * @param featureLists a list of FeatureList.
      */
-    public void addFeatures(List<FeatureList> featureLists) {
+    public void addFeatures(final List<FeatureList> featureLists) {
         for (FeatureList featureList : featureLists) {
             String rfg = featureList.getRawFilesGroupRef();
             for (Feature feature : featureList.getFeature()) {
@@ -284,7 +286,7 @@ public class MzqData {
      *
      * @param pcList peptideConsensusList.
      */
-    public void addPeptides(PeptideConsensusList pcList) {
+    public void addPeptides(final PeptideConsensusList pcList) {
         for (PeptideConsensus pc : pcList.getPeptideConsensus()) {
             PeptideData peptide = new PeptideData(pc);
             peptides.put(pc.getId(), peptide);
@@ -309,7 +311,7 @@ public class MzqData {
      *
      * @param pgList proteinGroupList
      */
-    public void addProteinGroups(ProteinGroupList pgList) {
+    public void addProteinGroups(final ProteinGroupList pgList) {
         if (pgList == null) {
             return;
         }
@@ -338,7 +340,7 @@ public class MzqData {
      *
      * @param proteinList proteinList.
      */
-    public void addProteins(ProteinList proteinList) {
+    public void addProteins(final ProteinList proteinList) {
         //the data structure localMapping holds the relationship between the ids from the current proteinList (keys) and the ids from the existing protein list in the memory (values)
         //will be useful if merging multiple mzq files
         //this will be used to assign quantitation values etc.
@@ -380,7 +382,7 @@ public class MzqData {
         }
     }
 
-    private QuantitationLevel determineQuantObj(int level, Row row) {
+    private QuantitationLevel determineQuantObj(final int level, final Row row) {
         QuantitationLevel quantObj = null;
         switch (level) {
             case PROTEIN_GROUP:
@@ -401,7 +403,8 @@ public class MzqData {
         return quantObj;
     }
 
-    private void parseQuantLayer(QuantLayer ql, int type, int level) {
+    private void parseQuantLayer(final QuantLayer ql, final int type,
+                                 final int level) {
         CvParam cvTerm = ql.getDataType().getCvParam();
         String quantityName = cvTerm.getName();
 
@@ -433,7 +436,7 @@ public class MzqData {
         }
     }
 
-    private Double parseDoubleValue(String str) {
+    private Double parseDoubleValue(final String str) {
         if (str == null) {
             return null;
         }
@@ -449,7 +452,7 @@ public class MzqData {
         return Double.parseDouble(str);
     }
 
-    private void parseRatioQuantLayer(RatioQuantLayer rql, int level) {
+    private void parseRatioQuantLayer(final RatioQuantLayer rql, final int level) {
         List<String> ratioIDs = new ArrayList<>();
         for (String ratioID : rql.getColumnIndex()) {
             ratioIDs.add(ratioID);
@@ -465,8 +468,9 @@ public class MzqData {
         }
     }
 
-    private void parseGlobalQuantLayer(GlobalQuantLayer gql, int level) {
-        ArrayList<String> columnIDs = new ArrayList<>();
+    private void parseGlobalQuantLayer(final GlobalQuantLayer gql,
+                                       final int level) {
+        List<String> columnIDs = new ArrayList<>();
         for (Column column : gql.getColumnDefinition().getColumn()) {
             final CvParam cvParam = column.getDataType().getCvParam();
             String name = cvParam.getName();
@@ -489,7 +493,7 @@ public class MzqData {
      *
      * @param assayList assayList.
      */
-    public void addAssays(AssayList assayList) {
+    public void addAssays(final AssayList assayList) {
         for (Assay assay : assayList.getAssay()) {
             assays.add(assay);
             assayIDs.add(assay.getId());
@@ -501,7 +505,7 @@ public class MzqData {
      *
      * @param studyVariableList studyVariableList.
      */
-    public void addStudyVariables(StudyVariableList studyVariableList) {
+    public void addStudyVariables(final StudyVariableList studyVariableList) {
         if (studyVariableList == null) {
             return;
         }
@@ -513,7 +517,7 @@ public class MzqData {
      *
      * @param ratioList ratioList.
      */
-    public void addRatios(RatioList ratioList) {
+    public void addRatios(final RatioList ratioList) {
         if (ratioList == null) {
             return;
         }
@@ -529,7 +533,7 @@ public class MzqData {
      *
      * @return the index of modification.
      */
-    public int getModificationIndex(Modification mod) {
+    public int getModificationIndex(final Modification mod) {
         String modStr = getModificationString(mod);
         if (modifications.contains(modStr)) {
             return modifications.indexOf(modStr);
@@ -539,7 +543,7 @@ public class MzqData {
     }
 
     //for modification in PeptideConsensus, not modification in Label which is of ModParamType type
-    private String getModificationString(Modification mod) {
+    private String getModificationString(final Modification mod) {
         //<xsd:element name="cvParam" type="CVParamType" minOccurs="1" maxOccurs="unbounded">           
         for (CvParam cv : mod.getCvParam()) {
             if (cv.getName() == null) {
@@ -557,7 +561,7 @@ public class MzqData {
      * @return list of ProteinGroupData.
      */
     public List<ProteinGroupData> getProteinGroups() {
-        ArrayList<ProteinGroupData> values = new ArrayList<>();
+        List<ProteinGroupData> values = new ArrayList<>();
         for (String id : pgIds) {
             values.add(pgs.get(id));
         }
@@ -570,7 +574,7 @@ public class MzqData {
      * @return list of ProteinData.
      */
     public List<ProteinData> getProteins() {
-        ArrayList<ProteinData> values = new ArrayList<>();
+        List<ProteinData> values = new ArrayList<>();
         for (String id : proteinIds) {
             values.add(proteins.get(id));
         }
@@ -593,7 +597,7 @@ public class MzqData {
      *
      * @return quantitation CvParam.
      */
-    public CvParam getQuantitationCvParam(String name) {
+    public CvParam getQuantitationCvParam(final String name) {
         if (cvParams.containsKey(name)) {
             return cvParams.get(name);
         }
@@ -636,7 +640,7 @@ public class MzqData {
         return ratios;
     }
 
-    private String existing(Protein protein) {
+    private String existing(final Protein protein) {
         //first search by id
         if (proteins.containsKey(protein.getId())) {
             return protein.getId();
@@ -704,7 +708,7 @@ public class MzqData {
      *
      * @param needAutoAssignment needAutoAssignment.
      */
-    public void setNeedAutoAssignment(boolean needAutoAssignment) {
+    public void setNeedAutoAssignment(final boolean needAutoAssignment) {
         this.needAutoAssignment = needAutoAssignment;
     }
 
@@ -764,7 +768,7 @@ public class MzqData {
      *
      * @param cvList cvList.
      */
-    public void setCvList(CvList cvList) {
+    public void setCvList(final CvList cvList) {
         cvs = cvList.getCv();
     }
 
@@ -784,7 +788,7 @@ public class MzqData {
      *
      * @return ProteinData.
      */
-    public ProteinData getProtein(String anchorProteinStr) {
+    public ProteinData getProtein(final String anchorProteinStr) {
         if (proteins.containsKey(anchorProteinStr)) {
             return proteins.get(anchorProteinStr);
         }

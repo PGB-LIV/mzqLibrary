@@ -24,7 +24,7 @@ public class RUtils {
      *
      * @return true if the packages are installed successfully.
      */
-    public static boolean installRequiredPackages(Rengine re) {
+    public static boolean installRequiredPackages(final Rengine re) {
 
         boolean allInstalled = true;
         List<Boolean> installedList = new ArrayList<>();
@@ -49,7 +49,8 @@ public class RUtils {
      *
      * @return true if the package is successfully installed.
      */
-    public static boolean installPackage(Rengine re, String packageName) {
+    public static boolean installPackage(final Rengine re,
+                                         final String packageName) {
 
         boolean installed = false;
 
@@ -101,7 +102,7 @@ public class RUtils {
         return installed;
     }
 
-    private static void showPackageInstalledDialog(String packageName) {
+    private static void showPackageInstalledDialog(final String packageName) {
         //Platform.runLater(() -> {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Package installed");

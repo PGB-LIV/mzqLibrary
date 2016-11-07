@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,7 +35,7 @@ public class CsvConverter extends GenericConverter {
      * @param filename   input mzq file name.
      * @param outputFile output csv file name.
      */
-    public CsvConverter(String filename, String outputFile) {
+    public CsvConverter(final String filename, final String outputFile) {
         super(filename, outputFile);
     }
 
@@ -49,7 +50,7 @@ public class CsvConverter extends GenericConverter {
         }
         StringBuilder sb = new StringBuilder();
         //deal with protein groups
-        ArrayList<QuantitationLevel> pgs = new ArrayList<>();
+        List<QuantitationLevel> pgs = new ArrayList<>();
         for (ProteinGroupData pg : MzqLib.DATA.getProteinGroups()) {
             pgs.add(pg);
         }
@@ -65,7 +66,7 @@ public class CsvConverter extends GenericConverter {
         sb.append("\n");
 
         //deal with proteins
-        ArrayList<QuantitationLevel> proteins = new ArrayList<>();
+        List<QuantitationLevel> proteins = new ArrayList<>();
         for (ProteinData protein : MzqLib.DATA.getProteins()) {
             proteins.add(protein);
         }
@@ -84,7 +85,7 @@ public class CsvConverter extends GenericConverter {
         }
         sb.append("\n");
         //deal with peptide
-        ArrayList<QuantitationLevel> peptides = new ArrayList<>();
+        List<QuantitationLevel> peptides = new ArrayList<>();
         for (PeptideData peptide : MzqLib.DATA.getPeptides()) {
             peptides.add(peptide);
         }
@@ -100,7 +101,7 @@ public class CsvConverter extends GenericConverter {
             }
         }
         //deal with features
-        ArrayList<QuantitationLevel> features = new ArrayList<>();
+        List<QuantitationLevel> features = new ArrayList<>();
         for (FeatureData feature : MzqLib.DATA.getFeatures()) {
             features.add(feature);
         }
@@ -145,7 +146,8 @@ public class CsvConverter extends GenericConverter {
         }
     }
 
-    private void addHeaderLine(int level, StringBuilder sb, String quantityName) {
+    private void addHeaderLine(final int level, final StringBuilder sb,
+                               final String quantityName) {
         if (MzqLib.DATA.control.isRequired(level, MzqData.ASSAY, quantityName)
                 || MzqLib.DATA.control.isRequired(level, MzqData.SV,
                                                   quantityName)) {
@@ -156,24 +158,28 @@ public class CsvConverter extends GenericConverter {
         }
     }
 
-    private void addEntityHeader(int level, StringBuilder sb) {
-        if (level == MzqData.PEPTIDE) {
-            sb.append("Peptide");
-            sb.append(SEPARATOR);
-            sb.append("Charge");
-            sb.append(SEPARATOR);
-            sb.append("Modification");
-        } else if (level == MzqData.PROTEIN_GROUP) {
-            sb.append("Anchor protein");
-            sb.append(SEPARATOR);
-            sb.append("Ambiguity member");
-        } else {
-            sb.append("Entity");
+    private void addEntityHeader(final int level, final StringBuilder sb) {
+        switch (level) {
+            case MzqData.PEPTIDE:
+                sb.append("Peptide");
+                sb.append(SEPARATOR);
+                sb.append("Charge");
+                sb.append(SEPARATOR);
+                sb.append("Modification");
+                break;
+            case MzqData.PROTEIN_GROUP:
+                sb.append("Anchor protein");
+                sb.append(SEPARATOR);
+                sb.append("Ambiguity member");
+                break;
+            default:
+                sb.append("Entity");
+                break;
         }
     }
 
-    private void outputAssayAndSV(StringBuilder sb, int level,
-                                  ArrayList<QuantitationLevel> objects) {
+    private void outputAssayAndSV(final StringBuilder sb, final int level,
+                                  final List<QuantitationLevel> objects) {
         printQuantitationLevelHeader(sb, level);
         for (String quantityName : MzqLib.DATA.getQuantitationNames()) {
             addHeaderLine(level, sb, quantityName);
@@ -189,8 +195,8 @@ public class CsvConverter extends GenericConverter {
         }
     }
 
-    private void outputRatio(StringBuilder sb, int level,
-                             ArrayList<QuantitationLevel> objects) {
+    private void outputRatio(final StringBuilder sb, final int level,
+                             final List<QuantitationLevel> objects) {
         sb.append("Ratios\n");
         addEntityHeader(level, sb);
         addRatioHeader(level, sb, SEPARATOR, "");
@@ -205,8 +211,8 @@ public class CsvConverter extends GenericConverter {
         sb.append("\n");
     }
 
-    private void outputGlobal(StringBuilder sb, int level,
-                              ArrayList<QuantitationLevel> objects) {
+    private void outputGlobal(final StringBuilder sb, final int level,
+                              final List<QuantitationLevel> objects) {
         Set<String> globals = MzqLib.DATA.control.getElements(level,
                                                               MzqData.GLOBAL);
         if (globals.size() > 0) {
@@ -225,8 +231,8 @@ public class CsvConverter extends GenericConverter {
         }
     }
 
-    private void printQuantitationLevel(StringBuilder sb, int level,
-                                        QuantitationLevel obj) {
+    private void printQuantitationLevel(final StringBuilder sb, final int level,
+                                        final QuantitationLevel obj) {
         switch (level) {
             case MzqData.PROTEIN_GROUP:
                 if (obj instanceof ProteinGroupData) {
@@ -262,7 +268,8 @@ public class CsvConverter extends GenericConverter {
         }
     }
 
-    private void printQuantitationLevelHeader(StringBuilder sb, int level) {
+    private void printQuantitationLevelHeader(final StringBuilder sb,
+                                              final int level) {
         switch (level) {
             case MzqData.PROTEIN_GROUP:
                 sb.append("Protein groups");

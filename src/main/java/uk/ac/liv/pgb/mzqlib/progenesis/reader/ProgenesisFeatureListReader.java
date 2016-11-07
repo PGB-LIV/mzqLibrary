@@ -100,7 +100,7 @@ public class ProgenesisFeatureListReader implements Closeable {
      *
      * @throws IOException io exceptions.
      */
-    public ProgenesisFeatureListReader(Reader rd, char separator)
+    public ProgenesisFeatureListReader(final Reader rd, final char separator)
             throws IOException {
         br = new BufferedReader(rd);
 
@@ -363,7 +363,7 @@ public class ProgenesisFeatureListReader implements Closeable {
      *
      * @throws IOException io exceptions.
      */
-    public ProgenesisFeatureListReader(Reader rd)
+    public ProgenesisFeatureListReader(final Reader rd)
             throws IOException {
         this(rd, ',');
     }
@@ -495,7 +495,7 @@ public class ProgenesisFeatureListReader implements Closeable {
         masterRetenTimeMapWithDuplicate.forEachEntry(new TIntDoubleProcedure() {
 
             @Override
-            public boolean execute(int key, double value) {
+            public boolean execute(final int key, final double value) {
                 TIntSet mf = masterRetenTimeMap.get(value);
                 if (mf == null) {
                     mf = new TIntHashSet();
@@ -528,7 +528,7 @@ public class ProgenesisFeatureListReader implements Closeable {
         proteinMapWithDuplicate.forEachEntry(new TIntObjectProcedure<String>() {
 
             @Override
-            public boolean execute(int key, String accession) {
+            public boolean execute(final int key, final String accession) {
 
                 TIntSet idSet = proteinMap.get(accession);
                 if (idSet == null) {
@@ -563,7 +563,7 @@ public class ProgenesisFeatureListReader implements Closeable {
         proteinMapWithDuplicate.forEachEntry(new TIntObjectProcedure<String>() {
 
             @Override
-            public boolean execute(int id, String accession) {
+            public boolean execute(final int id, final String accession) {
 
                 Set<String> pepSeqSet = proteinPeptidesMap.get(accession);
                 if (pepSeqSet == null) {
@@ -592,7 +592,7 @@ public class ProgenesisFeatureListReader implements Closeable {
         peptideMapWithDuplicate.forEachEntry(new TIntObjectProcedure<String>() {
 
             @Override
-            public boolean execute(int id, String pepSeq) {
+            public boolean execute(final int id, final String pepSeq) {
                 Set<String> protAccSet = peptideProteinsMap.get(pepSeq);
                 if (protAccSet == null) {
                     protAccSet = new HashSet<>();
@@ -619,7 +619,7 @@ public class ProgenesisFeatureListReader implements Closeable {
         peptideMapWithDuplicate.forEachEntry(new TIntObjectProcedure<String>() {
 
             @Override
-            public boolean execute(int id, String pepSeq) {
+            public boolean execute(final int id, final String pepSeq) {
                 TIntSet idSet = peptideMap.get(pepSeq);
                 if (idSet == null) {
                     idSet = new TIntHashSet();
@@ -730,7 +730,7 @@ public class ProgenesisFeatureListReader implements Closeable {
         completeMap.forEachEntry(new TIntObjectProcedure<String[]>() {
 
             @Override
-            public boolean execute(int id, String[] values) {
+            public boolean execute(final int id, final String[] values) {
                 if (!isFirstThreeRow(id)) {
                     retMap.put(id, getArrayPart(values, startCol, endCol));
                 }
@@ -755,7 +755,7 @@ public class ProgenesisFeatureListReader implements Closeable {
         completeMap.forEachEntry(new TIntObjectProcedure<String[]>() {
 
             @Override
-            public boolean execute(int id, String[] values) {
+            public boolean execute(final int id, final String[] values) {
                 if (!isFirstThreeRow(id)) {
                     retMap.put(id, values[col]);
                 }
@@ -768,7 +768,7 @@ public class ProgenesisFeatureListReader implements Closeable {
 
     //private function
     // isFirstThreeRow determine whether an entry is from the title row
-    private boolean isFirstThreeRow(int i) {
+    private boolean isFirstThreeRow(final int i) {
         boolean b = false;
         if (i == ROW1 || i == ROW2 || i == ROW3) {
             b = true;
@@ -776,7 +776,8 @@ public class ProgenesisFeatureListReader implements Closeable {
         return b;
     }
 
-    private List<String> getArrayPart(String[] array, int start, int end) {
+    private List<String> getArrayPart(final String[] array, final int start,
+                                      final int end) {
         List<String> retList = new ArrayList<>();
         for (int i = start; i < end + 1; i++) {
             retList.add(array[i]);
@@ -784,7 +785,7 @@ public class ProgenesisFeatureListReader implements Closeable {
         return retList;
     }
 
-    private int getAssayNumber(int start, String[] line) {
+    private int getAssayNumber(final int start, final String[] line) {
         int ret = 1;
 
         for (int i = start + 1; i < line.length; i++) {
@@ -797,7 +798,7 @@ public class ProgenesisFeatureListReader implements Closeable {
         return ret;
     }
 
-    private void storeHeadingRow3(int start, String[] line) {
+    private void storeHeadingRow3(final int start, final String[] line) {
         for (int i = start; i < (start + assayNum); i++) {
             assayList.add(line[i]);
             headingRow3 = headingRow3 + line[i] + ",";

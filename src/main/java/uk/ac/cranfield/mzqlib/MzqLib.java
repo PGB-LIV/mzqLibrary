@@ -60,7 +60,7 @@ public class MzqLib {
      * @param mzqFile Input mzq file name.
      * @param outputFile Output file name.
      */
-    public MzqLib(String typeStr, String mzqFile, String outputFile) {
+    public MzqLib(final String typeStr, final String mzqFile, final String outputFile) {
         initialize();
         int type = getType(typeStr);
         if (type == 0) {
@@ -96,7 +96,7 @@ public class MzqLib {
         }
     }
 
-    private void parseMzq(String mzqFile) {
+    private void parseMzq(final String mzqFile) {
         File file = new File(mzqFile);
         if (!file.exists()) {
             throw new IllegalStateException("Can not find the specified file:"
@@ -173,7 +173,7 @@ public class MzqLib {
      * Main class.
      * @param args input argument array.
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
 //        new MzqLib("csv","maxquant-silac.mzq","");
 //        new MzqLib("mztab","iTraq3standards.mzq","");
 //        new MzqLib("mztab","CPTAC-Progenesis-small-example.mzq","");
@@ -221,7 +221,7 @@ public class MzqLib {
         //data = new MzqData();
     }
 
-    private int getType(String type) {
+    private int getType(final String type) {
         if (converterTypeMap.containsKey(type)) {
             return converterTypeMap.get(type);
         }

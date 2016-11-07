@@ -94,7 +94,7 @@ public class CommandLineGui extends JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Mzq Library"));
 
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(final java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
             }
         });
@@ -108,14 +108,14 @@ public class CommandLineGui extends JFrame {
 
         jButton1.setText("Select output file ...");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(final java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
         jButton2.setText("Select input file ...");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(final java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
@@ -130,7 +130,7 @@ public class CommandLineGui extends JFrame {
 
         jButton3.setText("Go");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(final java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
@@ -232,9 +232,9 @@ public class CommandLineGui extends JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     @SuppressWarnings("unused")
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButton2ActionPerformed(final java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
         fc.showOpenDialog(this);
         if (fc.getSelectedFile() != null) {
@@ -244,7 +244,7 @@ public class CommandLineGui extends JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     @SuppressWarnings("unused")
-	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+	private void jButton1ActionPerformed(final java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         fc.showSaveDialog(this);
         if (fc.getSelectedFile() != null) {
             jTextField2.setText(fc.getSelectedFile().getAbsolutePath());
@@ -252,7 +252,7 @@ public class CommandLineGui extends JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     @SuppressWarnings("unused")
-	private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+	private void jButton3ActionPerformed(final java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
         if (jTextField1.getText() != null && jTextField2 != null) {
             String input = jTextField1.getText();
@@ -312,7 +312,7 @@ public class CommandLineGui extends JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     @SuppressWarnings("unused")
-	private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+	private void jComboBox1ActionPerformed(final java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         String selected = (String) jComboBox1.getSelectedItem();
         String value = (String) mzQuantMLLib.getAllFunctions().get(selected);
         String[] split = value.split(";@;");
@@ -328,7 +328,7 @@ public class CommandLineGui extends JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(final String args[]) {
         /*
          * Set the Nimbus look and feel
          */

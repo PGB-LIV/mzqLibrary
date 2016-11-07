@@ -17,12 +17,13 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.Feature;
  */
 public class FeatureSiiMatchManager {
 
-    private Map<String, Map<Feature, List<SIIData>>> featureListFeatureMatches
+    private final Map<String, Map<Feature, List<SIIData>>> featureListFeatureMatches
             = new HashMap<>();
-    private Map<String, Map<SIIData, List<Feature>>> featureListIdentificationMatches
+    private final Map<String, Map<SIIData, List<Feature>>> featureListIdentificationMatches
             = new HashMap<>();
 
-    public void registerFeature(Feature feature, String featureListName) {
+    public void registerFeature(final Feature feature,
+                                final String featureListName) {
         Map<Feature, List<SIIData>> featureMatches = featureListFeatureMatches.
                 get(featureListName);
         if (featureMatches == null) {
@@ -37,8 +38,8 @@ public class FeatureSiiMatchManager {
         }
     }
 
-    public void registerIdentification(SIIData identification,
-                                       String featureListName) {
+    public void registerIdentification(final SIIData identification,
+                                       final String featureListName) {
         Map<SIIData, List<Feature>> identificationMatches
                 = featureListIdentificationMatches.get(featureListName);
         if (identificationMatches == null) {
@@ -55,8 +56,9 @@ public class FeatureSiiMatchManager {
         }
     }
 
-    public void registerMatch(Feature feature, String featureListName,
-                              SIIData data) {
+    public void registerMatch(final Feature feature,
+                              final String featureListName,
+                              final SIIData data) {
         Map<Feature, List<SIIData>> featureMatches = featureListFeatureMatches.
                 get(featureListName);
         if (featureMatches == null) {
@@ -96,7 +98,7 @@ public class FeatureSiiMatchManager {
                                                                          mergeListsOperator));
     }
 
-    public long getFeatureCount(String featureListName) {
+    public long getFeatureCount(final String featureListName) {
         Map<Feature, List<SIIData>> featureMatches = featureListFeatureMatches.
                 get(featureListName);
         if (featureMatches == null) {
@@ -114,20 +116,20 @@ public class FeatureSiiMatchManager {
     }
 
     private <T, U extends Collection<?>> Stream<T> getStreamOfMappingToN(
-            Map<T, U> map, int minimumMappingNumber) {
+            final Map<T, U> map, final int minimumMappingNumber) {
         return map.entrySet().stream().filter(p -> p.getValue().size()
                 > (minimumMappingNumber - 1)).map(q -> q.getKey());
     }
 
     private <T, U extends Collection<?>> Stream<T> getStreamOfMergedDistinctMappingToN(
-            Map<String, Map<T, U>> map, int minimumMappingNumber) {
+            final Map<String, Map<T, U>> map, final int minimumMappingNumber) {
         return map.entrySet().stream().flatMap(
                 p -> getStreamOfMappingToN(p.getValue(), minimumMappingNumber)
         ).distinct();
     }
 
-    private long getFeaturesMappingToN(String featureListName,
-                                       int minimumMappingNumber) {
+    private long getFeaturesMappingToN(final String featureListName,
+                                       final int minimumMappingNumber) {
         Map<Feature, List<SIIData>> featureMatches = featureListFeatureMatches.
                 get(featureListName);
         if (featureMatches == null) {
@@ -139,12 +141,12 @@ public class FeatureSiiMatchManager {
                 count();
     }
 
-    private long getFeaturesMappingToN(int minimumMappingNumber) {
+    private long getFeaturesMappingToN(final int minimumMappingNumber) {
         return getStreamOfMergedDistinctMappingToN(featureListFeatureMatches,
                                                    minimumMappingNumber).count();
     }
 
-    public long getIdentificationsCount(String featureListName) {
+    public long getIdentificationsCount(final String featureListName) {
         Map<SIIData, List<Feature>> identificationMatches
                 = featureListIdentificationMatches.get(featureListName);
         if (identificationMatches == null) {
@@ -162,7 +164,7 @@ public class FeatureSiiMatchManager {
         return identificationCount;
     }
 
-    public long getIdentificationsAssignedCount(String featureListName) {
+    public long getIdentificationsAssignedCount(final String featureListName) {
         return getIdentificationsMappingToN(featureListName, 1);
     }
 
@@ -174,11 +176,11 @@ public class FeatureSiiMatchManager {
         return getIdentificationsMappingToN(2);
     }
 
-    public long getIdentificationsMultimappingCount(String featureListName) {
+    public long getIdentificationsMultimappingCount(final String featureListName) {
         return getIdentificationsMappingToN(featureListName, 2);
     }
 
-    private long getIdentificationsMappingToN(int minimumMappingNumber) {
+    private long getIdentificationsMappingToN(final int minimumMappingNumber) {
         long identificationWithMatchCount = featureListIdentificationMatches.
                 entrySet().stream().flatMap(
                         p -> p.getValue().entrySet().stream().filter(entry
@@ -189,8 +191,8 @@ public class FeatureSiiMatchManager {
         return identificationWithMatchCount;
     }
 
-    private long getIdentificationsMappingToN(String featureListName,
-                                              int minimumMappingNumber) {
+    private long getIdentificationsMappingToN(final String featureListName,
+                                              final int minimumMappingNumber) {
         Map<SIIData, List<Feature>> identificationMatches
                 = featureListIdentificationMatches.get(featureListName);
         if (identificationMatches == null) {
@@ -206,7 +208,7 @@ public class FeatureSiiMatchManager {
         return getFeaturesMappingToN(1);
     }
 
-    public long getFeaturesWithMatchCount(String featureListName) {
+    public long getFeaturesWithMatchCount(final String featureListName) {
         return getFeaturesMappingToN(featureListName, 1);
     }
 
@@ -214,7 +216,7 @@ public class FeatureSiiMatchManager {
         return getFeaturesMappingToN(2);
     }
 
-    public long getFeaturesMultimappingCount(String featureListName) {
+    public long getFeaturesMultimappingCount(final String featureListName) {
         return getFeaturesMappingToN(featureListName, 2);
     }
 
@@ -222,7 +224,7 @@ public class FeatureSiiMatchManager {
             = new BinaryOperator<List<SIIData>>() {
 
         @Override
-        public List<SIIData> apply(List<SIIData> t, List<SIIData> u) {
+        public List<SIIData> apply(final List<SIIData> t, final List<SIIData> u) {
             List<SIIData> newList = new LinkedList<>();
             newList.addAll(t);
             newList.addAll(u);

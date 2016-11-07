@@ -18,7 +18,7 @@ public enum RequiredPackages {
     //variables
     private final String packageName;
 
-    private RequiredPackages(String pkName) {
+    private RequiredPackages(final String pkName) {
         this.packageName = pkName;
     }
 

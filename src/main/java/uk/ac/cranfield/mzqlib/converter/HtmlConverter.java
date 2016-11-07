@@ -38,7 +38,7 @@ public class HtmlConverter extends GenericConverter {
      * @param filename   input mzq file name.
      * @param outputFile output html file name.
      */
-    public HtmlConverter(String filename, String outputFile) {
+    public HtmlConverter(final String filename, final String outputFile) {
         super(filename, outputFile);
     }
 
@@ -294,7 +294,7 @@ public class HtmlConverter extends GenericConverter {
 
     }
 
-    private void addHeader(int level, StringBuilder sb) {
+    private void addHeader(final int level, final StringBuilder sb) {
         for (String quantityName : MzqLib.DATA.getQuantitationNames()) {
             if (level == MzqData.FEATURE) {
                 addAssayHeader(level, sb, quantityName,

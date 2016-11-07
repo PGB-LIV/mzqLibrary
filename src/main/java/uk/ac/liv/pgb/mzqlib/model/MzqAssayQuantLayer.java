@@ -27,10 +27,11 @@ public class MzqAssayQuantLayer extends MzqQuantLayer {
      *
      * @throws JAXBException jaxb exception
      */
-    public MzqAssayQuantLayer(MzQuantMLUnmarshaller um, String listId,
-                              QuantLayer quantLayer,
-                              String listType,
-                              String dataType)
+    public MzqAssayQuantLayer(final MzQuantMLUnmarshaller um,
+                              final String listId,
+                              final QuantLayer quantLayer,
+                              final String listType,
+                              final String dataType)
             throws JAXBException {
         this.quantLayerType = new SimpleStringProperty("AssayQuantLayer");
         this.mzqUm = um;

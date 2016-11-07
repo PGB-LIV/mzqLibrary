@@ -53,7 +53,7 @@ public class LoadMzQuantMLDataTask extends Task<MzQuantMLData> {
      *
      * @param f input mzq file.
      */
-    public LoadMzQuantMLDataTask(File f) {
+    public LoadMzQuantMLDataTask(final File f) {
         mzqFile = f;
     }
 

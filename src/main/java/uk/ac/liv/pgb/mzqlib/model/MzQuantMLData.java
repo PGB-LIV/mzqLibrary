@@ -33,7 +33,7 @@ public class MzQuantMLData {
      *
      * @param mzqSum MzQuantMLSummary
      */
-    public void setMzQuantMLSummary(MzQuantMLSummary mzqSum) {
+    public void setMzQuantMLSummary(final MzQuantMLSummary mzqSum) {
         mzQuantMLSummary.setProteinGroupListNumber(mzqSum.
                 getProteinGroupListNumber());
         mzQuantMLSummary.setProteinListNumber(mzqSum.getProteinListNumber());
@@ -48,7 +48,7 @@ public class MzQuantMLData {
      * @param mzqAQLList ObservableList&lt;MzqAssayQuantLayer&gt;
      */
     public void setMzqAssayQuantLayerList(
-            ObservableList<MzqAssayQuantLayer> mzqAQLList) {
+            final ObservableList<MzqAssayQuantLayer> mzqAQLList) {
         mzqAssayQuantLayerList.clear();
         mzqAssayQuantLayerList.addAll(mzqAQLList);
     }
@@ -76,7 +76,7 @@ public class MzQuantMLData {
      *
      * @param um MzQuantMLUnmarshaller
      */
-    public void setMzQuantMLUnmarshaller(MzQuantMLUnmarshaller um) {
+    public void setMzQuantMLUnmarshaller(final MzQuantMLUnmarshaller um) {
         mzQuantMLUnmarshaller = um;
     }
 
@@ -101,10 +101,11 @@ public class MzQuantMLData {
     /**
      * Set list of MzqFeatureQuantLayer.
      *
-     * @param mzqFeatureQuantLayerList ObservableList&lt;MzqFeatureQuantLayer&gt;
+     * @param
+     *                                 mzqFeatureQuantLayerList ObservableList&lt;MzqFeatureQuantLayer&gt;
      */
     public void setMzqFeatureQuantLayerList(
-            ObservableList<MzqFeatureQuantLayer> mzqFeatureQuantLayerList) {
+            final ObservableList<MzqFeatureQuantLayer> mzqFeatureQuantLayerList) {
         this.mzqFeatureQuantLayerList.clear();
         this.mzqFeatureQuantLayerList.addAll(mzqFeatureQuantLayerList);
     }

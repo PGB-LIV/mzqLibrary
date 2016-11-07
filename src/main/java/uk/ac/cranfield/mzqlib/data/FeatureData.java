@@ -14,7 +14,7 @@ public class FeatureData extends QuantitationLevel {
 //     */
 //    private String peptideID;
 
-    private Feature feature;
+    private final Feature feature;
     private String rawFilesGroupRef;
 
     /**
@@ -31,7 +31,7 @@ public class FeatureData extends QuantitationLevel {
      *
      * @param rawFilesGroupRef rawFilesGroupRef.
      */
-    public void setRawFilesGroupRef(String rawFilesGroupRef) {
+    public void setRawFilesGroupRef(final String rawFilesGroupRef) {
         this.rawFilesGroupRef = rawFilesGroupRef;
     }
 
@@ -40,7 +40,7 @@ public class FeatureData extends QuantitationLevel {
      *
      * @param feature Feature.
      */
-    public FeatureData(Feature feature) {
+    public FeatureData(final Feature feature) {
         this.feature = feature;
     }
 

@@ -20,18 +20,18 @@ public class ProteinData extends QuantitationLevel {
     /**
      * the corresponding protein element in mzQuantML
      */
-    private Protein protein;
+    private final Protein protein;
     /**
      * the list of peptides
      */
-    private Map<String, PeptideSequenceData> peptides;
+    private final Map<String, PeptideSequenceData> peptides;
 
     /**
      * Constructor of ProteinData class.
      *
      * @param pro input Protein.
      */
-    public ProteinData(Protein pro) {
+    public ProteinData(final Protein pro) {
         protein = pro;
         peptides = new HashMap<>();
     }
@@ -96,7 +96,7 @@ public class ProteinData extends QuantitationLevel {
      * @return true if two objects are equal.
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -135,6 +135,7 @@ public class ProteinData extends QuantitationLevel {
 
     /**
      * Get list of PeptideData.
+     *
      * @return list of PeptideData.
      */
     public List<PeptideData> getPeptides() {
@@ -145,7 +146,7 @@ public class ProteinData extends QuantitationLevel {
         return result;
     }
 
-    void addPeptide(PeptideData peptide) {
+    void addPeptide(final PeptideData peptide) {
         String seq = peptide.getSeq();
         if (!peptides.containsKey(seq)) {
             PeptideSequenceData psData = new PeptideSequenceData(seq);

@@ -34,7 +34,8 @@ public class MassTrace {
      * @param rt     retention time value
      * @param rtWin  retention time window value
      */
-    public MassTrace(double mz, double charge, double rt, double rtWin) {
+    public MassTrace(final double mz, final double charge, final double rt,
+                     final double rtWin) {
         rt_start = rt - rtWin / 2;
         rt_end = rt_start + rtWin;
         mz_start = mz;
@@ -49,7 +50,8 @@ public class MassTrace {
      * @param rt     retention time value
      * @param rtWin  retention time window value
      */
-    public MassTrace(String mz, String charge, String rt, String rtWin) {
+    public MassTrace(final String mz, final String charge, final String rt,
+                     final String rtWin) {
         this(Double.parseDouble(mz), Double.parseDouble(charge), Double.
              parseDouble(rt), Double.parseDouble(rtWin));
     }
@@ -63,8 +65,9 @@ public class MassTrace {
      * @param rtWin  retention time window value
      * @param df     DecimalFormat setting
      */
-    public MassTrace(double mz, double charge, double rt, double rtWin,
-                     DecimalFormat df) {
+    public MassTrace(final double mz, final double charge, final double rt,
+                     final double rtWin,
+                     final DecimalFormat df) {
         this(mz, charge, rt, rtWin);
         this.rt_start = Double.valueOf(df.format(rt_start));
         this.rt_end = Double.valueOf(df.format(rt_end));
@@ -81,8 +84,9 @@ public class MassTrace {
      * @param rtWin  retention time window value
      * @param df     DecimalFormat setting
      */
-    public MassTrace(String mz, String charge, String rt, String rtWin,
-                     DecimalFormat df) {
+    public MassTrace(final String mz, final String charge, final String rt,
+                     final String rtWin,
+                     final DecimalFormat df) {
         this(Double.parseDouble(mz), Double.parseDouble(charge), Double.
              parseDouble(rt), Double.parseDouble(rtWin), df);
     }

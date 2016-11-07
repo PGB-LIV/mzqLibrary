@@ -26,7 +26,8 @@ public class RConsole implements RMainLoopCallbacks {
      * @param oType output type.
      */
     @Override
-    public void rWriteConsole(Rengine re, String text, int oType) {
+    public void rWriteConsole(final Rengine re, final String text,
+                              final int oType) {
         System.out.print(text);
     }
 
@@ -37,7 +38,7 @@ public class RConsole implements RMainLoopCallbacks {
      * @param which which.
      */
     @Override
-    public void rBusy(Rengine re, int which) {
+    public void rBusy(final Rengine re, final int which) {
         System.out.println("rBusy(" + which + ")");
     }
 
@@ -51,7 +52,8 @@ public class RConsole implements RMainLoopCallbacks {
      * @return result messages.
      */
     @Override
-    public String rReadConsole(Rengine re, String prompt, int addToHistory) {
+    public String rReadConsole(final Rengine re, final String prompt,
+                               final int addToHistory) {
         System.out.print(prompt);
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(
@@ -73,7 +75,7 @@ public class RConsole implements RMainLoopCallbacks {
      * @param message message text.
      */
     @Override
-    public void rShowMessage(Rengine re, String message) {
+    public void rShowMessage(final Rengine re, final String message) {
         System.out.println("rShowMessage \"" + message + "\"");
     }
 
@@ -86,7 +88,7 @@ public class RConsole implements RMainLoopCallbacks {
      * @return result message.
      */
     @Override
-    public String rChooseFile(Rengine re, int newFile) {
+    public String rChooseFile(final Rengine re, final int newFile) {
         FileDialog fd = new FileDialog(new Frame(), (newFile == 0)
                                        ? "Select a file" : "Select a new file",
                                        (newFile == 0) ? FileDialog.LOAD
@@ -108,7 +110,7 @@ public class RConsole implements RMainLoopCallbacks {
      * @param re R engine.
      */
     @Override
-    public void rFlushConsole(Rengine re) {
+    public void rFlushConsole(final Rengine re) {
     }
 
     /**
@@ -118,7 +120,7 @@ public class RConsole implements RMainLoopCallbacks {
      * @param filename file name.
      */
     @Override
-    public void rLoadHistory(Rengine re, String filename) {
+    public void rLoadHistory(final Rengine re, final String filename) {
     }
 
     /**
@@ -128,7 +130,7 @@ public class RConsole implements RMainLoopCallbacks {
      * @param filename file name.
      */
     @Override
-    public void rSaveHistory(Rengine re, String filename) {
+    public void rSaveHistory(final Rengine re, final String filename) {
     }
 
 }

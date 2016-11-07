@@ -62,7 +62,7 @@ public class MztabConverter extends GenericConverter {
      * @param filename   input mzq file name.
      * @param outputFile output mzTab file name.
      */
-    public MztabConverter(String filename, String outputFile) {
+    public MztabConverter(final String filename, final String outputFile) {
         super(filename, outputFile);
     }
 
@@ -916,7 +916,8 @@ public class MztabConverter extends GenericConverter {
      * referenced
      * in either assay or study variable
      */
-    private CvParam determineQuantitationUnit(int level, List<String> names) {
+    private CvParam determineQuantitationUnit(final int level,
+                                              final List<String> names) {
         for (String name : names) {
             if (MzqLib.DATA.control.isRequired(level, MzqData.ASSAY, name)) {
                 return MzqLib.DATA.getQuantitationCvParam(name);
@@ -933,7 +934,8 @@ public class MztabConverter extends GenericConverter {
         return null;
     }
 
-    private Param determineQuantitationMethod(AnalysisSummary analysisSummary) {
+    private Param determineQuantitationMethod(
+            final AnalysisSummary analysisSummary) {
         for (CvParam cvParam : analysisSummary.getCvParam()) {
             String accession = cvParam.getAccession();
             if (accession.contains("MS:1001834") //LC-MS label-free quantitation analysis
@@ -947,25 +949,4 @@ public class MztabConverter extends GenericConverter {
         return null;
     }
 
-//    private String getSearchEngineString() {
-//        for (String name : MzqLib.data.control.getElements(MzqData.PEPTIDE, MzqData.GLOBAL)) {
-//            CvParam param = MzqLib.data.getQuantitationCvParam(name);
-////            String value = ((Cv) param.getCvRef()).getId();
-////            String value = ((Cv) param.getCv()).getId();
-//            String value = param.getCvRef();
-//            if (param != null) {
-//                String accession = param.getAccession();
-//                if (accession.contains("MS:1001171")) {
-//                    return value + ";MS:1001171;Mascot:score;MS:1001207;Mascot";
-//                }
-//                if (accession.contains("MS:1001390")) {
-//                    return value + ";MS:1001390;Phenyx:Score;MS:1001209;Phenyx";
-//                }
-//                if (accession.contains("MS:1001492")) {
-//                    return value + ";MS:1001492;percolator:score;MS:1001490;percolator";
-//                }
-//            }
-//        }
-//        return null;
-//    }
 }

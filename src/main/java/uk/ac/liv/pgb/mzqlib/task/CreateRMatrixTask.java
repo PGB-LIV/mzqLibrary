@@ -29,7 +29,7 @@ public class CreateRMatrixTask extends Task<HeatMapParam> {
      *
      * @param list list of MzqDataMatrixRow.
      */
-    public CreateRMatrixTask(ObservableList<MzqDataMatrixRow> list) {
+    public CreateRMatrixTask(final ObservableList<MzqDataMatrixRow> list) {
         rowList.clear();
         rowList.addAll(list);
     }

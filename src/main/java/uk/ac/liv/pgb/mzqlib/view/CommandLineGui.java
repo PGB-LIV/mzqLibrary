@@ -1,6 +1,7 @@
 
 package uk.ac.liv.pgb.mzqlib.view;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +16,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import javax.xml.bind.JAXBException;
+import javax.xml.datatype.DatatypeConfigurationException;
 
 import uk.ac.liv.pgb.mzqlib.MzQuantMLLib;
 
@@ -229,7 +232,8 @@ public class CommandLineGui extends JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    @SuppressWarnings("unused")
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
         fc.showOpenDialog(this);
@@ -239,15 +243,16 @@ public class CommandLineGui extends JFrame {
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    @SuppressWarnings("unused")
+	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         fc.showSaveDialog(this);
         if (fc.getSelectedFile() != null) {
             jTextField2.setText(fc.getSelectedFile().getAbsolutePath());
         }
-        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    @SuppressWarnings("unused")
+	private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
         if (jTextField1.getText() != null && jTextField2 != null) {
             String input = jTextField1.getText();
@@ -262,7 +267,7 @@ public class CommandLineGui extends JFrame {
             String selected = (String) jComboBox1.getSelectedItem();
             String argsTemp = selected + " " + input + " " + output + " "
                     + jTextField3.getText();
-            List<String> matchList = new ArrayList<String>();
+            List<String> matchList = new ArrayList<>();
             Pattern regex = Pattern.compile("[^\\s\"']+|\"[^\"]*\"|'[^']*'");           //split unless surrounded by double quotes
             Matcher regexMatcher = regex.matcher(argsTemp);
             while (regexMatcher.find()) {
@@ -276,7 +281,8 @@ public class CommandLineGui extends JFrame {
                 String libFeedback = null;
                 try {
                     libFeedback = mzQuantMLLib.init(args);
-                } catch (Exception ex) {
+                } catch (IOException | JAXBException |
+                        DatatypeConfigurationException | InterruptedException ex) {
                     Logger.getLogger(CommandLineGui.class.getName()).log(
                             Level.SEVERE, null, ex);
                 }
@@ -305,7 +311,8 @@ public class CommandLineGui extends JFrame {
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    @SuppressWarnings("unused")
+	private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         String selected = (String) jComboBox1.getSelectedItem();
         String value = (String) mzQuantMLLib.getAllFunctions().get(selected);
         String[] split = value.split(";@;");

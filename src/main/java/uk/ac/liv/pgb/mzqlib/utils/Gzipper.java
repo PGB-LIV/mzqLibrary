@@ -29,9 +29,7 @@ public class Gzipper {
         GZIPInputStream gin = null;
         File outFile = null;
         FileOutputStream fos = null;
-        FileInputStream fis = null;
-        try {
-            fis = new FileInputStream(zipped_file);
+        try (FileInputStream fis = new FileInputStream(zipped_file)) {
             gin = new GZIPInputStream(fis);
             outFile = File.createTempFile("tmp_" + new Random().toString(),
                                           ".mzq");
@@ -46,11 +44,11 @@ public class Gzipper {
             Logger.getLogger(Gzipper.class.getName()).
                     log(Level.SEVERE, null, ex);
         } finally {
-            if (fis != null) {
-                fis.close();
-            }
             if (fos != null) {
                 fos.close();
+            }
+            if (gin != null) {
+                gin.close();
             }
         }
         return outFile;

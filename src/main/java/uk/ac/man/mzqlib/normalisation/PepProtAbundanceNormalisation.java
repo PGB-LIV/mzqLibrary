@@ -80,7 +80,7 @@ public class PepProtAbundanceNormalisation {
 
 //    private int referenceNumber;
     private String userRef;
-    private String setType;
+    //private String setType;
     //private Map<String, List<String>> scalingFactor;
     //private String preferedRef;
 
@@ -157,9 +157,9 @@ public class PepProtAbundanceNormalisation {
      *
      * @param idType - ID type
      */
-    public void setIDType(String idType) {
-        this.setType = idType;
-    }
+//    public void setIDType(String idType) {
+//        this.setType = idType;
+//    }
 
     /**
      * set unmarshalling file for mzQuantML object
@@ -388,8 +388,7 @@ public class PepProtAbundanceNormalisation {
             } catch (InterruptedException ex) {
 //                Logger.getLogger(PepProtAbundanceNormalisation.class.getName()).
 //                        log(Level.SEVERE, null, ex);
-                throw new InterruptedException(
-                        "Error running scaling factor calculations.");
+                throw ex;
             }
 
             Set<ScaleFactorCalculationResult> result = futures.stream().map(

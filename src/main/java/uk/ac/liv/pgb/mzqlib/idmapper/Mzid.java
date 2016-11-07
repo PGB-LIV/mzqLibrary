@@ -89,6 +89,7 @@ public class Mzid {
      * @return retention time in the cvParam of SpectrumIdentificationResult
      *         with accession="MS:1000796"
      */
+    @SuppressWarnings("unused")
     private double getRetentionTime(SpectrumIdentificationResult sir) {
         throw new UnsupportedOperationException("Not yet implemented");
     }

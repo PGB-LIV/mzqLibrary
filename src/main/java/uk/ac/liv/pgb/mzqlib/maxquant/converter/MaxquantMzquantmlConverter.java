@@ -81,7 +81,7 @@ public class MaxquantMzquantmlConverter {
     /**
      * @param args the command line arguments
      */
-    private final static String MAXQUANT_VERSION = "1.2.0.18";
+    private final static String MAXQUANT_VERSION = "1.2.0.18"; // NOPMD
     private final MaxquantFilesReader maxRd;
 
     // MzQuantML elements

@@ -35,9 +35,13 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.StudyVariable;
  */
 public class XlsConverter extends GenericConverter {
 
-    final static String SEPERATOR = "";
-    private WritableCellFormat boldFormat;
-    private WritableCellFormat normalFormat;
+//    final static String SEPERATOR = "";
+    private final WritableCellFormat boldFormat;
+    private final WritableCellFormat normalFormat;
+    private final int FONT11 = 11;
+    private final int FONT10 = 10;
+    private final int PEPTIDE_SHEET = 3;
+    private final int FEATURE_SHEET = 4;
 
     /**
      * Constructor.
@@ -47,10 +51,10 @@ public class XlsConverter extends GenericConverter {
      */
     public XlsConverter(final String filename, final String outputFile) {
         super(filename, outputFile);
-        WritableFont boldFont = new WritableFont(WritableFont.ARIAL, 11,
+        WritableFont boldFont = new WritableFont(WritableFont.ARIAL, FONT11,
                                                  WritableFont.BOLD);
         boldFormat = new WritableCellFormat(boldFont);
-        WritableFont normalFont = new WritableFont(WritableFont.ARIAL, 10);
+        WritableFont normalFont = new WritableFont(WritableFont.ARIAL, FONT10);
         normalFormat = new WritableCellFormat(normalFont);
     }
 
@@ -69,8 +73,8 @@ public class XlsConverter extends GenericConverter {
             wb.createSheet("metadata", 0);
             wb.createSheet("protein groups", 1);
             wb.createSheet("proteins", 2);
-            wb.createSheet("peptides", 3);
-            wb.createSheet("features", 4);
+            wb.createSheet("peptides", PEPTIDE_SHEET);
+            wb.createSheet("features", FEATURE_SHEET);
 
             WritableSheet metaSheet = wb.getSheet("metadata");
             outputMetadata(metaSheet);

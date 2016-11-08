@@ -29,7 +29,11 @@ import uk.ac.liv.pgb.mzqlib.idmapper.data.SIIData;
  */
 public class MzidProcessorFactory {
 
-    //MzIdentMLUnmarshaller um;
+    /**
+     * Number of seconds in one minute.
+     */
+    private static final int SECONDS_PER_MINUTE = 60;
+
     private static final MzidProcessorFactory instance
             = new MzidProcessorFactory();
 
@@ -196,11 +200,11 @@ public class MzidProcessorFactory {
 
                 switch (unit.toLowerCase(Locale.ENGLISH)) {
                     case "second":
-                        return Double.parseDouble(value) / 60;
+                        return Double.parseDouble(value) / SECONDS_PER_MINUTE;
                     case "minute":
                         return Double.parseDouble(value);
                     case "hour": // rare case?
-                        return Double.parseDouble(value) * 60;
+                        return Double.parseDouble(value) * SECONDS_PER_MINUTE;
                     default:
                         return rt;
                 }

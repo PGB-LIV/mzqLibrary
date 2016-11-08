@@ -204,9 +204,9 @@ class GenericFileFilter extends javax.swing.filechooser.FileFilter {
     private String description;
 
     public GenericFileFilter(final String[] filesExtsIn,
-                             final String description) {
+                             final String desc) {
         this.fileExts = filesExtsIn;
-        this.description = description;
+        this.description = desc;
     }
 
     /**

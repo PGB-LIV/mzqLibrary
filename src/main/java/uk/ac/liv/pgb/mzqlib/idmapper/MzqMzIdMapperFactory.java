@@ -73,6 +73,8 @@ public class MzqMzIdMapperFactory {
     private static final MzqMzIdMapperFactory instance
             = new MzqMzIdMapperFactory();
 
+    private final double TOLERANCE = 0.1;
+
     private MzqMzIdMapperFactory() {
     }
 
@@ -104,8 +106,9 @@ public class MzqMzIdMapperFactory {
     public MzqMzIdMapper buildMzqMzIdMapper(final MzQuantMLUnmarshaller mzqUm,
                                             final String rawToMzidString)
             throws JAXBException, IOException {
-        return buildMzqMzIdMapper(mzqUm, rawToMzidString, new Tolerance(0.1,
-                                                                        ToleranceUnit.DALTON));
+        return buildMzqMzIdMapper(mzqUm, rawToMzidString, new Tolerance(
+                                  TOLERANCE,
+                                  ToleranceUnit.DALTON));
     }
 
     /**
@@ -167,7 +170,7 @@ public class MzqMzIdMapperFactory {
     public MzqMzIdMapper buildMzqMzIdMapper(final MzQuantMLUnmarshaller mzqUm,
                                             final Map<String, String> rawToMzidMap)
             throws JAXBException, IOException {
-        return buildMzqMzIdMapper(mzqUm, rawToMzidMap, new Tolerance(0.1,
+        return buildMzqMzIdMapper(mzqUm, rawToMzidMap, new Tolerance(TOLERANCE,
                                                                      ToleranceUnit.DALTON));
     }
 

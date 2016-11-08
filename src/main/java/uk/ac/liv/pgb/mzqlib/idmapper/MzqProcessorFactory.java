@@ -36,6 +36,8 @@ public class MzqProcessorFactory {
     private static final MzqProcessorFactory instance
             = new MzqProcessorFactory();
 
+    private static final double TOLERANCE = 0.1;
+
     private MzqProcessorFactory() {
     }
 
@@ -137,7 +139,8 @@ public class MzqProcessorFactory {
         private MzqProcessorImpl(final MzQuantMLUnmarshaller mzqUm,
                                  final Map<String, String> rawToMzidMap)
                 throws JAXBException, IOException {
-            this(mzqUm, rawToMzidMap, new Tolerance(0.1, ToleranceUnit.DALTON),
+            this(mzqUm, rawToMzidMap, new Tolerance(TOLERANCE,
+                                                    ToleranceUnit.DALTON),
                  1.0 / 3.0);
         }
 

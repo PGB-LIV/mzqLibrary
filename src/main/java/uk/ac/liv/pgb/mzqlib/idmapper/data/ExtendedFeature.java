@@ -24,6 +24,8 @@ public class ExtendedFeature extends Feature {
     private final double urt; // up boundary of rt (min)
     private final double brt; // bottom boundary of rt (min)
     private final Feature feature;
+    private final double PPM_BASE = 1000000.0;
+    private static final double TOLERANCE = 0.1;
 
     /**
      * Constructor of ExtendedFeature base on Feature, m/z window and retention
@@ -52,7 +54,7 @@ public class ExtendedFeature extends Feature {
             double mzToleranceDaltons = msTolerance.getUnit()
                     == ToleranceUnit.DALTON ? msTolerance.getTolerance() : ft.
                             getMz() / ((1 / msTolerance.getTolerance())
-                            * 1000000.0);
+                            * PPM_BASE);
             lmz = ft.getMz() - mzToleranceDaltons;
             rmz = ft.getMz() + mzToleranceDaltons;
         } else {
@@ -63,7 +65,7 @@ public class ExtendedFeature extends Feature {
                 double mzToleranceDaltons = msTolerance.getUnit()
                         == ToleranceUnit.DALTON ? msTolerance.getTolerance()
                                 : ft.getMz()
-                                / ((1 / msTolerance.getTolerance()) * 1000000.0);
+                                / ((1 / msTolerance.getTolerance()) * PPM_BASE);
                 lmz = ft.getMz() - mzToleranceDaltons;
                 rmz = ft.getMz() + mzToleranceDaltons;
             } else {
@@ -81,7 +83,7 @@ public class ExtendedFeature extends Feature {
      * @param ft Feature
      */
     public ExtendedFeature(final Feature ft) {
-        this(ft, new Tolerance(0.1, ToleranceUnit.DALTON), 1.0 / 3.0);
+        this(ft, new Tolerance(TOLERANCE, ToleranceUnit.DALTON), 1.0 / 3.0);
     }
 
     /**

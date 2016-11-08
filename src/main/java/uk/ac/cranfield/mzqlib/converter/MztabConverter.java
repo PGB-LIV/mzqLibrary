@@ -57,6 +57,11 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.StudyVariable;
 public class MztabConverter extends GenericConverter {
 
     /**
+     * Number of seconds in one minute.
+     */
+    private final int SECONDS_PER_MINUTE = 60;
+
+    /**
      * Constructor.
      *
      * @param filename   input mzq file name.
@@ -707,7 +712,7 @@ public class MztabConverter extends GenericConverter {
                             tabPep.setModifications(mods);
                         }
                         //mandatory field in quantification mode: retention_time, retention_time_window
-                        ArrayList<Double> mzs = new ArrayList<>();
+                        List<Double> mzs = new ArrayList<>();
                         SplitList<Double> rts = new SplitList<>('|');
                         SplitList<SpectraRef> spectrum_refs = new SplitList<>(
                                 '|');
@@ -722,7 +727,8 @@ public class MztabConverter extends GenericConverter {
                             //in mzTab retention_time Double List (“,”) Time points in seconds.
                             String rtStr = feature.getFeature().getRt();
                             if (rtStr != null && !rtStr.equalsIgnoreCase("null")) {
-                                double rt = 60 * Double.parseDouble(rtStr);
+                                double rt = SECONDS_PER_MINUTE * Double.
+                                        parseDouble(rtStr);
                                 if (maxRt < rt) {
                                     maxRt = rt;
                                 }

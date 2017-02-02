@@ -248,16 +248,14 @@ public class MzQuantMLLib implements Serializable {
      */
     public static final String proteinInferenceParams
             = "-op [sum|mean|median] -inPepNormCA inPeptideNormCvAccession "
-            + "-outPGNormCA outProteinGroupNormCvAccession -outPGNormCN outProteinGroupNormCvName "
-            + "-outPGRawCN outProteinGroupRawCvName";
+            + "-outPGNormCA outProteinGroupNormCvAccession -outPGNormCN outProteinGroupNormCvName";
 
     /**
      * Constant.
      */
     public static final String proteinInferenceUsageExample
             = "-op sum -inPepNormCA MS:1001891 "
-            + "-outPGNormCA MS:1002518 -outPGNormCN Progenesis:protein group normalised abundance "
-            + "-outPGRawCN Progenesis:protein group raw abundance";
+            + "-outPGNormCA MS:1002518 -outPGNormCN Progenesis:protein group normalised abundance";
 
     /**
      * Constant.
@@ -563,15 +561,11 @@ public class MzQuantMLLib implements Serializable {
                         String outPGNormCN = Utils.getCmdParameter(args,
                                                                    "outPGNormCN",
                                                                    true);
-                        String outPGRawCN = Utils.getCmdParameter(args,
-                                                                  "outPGRawCN",
-                                                                  true);
                         ProteinAbundanceInference pai
                                 = new ProteinAbundanceInference(inputFileName,
                                                                 op, inPepNormCA,
                                                                 outPGNormCA,
                                                                 outPGNormCN,
-                                                                outPGRawCN,
                                                                 "AssayQuantLayer");
                         pai.proteinInference();
                     } else if (args[0].equals("MaxquantConverter")) {

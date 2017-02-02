@@ -34,18 +34,15 @@ public final class ProteinAbundanceInference {
     /**
      * constructor
      *
-     * @param in_file                          - input file
-     * @param abundanceOperation               - calculation operator
-     * @param inputDataTypeAccession           - input datatype accession
-     * @param outputProteinGroupDTAccession    - output protein group datatype
-     *                                         accession
-     * @param outputProteinGroupDTName         - output protein group datatype
-     *                                         name
-     *                                         datatype accession
-     * @param outputRawProteinGroupDTName      - output raw protein group
-     *                                         datatype
-     *                                         name
-     * @param QuantLayerType                   - quant layer type
+     * @param in_file                       - input file
+     * @param abundanceOperation            - calculation operator
+     * @param inputDataTypeAccession        - input datatype accession
+     * @param outputProteinGroupDTAccession - output protein group datatype
+     *                                      accession
+     * @param outputProteinGroupDTName      - output protein group datatype
+     *                                      name
+     *                                      datatype accession
+     * @param QuantLayerType                - quant layer type
      *
      * @throws FileNotFoundException file not found exceptions.
      */
@@ -54,7 +51,6 @@ public final class ProteinAbundanceInference {
                                      final String inputDataTypeAccession,
                                      final String outputProteinGroupDTAccession,
                                      final String outputProteinGroupDTName,
-                                     final String outputRawProteinGroupDTName,
                                      final String QuantLayerType)
             throws FileNotFoundException {
 
@@ -136,20 +132,17 @@ public final class ProteinAbundanceInference {
     /**
      * constructor with the option for skipping the conflicting peptides.
      *
-     * @param in_file                          - input file
-     * @param abundanceOperation               - calculation operator
-     * @param inputDataTypeAccession           - input datatype accession
-     * @param inputRawDataTypeAccession        - input raw datatype accession
-     * @param outputProteinGroupDTAccession    - output protein group datatype
-     *                                         accession
-     * @param outputProteinGroupDTName         - output protein group datatype
-     *                                         name
-     *                                         datatype accession
-     * @param outputRawProteinGroupDTName      - output raw protein group
-     *                                         datatype
-     *                                         name
-     * @param QuantLayerType                   - quant layer type
-     * @param conflictPeptideExcluded          - remove conflicting peptides
+     * @param in_file                       - input file
+     * @param abundanceOperation            - calculation operator
+     * @param inputDataTypeAccession        - input datatype accession
+     * @param inputRawDataTypeAccession     - input raw datatype accession
+     * @param outputProteinGroupDTAccession - output protein group datatype
+     *                                      accession
+     * @param outputProteinGroupDTName      - output protein group datatype
+     *                                      name
+     *                                      datatype accession
+     * @param QuantLayerType                - quant layer type
+     * @param conflictPeptideExcluded       - remove conflicting peptides
      *
      * @throws FileNotFoundException file not found exceptions.
      */
@@ -159,7 +152,6 @@ public final class ProteinAbundanceInference {
                                      final String inputRawDataTypeAccession,
                                      final String outputProteinGroupDTAccession,
                                      final String outputProteinGroupDTName,
-                                     final String outputRawProteinGroupDTName,
                                      final String QuantLayerType,
                                      final boolean conflictPeptideExcluded)
             throws FileNotFoundException {
@@ -284,7 +276,6 @@ public final class ProteinAbundanceInference {
 //                + "unlabeled_result_FLUQT_mapped_normalised_peptide_proteinInference.mzq";
 //                + "unlabeled_result_FLUQT_mapped_normalised_simon_proteinInference.mzq";
 //                + "unlabeled_result_FLUQT_mapped_speciesNormalised_peptide_proteinInference_1_0.mzq";
-
         String operator = "sum"; //"median", "mean"
 
         String inputPeptideDTCA = null;
@@ -333,7 +324,7 @@ public final class ProteinAbundanceInference {
                                                     inputRawPeptideDTCA,
                                                     outputProteinGCA,
                                                     outputProteinGCN,
-                                                    outputRawProteinGCN, quantLT,
+                                                    quantLT,
                                                     signalConflictPeptideExcluded);
             pai.proteinInference(conflictPeptideExcluded);
         } else {
@@ -342,7 +333,7 @@ public final class ProteinAbundanceInference {
                                                     inputPeptideDTCA,
                                                     outputProteinGCA,
                                                     outputProteinGCN,
-                                                    outputRawProteinGCN, quantLT);
+                                                    quantLT);
             pai.proteinInference();
         }
     }
@@ -385,14 +376,13 @@ public final class ProteinAbundanceInference {
 
         System.out.println(
                 "****************************************************");
+        System.out.println(
+                "******************** The pipeline does work successfully! *********************");
+        if (signalConflict) {
             System.out.println(
-                    "******************** The pipeline does work successfully! *********************");
-            if (signalConflict) {
-                System.out.println(
-                        "**** The protein abundance is calculated by removing conflicting pepConsensuses! ****");
-            }
+                    "**** The protein abundance is calculated by removing conflicting pepConsensuses! ****");
+        }
     }
-
 
     /**
      * examine if there is a protein group list. If existing, remove it.

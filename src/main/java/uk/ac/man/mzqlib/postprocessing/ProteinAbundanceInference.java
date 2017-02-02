@@ -3,8 +3,6 @@ package uk.ac.man.mzqlib.postprocessing;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.text.DecimalFormat;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -24,7 +22,6 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.IdOnly;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.IdentificationFile;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.IdentificationRef;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.MzQuantML;
-import uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensusList;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.Protein;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinGroup;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinGroupList;
@@ -62,48 +59,8 @@ public final class ProteinAbundanceInference {
     final static String cvRef = "PSI-MS";
 
     private String in_file;
-    private String outputProteinGroupDTAccession;
-    private String outputRawProteinGroupDTAccession;
-    private String outputProteinGroupDTName;
-    private String outputRawProteinGroupDTName;
 
     static boolean conflictPeptideExcluded;
-
-    /**
-     * set output protein group datatype accession
-     *
-     * @param pgdta - datatype accession
-     */
-    public void setOutPGDTA(final String pgdta) {
-        outputProteinGroupDTAccession = pgdta;
-    }
-
-    /**
-     * set output protein group datatype name
-     *
-     * @param pgdtn - datatype name
-     */
-    public void setOutPGDTN(final String pgdtn) {
-        outputProteinGroupDTName = pgdtn;
-    }
-
-    /**
-     * set output raw protein group datatype accession
-     *
-     * @param rpgdta - datatype accession
-     */
-    public void setOutRawPGDTA(final String rpgdta) {
-        outputRawProteinGroupDTAccession = rpgdta;
-    }
-
-    /**
-     * set output raw protein group datatype name
-     *
-     * @param rpgdtn - datatype name
-     */
-    public void setOutRawPGDTN(final String rpgdtn) {
-        outputRawProteinGroupDTName = rpgdtn;
-    }
 
     /**
      * constructor
@@ -111,7 +68,6 @@ public final class ProteinAbundanceInference {
      * @param in_file                          - input file
      * @param abundanceOperation               - calculation operator
      * @param inputDataTypeAccession           - input datatype accession
-     * @param inputRawDataTypeAccession        - input raw datatype accession
      * @param outputProteinGroupDTAccession    - output protein group datatype
      *                                         accession
      * @param outputProteinGroupDTName         - output protein group datatype
@@ -207,10 +163,6 @@ public final class ProteinAbundanceInference {
         }
 
         this.in_file = in_file;
-        this.outputProteinGroupDTAccession = outputProteinGroupDTAccession;
-        this.outputProteinGroupDTName = outputProteinGroupDTName;
-        this.outputRawProteinGroupDTAccession = outputRawProteinGroupDTAccession;
-        this.outputRawProteinGroupDTName = outputRawProteinGroupDTName;
 
     }
 
@@ -319,10 +271,6 @@ public final class ProteinAbundanceInference {
         }
 
         this.in_file = in_file;
-        this.outputProteinGroupDTAccession = outputProteinGroupDTAccession;
-        this.outputProteinGroupDTName = outputProteinGroupDTName;
-        this.outputRawProteinGroupDTAccession = outputRawProteinGroupDTAccession;
-        this.outputRawProteinGroupDTName = outputRawProteinGroupDTName;
 
         ProteinAbundanceInference.conflictPeptideExcluded
                 = conflictPeptideExcluded;
@@ -671,7 +619,7 @@ public final class ProteinAbundanceInference {
 
                         Set<String> protsId = peptideToProtein.get(pepSel);
                         //sort proteins
-                        Set<String> protIds = new TreeSet<String>(protsId);
+                        Set<String> protIds = new TreeSet<>(protsId);
 //                        if (proteinGroupIdOri.equalsIgnoreCase("SubSetGroup1")) {
 //                        System.out.println( proteinGroupIdOri + " Peptides: " + subSetGroup.get(proteinGroupIdOri));
 //                            System.out.println( proteinGroupIdOri + " IDs: " + protsId);

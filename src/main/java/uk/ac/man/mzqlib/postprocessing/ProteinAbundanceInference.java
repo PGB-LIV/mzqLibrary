@@ -24,18 +24,6 @@ import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
  */
 public final class ProteinAbundanceInference {
 
-    private static final Map<String, Set<String>> proteinToPeptide
-            = new HashMap<>();
-    private static final Map<String, Set<String>> peptideToProtein
-            = new HashMap<>();
-
-    private static final Map<String, String> proteinToAccession
-            = new HashMap<>();
-
-    private static Map<String, Set<String>> sameSetGroup = new HashMap<>();
-    private static Map<String, Set<String>> subSetGroup = new HashMap<>();
-    private static Map<String, Set<String>> uniSetGroup = new HashMap<>();
-
     final static String path = "./src/main/resources/";
     final static String proteinGroupList = "ProteinGroupList11";
     final static String searchDatabase = "SD1";
@@ -56,7 +44,6 @@ public final class ProteinAbundanceInference {
      *                                         accession
      * @param outputProteinGroupDTName         - output protein group datatype
      *                                         name
-     * @param outputRawProteinGroupDTAccession - output raw protein group
      *                                         datatype accession
      * @param outputRawProteinGroupDTName      - output raw protein group
      *                                         datatype
@@ -70,7 +57,6 @@ public final class ProteinAbundanceInference {
                                      final String inputDataTypeAccession,
                                      final String outputProteinGroupDTAccession,
                                      final String outputProteinGroupDTName,
-                                     final String outputRawProteinGroupDTAccession,
                                      final String outputRawProteinGroupDTName,
                                      final String QuantLayerType)
             throws FileNotFoundException {
@@ -161,7 +147,6 @@ public final class ProteinAbundanceInference {
      *                                         accession
      * @param outputProteinGroupDTName         - output protein group datatype
      *                                         name
-     * @param outputRawProteinGroupDTAccession - output raw protein group
      *                                         datatype accession
      * @param outputRawProteinGroupDTName      - output raw protein group
      *                                         datatype
@@ -177,7 +162,6 @@ public final class ProteinAbundanceInference {
                                      final String inputRawDataTypeAccession,
                                      final String outputProteinGroupDTAccession,
                                      final String outputProteinGroupDTName,
-                                     final String outputRawProteinGroupDTAccession,
                                      final String outputRawProteinGroupDTName,
                                      final String QuantLayerType,
                                      final boolean conflictPeptideExcluded)
@@ -355,7 +339,6 @@ public final class ProteinAbundanceInference {
                                                     inputRawPeptideDTCA,
                                                     outputProteinGCA,
                                                     outputProteinGCN,
-                                                    outputRawProteinGCA,
                                                     outputRawProteinGCN, quantLT,
                                                     signalConflictPeptideExcluded);
             pai.proteinInference(conflictPeptideExcluded);
@@ -365,7 +348,6 @@ public final class ProteinAbundanceInference {
                                                     inputPeptideDTCA,
                                                     outputProteinGCA,
                                                     outputProteinGCN,
-                                                    outputRawProteinGCA,
                                                     outputRawProteinGCN, quantLT);
             pai.proteinInference();
         }

@@ -247,17 +247,17 @@ public class MzQuantMLLib implements Serializable {
      * Constant.
      */
     public static final String proteinInferenceParams
-            = "-op [sum|mean|median] -inPepNormCA inPeptideNormCvAccession -inPepRawCA inPeptideRawCvAccession "
+            = "-op [sum|mean|median] -inPepNormCA inPeptideNormCvAccession "
             + "-outPGNormCA outProteinGroupNormCvAccession -outPGNormCN outProteinGroupNormCvName "
-            + "-outPGRawCA outProteinGroupRawCvAccession -outPGRawCN outProteinGroupRawCvName";
+            + "-outPGRawCN outProteinGroupRawCvName";
 
     /**
      * Constant.
      */
     public static final String proteinInferenceUsageExample
-            = "-op sum -inPepNormCA MS:1001891 -inPepRawCA MS:1001893 "
+            = "-op sum -inPepNormCA MS:1001891 "
             + "-outPGNormCA MS:1002518 -outPGNormCN Progenesis:protein group normalised abundance "
-            + "-outPGRawCA MS:1002519 -outPGRawCN Progenesis:protein group raw abundance";
+            + "-outPGRawCN Progenesis:protein group raw abundance";
 
     /**
      * Constant.
@@ -537,7 +537,6 @@ public class MzQuantMLLib implements Serializable {
                     } else if (args[0].equals("Normalisation")) {
                         String normLevel = Utils.
                                 getCmdParameter(args, "normLvl", true);
-                        //String qlType = Utils.getCmdParameter(args, "qlType", true);
                         String inDTCA = Utils.getCmdParameter(args, "inDTCA",
                                                               true);
                         String outDTCA = Utils.getCmdParameter(args, "outDTCA",
@@ -558,29 +557,20 @@ public class MzQuantMLLib implements Serializable {
                         String inPepNormCA = Utils.getCmdParameter(args,
                                                                    "inPepNormCA",
                                                                    true);
-                        String inPepRawCA = Utils.getCmdParameter(args,
-                                                                  "inPepRawCA",
-                                                                  true);
                         String outPGNormCA = Utils.getCmdParameter(args,
                                                                    "outPGNormCA",
                                                                    true);
                         String outPGNormCN = Utils.getCmdParameter(args,
                                                                    "outPGNormCN",
                                                                    true);
-                        String outPGRawCA = Utils.getCmdParameter(args,
-                                                                  "outPGRawCA",
-                                                                  true);
                         String outPGRawCN = Utils.getCmdParameter(args,
                                                                   "outPGRawCN",
                                                                   true);
-                        //String qlType = Utils.getCmdParameter(args, "qlType", true);
-
                         ProteinAbundanceInference pai
                                 = new ProteinAbundanceInference(inputFileName,
                                                                 op, inPepNormCA,
                                                                 outPGNormCA,
                                                                 outPGNormCN,
-                                                                outPGRawCA,
                                                                 outPGRawCN,
                                                                 "AssayQuantLayer");
                         pai.proteinInference();

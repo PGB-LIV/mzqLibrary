@@ -1329,13 +1329,12 @@ public class MainApp extends Application {
             Platform.runLater(() -> {
                 RUtils.installRequiredPackages(re);
             });
-
-            return re;
         } catch (UnsatisfiedLinkError ex) {
             Logger.getLogger(MainApp.class.getName()).log(
                     Level.SEVERE, null, ex);
-            return null;
+            re = null;
         }
+        return re;
     }
 
     private void initialREngine() {

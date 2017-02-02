@@ -154,25 +154,26 @@ public class MainApp extends Application {
 
                 Rengine engine = getRengine();
 
-                //False condition 
-//                if (engine == null) {
-//                    System.out.println(
-//                            "R engine not initialised! Aborting creation of quality plots.");
-//                    return;
-//                }
+                if (engine != null) {
+                    engine.eval(getResourceFileText(
+                            "R/featureRTDelta_Simon_format.R"));
+                    engine.eval(getResourceFileText(
+                            "R/pepConsHist_Simon_format.R"));
 
-                engine.eval(getResourceFileText(
-                        "R/featureRTDelta_Simon_format.R"));
-                engine.eval(getResourceFileText("R/pepConsHist_Simon_format.R"));
-
-                String assayCountFrequenciesCommand = "pepConsHist(\""
-                        + location + "\\\\" + "assays_per_feature_format.csv\")";
-                String deltaStatsCommand = "featureRTDelta(\"" + location
-                        + "\\\\" + "rt_format.csv\")";
-                // Create our display of the distribution of the frequency of features with 1-N assays.
-                engine.eval(assayCountFrequenciesCommand);
-                // Create our display of RT delta distribution for all features.
-                engine.eval(deltaStatsCommand);
+                    String assayCountFrequenciesCommand = "pepConsHist(\""
+                            + location + "\\\\"
+                            + "assays_per_feature_format.csv\")";
+                    String deltaStatsCommand = "featureRTDelta(\"" + location
+                            + "\\\\" + "rt_format.csv\")";
+                    // Create our display of the distribution of the frequency of features with 1-N assays.
+                    engine.eval(assayCountFrequenciesCommand);
+                    // Create our display of RT delta distribution for all features.
+                    engine.eval(deltaStatsCommand);
+                } else {
+                    System.out.println(
+                            "R engine not initialised! Aborting creation of quality plots.");
+                    return;
+                }
             }
         }
     }

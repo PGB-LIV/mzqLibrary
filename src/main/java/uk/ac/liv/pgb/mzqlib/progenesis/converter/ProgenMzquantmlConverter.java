@@ -1,6 +1,9 @@
 
 package uk.ac.liv.pgb.mzqlib.progenesis.converter;
 
+import static uk.ac.liv.pgb.mzqlib.utils.Utils.addSearchDBToInputFiles;
+import static uk.ac.liv.pgb.mzqlib.utils.Utils.setSearchDB;
+
 import au.com.bytecode.opencsv.CSVReader;
 import gnu.trove.list.TDoubleList;
 import gnu.trove.map.TIntDoubleMap;
@@ -69,7 +72,6 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.InputFiles;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.Label;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.ModParam;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.Modification;
-import uk.ac.liv.pgb.jmzqml.model.mzqml.Param;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensus;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensusList;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.ProcessingMethod;
@@ -87,7 +89,6 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.Software;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.SoftwareList;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.StudyVariable;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.StudyVariableList;
-import uk.ac.liv.pgb.jmzqml.model.mzqml.UserParam;
 
 /**
  *
@@ -114,6 +115,11 @@ public class ProgenMzquantmlConverter {
     private static final String CvNameUNIMOD = "Unimod";
     private static final String CvUriUNIMOD
             = "http://www.unimod.org/obo/unimod.obo";
+
+    private static final String SEARCH_DATABASE_LOCATION
+            = "sgd_orfs_plus_ups_prots.fasta";
+    private static final String SEARCH_DATABASE_NAME
+            = "sgd_orfs_plus_ups_prots.fasta";
 
     // MzQuantML elements
     private CvList cvList = null;
@@ -350,16 +356,7 @@ public class ProgenMzquantmlConverter {
         }
 
         //add search databases
-        List<SearchDatabase> searchDBs = inputFiles.getSearchDatabase();
-        db = new SearchDatabase();
-        db.setId("SD1");
-        db.setLocation("sgd_orfs_plus_ups_prots.fasta");
-        searchDBs.add(db);
-        Param dbName = new Param();
-        db.setDatabaseName(dbName);
-        UserParam dbNameParam = new UserParam();
-        dbNameParam.setName("sgd_orfs_plus_ups_prots.fasta");
-        dbName.setParam(dbNameParam);
+        addSearchDBToInputFiles(inputFiles, db);
 
         //add identificationfiles
         IdentificationFiles idFiles = new IdentificationFiles();
@@ -1540,7 +1537,7 @@ public class ProgenMzquantmlConverter {
 
     /**
      * Create output mzQuantML file with output parameters.
-     * The protGrpList flag decides if output file contains ProteinGroupList or
+     * The outPGL flag decides if output file contains ProteinGroupList or
      * not.
      * The rawPlusNorm flag decides which type of abundance QuantLayer is in the
      * output file.
@@ -1550,7 +1547,7 @@ public class ProgenMzquantmlConverter {
      * are output.
      *
      * @param outFn       output file name
-     * @param protGrpList flag indicates if output ProteinGroupList or not
+     * @param outPGL flag indicates if output ProteinGroupList or not
      * @param rawPlusNorm flag indicates which type of abundance is in the
      *                    output file.
      *
@@ -1558,7 +1555,7 @@ public class ProgenMzquantmlConverter {
      * @throws DatatypeConfigurationException data type configuration
      *                                        exceptions.
      */
-    public void convert(final String outFn, final boolean protGrpList,
+    public void convert(final String outFn, final boolean outPGL,
                         final String rawPlusNorm)
             throws IOException, DatatypeConfigurationException {
 
@@ -1583,6 +1580,8 @@ public class ProgenMzquantmlConverter {
         rtWinMap = new TIntDoubleHashMap();
         scoreMap = new TIntDoubleHashMap();
         modificationMap = new TIntObjectHashMap<>();
+
+        db = setSearchDB("SD1", SEARCH_DATABASE_LOCATION, SEARCH_DATABASE_NAME);
 
         //proteinAccessionsMap = new TIntObjectHashMap<>();
         if (!flFn.isEmpty()) {
@@ -1618,7 +1617,7 @@ public class ProgenMzquantmlConverter {
             /**
              * parsing protein list file
              */
-            FileInputStream fis = new FileInputStream(flFn);
+            FileInputStream fis = new FileInputStream(plFn);
             try (ProgenesisProteinListReader pplr
                     = new ProgenesisProteinListReader(new InputStreamReader(fis,
                                                                             "UTF-8"),
@@ -1662,7 +1661,7 @@ public class ProgenMzquantmlConverter {
 
         createDataProcessingList();
 
-        writeMzqFile(outFn, protGrpList);
+        writeMzqFile(outFn, outPGL);
     }
 
     private void writeMzqFile(final String out, final boolean pgl) {

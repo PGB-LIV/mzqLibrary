@@ -7,7 +7,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import uk.ac.liv.pgb.jmzqml.model.mzqml.InputFiles;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.Param;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.SearchDatabase;
+import uk.ac.liv.pgb.jmzqml.model.mzqml.UserParam;
 
 /**
  * General utilities class
@@ -126,6 +132,42 @@ public class Utils {
         }
 
         return null;
+    }
+
+    /**
+     * Add a SearchDatabase to InputFiles.
+     *
+     * @param inFiles input files.
+     * @param db      search database.
+     *
+     */
+    public static void addSearchDBToInputFiles(final InputFiles inFiles,
+                                               final SearchDatabase db) {
+        List<SearchDatabase> searchDBs = inFiles.getSearchDatabase();
+        searchDBs.add(db);
+    }
+
+    /**
+     * Create SearchDatabase.
+     *
+     * @param id   id of the search database.
+     * @param loc  location of the search database.
+     * @param name name of the search database.
+     *
+     * @return SearchDatabase
+     */
+    public static SearchDatabase setSearchDB(final String id, final String loc,
+                                             final String name) {
+        SearchDatabase db = new SearchDatabase();
+        db.setId(id);
+        db.setLocation(loc);
+        Param dbName = new Param();
+        db.setDatabaseName(dbName);
+        UserParam dbNameParam = new UserParam();
+        dbNameParam.setName(name);
+        dbName.setParam(dbNameParam);
+
+        return db;
     }
 
 }

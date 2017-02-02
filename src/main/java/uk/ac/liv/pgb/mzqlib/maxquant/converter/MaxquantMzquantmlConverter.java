@@ -1,6 +1,9 @@
 
 package uk.ac.liv.pgb.mzqlib.maxquant.converter;
 
+import static uk.ac.liv.pgb.mzqlib.utils.Utils.addSearchDBToInputFiles;
+import static uk.ac.liv.pgb.mzqlib.utils.Utils.setSearchDB;
+
 import gnu.trove.iterator.TDoubleIterator;
 import gnu.trove.iterator.TIntIterator;
 import gnu.trove.iterator.TIntObjectIterator;
@@ -47,7 +50,6 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.GlobalQuantLayer;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.InputFiles;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.Label;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.ModParam;
-import uk.ac.liv.pgb.jmzqml.model.mzqml.Param;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.ParamList;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensus;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensusList;
@@ -68,7 +70,6 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.Software;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.SoftwareList;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.StudyVariable;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.StudyVariableList;
-import uk.ac.liv.pgb.jmzqml.model.mzqml.UserParam;
 import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLMarshaller;
 
 /**
@@ -83,6 +84,11 @@ public class MaxquantMzquantmlConverter {
      */
     private final static String MAXQUANT_VERSION = "1.2.0.18"; // NOPMD
     private final MaxquantFilesReader maxRd;
+
+    private static final String SEARCH_DATABASE_LOCATION
+            = "sgd_orfs_plus_ups_prots.fasta";
+    private static final String SEARCH_DATABASE_NAME
+            = "sgd_orfs_plus_ups_prots.fasta";
 
     // MzQuantML elements
     private CvList cvList = null;
@@ -376,16 +382,7 @@ public class MaxquantMzquantmlConverter {
         }
 
         //add search databases
-        List<SearchDatabase> searchDBs = inputFiles.getSearchDatabase();
-        db = new SearchDatabase();
-        db.setId("SD1");
-        db.setLocation("sgd_orfs_plus_ups_prots.fasta");
-        searchDBs.add(db);
-        Param dbName = new Param();
-        db.setDatabaseName(dbName);
-        UserParam dbNameParam = new UserParam();
-        dbNameParam.setName("sgd_orfs_plus_ups_prots.fasta");
-        dbName.setParam(dbNameParam);
+        addSearchDBToInputFiles(inputFiles, db);
     }
 
     private void createAssayList() {
@@ -423,8 +420,7 @@ public class MaxquantMzquantmlConverter {
             else //TODO: this is fixed label modification just used for example file
             //TODO: need to find a better way to form this later
             //find out if it is light or heavy label assay
-            {
-                if (assName.toLowerCase(Locale.ENGLISH).contains("light")) {
+             if (assName.toLowerCase(Locale.ENGLISH).contains("light")) {
                     assay.setLabel(label);
                     assays.add(assay);
                 } else if (assName.toLowerCase(Locale.ENGLISH).contains("heavy")) {
@@ -452,7 +448,6 @@ public class MaxquantMzquantmlConverter {
                     assay.setLabel(label_heavy);
                     assays.add(assay);
                 }
-            }
             ass_i++;
         }
     }
@@ -1295,6 +1290,8 @@ public class MaxquantMzquantmlConverter {
 //
 //        Calendar rightnow = Calendar.getInstance();
 //        qml.setCreationDate(rightnow);
+        db = setSearchDB("SD1", SEARCH_DATABASE_LOCATION, SEARCH_DATABASE_NAME);
+
         createCvList();
 
         createAnalysisSummary();

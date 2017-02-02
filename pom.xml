@@ -13,7 +13,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mainClass>uk.ac.liv.mzqlib.MzQuantMLLib</mainClass>
+        <mainClass>uk.ac.liv.pgb.mzqlib.MzQuantMLLib</mainClass>
         <institute>University of Liverpool</institute>
         <inceptionYear>2013</inceptionYear>
     </properties>
@@ -330,7 +330,7 @@
         </pluginManagement>
         <resources>
             <resource>
-                <directory>src/main/java/uk/ac/liv/mzqlib/view</directory>
+                <directory>src/main/java/uk/ac/liv/pgb/mzqlib/view</directory>
             </resource>
             <!--resource>
                 <directory> src/main/resources/ </directory>                      

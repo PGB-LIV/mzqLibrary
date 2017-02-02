@@ -577,7 +577,6 @@ public class MzQuantMLLib implements Serializable {
 
                         ProteinAbundanceInference pai
                                 = new ProteinAbundanceInference(inputFileName,
-                                                                outputFileName,
                                                                 op, inPepNormCA,
                                                                 inPepRawCA,
                                                                 outPGNormCA,

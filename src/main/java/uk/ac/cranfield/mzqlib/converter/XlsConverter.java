@@ -35,7 +35,6 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.StudyVariable;
  */
 public class XlsConverter extends GenericConverter {
 
-//    final static String SEPERATOR = "";
     private final WritableCellFormat boldFormat;
     private final WritableCellFormat normalFormat;
     private final int FONT11 = 11;

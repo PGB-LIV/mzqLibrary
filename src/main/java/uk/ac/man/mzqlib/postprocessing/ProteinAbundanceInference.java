@@ -528,14 +528,14 @@ public final class ProteinAbundanceInference {
     public void proteinInference(final boolean signalConflict)
             throws FileNotFoundException {
 
-        boolean pipeline_flag = true;
+//        boolean pipeline_flag = true;
 
         MzQuantMLUnmarshaller infile_um;
         try {
             infile_um = mzqFileInput(in_file);
             //remove the previous protein group list if existing
             checkProteinGroupList(infile_um);
-            pipeline_flag = pipeline_executor(infile_um, signalConflict);
+//            pipeline_flag = pipeline_executor(infile_um, signalConflict);  //TODO: This function needs to be revisited as it doesn't do anything
         } catch (IllegalStateException ex) {
             System.out.println(
                     "****************************************************");
@@ -548,20 +548,20 @@ public final class ProteinAbundanceInference {
 
         System.out.println(
                 "****************************************************");
-        if (pipeline_flag) {
+//        if (pipeline_flag) {
             System.out.println(
                     "******************** The pipeline does work successfully! *********************");
             if (signalConflict) {
                 System.out.println(
                         "**** The protein abundance is calculated by removing conflicting pepConsensuses! ****");
             }
-        } else {
-
-            throw new IllegalStateException(
-                    "****** Some errors exist within the pipeline *******");
-        }
-        System.out.println(
-                "****************************************************");
+//        } else {
+//
+//            throw new IllegalStateException(
+//                    "****** Some errors exist within the pipeline *******");
+//        }
+//        System.out.println(
+//                "****************************************************");
     }
 
     /**

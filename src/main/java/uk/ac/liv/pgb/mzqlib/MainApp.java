@@ -172,8 +172,6 @@ public class MainApp extends Application {
                 } else {
                     Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE,
                                                                   "R engine not initialised! Aborting creation of quality plots.");
-                    System.out.println(
-                            "R engine not initialised! Aborting creation of quality plots.");
                     return;
                 }
             }

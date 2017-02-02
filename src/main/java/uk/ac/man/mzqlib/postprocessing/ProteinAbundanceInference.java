@@ -6,11 +6,9 @@ import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -26,17 +24,13 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.IdOnly;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.IdentificationFile;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.IdentificationRef;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.MzQuantML;
-import uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensus;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensusList;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.Protein;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinGroup;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinGroupList;
-import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinList;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinRef;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.QuantLayer;
-import uk.ac.liv.pgb.jmzqml.model.mzqml.Row;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.SearchDatabase;
-import uk.ac.liv.pgb.jmzqml.model.mzqml.UserParam;
 
 import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLMarshaller;
 import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
@@ -53,8 +47,7 @@ public final class ProteinAbundanceInference {
             = new HashMap<>();
     private static final Map<String, Set<String>> peptideToProtein
             = new HashMap<>();
-    //private Map<String, List<String>> peptideAssayValues
-    //        = new HashMap<>();
+
     private static final Map<String, String> proteinToAccession
             = new HashMap<>();
 
@@ -69,55 +62,12 @@ public final class ProteinAbundanceInference {
     final static String cvRef = "PSI-MS";
 
     private String in_file;
-    //private String out_file;
-    //private String quantLayerType;
-    //private String abundanceOperation;
-    //private String inputDataTypeAccession;
-    //private String inputRawDataTypeAccession;
     private String outputProteinGroupDTAccession;
     private String outputRawProteinGroupDTAccession;
     private String outputProteinGroupDTName;
     private String outputRawProteinGroupDTName;
-    //private String outputAssayQuantLayerID;
-    //private String outputRawAssayQuantLayerID;
 
     static boolean conflictPeptideExcluded;
-
-    /**
-     * set quant layer type
-     *
-     * @param qlt - quant layer type
-     */
-//    public void setQuantLayerType(final String qlt) {
-//        quantLayerType = qlt;
-//    }
-
-    /**
-     * set calculation operator
-     *
-     * @param cal - operator
-     */
-//    public void setCalOperation(final String cal) {
-//        abundanceOperation = cal;
-//    }
-
-    /**
-     * set input peptide datatype accession
-     *
-     * @param pdta - datatype accession
-     */
-//    public void setInPDTA(final String pdta) {
-//        inputDataTypeAccession = pdta;
-//    }
-
-    /**
-     * set input raw data peptide datatype accession
-     *
-     * @param rdta - datatype accession
-     */
-//    public void setInRawPDTA(final String rdta) {
-//        inputRawDataTypeAccession = rdta;
-//    }
 
     /**
      * set output protein group datatype accession
@@ -159,7 +109,6 @@ public final class ProteinAbundanceInference {
      * constructor
      *
      * @param in_file                          - input file
-     * @param out_file                         - output file
      * @param abundanceOperation               - calculation operator
      * @param inputDataTypeAccession           - input datatype accession
      * @param inputRawDataTypeAccession        - input raw datatype accession
@@ -177,7 +126,6 @@ public final class ProteinAbundanceInference {
      * @throws FileNotFoundException file not found exceptions.
      */
     public ProteinAbundanceInference(final String in_file,
-                                     final String out_file,
                                      final String abundanceOperation,
                                      final String inputDataTypeAccession,
                                      final String inputRawDataTypeAccession,
@@ -276,7 +224,6 @@ public final class ProteinAbundanceInference {
      * constructor with the option for skipping the conflicting peptides.
      *
      * @param in_file                          - input file
-     * @param out_file                         - output file
      * @param abundanceOperation               - calculation operator
      * @param inputDataTypeAccession           - input datatype accession
      * @param inputRawDataTypeAccession        - input raw datatype accession
@@ -295,7 +242,6 @@ public final class ProteinAbundanceInference {
      * @throws FileNotFoundException file not found exceptions.
      */
     public ProteinAbundanceInference(final String in_file,
-                                     final String out_file,
                                      final String abundanceOperation,
                                      final String inputDataTypeAccession,
                                      final String inputRawDataTypeAccession,
@@ -379,7 +325,6 @@ public final class ProteinAbundanceInference {
         }
 
         this.in_file = in_file;
-        //this.out_file = out_file;
         //this.abundanceOperation = abundanceOperation;
         //this.inputDataTypeAccession = inputDataTypeAccession;
         //this.inputRawDataTypeAccession = inputRawDataTypeAccession;
@@ -486,7 +431,7 @@ public final class ProteinAbundanceInference {
 
         if (signalConflictPeptideExcluded) {
             ProteinAbundanceInference pai
-                    = new ProteinAbundanceInference(infile, outfile, operator,
+                    = new ProteinAbundanceInference(infile, operator,
                                                     inputPeptideDTCA,
                                                     inputRawPeptideDTCA,
                                                     outputProteinGCA,
@@ -497,7 +442,7 @@ public final class ProteinAbundanceInference {
             pai.proteinInference(conflictPeptideExcluded);
         } else {
             ProteinAbundanceInference pai
-                    = new ProteinAbundanceInference(infile, outfile, operator,
+                    = new ProteinAbundanceInference(infile, operator,
                                                     inputPeptideDTCA,
                                                     inputRawPeptideDTCA,
                                                     outputProteinGCA,

@@ -154,11 +154,12 @@ public class MainApp extends Application {
 
                 Rengine engine = getRengine();
 
-                if (engine == null) {
-                    System.out.println(
-                            "R engine not initialised! Aborting creation of quality plots.");
-                    return;
-                }
+                //False condition 
+//                if (engine == null) {
+//                    System.out.println(
+//                            "R engine not initialised! Aborting creation of quality plots.");
+//                    return;
+//                }
 
                 engine.eval(getResourceFileText(
                         "R/featureRTDelta_Simon_format.R"));
@@ -1322,7 +1323,6 @@ public class MainApp extends Application {
         if (re != null) {
             return re;
         }
-
         try {
             System.loadLibrary("jri");
             re = new Rengine(new String[]{" ", " "}, false, null);
@@ -1332,9 +1332,8 @@ public class MainApp extends Application {
         } catch (UnsatisfiedLinkError ex) {
             Logger.getLogger(MainApp.class.getName()).log(
                     Level.SEVERE, null, ex);
-            re = null;
         }
-        return re;
+        return null;
     }
 
     private void initialREngine() {

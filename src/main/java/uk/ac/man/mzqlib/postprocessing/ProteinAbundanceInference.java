@@ -573,66 +573,67 @@ public final class ProteinAbundanceInference {
      *
      * @return
      */
-    private boolean pipeline_executor(final MzQuantMLUnmarshaller infile_um,
-                                      final boolean excludeConflictingPeptides) {
-
-        boolean flag = true;
-        String inputAssayQLID = "";
-        String inputRawAssayQLID = "";
-        Map<String, List<String>> peptideRawAssayValues = peptideAssayValues(
-                infile_um, inputRawDataTypeAccession);
-
-        peptideAssayValues = peptideValidAssayValues(infile_um,
-                                                     inputDataTypeAccession);
-
-        if (peptideAssayValues == null) {
-
-            throw new IllegalStateException(
-                    "The desired assay quant layer is not found!!! Please check the input file.");
-        }
-
-        proteinToPeptide(infile_um, peptideAssayValues,
-                         excludeConflictingPeptides);
-        proteinToAccession(infile_um);
-        peptideToProtein(proteinToPeptide);
-
-        if (quantLayerType.equals("AssayQuantLayer")) {
-            List<QuantLayer<IdOnly>> assayQLs = assayQLs(infile_um);
-            inputAssayQLID
-                    = assayQuantLayerId(infile_um, inputDataTypeAccession);
-            outputAssayQuantLayerID = "PGL_" + inputAssayQLID;
-            inputRawAssayQLID = assayQuantLayerId(infile_um,
-                                                  inputRawDataTypeAccession);
-            outputRawAssayQuantLayerID = "PGL_raw_" + inputRawAssayQLID;
-
-            MzQuantML mzq = mzq(infile_um);
-
-            uniSetGroup = ProteinGrouping.uniSetGrouping(peptideToProtein,
-                                                         proteinToPeptide);
-            sameSetGroup = ProteinGrouping.sameSetGrouping(peptideToProtein,
-                                                           proteinToPeptide);
-            subSetGroup = ProteinGrouping.subSetGrouping(peptideToProtein,
-                                                         proteinToPeptide);
-
-            Map<String, List<String>> proteinAbundance
-                    = proteinAbundanceCalculation(abundanceOperation,
-                                                  uniSetGroup, sameSetGroup,
-                                                  subSetGroup,
-                                                  peptideAssayValues);
-            Map<String, List<String>> rawProteinAbundance
-                    = proteinAbundanceCalculation(abundanceOperation,
-                                                  uniSetGroup, sameSetGroup,
-                                                  subSetGroup,
-                                                  peptideRawAssayValues);
-
-            mzqOutput(mzq, assayQLs, outputAssayQuantLayerID, inputAssayQLID,
-                      outputRawAssayQuantLayerID,
-                      inputRawAssayQLID, out_file, proteinAbundance,
-                      rawProteinAbundance);
-
-        }
-        return flag;
-    }
+    //Doing nothing
+//    private boolean pipeline_executor(final MzQuantMLUnmarshaller infile_um,
+//                                      final boolean excludeConflictingPeptides) {
+//
+//        boolean flag = true;
+//        String inputAssayQLID = "";
+//        String inputRawAssayQLID = "";
+//        Map<String, List<String>> peptideRawAssayValues = peptideAssayValues(
+//                infile_um, inputRawDataTypeAccession);
+//
+//        peptideAssayValues = peptideValidAssayValues(infile_um,
+//                                                     inputDataTypeAccession);
+//
+//        if (peptideAssayValues == null) {
+//
+//            throw new IllegalStateException(
+//                    "The desired assay quant layer is not found!!! Please check the input file.");
+//        }
+//
+//        proteinToPeptide(infile_um, peptideAssayValues,
+//                         excludeConflictingPeptides);
+//        proteinToAccession(infile_um);
+//        peptideToProtein(proteinToPeptide);
+//
+//        if (quantLayerType.equals("AssayQuantLayer")) {
+//            List<QuantLayer<IdOnly>> assayQLs = assayQLs(infile_um);
+//            inputAssayQLID
+//                    = assayQuantLayerId(infile_um, inputDataTypeAccession);
+//            outputAssayQuantLayerID = "PGL_" + inputAssayQLID;
+//            inputRawAssayQLID = assayQuantLayerId(infile_um,
+//                                                  inputRawDataTypeAccession);
+//            outputRawAssayQuantLayerID = "PGL_raw_" + inputRawAssayQLID;
+//
+//            MzQuantML mzq = mzq(infile_um);
+//
+//            uniSetGroup = ProteinGrouping.uniSetGrouping(peptideToProtein,
+//                                                         proteinToPeptide);
+//            sameSetGroup = ProteinGrouping.sameSetGrouping(peptideToProtein,
+//                                                           proteinToPeptide);
+//            subSetGroup = ProteinGrouping.subSetGrouping(peptideToProtein,
+//                                                         proteinToPeptide);
+//
+//            Map<String, List<String>> proteinAbundance
+//                    = proteinAbundanceCalculation(abundanceOperation,
+//                                                  uniSetGroup, sameSetGroup,
+//                                                  subSetGroup,
+//                                                  peptideAssayValues);
+//            Map<String, List<String>> rawProteinAbundance
+//                    = proteinAbundanceCalculation(abundanceOperation,
+//                                                  uniSetGroup, sameSetGroup,
+//                                                  subSetGroup,
+//                                                  peptideRawAssayValues);
+//
+//            mzqOutput(mzq, assayQLs, outputAssayQuantLayerID, inputAssayQLID,
+//                      outputRawAssayQuantLayerID,
+//                      inputRawAssayQLID, out_file, proteinAbundance,
+//                      rawProteinAbundance);
+//
+//        }
+//        return flag;
+//    }
 
     /**
      * examine if there is a protein group list. If existing, remove it.

@@ -380,9 +380,6 @@ public final class ProteinAbundanceInference {
 //                + "unlabeled_result_FLUQT_mapped_normalised_peptide_proteinInference.mzq";
 //                + "unlabeled_result_FLUQT_mapped_normalised_simon_proteinInference.mzq";
 //                + "unlabeled_result_FLUQT_mapped_speciesNormalised_peptide_proteinInference_1_0.mzq";
-        String outfile
-                = "C:\\Manchester\\result\\CPTAC_Study6_Progenesis_result\\study6\\CPTAC_study6\\"
-                + "data\\CPTAC_EvsB_unlabeled_result_FLUQT_mapped_v0.3.5_peptide_normalised_proteinInference_filtered_noConflictPeptide.mzq";
 
         String operator = "sum"; //"median", "mean"
 
@@ -417,7 +414,6 @@ public final class ProteinAbundanceInference {
                     + "output raw protein group CV name" + "operator.");
         } else if (args.length == 11) {
             infile = args[0];
-            outfile = args[1];
             operator = args[2];
             inputPeptideDTCA = args[3];
             inputRawPeptideDTCA = args[4];

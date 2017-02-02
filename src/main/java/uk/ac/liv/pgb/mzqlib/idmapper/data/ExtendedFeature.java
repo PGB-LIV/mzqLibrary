@@ -24,7 +24,7 @@ public class ExtendedFeature extends Feature {
     private final double urt; // up boundary of rt (min)
     private final double brt; // bottom boundary of rt (min)
     private final Feature feature;
-    private final double PPM_BASE = 1000000.0;
+    private static final double PPM_BASE = 1000000.0;
     private static final double TOLERANCE = 0.1;
 
     /**

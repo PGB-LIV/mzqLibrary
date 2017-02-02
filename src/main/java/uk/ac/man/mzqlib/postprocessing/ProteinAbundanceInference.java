@@ -3,9 +3,6 @@ package uk.ac.man.mzqlib.postprocessing;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 import javax.xml.bind.JAXBException;
 
@@ -294,7 +291,6 @@ public final class ProteinAbundanceInference {
         String inputRawPeptideDTCA = null;
         String outputProteinGCA = null;
         String outputProteinGCN = null;
-        String outputRawProteinGCA = null;
         String outputRawProteinGCN = null;
         boolean signalConflictPeptideExcluded = true; //conflicting peptides excluded
 
@@ -302,7 +298,6 @@ public final class ProteinAbundanceInference {
         inputRawPeptideDTCA = "MS:1001840";  //"MS:1001893"
         outputProteinGCA = "MS:1001890"; //Progenesis:protein normalised abundance
         outputProteinGCN = "Progenesis: protein normalised abundance";
-        outputRawProteinGCA = "MS:1001892";
         outputRawProteinGCN = "Progenesis: protein raw abundance";
 
         //simon data
@@ -312,24 +307,23 @@ public final class ProteinAbundanceInference {
 //        outputProteinGCN = "Progenesis: protein normalised abundance";
 //        outputRawProteinGCA = "MS:1002519";
 //        outputRawProteinGCN = "Progenesis: protein raw abundance";
-        if (args.length != 11 && args.length != 0) {
+        if (args.length != 10 && args.length != 0) {
             System.out.println(
                     "Please input all eight parameters in order: input file, "
                     + "output file, quant layer type, input normalised peptide datatype CV accession,"
                     + "input raw peptide datatype CV accession, output protein group CV accession,"
                     + "output protein group CV name, output raw protein group CV accession, "
                     + "output raw protein group CV name" + "operator.");
-        } else if (args.length == 11) {
+        } else if (args.length == 10) {
             infile = args[0];
             operator = args[2];
             inputPeptideDTCA = args[3];
             inputRawPeptideDTCA = args[4];
             outputProteinGCA = args[5];
             outputProteinGCN = args[6];
-            outputRawProteinGCA = args[7];
-            outputRawProteinGCN = args[8];
-            quantLT = args[9];
-            signalConflictPeptideExcluded = Integer.parseInt(args[10]) != 0;
+            outputRawProteinGCN = args[7];
+            quantLT = args[8];
+            signalConflictPeptideExcluded = Integer.parseInt(args[9]) != 0;
         }
 
         if (signalConflictPeptideExcluded) {

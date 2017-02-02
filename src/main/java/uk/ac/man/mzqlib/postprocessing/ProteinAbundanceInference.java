@@ -128,7 +128,6 @@ public final class ProteinAbundanceInference {
     public ProteinAbundanceInference(final String in_file,
                                      final String abundanceOperation,
                                      final String inputDataTypeAccession,
-                                     final String inputRawDataTypeAccession,
                                      final String outputProteinGroupDTAccession,
                                      final String outputProteinGroupDTName,
                                      final String outputRawProteinGroupDTAccession,
@@ -208,15 +207,10 @@ public final class ProteinAbundanceInference {
         }
 
         this.in_file = in_file;
-        //this.out_file = out_file;
-        //this.abundanceOperation = abundanceOperation;
-        //this.inputDataTypeAccession = inputDataTypeAccession;
-        //this.inputRawDataTypeAccession = inputRawDataTypeAccession;
         this.outputProteinGroupDTAccession = outputProteinGroupDTAccession;
         this.outputProteinGroupDTName = outputProteinGroupDTName;
         this.outputRawProteinGroupDTAccession = outputRawProteinGroupDTAccession;
         this.outputRawProteinGroupDTName = outputRawProteinGroupDTName;
-        //this.quantLayerType = QuantLayerType;
 
     }
 
@@ -325,14 +319,11 @@ public final class ProteinAbundanceInference {
         }
 
         this.in_file = in_file;
-        //this.abundanceOperation = abundanceOperation;
-        //this.inputDataTypeAccession = inputDataTypeAccession;
-        //this.inputRawDataTypeAccession = inputRawDataTypeAccession;
         this.outputProteinGroupDTAccession = outputProteinGroupDTAccession;
         this.outputProteinGroupDTName = outputProteinGroupDTName;
         this.outputRawProteinGroupDTAccession = outputRawProteinGroupDTAccession;
         this.outputRawProteinGroupDTName = outputRawProteinGroupDTName;
-        //this.quantLayerType = QuantLayerType;
+
         ProteinAbundanceInference.conflictPeptideExcluded
                 = conflictPeptideExcluded;
 
@@ -440,7 +431,6 @@ public final class ProteinAbundanceInference {
             ProteinAbundanceInference pai
                     = new ProteinAbundanceInference(infile, operator,
                                                     inputPeptideDTCA,
-                                                    inputRawPeptideDTCA,
                                                     outputProteinGCA,
                                                     outputProteinGCN,
                                                     outputRawProteinGCA,
@@ -469,14 +459,12 @@ public final class ProteinAbundanceInference {
     public void proteinInference(final boolean signalConflict)
             throws FileNotFoundException {
 
-//        boolean pipeline_flag = true;
-
         MzQuantMLUnmarshaller infile_um;
         try {
             infile_um = mzqFileInput(in_file);
             //remove the previous protein group list if existing
             checkProteinGroupList(infile_um);
-//            pipeline_flag = pipeline_executor(infile_um, signalConflict);  //TODO: This function needs to be revisited as it doesn't do anything
+//            pipeline_flag = pipeline_executor(infile_um, signalConflict);  // This function needs to be revisited as it doesn't do anything
         } catch (IllegalStateException ex) {
             System.out.println(
                     "****************************************************");
@@ -489,20 +477,12 @@ public final class ProteinAbundanceInference {
 
         System.out.println(
                 "****************************************************");
-//        if (pipeline_flag) {
             System.out.println(
                     "******************** The pipeline does work successfully! *********************");
             if (signalConflict) {
                 System.out.println(
                         "**** The protein abundance is calculated by removing conflicting pepConsensuses! ****");
             }
-//        } else {
-//
-//            throw new IllegalStateException(
-//                    "****** Some errors exist within the pipeline *******");
-//        }
-//        System.out.println(
-//                "****************************************************");
     }
 
 
@@ -550,455 +530,6 @@ public final class ProteinAbundanceInference {
         File mzqFile = new File(infile);
         MzQuantMLUnmarshaller infile_um = new MzQuantMLUnmarshaller(mzqFile);
         return infile_um;
-    }
-
-    /**
-     *
-     * @param in_file_um
-     *
-     * @return
-     */
-//    private List<QuantLayer<IdOnly>> studyVariableQLs(
-//            MzQuantMLUnmarshaller in_file_um) {
-//
-//        PeptideConsensusList pepConList = in_file_um.unmarshal(MzQuantMLElement.PeptideConsensusList);
-//        List<QuantLayer<IdOnly>> sVQLs = pepConList.getStudyVariableQuantLayer();
-//        return sVQLs;
-//    }
-//    private RatioQuantLayer ratioQLs(MzQuantMLUnmarshaller in_file_um) {
-//
-//        PeptideConsensusList pepConList = in_file_um.unmarshal(MzQuantMLElement.PeptideConsensusList);
-//        RatioQuantLayer ratioQLs = pepConList.getRatioQuantLayer();
-//        return ratioQLs;
-//    }
-    /**
-     * get the object of MzQuantML from the input file
-     *
-     * @param in_file_um - input unmarshalled mzq file
-     *
-     * @return java object
-     */
-    private MzQuantML mzq(final MzQuantMLUnmarshaller in_file_um) {
-
-        MzQuantML mzq = in_file_um.unmarshal(MzQuantMLElement.MzQuantML);
-        return mzq;
-    }
-
-    /**
-     * get the identification of assay quant layer
-     *
-     * @param in_file_um       - input unmarshalled mzq file
-     * @param inputPeptideDTCA - input peptide datatype accession
-     *
-     * @return - assay quant layer ID
-     */
-    private static String assayQuantLayerId(
-            final MzQuantMLUnmarshaller in_file_um,
-            final String inputPeptideDTCA) {
-
-        String assayQLID = null;
-        PeptideConsensusList pepConList = in_file_um.unmarshal(
-                MzQuantMLElement.PeptideConsensusList);
-
-        List<QuantLayer<IdOnly>> assayQLs = pepConList.getAssayQuantLayer();
-
-        for (QuantLayer assayQL : assayQLs) {
-            if (assayQL.getDataType().getCvParam().getAccession().
-                    equalsIgnoreCase(inputPeptideDTCA)) {
-                assayQLID = assayQL.getId();
-                break;
-            }
-        }
-        return assayQLID;
-
-    }
-
-    /**
-     * output the result (protein groups, assay quant layers) with the mzQuantML
-     * standard format
-     *
-     * @param mzq              - MzQuantML object file
-     * @param assayQLs         - assay quant layer list
-     * @param assayQlId        - assay quant layer ID
-     * @param inPepQLID        - input peptide quant layer ID
-     * @param outRawPQlId      - output raw peptide quant layer ID
-     * @param inRawPepQLID     - input raw peptide quant layer ID
-     * @param outFile          - output mzq file
-     * @param protAbundance    - protein abundance
-     * @param rawProtAbundance - raw protein abundance
-     *
-     * @return - true/false
-     */
-    private boolean mzqOutput(final MzQuantML mzq,
-                              final List<QuantLayer<IdOnly>> assayQLs,
-                              final String assayQlId,
-                              final String inPepQLID,
-                              final String outRawPQlId,
-                              final String inRawPepQLID,
-                              final String outFile,
-                              final Map<String, List<String>> protAbundance,
-                              final Map<String, List<String>> rawProtAbundance) {
-
-        boolean flag = true;
-//        Map<String, List<String>> proteinAbundance = ProteinAbundanceCalculation(operation,
-//                uniSetGr, sameSetGr, subSetGr, pepAssayVals);
-        Map<String, String> groupInOrder = ProteinGrouping.groupInOrder(
-                protAbundance);
-
-        Map<String, String> rawGroupInOrder = ProteinGrouping.groupInOrder(
-                rawProtAbundance);
-//        System.out.println("Group in Order:" + groupInOrder.entrySet());
-//        Map<String, String> rawGroupInOrder = ProteinGrouping.GroupInOrder(rawProtAbundance);
-
-        //        uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinGroupList protGroupList = 
-//        uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinGroupList.class.newInstance();
-//        ProteinGroupList protGroupList = um.unmarshal(MzQuantMLElement.ProteinGroupList);
-        ProteinGroupList protGroupList = null;
-        protGroupList = new ProteinGroupList();
-
-        protGroupList.setId(proteinGroupList);
-
-        //create protein groups in ProteinGroupList
-        proteinGroups(protGroupList, groupInOrder);
-
-        //create assay quant layers for raw peptide abundances
-        assayQuantLayers(protGroupList, assayQLs, outRawPQlId, inRawPepQLID,
-                         rawProtAbundance, rawGroupInOrder,
-                         outputRawProteinGroupDTAccession, cvParamId,
-                         outputRawProteinGroupDTName);
-
-        //create assay quant layers in ProteinGroupList for normalised peptide abundances
-        assayQuantLayers(protGroupList, assayQLs, assayQlId, inPepQLID,
-                         protAbundance, groupInOrder,
-                         outputProteinGroupDTAccession, cvParamId,
-                         outputProteinGroupDTName);
-
-        /**
-         * Create the ProteinGroupList in mzq
-         */
-        mzq.setProteinGroupList(protGroupList);
-
-        /**
-         * Marshall the created object to MzQuantML The output of MzQuantML
-         * format file
-         */
-//  MzQuantMLMarshaller marshaller = new MzQuantMLMarshaller("CPTAC-Progenesis-small-example_proteinAbundance.mzq");
-//  MzQuantMLMarshaller marshaller = new MzQuantMLMarshaller("test_grouping_data_proteinAbundance.mzq");
-//  MzQuantMLMarshaller marshaller = new MzQuantMLMarshaller("ProteoSuite_xTracker_fourProteins_result_proteinAbundance.mzq");
-        MzQuantMLMarshaller marshaller = new MzQuantMLMarshaller(outFile);
-        marshaller.marshall(mzq);
-
-        return flag;
-
-    }
-
-    /**
-     * calculate protein abundance with the protein grouping result
-     *
-     * @param operation - calculation operator
-     * @param uniSetGr  - unique set group map
-     * @param sameSetGr - sameset group map
-     * @param subSetGr  - subset group map
-     * @param pepAssVal - peptide assay values
-     *
-     * @return - protein abundance
-     */
-    private Map<String, List<String>> proteinAbundanceCalculation(
-            final String operation,
-            final Map<String, Set<String>> uniSetGr,
-            final Map<String, Set<String>> sameSetGr,
-            final Map<String, Set<String>> subSetGr,
-            final Map<String, List<String>> pepAssVal) {
-
-        Map<String, List<String>> protAbu = new HashMap<>();
-//        int groupId = 0;
-        int groupLeader = 0;
-
-        DecimalFormat df = new DecimalFormat(".000");
-
-        /**
-         * unique set case
-         */
-        for (Map.Entry<String, Set<String>> entry : uniSetGr.entrySet()) {
-//            groupId++;
-            /**
-             * get the dimension of peptide assay values
-             */
-
-            String pepSelect = entry.getValue().iterator().next();
-//            System.out.println("pepSelect: " + pepSelect);
-            List<String> assayValTmp = pepAssVal.get(pepSelect);
-//            System.out.println("assay value temp: " + assayValTmp);
-            //number of assay values in each peptide
-            int assaySize = assayValTmp.size();
-            //number of peptides correponding to the protein
-            int numPeptides = entry.getValue().size();
-
-            /**
-             * create an array for calculating the abundance
-             */
-            double[] operationResult = new double[assaySize + 1];
-            double[] operationPepValue = new double[assaySize];
-            double[][] matrixPepValue = new double[numPeptides][assaySize];
-            int tempNo = 0;
-
-            /**
-             * initialization of operationOfpepValues, matrixPepValues
-             */
-            for (int i = 0; i < assaySize; i++) {
-//                sumOfpepValues[i] = 0;
-
-                operationPepValue[i] = 0;
-                operationResult[i] = 0;
-                for (int j = 0; j < numPeptides; j++) {
-                    matrixPepValue[j][i] = 0;
-                }
-            }
-            operationResult[assaySize] = 0;
-
-            for (String peptide : entry.getValue()) {
-                List<String> assayValues = pepAssVal.get(peptide);
-
-                for (int j = 0; j < assayValues.size(); j++) {
-                    String componentValue = assayValues.get(j);
-
-                    /**
-                     * set NaN/Null to zero
-                     */
-                    double temp = componentValue.equals("NaN")
-                            || componentValue.equals("nan")
-                            || componentValue.equals("Null") || componentValue.
-                            equals("null")
-                            ? Double.parseDouble("0") : Double.
-                            parseDouble(componentValue);
-//                        sumOfpepValues[j] = sumOfpepValues[j] + temp;
-                    matrixPepValue[tempNo][j] = temp;
-                }
-                tempNo++;
-            }
-
-            /**
-             * calculation the abundance according to operation method
-             */
-            if (operation.equals("sum")) {
-                operationPepValue = Utils.columnSum(matrixPepValue);
-            } else if (operation.equals("mean")) {
-                operationPepValue = Utils.columnSum(matrixPepValue);
-                for (int i = 0; i < operationPepValue.length; i++) {
-                    operationPepValue[i] = operationPepValue[i] / numPeptides;
-                }
-            } else if (operation.equals("median")) {
-                double[] tmp = new double[numPeptides];
-                for (int j = 0; j < operationPepValue.length; j++) {
-                    for (int i = 0; i < numPeptides; i++) {
-                        tmp[i] = matrixPepValue[i][j];
-                    }
-                    operationPepValue[j] = Utils.median(tmp);
-                }
-            }
-
-            System.
-                    arraycopy(operationPepValue, 0, operationResult, 0,
-                              assaySize);
-            operationResult[assaySize] = groupLeader;
-//            operationResult[assaySize + 1] = groupId;
-
-            String[] operationResultFormat = new String[assaySize + 1];
-            for (int i = 0; i < assaySize + 1; i++) {
-                operationResultFormat[i] = df.format(operationResult[i]);
-            }
-
-            List<String> proteinAbundanceList = Arrays.asList(
-                    operationResultFormat);
-            protAbu.put(entry.getKey(), proteinAbundanceList);
-//            proteinAbundance.put("ProteinGroup" + groupId, proteinAbundanceList);
-//            }
-        }
-
-        /**
-         * sameSet case
-         */
-        for (Map.Entry<String, Set<String>> entry : sameSetGr.entrySet()) {
-
-//            groupId++;
-            String pepSelect = entry.getValue().iterator().next();
-
-            List<String> assayValTmp = pepAssVal.get(pepSelect);
-
-            //number of assay values in each peptide
-            int assaySize = assayValTmp.size();
-            //number of peptides correponding to the protein
-            int numPeptides = entry.getValue().size();
-
-            /**
-             * create an array for calculating the abundance
-             */
-            double[] operationResult = new double[assaySize + 1];
-            double[] operationPepValue = new double[assaySize];
-            double[][] matrixPepValue = new double[numPeptides][assaySize];
-            int tempNo = 0;
-
-            /**
-             * initialization of operationOfpepValues, matrixPepValues
-             */
-            for (int i = 0; i < assaySize; i++) {
-//                sumOfpepValues[i] = 0;
-
-                operationPepValue[i] = 0;
-                operationResult[i] = 0;
-                for (int j = 0; j < numPeptides; j++) {
-                    matrixPepValue[j][i] = 0;
-                }
-            }
-            operationResult[assaySize] = 0;
-//            operationResult[assaySize + 1] = 0;
-
-            for (String peptide : entry.getValue()) {
-                List<String> assayValues = pepAssVal.get(peptide);
-                for (int j = 0; j < assayValues.size(); j++) {
-                    String componentValue = assayValues.get(j);
-
-                    /**
-                     * set NaN/Null to zero
-                     */
-                    double temp = componentValue.equalsIgnoreCase("nan")
-                            || componentValue.equalsIgnoreCase("null")
-                            ? Double.parseDouble("0") : Double.
-                            parseDouble(componentValue);
-                    matrixPepValue[tempNo][j] = temp;
-                }
-                tempNo++;
-            }
-
-            /**
-             * calculation the abundance according to operation method
-             */
-            if (operation.equals("sum")) {
-                operationPepValue = Utils.columnSum(matrixPepValue);
-            } else if (operation.equals("mean")) {
-                operationPepValue = Utils.columnSum(matrixPepValue);
-                for (int i = 0; i < operationPepValue.length; i++) {
-                    operationPepValue[i] = operationPepValue[i] / numPeptides;
-                }
-            } else if (operation.equals("median")) {
-                double[] tmp = new double[numPeptides];
-                for (int j = 0; j < operationPepValue.length; j++) {
-                    for (int i = 0; i < numPeptides; i++) {
-                        tmp[i] = matrixPepValue[i][j];
-                    }
-                    operationPepValue[j] = Utils.median(tmp);
-                }
-            }
-            System.
-                    arraycopy(operationPepValue, 0, operationResult, 0,
-                              assaySize);
-            operationResult[assaySize] = groupLeader;
-//            operationResult[assaySize + 1] = groupId;
-
-            String[] operationResultFormat = new String[assaySize + 1];
-            for (int i = 0; i < assaySize + 1; i++) {
-                operationResultFormat[i] = df.format(operationResult[i]);
-            }
-            List<String> proteinAbundanceList = Arrays.asList(
-                    operationResultFormat);
-
-//            List<String> proteinAbundanceList = Arrays.asList(Arrays.toString(operationResult));
-            protAbu.put(entry.getKey(), proteinAbundanceList);
-//proteinAbundance.put("ProteinGroup" + groupId, proteinAbundanceList);
-//            }
-        }
-
-        /**
-         * subSet case
-         */
-        for (Map.Entry<String, Set<String>> entry : subSetGr.entrySet()) {
-
-//            groupId++;
-            String pepSelect = entry.getValue().iterator().next();
-//            HashSet<String> proteins = peptideToProtein.get(pepSelect);
-            List<String> assayValTmp = pepAssVal.get(pepSelect);
-            //number of assay values in each peptide
-            int assaySize = assayValTmp.size();
-            //number of peptides correponding to the protein
-            int numPeptides = entry.getValue().size();
-
-            /**
-             * create an array for calculating the abundance
-             */
-            double[] operationResult = new double[assaySize + 1];
-            double[] operationPepValue = new double[assaySize];
-            double[][] matrixPepValue = new double[numPeptides][assaySize];
-            int tempNo = 0;
-
-            /*
-             * initialization of operationOfpepValues, matrixPepValues
-             */
-            for (int i = 0; i < assaySize; i++) {
-//                sumOfpepValues[i] = 0;
-
-                operationPepValue[i] = 0;
-                operationResult[i] = 0;
-                for (int j = 0; j < numPeptides; j++) {
-                    matrixPepValue[j][i] = 0;
-                }
-            }
-            operationResult[assaySize] = 0;
-
-            for (String peptide : entry.getValue()) {
-                List<String> assayValues = pepAssVal.get(peptide);
-                for (int j = 0; j < assayValues.size(); j++) {
-                    String componentValue = assayValues.get(j);
-
-                    /**
-                     * set NaN/Null to zero
-                     */
-                    double temp = componentValue.equals("NaN")
-                            || componentValue.equals("nan")
-                            || componentValue.equals("Null") || componentValue.
-                            equals("null")
-                            ? Double.parseDouble("0") : Double.
-                            parseDouble(componentValue);
-                    matrixPepValue[tempNo][j] = temp;
-                }
-                tempNo++;
-            }
-
-            /**
-             * calculation the abundance according to operation method
-             */
-            if (operation.equals("sum")) {
-                operationPepValue = Utils.columnSum(matrixPepValue);
-            } else if (operation.equals("mean")) {
-                operationPepValue = Utils.columnSum(matrixPepValue);
-                for (int i = 0; i < operationPepValue.length; i++) {
-                    operationPepValue[i] = operationPepValue[i] / numPeptides;
-                }
-            } else if (operation.equals("median")) {
-                double[] tmp = new double[numPeptides];
-                for (int j = 0; j < operationPepValue.length; j++) {
-                    for (int i = 0; i < numPeptides; i++) {
-                        tmp[i] = matrixPepValue[i][j];
-                    }
-                    operationPepValue[j] = Utils.median(tmp);
-                }
-            }
-            System.
-                    arraycopy(operationPepValue, 0, operationResult, 0,
-                              assaySize);
-            operationResult[assaySize] = groupLeader;
-//            operationResult[assaySize + 1] = groupId;
-
-            String[] operationResultFormat = new String[assaySize + 1];
-            for (int i = 0; i < assaySize + 1; i++) {
-                operationResultFormat[i] = df.format(operationResult[i]);
-            }
-            List<String> proteinAbundanceList = Arrays.asList(
-                    operationResultFormat);
-
-            protAbu.put(entry.getKey(), proteinAbundanceList);
-        }
-
-        return protAbu;
     }
 
     /**

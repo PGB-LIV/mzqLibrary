@@ -170,6 +170,8 @@ public class MainApp extends Application {
                     // Create our display of RT delta distribution for all features.
                     engine.eval(deltaStatsCommand);
                 } else {
+                    Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE,
+                                                                  "R engine not initialised! Aborting creation of quality plots.");
                     System.out.println(
                             "R engine not initialised! Aborting creation of quality plots.");
                     return;

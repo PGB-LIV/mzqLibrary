@@ -428,10 +428,12 @@ public class MzqData {
                 quantities.put(assayID, value);
 
             }
-            if (type == ASSAY) {
-                quantObj.setQuantities(quantityName, quantities);
-            } else {
-                quantObj.setStudyVariables(quantityName, quantities);
+            if (quantObj != null) {
+                if (type == ASSAY) {
+                    quantObj.setQuantities(quantityName, quantities);
+                } else {
+                    quantObj.setStudyVariables(quantityName, quantities);
+                }
             }
         }
     }
@@ -460,10 +462,12 @@ public class MzqData {
         }
         for (Row row : rql.getDataMatrix().getRow()) {
             QuantitationLevel quantObj = determineQuantObj(level, row);
-            for (int i = 0; i < ratioIDs.size(); i++) {
-                String ratioID = ratioIDs.get(i);
-                Double value = parseDoubleValue(row.getValue().get(i));
-                quantObj.setRatios(ratioID, value);
+            if (quantObj != null) {
+                for (int i = 0; i < ratioIDs.size(); i++) {
+                    String ratioID = ratioIDs.get(i);
+                    Double value = parseDoubleValue(row.getValue().get(i));
+                    quantObj.setRatios(ratioID, value);
+                }
             }
         }
     }
@@ -480,10 +484,12 @@ public class MzqData {
         }
         for (Row row : gql.getDataMatrix().getRow()) {
             QuantitationLevel quantObj = determineQuantObj(level, row);
-            for (int i = 0; i < columnIDs.size(); i++) {
-                String columnID = columnIDs.get(i);
-                Double value = parseDoubleValue(row.getValue().get(i));
-                quantObj.setGlobal(columnID, value);
+            if (quantObj != null) {
+                for (int i = 0; i < columnIDs.size(); i++) {
+                    String columnID = columnIDs.get(i);
+                    Double value = parseDoubleValue(row.getValue().get(i));
+                    quantObj.setGlobal(columnID, value);
+                }
             }
         }
     }

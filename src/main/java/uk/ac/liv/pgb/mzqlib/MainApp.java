@@ -922,29 +922,36 @@ public class MainApp extends Application {
                     PeptideConsensus peptide = this.getUnmarshaller().unmarshal(
                             uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensus.class,
                             peptideRef);
-                    List<StringProperty> peptideValues = peptideDMMap.get(
-                            peptideRef);
-                    if (peptideValues != null) {
-                        XYChart.Series peptideSeries = new XYChart.Series<>();
-                        lineChart.getData().add(peptideSeries);
+                    if (peptideDMMap != null) {
+                        List<StringProperty> peptideValues = peptideDMMap.get(
+                                peptideRef);
+                        if (peptideValues != null) {
+                            XYChart.Series peptideSeries
+                                    = new XYChart.Series<>();
+                            lineChart.getData().add(peptideSeries);
 
-                        //Set peptide lines color to GRAY
-                        peptideSeries.getNode().setStyle("-fx-stroke: gray;");
+                            //Set peptide lines color to GRAY
+                            peptideSeries.getNode().
+                                    setStyle("-fx-stroke: gray;");
 
-                        peptideSeries.setName(peptide.getPeptideSequence());
-                        //if (peptideValues != null) {
-                        int k = 1;
-                        for (StringProperty value : peptideValues) {
-                            if (NumberUtils.isNumber(value.get())) {
-                                peptideSeries.getData().add(new XYChart.Data(
-                                        columns.get(k).getText(), Double.
-                                        parseDouble(value.get())));
+                            peptideSeries.setName(peptide.getPeptideSequence());
+                            //if (peptideValues != null) {
+                            int k = 1;
+                            for (StringProperty value : peptideValues) {
+                                if (NumberUtils.isNumber(value.get())) {
+                                    peptideSeries.getData().add(
+                                            new XYChart.Data(
+                                                    columns.get(k).getText(),
+                                                    Double.
+                                                    parseDouble(value.get())));
 
-                            } else {
-                                peptideSeries.getData().add(new XYChart.Data(
-                                        columns.get(k).getText(), -1));
+                                } else {
+                                    peptideSeries.getData().add(
+                                            new XYChart.Data(
+                                                    columns.get(k).getText(), -1));
+                                }
+                                k++;
                             }
-                            k++;
                         }
                     }
                 }
@@ -1054,10 +1061,8 @@ public class MainApp extends Application {
                 gui.setTitle("Mzq library command line GUI");
                 gui.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 gui.setVisible(true);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(MainApp.class.getName()).
-                        log(Level.SEVERE, null, ex);
-            } catch (InstantiationException | IllegalAccessException |
+            } catch (ClassNotFoundException | InstantiationException |
+                    IllegalAccessException |
                     javax.swing.UnsupportedLookAndFeelException ex) {
                 Logger.getLogger(MainApp.class.getName()).
                         log(Level.SEVERE, null, ex);
@@ -1150,25 +1155,29 @@ public class MainApp extends Application {
             PeptideConsensus peptide = this.getUnmarshaller().unmarshal(
                     uk.ac.liv.pgb.jmzqml.model.mzqml.PeptideConsensus.class,
                     peptideRef);
-            List<StringProperty> peptideValues = peptideDMMap.get(peptideRef);
-            XYChart.Series peptideSeries = new XYChart.Series<>();
-            lineChart.getData().add(peptideSeries);
-            peptideSeries.setName(peptide.getPeptideSequence());
-            if (peptideValues != null) {
-                int k = 1;
-                for (StringProperty value : peptideValues) {
-                    if (NumberUtils.isNumber(value.get())) {
-                        peptideSeries.getData().add(new XYChart.Data(columns.
-                                get(k).getText(), Double.
-                                                                     parseDouble(
-                                                                             value.
-                                                                             get())));
-
-                    } else {
-                        peptideSeries.getData().add(new XYChart.Data(columns.
-                                get(k).getText(), -1));
+            if (peptideDMMap != null) {
+                List<StringProperty> peptideValues = peptideDMMap.
+                        get(peptideRef);
+                XYChart.Series peptideSeries = new XYChart.Series<>();
+                lineChart.getData().add(peptideSeries);
+                peptideSeries.setName(peptide.getPeptideSequence());
+                if (peptideValues != null) {
+                    int k = 1;
+                    for (StringProperty value : peptideValues) {
+                        if (NumberUtils.isNumber(value.get())) {
+                            peptideSeries.getData().add(new XYChart.Data(
+                                    columns.
+                                    get(k).getText(), Double.
+                                    parseDouble(
+                                            value.
+                                            get())));
+                        } else {
+                            peptideSeries.getData().add(new XYChart.Data(
+                                    columns.
+                                    get(k).getText(), -1));
+                        }
+                        k++;
                     }
-                    k++;
                 }
             }
         }
@@ -1325,9 +1334,8 @@ public class MainApp extends Application {
         } catch (UnsatisfiedLinkError ex) {
             Logger.getLogger(MainApp.class.getName()).log(
                     Level.SEVERE, null, ex);
+            return null;
         }
-
-        return null;
     }
 
     private void initialREngine() {

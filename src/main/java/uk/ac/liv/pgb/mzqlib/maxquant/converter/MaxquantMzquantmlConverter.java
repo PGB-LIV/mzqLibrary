@@ -82,7 +82,7 @@ public class MaxquantMzquantmlConverter {
     /**
      * @param args the command line arguments
      */
-    private final static String MAXQUANT_VERSION = "1.2.0.18"; // NOPMD
+    private static final String MAXQUANT_VERSION = "1.2.0.18"; // NOPMD
     private final MaxquantFilesReader maxRd;
 
     private static final String SEARCH_DATABASE_LOCATION
@@ -107,8 +107,8 @@ public class MaxquantMzquantmlConverter {
     private List<FeatureList> ftListList = null;
     private SmallMoleculeList smallMolList = null;
     private Cv cv;
-    private Cv cv_unimod;
-    private Cv cv_mod;
+    private Cv cvUnimod;
+    private Cv cvMod;
     private Label label; // for unlabel sample
 
     // internal variables
@@ -214,20 +214,20 @@ public class MaxquantMzquantmlConverter {
         cvs.add(cv);
 
         //unimod
-        cv_unimod = new Cv();
-        cv_unimod.setId("UNIMOD");
-        cv_unimod.setUri("http://www.unimod.org/obo/unimod.obo");
-        cv_unimod.setFullName("Unimod");
-        cvs.add(cv_unimod);
+        cvUnimod = new Cv();
+        cvUnimod.setId("UNIMOD");
+        cvUnimod.setUri("http://www.unimod.org/obo/unimod.obo");
+        cvUnimod.setFullName("Unimod");
+        cvs.add(cvUnimod);
 
         //psi-mod
-        cv_mod = new Cv();
-        cv_mod.setId("PSI-MOD");
-        cv_mod.setUri(
+        cvMod = new Cv();
+        cvMod.setId("PSI-MOD");
+        cvMod.setUri(
                 "http://psidev.cvs.sourceforge.net/psidev/psi/mod/data/PSI-MOD.obo");
-        cv_mod.setFullName(
+        cvMod.setFullName(
                 "Proteomics Standards Initiative Protein Modifications Vocabularies");
-        cvs.add(cv_mod);
+        cvs.add(cvMod);
 
         label = new Label();
         CvParam labelCvParam = new CvParam();
@@ -428,13 +428,13 @@ public class MaxquantMzquantmlConverter {
                     CvParam label_lysine = new CvParam();
                     label_lysine.setAccession("MOD:00582");
                     label_lysine.setName("6x(13)C,2x(15)N labeled L-lysine");
-                    label_lysine.setCv(cv_mod);
+                    label_lysine.setCv(cvMod);
                     label_lysine.setValue("Lys8");
 
                     CvParam label_arginine = new CvParam();
                     label_arginine.setAccession("MOD:00587");
                     label_arginine.setName("6x(13)C,4x(15)N labeled L-arginine");
-                    label_arginine.setCv(cv_mod);
+                    label_arginine.setCv(cvMod);
                     label_arginine.setValue("Arg10");
 
                     ModParam modParam_lysine = new ModParam();

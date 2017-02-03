@@ -181,7 +181,7 @@ public class ProgenMzquantmlConverter {
     private String idFn;
     private char separator;
 
-    final static Set<String> plProteinL = new HashSet<>(); //proteins from protein list file
+     static final Set<String> plProteinL = new HashSet<>(); //proteins from protein list file
 
     static class ProteinAccessionsTIntObjectProcedure implements
             TIntObjectProcedure<String> {

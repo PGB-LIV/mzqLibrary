@@ -305,7 +305,7 @@ public class MztabConverter extends GenericConverter {
                 uk.ac.ebi.pride.jmztab.model.Assay tabAssay
                         = new uk.ac.ebi.pride.jmztab.model.Assay(i + 1);
                 if (methodAccession.equals("MS:1001834") || methodAccession.
-                        equals("MS:1001836")) {//label free 
+                        equals("MS:1001836")) { //label free 
                     tabAssay.setQuantificationReagent(
                             new CVParam(msCVstr,
                                         "MS:1002038",
@@ -358,7 +358,7 @@ public class MztabConverter extends GenericConverter {
             final List<StudyVariable> svs = MzqLib.DATA.getSvs();
             ArrayList<uk.ac.ebi.pride.jmztab.model.StudyVariable> tabSvs
                     = new ArrayList<>();
-            if (svs.isEmpty()) {//no study variable found in the mzq file, create the study variable
+            if (svs.isEmpty()) { //no study variable found in the mzq file, create the study variable
                 //one for all assays
                 uk.ac.ebi.pride.jmztab.model.StudyVariable tabSv
                         = new uk.ac.ebi.pride.jmztab.model.StudyVariable(1);
@@ -424,7 +424,7 @@ public class MztabConverter extends GenericConverter {
             for (uk.ac.ebi.pride.jmztab.model.StudyVariable sv : tabSvs) {
                 proFactory.addAbundanceOptionalColumn(sv);
             }
-            if (proCvParam != null) {//means no assay quant layer for protein, no need to add more
+            if (proCvParam != null) { //means no assay quant layer for protein, no need to add more
                 String proCvName = proCvParam.getName();
                 for (String quantName : names) {
                     if (quantName.equals(proCvName)) {
@@ -540,7 +540,7 @@ public class MztabConverter extends GenericConverter {
                 String searchDatabase = "null";
                 String searchDatabaseVersion = "null";
                 Protein tabProt = new Protein(proFactory);
-                ProteinData protein;//whe in PG mode, protein is the lead protein
+                ProteinData protein; //whe in PG mode, protein is the lead protein
                 if (proteinLevel == MzqData.PROTEIN_GROUP) {
                     ProteinGroupData pg = (ProteinGroupData) entity;
                     protein = MzqLib.DATA.getProtein(pg.getAnchorProteinStr());
@@ -860,7 +860,7 @@ public class MztabConverter extends GenericConverter {
             int pepCount = MzqLib.DATA.getPeptides().size();
             int fixModCount = 1;
             int variableModCount = 1;
-            if (modCount.isEmpty()) {//no modification found in peptide
+            if (modCount.isEmpty()) { //no modification found in peptide
 //                String accession = mtd.getQuantificationMethod().getAccession();
                 //try to find in the assaylist for labelled method
 //                if (accession.equals("MS:1002023") || accession.equals("MS:1002018")){ //labelled quantitation method

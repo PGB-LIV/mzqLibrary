@@ -30,14 +30,15 @@ import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
 
 /**
  * MzqLib class.
+ *
  * @author Jun Fan
  */
 public class MzqLib {
 
-    private final static int CSV = 1;
-    private final static int MZTAB = 2;
-    private final static int HTML = 3;
-    private final static int XLS = 4;
+    private static final int CSV = 1;
+    private static final int MZTAB = 2;
+    private static final int HTML = 3;
+    private static final int XLS = 4;
 
     /**
      * Static MzqData instance.
@@ -46,7 +47,6 @@ public class MzqLib {
     private HashMap<String, Integer> converterTypeMap = new HashMap<>();
 
     //call the GUI
-
     /**
      * Constructor.
      */
@@ -56,11 +56,13 @@ public class MzqLib {
 
     /**
      * Call the converter.
-     * @param typeStr File format of the output file from converter. 
-     * @param mzqFile Input mzq file name.
+     *
+     * @param typeStr    File format of the output file from converter.
+     * @param mzqFile    Input mzq file name.
      * @param outputFile Output file name.
      */
-    public MzqLib(final String typeStr, final String mzqFile, final String outputFile) {
+    public MzqLib(final String typeStr, final String mzqFile,
+                  final String outputFile) {
         initialize();
         int type = getType(typeStr);
         if (type == 0) {
@@ -78,7 +80,7 @@ public class MzqLib {
                 break;
             case MZTAB:
                 converter = new MztabConverter(mzqFile, outputFile);
-                DATA.setNeedAutoAssignment(true);//feature_ref is needed to get m/z and rt for peptide from features
+                DATA.setNeedAutoAssignment(true); //feature_ref is needed to get m/z and rt for peptide from features
                 break;
             case HTML:
                 converter = new HtmlConverter(mzqFile, outputFile);
@@ -111,7 +113,7 @@ public class MzqLib {
 
         MzQuantMLUnmarshaller unmarshaller = new MzQuantMLUnmarshaller(file);
 
-//	<xsd:element name="AssayList" type="AssayListType" minOccurs="1" maxOccurs="1"/>
+//<xsd:element name="AssayList" type="AssayListType" minOccurs="1" maxOccurs="1"/>
         DATA.addAssays(unmarshaller.unmarshal(AssayList.class));
 //	<xsd:element name="StudyVariableList" type="StudyVariableListType" minOccurs="0" maxOccurs="1"/>
         DATA.addStudyVariables(unmarshaller.unmarshal(StudyVariableList.class));
@@ -168,9 +170,9 @@ public class MzqLib {
 //        }
 //        //System.exit(0);
 //    }
-
     /**
      * Main class.
+     *
      * @param args input argument array.
      */
     public static void main(final String[] args) {

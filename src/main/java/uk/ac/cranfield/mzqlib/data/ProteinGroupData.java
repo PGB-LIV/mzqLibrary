@@ -14,7 +14,7 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.ProteinRef;
 public class ProteinGroupData extends QuantitationLevel {
 
     private ProteinGroup pg;
-    private final static String SEPARATOR = ";";
+    private  static final String SEPARATOR = ";";
 
     /**
      * Constructor of ProteinGroupData.
@@ -40,7 +40,7 @@ public class ProteinGroupData extends QuantitationLevel {
      * @return anchor protein string.
      */
     public String getAnchorProteinStr() {
-        ProteinRef lead = pg.getProteinRef().get(0);//ProteinRef 1:n
+        ProteinRef lead = pg.getProteinRef().get(0); //ProteinRef 1:n
         return lead.getProteinRef();
     }
 

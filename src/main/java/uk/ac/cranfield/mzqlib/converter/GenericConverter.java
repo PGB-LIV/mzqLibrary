@@ -13,7 +13,7 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.StudyVariable;
  *
  * @author Jun Fan@cranfield
  */
-abstract public class GenericConverter {
+public abstract class GenericConverter {
 
     String filename;
     String outfile;
@@ -37,7 +37,7 @@ abstract public class GenericConverter {
     /**
      * Abstract convert method.
      */
-    abstract public void convert();
+    public abstract void convert();
 
     /**
      * Utility method to add study variable header.

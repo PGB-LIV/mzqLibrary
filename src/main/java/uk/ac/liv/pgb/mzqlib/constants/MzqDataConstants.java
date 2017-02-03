@@ -11,27 +11,27 @@ public class MzqDataConstants {
     /**
      * Constant.
      */
-    public final static String PROTEIN_GROUP_LIST_TYPE = "ProteinGroupList";
+    public static final String PROTEIN_GROUP_LIST_TYPE = "ProteinGroupList";
 
     /**
      * Constant.
      */
-    public final static String PROTEIN_LIST_TYPE = "ProteinList";
+    public static final String PROTEIN_LIST_TYPE = "ProteinList";
 
     /**
      * Constant.
      */
-    public final static String PEPTIDE_LIST_TYPE = "PeptideConsensusList";
+    public static final String PEPTIDE_LIST_TYPE = "PeptideConsensusList";
 
     /**
      * Constant.
      */
-    public final static String FEATURE_LIST_TYPE = "FeatureList";
+    public static final  String FEATURE_LIST_TYPE = "FeatureList";
 
     /**
      * Constant.
      */
-    public final static String SMALL_MOLECULE_LIST_TYPE = "SmallMoleculeList";
+    public static final String SMALL_MOLECULE_LIST_TYPE = "SmallMoleculeList";
 
     /**
      * Constant.

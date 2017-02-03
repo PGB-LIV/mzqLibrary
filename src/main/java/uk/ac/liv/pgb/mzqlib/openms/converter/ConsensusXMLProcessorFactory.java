@@ -126,7 +126,7 @@ public class ConsensusXMLProcessorFactory {
                 createUnmarshaller();
         private final Map<File, Assay> filesToAssays = new HashMap<>();
 
-        public ConsensusXMLProcessorImpl(final File file)
+        ConsensusXMLProcessorImpl(final File file)
                 throws JAXBException {
 //            JAXBContext context = JAXBContext.newInstance(new Class[]{
 //                ConsensusXML.class});
@@ -596,7 +596,7 @@ public class ConsensusXMLProcessorFactory {
         private final double rtCentroid;
         private final List<Double> massTrace = new LinkedList<>();
 
-        public MzRtArea(final double mzCentroid, final double rtCentroid) {
+        MzRtArea(final double mzCentroid, final double rtCentroid) {
             this.mzCentroid = mzCentroid;
             this.rtCentroid = rtCentroid;
         }

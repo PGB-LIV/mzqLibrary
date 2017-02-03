@@ -555,7 +555,7 @@ public class MzqMzIdMapperFactory {
         static class ValueListSizeComparator implements
                 Comparator<Entry<String, List<String>>>, Serializable {
 
-            private final static long serialVersionUID = 30L;
+            private static final long serialVersionUID = 30L;
 
             @Override
             // descending 

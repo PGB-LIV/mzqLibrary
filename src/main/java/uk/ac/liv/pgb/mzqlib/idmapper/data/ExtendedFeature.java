@@ -18,7 +18,7 @@ import uk.ac.liv.pgb.mzqlib.idmapper.data.Tolerance.ToleranceUnit;
  */
 public class ExtendedFeature extends Feature {
 
-    private final static long serialVersionUID = 107L;
+    private static final long serialVersionUID = 107L;
     private final double lmz; // left boundary of mz
     private final double rmz; // right boundary of mz
     private final double urt; // up boundary of rt (min)

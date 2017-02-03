@@ -361,7 +361,7 @@ public class MzqData {
         for (Protein qprotein : proteinList.getProtein()) {
             //check whether this protein has been processed before (more likely from the previous mzq file)
             String id = existing(qprotein);
-            if (id == null) {//not matched to the existing proteins
+            if (id == null) { //not matched to the existing proteins
                 id = qprotein.getId();
                 ProteinData newProtein = new ProteinData(qprotein);
                 proteins.put(id, newProtein);
@@ -410,7 +410,7 @@ public class MzqData {
 
         if (cvParams.containsKey(quantityName)) {
             if (!quantitationNames.contains(quantityName)) {
-                quantitationNames.add(quantityName);//this could happen when the quantitation name is parsed in a global quant layer which only puts the cvParam into cvParams
+                quantitationNames.add(quantityName); //this could happen when the quantitation name is parsed in a global quant layer which only puts the cvParam into cvParams
             }
         } else {
             cvParams.put(quantityName, cvTerm);

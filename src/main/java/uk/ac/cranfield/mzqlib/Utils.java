@@ -2,6 +2,7 @@
 package uk.ac.cranfield.mzqlib;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -11,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
@@ -83,7 +85,7 @@ public class Utils {
             } else {
                 throw new IllegalStateException(ex.getMessage(), ex);
             }
-        } catch (Exception e) {
+        } catch (ParserConfigurationException | IOException e) {
             throw new IllegalStateException("Exception while validating \n" + e,
                                             e);
         }
@@ -167,7 +169,7 @@ public class Utils {
      * @param path which would require a confirmation when overwriting an
      *             existing file
      */
-    public static FileChooserWithGenericFileFilter createOverwriteFileChooser(
+    static FileChooserWithGenericFileFilter createOverwriteFileChooser(
             final String path) {
         return new FileChooserWithGenericFileFilter(path) {
 

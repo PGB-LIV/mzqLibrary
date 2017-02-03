@@ -29,7 +29,7 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.Software;
 public class HtmlConverter extends GenericConverter {
 
     private static final String SEPERATOR = "</td><td>";
-    final private String TEMPLATE = "htmlTemplate.txt";
+    private final String TEMPLATE = "htmlTemplate.txt";
     private static final HashMap<String, String> templates = new HashMap<>();
 
     /**
@@ -62,7 +62,7 @@ public class HtmlConverter extends GenericConverter {
                 String tag = "";
                 StringBuilder sb = new StringBuilder();
                 while ((line = reader.readLine()) != null) {
-                    if (line.startsWith("#")) {//tag line
+                    if (line.startsWith("#")) {   //tag line
                         if (tag.length() > 0) {
                             sb.deleteCharAt(sb.length() - 1);
                             sb.deleteCharAt(sb.length() - 1);

@@ -59,8 +59,8 @@ public class PepProtAbundanceNormalisation {
             = new HashMap<>();
     //private Map<String, List<String>> proteinAssayValues;
 
-    final static double thresholdConfidence = 2;
-    final static double coefficientMAD = 1.4826; //scale factor, 
+    static final double thresholdConfidence = 2;
+    static final double coefficientMAD = 1.4826; //scale factor, 
 
     private int maximumThreads = 4;
     private final String in_file;

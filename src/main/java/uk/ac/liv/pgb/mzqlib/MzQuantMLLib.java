@@ -404,8 +404,8 @@ public class MzQuantMLLib implements Serializable {
 
             mzqLib.init(args);
 
-        } catch (IOException | JAXBException | DatatypeConfigurationException |
-                InterruptedException ex) {
+        } catch (IOException | JAXBException | DatatypeConfigurationException 
+                | InterruptedException ex) {
             Logger.getLogger(MzQuantMLLib.class.getName()).log(
                     Level.SEVERE, null, ex);
         }

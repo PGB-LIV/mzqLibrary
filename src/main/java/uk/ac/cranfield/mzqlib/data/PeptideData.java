@@ -128,7 +128,7 @@ public class PeptideData extends QuantitationLevel {
     public List<FeatureData> getFeaturesWithCharge(final int charge) {
         List<FeatureData> values = new ArrayList<>();
         for (FeatureData feature : features) {
-            String value = feature.getFeature().getCharge();//<xsd:attribute name="charge" type="integerOrNullType" use="required">
+            String value = feature.getFeature().getCharge(); //<xsd:attribute name="charge" type="integerOrNullType" use="required">
             if (value != null && !value.equalsIgnoreCase("null") && charge
                     == Integer.parseInt(value)) {
                 values.add(feature);

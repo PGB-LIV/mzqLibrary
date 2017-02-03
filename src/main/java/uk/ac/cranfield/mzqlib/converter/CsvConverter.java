@@ -27,7 +27,7 @@ import uk.ac.cranfield.mzqlib.data.QuantitationLevel;
  */
 public class CsvConverter extends GenericConverter {
 
-    final static String SEPARATOR = ",";
+     static final String SEPARATOR = ",";
 
     /**
      * Constructor.

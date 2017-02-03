@@ -1,7 +1,7 @@
-
 package uk.ac.liv.pgb.mzqlib.progenesis.converter;
 
 import java.text.DecimalFormat;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +10,6 @@ import java.util.List;
  * @author ddq
  */
 public class MassTrace {
-
     private double rt_start;
     private double rt_end;
     private double mz_start;
@@ -21,9 +20,9 @@ public class MassTrace {
      */
     public MassTrace() {
         rt_start = (double) 0;
-        rt_end = (double) 0;
+        rt_end   = (double) 0;
         mz_start = (double) 0;
-        mz_end = (double) 0;
+        mz_end   = (double) 0;
     }
 
     /**
@@ -34,12 +33,11 @@ public class MassTrace {
      * @param rt     retention time value
      * @param rtWin  retention time window value
      */
-    public MassTrace(final double mz, final double charge, final double rt,
-                     final double rtWin) {
+    public MassTrace(final double mz, final double charge, final double rt, final double rtWin) {
         rt_start = rt - rtWin / 2;
-        rt_end = rt_start + rtWin;
+        rt_end   = rt_start + rtWin;
         mz_start = mz;
-        mz_end = mz_start + 3 / charge;
+        mz_end   = mz_start + 3 / charge;
     }
 
     /**
@@ -50,10 +48,8 @@ public class MassTrace {
      * @param rt     retention time value
      * @param rtWin  retention time window value
      */
-    public MassTrace(final String mz, final String charge, final String rt,
-                     final String rtWin) {
-        this(Double.parseDouble(mz), Double.parseDouble(charge), Double.
-             parseDouble(rt), Double.parseDouble(rtWin));
+    public MassTrace(final String mz, final String charge, final String rt, final String rtWin) {
+        this(Double.parseDouble(mz), Double.parseDouble(charge), Double.parseDouble(rt), Double.parseDouble(rtWin));
     }
 
     /**
@@ -65,14 +61,13 @@ public class MassTrace {
      * @param rtWin  retention time window value
      * @param df     DecimalFormat setting
      */
-    public MassTrace(final double mz, final double charge, final double rt,
-                     final double rtWin,
+    public MassTrace(final double mz, final double charge, final double rt, final double rtWin,
                      final DecimalFormat df) {
         this(mz, charge, rt, rtWin);
         this.rt_start = Double.valueOf(df.format(rt_start));
-        this.rt_end = Double.valueOf(df.format(rt_end));
+        this.rt_end   = Double.valueOf(df.format(rt_end));
         this.mz_start = Double.valueOf(df.format(mz_start));
-        this.mz_end = Double.valueOf(df.format(mz_end));
+        this.mz_end   = Double.valueOf(df.format(mz_end));
     }
 
     /**
@@ -84,11 +79,9 @@ public class MassTrace {
      * @param rtWin  retention time window value
      * @param df     DecimalFormat setting
      */
-    public MassTrace(final String mz, final String charge, final String rt,
-                     final String rtWin,
+    public MassTrace(final String mz, final String charge, final String rt, final String rtWin,
                      final DecimalFormat df) {
-        this(Double.parseDouble(mz), Double.parseDouble(charge), Double.
-             parseDouble(rt), Double.parseDouble(rtWin), df);
+        this(Double.parseDouble(mz), Double.parseDouble(charge), Double.parseDouble(rt), Double.parseDouble(rtWin), df);
     }
 
     /**
@@ -98,11 +91,15 @@ public class MassTrace {
      */
     public List<Double> getMassTraceDoubleList() {
         List<Double> mtDList = new ArrayList<>();
+
         mtDList.add(rt_start);
         mtDList.add(mz_start);
         mtDList.add(rt_end);
         mtDList.add(mz_end);
+
         return mtDList;
     }
-
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

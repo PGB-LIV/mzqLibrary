@@ -1,7 +1,7 @@
-
 package uk.ac.liv.pgb.mzqlib.idmapper;
 
 import java.util.Map;
+
 import uk.ac.liv.pgb.jmzqml.model.mzqml.SearchDatabase;
 
 /**
@@ -25,5 +25,7 @@ public interface MzqProcessor {
      * @return SearchDatabase
      */
     SearchDatabase getSearchDatabase();
-
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

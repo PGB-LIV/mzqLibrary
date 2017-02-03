@@ -1,8 +1,8 @@
-
 package uk.ac.liv.pgb.mzqlib.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -15,88 +15,32 @@ import javafx.beans.property.StringProperty;
  * @since 18-Jul-2014 02:13:36
  */
 public class MzQuantMLSummary {
-
-    private final IntegerProperty proteinListNumber;
+    private final IntegerProperty      proteinListNumber;
     private final List<StringProperty> techniquesUsed;
-    private final IntegerProperty proteinGroupListNumber;
-    private final IntegerProperty peptideListNumber;
-    private final IntegerProperty featureListNumber;
-    private StringProperty software;
+    private final IntegerProperty      proteinGroupListNumber;
+    private final IntegerProperty      peptideListNumber;
+    private final IntegerProperty      featureListNumber;
+    private StringProperty             software;
 
     /**
      * Constructor of MzQuantMLSummary.
      */
     public MzQuantMLSummary() {
         this.proteinGroupListNumber = new SimpleIntegerProperty();
-        this.techniquesUsed = new ArrayList<>();
-        this.proteinListNumber = new SimpleIntegerProperty();
-        this.peptideListNumber = new SimpleIntegerProperty();
-        this.featureListNumber = new SimpleIntegerProperty();
-        this.software = new SimpleStringProperty();
+        this.techniquesUsed         = new ArrayList<>();
+        this.proteinListNumber      = new SimpleIntegerProperty();
+        this.peptideListNumber      = new SimpleIntegerProperty();
+        this.featureListNumber      = new SimpleIntegerProperty();
+        this.software               = new SimpleStringProperty();
     }
 
     /**
-     * Set list of technique used in mzQuantML file.
+     * Get feature list number as IntegerProperty.
      *
-     * @param techList list of techniques.
+     * @return feature list number
      */
-    public void setTechniquesUsed(final List<StringProperty> techList) {
-        this.techniquesUsed.clear();
-        this.techniquesUsed.addAll(techList);
-    }
-
-    /**
-     * Get protein group list number as IntegerProperty.
-     *
-     * @return IntegerProperty
-     */
-    public IntegerProperty proteinGroupListNumber() {
-        return proteinGroupListNumber;
-    }
-
-    /**
-     * Get protein group list number as int.
-     *
-     * @return protein group list number
-     */
-    public int getProteinGroupListNumber() {
-        return proteinGroupListNumber.get();
-    }
-
-    /**
-     * Set protein group list number.
-     *
-     * @param num protein group list number
-     */
-    public void setProteinGroupListNumber(final int num) {
-        this.proteinGroupListNumber.set(num);
-    }
-
-    /**
-     * Get protein list number as IntegerProperty.
-     *
-     * @return protein list number
-     */
-    public IntegerProperty proteinListNumber() {
-        return proteinListNumber;
-    }
-
-    /**
-     * Get protein list number as int.
-     *
-     * @return protein list number.
-     */
-    public int getProteinListNumber() {
-        return proteinListNumber.get();
-    }
-
-    /**
-     * Set protein list number.
-     *
-     * @param num protein list number
-     */
-    public void setProteinListNumber(final int num) {
-        this.proteinListNumber.set(num);
+    public IntegerProperty featureListNumber() {
+        return featureListNumber;
     }
 
     /**
@@ -109,30 +53,21 @@ public class MzQuantMLSummary {
     }
 
     /**
-     * Get peptide list number as int.
+     * Get protein group list number as IntegerProperty.
      *
-     * @return peptide list number
+     * @return IntegerProperty
      */
-    public int getPeptideListNumber() {
-        return peptideListNumber.get();
+    public IntegerProperty proteinGroupListNumber() {
+        return proteinGroupListNumber;
     }
 
     /**
-     * Set peptide list number.
+     * Get protein list number as IntegerProperty.
      *
-     * @param num peptide list number
+     * @return protein list number
      */
-    public void setPeptideListNumber(final int num) {
-        this.peptideListNumber.set(num);
-    }
-
-    /**
-     * Get feature list number as IntegerProperty.
-     *
-     * @return feature list number
-     */
-    public IntegerProperty featureListNumber() {
-        return featureListNumber;
+    public IntegerProperty proteinListNumber() {
+        return proteinListNumber;
     }
 
     /**
@@ -154,6 +89,60 @@ public class MzQuantMLSummary {
     }
 
     /**
+     * Get peptide list number as int.
+     *
+     * @return peptide list number
+     */
+    public int getPeptideListNumber() {
+        return peptideListNumber.get();
+    }
+
+    /**
+     * Set peptide list number.
+     *
+     * @param num peptide list number
+     */
+    public void setPeptideListNumber(final int num) {
+        this.peptideListNumber.set(num);
+    }
+
+    /**
+     * Get protein group list number as int.
+     *
+     * @return protein group list number
+     */
+    public int getProteinGroupListNumber() {
+        return proteinGroupListNumber.get();
+    }
+
+    /**
+     * Set protein group list number.
+     *
+     * @param num protein group list number
+     */
+    public void setProteinGroupListNumber(final int num) {
+        this.proteinGroupListNumber.set(num);
+    }
+
+    /**
+     * Get protein list number as int.
+     *
+     * @return protein list number.
+     */
+    public int getProteinListNumber() {
+        return proteinListNumber.get();
+    }
+
+    /**
+     * Set protein list number.
+     *
+     * @param num protein list number
+     */
+    public void setProteinListNumber(final int num) {
+        this.proteinListNumber.set(num);
+    }
+
+    /**
      * Get software.
      *
      * @return the software
@@ -171,4 +160,16 @@ public class MzQuantMLSummary {
         this.software = software;
     }
 
+    /**
+     * Set list of technique used in mzQuantML file.
+     *
+     * @param techList list of techniques.
+     */
+    public void setTechniquesUsed(final List<StringProperty> techList) {
+        this.techniquesUsed.clear();
+        this.techniquesUsed.addAll(techList);
+    }
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

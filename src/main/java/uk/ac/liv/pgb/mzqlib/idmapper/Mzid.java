@@ -1,4 +1,3 @@
-
 package uk.ac.liv.pgb.mzqlib.idmapper;
 
 import java.util.HashMap;
@@ -18,7 +17,6 @@ import uk.ac.ebi.jmzidml.xml.io.MzIdentMLUnmarshaller;
  * @since 24-Jun-2013 14:07:02
  */
 public class Mzid {
-
     MzIdentMLUnmarshaller um;
 
     /**
@@ -36,19 +34,19 @@ public class Mzid {
      * @return Map&lt;String, SIIData&gt;
      */
     public Map<String, SIIData> getPeptideSIIData() {
-        Map<String, SIIData> retMap = new HashMap();
+        Map<String, SIIData>                   retMap  = new HashMap();
+        Iterator<SpectrumIdentificationResult> sirIter =
+            um.unmarshalCollectionFromXpath(MzIdentMLElement.SpectrumIdentificationResult);
 
-        Iterator<SpectrumIdentificationResult> sirIter = um.
-                unmarshalCollectionFromXpath(
-                        MzIdentMLElement.SpectrumIdentificationResult);
         while (sirIter.hasNext()) {
             SpectrumIdentificationResult sir = sirIter.next();
 
             // retrive retention time from cvParam of SpectrumIdentificationResult -- MS:1000796
-            double rt = getRetentionTime(sir);
-            List<SpectrumIdentificationItem> siiList = sir.
-                    getSpectrumIdentificationItem();
+            double                           rt      = getRetentionTime(sir);
+            List<SpectrumIdentificationItem> siiList = sir.getSpectrumIdentificationItem();
+
             for (SpectrumIdentificationItem sii : siiList) {
+
                 // retrieve peptide sequence from each SpectrumIdentificationItem
                 String pepSeq = sii.getPeptide().getPeptideSequence();
 
@@ -65,21 +63,8 @@ public class Mzid {
                 }
             }
         }
+
         return retMap;
-    }
-
-    private SIIData getSIIData(final SpectrumIdentificationItem sii) {
-
-        int rank = sii.getRank();
-        boolean passTh = sii.isPassThreshold();
-        if (rank == 1 && passTh) {
-            String charge = String.valueOf(sii.getChargeState());
-            double mz = sii.getExperimentalMassToCharge();
-            String id = sii.getId();
-            return new SIIData(charge, mz, 0, id);
-        } else {
-            return null;
-        }
     }
 
     /**
@@ -92,6 +77,21 @@ public class Mzid {
     @SuppressWarnings("unused")
     private double getRetentionTime(final SpectrumIdentificationResult sir) {
         throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    private SIIData getSIIData(final SpectrumIdentificationItem sii) {
+        int     rank   = sii.getRank();
+        boolean passTh = sii.isPassThreshold();
+
+        if (rank == 1 && passTh) {
+            String charge = String.valueOf(sii.getChargeState());
+            double mz     = sii.getExperimentalMassToCharge();
+            String id     = sii.getId();
+
+            return new SIIData(charge, mz, 0, id);
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -127,12 +127,11 @@ public class Mzid {
          * @param rt     retention time
          * @param siiID  SpectrumIdentification id
          */
-        public SIIData(final String charge, final double mz, final double rt,
-                       final String siiID) {
+        public SIIData(final String charge, final double mz, final double rt, final String siiID) {
             this.charge = charge;
-            this.mz = mz;
-            this.rt = rt;
-            this.siiID = siiID;
+            this.mz     = mz;
+            this.rt     = rt;
+            this.siiID  = siiID;
         }
 
         /**
@@ -190,7 +189,8 @@ public class Mzid {
         public void setSiiID(final String siiID) {
             this.siiID = siiID;
         }
-
     }
-
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

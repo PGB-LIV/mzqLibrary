@@ -1,4 +1,3 @@
-
 package uk.ac.liv.pgb.mzqlib.idmapper.data;
 
 import java.util.Comparator;
@@ -25,19 +24,35 @@ import uk.ac.ebi.jmzidml.xml.io.MzIdentMLUnmarshaller;
  */
 public class SIIData implements Comparable<SIIData> {
 
-    private final String id;
-    private final String pepRef;
-    private String sequence;
-    private final double mzExperimental;
-    private final double mzCalculated;
-    private final int charge;
-    private double rt = Double.NaN;
-    private final int rank;
-    private final boolean passTh;
-    private final List peptideEvidenceRef;
-    private final String peptideModString;
+    /**
+     * SIIData is comparable base on the retention time value.
+     */
+    public static final Comparator<SIIData> SIIDataRTComparator = new Comparator<SIIData>() {
+        @Override
+        public int compare(final SIIData siiData1, final SIIData siiData2) {
+            double rt1 = siiData1.getRetentionTime();
+            double rt2 = siiData2.getRetentionTime();
+
+            // ascending order
+            return Double.compare(rt1, rt2);
+
+            // descending order
+            // return Double.compare(rt2, rt1);
+        }
+    };
+    private double                      rt = Double.NaN;
+    private final String                id;
+    private final String                pepRef;
+    private String                      sequence;
+    private final double                mzExperimental;
+    private final double                mzCalculated;
+    private final int                   charge;
+    private final int                   rank;
+    private final boolean               passTh;
+    private final List                  peptideEvidenceRef;
+    private final String                peptideModString;
     private final MzIdentMLUnmarshaller um;
-    private String mzidFn;
+    private String                      mzidFn;
 
     /**
      * Constructor of SIIData base on parameters.
@@ -45,46 +60,139 @@ public class SIIData implements Comparable<SIIData> {
      * @param sii    SpectrumIdentificationItem
      * @param umarsh MzIdentMLUnmarshaller
      */
-    public SIIData(final SpectrumIdentificationItem sii,
-                   final MzIdentMLUnmarshaller umarsh) {
-
-        this.um = umarsh;
-        this.pepRef = sii.getPeptideRef();
-        this.id = sii.getId();
-        this.mzCalculated = sii.getCalculatedMassToCharge();
-        this.mzExperimental = sii.getExperimentalMassToCharge();
-        this.charge = sii.getChargeState();
-        this.rank = sii.getRank();
-        this.passTh = sii.isPassThreshold();
+    public SIIData(final SpectrumIdentificationItem sii, final MzIdentMLUnmarshaller umarsh) {
+        this.um                 = umarsh;
+        this.pepRef             = sii.getPeptideRef();
+        this.id                 = sii.getId();
+        this.mzCalculated       = sii.getCalculatedMassToCharge();
+        this.mzExperimental     = sii.getExperimentalMassToCharge();
+        this.charge             = sii.getChargeState();
+        this.rank               = sii.getRank();
+        this.passTh             = sii.isPassThreshold();
         this.peptideEvidenceRef = sii.getPeptideEvidenceRef();
-        this.peptideModString = this.createPeptideModString();
+        this.peptideModString   = this.createPeptideModString();
     }
 
     /**
-     * Get MzIdentMLUnmarshaller.
+     * Overrided compareTo method.
      *
-     * @return MzIdentMLUnmarshaller
+     * @param compareSIIData SIIData to be compared
+     *
+     * @return compare result.
      */
-    public MzIdentMLUnmarshaller getUnmarshaller() {
-        return um;
+    @Override
+    public int compareTo(final SIIData compareSIIData) {
+        String compareModString = compareSIIData.getPeptideModString();
+
+        // ascending order
+        return this.peptideModString.compareTo(compareModString);
+
+        // descending order
+        // return compareModString.compareTo(this.peptideModString);
     }
 
     /**
-     * Get id of SpectrumIdentificationItem.
+     * Create peptide mod string for this SIIData.
+     * The modString contains peptide sequence and list of mods.
+     * Each mod contains mod accession and mod name, plus monoisotopicMassDelta
+     * and location.
+     * They all connected by '_'.
      *
-     * @return id string
+     * @return
      */
-    public String getId() {
-        return id;
+    private String createPeptideModString() {
+        StringBuilder modString = new StringBuilder();
+
+        try {
+            Peptide peptide = um.unmarshal(Peptide.class, pepRef);
+            String  pepSeq  = peptide.getPeptideSequence();
+
+            this.setSequence(pepSeq);
+
+            List<Modification> mods = peptide.getModification();
+
+            modString.append(pepSeq);
+            modString.append('_');
+
+            for (Modification mod : mods) {
+
+                // modString = modString + mod.getLocation().toString() + "_";
+                List<CvParam> cps = mod.getCvParam();
+
+                for (CvParam cp : cps) {
+                    modString = modString.append(cp.getAccession())
+                                         .append('_')
+                                         .append(cp.getName())
+                                         .append('_')
+                                         .append(mod.getMonoisotopicMassDelta())
+                                         .append('_')
+                                         .append(mod.getLocation())
+                                         .append('_');
+                }
+            }
+
+            return modString.substring(0, modString.length() - 1);    // remove the last '_'
+        } catch (JAXBException ex) {
+            Logger.getLogger(SIIData.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Couldn't get peptide object: " + pepRef + " -- " + ex.getMessage());
+
+            return modString.toString();
+        }
     }
 
     /**
-     * Get peptide reference.
+     * Overrided equals method.
      *
-     * @return peptide reference string
+     * @param obj object to be compared.
+     *
+     * @return true if both are equal.
      */
-    public String getPeptideRef() {
-        return pepRef;
+    @Override
+    public boolean equals(final Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        if (obj == this) {
+            return true;
+        }
+
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+
+        SIIData rhs = (SIIData) obj;
+
+        return new EqualsBuilder().appendSuper(super.equals(obj))
+                                  .append(this.getPeptideModString(), rhs.getPeptideModString())
+                                  .append(getId(), rhs.getId())
+                                  .append(getPeptideRef(), rhs.getPeptideRef())
+                                  .append(getCalculatedMassToCharge(), rhs.getCalculatedMassToCharge())
+                                  .append(getExperimentalMassToCharge(), rhs.getExperimentalMassToCharge())
+                                  .append(getCharge(), rhs.getCharge())
+                                  .append(getRank(), rhs.getRank())
+                                  .append(isPassThreshold(), rhs.isPassThreshold())
+                                  .isEquals();
+    }
+
+    /**
+     * Override hashCode calculation method.
+     *
+     * @return hash code.
+     */
+    @Override
+    public int hashCode() {
+        int hash = 59;
+
+        return new HashCodeBuilder(hash, 37).append(this.getPeptideModString())
+                                            .append(getId())
+                                            .append(getPeptideRef())
+                                            .append(getCalculatedMassToCharge())
+                                            .append(getExperimentalMassToCharge())
+                                            .append(getCharge())
+                                            .append(getRank())
+                                            .append(isPassThreshold())
+                                            .toHashCode();
     }
 
     /**
@@ -97,15 +205,6 @@ public class SIIData implements Comparable<SIIData> {
     }
 
     /**
-     * Get experimental m/z.
-     *
-     * @return experimental m/z double
-     */
-    public double getExperimentalMassToCharge() {
-        return mzExperimental;
-    }
-
-    /**
      * Get charge.
      *
      * @return charge value
@@ -115,12 +214,39 @@ public class SIIData implements Comparable<SIIData> {
     }
 
     /**
-     * Get rank.
+     * Get experimental m/z.
      *
-     * @return rank value
+     * @return experimental m/z double
      */
-    public int getRank() {
-        return rank;
+    public double getExperimentalMassToCharge() {
+        return mzExperimental;
+    }
+
+    /**
+     * Get id of SpectrumIdentificationItem.
+     *
+     * @return id string
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Get mzIdentML file name.
+     *
+     * @return the mzIdentML file name
+     */
+    public String getMzidFn() {
+        return mzidFn;
+    }
+
+    /**
+     * Set mzIdentML file name.
+     *
+     * @param mzidFn the mzIdentML file name
+     */
+    public void setMzidFn(final String mzidFn) {
+        this.mzidFn = mzidFn;
     }
 
     /**
@@ -151,21 +277,21 @@ public class SIIData implements Comparable<SIIData> {
     }
 
     /**
-     * Get peptide sequence.
+     * Get peptide reference.
      *
-     * @return sequence string
+     * @return peptide reference string
      */
-    public String getSequence() {
-        return sequence;
+    public String getPeptideRef() {
+        return pepRef;
     }
 
     /**
-     * Set retention time.
+     * Get rank.
      *
-     * @param rt retention time in double value
+     * @return rank value
      */
-    public void setRetentionTime(final double rt) {
-        this.rt = rt;
+    public int getRank() {
+        return rank;
     }
 
     /**
@@ -178,153 +304,21 @@ public class SIIData implements Comparable<SIIData> {
     }
 
     /**
-     * Overrided compareTo method.
+     * Set retention time.
      *
-     * @param compareSIIData SIIData to be compared
-     *
-     * @return compare result.
+     * @param rt retention time in double value
      */
-    @Override
-    public int compareTo(final SIIData compareSIIData) {
-        String compareModString = compareSIIData.getPeptideModString();
-
-        //ascending order
-        return this.peptideModString.compareTo(compareModString);
-
-        //descending order
-        //return compareModString.compareTo(this.peptideModString);
+    public void setRetentionTime(final double rt) {
+        this.rt = rt;
     }
 
     /**
-     * SIIData is comparable base on the retention time value.
-     */
-    public static final Comparator<SIIData> SIIDataRTComparator
-            = new Comparator<SIIData>() {
-
-        @Override
-        public int compare(final SIIData siiData1, final SIIData siiData2) {
-            double rt1 = siiData1.getRetentionTime();
-            double rt2 = siiData2.getRetentionTime();
-
-            //ascending order
-            return Double.compare(rt1, rt2);
-
-            //descending order
-            //return Double.compare(rt2, rt1);
-        }
-
-    };
-
-    /**
-     * Overrided equals method.
+     * Get peptide sequence.
      *
-     * @param obj object to be compared.
-     *
-     * @return true if both are equal.
+     * @return sequence string
      */
-    @Override
-    public boolean equals(final Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        SIIData rhs = (SIIData) obj;
-        return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
-                .append(this.getPeptideModString(), rhs.getPeptideModString())
-                .append(getId(), rhs.getId())
-                .append(getPeptideRef(), rhs.getPeptideRef())
-                .append(getCalculatedMassToCharge(), rhs.
-                        getCalculatedMassToCharge())
-                .append(getExperimentalMassToCharge(), rhs.
-                        getExperimentalMassToCharge())
-                .append(getCharge(), rhs.getCharge())
-                .append(getRank(), rhs.getRank())
-                .append(isPassThreshold(), rhs.isPassThreshold())
-                .isEquals();
-    }
-
-    /**
-     * Override hashCode calculation method.
-     *
-     * @return hash code.
-     */
-    @Override
-    public int hashCode() {
-        int hash = 59;
-        return new HashCodeBuilder(hash, 37)
-                .append(this.getPeptideModString())
-                .append(getId())
-                .append(getPeptideRef())
-                .append(getCalculatedMassToCharge())
-                .append(getExperimentalMassToCharge())
-                .append(getCharge())
-                .append(getRank())
-                .append(isPassThreshold())
-                .toHashCode();
-    }
-
-    /**
-     * Create peptide mod string for this SIIData.
-     * The modString contains peptide sequence and list of mods.
-     * Each mod contains mod accession and mod name, plus monoisotopicMassDelta
-     * and location.
-     * They all connected by '_'.
-     *
-     * @return
-     */
-    private String createPeptideModString() {
-        StringBuilder modString = new StringBuilder();
-        try {
-            Peptide peptide = um.unmarshal(
-                    Peptide.class, pepRef);
-            String pepSeq = peptide.getPeptideSequence();
-            this.setSequence(pepSeq);
-            List<Modification> mods = peptide.getModification();
-            modString.append(pepSeq);
-            modString.append('_');
-            for (Modification mod : mods) {
-                //modString = modString + mod.getLocation().toString() + "_";
-                List<CvParam> cps = mod.getCvParam();
-                for (CvParam cp : cps) {
-                    modString = modString.append(cp.getAccession()).append('_')
-                            .append(cp.getName()).append('_').append(mod.
-                            getMonoisotopicMassDelta())
-                            .append('_').append(mod.getLocation()).append('_');
-                }
-            }
-            return modString.substring(0, modString.length() - 1); //remove the last '_'
-        } catch (JAXBException ex) {
-            Logger.getLogger(SIIData.class.getName()).
-                    log(Level.SEVERE, null, ex);
-            System.out.println("Couldn't get peptide object: " + pepRef + " -- "
-                    + ex.getMessage());
-            return modString.toString();
-        }
-
-    }
-
-    /**
-     * Get mzIdentML file name.
-     *
-     * @return the mzIdentML file name
-     */
-    public String getMzidFn() {
-        return mzidFn;
-    }
-
-    /**
-     * Set mzIdentML file name.
-     *
-     * @param mzidFn the mzIdentML file name
-     */
-    public void setMzidFn(final String mzidFn) {
-        this.mzidFn = mzidFn;
+    public String getSequence() {
+        return sequence;
     }
 
     /**
@@ -337,4 +331,15 @@ public class SIIData implements Comparable<SIIData> {
         this.sequence = sequence;
     }
 
+    /**
+     * Get MzIdentMLUnmarshaller.
+     *
+     * @return MzIdentMLUnmarshaller
+     */
+    public MzIdentMLUnmarshaller getUnmarshaller() {
+        return um;
+    }
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

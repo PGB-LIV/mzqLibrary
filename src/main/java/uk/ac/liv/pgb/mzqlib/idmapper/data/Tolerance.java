@@ -1,4 +1,3 @@
-
 package uk.ac.liv.pgb.mzqlib.idmapper.data;
 
 /**
@@ -7,8 +6,24 @@ package uk.ac.liv.pgb.mzqlib.idmapper.data;
  * @author SPerkins
  */
 public class Tolerance {
+    private double        tolerance;
+    private ToleranceUnit unit;
 
-    private double tolerance;
+    /**
+     * Tolerance unit enumerate class.
+     */
+    public enum ToleranceUnit {
+
+        /**
+         * PPM.
+         */
+        PPM,
+
+        /**
+         * DALTON.
+         */
+        DALTON
+    }
 
     /**
      * Constructor.
@@ -18,7 +33,7 @@ public class Tolerance {
      */
     public Tolerance(final double tolerance, final ToleranceUnit unit) {
         this.tolerance = tolerance;
-        this.unit = unit;
+        this.unit      = unit;
     }
 
     /**
@@ -56,23 +71,7 @@ public class Tolerance {
     public void setUnit(final ToleranceUnit unit) {
         this.unit = unit;
     }
-
-    private ToleranceUnit unit;
-
-    /**
-     * Tolerance unit enumerate class.
-     */
-    public enum ToleranceUnit {
-
-        /**
-         * PPM.
-         */
-        PPM,
-
-        /**
-         * DALTON.
-         */
-        DALTON
-    }
-
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

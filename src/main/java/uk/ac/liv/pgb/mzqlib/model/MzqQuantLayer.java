@@ -1,9 +1,10 @@
-
 package uk.ac.liv.pgb.mzqlib.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javafx.beans.property.StringProperty;
+
 import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
 
 /**
@@ -54,12 +55,12 @@ public class MzqQuantLayer {
     protected List<MzqDataMatrixRow> dmRows;
 
     /**
-     * Get the id of the list as String.
+     * Get data type of the QuantLayer as StringProperty.
      *
-     * @return the value of listId
+     * @return the dataType
      */
-    public String getListId() {
-        return listId.get();
+    public StringProperty dataType() {
+        return dataType;
     }
 
     /**
@@ -72,12 +73,12 @@ public class MzqQuantLayer {
     }
 
     /**
-     * Get the id of the QuantLayer as String.
+     * Get type of the list as StringProperty.
      *
-     * @return the value of quantLayerId
+     * @return the listType
      */
-    public String getQuantLayerId() {
-        return quantLayerId.get();
+    public StringProperty listType() {
+        return listType;
     }
 
     /**
@@ -90,15 +91,6 @@ public class MzqQuantLayer {
     }
 
     /**
-     * Get type of QuantLayer as String.
-     *
-     * @return the value of quantLayerType
-     */
-    public String getQuantLayerType() {
-        return quantLayerType.get();
-    }
-
-    /**
      * Get type of QuantLayer as StringProperty.
      *
      * @return the quantLayerType
@@ -108,30 +100,25 @@ public class MzqQuantLayer {
     }
 
     /**
-     * Get type of the list as String.
+     * Get list of column names.
      *
-     * @return the value of listType
+     * @return the columnNames
      */
-    public String getListType() {
-        return listType.get();
+    public List<StringProperty> getColumnNames() {
+        if (columnNames == null) {
+            columnNames = new ArrayList<>();
+        }
+
+        return columnNames;
     }
 
     /**
-     * Get type of the list as StringProperty.
+     * Set list of column names.
      *
-     * @return the listType
+     * @param columnNames the columnNames to set
      */
-    public StringProperty listType() {
-        return listType;
-    }
-
-    /**
-     * Get input MzQuantMLUnmarshaller.
-     *
-     * @return the mzqUm
-     */
-    public MzQuantMLUnmarshaller getMzqUm() {
-        return mzqUm;
+    public void setColumnNames(final List<StringProperty> columnNames) {
+        this.columnNames = columnNames;
     }
 
     /**
@@ -144,37 +131,6 @@ public class MzqQuantLayer {
     }
 
     /**
-     * Get data type of the QuantLayer as StringProperty.
-     *
-     * @return the dataType
-     */
-    public StringProperty dataType() {
-        return dataType;
-    }
-
-    /**
-     * Get list of column names.
-     *
-     * @return the columnNames
-     */
-    public List<StringProperty> getColumnNames() {
-        if (columnNames == null) {
-            columnNames = new ArrayList<>();
-        }
-        return columnNames;
-    }
-
-    /**
-     * Set list of column names.
-     *
-     * @param columnNames the columnNames to set
-     */
-    public void setColumnNames(
-            final List<StringProperty> columnNames) {
-        this.columnNames = columnNames;
-    }
-
-    /**
      * Get list of MzqDataMatrixRow.
      *
      * @return the dmRows
@@ -183,6 +139,7 @@ public class MzqQuantLayer {
         if (dmRows == null) {
             dmRows = new ArrayList<>();
         }
+
         return dmRows;
     }
 
@@ -191,9 +148,55 @@ public class MzqQuantLayer {
      *
      * @param dmRows the dmRows to set
      */
-    public void setDmRows(
-            final List<MzqDataMatrixRow> dmRows) {
+    public void setDmRows(final List<MzqDataMatrixRow> dmRows) {
         this.dmRows = dmRows;
     }
 
+    /**
+     * Get the id of the list as String.
+     *
+     * @return the value of listId
+     */
+    public String getListId() {
+        return listId.get();
+    }
+
+    /**
+     * Get type of the list as String.
+     *
+     * @return the value of listType
+     */
+    public String getListType() {
+        return listType.get();
+    }
+
+    /**
+     * Get input MzQuantMLUnmarshaller.
+     *
+     * @return the mzqUm
+     */
+    public MzQuantMLUnmarshaller getMzqUm() {
+        return mzqUm;
+    }
+
+    /**
+     * Get the id of the QuantLayer as String.
+     *
+     * @return the value of quantLayerId
+     */
+    public String getQuantLayerId() {
+        return quantLayerId.get();
+    }
+
+    /**
+     * Get type of QuantLayer as String.
+     *
+     * @return the value of quantLayerType
+     */
+    public String getQuantLayerType() {
+        return quantLayerType.get();
+    }
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

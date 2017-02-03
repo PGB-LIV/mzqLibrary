@@ -1,10 +1,12 @@
-
 package uk.ac.liv.pgb.mzqlib.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javafx.beans.property.SimpleStringProperty;
+
 import javax.xml.bind.JAXBException;
+
 import uk.ac.liv.pgb.jmzqml.model.mzqml.Assay;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.QuantLayer;
 import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
@@ -27,27 +29,28 @@ public class MzqAssayQuantLayer extends MzqQuantLayer {
      *
      * @throws JAXBException jaxb exception
      */
-    public MzqAssayQuantLayer(final MzQuantMLUnmarshaller um,
-                              final String listId,
-                              final QuantLayer quantLayer,
-                              final String listType,
-                              final String dataType)
+    public MzqAssayQuantLayer(final MzQuantMLUnmarshaller um, final String listId, final QuantLayer quantLayer,
+                              final String listType, final String dataType)
             throws JAXBException {
         this.quantLayerType = new SimpleStringProperty("AssayQuantLayer");
-        this.mzqUm = um;
-        this.listId = new SimpleStringProperty(listId);
-        this.quantLayerId = new SimpleStringProperty(quantLayer.getId());
-        this.listType = new SimpleStringProperty(listType);
-        this.dataType = new SimpleStringProperty(dataType);
+        this.mzqUm          = um;
+        this.listId         = new SimpleStringProperty(listId);
+        this.quantLayerId   = new SimpleStringProperty(quantLayer.getId());
+        this.listType       = new SimpleStringProperty(listType);
+        this.dataType       = new SimpleStringProperty(dataType);
 
-        //set column names 
+        // set column names
         this.columnNames = new ArrayList<>();
+
         List<String> columnIndex = quantLayer.getColumnIndex();
+
         for (String colId : columnIndex) {
-            Assay assay = mzqUm.unmarshal(
-                    Assay.class, colId);
+            Assay assay = mzqUm.unmarshal(Assay.class, colId);
+
             this.columnNames.add(new SimpleStringProperty(assay.getName()));
         }
     }
-
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

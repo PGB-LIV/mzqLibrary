@@ -1,11 +1,12 @@
-
 package uk.ac.liv.pgb.mzqlib.openms.converter;
 
 import java.io.File;
 import java.io.IOException;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+
 import uk.ac.liv.pgb.jmzqml.model.mzqml.Assay;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.AssayList;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.Cv;
@@ -23,56 +24,13 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.RawFilesGroup;
 public interface ConsensusXMLProcessor {
 
     /**
-     * Get PeptideConsensusList element.
-     *
-     * @return PeptideConsensusList
-     */
-    PeptideConsensusList getPeptideConsensusList();
-
-    /**
-     * Get map of rawFilesGroup's id to FeatureList.
-     *
-     * @return Map&lt;String, FeatureList&gt;
-     */
-    Map<String, FeatureList> getRawFilesGroupIdToFeatureListMap();
-
-    /**
-     * Get Cv element.
-     *
-     * @return Cv
-     */
-    Cv getCv();
-
-    /**
-     * Get AssayList element.
-     *
-     * @return AssayList
-     */
-    AssayList getAssayList();
-
-    /**
-     * Get map of rawFilesGroup to Assay.
-     *
-     * @return Map&lt;String, Assay&gt;
-     */
-    Map<String, Assay> getRawFilesGroupAssayMap();
-
-    /**
-     * Get list of rawFilesGroup.
-     *
-     * @return List&lt;RawFilesGroup&gt;
-     */
-    List<RawFilesGroup> getRawFilesGroupList();
-
-    /**
      * Convert to mzQuantML file.
      *
      * @param outputFn output file name
      *
      * @throws IOException io exception
      */
-    void convert(String outputFn)
-            throws IOException;
+    void convert(String outputFn) throws IOException;
 
     /**
      * Convert method.
@@ -82,8 +40,50 @@ public interface ConsensusXMLProcessor {
      *
      * @throws IOException io exception.
      */
-    void convert(String outputFn,
-                 Map<String, ? extends Collection<File>> studyVariablesToFiles)
-            throws IOException;
+    void convert(String outputFn, Map<String, ? extends Collection<File>> studyVariablesToFiles) throws IOException;
 
+    /**
+     * Get AssayList element.
+     *
+     * @return AssayList
+     */
+    AssayList getAssayList();
+
+    /**
+     * Get Cv element.
+     *
+     * @return Cv
+     */
+    Cv getCv();
+
+    /**
+     * Get PeptideConsensusList element.
+     *
+     * @return PeptideConsensusList
+     */
+    PeptideConsensusList getPeptideConsensusList();
+
+    /**
+     * Get map of rawFilesGroup to Assay.
+     *
+     * @return Map&lt;String, Assay&gt;
+     */
+    Map<String, Assay> getRawFilesGroupAssayMap();
+
+    /**
+     * Get map of rawFilesGroup's id to FeatureList.
+     *
+     * @return Map&lt;String, FeatureList&gt;
+     */
+    Map<String, FeatureList> getRawFilesGroupIdToFeatureListMap();
+
+    /**
+     * Get list of rawFilesGroup.
+     *
+     * @return List&lt;RawFilesGroup&gt;
+     */
+    List<RawFilesGroup> getRawFilesGroupList();
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

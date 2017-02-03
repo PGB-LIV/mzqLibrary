@@ -1,4 +1,3 @@
-
 package uk.ac.liv.pgb.mzqlib.idmapper.data;
 
 import java.util.List;
@@ -17,15 +16,25 @@ import uk.ac.liv.pgb.mzqlib.idmapper.data.Tolerance.ToleranceUnit;
  * @since 06-Mar-2014 11:24:28
  */
 public class ExtendedFeature extends Feature {
+    private static final long   serialVersionUID = 107L;
+    private static final double PPM_BASE         = 1000000.0;
+    private static final double TOLERANCE        = 0.1;
+    private final double        lmz;    // left boundary of mz
+    private final double        rmz;    // right boundary of mz
+    private final double        urt;    // up boundary of rt (min)
+    private final double        brt;    // bottom boundary of rt (min)
+    private final Feature       feature;
 
-    private static final long serialVersionUID = 107L;
-    private final double lmz; // left boundary of mz
-    private final double rmz; // right boundary of mz
-    private final double urt; // up boundary of rt (min)
-    private final double brt; // bottom boundary of rt (min)
-    private final Feature feature;
-    private static final double PPM_BASE = 1000000.0;
-    private static final double TOLERANCE = 0.1;
+    /**
+     * Constructor of ExtendedFeature base on Feature and default m/z window
+     * (0.1
+     * Da) and retention time window (20 second, 1/3 minute).
+     *
+     * @param ft Feature
+     */
+    public ExtendedFeature(final Feature ft) {
+        this(ft, new Tolerance(TOLERANCE, ToleranceUnit.DALTON), 1.0 / 3.0);
+    }
 
     /**
      * Constructor of ExtendedFeature base on Feature, m/z window and retention
@@ -41,20 +50,20 @@ public class ExtendedFeature extends Feature {
      *                    minutes. Only
      *                    used if the feature mass trace is null or empty.
      */
-    public ExtendedFeature(final Feature ft, final Tolerance msTolerance,
-                           final double rtWin) {
+    public ExtendedFeature(final Feature ft, final Tolerance msTolerance, final double rtWin) {
         super();
         feature = ft;
+
         List<Double> massT = feature.getMassTrace();
 
         if (massT == null || massT.isEmpty()) {
             brt = Double.valueOf(ft.getRt()) - rtWin / 2;
             urt = Double.valueOf(ft.getRt()) + rtWin / 2;
 
-            double mzToleranceDaltons = msTolerance.getUnit()
-                    == ToleranceUnit.DALTON ? msTolerance.getTolerance() : ft.
-                            getMz() / ((1 / msTolerance.getTolerance())
-                            * PPM_BASE);
+            double mzToleranceDaltons = msTolerance.getUnit() == ToleranceUnit.DALTON
+                                        ? msTolerance.getTolerance()
+                                        : ft.getMz() / ((1 / msTolerance.getTolerance()) * PPM_BASE);
+
             lmz = ft.getMz() - mzToleranceDaltons;
             rmz = ft.getMz() + mzToleranceDaltons;
         } else {
@@ -62,10 +71,10 @@ public class ExtendedFeature extends Feature {
             urt = massT.get(2);
 
             if (msTolerance != null && msTolerance.getTolerance() > 0.0) {
-                double mzToleranceDaltons = msTolerance.getUnit()
-                        == ToleranceUnit.DALTON ? msTolerance.getTolerance()
-                                : ft.getMz()
-                                / ((1 / msTolerance.getTolerance()) * PPM_BASE);
+                double mzToleranceDaltons = msTolerance.getUnit() == ToleranceUnit.DALTON
+                                            ? msTolerance.getTolerance()
+                                            : ft.getMz() / ((1 / msTolerance.getTolerance()) * PPM_BASE);
+
                 lmz = ft.getMz() - mzToleranceDaltons;
                 rmz = ft.getMz() + mzToleranceDaltons;
             } else {
@@ -73,44 +82,6 @@ public class ExtendedFeature extends Feature {
                 rmz = massT.get(3);
             }
         }
-    }
-
-    /**
-     * Constructor of ExtendedFeature base on Feature and default m/z window
-     * (0.1
-     * Da) and retention time window (20 second, 1/3 minute).
-     *
-     * @param ft Feature
-     */
-    public ExtendedFeature(final Feature ft) {
-        this(ft, new Tolerance(TOLERANCE, ToleranceUnit.DALTON), 1.0 / 3.0);
-    }
-
-    /**
-     * Get left boundary m/z of the feature.
-     *
-     * @return double value of m/z
-     */
-    public double getLMZ() {
-        return lmz;
-    }
-
-    /**
-     * Get right boundary m/z of the feature.
-     *
-     * @return double value of m/z
-     */
-    public double getRMZ() {
-        return rmz;
-    }
-
-    /**
-     * Get up boundary retention time of the feature.
-     *
-     * @return double value of retention time
-     */
-    public double getURT() {
-        return urt;
     }
 
     /**
@@ -128,48 +99,8 @@ public class ExtendedFeature extends Feature {
     }
 
     @Override
-    public RawFile getRawFile() {
-        return feature.getRawFile();
-    }
-
-    @Override
-    public String getId() {
-        return feature.getId();
-    }
-
-    @Override
-    public List<Double> getMassTrace() {
-        return feature.getMassTrace();
-    }
-
-    @Override
-    public List<AbstractParam> getParamGroup() {
-        return feature.getParamGroup();
-    }
-
-    @Override
-    public String getRt() {
-        return feature.getRt();
-    }
-
-    @Override
-    public double getMz() {
-        return feature.getMz();
-    }
-
-    @Override
     public String getChromatogramRefs() {
         return feature.getChromatogramRefs();
-    }
-
-    @Override
-    public String getSpectrumRefs() {
-        return feature.getSpectrumRefs();
-    }
-
-    @Override
-    public String getRawFileRef() {
-        return feature.getRawFileRef();
     }
 
     @Override
@@ -178,8 +109,77 @@ public class ExtendedFeature extends Feature {
     }
 
     @Override
+    public String getId() {
+        return feature.getId();
+    }
+
+    /**
+     * Get left boundary m/z of the feature.
+     *
+     * @return double value of m/z
+     */
+    public double getLMZ() {
+        return lmz;
+    }
+
+    @Override
+    public List<Double> getMassTrace() {
+        return feature.getMassTrace();
+    }
+
+    @Override
+    public double getMz() {
+        return feature.getMz();
+    }
+
+    @Override
+    public List<AbstractParam> getParamGroup() {
+        return feature.getParamGroup();
+    }
+
+    /**
+     * Get right boundary m/z of the feature.
+     *
+     * @return double value of m/z
+     */
+    public double getRMZ() {
+        return rmz;
+    }
+
+    @Override
+    public RawFile getRawFile() {
+        return feature.getRawFile();
+    }
+
+    @Override
+    public String getRawFileRef() {
+        return feature.getRawFileRef();
+    }
+
+    @Override
+    public String getRt() {
+        return feature.getRt();
+    }
+
+    @Override
+    public String getSpectrumRefs() {
+        return feature.getSpectrumRefs();
+    }
+
+    /**
+     * Get up boundary retention time of the feature.
+     *
+     * @return double value of retention time
+     */
+    public double getURT() {
+        return urt;
+    }
+
+    @Override
     public List<UserParam> getUserParam() {
         return feature.getUserParam();
     }
-
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

@@ -1,4 +1,3 @@
-
 package uk.ac.liv.pgb.mzqlib.idmapper;
 
 import java.util.ArrayList;
@@ -6,7 +5,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 import javax.xml.bind.JAXBException;
+
 import uk.ac.liv.pgb.jmzqml.MzQuantMLElement;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.EvidenceRef;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.Feature;
@@ -21,7 +22,6 @@ import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
  * @since 24-Jun-2013 14:06:51
  */
 public class Mzq {
-
     private final MzQuantMLUnmarshaller um;
 
     /**
@@ -40,45 +40,46 @@ public class Mzq {
      *
      * @throws JAXBException jaxb exception
      */
-    public Map<String, List<SimpleFeature>> getPepIdFeature()
-            throws JAXBException {
+    public Map<String, List<SimpleFeature>> getPepIdFeature() throws JAXBException {
+        Map<String, List<SimpleFeature>> retMap         = new HashMap();
+        Iterator<PeptideConsensusList>   pepConListIter =
+            this.um.unmarshalCollectionFromXpath(MzQuantMLElement.PeptideConsensusList);
 
-        Map<String, List<SimpleFeature>> retMap = new HashMap();
-
-        Iterator<PeptideConsensusList> pepConListIter = this.um.
-                unmarshalCollectionFromXpath(
-                        MzQuantMLElement.PeptideConsensusList);
         while (pepConListIter.hasNext()) {
-            PeptideConsensusList pepConList = pepConListIter.next();
-            List<PeptideConsensus> pepCons = pepConList.getPeptideConsensus();
+            PeptideConsensusList   pepConList = pepConListIter.next();
+            List<PeptideConsensus> pepCons    = pepConList.getPeptideConsensus();
 
             for (PeptideConsensus pepCon : pepCons) {
-                String pepId = pepCon.getId();
-                String charge = pepCon.getCharge().get(0);
-
+                String            pepId      = pepCon.getId();
+                String            charge     = pepCon.getCharge().get(0);
                 List<EvidenceRef> eviRefList = pepCon.getEvidenceRef();
+
                 for (EvidenceRef eviRef : eviRefList) {
-
-                    String ftRef = eviRef.getFeatureRef();
-
-                    Feature ft = this.um.unmarshal(
-                            Feature.class,
-                            ftRef);
-                    double mz = ft.getMz();
-                    double rw = this.getRetentionWindow(ft.getMassTrace());
-
+                    String              ftRef  = eviRef.getFeatureRef();
+                    Feature             ft     = this.um.unmarshal(Feature.class, ftRef);
+                    double              mz     = ft.getMz();
+                    double              rw     = this.getRetentionWindow(ft.getMassTrace());
                     List<SimpleFeature> sfList = retMap.get(pepId);
+
                     if (sfList == null) {
+
                         // initialise a new list of SimpleFeature
                         sfList = new ArrayList();
                         retMap.put(pepId, sfList);
                     }
+
                     SimpleFeature sf = new SimpleFeature(charge, ftRef, mz, rw);
+
                     sfList.add(sf);
                 }
             }
         }
+
         return retMap;
+    }
+
+    private double getRetentionWindow(final List<Double> massTrace) {
+        return Math.abs(massTrace.get(0) - massTrace.get(2));
     }
 
     /**
@@ -117,11 +118,10 @@ public class Mzq {
          * @param mz   feature m/z
          * @param rw   feature retention time window
          */
-        public SimpleFeature(final String chr, final String ftId,
-                             final double mz, final double rw) {
+        public SimpleFeature(final String chr, final String ftId, final double mz, final double rw) {
             this.charge = chr;
-            this.ftId = ftId;
-            this.mz = mz;
+            this.ftId   = ftId;
+            this.mz     = mz;
             this.retWin = rw;
         }
 
@@ -180,11 +180,8 @@ public class Mzq {
         public void setRetWin(final double retWin) {
             this.retWin = retWin;
         }
-
     }
-
-    private double getRetentionWindow(final List<Double> massTrace) {
-        return Math.abs(massTrace.get(0) - massTrace.get(2));
-    }
-
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

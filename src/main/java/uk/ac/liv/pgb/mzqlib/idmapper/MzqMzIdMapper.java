@@ -1,8 +1,8 @@
-
 package uk.ac.liv.pgb.mzqlib.idmapper;
 
 import java.io.File;
 import java.io.IOException;
+
 import javax.xml.bind.JAXBException;
 
 /**
@@ -24,7 +24,8 @@ public interface MzqMzIdMapper {
      * @throws JAXBException       jaxb exception
      * @throws java.io.IOException io exception
      */
-    void createMappedFile(File outputFile)
-            throws JAXBException, IOException;
-
+    void createMappedFile(File outputFile) throws JAXBException, IOException;
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

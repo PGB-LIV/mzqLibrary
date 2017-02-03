@@ -1,4 +1,3 @@
-
 package uk.ac.cranfield.mzqlib.data;
 
 import java.util.Collection;
@@ -11,8 +10,7 @@ import java.util.Map;
  * @author Jun Fan
  */
 public class PeptideSequenceData {
-
-    private final String sequence;
+    private final String                   sequence;
     private final Map<String, PeptideData> peptides;
 
     /**
@@ -22,16 +20,22 @@ public class PeptideSequenceData {
      */
     public PeptideSequenceData(final String sequence) {
         this.sequence = sequence;
-        peptides = new HashMap<>();
+        peptides      = new HashMap<>();
     }
 
     /**
-     * Get peptide sequence.
+     * Add PeptideData to this class.
      *
-     * @return sequence.
+     * @param peptide new PeptideData.
      */
-    public String getSequence() {
-        return sequence;
+    public void addPeptideData(final PeptideData peptide) {
+        String modStr = peptide.getModString();
+
+        if (peptides.containsKey(modStr)) {
+            peptides.get(modStr).mergeAnotherPeptideData(peptide);
+        } else {
+            peptides.put(modStr, peptide);
+        }
     }
 
     /**
@@ -44,17 +48,14 @@ public class PeptideSequenceData {
     }
 
     /**
-     * Add PeptideData to this class.
+     * Get peptide sequence.
      *
-     * @param peptide new PeptideData.
+     * @return sequence.
      */
-    public void addPeptideData(final PeptideData peptide) {
-        String modStr = peptide.getModString();
-        if (peptides.containsKey(modStr)) {
-            peptides.get(modStr).mergeAnotherPeptideData(peptide);
-        } else {
-            peptides.put(modStr, peptide);
-        }
+    public String getSequence() {
+        return sequence;
     }
-
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

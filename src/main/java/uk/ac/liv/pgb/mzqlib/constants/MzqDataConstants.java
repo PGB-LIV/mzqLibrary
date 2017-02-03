@@ -1,4 +1,3 @@
-
 package uk.ac.liv.pgb.mzqlib.constants;
 
 /**
@@ -26,7 +25,7 @@ public class MzqDataConstants {
     /**
      * Constant.
      */
-    public static final  String FEATURE_LIST_TYPE = "FeatureList";
+    public static final String FEATURE_LIST_TYPE = "FeatureList";
 
     /**
      * Constant.
@@ -41,28 +40,25 @@ public class MzqDataConstants {
     /**
      * Constant.
      */
-    public static final String CvNamePSIMS
-            = "Proteomics Standards Initiative Mass Spectrometry Vocabularies";
+    public static final String CvNamePSIMS = "Proteomics Standards Initiative Mass Spectrometry Vocabularies";
 
     /**
      * Constant.
      */
-    public static final String CvUriPSIMS
-            = "http://psidev.cvs.sourceforge.net/viewvc/psidev/psi/psi-ms/"
-            + "mzML/controlledVocabulary/psi-ms.obo";
+    public static final String CvUriPSIMS = "http://psidev.cvs.sourceforge.net/viewvc/psidev/psi/psi-ms/"
+                                            + "mzML/controlledVocabulary/psi-ms.obo";
 
     /**
      * Constant.
      */
     public static final String CvVerPSIMS = "3.61.0";
 
-    //CV terms for different techniques
+    // CV terms for different techniques
 
     /**
      * Constant.
      */
-    public static final String LABEL_FREE
-            = "LC-MS label-free quantitation analysis";
+    public static final String LABEL_FREE = "LC-MS label-free quantitation analysis";
 
     /**
      * Constant.
@@ -92,8 +88,7 @@ public class MzqDataConstants {
     /**
      * Constant.
      */
-    public static final String SPECTRAL_COUNTING
-            = "spectral counting quantitation analysis";
+    public static final String SPECTRAL_COUNTING = "spectral counting quantitation analysis";
 
     /**
      * Constant.
@@ -110,3 +105,6 @@ public class MzqDataConstants {
      */
     public static final String SRM_ACCESSION = "MS:1001838";
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

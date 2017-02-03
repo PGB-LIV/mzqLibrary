@@ -1,4 +1,3 @@
-
 package uk.ac.liv.pgb.mzqlib.progenesis.reader;
 
 /**
@@ -13,6 +12,7 @@ public class FeatureListHeaders {
     /*
      * These are the first row headers
      */
+
     /**
      * The heading of "normalized abundance".
      */
@@ -36,6 +36,7 @@ public class FeatureListHeaders {
     /*
      * These are the third row headers
      */
+
     /**
      * The heading of "m/z".
      */
@@ -49,8 +50,7 @@ public class FeatureListHeaders {
     /**
      * The heading of "retention time window (min)".
      */
-    public static final String RETENTION_TIME_WINDOW
-            = "retention time window (min)";
+    public static final String RETENTION_TIME_WINDOW = "retention time window (min)";
 
     /**
      * The heading of "charge".
@@ -87,3 +87,6 @@ public class FeatureListHeaders {
      */
     public static final String USE_IN_QUANT = "use in quantitation";
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

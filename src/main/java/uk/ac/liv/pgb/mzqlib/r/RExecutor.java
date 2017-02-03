@@ -1,8 +1,8 @@
-
 package uk.ac.liv.pgb.mzqlib.r;
 
 import java.util.Arrays;
 import java.util.Iterator;
+
 import org.rosuda.JRI.Rengine;
 
 /**
@@ -15,11 +15,10 @@ public class RExecutor {
     /**
      * Constant.
      */
-    public static final Rengine re = new Rengine(new String[]{"--vanilla"},
-                                                 false, null);
-    private final String command;
-    private final String[] args;
-    private StringBuilder error;
+    public static final Rengine re = new Rengine(new String[] { "--vanilla" }, false, null);
+    private final String        command;
+    private final String[]      args;
+    private StringBuilder       error;
 
     /**
      * Constructor of RExecutor class.
@@ -29,7 +28,7 @@ public class RExecutor {
      */
     public RExecutor(final String command, final String[] args) {
         this.command = command;
-        this.args = Arrays.copyOf(args, args.length);
+        this.args    = Arrays.copyOf(args, args.length);
     }
 
     /**
@@ -37,17 +36,21 @@ public class RExecutor {
      */
     public void run() {
         StringBuilder runString = new StringBuilder();
+
         runString.append(command);
         runString.append("(");
+
         Iterator<String> i = Arrays.asList(args).iterator();
+
         while (i.hasNext()) {
             runString.append(i.next());
+
             if (i.hasNext()) {
                 runString.append(", ");
             }
         }
-        runString.append(")");
 
+        runString.append(")");
         re.eval(runString.toString());
     }
 
@@ -60,7 +63,10 @@ public class RExecutor {
         if (error == null) {
             error = new StringBuilder();
         }
+
         return error.toString();
     }
-
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

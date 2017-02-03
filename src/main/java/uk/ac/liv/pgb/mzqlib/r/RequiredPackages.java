@@ -1,4 +1,3 @@
-
 package uk.ac.liv.pgb.mzqlib.r;
 
 /**
@@ -8,14 +7,16 @@ package uk.ac.liv.pgb.mzqlib.r;
  */
 public enum RequiredPackages {
 
-    //list of required R pakcages
-    //R_JAVA("rJava"),
+    // list of required R pakcages
+    // R_JAVA("rJava"),
+
     /**
      *
      */
     GPLOTS("gplots");
-    //R_COLOR_BREWER("RColorBrewer");
-    //variables
+
+    // R_COLOR_BREWER("RColorBrewer");
+    // variables
     private final String packageName;
 
     RequiredPackages(final String pkName) {
@@ -30,5 +31,7 @@ public enum RequiredPackages {
     public String getPackageName() {
         return packageName;
     }
-
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

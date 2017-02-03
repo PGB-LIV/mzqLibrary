@@ -30,7 +30,6 @@ public class NormalisationMultiThreading {
 
 //      String inputFile = "C:\\Manchester\\work\\ProteoSuite\\AndyPaper\\AllAges.mzq\\" + "AllAges.mzq";
 //      String outputFile = "C:\\Manchester\\work\\ProteoSuite\\AndyPaper\\" + "AllAges_featureNormalised116.mzq";
-
         // iTraq for exception test
 //      String inputFile = "C:\\Manchester\\work\\ProteoSuite\\mzq-lib\\example_files\\test_ksl_itraq1.mzq";
 //      String outputFile = "C:\\Manchester\\work\\ProteoSuite\\mzq-lib\\example_files\\test_ksl_itraq_normalised.mzq";
@@ -52,7 +51,6 @@ public class NormalisationMultiThreading {
 //          inDataTypeAccession = "MS:1001840"; //LC-MS feature intensity
 //          outDataTypeAccession = "MS:1001891"; //Progenesis:peptide normalised abundance
 //          decoyTag = "XXX_";
-
 //          andy data in paper work
             inDataTypeAccession  = "MS:1001893";    // Progenesis:peptide raw abundance
             outDataTypeAccession = "MS:1001891";    // Progenesis:peptide normalised abundance

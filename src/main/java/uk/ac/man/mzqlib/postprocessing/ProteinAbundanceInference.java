@@ -78,7 +78,7 @@ public final class ProteinAbundanceInference {
 
         if (!outputProteinGroupDTAccession.substring(0, 3).equals(cvAccessionPrefix)
                 && Integer.parseInt(outputCvAccessionSuffix) >= 0
-                && (Integer.parseInt(outputCvAccessionSuffix) <= cvAccessionLastSevenNumMax)) {
+                && Integer.parseInt(outputCvAccessionSuffix) <= cvAccessionLastSevenNumMax) {
             throw new IllegalArgumentException("Wrong Output Protein Group CV Accession!!! "
                                                + outputProteinGroupDTAccession);
         }
@@ -155,7 +155,7 @@ public final class ProteinAbundanceInference {
 
         if (!outputProteinGroupDTAccession.substring(0, 3).equals(cvAccessionPrefix)
                 && Integer.parseInt(outputCvAccessionSuffix) >= 0
-                && (Integer.parseInt(outputCvAccessionSuffix) <= cvAccessionLastSevenNumMax)) {
+                && Integer.parseInt(outputCvAccessionSuffix) <= cvAccessionLastSevenNumMax) {
             throw new IllegalArgumentException("Wrong Output Protein Group CV Accession!!! "
                                                + outputProteinGroupDTAccession);
         }

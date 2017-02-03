@@ -1,4 +1,3 @@
-
 package uk.ac.liv.pgb.mzqlib.progenesis.reader;
 
 /**
@@ -12,9 +11,11 @@ public class ProteinListHeaders {
     /*
      * All use lower case
      */
- /*
-     * These are the first row headers
+
+    /*
+     *    These are the first row headers
      */
+
     /**
      * Constant.
      */
@@ -29,6 +30,7 @@ public class ProteinListHeaders {
      * Constant.
      */
     public static final String SPECTRAL_COUNTS = "spectral counts";
+
     /*
      * These are the third row headers
      */
@@ -48,3 +50,6 @@ public class ProteinListHeaders {
      */
     public static final String MAX_FOLD_CHANGE = "max fold change";
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

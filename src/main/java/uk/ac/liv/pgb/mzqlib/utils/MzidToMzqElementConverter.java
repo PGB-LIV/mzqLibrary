@@ -1,8 +1,8 @@
-
 package uk.ac.liv.pgb.mzqlib.utils;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import uk.ac.liv.pgb.jmzqml.model.mzqml.Cv;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.CvParam;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.FileFormat;
@@ -19,45 +19,13 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.UserParam;
 public class MzidToMzqElementConverter {
 
     /**
-     * Utility method to convert mzIdentML modifications to mzQuantML
-     * modifications.
-     *
-     * @param modifications list of mzIdentML modifications.
-     *
-     * @return list of mzQuantML modifications.
-     */
-    public static List<Modification> convertMzidModsToMzqMods(
-            final List<uk.ac.ebi.jmzidml.model.mzidml.Modification> modifications) {
-        List<Modification> mzqMods = new ArrayList();
-        for (uk.ac.ebi.jmzidml.model.mzidml.Modification mzidMod : modifications) {
-            Modification mzqMod = new Modification();
-            List<CvParam> mzqCps;
-            List<uk.ac.ebi.jmzidml.model.mzidml.CvParam> mzidCps = mzidMod.
-                    getCvParam();
-            if (!mzidCps.isEmpty()) {
-                mzqCps = new ArrayList();
-                for (uk.ac.ebi.jmzidml.model.mzidml.CvParam mzidCp : mzidCps) {
-                    CvParam mzqCp = convertMzidCvParamToMzqCvParam(mzidCp);
-                    mzqCps.add(mzqCp);
-                }
-                mzqMod.getCvParam().addAll(mzqCps);
-            }
-            mzqMod.setAvgMassDelta(mzidMod.getAvgMassDelta());
-            mzqMod.setLocation(mzidMod.getLocation());
-            mzqMod.setMonoisotopicMassDelta(mzidMod.getMonoisotopicMassDelta());
-        }
-        return mzqMods;
-    }
-
-    /**
      * Utility method to convert mzIdentML CvParam to mzQuantML CvParam.
      *
      * @param mzidCp mzIdentML CvParam.
      *
      * @return mzQuantML CvParam.
      */
-    public static CvParam convertMzidCvParamToMzqCvParam(
-            final uk.ac.ebi.jmzidml.model.mzidml.CvParam mzidCp) {
+    public static CvParam convertMzidCvParamToMzqCvParam(final uk.ac.ebi.jmzidml.model.mzidml.CvParam mzidCp) {
         CvParam mzqCp = new CvParam();
 
         if (mzidCp.getAccession() != null) {
@@ -66,6 +34,7 @@ public class MzidToMzqElementConverter {
 
         if (mzidCp.getCv() != null) {
             Cv mzqCv = convertMzidCvToMzqCv(mzidCp.getCv());
+
             mzqCp.setCv(mzqCv);
         }
 
@@ -75,6 +44,7 @@ public class MzidToMzqElementConverter {
 
         if (mzidCp.getUnitCv() != null) {
             Cv mzqUnitCv = convertMzidCvToMzqCv(mzidCp.getUnitCv());
+
             mzqCp.setUnitCv(mzqUnitCv);
         }
 
@@ -90,46 +60,13 @@ public class MzidToMzqElementConverter {
     }
 
     /**
-     *
-     * Utility method to convert mzIdentML UserParam to mzQuantML UserParam.
-     *
-     * @param mzidUp mzIdentML UserParam.
-     *
-     * @return mzQuantML UserParam.
-     */
-    public static UserParam convertMzidUserParamToMzqUserParam(
-            final uk.ac.ebi.jmzidml.model.mzidml.UserParam mzidUp) {
-        UserParam mzqUp = new UserParam();
-
-        if (mzidUp.getName() != null) {
-            mzqUp.setName(mzidUp.getName());
-        }
-
-        if (mzidUp.getUnitCv() != null) {
-            Cv mzqUnitCv = convertMzidCvToMzqCv(mzidUp.getUnitCv());
-            mzqUp.setUnitCv(mzqUnitCv);
-        }
-
-        if (mzidUp.getUnitAccession() != null) {
-            mzqUp.setUnitAccession(mzidUp.getUnitAccession());
-        }
-
-        if (mzidUp.getUnitName() != null) {
-            mzqUp.setUnitName(mzidUp.getUnitName());
-        }
-
-        return mzqUp;
-    }
-
-    /**
      * Utility method to convert mzIdentML CV to mzQuantML CV.
      *
      * @param mzidCv mzIdentML CV.
      *
      * @return mzQuantML CV.
      */
-    public static Cv convertMzidCvToMzqCv(
-            final uk.ac.ebi.jmzidml.model.mzidml.Cv mzidCv) {
+    public static Cv convertMzidCvToMzqCv(final uk.ac.ebi.jmzidml.model.mzidml.Cv mzidCv) {
         Cv mzqCv = new Cv();
 
         if (mzidCv.getFullName() != null) {
@@ -163,12 +100,47 @@ public class MzidToMzqElementConverter {
         FileFormat mzqFF = new FileFormat();
 
         if (mzidFF.getCvParam() != null) {
-            mzqFF.
-                    setCvParam(convertMzidCvParamToMzqCvParam(mzidFF.
-                            getCvParam()));
+            mzqFF.setCvParam(convertMzidCvParamToMzqCvParam(mzidFF.getCvParam()));
         }
 
         return mzqFF;
+    }
+
+    /**
+     * Utility method to convert mzIdentML modifications to mzQuantML
+     * modifications.
+     *
+     * @param modifications list of mzIdentML modifications.
+     *
+     * @return list of mzQuantML modifications.
+     */
+    public static List<Modification> convertMzidModsToMzqMods(
+            final List<uk.ac.ebi.jmzidml.model.mzidml.Modification> modifications) {
+        List<Modification> mzqMods = new ArrayList();
+
+        for (uk.ac.ebi.jmzidml.model.mzidml.Modification mzidMod : modifications) {
+            Modification                                 mzqMod = new Modification();
+            List<CvParam>                                mzqCps;
+            List<uk.ac.ebi.jmzidml.model.mzidml.CvParam> mzidCps = mzidMod.getCvParam();
+
+            if (!mzidCps.isEmpty()) {
+                mzqCps = new ArrayList();
+
+                for (uk.ac.ebi.jmzidml.model.mzidml.CvParam mzidCp : mzidCps) {
+                    CvParam mzqCp = convertMzidCvParamToMzqCvParam(mzidCp);
+
+                    mzqCps.add(mzqCp);
+                }
+
+                mzqMod.getCvParam().addAll(mzqCps);
+            }
+
+            mzqMod.setAvgMassDelta(mzidMod.getAvgMassDelta());
+            mzqMod.setLocation(mzidMod.getLocation());
+            mzqMod.setMonoisotopicMassDelta(mzidMod.getMonoisotopicMassDelta());
+        }
+
+        return mzqMods;
     }
 
     /**
@@ -182,6 +154,7 @@ public class MzidToMzqElementConverter {
     public static SearchDatabase convertMzidSDBToMzqSDB(
             final uk.ac.ebi.jmzidml.model.mzidml.SearchDatabase searchDatabase) {
         SearchDatabase sDB = new SearchDatabase();
+
         if (searchDatabase.getId() != null) {
             sDB.setId(searchDatabase.getId());
         }
@@ -202,40 +175,72 @@ public class MzidToMzqElementConverter {
             sDB.setVersion(searchDatabase.getVersion());
         }
 
-        uk.ac.ebi.jmzidml.model.mzidml.Param mzidDBNameParam = searchDatabase.
-                getDatabaseName();
+        uk.ac.ebi.jmzidml.model.mzidml.Param mzidDBNameParam = searchDatabase.getDatabaseName();
+
         if (mzidDBNameParam != null) {
             Param mzqDBNameParam = new Param();
+
             if (mzidDBNameParam.getCvParam() != null) {
-                mzqDBNameParam.setParam(convertMzidCvParamToMzqCvParam(
-                        mzidDBNameParam.getCvParam()));
+                mzqDBNameParam.setParam(convertMzidCvParamToMzqCvParam(mzidDBNameParam.getCvParam()));
             }
+
             if (mzidDBNameParam.getUserParam() != null) {
-                mzqDBNameParam.setParam(convertMzidUserParamToMzqUserParam(
-                        mzidDBNameParam.getUserParam()));
+                mzqDBNameParam.setParam(convertMzidUserParamToMzqUserParam(mzidDBNameParam.getUserParam()));
             }
+
             sDB.setDatabaseName(mzqDBNameParam);
         }
 
-        if (searchDatabase.getCvParam() != null && !searchDatabase.getCvParam().
-                isEmpty()) {
-            for (uk.ac.ebi.jmzidml.model.mzidml.CvParam cp : searchDatabase.
-                    getCvParam()) {
+        if (searchDatabase.getCvParam() != null &&!searchDatabase.getCvParam().isEmpty()) {
+            for (uk.ac.ebi.jmzidml.model.mzidml.CvParam cp : searchDatabase.getCvParam()) {
                 sDB.getCvParam().add(convertMzidCvParamToMzqCvParam(cp));
             }
         }
 
         // convert FileFormat
-        uk.ac.ebi.jmzidml.model.mzidml.FileFormat mzidFF = searchDatabase.
-                getFileFormat();
+        uk.ac.ebi.jmzidml.model.mzidml.FileFormat mzidFF = searchDatabase.getFileFormat();
 
         if (mzidFF != null) {
-            //FileFormat mzqFF = 
-            MzidToMzqElementConverter.convertMzidFileFormatToMzqFileFormat(
-                    mzidFF);
+
+            // FileFormat mzqFF =
+            MzidToMzqElementConverter.convertMzidFileFormatToMzqFileFormat(mzidFF);
         }
 
         return sDB;
     }
 
+    /**
+     *
+     * Utility method to convert mzIdentML UserParam to mzQuantML UserParam.
+     *
+     * @param mzidUp mzIdentML UserParam.
+     *
+     * @return mzQuantML UserParam.
+     */
+    public static UserParam convertMzidUserParamToMzqUserParam(final uk.ac.ebi.jmzidml.model.mzidml.UserParam mzidUp) {
+        UserParam mzqUp = new UserParam();
+
+        if (mzidUp.getName() != null) {
+            mzqUp.setName(mzidUp.getName());
+        }
+
+        if (mzidUp.getUnitCv() != null) {
+            Cv mzqUnitCv = convertMzidCvToMzqCv(mzidUp.getUnitCv());
+
+            mzqUp.setUnitCv(mzqUnitCv);
+        }
+
+        if (mzidUp.getUnitAccession() != null) {
+            mzqUp.setUnitAccession(mzidUp.getUnitAccession());
+        }
+
+        if (mzidUp.getUnitName() != null) {
+            mzqUp.setUnitName(mzidUp.getUnitName());
+        }
+
+        return mzqUp;
+    }
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

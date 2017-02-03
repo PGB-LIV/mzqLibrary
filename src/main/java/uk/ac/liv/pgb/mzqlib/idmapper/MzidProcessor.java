@@ -1,8 +1,9 @@
-
 package uk.ac.liv.pgb.mzqlib.idmapper;
 
-import gnu.trove.map.TIntObjectMap;
 import java.util.Map;
+
+import gnu.trove.map.TIntObjectMap;
+
 import uk.ac.ebi.jmzidml.model.mzidml.SearchDatabase;
 
 /**
@@ -22,7 +23,8 @@ public interface MzidProcessor {
      */
     Map getPeptideModStringToSIIsMap();
 
-    //public Map getPeptideModStringToProtAccessionsMap();
+    // public Map getPeptideModStringToProtAccessionsMap();
+
     /**
      * Get retention time (minute) to spectumIdentificationItems map.
      * This is a one to many map with retention time (round to minute) as key
@@ -38,5 +40,7 @@ public interface MzidProcessor {
      * @return SearchDatabase
      */
     SearchDatabase getSearchDatabase();
-
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

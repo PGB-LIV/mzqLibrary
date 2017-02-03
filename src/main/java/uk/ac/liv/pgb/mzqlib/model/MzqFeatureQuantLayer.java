@@ -1,10 +1,10 @@
-
 package uk.ac.liv.pgb.mzqlib.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javafx.beans.property.SimpleStringProperty;
+
 import uk.ac.liv.pgb.jmzqml.model.mzqml.Column;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.GlobalQuantLayer;
 import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
@@ -24,25 +24,27 @@ public class MzqFeatureQuantLayer extends MzqQuantLayer {
      * @param listId       the specific id of list
      * @param ftQuantLayer the GlobalQuantLayer
      */
-    public MzqFeatureQuantLayer(final MzQuantMLUnmarshaller um,
-                                final String listId,
+    public MzqFeatureQuantLayer(final MzQuantMLUnmarshaller um, final String listId,
                                 final GlobalQuantLayer ftQuantLayer) {
-
-        this.mzqUm = um;
+        this.mzqUm          = um;
         this.quantLayerType = new SimpleStringProperty("FeatureQuantLayer");
-        this.listId = new SimpleStringProperty(listId);
-        this.quantLayerId = new SimpleStringProperty(ftQuantLayer.getId());
-        this.listType = new SimpleStringProperty(
-                MzqDataConstants.FEATURE_LIST_TYPE);
-        this.dataType = new SimpleStringProperty("List in column titles");
+        this.listId         = new SimpleStringProperty(listId);
+        this.quantLayerId   = new SimpleStringProperty(ftQuantLayer.getId());
+        this.listType       = new SimpleStringProperty(MzqDataConstants.FEATURE_LIST_TYPE);
+        this.dataType       = new SimpleStringProperty("List in column titles");
 
-        //set column names
+        // set column names
         this.columnNames = new ArrayList<>();
+
         List<Column> columns = ftQuantLayer.getColumnDefinition().getColumn();
+
         for (Column col : columns) {
             String name = col.getDataType().getCvParam().getName();
+
             this.columnNames.add(new SimpleStringProperty(name));
         }
     }
-
 }
+
+
+//~ Formatted by Jindent --- http://www.jindent.com

@@ -42,141 +42,141 @@ public class MzQuantMLLib implements Serializable {
     /**
      * Constant.
      */
-    public static final String csvConverterParams = "-compress true|false";
+    private static final String CSV_CONVERTER_PARAMS = "-compress true|false";
 
     /**
      * Constant.
      */
-    public static final String csvConverterUsageExample = "-compress false";
+    private static final String CSV_CONVERTER_USAGE_EXAMPLE = "-compress false";
 
     /**
      * Constant.
      */
-    public static final String csvConverterToolDescription
+    private static final String CSV_CONVERTER_TOOL_DES
             = "This tool converts an mzQuantML file to a CSV file.";
 
     /**
      * Constant.
      */
-    public static final String csvConverterUsage
-            = "CsvConverter input.mzq output.csv " + csvConverterParams
-            + " \n\nDescription:\n" + csvConverterToolDescription;
+    private static final String CSV_CONVERTER_USAGE
+            = "CsvConverter input.mzq output.csv " + CSV_CONVERTER_PARAMS
+            + " \n\nDescription:\n" + CSV_CONVERTER_TOOL_DES;
 
     //XLS converter
     /**
      * Constant.
      */
-    public static final String xlsConverterParams = "-compress true|false";
+    private static final String XLS_CONVERTER_PARAMS = "-compress true|false";
 
     /**
      * Constant.
      */
-    public static final String xlsConverterUsageExample = "-compress false";
+    private static final String XLS_CONVERTER_USAGE_EXAMPLE = "-compress false";
 
     /**
      * Constant.
      */
-    public static final String xlsConverterToolDescription
+    private static final String XLS_CONVERTER_TOOL_DES
             = "This tool converts an mzQuantML file to a XLS file.";
 
     /**
      * Constant.
      */
-    public static final String xlsConverterUsage
-            = "XlsConverter input.mzq output.csv " + xlsConverterParams
-            + " \n\nDescription:\n" + xlsConverterToolDescription;
+    private static final String XLS_CONVERTER_USAGE
+            = "XlsConverter input.mzq output.csv " + XLS_CONVERTER_PARAMS
+            + " \n\nDescription:\n" + XLS_CONVERTER_TOOL_DES;
 
     //HTML converter
     /**
      * Constant.
      */
-    public static final String htmlConverterParams = "-compress true|false";
+    private static final String HTML_CONVERTER_PARAMS = "-compress true|false";
 
     /**
      * Constant.
      */
-    public static final String htmlConverterUsageExample = "-compress false";
+    private static final String HTML_CONVERTER_USAGE_EXAMPLE = "-compress false";
 
     /**
      * Constant.
      */
-    public static final String htmlConverterToolDescription
+    private static final String HTML_CONVERTER_TOOL_DES
             = "This tool converts an mzQuantML file to a HTML file.";
 
     /**
      * Constant.
      */
-    public static final String htmlConverterUsage
-            = "HtmlConverter input.mzq output.html " + htmlConverterParams
-            + " \n\nDescription:\n" + htmlConverterToolDescription;
+    private static final String HTML_CONVERTER_USAGE
+            = "HtmlConverter input.mzq output.html " + HTML_CONVERTER_PARAMS
+            + " \n\nDescription:\n" + HTML_CONVERTER_TOOL_DES;
 
     //mzTab converter
     /**
      * Constant.
      */
-    public static final String mzTabConverterParams = "-compress true|false";
+    private static final String MZTAB_CONVERTER_PARAMS = "-compress true|false";
 
     /**
      * Constant.
      */
-    public static final String mzTabConverterUsageExample = "-compress false";
+    private static final String MZTAB_CONVERTER_USAGE_EXAMPLE = "-compress false";
 
     /**
      * Constant.
      */
-    public static final String mzTabConverterToolDescription
+    private static final String MZTAB_CONVERTER_TOOL_DES
             = "This tool converts an mzQuantML file to an mzTab file.";
 
     /**
      * Constant.
      */
-    public static final String mzTabConverterUsage
-            = "MzTabConverter input.mzq output.mztab " + mzTabConverterParams
-            + " \n\nDescription:\n" + mzTabConverterToolDescription;
+    private static final String MZTAB_CONVERTER_USAGE
+            = "MzTabConverter input.mzq output.mztab " + MZTAB_CONVERTER_PARAMS
+            + " \n\nDescription:\n" + MZTAB_CONVERTER_TOOL_DES;
 
     //ConsensusXML converter
     /**
      * Constant.
      */
-    public static final String consensusXMLConverterParams
+    private static final String CONSENSUSXML_CONVERTER_PARAMS
             = "-compress true|false";
 
     /**
      * Constant.
      */
-    public static final String consensusXMLConverterUsageExample
+    private static final String CONSENSUSXML_CONVERTER_USAGE_EXAMPLE
             = "-compress false";
 
     /**
      * Constant.
      */
-    public static final String consensusXMLConverterToolDescription
+    private static final String CONSENSUSXML_CONVERTER_TOOL_DES
             = "This tool converts a consensusXML file from openMS to an mzQuantML file.";
 
     /**
      * Constant.
      */
-    public static final String consensusXMLConverterUsage
+    private static final String CONSENSUSXML_CONVERTER_USAGE
             = "ConsensusXMLConverter input.consensusXML output.mzq "
-            + consensusXMLConverterParams
-            + " \n\nDescription:\n" + consensusXMLConverterToolDescription;
+            + CONSENSUSXML_CONVERTER_PARAMS
+            + " \n\nDescription:\n" + CONSENSUSXML_CONVERTER_TOOL_DES;
 
     /**
      * Constant.
      */
-    public static final String idMappingParams
+    private static final String ID_MAPPING_PARAMS
             = "-rawToMzidMap rawToMzidMap [-compress true|false]";
 
     /**
      * Constant.
      */
-    public static final String idMappingUsageExample
+    private static final String ID_MAPPING_USAGE_EXAMPLE
             = "-rawToMzidMap filename1.raw;C:\\Data\\Mzid\\filename1.mzid;filename2.raw;C:\\Data\\Mzid\\filename2.mzid -compress false";
 
     /**
      * Constant.
      */
-    public static final String idMappingToolDescription
+    private static final String ID_MAPPING_TOOL_DES
             = "This tool will reassign consensus peptide sequence by mapping the identifications across input mzid files. "
             + "The -rawToMzidMap argument requires pairs of a raw file name (file name only) and its mzid file (with absolute file path), using semicolon as seperator. "
             + "The raw file names must be same as those in the input mzq file.";
@@ -184,26 +184,26 @@ public class MzQuantMLLib implements Serializable {
     /**
      * Constant.
      */
-    public static final String idMappingUsage
-            = "MzqMzIdMapping input.mzq output.mzq " + idMappingParams
-            + " \n\nDescription:\n" + idMappingToolDescription;
+    private static final String ID_MAPPING_USAGE
+            = "MzqMzIdMapping input.mzq output.mzq " + ID_MAPPING_PARAMS
+            + " \n\nDescription:\n" + ID_MAPPING_TOOL_DES;
 
     /**
      * Constant.
      */
-    public static final String anovaParams
+    private static final String ANOVA_PARAMS
             = "-listType Protein|ProteinGroup -qlDTCA qlDataTypeCvAccession -assayIdsGroup assayIdsGroup [-compress true|false]";
 
     /**
      * Constant.
      */
-    public static final String anovaUsageExample
+    private static final String ANOVA_USAGE_EXAMPLE
             = "-listType ProteinGroup -qlDTCA MS:1002518 -assayIdsGroup ass_0,ass_1,ass_2,ass_3,ass_4;ass_5,ass_6,ass_7,ass_8,ass_9";
 
     /**
      * Constant.
      */
-    public static final String anovaToolDescription
+    private static final String ANOVA_TOOL_DES
             = "This tool calculates one-way ANOVA p value of specified QuantLayer for either ProteinGroupList or ProteinList. "
             + "The QuantLayer is specified by passing Cv accession to qlDTCA option. The group of assays included in the ANOVA calculation is provided by the flat "
             + "string option of assayIdsGroup. The whole string is divided into groups which are separated by \";\" (semicolon) and in each group, "
@@ -212,26 +212,26 @@ public class MzQuantMLLib implements Serializable {
     /**
      * Constant.
      */
-    public static final String anovaUsage = "AnovaPValue input.mzq output.mzq "
-            + anovaParams
-            + " \n\nDescription:\n" + anovaToolDescription;
+    private static final String ANOVA_USAGE = "AnovaPValue input.mzq output.mzq "
+            + ANOVA_PARAMS
+            + " \n\nDescription:\n" + ANOVA_TOOL_DES;
 
     /**
      * Constant.
      */
-    public static final String normalisationParams
+    private static final String NORMALISATION_PARAMS
             = "-normLvl Peptide|Feature -inDTCA inDTCA -outDTCA outDTCA -outDTCN outDTCN -tagDecoy tagDecoy [-compress true|false]";
 
     /**
      * Constant.
      */
-    public static final String normalisationUsageExample
+    private static final String NORMALISATION_USAGE_EXAMPLE
             = "-normLvl peptide -inDTCA MS:1001840 -outDTCA MS:1001891 -outDTCN Progenesis:peptide normalised abundance -tagDecoy XXX_";
 
     /**
      * Constant.
      */
-    public static final String normalisationToolDescription
+    private static final String NORMALISATION_TOOL_DES
             = "This tool will calculate normalised value of specified AssayQuantLayer in one specified list (peptide or feature). "
             + "Then output the result as an mzq file. "
             + "The tool will automatically select the best reference assay.";
@@ -239,92 +239,92 @@ public class MzQuantMLLib implements Serializable {
     /**
      * Constant.
      */
-    public static final String normalisationUsage
-            = "Normalisation input.mzq output.mzq " + normalisationParams
-            + " \n\nDescription:\n" + normalisationToolDescription;
+    private static final String NORMALISATION_USAGE
+            = "Normalisation input.mzq output.mzq " + NORMALISATION_PARAMS
+            + " \n\nDescription:\n" + NORMALISATION_TOOL_DES;
 
     /**
      * Constant.
      */
-    public static final String proteinInferenceParams
+    private static final String PROTEIN_INFERENCE_PARAMS
             = "-op [sum|mean|median] -inPepNormCA inPeptideNormCvAccession "
             + "-outPGNormCA outProteinGroupNormCvAccession -outPGNormCN outProteinGroupNormCvName";
 
     /**
      * Constant.
      */
-    public static final String proteinInferenceUsageExample
+    private static final String PROTEIN_INFERENCE_USAGE_EXAMPLE
             = "-op sum -inPepNormCA MS:1001891 "
             + "-outPGNormCA MS:1002518 -outPGNormCN Progenesis:protein group normalised abundance";
 
     /**
      * Constant.
      */
-    public static final String proteinInferenceToolDescription
+    private static final String PROTEIN_INFERENCE_TOOL_DES
             = "This tool will perform protein inference and calculate the abundance from specified quantlayer.";
 
     /**
      * Constant.
      */
-    public static final String proteinInferenceUsage
-            = "ProteinInference input.mzq output.mzq " + proteinInferenceParams
-            + " \n\nDescription:\n" + proteinInferenceToolDescription;
+    private static final String PROTEIN_INFERENCE_USAGE
+            = "ProteinInference input.mzq output.mzq " + PROTEIN_INFERENCE_PARAMS
+            + " \n\nDescription:\n" + PROTEIN_INFERENCE_TOOL_DES;
 
     /**
      * Constant.
      */
-    public static final String maxquantConverterParams
+    private static final String MAXQUANT_CONVERTER_PARAMS
             = "-summary summaryFile -peptides peptidesFile -proteinGroups proteinGroupsFile "
             + "-template experimentalDesignTemplateFile";
 
     /**
      * Constant.
      */
-    public static final String maxquantConverterUsageExample
+    private static final String MAXQUANT_CONVERTER_USAGE_EXAMPLE
             = "-summary summary.txt -peptides peptides.txt -proteinGroups proteinGroups.txt "
             + "-template ExperimentalDesignTemplate.txt";
 
     /**
      * Constant.
      */
-    public static final String maxquantConverterToolDescription
+    private static final String MAXQUANT_CONVERTER_TOOL_DES
             = "This tool will convert Maxquant result files to a single mzQuantML file. "
             + "User needs to select the \"evidence.txt\" in Maxquant output folder as the input file. Provide the other mandatory files via options. ";
 
     /**
      * Constant.
      */
-    public static final String maxquantConverterUsage
+    private static final String MAXQUANT_CONVERTER_USAGE
             = "MaxquantConverter evidence.txt output.mzq "
-            + maxquantConverterParams
-            + " \n\nDescription:\n" + maxquantConverterToolDescription;
+            + MAXQUANT_CONVERTER_PARAMS
+            + " \n\nDescription:\n" + MAXQUANT_CONVERTER_TOOL_DES;
 
     /**
      * Constant.
      */
-    public static final String progenesisConverterParams
+    private static final String PROGENESIS_CONVERTER_PARAMS
             = "-pepList peptideListFile [-sep CsvSeparator -proteinGroupList [true|fasle] -rawPlusNorm [norm|raw]]";
 
     /**
      * Constant.
      */
-    public static final String progenesisConverterUsageExample
+    private static final String PROGENESIS_CONVERTER_USAGE_EXAMPLE
             = "-pepList peptide_list.csv -proteinGroupList false -rawPlusNorm raw";
 
     /**
      * Constant.
      */
-    public static final String progenesisConverterToolDescription
+    private static final String PROGENESIS_CONVERTER_TOOL_DES
             = "This tool will convert Progenesis result files to a single mzQuantML file. "
             + "User needs to provide protein list CSV file as the input file and provide peptide list (or feature list) CSV file via option. ";
 
     /**
      * Constant.
      */
-    public static final String progenesisConverterUsage
+    private static final String PROGENESIS_CONVERTER_USAGE
             = "ProgenesisConverter proteinList.csv output.mzq "
-            + progenesisConverterParams
-            + " \n\nDescription:\n" + progenesisConverterToolDescription;
+            + PROGENESIS_CONVERTER_PARAMS
+            + " \n\nDescription:\n" + PROGENESIS_CONVERTER_TOOL_DES;
 
     /**
      * Constant.
@@ -342,45 +342,45 @@ public class MzQuantMLLib implements Serializable {
      */
     public MzQuantMLLib() {
         allFunctions = new HashMap<>();
-        allFunctions.put("CsvConverter", csvConverterParams + ";@;"
-                         + csvConverterUsage + ";@;" + csvConverterUsageExample
-                         + ";@;" + csvConverterToolDescription);
-        allFunctions.put("XlsConverter", xlsConverterParams + ";@;"
-                         + xlsConverterUsage + ";@;" + xlsConverterUsageExample
-                         + ";@;" + xlsConverterToolDescription);
-        allFunctions.put("HtmlConverter", htmlConverterParams + ";@;"
-                         + htmlConverterUsage + ";@;"
-                         + htmlConverterUsageExample + ";@;"
-                         + htmlConverterToolDescription);
-        allFunctions.put("MzTabConverter", mzTabConverterParams + ";@;"
-                         + mzTabConverterUsage + ";@;"
-                         + mzTabConverterUsageExample + ";@;"
-                         + mzTabConverterToolDescription);
-        allFunctions.put("ConsensusXMLConverter", consensusXMLConverterParams
-                         + ";@;" + consensusXMLConverterUsage + ";@;"
-                         + consensusXMLConverterUsageExample + ";@;"
-                         + consensusXMLConverterToolDescription);
-        allFunctions.put("MzqMzIdMapping", idMappingParams + ";@;"
-                         + idMappingUsage + ";@;" + idMappingUsageExample
-                         + ";@;" + idMappingToolDescription);
-        allFunctions.put("AnovaPValue", anovaParams + ";@;" + anovaUsage + ";@;"
-                         + anovaUsageExample + ";@;" + anovaToolDescription);
-        allFunctions.put("Normalisation", normalisationParams + ";@;"
-                         + normalisationUsage + ";@;"
-                         + normalisationUsageExample + ";@;"
-                         + normalisationToolDescription);
-        allFunctions.put("ProteinInference", proteinInferenceParams + ";@;"
-                         + proteinInferenceUsage + ";@;"
-                         + proteinInferenceUsageExample + ";@;"
-                         + proteinInferenceToolDescription);
-        allFunctions.put("MaxquantConverter", maxquantConverterParams + ";@;"
-                         + maxquantConverterUsage + ";@;"
-                         + maxquantConverterUsageExample + ";@;"
-                         + maxquantConverterToolDescription);
-        allFunctions.put("ProgenesisConverter", progenesisConverterParams
-                         + ";@;" + progenesisConverterUsage + ";@;"
-                         + progenesisConverterUsageExample + ";@;"
-                         + progenesisConverterToolDescription);
+        allFunctions.put("CsvConverter", CSV_CONVERTER_PARAMS + ";@;"
+                         + CSV_CONVERTER_USAGE + ";@;" + CSV_CONVERTER_USAGE_EXAMPLE
+                         + ";@;" + CSV_CONVERTER_TOOL_DES);
+        allFunctions.put("XlsConverter", XLS_CONVERTER_PARAMS + ";@;"
+                         + XLS_CONVERTER_USAGE + ";@;" + XLS_CONVERTER_USAGE_EXAMPLE
+                         + ";@;" + XLS_CONVERTER_TOOL_DES);
+        allFunctions.put("HtmlConverter", HTML_CONVERTER_PARAMS + ";@;"
+                         + HTML_CONVERTER_USAGE + ";@;"
+                         + HTML_CONVERTER_USAGE_EXAMPLE + ";@;"
+                         + HTML_CONVERTER_TOOL_DES);
+        allFunctions.put("MzTabConverter", MZTAB_CONVERTER_PARAMS + ";@;"
+                         + MZTAB_CONVERTER_USAGE + ";@;"
+                         + MZTAB_CONVERTER_USAGE_EXAMPLE + ";@;"
+                         + MZTAB_CONVERTER_TOOL_DES);
+        allFunctions.put("ConsensusXMLConverter", CONSENSUSXML_CONVERTER_PARAMS
+                         + ";@;" + CONSENSUSXML_CONVERTER_USAGE + ";@;"
+                         + CONSENSUSXML_CONVERTER_USAGE_EXAMPLE + ";@;"
+                         + CONSENSUSXML_CONVERTER_TOOL_DES);
+        allFunctions.put("MzqMzIdMapping", ID_MAPPING_PARAMS + ";@;"
+                         + ID_MAPPING_USAGE + ";@;" + ID_MAPPING_USAGE_EXAMPLE
+                         + ";@;" + ID_MAPPING_TOOL_DES);
+        allFunctions.put("AnovaPValue", ANOVA_PARAMS + ";@;" + ANOVA_USAGE + ";@;"
+                         + ANOVA_USAGE_EXAMPLE + ";@;" + ANOVA_TOOL_DES);
+        allFunctions.put("Normalisation", NORMALISATION_PARAMS + ";@;"
+                         + NORMALISATION_USAGE + ";@;"
+                         + NORMALISATION_USAGE_EXAMPLE + ";@;"
+                         + NORMALISATION_TOOL_DES);
+        allFunctions.put("ProteinInference", PROTEIN_INFERENCE_PARAMS + ";@;"
+                         + PROTEIN_INFERENCE_USAGE + ";@;"
+                         + PROTEIN_INFERENCE_USAGE_EXAMPLE + ";@;"
+                         + PROTEIN_INFERENCE_TOOL_DES);
+        allFunctions.put("MaxquantConverter", MAXQUANT_CONVERTER_PARAMS + ";@;"
+                         + MAXQUANT_CONVERTER_USAGE + ";@;"
+                         + MAXQUANT_CONVERTER_USAGE_EXAMPLE + ";@;"
+                         + MAXQUANT_CONVERTER_TOOL_DES);
+        allFunctions.put("ProgenesisConverter", PROGENESIS_CONVERTER_PARAMS
+                         + ";@;" + PROGENESIS_CONVERTER_USAGE + ";@;"
+                         + PROGENESIS_CONVERTER_USAGE_EXAMPLE + ";@;"
+                         + PROGENESIS_CONVERTER_TOOL_DES);
     }
 
     /**
@@ -497,10 +497,10 @@ public class MzQuantMLLib implements Serializable {
                         } catch (JAXBException | IOException ex) {
                             System.out.println(
                                     "Error running ConsensusXMLConverter: "
-                                    + userFeedback + consensusXMLConverterUsage);
+                                    + userFeedback + CONSENSUSXML_CONVERTER_USAGE);
                             guiFeedback
                                     = "Error running ConsensusXMLConverter: "
-                                    + consensusXMLConverterUsage + "\n"
+                                    + CONSENSUSXML_CONVERTER_USAGE + "\n"
                                     + ex.getMessage();
                             Logger.getLogger(MzQuantMLLib.class.getName()).log(
                                     Level.SEVERE, null, ex);
@@ -637,15 +637,15 @@ public class MzQuantMLLib implements Serializable {
                                 = "Program within mzqLibrary not recognized: "
                                 + args[0]
                                 + "\n\nPlease use one of the following command:\n\n"
-                                + progenesisConverterUsage + "\n\n"
-                                + maxquantConverterUsage + "\n\n"
-                                + consensusXMLConverterUsage + "\n\n"
-                                + csvConverterUsage + "\n\n" + xlsConverterUsage
-                                + "\n\n" + htmlConverterUsage + "\n\n"
-                                + mzTabConverterUsage + "\n\n"
-                                + idMappingUsage + "\n\n" + normalisationUsage
-                                + "\n\n" + proteinInferenceUsage + "\n\n"
-                                + anovaUsage + "\n";
+                                + PROGENESIS_CONVERTER_USAGE + "\n\n"
+                                + MAXQUANT_CONVERTER_USAGE + "\n\n"
+                                + CONSENSUSXML_CONVERTER_USAGE + "\n\n"
+                                + CSV_CONVERTER_USAGE + "\n\n" + XLS_CONVERTER_USAGE
+                                + "\n\n" + HTML_CONVERTER_USAGE + "\n\n"
+                                + MZTAB_CONVERTER_USAGE + "\n\n"
+                                + ID_MAPPING_USAGE + "\n\n" + NORMALISATION_USAGE
+                                + "\n\n" + PROTEIN_INFERENCE_USAGE + "\n\n"
+                                + ANOVA_USAGE + "\n";
 
                         System.out.println(tempFeedback);
                         guiFeedback = "Error, usage: " + tempFeedback;
@@ -669,39 +669,39 @@ public class MzQuantMLLib implements Serializable {
                 }
 
             } else if (args[0].equals("CsvConverter")) {
-                guiFeedback = "Error, usage: " + csvConverterUsage;
+                guiFeedback = "Error, usage: " + CSV_CONVERTER_USAGE;
             } else if (args[0].equals("XlsConverter")) {
-                guiFeedback = "Error, usage:  " + xlsConverterUsage;
+                guiFeedback = "Error, usage:  " + XLS_CONVERTER_USAGE;
             } else if (args[0].equals("HtmlConverter")) {
-                guiFeedback = "Error, usage: " + htmlConverterUsage;
+                guiFeedback = "Error, usage: " + HTML_CONVERTER_USAGE;
             } else if (args[0].equals("ConsensusXMLConverter")) {
-                guiFeedback = "Error, usage:  " + consensusXMLConverterUsage;
+                guiFeedback = "Error, usage:  " + CONSENSUSXML_CONVERTER_USAGE;
             } else if (args[0].equals("MzTabConverter")) {
-                guiFeedback = "Error, usage: " + mzTabConverterUsage;
+                guiFeedback = "Error, usage: " + MZTAB_CONVERTER_USAGE;
             } else if (args[0].equals("MzqMzIdMapping")) {
-                guiFeedback = "Error, usage:  " + idMappingUsage;
+                guiFeedback = "Error, usage:  " + ID_MAPPING_USAGE;
             } else if (args[0].equals("AnovaPValue")) {
-                guiFeedback = "Error, usage:  " + anovaUsage;
+                guiFeedback = "Error, usage:  " + ANOVA_USAGE;
             } else if (args[0].equals("Normalisation")) {
-                guiFeedback = "Error, usage:  " + normalisationUsage;
+                guiFeedback = "Error, usage:  " + NORMALISATION_USAGE;
             } else if (args[0].equals("ProteinInference")) {
-                guiFeedback = "Error, usage:  " + proteinInferenceUsage;
+                guiFeedback = "Error, usage:  " + PROTEIN_INFERENCE_USAGE;
             } else if (args[0].equals("MaxquantConverter")) {
-                guiFeedback = "Error, usage:  " + maxquantConverterUsage;
+                guiFeedback = "Error, usage:  " + MAXQUANT_CONVERTER_USAGE;
             } else if (args[0].equals("ProgenesisConverter")) {
-                guiFeedback = "Error, usage:  " + progenesisConverterUsage;
+                guiFeedback = "Error, usage:  " + PROGENESIS_CONVERTER_USAGE;
             } else {
                 String tempFeedback
                         = "Program within mzqLibrary not recognized: " + args[0]
                         + "\n\nPlease use one of the following command:\n\n"
-                        + progenesisConverterUsage + "\n\n"
-                        + maxquantConverterUsage + "\n\n"
-                        + consensusXMLConverterUsage + "\n\n"
-                        + csvConverterUsage + "\n\n" + xlsConverterUsage
-                        + "\n\n" + htmlConverterUsage + "\n\n"
-                        + mzTabConverterUsage + "\n\n"
-                        + idMappingUsage + "\n\n" + normalisationUsage + "\n\n"
-                        + proteinInferenceUsage + "\n\n" + anovaUsage + "\n";
+                        + PROGENESIS_CONVERTER_USAGE + "\n\n"
+                        + MAXQUANT_CONVERTER_USAGE + "\n\n"
+                        + CONSENSUSXML_CONVERTER_USAGE + "\n\n"
+                        + CSV_CONVERTER_USAGE + "\n\n" + XLS_CONVERTER_USAGE
+                        + "\n\n" + HTML_CONVERTER_USAGE + "\n\n"
+                        + MZTAB_CONVERTER_USAGE + "\n\n"
+                        + ID_MAPPING_USAGE + "\n\n" + NORMALISATION_USAGE + "\n\n"
+                        + PROTEIN_INFERENCE_USAGE + "\n\n" + ANOVA_USAGE + "\n";
 
                 System.out.println(tempFeedback);
                 guiFeedback = "Error, usage: " + tempFeedback;
@@ -716,17 +716,17 @@ public class MzQuantMLLib implements Serializable {
                     = "Error insufficient arguments entered, options: "
                     + userFeedback + " toolname options\n"
                     + "\n\nTools:\n\n***************\n"
-                    + csvConverterUsage
-                    + "\n" + "***************\n" + xlsConverterUsage
-                    + "\n" + "***************\n" + htmlConverterUsage
-                    + "\n" + "***************\n" + mzTabConverterUsage
-                    + "\n" + "***************\n" + progenesisConverterUsage
-                    + "\n" + "***************\n" + maxquantConverterUsage
-                    + "\n" + "***************\n" + consensusXMLConverterUsage
-                    + "\n" + "***************\n" + idMappingUsage
-                    + "\n" + "***************\n" + normalisationUsage
-                    + "\n" + "***************\n" + proteinInferenceUsage
-                    + "\n" + "***************\n" + anovaUsage + "\n";
+                    + CSV_CONVERTER_USAGE
+                    + "\n" + "***************\n" + XLS_CONVERTER_USAGE
+                    + "\n" + "***************\n" + HTML_CONVERTER_USAGE
+                    + "\n" + "***************\n" + MZTAB_CONVERTER_USAGE
+                    + "\n" + "***************\n" + PROGENESIS_CONVERTER_USAGE
+                    + "\n" + "***************\n" + MAXQUANT_CONVERTER_USAGE
+                    + "\n" + "***************\n" + CONSENSUSXML_CONVERTER_USAGE
+                    + "\n" + "***************\n" + ID_MAPPING_USAGE
+                    + "\n" + "***************\n" + NORMALISATION_USAGE
+                    + "\n" + "***************\n" + PROTEIN_INFERENCE_USAGE
+                    + "\n" + "***************\n" + ANOVA_USAGE + "\n";
 
             System.out.println(tempFeedback);
             guiFeedback = tempFeedback;

@@ -72,7 +72,6 @@ public class RConsole implements RMainLoopCallbacks {
      */
     @Override
     public void rFlushConsole(final Rengine re) {
-        ;
     }
 
     /**
@@ -83,7 +82,6 @@ public class RConsole implements RMainLoopCallbacks {
      */
     @Override
     public void rLoadHistory(final Rengine re, final String filename) {
-        ;
     }
 
     /**
@@ -122,7 +120,6 @@ public class RConsole implements RMainLoopCallbacks {
      */
     @Override
     public void rSaveHistory(final Rengine re, final String filename) {
-        ;
     }
 
     /**

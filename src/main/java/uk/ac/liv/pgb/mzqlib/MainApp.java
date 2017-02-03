@@ -1317,7 +1317,7 @@ public class MainApp extends Application {
 //                        .message("Required R packages has been installed.")
 //                        .showInformation();
             });
-        };
+        }
     }
 
     private synchronized Rengine getRengine() {

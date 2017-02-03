@@ -5,10 +5,16 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.xml.bind.JAXBException;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import uk.ac.ebi.jmzidml.model.mzidml.*;
+
+import uk.ac.ebi.jmzidml.model.mzidml.CvParam;
+import uk.ac.ebi.jmzidml.model.mzidml.Modification;
+import uk.ac.ebi.jmzidml.model.mzidml.Peptide;
+import uk.ac.ebi.jmzidml.model.mzidml.SpectrumIdentificationItem;
 import uk.ac.ebi.jmzidml.xml.io.MzIdentMLUnmarshaller;
 
 /**

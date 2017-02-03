@@ -121,9 +121,8 @@ public class ProgenesisFeatureListReader implements Closeable {
                 } else if (nextLine[i].toLowerCase(Locale.ENGLISH).contains(
                         FeatureListHeaders.INTENSITY)) {
                     intensityStart = i;
-                } // Column of 'Sample retention time (min)'
-                else if (nextLine[i].toLowerCase(Locale.ENGLISH).contains(
-                        FeatureListHeaders.SAMPLE_RETENTION_TIME)) {
+                } else if (nextLine[i].toLowerCase(Locale.ENGLISH).contains(
+                        FeatureListHeaders.SAMPLE_RETENTION_TIME)) {    // Column of 'Sample retention time (min)'                        
                     retTimeStart = i;
                     break;
                 }

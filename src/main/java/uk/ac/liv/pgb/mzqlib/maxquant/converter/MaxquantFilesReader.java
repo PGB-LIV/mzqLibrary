@@ -355,8 +355,7 @@ public class MaxquantFilesReader {
                         assayName = nextLine[0] + "_Heavy";
                         assays.add(assayName);
                         assayRawFileMap.put(assayName, rawFileName);
-                    } // This is very rare case when more than 2 labels are used.
-                    else {
+                    } else {  // This is very rare case when more than 2 labels are used.
                         for (int i = 0; i < multiplicity; i++) {
                             rawFileName = nextLine[0] + ".raw";
                             assayName = nextLine[0] + "_" + i;

@@ -34,7 +34,6 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.Modification;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.Provider;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.SearchDatabase;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.UserParam;
-import uk.ac.liv.pgb.jmzqml.xml.io.*;
 import uk.ac.liv.pgb.mzqlib.constants.MzqDataConstants;
 import uk.ac.liv.pgb.mzqlib.idmapper.data.SIIData;
 import uk.ac.liv.pgb.mzqlib.idmapper.data.Tolerance;
@@ -60,6 +59,8 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.Row;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.SmallMoleculeList;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.SoftwareList;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.StudyVariableList;
+import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLMarshaller;
+import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
 
 /**
  * The MzqMzIdMapperFactory class create an MzqMzIdMapper instance from

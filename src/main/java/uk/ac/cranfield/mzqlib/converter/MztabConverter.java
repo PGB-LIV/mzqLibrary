@@ -947,8 +947,7 @@ public class MztabConverter extends GenericConverter {
             if (accession.contains("MS:1001834") //LC-MS label-free quantitation analysis
                     || accession.contains("MS:1001836") //spectral counting quantitation analysis
                     || accession.contains("MS:1002023") //MS2 tag-based analysis
-                    || accession.contains("MS:1002018")) //MS1 label-based analysis
-            {
+                    || accession.contains("MS:1002018")) { //MS1 label-based analysis
                 return Utils.convertMztabParam(cvParam);
             }
         }

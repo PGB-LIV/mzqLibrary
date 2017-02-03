@@ -416,8 +416,8 @@ public class MaxquantMzquantmlConverter {
             if (maxRd.isLabelFree()) {
                 assay.setLabel(label);
                 assays.add(assay);
-            } //non label free example
-            else {//TODO: this is fixed label modification just used for example file
+            } else {                  //non label free example            
+                //TODO: this is fixed label modification just used for example file
                 //TODO: need to find a better way to form this later
                 //find out if it is light or heavy label assay
                 if (assName.toLowerCase(Locale.ENGLISH).contains("light")) {
@@ -845,11 +845,10 @@ public class MaxquantMzquantmlConverter {
                 }
                 featureList.getFeature().add(feature);
                 featureAssNameMap.put(feature.getId(), rfn);
-            } /**
-             * *
-             * not label free
-             */
-            else {
+            } else {
+                /*
+                 * not label free
+                 */
                 Feature feature_L = new Feature();
                 Feature feature_H = new Feature();
                 /*

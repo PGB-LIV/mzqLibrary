@@ -103,7 +103,7 @@ public class RootLayoutController {
     private void handleOpen() {
         FileChooser fileChooser = new FileChooser();
 
-        if ((mainApp.getLastFilePath() != null) && mainApp.getLastFilePath().exists()) {
+        if (mainApp.getLastFilePath() != null && mainApp.getLastFilePath().exists()) {
             fileChooser.setInitialDirectory(mainApp.getLastFilePath());
         } else {
             fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));

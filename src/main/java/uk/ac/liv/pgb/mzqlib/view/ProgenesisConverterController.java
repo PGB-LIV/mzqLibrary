@@ -74,7 +74,7 @@ public class ProgenesisConverterController implements Initializable {
 //                  .message("Please select at least one list csv file!")
 //                  .showError();
         } else if ((!this.flFileTextField.getText().isEmpty() &&!this.flFileTextField.getText().endsWith(".csv"))
-                   || (!this.plFileTextField.getText().isEmpty() &&!this.plFileTextField.getText().endsWith(".csv"))) {    // Either of the file names is not end with ".csv"
+                   ||!this.plFileTextField.getText().isEmpty() &&!this.plFileTextField.getText().endsWith(".csv")) {    // Either of the file names is not end with ".csv"
             Alert alert = new Alert(AlertType.ERROR);
 
             alert.setTitle("Wrong file format");

@@ -76,9 +76,9 @@ public final class ProteinAbundanceInference {
                                                + outputProteinGroupDTAccession);
         }
 
-        if (!(outputProteinGroupDTAccession.substring(0, 3).equals(cvAccessionPrefix)
-                && (Integer.parseInt(outputCvAccessionSuffix) >= 0)
-                && (Integer.parseInt(outputCvAccessionSuffix) <= cvAccessionLastSevenNumMax))) {
+        if (!outputProteinGroupDTAccession.substring(0, 3).equals(cvAccessionPrefix)
+                && Integer.parseInt(outputCvAccessionSuffix) >= 0
+                && (Integer.parseInt(outputCvAccessionSuffix) <= cvAccessionLastSevenNumMax)) {
             throw new IllegalArgumentException("Wrong Output Protein Group CV Accession!!! "
                                                + outputProteinGroupDTAccession);
         }
@@ -153,9 +153,9 @@ public final class ProteinAbundanceInference {
                                                + outputProteinGroupDTAccession);
         }
 
-        if (!(outputProteinGroupDTAccession.substring(0, 3).equals(cvAccessionPrefix)
-                && (Integer.parseInt(outputCvAccessionSuffix) >= 0)
-                && (Integer.parseInt(outputCvAccessionSuffix) <= cvAccessionLastSevenNumMax))) {
+        if (!outputProteinGroupDTAccession.substring(0, 3).equals(cvAccessionPrefix)
+                && Integer.parseInt(outputCvAccessionSuffix) >= 0
+                && (Integer.parseInt(outputCvAccessionSuffix) <= cvAccessionLastSevenNumMax)) {
             throw new IllegalArgumentException("Wrong Output Protein Group CV Accession!!! "
                                                + outputProteinGroupDTAccession);
         }
@@ -254,7 +254,7 @@ public final class ProteinAbundanceInference {
 //      outputProteinGCN = "Progenesis: protein normalised abundance";
 //      outputRawProteinGCA = "MS:1002519";
 //      outputRawProteinGCN = "Progenesis: protein raw abundance";
-        if ((args.length != 8) && (args.length != 0)) {
+        if (args.length != 8 && args.length != 0) {
             System.out.println("Please input all eight parameters in order: input file, "
                                + "output file, quant layer type, input normalised peptide datatype CV accession,"
                                + "input raw peptide datatype CV accession, output protein group CV accession,"
@@ -361,7 +361,7 @@ public final class ProteinAbundanceInference {
     private boolean textHasContext(final String aText) {
         String EMPTY_STRING = "";
 
-        return (aText != null) &&!aText.trim().equals(EMPTY_STRING);
+        return aText != null &&!aText.trim().equals(EMPTY_STRING);
     }
 }
 

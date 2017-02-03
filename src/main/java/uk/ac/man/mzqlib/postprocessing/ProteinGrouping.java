@@ -47,7 +47,6 @@ public class ProteinGrouping {
 
 //              num = key.substring(12, key.length());
 //              int numi = Integer.parseInt(num) + no;
-
 //              String nums = Integer.toString(numi);
                 groupIO.put(key, "ProteinGroup" + no);
             }
@@ -61,7 +60,6 @@ public class ProteinGrouping {
 
 //              num = key.substring(11, key.length());
 //              int numi = Integer.parseInt(num) + no;
-
 //              String nums = Integer.toString(numi);
                 groupIO.put(key, "ProteinGroup" + no);
             }
@@ -305,7 +303,7 @@ public class ProteinGrouping {
                         proteins.add(protein);
                     }
                 }
-            } while ((peptideCount != peptides.size()) || (proteinCount != proteins.size()));
+            } while (peptideCount != peptides.size() || proteinCount != proteins.size());
 
             if (proteins.size() == 1) {
                 continue;

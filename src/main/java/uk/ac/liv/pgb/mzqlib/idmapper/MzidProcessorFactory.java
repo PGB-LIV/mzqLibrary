@@ -35,8 +35,6 @@ public class MzidProcessorFactory {
     private static final int                  SECONDS_PER_MINUTE = 60;
     private static final MzidProcessorFactory instance           = new MzidProcessorFactory();
 
-    private MzidProcessorFactory() {}
-
     /**
      * The method builds a MzidProcessor instance from an input mzIdentML file.
      *

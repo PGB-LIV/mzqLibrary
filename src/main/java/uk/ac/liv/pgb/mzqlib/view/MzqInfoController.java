@@ -60,11 +60,6 @@ public class MzqInfoController {
     private Label                              numberFeatureList;
 
     /**
-     * Constructor.
-     */
-    public MzqInfoController() {}
-
-    /**
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
      */

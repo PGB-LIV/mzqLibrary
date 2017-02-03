@@ -596,7 +596,7 @@ public class MaxquantFilesReader {
                             nextLine[posProt], nextLine[posRaw],
                             nextLine[posExp],
                             nextLine[posChr], nextLine[posMz], nextLine[posRet],
-                            nextLine[posInt]};// nextLine[posInt + 1], nextLine[posInt + 2]};
+                            nextLine[posInt]}; // nextLine[posInt + 1], nextLine[posInt + 2]};
                         valueList = Arrays.asList(values);
                         // Add intensity bunch
                         for (int i = 0; i < multiplicity; i++) {

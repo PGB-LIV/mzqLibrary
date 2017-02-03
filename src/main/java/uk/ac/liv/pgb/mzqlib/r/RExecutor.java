@@ -15,7 +15,7 @@ public class RExecutor {
     /**
      * Constant.
      */
-    public static final Rengine re = new Rengine(new String[] { "--vanilla" }, false, null);
+    public static final Rengine re = new Rengine(new String[]{"--vanilla"}, false, null);
     private final String        command;
     private final String[]      args;
     private StringBuilder       error;

@@ -65,8 +65,8 @@ public final class ProteinAbundanceInference {
         }
 
         if (!(inputDataTypeAccession.substring(0, 3).equals(cvAccessionPrefix))
-                ||!(Integer.parseInt(inputCvAccessionSuffix) >= 0)
-                ||!(Integer.parseInt(inputCvAccessionSuffix) <= cvAccessionLastSevenNumMax)) {
+                || !(Integer.parseInt(inputCvAccessionSuffix) >= 0)
+                || !(Integer.parseInt(inputCvAccessionSuffix) <= cvAccessionLastSevenNumMax)) {
             throw new IllegalArgumentException("Wrong Input Peptide Datatype CV Accession!!! "
                                                + inputDataTypeAccession);
         }
@@ -142,8 +142,8 @@ public final class ProteinAbundanceInference {
         }
 
         if (!(inputDataTypeAccession.substring(0, 3).equals(cvAccessionPrefix))
-                ||!(Integer.parseInt(inputCvAccessionSuffix) >= 0)
-                ||!(Integer.parseInt(inputCvAccessionSuffix) <= cvAccessionLastSevenNumMax)) {
+                || !(Integer.parseInt(inputCvAccessionSuffix) >= 0)
+                || !(Integer.parseInt(inputCvAccessionSuffix) <= cvAccessionLastSevenNumMax)) {
             throw new IllegalArgumentException("Wrong Input Peptide Datatype CV Accession!!! "
                                                + inputDataTypeAccession);
         }
@@ -361,7 +361,7 @@ public final class ProteinAbundanceInference {
     private boolean textHasContext(final String aText) {
         String EMPTY_STRING = "";
 
-        return aText != null &&!aText.trim().equals(EMPTY_STRING);
+        return aText != null && !aText.trim().equals(EMPTY_STRING);
     }
 }
 

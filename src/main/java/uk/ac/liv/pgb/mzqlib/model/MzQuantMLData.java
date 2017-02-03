@@ -19,11 +19,6 @@ public class MzQuantMLData {
     private MzQuantMLUnmarshaller                      mzQuantMLUnmarshaller;
 
     /**
-     * Constructor of MzQuantMLData.
-     */
-    public MzQuantMLData() {}
-
-    /**
      * Get MzQuantMLSummary.
      *
      * @return MzQuantMLSummary

@@ -39,8 +39,8 @@ public class HeatMapPdfController {
     private void handleHeatMapinR() {
         if (NumberUtils.isNumber(pdfH.getText())
                 && NumberUtils.isNumber(pdfW.getText())
-                &&!pdfH.getText().trim().equals("0")
-                &&!pdfW.getText().trim().equals("0")) {
+                && !pdfH.getText().trim().equals("0")
+                && !pdfW.getText().trim().equals("0")) {
 
             // mainApp.showHeatMapinR(Double.parseDouble(pdfH.getText()),
             // Double.parseDouble(pdfW.getText()));

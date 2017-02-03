@@ -112,7 +112,7 @@ public class CsvConverter extends GenericConverter {
         }
 
         // not just the obj artificially created
-        if (proteins.size() > 1 ||!MzqLib.DATA.getProteins().get(0).getAccession().equals(MzqData.ARTIFICIAL)) {
+        if (proteins.size() > 1 || !MzqLib.DATA.getProteins().get(0).getAccession().equals(MzqData.ARTIFICIAL)) {
             outputAssayAndSV(sb, MzqData.PROTEIN, proteins);
 
             if (MzqLib.DATA.control.isRequired(MzqData.PROTEIN, MzqData.RATIO, MzqData.RATIO_STRING)) {

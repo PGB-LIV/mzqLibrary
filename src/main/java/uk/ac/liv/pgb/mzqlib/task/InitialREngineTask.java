@@ -18,7 +18,7 @@ public class InitialREngineTask extends Task<Rengine> {
 
     @Override
     protected Rengine call() throws Exception {
-        re = new Rengine(new String[] { " ", " " }, false, null);
+        re = new Rengine(new String[]{" ", " "}, false, null);
         Platform.runLater(
             () -> {
                 RUtils.installRequiredPackages(re);

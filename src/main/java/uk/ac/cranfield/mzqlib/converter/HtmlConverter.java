@@ -140,7 +140,7 @@ public class HtmlConverter extends GenericConverter {
             sb.append("<li><b>");
             sb.append(cv.getName());
 
-            if (cv.getValue() != null && cv.getValue().length() > 1 &&!cv.getValue().equalsIgnoreCase("null")) {
+            if (cv.getValue() != null && cv.getValue().length() > 1 && !cv.getValue().equalsIgnoreCase("null")) {
                 sb.append(":</b> ");
                 sb.append(cv.getValue());
             } else {

@@ -191,7 +191,7 @@ public class MzidToMzqElementConverter {
             sDB.setDatabaseName(mzqDBNameParam);
         }
 
-        if (searchDatabase.getCvParam() != null &&!searchDatabase.getCvParam().isEmpty()) {
+        if (searchDatabase.getCvParam() != null && !searchDatabase.getCvParam().isEmpty()) {
             for (uk.ac.ebi.jmzidml.model.mzidml.CvParam cp : searchDatabase.getCvParam()) {
                 sDB.getCvParam().add(convertMzidCvParamToMzqCvParam(cp));
             }

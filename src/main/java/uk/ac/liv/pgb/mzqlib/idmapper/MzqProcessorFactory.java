@@ -35,8 +35,6 @@ public class MzqProcessorFactory {
     private static final MzqProcessorFactory instance  = new MzqProcessorFactory();
     private static final double              TOLERANCE = 0.1;
 
-    private MzqProcessorFactory() {}
-
     /**
      * The method builds a MzqProcessor instance from an input mzQuantML
      * unmarshaller and other parameters.
@@ -178,7 +176,7 @@ public class MzqProcessorFactory {
 
                 String mzidFileName = rawToMzidMap.get(rawFileName);
 
-                if (mzidFileName == null ||!(new File(mzidFileName).isFile())) {
+                if (mzidFileName == null || !(new File(mzidFileName).isFile())) {
                     throw new IllegalStateException("The raw file name \"" + rawFileName
                                                     + "\" which appears in mzq file cannot be found in rawToMzidMap "
                                                     + "or the related mzid file: \"" + mzidFileName

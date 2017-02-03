@@ -48,11 +48,6 @@ public class MzqLib {
     // call the GUI
 
     /**
-     * Constructor.
-     */
-    public MzqLib() {}
-
-    /**
      * Call the converter.
      *
      * @param typeStr    File format of the output file from converter.
@@ -187,7 +182,6 @@ public class MzqLib {
 //          System.exit(1);
 //      }
 //      System.out.println("Validation successful for the file "+mzqFile);
-
         MzQuantMLUnmarshaller unmarshaller = new MzQuantMLUnmarshaller(file);
 
 //      <xsd:element name="AssayList" type="AssayListType" minOccurs="1" maxOccurs="1"/>

@@ -113,7 +113,7 @@ public class XlsConverter extends GenericConverter {
             }
 
             // not just the protein artificially created
-            if (proteins.size() > 1 ||!MzqLib.DATA.getProteins().get(0).getAccession().equals(MzqData.ARTIFICIAL)) {
+            if (proteins.size() > 1 || !MzqLib.DATA.getProteins().get(0).getAccession().equals(MzqData.ARTIFICIAL)) {
                 int index = 0;
 
                 index = outputAssayAndSV(MzqData.PROTEIN, proteinSheet, proteins);
@@ -283,7 +283,7 @@ public class XlsConverter extends GenericConverter {
         for (CvParam cv : MzqLib.DATA.getAnalysisSummary().getCvParam()) {
             metaSheet.addCell(new Label(0, rowCount, cv.getName(), boldFormat));
 
-            if (cv.getValue() != null && cv.getValue().length() > 1 &&!cv.getValue().equalsIgnoreCase("null")) {
+            if (cv.getValue() != null && cv.getValue().length() > 1 && !cv.getValue().equalsIgnoreCase("null")) {
                 metaSheet.addCell(new Label(1, rowCount, cv.getValue(), normalFormat));
             }
 

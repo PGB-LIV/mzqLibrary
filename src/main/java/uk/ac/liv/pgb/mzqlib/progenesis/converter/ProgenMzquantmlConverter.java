@@ -141,7 +141,7 @@ public class ProgenMzquantmlConverter {
     //
     final DecimalFormat format = new DecimalFormat("#.###");
     List<String> assayListFrReader;
-    Set<String> proteinList; //list of protein accessions from either feature list or protein list; 
+    Set<String> proteinList; //list of protein accessions from either feature list or protein list;
     Software software;
     Map<String, String> rawFileNameIdMap;
     Label label;
@@ -490,7 +490,7 @@ public class ProgenMzquantmlConverter {
             rawFilesGroup.setId("rg_" + rawFileNameIdMap.get(assName + ".raw").
                     substring(4));
             assay.setRawFilesGroup(rawFilesGroup);
-            //rawFilesGroupRef.add(rawFilesGroup);    
+            //rawFilesGroupRef.add(rawFilesGroup);
             assay.setLabel(label);
             assays.add(assay);
             assI++;

@@ -21,36 +21,6 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.Row;
  */
 public class Utils {
 
-//  public static int findMedian(double[] a,int left,int right){ 
-//      int index = 0; 
-//      int mid = (left+right)/2; 
-//      index = partition(a,left,right); 
-//      while( index != mid){ 
-//          if(index < mid) 
-//              index = partition(a,mid,right); 
-//          else index = partition(a,left,mid); 
-//      } 
-//      return index; 
-//  } 
-//  
-//  public static int partition(double[] a,int i,int j ){ 
-//      int pivot = (i+j)/2; 
-//      double temp; 
-//      while(i <= j){ 
-//          while(a[i] < a[pivot]) 
-//              i++; 
-//          while(a[j] > a[pivot]) 
-//              j--; 
-//          if(i <= j){ 
-//              temp = a[i]; 
-//              a[i]=a[j]; 
-//              a[j] = temp; 
-//              i++;j--; 
-//          } 
-//      } 
-//      return pivot; 
-//  } 
-
     /**
      * calculate vector mean value
      *

@@ -346,10 +346,10 @@ public class MaxquantMzquantmlConverter {
         Iterator iRaw = maxRd.getRawFileList().iterator();
         rawFileNameIdMap = new HashMap<>();
         Map<String, List<String>> rgIdrawIdMap = new HashMap<>();
-        int raw_i = 0;
+        int rawI = 0;
         while (iRaw.hasNext()) {
             String rawFn = (String) iRaw.next();
-            String rawId = "raw_" + Integer.toString(raw_i);
+            String rawId = "raw_" + Integer.toString(rawI);
             RawFilesGroup rawFilesGroup = new RawFilesGroup();
             List<RawFile> rawFilesList = rawFilesGroup.getRawFile();
             RawFile rawFile = new RawFile();
@@ -363,7 +363,7 @@ public class MaxquantMzquantmlConverter {
             rawFileNameIdMap.put(rawFn, rawId);
             rawFilesList.add(rawFile);
 
-            String rgId = "rg_" + Integer.toString(raw_i);
+            String rgId = "rg_" + Integer.toString(rawI);
             rawFilesGroup.setId(rgId);
             rawFilesGroupList.add(rawFilesGroup);
 
@@ -378,7 +378,7 @@ public class MaxquantMzquantmlConverter {
             }
             rawIds.add(rawId);
 
-            raw_i++;
+            rawI++;
         }
 
         //add search databases
@@ -391,11 +391,11 @@ public class MaxquantMzquantmlConverter {
         List<Assay> assays = assayList.getAssay();
         Iterator iAss = maxRd.getAssayList().iterator();
         assayNameIdMap = new HashMap<>();
-        int ass_i = 0;
+        int assI = 0;
         while (iAss.hasNext()) {
             Assay assay = new Assay();
             String assName = (String) iAss.next();
-            String assId = "ass_" + Integer.toString(ass_i);
+            String assId = "ass_" + Integer.toString(assI);
             assay.setId(assId);
             assay.setName(assName);
             assayNameIdMap.put(assName, assId);
@@ -424,31 +424,31 @@ public class MaxquantMzquantmlConverter {
                     assay.setLabel(label);
                     assays.add(assay);
                 } else if (assName.toLowerCase(Locale.ENGLISH).contains("heavy")) {
-                    Label label_heavy = new Label();
-                    CvParam label_lysine = new CvParam();
-                    label_lysine.setAccession("MOD:00582");
-                    label_lysine.setName("6x(13)C,2x(15)N labeled L-lysine");
-                    label_lysine.setCv(cvMod);
-                    label_lysine.setValue("Lys8");
+                    Label labelHeavy = new Label();
+                    CvParam labelLysine = new CvParam();
+                    labelLysine.setAccession("MOD:00582");
+                    labelLysine.setName("6x(13)C,2x(15)N labeled L-lysine");
+                    labelLysine.setCv(cvMod);
+                    labelLysine.setValue("Lys8");
 
-                    CvParam label_arginine = new CvParam();
-                    label_arginine.setAccession("MOD:00587");
-                    label_arginine.setName("6x(13)C,4x(15)N labeled L-arginine");
-                    label_arginine.setCv(cvMod);
-                    label_arginine.setValue("Arg10");
+                    CvParam labelArginine = new CvParam();
+                    labelArginine.setAccession("MOD:00587");
+                    labelArginine.setName("6x(13)C,4x(15)N labeled L-arginine");
+                    labelArginine.setCv(cvMod);
+                    labelArginine.setValue("Arg10");
 
-                    ModParam modParam_lysine = new ModParam();
-                    modParam_lysine.setCvParam(label_lysine);
-                    label_heavy.getModification().add(modParam_lysine);
+                    ModParam modParamLysine = new ModParam();
+                    modParamLysine.setCvParam(labelLysine);
+                    labelHeavy.getModification().add(modParamLysine);
 
-                    ModParam modParam_arginine = new ModParam();
-                    modParam_arginine.setCvParam(label_arginine);
-                    label_heavy.getModification().add(modParam_arginine);
+                    ModParam modParamArginine = new ModParam();
+                    modParamArginine.setCvParam(labelArginine);
+                    labelHeavy.getModification().add(modParamArginine);
 
-                    assay.setLabel(label_heavy);
+                    assay.setLabel(labelHeavy);
                     assays.add(assay);
                 }
-                ass_i++;
+                assI++;
             }
         }
     }
@@ -496,18 +496,18 @@ public class MaxquantMzquantmlConverter {
                     "simple ratio of two values", "PSI-MS", "MS:1001848"));
             ratio.setRatioCalculation(ratioCalculations);
 
-            CvParamRef denom_ref = new CvParamRef();
-            denom_ref.setCvParam(createCvParam("MaxQuant:feature intensity",
+            CvParamRef denomRef = new CvParamRef();
+            denomRef.setCvParam(createCvParam("MaxQuant:feature intensity",
                                                "PSI-MS", "MS:1001903"));
-            ratio.setDenominatorDataType(denom_ref);
+            ratio.setDenominatorDataType(denomRef);
 
-            CvParamRef numer_ref = new CvParamRef();
-            numer_ref.setCvParam(createCvParam("MaxQuant:feature intensity",
+            CvParamRef numerRef = new CvParamRef();
+            numerRef.setCvParam(createCvParam("MaxQuant:feature intensity",
                                                "PSI-MS", "MS:1001903"));
-            ratio.setNumeratorDataType(numer_ref);
+            ratio.setNumeratorDataType(numerRef);
 
             // TODO: a not very smart way to map denominator_ref and numerator_ref
-            // TODO: to StudyVariable or Assay. 
+            // TODO: to StudyVariable or Assay.
             // TODO: This is only fixed to H/L ratio
             // TODO: need to re-code
             List<String> primeStudyVars = maxRd.getPrimeStudyVariableList();
@@ -584,12 +584,12 @@ public class MaxquantMzquantmlConverter {
          */
         // AssayQuantLayer for protein intensity if it is label free example
         if (maxRd.isLabelFree()) {
-            QuantLayer assayQL_prot_int = new QuantLayer();
-            assayQL_prot_int.setId("Prot_Assay_QL1");
-            CvParamRef cvParamRef_prot_int = new CvParamRef();
-            cvParamRef_prot_int.setCvParam(createCvParam(
+            QuantLayer assayQLProtInt = new QuantLayer();
+            assayQLProtInt.setId("Prot_Assay_QL1");
+            CvParamRef cvParamRefProtInt = new CvParamRef();
+            cvParamRefProtInt.setCvParam(createCvParam(
                     "MaxQuant:feature intensity", "PSI-MS", "MS:1001903"));
-            assayQL_prot_int.setDataType(cvParamRef_prot_int);
+            assayQLProtInt.setDataType(cvParamRefProtInt);
 
             Iterator iAss = maxRd.getAssayList().iterator();
             while (iAss.hasNext()) {
@@ -597,7 +597,7 @@ public class MaxquantMzquantmlConverter {
                 String assId = assayNameIdMap.get(assName);
                 Assay assay = new Assay();
                 assay.setId(assId);
-                assayQL_prot_int.getColumnIndex().add(assId);
+                assayQLProtInt.getColumnIndex().add(assId);
             }
 
             DataMatrix protIntDM = new DataMatrix();
@@ -624,31 +624,31 @@ public class MaxquantMzquantmlConverter {
                     protIntDM.getRow().add(row);
                 }
             }
-            assayQL_prot_int.setDataMatrix(protIntDM);
-            protList.getAssayQuantLayer().add(assayQL_prot_int);
+            assayQLProtInt.setDataMatrix(protIntDM);
+            protList.getAssayQuantLayer().add(assayQLProtInt);
         }
 
         // StudyVariableQuantLayer for protein intensity if it is NOT label free example
         if (!maxRd.isLabelFree()) {
             //int labelNum = maxRd.getLabelNumber();
-            QuantLayer assayQL_prot_int = new QuantLayer();
-            assayQL_prot_int.setId("Prot_StudyVariable_QL1");
-            CvParamRef cvParamRef_prot_int = new CvParamRef();
-            cvParamRef_prot_int.setCvParam(createCvParam(
+            QuantLayer assayQLProtInt = new QuantLayer();
+            assayQLProtInt.setId("Prot_StudyVariable_QL1");
+            CvParamRef cvParamRefProtInt = new CvParamRef();
+            cvParamRefProtInt.setCvParam(createCvParam(
                     "MaxQuant:feature intensity", "PSI-MS", "MS:1001903"));
-            assayQL_prot_int.setDataType(cvParamRef_prot_int);
+            assayQLProtInt.setDataType(cvParamRefProtInt);
 
             Iterator iPrimeStu = maxRd.getPrimeStudyVariableList().iterator();
             while (iPrimeStu.hasNext()) {
                 String studyVariableName = (String) iPrimeStu.next();
 
-                StudyVariable studyVariable_L = new StudyVariable();
-                studyVariable_L.setId("SV_" + studyVariableName + "_L");
-                assayQL_prot_int.getColumnIndex().add(studyVariable_L.getId());
+                StudyVariable studyVariableL = new StudyVariable();
+                studyVariableL.setId("SV_" + studyVariableName + "_L");
+                assayQLProtInt.getColumnIndex().add(studyVariableL.getId());
 
-                StudyVariable studyVariable_H = new StudyVariable();
-                studyVariable_H.setId("SV_" + studyVariableName + "_H");
-                assayQL_prot_int.getColumnIndex().add(studyVariable_H.getId());
+                StudyVariable studyVariableH = new StudyVariable();
+                studyVariableH.setId("SV_" + studyVariableName + "_H");
+                assayQLProtInt.getColumnIndex().add(studyVariableH.getId());
             }
 
             DataMatrix protIntDM = new DataMatrix();
@@ -674,18 +674,18 @@ public class MaxquantMzquantmlConverter {
                     protIntDM.getRow().add(row);
                 }
             }
-            assayQL_prot_int.setDataMatrix(protIntDM);
-            protList.getStudyVariableQuantLayer().add(assayQL_prot_int);
+            assayQLProtInt.setDataMatrix(protIntDM);
+            protList.getStudyVariableQuantLayer().add(assayQLProtInt);
         }
 
         //AssayQuantLayer for unique peptides if it is label-free example
         if (maxRd.isLabelFree()) {
-            QuantLayer assayQL_prot_uniqpep = new QuantLayer();
-            assayQL_prot_uniqpep.setId("Prot_Assay_QL2");
-            CvParamRef cvParamRef_prot_uniqpep = new CvParamRef();
-            cvParamRef_prot_uniqpep.setCvParam(createCvParam(
+            QuantLayer assayQLProtUniqpep = new QuantLayer();
+            assayQLProtUniqpep.setId("Prot_Assay_QL2");
+            CvParamRef cvParamRefProtUniqpep = new CvParamRef();
+            cvParamRefProtUniqpep.setCvParam(createCvParam(
                     "MaxQuant:peptide counts (unique)", "PSI-MS", "MS:1001897"));
-            assayQL_prot_uniqpep.setDataType(cvParamRef_prot_uniqpep);
+            assayQLProtUniqpep.setDataType(cvParamRefProtUniqpep);
 
             Iterator iAss = maxRd.getAssayList().iterator();
             while (iAss.hasNext()) {
@@ -693,7 +693,7 @@ public class MaxquantMzquantmlConverter {
                 String assId = assayNameIdMap.get(assName);
                 Assay assay = new Assay();
                 assay.setId(assId);
-                assayQL_prot_uniqpep.getColumnIndex().add(assId);
+                assayQLProtUniqpep.getColumnIndex().add(assId);
             }
 
             DataMatrix protUniqPepDM = new DataMatrix();
@@ -719,8 +719,8 @@ public class MaxquantMzquantmlConverter {
                     protUniqPepDM.getRow().add(row);
                 }
             }
-            assayQL_prot_uniqpep.setDataMatrix(protUniqPepDM);
-            protList.getAssayQuantLayer().add(assayQL_prot_uniqpep);
+            assayQLProtUniqpep.setDataMatrix(protUniqPepDM);
+            protList.getAssayQuantLayer().add(assayQLProtUniqpep);
         }
 
         protList.setId("ProtL1");
@@ -740,9 +740,9 @@ public class MaxquantMzquantmlConverter {
             int key = iEvd.key();
             List<String> value = iEvd.value();
 
-            //TODO: revisit key_H 
-            // @key_H is the id number for heavy label created artificial 
-            String key_H = String.valueOf(key + evidenceMap.size());
+            //TODO: revisit key_H
+            // @key_H is the id number for heavy label created artificial
+            String keyH = String.valueOf(key + evidenceMap.size());
 
             if (maxRd.isLabelFree()) {
 
@@ -823,11 +823,11 @@ public class MaxquantMzquantmlConverter {
                     featureQuantLayer.setColumnDefinition(featureColumnIndex);
 
                     // cvParam for intensity
-                    Column featureColumn_int
+                    Column featureColumnInt
                             = createColumn(0, createCvParam(
                                            "MaxQuant:feature intensity",
                                            "PSI-MS", "MS:1001903"));
-                    featureColumnIndex.getColumn().add(featureColumn_int);
+                    featureColumnIndex.getColumn().add(featureColumnInt);
 
                     Row row = new Row();
                     row.setObject(feature);
@@ -849,8 +849,8 @@ public class MaxquantMzquantmlConverter {
                 /*
                  * not label free
                  */
-                Feature feature_L = new Feature();
-                Feature feature_H = new Feature();
+                Feature featureL = new Feature();
+                Feature featureH = new Feature();
                 /*
                  * The positions for features in non label free example are:
                  * (0)Sequence,
@@ -879,27 +879,27 @@ public class MaxquantMzquantmlConverter {
                 }
 
                 // light label feature
-                feature_L.setMz(Double.parseDouble(mz));
-                feature_L.setRt(reten);
-                feature_L.setCharge(chr);
+                featureL.setMz(Double.parseDouble(mz));
+                featureL.setRt(reten);
+                featureL.setCharge(chr);
 
-                String ftId_L = "ft_" + key;
-                feature_L.setId(ftId_L);
+                String ftIdL = "ft_" + key;
+                featureL.setId(ftIdL);
 
                 // heavey label feature
-                //TODO: this mass shift is artificial 
+                //TODO: this mass shift is artificial
                 double massShift = 18;
-                double mz_H = Double.parseDouble(mz) + massShift / Double.
+                double mzH = Double.parseDouble(mz) + massShift / Double.
                         parseDouble(chr);
-                feature_H.setMz(mz_H);
+                featureH.setMz(mzH);
 
                 //TODO: retention time is also artifical
-                feature_H.setRt(reten);
+                featureH.setRt(reten);
 
-                feature_H.setCharge(chr);
+                featureH.setCharge(chr);
 
-                String ftId_H = "ft_" + key_H;
-                feature_H.setId(ftId_H);
+                String ftIdH = "ft_" + keyH;
+                featureH.setId(ftIdH);
 
                 // create peptide sequence to feture HashMap: peptideFeaturesMap
                 String pepSeq = value.get(0);
@@ -909,8 +909,8 @@ public class MaxquantMzquantmlConverter {
                         fList = new ArrayList<>();
                         peptideFeaturesMap.put(pepSeq, fList);
                     }
-                    fList.add(feature_L);
-                    fList.add(feature_H);
+                    fList.add(featureL);
+                    fList.add(featureH);
                 }
 
                 String rgId = "rg_" + rawFileNameIdMap.get(rfn + ".raw").
@@ -963,43 +963,43 @@ public class MaxquantMzquantmlConverter {
                     featureQuantLayer.setColumnDefinition(featureColumnIndex);
 
                     // cvParam for intensity
-                    Column featureColumn_int
+                    Column featureColumnInt
                             = createColumn(0, createCvParam(
                                            "MaxQuant:feature intensity",
                                            "PSI-MS", "MS:1001903"));
-                    featureColumnIndex.getColumn().add(featureColumn_int);
+                    featureColumnIndex.getColumn().add(featureColumnInt);
 
-                    Row row_L = new Row();
-                    row_L.setObject(feature_L);
-                    row_L.getValue().add(intensityL);
+                    Row rowL = new Row();
+                    rowL.setObject(featureL);
+                    rowL.getValue().add(intensityL);
 
                     //TODO: this is artificial row for heavy label
-                    Row row_H = new Row();
-                    row_H.setObject(feature_H);
-                    row_H.getValue().add(intensityH);
+                    Row rowH = new Row();
+                    rowH.setObject(featureH);
+                    rowH.getValue().add(intensityH);
 
                     DataMatrix dataMatrix = new DataMatrix();
-                    dataMatrix.getRow().add(row_L);
-                    dataMatrix.getRow().add(row_H);
+                    dataMatrix.getRow().add(rowL);
+                    dataMatrix.getRow().add(rowH);
                     featureQuantLayer.setDataMatrix(dataMatrix);
                 } else {
-                    Row row_L = new Row();
-                    row_L.setObject(feature_L);
-                    row_L.getValue().add(intensityL);
+                    Row rowL = new Row();
+                    rowL.setObject(featureL);
+                    rowL.getValue().add(intensityL);
                     featureList.getFeatureQuantLayer().get(0).getDataMatrix().
-                            getRow().add(row_L);
+                            getRow().add(rowL);
 
                     //TODO: this is artificial row for heavy label
-                    Row row_H = new Row();
-                    row_H.setObject(feature_H);
-                    row_H.getValue().add(intensityH);
+                    Row rowH = new Row();
+                    rowH.setObject(featureH);
+                    rowH.getValue().add(intensityH);
                     featureList.getFeatureQuantLayer().get(0).getDataMatrix().
-                            getRow().add(row_H);
+                            getRow().add(rowH);
                 }
-                featureList.getFeature().add(feature_L);
-                featureList.getFeature().add(feature_H);
-                featureAssNameMap.put(feature_L.getId(), rfn + "_Light");
-                featureAssNameMap.put(feature_H.getId(), rfn + "_Heavy");
+                featureList.getFeature().add(featureL);
+                featureList.getFeature().add(featureH);
+                featureAssNameMap.put(featureL.getId(), rfn + "_Light");
+                featureAssNameMap.put(featureH.getId(), rfn + "_Heavy");
             } // end for non label free
         }
     }
@@ -1015,8 +1015,8 @@ public class MaxquantMzquantmlConverter {
         Map<String, List<String>> peptideFeatureIdsMap = maxRd.
                 getPeptideEvidenceIdsMap();
 
-        DataMatrix pep_IntDM = new DataMatrix();
-        DataMatrix pep_RatioDM = new DataMatrix();
+        DataMatrix pepIntDM = new DataMatrix();
+        DataMatrix pepRatioDM = new DataMatrix();
 
         while (iPep.hasNext()) {
             PeptideConsensus peptideConsensus = new PeptideConsensus();
@@ -1061,10 +1061,10 @@ public class MaxquantMzquantmlConverter {
 
                         //add assay_refs
                         String assN = featureAssNameMap.get(f.getId());
-                        String ass_id = assayNameIdMap.get(assN);
+                        String assId = assayNameIdMap.get(assN);
 
                         Assay tempAssay = new Assay();
-                        tempAssay.setId(ass_id);
+                        tempAssay.setId(assId);
                         tempAssay.setName(assN);
                         evRef.getAssays().add(tempAssay);
                     }
@@ -1084,7 +1084,7 @@ public class MaxquantMzquantmlConverter {
                             row.getValue().add(intKey);
                         }
                     }
-                    pep_IntDM.getRow().add(row);
+                    pepIntDM.getRow().add(row);
                 }
 
                 // create DataMatrix of RatioQuantLayer for non label free example
@@ -1092,10 +1092,10 @@ public class MaxquantMzquantmlConverter {
                     Map<String, List<String>> peptideToRatioMap = maxRd.
                             getPeptideRatioMap();
                     List<String> ratioValues = peptideToRatioMap.get(key);
-                    Row row_ratio = new Row();
-                    row_ratio.setObject(peptideConsensus);
-                    row_ratio.getValue().addAll(ratioValues);
-                    pep_RatioDM.getRow().add(row_ratio);
+                    Row rowRatio = new Row();
+                    rowRatio.setObject(peptideConsensus);
+                    rowRatio.getValue().addAll(ratioValues);
+                    pepRatioDM.getRow().add(rowRatio);
                 }
 
                 peptideList.add(peptideConsensus);
@@ -1105,12 +1105,12 @@ public class MaxquantMzquantmlConverter {
         /*
          * add AssayQuantLayer to peptides
          */
-        QuantLayer pepAQL_int = new QuantLayer();
-        pepAQL_int.setId("Pep_AQL_1");
-        CvParamRef cvParamRef_pep_aql_int = new CvParamRef();
-        cvParamRef_pep_aql_int.setCvParam(createCvParam(
+        QuantLayer pepAQLInt = new QuantLayer();
+        pepAQLInt.setId("Pep_AQL_1");
+        CvParamRef cvParamRefPepAqlInt = new CvParamRef();
+        cvParamRefPepAqlInt.setCvParam(createCvParam(
                 "MaxQuant:feature intensity", "PSI-MS", "MS:1001903"));
-        pepAQL_int.setDataType(cvParamRef_pep_aql_int);
+        pepAQLInt.setDataType(cvParamRefPepAqlInt);
 
         Iterator iAss = maxRd.getAssayList().iterator();
         while (iAss.hasNext()) {
@@ -1118,10 +1118,10 @@ public class MaxquantMzquantmlConverter {
             String assId = assayNameIdMap.get(assName);
             Assay assay = new Assay();
             assay.setId(assId);
-            pepAQL_int.getColumnIndex().add(assId);
+            pepAQLInt.getColumnIndex().add(assId);
         }
-        pepAQL_int.setDataMatrix(pep_IntDM);
-        peptideConsensusList.getAssayQuantLayer().add(pepAQL_int);
+        pepAQLInt.setDataMatrix(pepIntDM);
+        peptideConsensusList.getAssayQuantLayer().add(pepAQLInt);
 
         /*
          * add RatioQuantLayer to peptides if not lable free
@@ -1130,7 +1130,7 @@ public class MaxquantMzquantmlConverter {
             RatioQuantLayer pepRQL = new RatioQuantLayer();
             pepRQL.setId("Pep_RQL_1");
 
-            pepRQL.setDataMatrix(pep_RatioDM);
+            pepRQL.setDataMatrix(pepRatioDM);
             for (Ratio ratio : ratioList.getRatio()) {
                 pepRQL.getColumnIndex().add(ratio.getId());
             }

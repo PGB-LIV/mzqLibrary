@@ -417,7 +417,7 @@ public class MztabConverter extends GenericConverter {
                         PeptideColumn.SEARCH_ENGINE_SCORE, 1, msrun);
             }
 
-            //assay and sv are mandatory 
+            //assay and sv are mandatory
             for (uk.ac.ebi.pride.jmztab.model.Assay tabAssay : tabAssays) {
                 proFactory.addAbundanceOptionalColumn(tabAssay);
             }
@@ -757,8 +757,8 @@ public class MztabConverter extends GenericConverter {
                         tabPep.setMassToCharge(Utils.mean(mzs));
                         //optional field in all cases: uri
                         //mandatory field in complete quantification mode MS2 only: spectrum_ref
-                        //The reference must be in the format ms_run[1-n]:{SPECTRA_REF} 
-                        //where SPECTRA_REF MUST follow the format defined in 5.2. 
+                        //The reference must be in the format ms_run[1-n]:{SPECTRA_REF}
+                        //where SPECTRA_REF MUST follow the format defined in 5.2.
                         //Multiple spectra MUST be referenced using a “|” delimited list.
                         if (!spectrum_refs.isEmpty()) {
                             tabPep.setSpectraRef(spectrum_refs);

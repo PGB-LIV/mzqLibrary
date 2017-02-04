@@ -646,7 +646,7 @@ public class MaxquantFilesReader {
                         posUniqPep = i;
                     }
                 }
-                // adjust posUniqPep to point one position AHEAD OF the first title containing "unique peptides"; 
+                // adjust posUniqPep to point one position AHEAD OF the first title containing "unique peptides";
                 // this trick only works for Label free example as SILAC doesn't need to report "unique peptides" (not true, see Ian's data)
                 if (multiplicity == 0) {
                     posUniqPep = posUniqPep - assays.size();

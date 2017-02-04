@@ -488,7 +488,7 @@ public class MzqMzIdMapperFactory {
                         evdRefs = pepCon.getEvidenceRef();
                         for (EvidenceRef evdRef : evdRefs) {
                             evdRef.setIdRefs(null); //remove previous reference
-                            evdRef.setIdentificationFile(null); // reset IdentificationFile;                       
+                            evdRef.setIdentificationFile(null); // reset IdentificationFile;
                         }
                         UserParam userParam = new UserParam();
                         //userParam.setValue();
@@ -558,7 +558,7 @@ public class MzqMzIdMapperFactory {
             private static final long serialVersionUID = 30L;
 
             @Override
-            // descending 
+            // descending
             public int compare(final Entry<String, List<String>> o1,
                                final Entry<String, List<String>> o2) {
                 List<String> key1 = o1.getValue();
@@ -577,7 +577,7 @@ public class MzqMzIdMapperFactory {
             //String mzqName = mzqUm.getMzQuantMLName();
             //String mzqVersion = mzqUm.getMzQuantMLVersion();
 
-            // three ways of unmarshalling an mzQuantML element: 
+            // three ways of unmarshalling an mzQuantML element:
             CvList cvList = mzqUm.unmarshal(
                     CvList.class); //1. class name
             Provider provider = mzqUm.unmarshal(MzQuantMLElement.Provider);
@@ -625,7 +625,7 @@ public class MzqMzIdMapperFactory {
             for (String mzidFileName : rawToMzidMap.values()) {
                 IdentificationFile idFile = new IdentificationFile();
                 idFile.setFileFormat(ff);
-                //String id = "idfile_" + count;                
+                //String id = "idfile_" + count;
                 String id = mzidFnToFileIdMap.get(new File(mzidFileName).
                         getName());
                 idFile.setId(id);

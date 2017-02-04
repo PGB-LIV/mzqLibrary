@@ -177,7 +177,7 @@ public class MzqQLAnova {
         // retrieve every attributes and elements from the mzQuantML file
         String mzqId = mzqUm.getMzQuantMLId();
 
-        // three ways of unmarshalling an mzQuantML element: 
+        // three ways of unmarshalling an mzQuantML element:
         CvList cvList = mzqUm.unmarshal(MzQuantMLElement.CvList);
         AuditCollection ac = mzqUm.unmarshal(MzQuantMLElement.AuditCollection);
         AnalysisSummary as = mzqUm.unmarshal(MzQuantMLElement.AnalysisSummary);
@@ -468,7 +468,7 @@ public class MzqQLAnova {
             // Get doulbeArrayList for ANOVA calculation
             for (TIntList posList : assayPosListList) {
                 TDoubleList doubleList = new TDoubleArrayList();
-                //Count number of zero in 
+                //Count number of zero in
                 MutableInt numberOfZero = new MutableInt(0);
                 posList.forEach((int pos) -> {
                     String valueString = valueList.get(pos);

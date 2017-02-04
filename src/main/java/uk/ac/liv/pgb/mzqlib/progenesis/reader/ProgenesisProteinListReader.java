@@ -189,10 +189,6 @@ public class ProgenesisProteinListReader implements Closeable {
 
             confidenceMap.put(currentK, conf);
 
-//          if (NumberUtils.isNumber(nextLine[pos_conf])) {
-//              confidenceMap.put(currentK, Double.parseDouble(nextLine[pos_conf]));
-//          }            
-
             double anova = getDoubleOrNaN(nextLine[pos_anova]);
 
             anovaMap.put(currentK, anova);

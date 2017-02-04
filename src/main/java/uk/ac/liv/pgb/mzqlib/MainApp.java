@@ -513,7 +513,7 @@ public class MainApp extends Application {
                     + "install.packages(\"RColorBrewer\")\n"
                     + "}");
 
-            // Require package gplots      
+            // Require package gplots
             re.eval("if (!require(\"gplots\")) {\n"
                     + "install.packages(\"gplots\", dependencies = TRUE)\n"
                     + "}");
@@ -546,7 +546,7 @@ public class MainApp extends Application {
                         + "install.packages(\"RColorBrewer\")\n"
                         + "}");
 
-                // Require package gplots      
+                // Require package gplots
                 re.eval("if (!require(\"gplots\")) {\n"
                         + "install.packages(\"gplots\", dependencies = TRUE)\n"
                         + "}");
@@ -1063,7 +1063,7 @@ public class MainApp extends Application {
                 gui.setTitle("Mzq library command line GUI");
                 gui.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 gui.setVisible(true);
-            } catch (ClassNotFoundException | InstantiationException 
+            } catch (ClassNotFoundException | InstantiationException
                     | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
                 Logger.getLogger(MainApp.class.getName()).
                         log(Level.SEVERE, null, ex);

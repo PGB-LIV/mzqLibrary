@@ -40,7 +40,7 @@ public class ProgenesisFeatureListReader implements Closeable {
 
     private BufferedReader br;
     //
-    // The title header rows  in feature list file.  
+    // The title header rows  in feature list file.
     private static final int ROW1 = -2; // 1st row
     private static final int ROW2 = -1; // 2nd row
     private static final int ROW3 = 0;  // 3rd row
@@ -122,7 +122,7 @@ public class ProgenesisFeatureListReader implements Closeable {
                         FeatureListHeaders.INTENSITY)) {
                     intensityStart = i;
                 } else if (nextLine[i].toLowerCase(Locale.ENGLISH).contains(
-                        FeatureListHeaders.SAMPLE_RETENTION_TIME)) {    // Column of 'Sample retention time (min)'                        
+                        FeatureListHeaders.SAMPLE_RETENTION_TIME)) {    // Column of 'Sample retention time (min)'
                     retTimeStart = i;
                     break;
                 }

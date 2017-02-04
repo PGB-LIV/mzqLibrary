@@ -53,7 +53,7 @@ public class InitialREngineTask extends Task<Rengine> {
 //
 //              this.re.eval(installString);
 //
-//              //Sometimes, R will recommand user to install in user documentation folder. 
+//              //Sometimes, R will recommand user to install in user documentation folder.
 //              //If user choose 'NO', the package will not be installed.
 //              //The code below will check this.
 //              uninstalled = this.re.eval(condition).asBool();

@@ -99,7 +99,7 @@ public class NormalisationMultiThreading {
 
         // input range version
 //      PepProtAbundanceNormalisation workTask = new PepProtAbundanceNormalisation(inputFile,
-//              outputFile, processingLevel, quantLayerType, inDataTypeAccession, outDataTypeAccession, 
+//              outputFile, processingLevel, quantLayerType, inDataTypeAccession, outDataTypeAccession,
 //              decoyTag, assayMin, assayMax);
         PepProtAbundanceNormalisation workTask = new PepProtAbundanceNormalisation(inputFile,
                                                                                    outputFile,

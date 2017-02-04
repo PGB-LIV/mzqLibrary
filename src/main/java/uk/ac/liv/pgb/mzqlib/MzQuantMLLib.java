@@ -331,7 +331,7 @@ public class MzQuantMLLib implements Serializable {
      */
     public String userFeedback = "java -jar jar-location/mzqlib-version.jar ";
 
-    // Added by Fawaz Ghali to automatically update the MzidLib GUI 
+    // Added by Fawaz Ghali to automatically update the MzidLib GUI
     private final Map<String, String> allFunctions;
 
     //TODO: changed from 3 to 2 by Da 16/09/2014
@@ -404,7 +404,7 @@ public class MzQuantMLLib implements Serializable {
 
             mzqLib.init(args);
 
-        } catch (IOException | JAXBException | DatatypeConfigurationException 
+        } catch (IOException | JAXBException | DatatypeConfigurationException
                 | InterruptedException ex) {
             Logger.getLogger(MzQuantMLLib.class.getName()).log(
                     Level.SEVERE, null, ex);

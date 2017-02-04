@@ -59,12 +59,12 @@ public class PepProtAbundanceNormalisation {
             = new HashMap<>();
     //private Map<String, List<String>> proteinAssayValues;
 
-    static final double thresholdConfidence = 2;
-    static final double coefficientMAD = 1.4826; //scale factor, 
+    static final double THRESHOLD_CONFIDENCE = 2;
+    static final double COEFFICIENT_MAD = 1.4826; //scale factor
 
     private int maximumThreads = 4;
-    private final String in_file;
-    private final String out_file;
+    private final String inFile;
+    private final String outFile;
     private String normalisedLevel;
     private String quantLayerType;
     private String inputDataTypeAccession;
@@ -172,8 +172,8 @@ public class PepProtAbundanceNormalisation {
     /**
      * Constructor
      *
-     * @param in_file                 - input mzq file
-     * @param out_file                - output mzq file
+     * @param in                 - input mzq file
+     * @param out                - output mzq file
      * @param normalisedLevel         - level for normalization, Ex. "peptide"
      * @param quantLayerType          - quant layer type, Ex. "AssayQuantLayer"
      * @param inputDataTypeAccession  - input accession in CV parameters, Ex.
@@ -186,8 +186,8 @@ public class PepProtAbundanceNormalisation {
      *
      * @throws FileNotFoundException file not found exceptions.
      */
-    public PepProtAbundanceNormalisation(final String in_file,
-                                         final String out_file,
+    public PepProtAbundanceNormalisation(final String in,
+                                         final String out,
                                          final String normalisedLevel,
                                          final String quantLayerType,
                                          final String inputDataTypeAccession,
@@ -197,8 +197,8 @@ public class PepProtAbundanceNormalisation {
                                          final String userRef)
             throws FileNotFoundException {
 
-        this.in_file = in_file;
-        this.out_file = out_file;
+        this.inFile = in;
+        this.outFile = out;
         this.normalisedLevel = normalisedLevel;
         this.inputDataTypeAccession = inputDataTypeAccession;
         this.outputDataTypeAccession = outputDataTypeAccession;
@@ -288,8 +288,8 @@ public class PepProtAbundanceNormalisation {
      */
     private void init() {
 
-        boolean flag_labelFree = true;
-        boolean flag_assVal = true;
+        boolean flagLabelFree = true;
+        boolean flagAssVal = true;
 
         //scalingFactor = new HashMap<>();
         try {
@@ -312,9 +312,9 @@ public class PepProtAbundanceNormalisation {
         }
 
         //examine whether the data file comes from a label-free experiment.
-        flag_labelFree = checkLFcvParam(inFileUM);
+        flagLabelFree = checkLFcvParam(inFileUM);
 
-        if (flag_labelFree == false) {
+        if (flagLabelFree == false) {
 
             throw new IllegalStateException(
                     "The mzq file is not label-free!!! Please check the input file.");
@@ -326,14 +326,14 @@ public class PepProtAbundanceNormalisation {
         peptideAssayValues = peptideAssayValue("consensus");
 
         if (featureAssayValues.isEmpty()) {
-            flag_assVal = false;
+            flagAssVal = false;
         }
 
         if (peptideAssayValues.isEmpty()) {
-            flag_assVal = false;
+            flagAssVal = false;
         }
 
-        if (flag_assVal == false) {
+        if (flagAssVal == false) {
             throw new IllegalStateException(
                     "The desired assay quant layer in the input file is not found!!!");
         }
@@ -363,8 +363,8 @@ public class PepProtAbundanceNormalisation {
         }
 
         boolean flag = true;
-        int ass_start = 1;
-        int ass_end = assNo;
+        int assStart = 1;
+        int assEnd = assNo;
         Map<String, List<String>> normalisedPepAssayValTmp;
         Map<String, List<String>> normalisedFeatureAssayValTmp;
         List<String> sfv;
@@ -377,7 +377,7 @@ public class PepProtAbundanceNormalisation {
 //        multi-threading will start if no user reference is input.
         if (userRef == null) {
             Set<ScaleFactorCalculation> calculations = new HashSet<>();
-            for (int ref = ass_start; ref <= ass_end; ref++) {
+            for (int ref = assStart; ref <= assEnd; ref++) {
                 calculations.add(new ScaleFactorCalculation(ref));
             }
 
@@ -427,7 +427,7 @@ public class PepProtAbundanceNormalisation {
                 String[] sfValue = sfv.toArray(new String[pepSizeTmp]);
 
                 //calculate the normalisation values of all features
-                //Note: apply the scaling factors to all features although they are 
+                //Note: apply the scaling factors to all features although they are
                 //created depending on the choice of peptide or features.
                 normalisedFeatureAssayValTmp = normalisedFeatureAssayValue(
                         sfValue);
@@ -472,9 +472,9 @@ public class PepProtAbundanceNormalisation {
      * @return scaling factors
      */
     private String[] getScalingFactors(final int referenceNumber,
-                                       final Map<String, List<String>> AV) {
+                                       final Map<String, List<String>> av) {
         Map<String, List<String>> normalisedPepAssayVal = normalisedAssayValue(
-                String.valueOf(referenceNumber), AV);
+                String.valueOf(referenceNumber), av);
         List<String> sf = normalisedPepAssayVal.get("scalingfactor");
         if (sf == null) {
             return null;
@@ -501,20 +501,20 @@ public class PepProtAbundanceNormalisation {
 
             double mean = sfvals.stream().mapToDouble(d -> Double.valueOf(d)).
                     average().getAsDouble();
-            double sum_dev = sfvals.stream().mapToDouble(d -> Double.valueOf(d))
+            double sumDev = sfvals.stream().mapToDouble(d -> Double.valueOf(d))
                     .map(d -> Math.pow(d - mean, 2)).sum();
 
-            std[ref - 1] = Math.pow(sum_dev / (sfvals.size() - 1), 0.5);
+            std[ref - 1] = Math.pow(sumDev / (sfvals.size() - 1), 0.5);
         }
 
-        double val_median = Utils.median(Arrays.copyOf(std, std.length));
-        double tmp = Math.abs(std[0] - val_median);
+        double valMedian = Utils.median(Arrays.copyOf(std, std.length));
+        double tmp = Math.abs(std[0] - valMedian);
 
         int refPreferred = 1;
         for (int i = 1; i < pepSize; i++) {
-            if (Math.abs(std[i] - val_median) < tmp) {
+            if (Math.abs(std[i] - valMedian) < tmp) {
                 refPreferred = i + 1; //due to being the std array dimesion from zero
-                tmp = Math.abs(std[i] - val_median);
+                tmp = Math.abs(std[i] - valMedian);
             }
         }
 
@@ -531,7 +531,7 @@ public class PepProtAbundanceNormalisation {
      * @return true/false
      */
     private boolean checkLFcvParam(final MzQuantMLUnmarshaller um) {
-        boolean flag_lf = false;
+        boolean flagIf = false;
 //        MzQuantML mzq = um.unmarshal(MzQuantMLElement.MzQuantML);
         AnalysisSummary analysisSummary = um.unmarshal(
                 MzQuantMLElement.AnalysisSummary);
@@ -542,12 +542,12 @@ public class PepProtAbundanceNormalisation {
             if (cvRef.equalsIgnoreCase("MS:1001834")) {
                 System.out.println(
                         "This is the label-free data. Normalisation processing continues ....");
-                flag_lf = true;
+                flagIf = true;
                 break;
             }
         }
 
-        return flag_lf;
+        return flagIf;
     }
 
     /**
@@ -616,7 +616,7 @@ public class PepProtAbundanceNormalisation {
     public MzQuantMLUnmarshaller mzqFileInput()
             throws IllegalStateException,
             FileNotFoundException {
-        File mzqFile = new File(in_file);
+        File mzqFile = new File(inFile);
         MzQuantMLUnmarshaller infileUm = new MzQuantMLUnmarshaller(mzqFile);
         return infileUm;
     }
@@ -712,7 +712,7 @@ public class PepProtAbundanceNormalisation {
                                 break;
                             }
                         }
-                        //for consensus ones only    
+                        //for consensus ones only
                     } else if (st.equalsIgnoreCase("consensus")) {
 
                         for (PeptideConsensus pepCon : pepCons) {
@@ -830,26 +830,26 @@ public class PepProtAbundanceNormalisation {
      * @return the map with the normalised values
      */
     private Map<String, List<String>> normalisedAssayValue(final String ref,
-                                                           final Map<String, List<String>> PAV) {
+                                    final Map<String, List<String>> pav) {
         Map<String, List<String>> normalisedPAV
                 = new HashMap<>();
         //Map<String, List<String>> ratioPAV = new HashMap<>();
 //        Set<Entry<String, List<String>>> entrys = peptideAssayValues.entrySet();
-        Set<Entry<String, List<String>>> entrys = PAV.entrySet();
+        Set<Entry<String, List<String>>> entrys = pav.entrySet();
 
         DecimalFormat df = new DecimalFormat(".000");
-        double threshold_confidence = thresholdConfidence;
-        double coef_mad = coefficientMAD;
+        double thresholdConfidence = THRESHOLD_CONFIDENCE;
+        double coefMad = COEFFICIENT_MAD;
 //        int vSize = peptideAssayValues.entrySet().iterator().next().getValue().size();
-        int vSize = PAV.entrySet().iterator().next().getValue().size();
+        int vSize = pav.entrySet().iterator().next().getValue().size();
 
 //        int entryNo = peptideAssayValues.size();
-        int entryNo = PAV.size();
+        int entryNo = pav.size();
 
         double[] scalingFactor = new double[vSize];
         int entryRow = 0;
         double med = 0.0;
-        double MAD = 0;
+        double mad = 0;
         double upper = 0;
         double lower = 0;
 //        System.out.println("entry no: " + entryNo);
@@ -861,7 +861,7 @@ public class PepProtAbundanceNormalisation {
 
         //adjust zeros and calculate the ratios
         for (Map.Entry<String, List<String>> entry : entrys) {
-            int sig_ignore = 0;
+            int sigIgnore = 0;
             //List<String> ratioVals = new ArrayList<>();
             //String key = entry.getKey();
             String vRef = entry.getValue().get(refNo);
@@ -882,7 +882,7 @@ public class PepProtAbundanceNormalisation {
 //                    vj = "0.5";
 //                }
                 if (vj.equalsIgnoreCase("null") || vj.equalsIgnoreCase("0")) {
-                    sig_ignore = 1;
+                    sigIgnore = 1;
                     break;
                 }
 
@@ -892,7 +892,7 @@ public class PepProtAbundanceNormalisation {
                 valArr[entryRow][col] = Double.parseDouble(vj);
             }
 
-            if (sig_ignore == 1) {
+            if (sigIgnore == 1) {
                 continue;
             }
 
@@ -921,7 +921,7 @@ public class PepProtAbundanceNormalisation {
 
             double[] logRatioTmp = new double[nonZero];
             double[] logRatioTmp1 = new double[nonZero];
-            double[] logRatio_med = new double[nonZero];
+            double[] logRatioMed = new double[nonZero];
             boolean check = true;
 //            for (int k = 0; k < nonZero; k++) {
 //                logRatioTmp[k] = logRatio[k];
@@ -933,11 +933,11 @@ public class PepProtAbundanceNormalisation {
                 med = Utils.median(logRatioTmp);
 
                 for (int i = 0; i < nonZero; i++) {
-                    logRatio_med[i] = Math.abs(logRatioTmp[i] - med);
+                    logRatioMed[i] = Math.abs(logRatioTmp[i] - med);
                 }
-                MAD = coef_mad * Utils.median(logRatio_med);
-                upper = med + threshold_confidence * MAD;
-                lower = med - threshold_confidence * MAD;
+                mad = coefMad * Utils.median(logRatioMed);
+                upper = med + thresholdConfidence * mad;
+                lower = med - thresholdConfidence * mad;
 
                 int nonZeroTmp = 0;
                 for (int i = 0; i < nonZero; i++) {
@@ -956,7 +956,7 @@ public class PepProtAbundanceNormalisation {
 
                 logRatioTmp = (double[]) Utils.resizeArray(logRatioTmp,
                                                            nonZeroTmp);
-                logRatio_med = (double[]) Utils.resizeArray(logRatio_med,
+                logRatioMed = (double[]) Utils.resizeArray(logRatioMed,
                                                             nonZeroTmp);
 //                for (int i = 0; i < nonZeroTmp; i++) {
 //                    logRatioTmp[i] = logRatioTmp1[i];
@@ -1054,13 +1054,13 @@ public class PepProtAbundanceNormalisation {
 //        double[][] valArrFeature = new double[entryNoFeature][vSize];
         String[][] valArrFeature = new String[entryNoFeature][vSize];
         String[] valArrRow = new String[vSize];
-        String[] valArrFeature_key = new String[entryNoFeature];
+        String[] valArrFeatureKey = new String[entryNoFeature];
 
         //adjust zeros and calculate the ratios
         for (Map.Entry<String, List<String>> entry : featureEntrys) {
 //            List<String> ratioVals = new ArrayList<String>();
             String key = entry.getKey();
-            int sig_ignore_feature_null = 0;
+            int sigIgnoreFeatureNull = 0;
 
             for (int col = 0; col < vSize; col++) {
                 String vj = entry.getValue().get(col);
@@ -1083,11 +1083,11 @@ public class PepProtAbundanceNormalisation {
 //                valArrFeature[entryRow][col] = Double.parseDouble(vj);
             }
 
-            if (sig_ignore_feature_null == 1) {
+            if (sigIgnoreFeatureNull == 1) {
                 continue;
             }
 
-            valArrFeature_key[entryRow] = key;
+            valArrFeatureKey[entryRow] = key;
 //            ratioPAV.put(key, ratioVals);
             entryRow++;
         }
@@ -1108,7 +1108,7 @@ public class PepProtAbundanceNormalisation {
 //                valArrRow[col] = df.format(valArrTmp);
                 valArrRowList.add(valArrRow[col]);
             }
-            normalisedFAV.put(valArrFeature_key[row], valArrRowList);
+            normalisedFAV.put(valArrFeatureKey[row], valArrRowList);
         }
 
         return normalisedFAV;
@@ -1263,7 +1263,7 @@ public class PepProtAbundanceNormalisation {
             mzq.getPeptideConsensusList().clear();
             mzq.getPeptideConsensusList().add(pepConList);
 
-            MzQuantMLMarshaller marshaller = new MzQuantMLMarshaller(out_file);
+            MzQuantMLMarshaller marshaller = new MzQuantMLMarshaller(outFile);
             marshaller.marshall(mzq);
         }
     }

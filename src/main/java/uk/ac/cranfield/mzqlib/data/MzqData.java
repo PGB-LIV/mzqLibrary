@@ -87,7 +87,7 @@ public class MzqData {
      */
     private final List<String> ratios = new ArrayList<>();
 
-    //the map between the name of the quantitation value (e.g. intensity, peak area) and the corresponding CV terms 
+    //the map between the name of the quantitation value (e.g. intensity, peak area) and the corresponding CV terms
     private final Map<String, CvParam> cvParams = new HashMap<>();
     //the list of quantitation names
     private final List<String> quantitationNames = new ArrayList<>();
@@ -345,7 +345,7 @@ public class MzqData {
         //will be useful if merging multiple mzq files
         //this will be used to assign quantitation values etc.
 //        HashMap<String,String> localMapping = new HashMap<String, String>();
-        //if the protein list is empty, create an artificial protein 
+        //if the protein list is empty, create an artificial protein
         if (proteinList == null) {
             if (!proteins.containsKey(ARTIFICIAL)) {
                 Protein protein = new Protein();
@@ -550,7 +550,7 @@ public class MzqData {
 
     //for modification in PeptideConsensus, not modification in Label which is of ModParamType type
     private String getModificationString(final Modification mod) {
-        //<xsd:element name="cvParam" type="CVParamType" minOccurs="1" maxOccurs="unbounded">           
+        //<xsd:element name="cvParam" type="CVParamType" minOccurs="1" maxOccurs="unbounded">
         for (CvParam cv : mod.getCvParam()) {
             if (cv.getName() == null) {
                 continue;

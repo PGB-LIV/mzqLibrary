@@ -5,7 +5,7 @@ package uk.ac.liv.pgb.mzqlib.constants;
  * @author Da Qi
  * @since 30-Oct-2014 13:49:46
  */
-public class MzqDataConstants {
+public final class MzqDataConstants {
 
     /**
      * Constant.

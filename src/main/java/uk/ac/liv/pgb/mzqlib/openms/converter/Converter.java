@@ -12,7 +12,7 @@ import javax.xml.bind.JAXBException;
  * Converting OpenMS consensusXML file to mzQuantML file
  *
  */
-public class Converter {
+public final class Converter {
     private Converter() {
     }
 

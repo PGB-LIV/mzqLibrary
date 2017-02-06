@@ -7,7 +7,7 @@ package uk.ac.liv.pgb.mzqlib.progenesis.reader;
  * @author Da Qi
  * @since 02-Dec-2013 15:02:27
  */
-public class FeatureListHeaders {
+public final class FeatureListHeaders {
 
     /*
      * These are the first row headers

@@ -17,7 +17,7 @@ import java.util.zip.GZIPOutputStream;
  * @author Da Qi
  * @since 06-Nov-2013 14:55:14
  */
-public class Gzipper {
+public final class Gzipper {
     private Gzipper() {
     }
 

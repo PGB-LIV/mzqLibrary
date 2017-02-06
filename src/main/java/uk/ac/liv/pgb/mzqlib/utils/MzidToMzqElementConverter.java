@@ -16,7 +16,7 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.UserParam;
  * @author Da Qi
  * @since 18-Mar-2014 13:57:49
  */
-public class MzidToMzqElementConverter {
+public final class MzidToMzqElementConverter {
     private MzidToMzqElementConverter() {
     }
 

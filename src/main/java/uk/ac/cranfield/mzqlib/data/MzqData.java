@@ -385,14 +385,14 @@ public class MzqData {
     /**
      * @return the control
      */
-    public MzqDataControl getControl() {
+    public final MzqDataControl getControl() {
         return control;
     }
 
     /**
      * @param control the control to set
      */
-    public void setControl(MzqDataControl control) {
+    public final void setControl(MzqDataControl control) {
         this.control = control;
     }
 

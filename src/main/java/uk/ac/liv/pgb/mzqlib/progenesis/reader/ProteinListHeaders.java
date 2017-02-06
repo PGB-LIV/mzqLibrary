@@ -6,7 +6,7 @@ package uk.ac.liv.pgb.mzqlib.progenesis.reader;
  * @author Da Qi
  * @since 02-Dec-2013 15:22:59
  */
-public class ProteinListHeaders {
+public final class ProteinListHeaders {
 
     /*
      * All use lower case

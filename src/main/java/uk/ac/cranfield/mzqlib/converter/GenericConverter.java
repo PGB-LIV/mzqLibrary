@@ -220,28 +220,28 @@ public abstract class GenericConverter {
     /**
      * @return the filename
      */
-    public String getFilename() {
+    public final String getFilename() {
         return filename;
     }
 
     /**
      * @param filename the filename to set
      */
-    public void setFilename(String filename) {
+    public final void setFilename(String filename) {
         this.filename = filename;
     }
 
     /**
      * @return the outfile
      */
-    public String getOutfile() {
+    public final String getOutfile() {
         return outfile;
     }
 
     /**
      * @param outfile the outfile to set
      */
-    public void setOutfile(String outfile) {
+    public final void setOutfile(String outfile) {
         this.outfile = outfile;
     }
 }

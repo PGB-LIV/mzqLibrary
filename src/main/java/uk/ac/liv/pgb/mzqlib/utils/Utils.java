@@ -21,7 +21,7 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.UserParam;
  * @author lukas007
  *
  */
-public class Utils {
+public final class Utils {
     private Utils() {
     }
 

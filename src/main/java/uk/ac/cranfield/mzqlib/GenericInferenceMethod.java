@@ -9,7 +9,7 @@ import java.util.Map;
  *
  * @author Jun Fan@cranfield
  */
-public class GenericInferenceMethod {
+public final class GenericInferenceMethod {
     private GenericInferenceMethod() {
     }
 

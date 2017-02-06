@@ -17,7 +17,7 @@ import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
  * @author Da Qi
  * @since 07-Mar-2014 10:27:50
  */
-public class Mapper {
+public final class Mapper {
     private static File                  mzqFile;
     private static Map<String, String>   rawToMzidMap;
     private static MzQuantMLUnmarshaller umarsh;

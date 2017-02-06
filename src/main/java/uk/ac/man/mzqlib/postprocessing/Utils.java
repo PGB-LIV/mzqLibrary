@@ -20,7 +20,7 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.Row;
  *
  * @author man-mqbsshz2
  */
-public class Utils {
+public final class Utils {
     private Utils() {
     }
 

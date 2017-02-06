@@ -12,7 +12,7 @@ import java.util.Set;
  *
  * @author man-mqbsshz2
  */
-public class ProteinGrouping {
+public final class ProteinGrouping {
     private static final Map<String, Set<String>> sameSetGr = new HashMap<>();
     private static final Map<String, Set<String>> subSetGr  = new HashMap<>();
     private static final Map<String, Set<String>> uniSetGr  = new HashMap<>();

@@ -110,7 +110,7 @@ class GenericFileFilter extends javax.swing.filechooser.FileFilter {
  *
  * @author Jun Fan@qmul
  */
-public class Utils {
+public final class Utils {
     private static final String MZQ_XSD = "mzQuantML_1_0_0.xsd";
 
     private Utils() {

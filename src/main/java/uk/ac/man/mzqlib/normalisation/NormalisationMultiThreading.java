@@ -18,7 +18,7 @@ import java.io.FileNotFoundException;
  *
  * @author man-mqbsshz2
  */
-public class NormalisationMultiThreading {
+public final class NormalisationMultiThreading {
     static final String path     = "C:\\Manchester\\work\\Puf3Study\\ProteoSuite\\Idenoutcomes\\Filtered_AJ_";
     static final String filter   = "qvalue001";
     static final String fileName = "unlabeled_result_FLUQT_mapped_" + filter;

@@ -29,12 +29,6 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.Assay;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.Cv;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.CvParam;
 
-/**
- *
- * @author Da Qi
- * @institute University of Liverpool
- * @time 06-Feb-2017 15:22:38
- */
 public final class Utils {
     private Utils() {
     }

@@ -43,12 +43,6 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.FeatureList;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.RawFilesGroup;
 import uk.ac.liv.pgb.mzqlib.progenesis.converter.util.Utils;
 
-/**
- *
- * @author Da Qi
- * @institute University of Liverpool
- * @time 06-Feb-2017 15:07:14
- */
 class TFeatureDoubleProcedure implements TDoubleProcedure {
     private DecimalFormat              format;
     private int                        id;

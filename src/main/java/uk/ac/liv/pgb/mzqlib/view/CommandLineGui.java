@@ -232,27 +232,27 @@ public class CommandLineGui extends JFrame {
 
         pack();
     } // </editor-fold>//GEN-END:initComponents
-	
+
     @SuppressWarnings("unused")
-    private void jButton2ActionPerformed(final java.awt.event.ActionEvent evt) { //GEN-FIRST:event_jButton2ActionPerformed
+    private void jButton2ActionPerformed(final java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
         fc.showOpenDialog(this);
         if (fc.getSelectedFile() != null) {
             jTextField1.setText(fc.getSelectedFile().getAbsolutePath());
         }
 
-    } //GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     @SuppressWarnings("unused")
-	private void jButton1ActionPerformed(final java.awt.event.ActionEvent evt) { //GEN-FIRST:event_jButton1ActionPerformed
+	private void jButton1ActionPerformed(final java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         fc.showSaveDialog(this);
         if (fc.getSelectedFile() != null) {
             jTextField2.setText(fc.getSelectedFile().getAbsolutePath());
         }
-    } //GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     @SuppressWarnings("unused")
-	private void jButton3ActionPerformed(final java.awt.event.ActionEvent evt) { //GEN-FIRST:event_jButton3ActionPerformed
+	private void jButton3ActionPerformed(final java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
         if (jTextField1.getText() != null && jTextField2 != null) {
             String input = jTextField1.getText();
@@ -309,10 +309,10 @@ public class CommandLineGui extends JFrame {
             //TODO  - fix other error: out stream only closed on program exit!
         }
 
-    } //GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     @SuppressWarnings("unused")
-	private void jComboBox1ActionPerformed(final java.awt.event.ActionEvent evt) { //GEN-FIRST:event_jComboBox1ActionPerformed
+	private void jComboBox1ActionPerformed(final java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         String selected = (String) jComboBox1.getSelectedItem();
         String value = (String) mzQuantMLLib.getAllFunctions().get(selected);
         String[] split = value.split(";@;");
@@ -323,7 +323,7 @@ public class CommandLineGui extends JFrame {
                 + "- If the output and input file are the same, the input will be overwritten.\n\n"
                 + split[3] + "\n\n"
                 + "Options for tool " + selected + ":\n" + split[0]);
-    } //GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments

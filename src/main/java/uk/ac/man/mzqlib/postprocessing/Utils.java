@@ -35,7 +35,7 @@ public final class Utils {
         int      index = 0;
         double[] temp  = new double[arr[index].length];
 
-        for (int i = 0;i < arr[0].length;i++) {
+        for (int i = 0; i < arr[0].length; i++) {
             double sum = 0;
 
             for (double[] arr1 : arr) {
@@ -82,7 +82,7 @@ public final class Utils {
     public static DataMatrix sortedMap(final Map<String, List<String>> map, final DataMatrix dM) {
         Set s = map.entrySet();
 
-        for (Iterator it = s.iterator();it.hasNext();) {
+        for (Iterator it = s.iterator(); it.hasNext(); ) {
             Map.Entry entry = (Map.Entry) it.next();
 
 //          String key = (String) entry.getKey();

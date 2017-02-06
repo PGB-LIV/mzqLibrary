@@ -218,7 +218,7 @@ public class HtmlConverter extends GenericConverter {
                                      + 2;    // +2 for the peptide sequence and modification columns
 
 //      for(ProteinData protein:MzqLib.data.getProteins()){
-        for (int proIdx = 0;proIdx < MzqLib.DATA.getProteins().size();proIdx++) {
+        for (int proIdx = 0; proIdx < MzqLib.DATA.getProteins().size(); proIdx++) {
             ProteinData protein = MzqLib.DATA.getProteins().get(proIdx);
 
             // it seems html does not like . which is fine in NCName
@@ -254,7 +254,7 @@ public class HtmlConverter extends GenericConverter {
             sb.append(TEMPLATES.get("PROTEIN_END_5"));
 
 //          for(PeptideData peptide:protein.getPeptides()){
-            for (int pepIdx = 0;pepIdx < protein.getPeptides().size();pepIdx++) {
+            for (int pepIdx = 0; pepIdx < protein.getPeptides().size(); pepIdx++) {
                 PeptideData peptide   = protein.getPeptides().get(pepIdx);
                 String      peptideID = proteinID + "-" + peptide.getSeq() + "-"
                                         + peptide.getPeptide().getModification().size();

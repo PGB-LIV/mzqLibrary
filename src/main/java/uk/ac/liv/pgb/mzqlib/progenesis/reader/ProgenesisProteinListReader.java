@@ -90,7 +90,7 @@ public class ProgenesisProteinListReader implements Closeable {
         nextLine = reader.readNext();
         completeMap.put(ROW1, nextLine);
 
-        for (int i = 0;i < nextLine.length;i++) {
+        for (int i = 0; i < nextLine.length; i++) {
             if (nextLine[i].toLowerCase(Locale.ENGLISH).equals(ProteinListHeaders.NORMALIZED_ABUNDANCE)) {
                 normAbStart = i;
             } else if (nextLine[i].toLowerCase(Locale.ENGLISH).contains(ProteinListHeaders.RAW_ABUNDANCE)) {
@@ -118,7 +118,7 @@ public class ProgenesisProteinListReader implements Closeable {
         int   m              = 0;
 
         if (normAbStart != 0) {
-            for (int i = normAbStart;i < (normAbStart + assayNum);i++) {
+            for (int i = normAbStart; i < (normAbStart + assayNum); i++) {
                 if (!nextLine[i].isEmpty()) {
                     stuVarList.add(nextLine[i]);
                     stuVarPosition[m] = i;
@@ -128,7 +128,7 @@ public class ProgenesisProteinListReader implements Closeable {
                 stuVarPosition[m] = i + 1;
             }
         } else if (rawAbStart != 0) {
-            for (int i = rawAbStart;i < (rawAbStart + assayNum);i++) {
+            for (int i = rawAbStart; i < (rawAbStart + assayNum); i++) {
                 if (!nextLine[i].isEmpty()) {
                     stuVarList.add(nextLine[i]);
                     stuVarPosition[m] = i;
@@ -144,20 +144,20 @@ public class ProgenesisProteinListReader implements Closeable {
         completeMap.put(ROW3, nextLine);
 
         if (normAbStart != 0) {
-            for (int i = normAbStart;i < (normAbStart + assayNum);i++) {
+            for (int i = normAbStart; i < (normAbStart + assayNum); i++) {
                 assayList.add(nextLine[i]);
             }
         } else if (rawAbStart != 0) {
-            for (int i = rawAbStart;i < (rawAbStart + assayNum);i++) {
+            for (int i = rawAbStart; i < (rawAbStart + assayNum); i++) {
                 assayList.add(nextLine[i]);
             }
         }
 
-        for (int i = 0;i < stuVarList.size();i++) {
+        for (int i = 0; i < stuVarList.size(); i++) {
             String      key   = (String) stuVarList.get(i);
             Set<String> value = new HashSet<>();
 
-            for (int k = stuVarPosition[i];k < stuVarPosition[i + 1];k++) {
+            for (int k = stuVarPosition[i]; k < stuVarPosition[i + 1]; k++) {
                 value.add(nextLine[k]);
             }
 
@@ -165,7 +165,7 @@ public class ProgenesisProteinListReader implements Closeable {
         }
 
         // get the position of confidence score, anova, max fold change
-        for (int i = 0;i < nextLine.length;i++) {
+        for (int i = 0; i < nextLine.length; i++) {
             String lowerCaseHeader = nextLine[i].trim().toLowerCase(Locale.ENGLISH);
 
             if (lowerCaseHeader.equals(ProteinListHeaders.CONFIDENCE_SCORE)) {
@@ -208,7 +208,7 @@ public class ProgenesisProteinListReader implements Closeable {
 
             // Build normalized abundance hashmap
             if (normAbStart != 0) {
-                for (int i = normAbStart;i < (normAbStart + assayNum);i++) {
+                for (int i = normAbStart; i < (normAbStart + assayNum); i++) {
                     if (!NumberUtils.isNumber(nextLine[i])) {
                         currentV.add(0.0);
                     } else {
@@ -222,7 +222,7 @@ public class ProgenesisProteinListReader implements Closeable {
 
             // Build raw abundance hashmap
             if (rawAbStart != 0) {
-                for (int i = rawAbStart;i < rawAbEnd;i++) {
+                for (int i = rawAbStart; i < rawAbEnd; i++) {
                     if (!NumberUtils.isNumber(nextLine[i])) {
                         currentV.add(0.0);
                     } else {
@@ -264,7 +264,7 @@ public class ProgenesisProteinListReader implements Closeable {
     private List<String> getArrayPart(final String[] array, final int start, final int end) {
         List<String> retList = new ArrayList<>();
 
-        for (int i = start;i < end + 1;i++) {
+        for (int i = start; i < end + 1; i++) {
             retList.add(array[i]);
         }
 
@@ -283,7 +283,7 @@ public class ProgenesisProteinListReader implements Closeable {
     private int getAssayNumber(final int start, final String[] line) {
         int ret = 1;
 
-        for (int i = start + 1;i < line.length;i++) {
+        for (int i = start + 1; i < line.length; i++) {
             if (line[i].toLowerCase(Locale.ENGLISH).equals("")) {
                 ret++;
             } else {

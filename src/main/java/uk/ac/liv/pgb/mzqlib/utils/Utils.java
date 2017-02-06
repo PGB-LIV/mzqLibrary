@@ -66,7 +66,7 @@ public final class Utils {
      *         found but is required, it throws an error.
      */
     public static String getCmdParameter(final String[] args, final String name, final boolean required) {
-        for (int i = 0;i < args.length;i++) {
+        for (int i = 0; i < args.length; i++) {
             String argName = args[i];
 
             if (argName.equals("-" + name)) {

@@ -210,7 +210,7 @@ public class MzqProcessorFactory {
 
                     ExtendedFeature exFt = new ExtendedFeature(ft, msTolerance, rtWin);
 
-                    for (int i = (int) exFt.getBRT();i <= (int) exFt.getURT();i++) {
+                    for (int i = (int) exFt.getBRT(); i <= (int) exFt.getURT(); i++) {
                         List<SIIData> siiDataList = rtToSIIsMap.get(i);
 
                         if (siiDataList != null) {

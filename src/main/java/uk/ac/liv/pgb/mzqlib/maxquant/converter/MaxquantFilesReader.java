@@ -249,7 +249,7 @@ public class MaxquantFilesReader {
             throw new IllegalStateException("The summary.txt doesn't exist.");
         } else {
             try {
-                String nextLine[];
+                String[] nextLine;
                 multiplicity = 0;
 
                 fis = new FileInputStream(this.summaryFile);

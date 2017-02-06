@@ -392,7 +392,7 @@ public class MzqData {
     /**
      * @param control the control to set
      */
-    public final void setControl(MzqDataControl control) {
+    public final void setControl(final MzqDataControl control) {
         this.control = control;
     }
 

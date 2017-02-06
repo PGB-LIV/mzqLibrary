@@ -1,3 +1,4 @@
+//~ Formatted by Jindent --- http://www.jindent.com
 package uk.ac.liv.pgb.mzqlib.idmapper;
 
 import java.io.File;
@@ -145,8 +146,8 @@ public class MzidProcessorFactory {
                     // generate peptide mod string
                     // String pepModString = createPeptideModString(umarsh, sii.getPeptideRef());
                     // sd.setPeptideModString(pepModString);
-                    String pepModString = sd.getPeptideModString();
-                    String pep[]        = pepModString.split("_", 2);    // separate modString into two parts: peptide sequence and mods
+                    String   pepModString = sd.getPeptideModString();
+                    String[] pep          = pepModString.split("_", 2);    // separate modString into two parts: peptide sequence and mods
 
                     sd.setSequence(pep[0]);
 
@@ -205,4 +206,3 @@ public class MzidProcessorFactory {
         }
     }
 }
-//~ Formatted by Jindent --- http://www.jindent.com

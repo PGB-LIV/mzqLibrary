@@ -328,7 +328,7 @@ public class CommandLineGui extends JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(final String args[]) {
+    public static void main(final String[] args) {
         /*
          * Set the Nimbus look and feel
          */

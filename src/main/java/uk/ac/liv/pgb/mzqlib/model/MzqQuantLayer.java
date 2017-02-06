@@ -1,3 +1,4 @@
+//~ Formatted by Jindent --- http://www.jindent.com
 package uk.ac.liv.pgb.mzqlib.model;
 
 import java.util.ArrayList;
@@ -133,7 +134,7 @@ public class MzqQuantLayer {
     /**
      * @param dataType the dataType to set
      */
-    public final void setDataType(StringProperty dataType) {
+    public final void setDataType(final StringProperty dataType) {
         this.dataType = dataType;
     }
 
@@ -171,7 +172,7 @@ public class MzqQuantLayer {
     /**
      * @param listId the listId to set
      */
-    public final void setListId(StringProperty listId) {
+    public final void setListId(final StringProperty listId) {
         this.listId = listId;
     }
 
@@ -187,7 +188,7 @@ public class MzqQuantLayer {
     /**
      * @param listType the listType to set
      */
-    public final void setListType(StringProperty listType) {
+    public final void setListType(final StringProperty listType) {
         this.listType = listType;
     }
 
@@ -203,7 +204,7 @@ public class MzqQuantLayer {
     /**
      * @param mzqUm the mzqUm to set
      */
-    public final void setMzqUm(MzQuantMLUnmarshaller mzqUm) {
+    public final void setMzqUm(final MzQuantMLUnmarshaller mzqUm) {
         this.mzqUm = mzqUm;
     }
 
@@ -219,7 +220,7 @@ public class MzqQuantLayer {
     /**
      * @param quantLayerId the quantLayerId to set
      */
-    public final void setQuantLayerId(StringProperty quantLayerId) {
+    public final void setQuantLayerId(final StringProperty quantLayerId) {
         this.quantLayerId = quantLayerId;
     }
 
@@ -235,8 +236,7 @@ public class MzqQuantLayer {
     /**
      * @param quantLayerType the quantLayerType to set
      */
-    public final void setQuantLayerType(StringProperty quantLayerType) {
+    public final void setQuantLayerType(final StringProperty quantLayerType) {
         this.quantLayerType = quantLayerType;
     }
 }
-//~ Formatted by Jindent --- http://www.jindent.com

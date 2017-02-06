@@ -105,7 +105,7 @@ public class ProgenesisFeatureListReader implements Closeable {
         br = new BufferedReader(rd);
 
         try (CSVReader reader = new CSVReader(br, separator)) {
-            String nextLine[];
+            String[] nextLine;
 
             // Read the first line of the csv file
             nextLine = reader.readNext();

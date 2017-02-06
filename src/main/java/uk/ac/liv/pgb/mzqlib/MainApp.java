@@ -1284,7 +1284,7 @@ public class MainApp extends Application {
         return alert;
     }
 
-    private void drawHeatMap(Rengine re, CreateRMatrixTask rmTask, TableView<MzqDataMatrixRow> dataMatrixTable) {
+    private void drawHeatMap(Rengine re, final CreateRMatrixTask rmTask, final TableView<MzqDataMatrixRow> dataMatrixTable) {
         re.eval("breaks <- seq(from = "
                 + String.valueOf(rmTask.getValue().getLogMin()
                         * DOWN_SCALE_FACTOR)

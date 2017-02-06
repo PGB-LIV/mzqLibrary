@@ -1,3 +1,4 @@
+//~ Formatted by Jindent --- http://www.jindent.com
 package uk.ac.liv.pgb.mzqlib.progenesis.reader;
 
 import java.io.BufferedReader;
@@ -84,7 +85,7 @@ public class ProgenesisProteinListReader implements Closeable {
         br = new BufferedReader(rd);
 
         CSVReader reader = new CSVReader(br, separator);
-        String    nextLine[];
+        String[]  nextLine;
 
         // Read the first line
         nextLine = reader.readNext();
@@ -430,4 +431,3 @@ public class ProgenesisProteinListReader implements Closeable {
         return studyGroupMap;
     }
 }
-//~ Formatted by Jindent --- http://www.jindent.com

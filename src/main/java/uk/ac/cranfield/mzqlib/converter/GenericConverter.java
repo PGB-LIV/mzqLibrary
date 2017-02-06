@@ -1,3 +1,4 @@
+//~ Formatted by Jindent --- http://www.jindent.com
 package uk.ac.cranfield.mzqlib.converter;
 
 import java.util.Set;
@@ -227,7 +228,7 @@ public abstract class GenericConverter {
     /**
      * @param pFilename the filename to set
      */
-    public final void setFilename(String pFilename) {
+    public final void setFilename(final String pFilename) {
         this.filename = pFilename;
     }
 
@@ -241,8 +242,7 @@ public abstract class GenericConverter {
     /**
      * @param pOutfile the outfile to set
      */
-    public final void setOutfile(String pOutfile) {
+    public final void setOutfile(final String pOutfile) {
         this.outfile = pOutfile;
     }
 }
-//~ Formatted by Jindent --- http://www.jindent.com

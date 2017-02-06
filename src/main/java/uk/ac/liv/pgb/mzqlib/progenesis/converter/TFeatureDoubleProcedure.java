@@ -1,3 +1,4 @@
+//~ Formatted by Jindent --- http://www.jindent.com
 /*
  * Date: 06-Feb-2017
  * Author: Da Qi
@@ -178,7 +179,7 @@ class TFeatureDoubleProcedure implements TDoubleProcedure {
     /**
      * @param assayList the assayList to set
      */
-    public void setAssayList(AssayList assayList) {
+    public void setAssayList(final AssayList assayList) {
         this.assayList = assayList;
     }
 
@@ -192,7 +193,7 @@ class TFeatureDoubleProcedure implements TDoubleProcedure {
     /**
      * @param assayNameIdMap the assayNameIdMap to set
      */
-    public void setAssayNameIdMap(Map<String, String> assayNameIdMap) {
+    public void setAssayNameIdMap(final Map<String, String> assayNameIdMap) {
         this.assayNameIdMap = assayNameIdMap;
     }
 
@@ -206,7 +207,7 @@ class TFeatureDoubleProcedure implements TDoubleProcedure {
     /**
      * @param chrMap the chrMap to set
      */
-    public void setChrMap(TIntIntMap chrMap) {
+    public void setChrMap(final TIntIntMap chrMap) {
         this.chrMap = chrMap;
     }
 
@@ -220,7 +221,7 @@ class TFeatureDoubleProcedure implements TDoubleProcedure {
     /**
      * @param featureAssNameMap the featureAssNameMap to set
      */
-    public void setFeatureAssNameMap(Map<String, String> featureAssNameMap) {
+    public void setFeatureAssNameMap(final Map<String, String> featureAssNameMap) {
         this.featureAssNameMap = featureAssNameMap;
     }
 
@@ -234,7 +235,7 @@ class TFeatureDoubleProcedure implements TDoubleProcedure {
     /**
      * @param featureMap the featureMap to set
      */
-    public void setFeatureMap(Map<String, Feature> featureMap) {
+    public void setFeatureMap(final Map<String, Feature> featureMap) {
         this.featureMap = featureMap;
     }
 
@@ -248,7 +249,7 @@ class TFeatureDoubleProcedure implements TDoubleProcedure {
     /**
      * @param flIndexMap the flIndexMap to set
      */
-    public void setFlIndexMap(TIntObjectMap<String> flIndexMap) {
+    public void setFlIndexMap(final TIntObjectMap<String> flIndexMap) {
         this.flIndexMap = flIndexMap;
     }
 
@@ -262,7 +263,7 @@ class TFeatureDoubleProcedure implements TDoubleProcedure {
     /**
      * @param format the format to set
      */
-    public void setFormat(DecimalFormat format) {
+    public void setFormat(final DecimalFormat format) {
         this.format = format;
     }
 
@@ -276,7 +277,7 @@ class TFeatureDoubleProcedure implements TDoubleProcedure {
     /**
      * @param ftListList the ftListList to set
      */
-    public void setFtListList(List<FeatureList> ftListList) {
+    public void setFtListList(final List<FeatureList> ftListList) {
         this.ftListList = ftListList;
     }
 
@@ -290,7 +291,7 @@ class TFeatureDoubleProcedure implements TDoubleProcedure {
     /**
      * @param id the id to set
      */
-    public void setId(int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 
@@ -304,7 +305,7 @@ class TFeatureDoubleProcedure implements TDoubleProcedure {
     /**
      * @param keyId the keyId to set
      */
-    public void setKeyId(MutableInt keyId) {
+    public void setKeyId(final MutableInt keyId) {
         this.keyId = keyId;
     }
 
@@ -332,7 +333,7 @@ class TFeatureDoubleProcedure implements TDoubleProcedure {
     /**
      * @param mzMap the mzMap to set
      */
-    public void setMzMap(TIntDoubleMap mzMap) {
+    public void setMzMap(final TIntDoubleMap mzMap) {
         this.mzMap = mzMap;
     }
 
@@ -346,7 +347,7 @@ class TFeatureDoubleProcedure implements TDoubleProcedure {
     /**
      * @param peptideAssaysMap the peptideAssaysMap to set
      */
-    public void setPeptideAssaysMap(Map<String, List<Assay>> peptideAssaysMap) {
+    public void setPeptideAssaysMap(final Map<String, List<Assay>> peptideAssaysMap) {
         this.peptideAssaysMap = peptideAssaysMap;
     }
 
@@ -360,7 +361,7 @@ class TFeatureDoubleProcedure implements TDoubleProcedure {
     /**
      * @param peptideDupMap the peptideDupMap to set
      */
-    public void setPeptideDupMap(TIntObjectMap<String> peptideDupMap) {
+    public void setPeptideDupMap(final TIntObjectMap<String> peptideDupMap) {
         this.peptideDupMap = peptideDupMap;
     }
 
@@ -374,7 +375,7 @@ class TFeatureDoubleProcedure implements TDoubleProcedure {
     /**
      * @param peptideFeaturesMap the peptideFeaturesMap to set
      */
-    public void setPeptideFeaturesMap(Map<String, List<Feature>> peptideFeaturesMap) {
+    public void setPeptideFeaturesMap(final Map<String, List<Feature>> peptideFeaturesMap) {
         this.peptideFeaturesMap = peptideFeaturesMap;
     }
 
@@ -388,7 +389,7 @@ class TFeatureDoubleProcedure implements TDoubleProcedure {
     /**
      * @param pos the pos to set
      */
-    public void setPos(MutableInt pos) {
+    public void setPos(final MutableInt pos) {
         this.pos = pos;
     }
 
@@ -402,7 +403,7 @@ class TFeatureDoubleProcedure implements TDoubleProcedure {
     /**
      * @param rawFileNameIdMap the rawFileNameIdMap to set
      */
-    public void setRawFileNameIdMap(Map<String, String> rawFileNameIdMap) {
+    public void setRawFileNameIdMap(final Map<String, String> rawFileNameIdMap) {
         this.rawFileNameIdMap = rawFileNameIdMap;
     }
 
@@ -416,7 +417,7 @@ class TFeatureDoubleProcedure implements TDoubleProcedure {
     /**
      * @param retenMap the retenMap to set
      */
-    public void setRetenMap(TIntObjectMap<TDoubleList> retenMap) {
+    public void setRetenMap(final TIntObjectMap<TDoubleList> retenMap) {
         this.retenMap = retenMap;
     }
 
@@ -430,7 +431,7 @@ class TFeatureDoubleProcedure implements TDoubleProcedure {
     /**
      * @param rgIdFeatureListMap the rgIdFeatureListMap to set
      */
-    public void setRgIdFeatureListMap(Map<String, FeatureList> rgIdFeatureListMap) {
+    public void setRgIdFeatureListMap(final Map<String, FeatureList> rgIdFeatureListMap) {
         this.rgIdFeatureListMap = rgIdFeatureListMap;
     }
 
@@ -444,8 +445,7 @@ class TFeatureDoubleProcedure implements TDoubleProcedure {
     /**
      * @param rtWinMap the rtWinMap to set
      */
-    public void setRtWinMap(TIntDoubleMap rtWinMap) {
+    public void setRtWinMap(final TIntDoubleMap rtWinMap) {
         this.rtWinMap = rtWinMap;
     }
 }
-//~ Formatted by Jindent --- http://www.jindent.com

@@ -384,7 +384,7 @@ public class ProgenMzquantmlConverter {
             BufferedReader idBr = new BufferedReader(new InputStreamReader(fis,
                                                                            "UTF-8"));
             CSVReader reader = new CSVReader(idBr);
-            String nextLine[];
+            String[] nextLine;
             reader.readNext();
             /*
              * Raw data location, Spectrum ID, Spectrum Title, Retention
@@ -1565,12 +1565,12 @@ public class ProgenMzquantmlConverter {
         }
     }
 
-private void setInitialValue(TFeatureDoubleProcedure fDoubleProcedure,
-                  int id, MutableInt pos,
-                  MutableInt keyId,
-                  Map<String, FeatureList> rgIdFeatureListMap,
-                  Map<String, List<Assay>> peptideAssaysMap,
-                  Map<String, Feature> featureMap) {
+private void setInitialValue(final TFeatureDoubleProcedure fDoubleProcedure,
+                  final int id, final MutableInt pos,
+                  final MutableInt keyId,
+                  final Map<String, FeatureList> rgIdFeatureListMap,
+                  final Map<String, List<Assay>> peptideAssaysMap,
+                  final Map<String, Feature> featureMap) {
         fDoubleProcedure.setFormat(format);
         fDoubleProcedure.setId(id);
         fDoubleProcedure.setFtListList(ftListList);

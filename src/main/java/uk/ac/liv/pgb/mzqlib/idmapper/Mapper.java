@@ -1,3 +1,4 @@
+//~ Formatted by Jindent --- http://www.jindent.com
 package uk.ac.liv.pgb.mzqlib.idmapper;
 
 import java.io.File;
@@ -32,7 +33,7 @@ public final class Mapper {
      *
      * @throws IOException I/O exceptions.
      */
-    public static void main(final String args[]) throws IOException {
+    public static void main(final String[] args) throws IOException {
 
         // String outMzFn = "CPTAC-Progenesis-after-mapper.mzq";
         // mzqFile = new File("CPTAC-Progenesis.mzq");
@@ -70,4 +71,3 @@ public final class Mapper {
         }
     }
 }
-//~ Formatted by Jindent --- http://www.jindent.com

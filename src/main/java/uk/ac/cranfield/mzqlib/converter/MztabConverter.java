@@ -59,7 +59,7 @@ public class MztabConverter extends GenericConverter {
     /**
      * Number of seconds in one minute.
      */
-    private final int SECONDS_PER_MINUTE = 60;
+    private final int secondsPerMinute = 60;
 
     /**
      * Constructor.
@@ -725,7 +725,7 @@ public class MztabConverter extends GenericConverter {
                         //mandatory field in quantification mode: retention_time, retention_time_window
                         List<Double> mzs = new ArrayList<>();
                         SplitList<Double> rts = new SplitList<>('|');
-                        SplitList<SpectraRef> spectrum_refs = new SplitList<>(
+                        SplitList<SpectraRef> spectrumRefs = new SplitList<>(
                                 '|');
                         double maxRt = 0;
                         double minRt = Double.MAX_VALUE;
@@ -738,7 +738,7 @@ public class MztabConverter extends GenericConverter {
                             //in mzTab retention_time Double List (“,”) Time points in seconds.
                             String rtStr = feature.getFeature().getRt();
                             if (rtStr != null && !rtStr.equalsIgnoreCase("null")) {
-                                double rt = SECONDS_PER_MINUTE * Double.
+                                double rt = secondsPerMinute * Double.
                                         parseDouble(rtStr);
                                 if (maxRt < rt) {
                                     maxRt = rt;
@@ -751,11 +751,11 @@ public class MztabConverter extends GenericConverter {
                             String specRef = feature.getFeature().
                                     getSpectrumRefs();
                             if (specRef != null) {
-                                int msrun_id = msruns.get(feature.
+                                int msrunId = msruns.get(feature.
                                         getRawFilesGroupRef());
-                                MsRun msrun = mtd.getMsRunMap().get(msrun_id);
+                                MsRun msrun = mtd.getMsRunMap().get(msrunId);
                                 SpectraRef ref = new SpectraRef(msrun, specRef);
-                                spectrum_refs.add(ref);
+                                spectrumRefs.add(ref);
                             }
                         }
                         tabPep.setRetentionTime(rts);
@@ -771,8 +771,8 @@ public class MztabConverter extends GenericConverter {
                         //The reference must be in the format ms_run[1-n]:{SPECTRA_REF}
                         //where SPECTRA_REF MUST follow the format defined in 5.2.
                         //Multiple spectra MUST be referenced using a “|” delimited list.
-                        if (!spectrum_refs.isEmpty()) {
-                            tabPep.setSpectraRef(spectrum_refs);
+                        if (!spectrumRefs.isEmpty()) {
+                            tabPep.setSpectraRef(spectrumRefs);
                         }
 
                         //mandatory field in complete quantification mode: peptide_abundance_assay[1-n]

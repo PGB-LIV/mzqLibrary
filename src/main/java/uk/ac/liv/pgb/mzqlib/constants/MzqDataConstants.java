@@ -35,23 +35,23 @@ public final class MzqDataConstants {
     /**
      * Constant.
      */
-    public static final String CvIDPSIMS = "PSI-MS";
+    public static final String CV_ID_PSI_MS = "PSI-MS";
 
     /**
      * Constant.
      */
-    public static final String CvNamePSIMS = "Proteomics Standards Initiative Mass Spectrometry Vocabularies";
+    public static final String CV_NAME_PSI_MS = "Proteomics Standards Initiative Mass Spectrometry Vocabularies";
 
     /**
      * Constant.
      */
-    public static final String CvUriPSIMS = "http://psidev.cvs.sourceforge.net/viewvc/psidev/psi/psi-ms/"
-                                            + "mzML/controlledVocabulary/psi-ms.obo";
+    public static final String CV_URI_PSI_MS = "http://psidev.cvs.sourceforge.net/viewvc/psidev/psi/psi-ms/"
+                                               + "mzML/controlledVocabulary/psi-ms.obo";
 
     /**
      * Constant.
      */
-    public static final String CvVerPSIMS = "3.61.0";
+    public static final String CV_VER_PSI_MS = "3.61.0";
 
     // CV terms for different techniques
 
@@ -108,6 +108,4 @@ public final class MzqDataConstants {
     private MzqDataConstants() {
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

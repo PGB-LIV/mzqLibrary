@@ -34,10 +34,11 @@ import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
  * @author Jun Fan
  */
 public class MzqLib {
-    private static final int CSV   = 1;
-    private static final int MZTAB = 2;
-    private static final int HTML  = 3;
-    private static final int XLS   = 4;
+    private static final int CSV       = 1;
+    private static final int MZTAB     = 2;
+    private static final int HTML      = 3;
+    private static final int XLS       = 4;
+    private static final int THREE_ARG = 3;
 
     /**
      * Static MzqData instance.
@@ -157,7 +158,7 @@ public class MzqLib {
 
             break;
 
-        case 3 :    // command line converter
+        case THREE_ARG :    // command line converter
 
             // lib =
             new MzqLib(args[0].toLowerCase(Locale.ENGLISH), args[1], args[2]);
@@ -257,6 +258,4 @@ public class MzqLib {
         return 0;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

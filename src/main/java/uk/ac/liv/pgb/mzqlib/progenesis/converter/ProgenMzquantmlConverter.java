@@ -1156,27 +1156,27 @@ public class ProgenMzquantmlConverter {
                             feature.setMz(Double.valueOf(format.format(mz)));
                             feature.setRt(format.format(value));
                             feature.setCharge(String.valueOf(chr));
-                            String ft_id = "ft_" + keyId.toString();
-                            feature.setId(ft_id);
+                            String ftId = "ft_" + keyId.toString();
+                            feature.setId(ftId);
 
                             //add mass trace
                             feature.getMassTrace().addAll(mt.
                                     getMassTraceDoubleList());
 
-                            featureMap.put(ft_id, feature);
+                            featureMap.put(ftId, feature);
 
                             // create peptide id to feture HashMap: peptideFeaturesMap
                             String pepSeq = peptideDupMap.get(id);
                             String indexStr = flIndexMap.get(id);
-                            String pep_id = "pep_" + pepSeq + "_" + chr + "_"
+                            String pepId = "pep_" + pepSeq + "_" + chr + "_"
                                     + indexStr;
                             if (pepSeq != null) {
 
                                 List<Feature> fList = peptideFeaturesMap.get(
-                                        pep_id);
+                                        pepId);
                                 if (fList == null) {
                                     fList = new ArrayList<>();
-                                    peptideFeaturesMap.put(pep_id, fList);
+                                    peptideFeaturesMap.put(pepId, fList);
                                 }
                                 fList.add(feature);
                             }

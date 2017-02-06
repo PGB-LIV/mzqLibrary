@@ -47,7 +47,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(
     name      = "",
-    propOrder = { "userParam" }
+    propOrder = {"userParam"}
 )
 @XmlRootElement(name = "map")
 public class Map {
@@ -241,6 +241,4 @@ public class Map {
         return this.userParam;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

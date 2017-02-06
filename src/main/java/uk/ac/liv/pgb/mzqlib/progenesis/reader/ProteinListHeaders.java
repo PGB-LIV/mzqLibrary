@@ -53,6 +53,4 @@ public final class ProteinListHeaders {
     private ProteinListHeaders() {
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

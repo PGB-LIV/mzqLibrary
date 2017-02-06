@@ -181,6 +181,4 @@ public class MzqInfoController {
         return quantLayerTable;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

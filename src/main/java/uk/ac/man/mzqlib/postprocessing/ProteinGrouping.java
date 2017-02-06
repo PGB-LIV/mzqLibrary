@@ -13,9 +13,9 @@ import java.util.Set;
  * @author man-mqbsshz2
  */
 public final class ProteinGrouping {
-    private static final Map<String, Set<String>> sameSetGr = new HashMap<>();
-    private static final Map<String, Set<String>> subSetGr  = new HashMap<>();
-    private static final Map<String, Set<String>> uniSetGr  = new HashMap<>();
+    private static final Map<String, Set<String>> SAME_SET_GR = new HashMap<>();
+    private static final Map<String, Set<String>> SUB_SET_GR  = new HashMap<>();
+    private static final Map<String, Set<String>> UNI_SET_GR  = new HashMap<>();
 
     private ProteinGrouping() {
     }
@@ -92,7 +92,7 @@ public final class ProteinGrouping {
             String      proTmpSel = proSetTmp.iterator().next();
             Set<String> pepSetTmp = protToPep.get(proTmpSel);
 
-            sameSetGr.put("SameSetGroup" + sameSetGroupNo, pepSetTmp);
+            SAME_SET_GR.put("SameSetGroup" + sameSetGroupNo, pepSetTmp);
 
             Iterator<String> sameSetTmpItr = sameSetTmp.iterator();
 
@@ -105,7 +105,7 @@ public final class ProteinGrouping {
             }
         }
 
-        return sameSetGr;
+        return SAME_SET_GR;
     }
 
     /**
@@ -139,7 +139,7 @@ public final class ProteinGrouping {
                 pepSetTmp.addAll(pepSetTmp0);
             }
 
-            subSetGr.put("SubSetGroup" + subSetGroupNo, pepSetTmp);
+            SUB_SET_GR.put("SubSetGroup" + subSetGroupNo, pepSetTmp);
 
             Iterator<String> subSetTmpItr = subSetTmp.iterator();
 
@@ -152,7 +152,7 @@ public final class ProteinGrouping {
             }
         }
 
-        return subSetGr;
+        return SUB_SET_GR;
     }
 
     /**
@@ -202,7 +202,7 @@ public final class ProteinGrouping {
                 }
             }
 
-            uniSetGr.put("UniSetGroup" + uniSetGroupNo, uniSetTmpJoined);
+            UNI_SET_GR.put("UniSetGroup" + uniSetGroupNo, uniSetTmpJoined);
 
             Iterator<String> uniSetTmp1Itr = uniSetTmp1.iterator();
 
@@ -217,7 +217,7 @@ public final class ProteinGrouping {
             uniSetTmp = uniSetTmp1;
         }
 
-        return uniSetGr;
+        return UNI_SET_GR;
     }
 
     /**
@@ -367,6 +367,4 @@ public final class ProteinGrouping {
         return uniquePeptides;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

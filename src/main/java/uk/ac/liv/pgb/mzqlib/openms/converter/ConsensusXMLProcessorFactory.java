@@ -65,15 +65,15 @@ import uk.ac.liv.pgb.mzqlib.openms.jaxb.MapList;
  */
 public final class ConsensusXMLProcessorFactory {
 
-    private static final ConsensusXMLProcessorFactory instance
+    private static final ConsensusXMLProcessorFactory INSTANCE
             = new ConsensusXMLProcessorFactory();
-    private static final String CvIDPSIMS = "PSI-MS";
-    private static final String CvNamePSIMS
+    private static final String CV_ID_PSI_MS = "PSI-MS";
+    private static final String CV_NAME_PSI_MS
             = "Proteomics Standards Initiative Mass Spectrometry Vocabularies";
-    private static final String CvUriPSIMS
+    private static final String CV_URI_PSI_MS
             = "http://psidev.cvs.sourceforge.net/viewvc/psidev/psi/psi-ms/"
             + "mzML/controlledVocabulary/psi-ms.obo";
-    private static final String CvVerPSIMS = "3.61.0";
+    private static final String CV_VER_PSI_MS = "3.61.0";
 
     private ConsensusXMLProcessorFactory() {
     }
@@ -86,7 +86,7 @@ public final class ConsensusXMLProcessorFactory {
      * @return the static instance of ConsensusXMLProcessorFactory
      */
     public static ConsensusXMLProcessorFactory getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     /**
@@ -133,10 +133,10 @@ public final class ConsensusXMLProcessorFactory {
             unmarsh = context.createUnmarshaller();
 
             cv = new Cv();
-            cv.setId(CvIDPSIMS);
-            cv.setUri(CvUriPSIMS);
-            cv.setFullName(CvNamePSIMS);
-            cv.setVersion(CvVerPSIMS);
+            cv.setId(CV_ID_PSI_MS);
+            cv.setUri(CV_URI_PSI_MS);
+            cv.setFullName(CV_NAME_PSI_MS);
+            cv.setVersion(CV_VER_PSI_MS);
 
             //unmodified label
             Label label = new Label();

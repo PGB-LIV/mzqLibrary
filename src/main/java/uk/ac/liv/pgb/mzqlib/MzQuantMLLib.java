@@ -38,6 +38,7 @@ public class MzQuantMLLib implements Serializable {
 
     private static final long serialVersionUID = 103L;
 
+    private final int FILENAME_SUF_LEN = 3;
     //CSV converter
     /**
      * Constant.
@@ -474,7 +475,7 @@ public class MzQuantMLLib implements Serializable {
                         outputFileName = outputFileName.substring(0,
                                                                   outputFileName.
                                                                   length()
-                                                                  - 3);
+                                                                  - FILENAME_SUF_LEN);
                     }
                     // Added by FG check if path is folder
 

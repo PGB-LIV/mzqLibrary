@@ -16,7 +16,7 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.Feature;
  * @author SPerkins
  */
 public class FeatureSiiMatchManager {
-    private static final BinaryOperator<List<SIIData>> mergeListsOperator = new BinaryOperator<List<SIIData>>() {
+    private static final BinaryOperator<List<SIIData>> MERGE_LISTS_OPERATOR = new BinaryOperator<List<SIIData>>() {
         @Override
         public List<SIIData> apply(final List<SIIData> t, final List<SIIData> u) {
             List<SIIData> newList = new LinkedList<>();
@@ -218,7 +218,7 @@ public class FeatureSiiMatchManager {
                                         .flatMap(p -> p.getValue().entrySet().stream())
                                         .collect(Collectors.toMap(entry -> entry.getKey().getId(),
                                                                   entry -> entry.getValue(),
-                                                                  mergeListsOperator));
+                                                                  MERGE_LISTS_OPERATOR));
     }
 
     private <T, U extends Collection<?>> Stream<T> getStreamOfMappingToN(final Map<T, U> map,
@@ -237,6 +237,4 @@ public class FeatureSiiMatchManager {
                   .distinct();
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

@@ -41,7 +41,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(
     name      = "",
-    propOrder = { "element" }
+    propOrder = {"element"}
 )
 @XmlRootElement(name = "groupedElementList")
 public class GroupedElementList {
@@ -84,6 +84,4 @@ public class GroupedElementList {
         return this.element;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

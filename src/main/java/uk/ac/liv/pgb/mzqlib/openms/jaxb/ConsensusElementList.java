@@ -41,7 +41,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(
     name      = "",
-    propOrder = { "consensusElement" }
+    propOrder = {"consensusElement"}
 )
 @XmlRootElement(name = "consensusElementList")
 public class ConsensusElementList {
@@ -85,6 +85,4 @@ public class ConsensusElementList {
         return this.consensusElement;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

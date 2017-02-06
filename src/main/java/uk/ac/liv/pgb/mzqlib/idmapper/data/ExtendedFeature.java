@@ -180,6 +180,4 @@ public class ExtendedFeature extends Feature {
         return feature.getUserParam();
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

@@ -239,6 +239,4 @@ public class MzqQuantLayer {
         this.quantLayerType = quantLayerType;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

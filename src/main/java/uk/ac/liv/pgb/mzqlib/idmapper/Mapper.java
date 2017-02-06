@@ -70,6 +70,4 @@ public final class Mapper {
         }
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

@@ -44,7 +44,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(
     name      = "",
-    propOrder = { "map" }
+    propOrder = {"map"}
 )
 @XmlRootElement(name = "mapList")
 public class MapList {
@@ -114,6 +114,4 @@ public class MapList {
         return this.map;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

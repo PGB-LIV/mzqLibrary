@@ -111,7 +111,7 @@ public class PeptideData extends QuantitationLevel {
     public final int[] getCharges() {
         int[] charges = new int[peptide.getCharge().size()];
 
-        for (int i = 0; i < peptide.getCharge().size(); i++) {
+        for (int i = 0;i < peptide.getCharge().size();i++) {
             charges[i] = Integer.parseInt(peptide.getCharge().get(i));
         }
 
@@ -205,6 +205,4 @@ public class PeptideData extends QuantitationLevel {
         return peptide.getPeptideSequence();
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

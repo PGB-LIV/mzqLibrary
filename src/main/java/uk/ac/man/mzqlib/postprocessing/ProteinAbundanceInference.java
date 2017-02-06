@@ -18,18 +18,18 @@ import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
  * @version 0.2
  */
 public final class ProteinAbundanceInference {
-    static final String    path             = "./src/main/resources/";
-    static final String    proteinGroupList = "ProteinGroupList11";
-    static final String    searchDatabase   = "SD1";
-    static final String    cvParamId        = "PSI-MS";
-    static final String    cvRef            = "PSI-MS";
+    static final String    PATH               = "./src/main/resources/";
+    static final String    PROTEIN_GROUP_LIST = "ProteinGroupList11";
+    static final String    SEARCH_DATABASE    = "SD1";
+    static final String    CV_PARAM_ID        = "PSI-MS";
+    static final String    CV_REF             = "PSI-MS";
     private static boolean conflictPeptideExcluded;
-    private String         in_file;
+    private String         inFile;
 
     /**
      * constructor
      *
-     * @param in_file                       - input file
+     * @param inFile                       - input file
      * @param abundanceOperation            - calculation operator
      * @param inputDataTypeAccession        - input datatype accession
      * @param outputProteinGroupDTAccession - output protein group datatype
@@ -37,13 +37,13 @@ public final class ProteinAbundanceInference {
      * @param outputProteinGroupDTName      - output protein group datatype
      *                                      name
      *                                      datatype accession
-     * @param QuantLayerType                - quant layer type
+     * @param quantLayerType                - quant layer type
      *
      * @throws FileNotFoundException file not found exceptions.
      */
-    public ProteinAbundanceInference(final String in_file, final String abundanceOperation,
+    public ProteinAbundanceInference(final String inFile, final String abundanceOperation,
                                      final String inputDataTypeAccession, final String outputProteinGroupDTAccession,
-                                     final String outputProteinGroupDTName, final String QuantLayerType)
+                                     final String outputProteinGroupDTName, final String quantLayerType)
             throws FileNotFoundException {
         String cvAccessionPrefix          = "MS:";
         int    cvAccssionLength           = 10;
@@ -90,21 +90,21 @@ public final class ProteinAbundanceInference {
 //      if (!textHasContext(QuantLayerType)) {
 //          throw new IllegalArgumentException("Invalid Quant Layer Type!!!");
 //      }
-        if (!(QuantLayerType.equals(qlt1) || QuantLayerType.equals(qlt2) || QuantLayerType.equals(qlt3))) {
-            throw new IllegalArgumentException("Invalid Quant Layer Type!!! " + QuantLayerType);
+        if (!(quantLayerType.equals(qlt1) || quantLayerType.equals(qlt2) || quantLayerType.equals(qlt3))) {
+            throw new IllegalArgumentException("Invalid Quant Layer Type!!! " + quantLayerType);
         }
 
         if (!(abundanceOperation.equals(co1) || abundanceOperation.equals(co2) || abundanceOperation.equals(co3))) {
             throw new IllegalArgumentException("Method slected is not correct: " + abundanceOperation);
         }
 
-        this.in_file = in_file;
+        this.inFile = inFile;
     }
 
     /**
      * constructor with the option for skipping the conflicting peptides.
      *
-     * @param in_file                       - input file
+     * @param inFile                       - input file
      * @param abundanceOperation            - calculation operator
      * @param inputDataTypeAccession        - input datatype accession
      * @param outputProteinGroupDTAccession - output protein group datatype
@@ -112,14 +112,14 @@ public final class ProteinAbundanceInference {
      * @param outputProteinGroupDTName      - output protein group datatype
      *                                      name
      *                                      datatype accession
-     * @param QuantLayerType                - quant layer type
+     * @param quantLayerType                - quant layer type
      * @param conflictPeptideExcluded       - remove conflicting peptides
      *
      * @throws FileNotFoundException file not found exceptions.
      */
-    public ProteinAbundanceInference(final String in_file, final String abundanceOperation,
+    public ProteinAbundanceInference(final String inFile, final String abundanceOperation,
                                      final String inputDataTypeAccession, final String outputProteinGroupDTAccession,
-                                     final String outputProteinGroupDTName, final String QuantLayerType,
+                                     final String outputProteinGroupDTName, final String quantLayerType,
                                      final boolean conflictPeptideExcluded)
             throws FileNotFoundException {
         String cvAccessionPrefix          = "MS:";
@@ -167,15 +167,15 @@ public final class ProteinAbundanceInference {
 //      if (!textHasContext(QuantLayerType)) {
 //          throw new IllegalArgumentException("Invalid Quant Layer Type!!!");
 //      }
-        if (!(QuantLayerType.equals(qlt1) || QuantLayerType.equals(qlt2) || QuantLayerType.equals(qlt3))) {
-            throw new IllegalArgumentException("Invalid Quant Layer Type!!! " + QuantLayerType);
+        if (!(quantLayerType.equals(qlt1) || quantLayerType.equals(qlt2) || quantLayerType.equals(qlt3))) {
+            throw new IllegalArgumentException("Invalid Quant Layer Type!!! " + quantLayerType);
         }
 
         if (!(abundanceOperation.equals(co1) || abundanceOperation.equals(co2) || abundanceOperation.equals(co3))) {
             throw new IllegalArgumentException("Method slected is not correct: " + abundanceOperation);
         }
 
-        this.in_file                                      = in_file;
+        this.inFile                                       = inFile;
         ProteinAbundanceInference.conflictPeptideExcluded = conflictPeptideExcluded;
     }
 
@@ -191,7 +191,7 @@ public final class ProteinAbundanceInference {
         if (protGrList != null) {
             mzq.setProteinGroupList(null);
 
-            MzQuantMLMarshaller marshaller = new MzQuantMLMarshaller(in_file);
+            MzQuantMLMarshaller marshaller = new MzQuantMLMarshaller(inFile);
 
             marshaller.marshall(mzq);
         }
@@ -304,10 +304,10 @@ public final class ProteinAbundanceInference {
      */
     public static MzQuantMLUnmarshaller mzqFileInput(final String infile)
             throws IllegalStateException, FileNotFoundException {
-        File                  mzqFile   = new File(infile);
-        MzQuantMLUnmarshaller infile_um = new MzQuantMLUnmarshaller(mzqFile);
+        File                  mzqFile  = new File(infile);
+        MzQuantMLUnmarshaller infileUm = new MzQuantMLUnmarshaller(mzqFile);
 
-        return infile_um;
+        return infileUm;
     }
 
     /**
@@ -327,13 +327,13 @@ public final class ProteinAbundanceInference {
      * @throws FileNotFoundException file not found exceptions.
      */
     public void proteinInference(final boolean signalConflict) throws FileNotFoundException {
-        MzQuantMLUnmarshaller infile_um;
+        MzQuantMLUnmarshaller infileUm;
 
         try {
-            infile_um = mzqFileInput(in_file);
+            infileUm = mzqFileInput(inFile);
 
             // remove the previous protein group list if existing
-            checkProteinGroupList(infile_um);
+            checkProteinGroupList(infileUm);
 
 //          pipeline_flag = pipeline_executor(infile_um, signalConflict);  // This function needs to be revisited as it doesn't do anything
         } catch (IllegalStateException ex) {
@@ -359,11 +359,9 @@ public final class ProteinAbundanceInference {
      * @return - true/false
      */
     private boolean textHasContext(final String aText) {
-        String EMPTY_STRING = "";
+        String emptyString = "";
 
-        return aText != null && !aText.trim().equals(EMPTY_STRING);
+        return aText != null && !aText.trim().equals(emptyString);
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

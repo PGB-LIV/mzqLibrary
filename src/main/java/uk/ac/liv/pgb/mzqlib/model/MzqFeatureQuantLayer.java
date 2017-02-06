@@ -45,6 +45,4 @@ public class MzqFeatureQuantLayer extends MzqQuantLayer {
         }
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

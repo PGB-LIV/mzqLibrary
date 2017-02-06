@@ -160,6 +160,9 @@ public final class Utils {
 
                     case JOptionPane.NO_OPTION :
                         return;
+
+                    default :
+                        return;
                     }
                 }
 
@@ -293,6 +296,4 @@ public final class Utils {
         return ext;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

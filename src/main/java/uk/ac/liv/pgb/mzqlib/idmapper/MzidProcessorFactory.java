@@ -33,7 +33,7 @@ public class MzidProcessorFactory {
      * Number of seconds in one minute.
      */
     private static final int                  SECONDS_PER_MINUTE = 60;
-    private static final MzidProcessorFactory instance           = new MzidProcessorFactory();
+    private static final MzidProcessorFactory INSTANCE           = new MzidProcessorFactory();
 
     /**
      * The method builds a MzidProcessor instance from an input mzIdentML file.
@@ -57,7 +57,7 @@ public class MzidProcessorFactory {
      * @return the static instance of MzidProcessorFactory
      */
     public static MzidProcessorFactory getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     /**
@@ -103,7 +103,7 @@ public class MzidProcessorFactory {
         private File                               mzidFile              = null;
         private MzIdentMLUnmarshaller              umarsh                = null;
         private final Map<String, List<SIIData>>   pepModStringToSIIsMap = new HashMap<>();
-        private final TIntObjectMap<List<SIIData>> RtToSIIsMap           = new TIntObjectHashMap<>();
+        private final TIntObjectMap<List<SIIData>> rtToSIIsMap           = new TIntObjectHashMap<>();
         private SearchDatabase                     searchDB;
 
         /*
@@ -175,11 +175,11 @@ public class MzidProcessorFactory {
                         List<SIIData> rtSiiDataList;
 
                         if (!Double.isNaN(rt)) {
-                            rtSiiDataList = RtToSIIsMap.get(intRt);
+                            rtSiiDataList = rtToSIIsMap.get(intRt);
 
                             if (rtSiiDataList == null) {
                                 rtSiiDataList = new ArrayList();
-                                RtToSIIsMap.put(intRt, rtSiiDataList);
+                                rtToSIIsMap.put(intRt, rtSiiDataList);
                             }
 
                             rtSiiDataList.add(sd);
@@ -196,7 +196,7 @@ public class MzidProcessorFactory {
 
         @Override
         public TIntObjectMap getRtToSIIsMap() {
-            return RtToSIIsMap;
+            return rtToSIIsMap;
         }
 
         @Override
@@ -205,6 +205,4 @@ public class MzidProcessorFactory {
         }
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

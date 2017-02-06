@@ -82,6 +82,4 @@ public enum UserParamType {
         return value;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

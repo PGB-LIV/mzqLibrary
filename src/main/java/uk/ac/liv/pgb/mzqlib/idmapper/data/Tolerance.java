@@ -72,6 +72,4 @@ public class Tolerance {
         this.unit = unit;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

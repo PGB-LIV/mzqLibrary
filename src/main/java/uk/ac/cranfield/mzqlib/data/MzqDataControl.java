@@ -118,6 +118,4 @@ class MzqDataControlElement {
         return false;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

@@ -19,16 +19,16 @@ import java.io.FileNotFoundException;
  * @author man-mqbsshz2
  */
 public final class NormalisationMultiThreading {
-    static final String path     = "C:\\Manchester\\work\\Puf3Study\\ProteoSuite\\Idenoutcomes\\Filtered_AJ_";
-    static final String filter   = "qvalue001";
-    static final String fileName = "unlabeled_result_FLUQT_mapped_" + filter;
+    static final String PATH      = "C:\\Manchester\\work\\Puf3Study\\ProteoSuite\\Idenoutcomes\\Filtered_AJ_";
+    static final String FILTER    = "qvalue001";
+    static final String FILE_NAME = "unlabeled_result_FLUQT_mapped_" + FILTER;
 
     private NormalisationMultiThreading() {
     }
 
     public static void main(final String[] args) throws FileNotFoundException, InterruptedException {
-        String inputFile  = path + filter + "\\mzq\\" + fileName + ".mzq";
-        String outputFile = path + filter + "\\mzq\\consensusonly\\test\\" + fileName
+        String inputFile  = PATH + FILTER + "\\mzq\\" + FILE_NAME + ".mzq";
+        String outputFile = PATH + FILTER + "\\mzq\\consensusonly\\test\\" + FILE_NAME
                             + "_peptideNormalization_medianSelectedRefAssay_25Oct_feature1.mzq";
 
 //      String inputFile = "C:\\Manchester\\work\\ProteoSuite\\AndyPaper\\AllAges.mzq\\" + "AllAges.mzq";
@@ -117,6 +117,4 @@ public final class NormalisationMultiThreading {
         workTask.multithreadingCalc();
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

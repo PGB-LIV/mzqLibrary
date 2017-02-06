@@ -75,6 +75,4 @@ public enum MassType {
         return value;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

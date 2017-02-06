@@ -15,6 +15,8 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.SearchDatabase;
  * @author Jun Fan@cranfield
  */
 public class ProteinData extends QuantitationLevel {
+    private final int HASH_PRIME_ONE = 7;
+    private final int HASH_PRIME_TWO = 17;
 
     /**
      * the corresponding protein element in mzQuantML
@@ -83,11 +85,11 @@ public class ProteinData extends QuantitationLevel {
      */
     @Override
     public final int hashCode() {
-        int hash = 7;
+        int hash = HASH_PRIME_ONE;
 
-        hash = 17 * hash + (this.getAccession() != null
-                            ? this.getAccession().hashCode()
-                            : 0);
+        hash = HASH_PRIME_TWO * hash + (this.getAccession() != null
+                                        ? this.getAccession().hashCode()
+                                        : 0);
 
         return hash;
     }
@@ -170,6 +172,4 @@ public class ProteinData extends QuantitationLevel {
         return ((SearchDatabase) protein.getSearchDatabase()).getVersion();
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

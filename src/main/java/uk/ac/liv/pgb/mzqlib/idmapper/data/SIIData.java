@@ -27,7 +27,7 @@ public class SIIData implements Comparable<SIIData> {
     /**
      * SIIData is comparable base on the retention time value.
      */
-    public static final Comparator<SIIData> SIIDataRTComparator = new Comparator<SIIData>() {
+    public static final Comparator<SIIData> SII_DATA_RT_COMPARATOR = new Comparator<SIIData>() {
         @Override
         public int compare(final SIIData siiData1, final SIIData siiData2) {
             double rt1 = siiData1.getRetentionTime();
@@ -340,6 +340,4 @@ public class SIIData implements Comparable<SIIData> {
         return um;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

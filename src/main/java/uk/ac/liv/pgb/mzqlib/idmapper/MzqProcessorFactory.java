@@ -32,7 +32,7 @@ import uk.ac.liv.pgb.mzqlib.utils.MzidToMzqElementConverter;
  * @since 24-Jun-2013 14:06:51
  */
 public class MzqProcessorFactory {
-    private static final MzqProcessorFactory instance  = new MzqProcessorFactory();
+    private static final MzqProcessorFactory INSTANCE  = new MzqProcessorFactory();
     private static final double              TOLERANCE = 0.1;
 
     /**
@@ -123,7 +123,7 @@ public class MzqProcessorFactory {
      * @return the instance of MzqProcessorFactor
      */
     public static MzqProcessorFactory getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     private static final class MzqProcessorImpl implements MzqProcessor {
@@ -210,7 +210,7 @@ public class MzqProcessorFactory {
 
                     ExtendedFeature exFt = new ExtendedFeature(ft, msTolerance, rtWin);
 
-                    for (int i = (int) exFt.getBRT(); i <= (int) exFt.getURT(); i++) {
+                    for (int i = (int) exFt.getBRT();i <= (int) exFt.getURT();i++) {
                         List<SIIData> siiDataList = rtToSIIsMap.get(i);
 
                         if (siiDataList != null) {
@@ -283,6 +283,4 @@ public class MzqProcessorFactory {
         }
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

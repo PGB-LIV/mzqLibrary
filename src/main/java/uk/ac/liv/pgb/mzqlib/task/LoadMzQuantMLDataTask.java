@@ -435,6 +435,4 @@ public class LoadMzQuantMLDataTask extends Task<MzQuantMLData> {
         return mzqData;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

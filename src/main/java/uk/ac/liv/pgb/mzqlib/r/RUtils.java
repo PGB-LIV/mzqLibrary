@@ -16,7 +16,7 @@ import org.rosuda.JRI.Rengine;
  * @author Da Qi
  * @since 21-Nov-2014 11:13:05
  */
-public class RUtils {
+public final class RUtils {
     private RUtils() {
     }
 
@@ -131,6 +131,4 @@ public class RUtils {
 //      });
 //  }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

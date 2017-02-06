@@ -104,6 +104,12 @@ public class MainApp extends Application {
     private static final String WINDOW_TITLE = "mzqViewer - mzqLibrary "
             + VERSION;
 
+    private final double DOWN_SCALE_FACTOR = 0.9;
+    private final double UP_SCALE_FACTOR = 1.1;
+    
+    private final int SCREEN_WIDTH = 800;
+    private final int SCREEN_HEIGHT = 600;
+
     private MzQuantMLData mzqData = new MzQuantMLData();
 
     /**
@@ -502,6 +508,7 @@ public class MainApp extends Application {
      */
     public final void saveHeatMapPdf(final File pdfFile, final double pdfHValue,
                                      final double pdfWValue) {
+
         newStage.hide();
 
         if (re == null) {
@@ -554,9 +561,9 @@ public class MainApp extends Application {
                 re.eval("library(\"gplots\")");
 
                 re.eval("breaks <- seq(from = "
-                        + String.valueOf(rmTask.getValue().getLogMin() * 0.9)
+                        + String.valueOf(rmTask.getValue().getLogMin() * DOWN_SCALE_FACTOR)
                         + ", to = "
-                        + String.valueOf(rmTask.getValue().getLogMax() * 1.1)
+                        + String.valueOf(rmTask.getValue().getLogMax() * UP_SCALE_FACTOR)
                         + ", length = 51)");
 
                 // Set color palette
@@ -1043,7 +1050,7 @@ public class MainApp extends Application {
         //show the chart only when data row is seleted.
         //without if condition, empty chart will show if no data row is selected
         if (dataMatrixTable.getSelectionModel().getSelectedItem() != null) {
-            Scene scene = new Scene(lineChart, 800, 600);
+            Scene scene = new Scene(lineChart, SCREEN_WIDTH, SCREEN_HEIGHT);
 
             curveStage.setScene(scene);
             curveStage.show();
@@ -1063,9 +1070,8 @@ public class MainApp extends Application {
                 gui.setTitle("Mzq library command line GUI");
                 gui.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 gui.setVisible(true);
-            } catch (ClassNotFoundException | InstantiationException |
-                    IllegalAccessException |
-                    javax.swing.UnsupportedLookAndFeelException ex) {
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException 
+                    | javax.swing.UnsupportedLookAndFeelException ex) {
                 Logger.getLogger(MainApp.class.getName()).
                         log(Level.SEVERE, null, ex);
             }

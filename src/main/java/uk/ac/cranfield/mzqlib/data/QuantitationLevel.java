@@ -18,7 +18,7 @@ import uk.ac.cranfield.mzqlib.GenericInferenceMethod;
  *
  * @author Jun Fan@cranfield
  */
-public class QuantitationLevel {
+public abstract class QuantitationLevel {
     private static QuantitationMisc misc = new QuantitationMisc();
 
     /**
@@ -119,9 +119,7 @@ public class QuantitationLevel {
      *
      * @return count.
      */
-    public int getCount() {
-        return 1;
-    }
+    public abstract int getCount();
 
     /**
      * Get global value.
@@ -318,6 +316,4 @@ class QuantitationMisc {
         return methods.get(clazz);
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

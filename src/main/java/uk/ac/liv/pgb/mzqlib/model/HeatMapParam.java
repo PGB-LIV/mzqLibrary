@@ -209,6 +209,4 @@ public class HeatMapParam {
         this.rowNumber = rowNumber;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

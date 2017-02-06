@@ -143,7 +143,7 @@ public final class GenericInferenceMethod {
         Map<String, Double>       ret = initializeRet(assayIDs);
         Map<String, List<Double>> tmp = initializeMiddleStructure(assayIDs);
 
-        for (int i = 0; i < lowLevelQuant.size(); i++) {
+        for (int i = 0;i < lowLevelQuant.size();i++) {
             Map<String, Double> quant = lowLevelQuant.get(i);
 
             for (String assayID : assayIDs) {
@@ -179,6 +179,4 @@ public final class GenericInferenceMethod {
         return ret;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

@@ -32,7 +32,8 @@ public class ObjectFactory {
      * schema derived classes for package: uk.ac.liv.mzqlib.openms.jaxb
      *
      */
-    public ObjectFactory() {}
+    public ObjectFactory() {
+    }
 
     /**
      * Create an instance of {@link Centroid }
@@ -491,6 +492,4 @@ public class ObjectFactory {
         return new uk.ac.liv.pgb.mzqlib.openms.jaxb.UserParam();
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

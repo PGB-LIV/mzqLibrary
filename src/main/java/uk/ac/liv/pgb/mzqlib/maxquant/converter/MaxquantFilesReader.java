@@ -458,8 +458,8 @@ public class MaxquantFilesReader {
                     Iterator iStudy = cloneStudyGroupMap.keySet().iterator();
                     while (iStudy.hasNext()) {
                         String studyV = (String) iStudy.next();
-                        String studyV_L = studyV + "_L";
-                        String studyV_H = studyV + "_H";
+                        String studyVL = studyV + "_L";
+                        String studyVH = studyV + "_H";
                         List assListLight = new ArrayList();
                         List assListHeavy = new ArrayList();
                         List value = studyGroupMap.get(studyV);
@@ -474,8 +474,8 @@ public class MaxquantFilesReader {
                                 assListHeavy.add(assName);
                             }
                         }
-                        studyGroupMap.put(studyV_L, new ArrayList(assListLight));
-                        studyGroupMap.put(studyV_H, new ArrayList(assListHeavy));
+                        studyGroupMap.put(studyVL, new ArrayList(assListLight));
+                        studyGroupMap.put(studyVH, new ArrayList(assListHeavy));
                     }
                 } else {
                     throw new IllegalStateException(

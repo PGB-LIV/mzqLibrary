@@ -191,6 +191,4 @@ public class Mzid {
         }
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

@@ -90,6 +90,4 @@ public final class FeatureListHeaders {
     private FeatureListHeaders() {
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

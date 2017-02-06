@@ -243,6 +243,4 @@ public final class MzidToMzqElementConverter {
         return mzqUp;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

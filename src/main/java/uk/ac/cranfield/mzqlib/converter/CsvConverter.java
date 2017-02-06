@@ -323,6 +323,4 @@ public class CsvConverter extends GenericConverter {
         sb.append("\n");
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

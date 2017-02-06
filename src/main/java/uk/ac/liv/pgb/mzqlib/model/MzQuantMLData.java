@@ -97,6 +97,4 @@ public class MzQuantMLData {
         this.mzqFeatureQuantLayerList.addAll(mzqFeatureQuantLayerList);
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

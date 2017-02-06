@@ -70,18 +70,18 @@ public final class Gzipper {
     /**
      * Utility method to extract zip file.
      *
-     * @param zipped_file zip file.
+     * @param zippedFile zip file.
      *
      * @return unzipped file.
      *
      * @throws IOException io exceptions.
      */
-    public static File extractFile(final File zipped_file) throws IOException {
+    public static File extractFile(final File zippedFile) throws IOException {
         GZIPInputStream  gin     = null;
         File             outFile = null;
         FileOutputStream fos     = null;
 
-        try (FileInputStream fis = new FileInputStream(zipped_file)) {
+        try (FileInputStream fis = new FileInputStream(zippedFile)) {
             gin     = new GZIPInputStream(fis);
             outFile = File.createTempFile("tmp_" + new Random().toString(), ".mzq");
 
@@ -109,6 +109,4 @@ public final class Gzipper {
         return outFile;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

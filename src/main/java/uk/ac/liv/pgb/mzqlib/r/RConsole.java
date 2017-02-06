@@ -145,6 +145,4 @@ public class RConsole implements RMainLoopCallbacks {
         System.out.print(text);
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

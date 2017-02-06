@@ -56,6 +56,4 @@ public class PeptideSequenceData {
         return sequence;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

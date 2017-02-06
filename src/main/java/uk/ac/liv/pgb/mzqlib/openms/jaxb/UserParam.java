@@ -40,8 +40,8 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "userParam")
-@XmlSeeAlso({ uk.ac.liv.pgb.mzqlib.openms.jaxb.ConsensusXML.DataProcessing.UserParam.class,
-              uk.ac.liv.pgb.mzqlib.openms.jaxb.FeatureMap.DataProcessing.UserParam.class })
+@XmlSeeAlso({uk.ac.liv.pgb.mzqlib.openms.jaxb.ConsensusXML.DataProcessing.UserParam.class,
+             uk.ac.liv.pgb.mzqlib.openms.jaxb.FeatureMap.DataProcessing.UserParam.class})
 public class UserParam {
 
     /**
@@ -144,6 +144,4 @@ public class UserParam {
         this.value = value;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

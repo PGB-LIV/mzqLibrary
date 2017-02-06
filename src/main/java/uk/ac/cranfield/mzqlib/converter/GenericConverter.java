@@ -22,8 +22,8 @@ public abstract class GenericConverter {
      * @param filename   input mzq file name.
      * @param outputFile output file name.
      */
-    public GenericConverter(final String filename, final String outputFile) {
-        this.filename = filename;
+    public GenericConverter(final String pFilename, final String outputFile) {
+        this.filename = pFilename;
         this.outfile  = outputFile;
     }
 
@@ -227,8 +227,8 @@ public abstract class GenericConverter {
     /**
      * @param filename the filename to set
      */
-    public final void setFilename(String filename) {
-        this.filename = filename;
+    public final void setFilename(String pFilename) {
+        this.filename = pFilename;
     }
 
     /**
@@ -241,10 +241,8 @@ public abstract class GenericConverter {
     /**
      * @param outfile the outfile to set
      */
-    public final void setOutfile(String outfile) {
-        this.outfile = outfile;
+    public final void setOutfile(String pOutfile) {
+        this.outfile = pOutfile;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

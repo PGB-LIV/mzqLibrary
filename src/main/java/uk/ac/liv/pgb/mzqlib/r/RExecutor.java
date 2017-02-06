@@ -15,7 +15,7 @@ public class RExecutor {
     /**
      * Constant.
      */
-    public static final Rengine re = new Rengine(new String[]{"--vanilla"}, false, null);
+    public static final Rengine RE = new Rengine(new String[]{"--vanilla"}, false, null);
     private final String        command;
     private final String[]      args;
     private StringBuilder       error;
@@ -51,7 +51,7 @@ public class RExecutor {
         }
 
         runString.append(")");
-        re.eval(runString.toString());
+        RE.eval(runString.toString());
     }
 
     /**
@@ -67,6 +67,4 @@ public class RExecutor {
         return error.toString();
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

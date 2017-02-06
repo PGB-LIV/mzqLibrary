@@ -71,10 +71,10 @@ import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
  */
 public final class MzqMzIdMapperFactory {
 
-    private static final MzqMzIdMapperFactory instance
+    private static final MzqMzIdMapperFactory INSTANCE
             = new MzqMzIdMapperFactory();
 
-    private final double TOLERANCE = 0.1;
+    private final double tolerance = 0.1;
 
     private MzqMzIdMapperFactory() {
     }
@@ -86,7 +86,7 @@ public final class MzqMzIdMapperFactory {
      * @return instance of MzqMzIdMapperFactory
      */
     public static MzqMzIdMapperFactory getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     /**
@@ -108,7 +108,7 @@ public final class MzqMzIdMapperFactory {
                                             final String rawToMzidString)
             throws JAXBException, IOException {
         return buildMzqMzIdMapper(mzqUm, rawToMzidString, new Tolerance(
-                                  TOLERANCE,
+                                  tolerance,
                                   ToleranceUnit.DALTON));
     }
 
@@ -171,7 +171,7 @@ public final class MzqMzIdMapperFactory {
     public MzqMzIdMapper buildMzqMzIdMapper(final MzQuantMLUnmarshaller mzqUm,
                                             final Map<String, String> rawToMzidMap)
             throws JAXBException, IOException {
-        return buildMzqMzIdMapper(mzqUm, rawToMzidMap, new Tolerance(TOLERANCE,
+        return buildMzqMzIdMapper(mzqUm, rawToMzidMap, new Tolerance(tolerance,
                                                                      ToleranceUnit.DALTON));
     }
 
@@ -610,10 +610,10 @@ public final class MzqMzIdMapperFactory {
             FileFormat ff = new FileFormat();
 
             Cv cv = new Cv();
-            cv.setId(MzqDataConstants.CvIDPSIMS);
-            cv.setUri(MzqDataConstants.CvUriPSIMS);
-            cv.setFullName(MzqDataConstants.CvNamePSIMS);
-            cv.setVersion(MzqDataConstants.CvVerPSIMS);
+            cv.setId(MzqDataConstants.CV_ID_PSI_MS);
+            cv.setUri(MzqDataConstants.CV_URI_PSI_MS);
+            cv.setFullName(MzqDataConstants.CV_NAME_PSI_MS);
+            cv.setVersion(MzqDataConstants.CV_VER_PSI_MS);
 
             CvParam cp = new CvParam();
             cp.setAccession("MS:1002073");

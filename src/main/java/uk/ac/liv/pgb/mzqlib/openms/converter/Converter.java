@@ -35,6 +35,4 @@ public final class Converter {
         }
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

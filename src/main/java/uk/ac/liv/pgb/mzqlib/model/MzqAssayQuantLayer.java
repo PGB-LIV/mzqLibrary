@@ -51,6 +51,4 @@ public class MzqAssayQuantLayer extends MzqQuantLayer {
         }
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

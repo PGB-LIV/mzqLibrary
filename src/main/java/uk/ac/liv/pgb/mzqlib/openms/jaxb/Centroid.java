@@ -121,6 +121,4 @@ public class Centroid {
         this.rt = value;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

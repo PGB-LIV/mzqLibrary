@@ -313,6 +313,4 @@ public class ProgenesisConverterController implements Initializable {
         }
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

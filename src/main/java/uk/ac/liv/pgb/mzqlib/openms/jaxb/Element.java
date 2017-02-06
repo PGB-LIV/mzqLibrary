@@ -218,6 +218,4 @@ public class Element {
         this.rt = value;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

@@ -7,6 +7,4 @@ package uk.ac.liv.pgb.mzqlib.r.routines;
  */
 public class Anova {
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

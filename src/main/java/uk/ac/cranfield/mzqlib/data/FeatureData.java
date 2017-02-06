@@ -79,6 +79,4 @@ public class FeatureData extends QuantitationLevel {
         this.rawFilesGroupRef = rawFilesGroupRef;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

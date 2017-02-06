@@ -170,6 +170,4 @@ public class MzQuantMLSummary {
         this.techniquesUsed.addAll(techList);
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

@@ -26,6 +26,4 @@ public interface MzqProcessor {
      */
     SearchDatabase getSearchDatabase();
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

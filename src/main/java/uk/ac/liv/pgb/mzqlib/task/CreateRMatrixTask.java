@@ -135,6 +135,4 @@ public class CreateRMatrixTask extends Task<HeatMapParam> {
         return hmParam;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

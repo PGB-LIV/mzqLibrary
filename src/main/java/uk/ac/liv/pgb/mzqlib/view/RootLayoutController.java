@@ -176,6 +176,4 @@ public class RootLayoutController {
         this.mainApp = mainApp;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

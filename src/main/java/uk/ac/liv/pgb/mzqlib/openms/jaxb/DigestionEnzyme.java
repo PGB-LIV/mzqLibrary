@@ -104,6 +104,4 @@ public enum DigestionEnzyme {
         return value;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

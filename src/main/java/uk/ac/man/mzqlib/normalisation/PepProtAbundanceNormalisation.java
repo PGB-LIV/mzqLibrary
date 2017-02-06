@@ -393,7 +393,7 @@ public class PepProtAbundanceNormalisation {
             }
 
             Set<ScaleFactorCalculationResult> result = futures.stream().map(
-                    mapResultFunction)
+                    MAP_RESULT_FUNCTION)
                     .collect(Collectors.toSet());
             if (result.stream().anyMatch(p -> p == null)) {
                 throw new IllegalStateException(
@@ -1339,7 +1339,7 @@ public class PepProtAbundanceNormalisation {
 
     }
 
-    private static final Function<Future<ScaleFactorCalculationResult>, ScaleFactorCalculationResult> mapResultFunction
+    private static final Function<Future<ScaleFactorCalculationResult>, ScaleFactorCalculationResult> MAP_RESULT_FUNCTION
             = new Function<Future<ScaleFactorCalculationResult>, ScaleFactorCalculationResult>() {
 
         @Override

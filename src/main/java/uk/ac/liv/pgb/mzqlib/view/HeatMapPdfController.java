@@ -96,6 +96,4 @@ public class HeatMapPdfController {
         this.mainApp = mainApp;
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

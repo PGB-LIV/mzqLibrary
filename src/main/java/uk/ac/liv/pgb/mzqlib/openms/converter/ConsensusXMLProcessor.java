@@ -84,6 +84,4 @@ public interface ConsensusXMLProcessor {
      */
     List<RawFilesGroup> getRawFilesGroupList();
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

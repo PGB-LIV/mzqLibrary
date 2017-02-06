@@ -26,6 +26,4 @@ public interface MzqMzIdMapper {
      */
     void createMappedFile(File outputFile) throws JAXBException, IOException;
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

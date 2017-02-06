@@ -28,8 +28,8 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.Software;
  */
 public class HtmlConverter extends GenericConverter {
     private static final String                  SEPERATOR = "</td><td>";
-    private static final HashMap<String, String> templates = new HashMap<>();
-    private final String                         TEMPLATE  = "htmlTemplate.txt";
+    private static final HashMap<String, String> TEMPLATES = new HashMap<>();
+    private final String                         template  = "htmlTemplate.txt";
 
     /**
      * Constructor.
@@ -82,12 +82,12 @@ public class HtmlConverter extends GenericConverter {
         }
 
         // read in the template from the local file and saved in the hash
-        if (templates.isEmpty()) {
+        if (TEMPLATES.isEmpty()) {
             BufferedReader reader = null;
 
             try {
                 reader = new BufferedReader(
-                    new InputStreamReader(HtmlConverter.class.getClassLoader().getResourceAsStream(TEMPLATE),
+                    new InputStreamReader(HtmlConverter.class.getClassLoader().getResourceAsStream(template),
                                           "UTF-8"));
 
                 String        line = "";
@@ -99,7 +99,7 @@ public class HtmlConverter extends GenericConverter {
                         if (tag.length() > 0) {
                             sb.deleteCharAt(sb.length() - 1);
                             sb.deleteCharAt(sb.length() - 1);
-                            templates.put(tag, sb.toString());
+                            TEMPLATES.put(tag, sb.toString());
                         }
 
                         sb  = new StringBuilder();
@@ -112,7 +112,7 @@ public class HtmlConverter extends GenericConverter {
 
                 sb.deleteCharAt(sb.length() - 1);
                 sb.deleteCharAt(sb.length() - 1);
-                templates.put(tag, sb.toString());
+                TEMPLATES.put(tag, sb.toString());
             } catch (IOException ioe) {
                 throw new IllegalStateException("Can not find the template file: " + ioe.getMessage(), ioe);
             } finally {
@@ -128,9 +128,9 @@ public class HtmlConverter extends GenericConverter {
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append(templates.get("MAIN_HEADER_1"));
+        sb.append(TEMPLATES.get("MAIN_HEADER_1"));
         sb.append(getBaseFilename());
-        sb.append(templates.get("MAIN_HEADER_2"));
+        sb.append(TEMPLATES.get("MAIN_HEADER_2"));
 
         // add metadata
         // analysis summary
@@ -179,9 +179,9 @@ public class HtmlConverter extends GenericConverter {
         sb.append("</ul>\n");
 
         // start the protein table
-        sb.append(templates.get("PROTEIN_HEADER_START"));
+        sb.append(TEMPLATES.get("PROTEIN_HEADER_START"));
         addHeader(MzqData.PROTEIN, sb);
-        sb.append(templates.get("PROTEIN_HEADER_END"));
+        sb.append(TEMPLATES.get("PROTEIN_HEADER_END"));
 
         Set<String> proteinGlobalNames = MzqLib.DATA.getControl().getElements(MzqData.PROTEIN, MzqData.GLOBAL);
         Set<String> peptideGlobalNames = MzqLib.DATA.getControl().getElements(MzqData.PEPTIDE, MzqData.GLOBAL);
@@ -218,20 +218,20 @@ public class HtmlConverter extends GenericConverter {
                                      + 2;    // +2 for the peptide sequence and modification columns
 
 //      for(ProteinData protein:MzqLib.data.getProteins()){
-        for (int proIdx = 0; proIdx < MzqLib.DATA.getProteins().size(); proIdx++) {
+        for (int proIdx = 0;proIdx < MzqLib.DATA.getProteins().size();proIdx++) {
             ProteinData protein = MzqLib.DATA.getProteins().get(proIdx);
 
             // it seems html does not like . which is fine in NCName
             String proteinID = protein.getAccession().replace(".", "_");
 
-            sb.append(templates.get("PROTEIN_START_1"));
+            sb.append(TEMPLATES.get("PROTEIN_START_1"));
             sb.append(proteinID);
 
             if (proIdx % 2 != 0) {
                 sb.append("\" class=\"pro-alternate");
             }
 
-            sb.append(templates.get("PROTEIN_START_2"));
+            sb.append(TEMPLATES.get("PROTEIN_START_2"));
             sb.append(protein.getAccession());
 
             for (String quantityName : MzqLib.DATA.getQuantitationNames()) {
@@ -241,32 +241,32 @@ public class HtmlConverter extends GenericConverter {
 
             addRatioValue(MzqData.PROTEIN, sb, protein, SEPERATOR);
             addGlobalValue(MzqData.PROTEIN, sb, protein, SEPERATOR, proteinGlobalNames);
-            sb.append(templates.get("PROTEIN_END_1"));
+            sb.append(TEMPLATES.get("PROTEIN_END_1"));
             sb.append(proteinID);
             sb.append("-detail");
-            sb.append(templates.get("PROTEIN_END_2"));
+            sb.append(TEMPLATES.get("PROTEIN_END_2"));
             sb.append("child-of-");
             sb.append(proteinID);
-            sb.append(templates.get("PROTEIN_END_3"));
+            sb.append(TEMPLATES.get("PROTEIN_END_3"));
             sb.append(proteinTotalSize);
-            sb.append(templates.get("PROTEIN_END_4"));
+            sb.append(TEMPLATES.get("PROTEIN_END_4"));
             addHeader(MzqData.PEPTIDE, sb);
-            sb.append(templates.get("PROTEIN_END_5"));
+            sb.append(TEMPLATES.get("PROTEIN_END_5"));
 
 //          for(PeptideData peptide:protein.getPeptides()){
-            for (int pepIdx = 0; pepIdx < protein.getPeptides().size(); pepIdx++) {
+            for (int pepIdx = 0;pepIdx < protein.getPeptides().size();pepIdx++) {
                 PeptideData peptide   = protein.getPeptides().get(pepIdx);
                 String      peptideID = proteinID + "-" + peptide.getSeq() + "-"
                                         + peptide.getPeptide().getModification().size();
 
-                sb.append(templates.get("PEPTIDE_START_1"));
+                sb.append(TEMPLATES.get("PEPTIDE_START_1"));
                 sb.append(peptideID);
 
                 if (pepIdx % 2 != 0) {
                     sb.append("\" class=\"pep-alternate");
                 }
 
-                sb.append(templates.get("PEPTIDE_START_2"));
+                sb.append(TEMPLATES.get("PEPTIDE_START_2"));
                 sb.append(peptide.getSeq());
                 sb.append(SEPERATOR);
                 sb.append(peptide.getPeptide().getModification().size());
@@ -278,20 +278,20 @@ public class HtmlConverter extends GenericConverter {
 
                 addRatioValue(MzqData.PEPTIDE, sb, peptide, SEPERATOR);
                 addGlobalValue(MzqData.PEPTIDE, sb, peptide, SEPERATOR, peptideGlobalNames);
-                sb.append(templates.get("PEPTIDE_END_1"));
+                sb.append(TEMPLATES.get("PEPTIDE_END_1"));
                 sb.append(peptideID);
                 sb.append("-detail");
-                sb.append(templates.get("PEPTIDE_END_2"));
+                sb.append(TEMPLATES.get("PEPTIDE_END_2"));
                 sb.append("child-of-");
                 sb.append(peptideID);
-                sb.append(templates.get("PEPTIDE_END_3"));
+                sb.append(TEMPLATES.get("PEPTIDE_END_3"));
                 sb.append(peptideTotalSize);
-                sb.append(templates.get("PEPTIDE_END_4"));
+                sb.append(TEMPLATES.get("PEPTIDE_END_4"));
                 addHeader(MzqData.FEATURE, sb);
-                sb.append(templates.get("PEPTIDE_END_5"));
+                sb.append(TEMPLATES.get("PEPTIDE_END_5"));
 
                 for (FeatureData feature : peptide.getFeatures()) {
-                    sb.append(templates.get("FEATURE_START"));
+                    sb.append(TEMPLATES.get("FEATURE_START"));
                     sb.append(feature.getFeature().getCharge());
                     sb.append(SEPERATOR);
                     sb.append(feature.getFeature().getMz());
@@ -303,16 +303,16 @@ public class HtmlConverter extends GenericConverter {
 
                     addRatioValue(MzqData.FEATURE, sb, feature, SEPERATOR);
                     addGlobalValue(MzqData.FEATURE, sb, feature, SEPERATOR, featureGlobalNames);
-                    sb.append(templates.get("FEATURE_END"));
+                    sb.append(TEMPLATES.get("FEATURE_END"));
                 }
 
-                sb.append(templates.get("PEPTIDE_FINISH"));
+                sb.append(TEMPLATES.get("PEPTIDE_FINISH"));
             }
 
-            sb.append(templates.get("PROTEIN_FINISH"));
+            sb.append(TEMPLATES.get("PROTEIN_FINISH"));
         }
 
-        sb.append(templates.get("MAIN_FOOTER"));
+        sb.append(TEMPLATES.get("MAIN_FOOTER"));
 
         BufferedWriter   out = null;
         FileOutputStream fos = null;
@@ -342,6 +342,4 @@ public class HtmlConverter extends GenericConverter {
         }
     }
 }
-
-
 //~ Formatted by Jindent --- http://www.jindent.com

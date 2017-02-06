@@ -158,9 +158,6 @@ public final class Utils {
 
                         return;
 
-                    case JOptionPane.NO_OPTION :
-                        return;
-
                     default :
                         return;
                     }

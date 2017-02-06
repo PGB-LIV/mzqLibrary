@@ -89,6 +89,7 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.Software;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.SoftwareList;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.StudyVariable;
 import uk.ac.liv.pgb.jmzqml.model.mzqml.StudyVariableList;
+import uk.ac.liv.pgb.mzqlib.progenesis.converter.util.Utils;
 
 /**
  *
@@ -147,7 +148,7 @@ public class ProgenMzquantmlConverter {
     private Label label;
     private Map<String, Set<String>> studyGroupMap;
     private Map<String, String> assayNameIdMap;
-    private TIntObjectMap<String> proteinAccessionsMap
+    private final TIntObjectMap<String> proteinAccessionsMap
             = new TIntObjectHashMap<>();
     private Map<String, Set<String>> proteinPeptidesMap;
     private SearchDatabase db;
@@ -286,26 +287,26 @@ public class ProgenMzquantmlConverter {
     private void createAnalysisSummary() {
 
         as = new AnalysisSummary();
-        as.getParamGroup().add(createCvParam(MzqDataConstants.LABEL_FREE,
-                                             "PSI-MS",
-                                             MzqDataConstants.LABEL_FREE_ACCESSION));
+        as.getParamGroup().add(Utils.createCvParam(MzqDataConstants.LABEL_FREE,
+                                                   "PSI-MS",
+                                                   MzqDataConstants.LABEL_FREE_ACCESSION));
 
-        CvParam analysisSummaryCv = createCvParam(
+        CvParam analysisSummaryCv = Utils.createCvParam(
                 "label-free raw feature quantitation", "PSI-MS", "MS:1002019");
         analysisSummaryCv.setValue(RAW_FEATURE_QUANT.toString());
         as.getParamGroup().add(analysisSummaryCv);
 
-        analysisSummaryCv = createCvParam(
+        analysisSummaryCv = Utils.createCvParam(
                 "label-free peptide level quantitation", "PSI-MS", "MS:1002020");
         analysisSummaryCv.setValue(PEPTIDE_LEVEL_QUANT.toString());
         as.getParamGroup().add(analysisSummaryCv);
 
-        analysisSummaryCv = createCvParam(
+        analysisSummaryCv = Utils.createCvParam(
                 "label-free protein level quantitation", "PSI-MS", "MS:1002021");
         analysisSummaryCv.setValue(PROTEIN_LEVEL_QUANT.toString());
         as.getParamGroup().add(analysisSummaryCv);
 
-        analysisSummaryCv = createCvParam(
+        analysisSummaryCv = Utils.createCvParam(
                 "label-free proteingroup level quantitation", "PSI-MS",
                 "MS:1002022");
         analysisSummaryCv.setValue(PROTEIN_GROUP_LEVEL_QUANT.toString());
@@ -444,8 +445,9 @@ public class ProgenMzquantmlConverter {
         softList.getSoftware().add(software);
         software.setId("Progenesis");
         software.setVersion("2.3");
-        software.getCvParam().add(createCvParam("Progenesis LC-MS", "PSI-MS",
-                                                "MS:1001830"));
+        software.getCvParam().add(Utils.createCvParam("Progenesis LC-MS",
+                                                      "PSI-MS",
+                                                      "MS:1001830"));
     }
 
     private void createDataProcessingList() {
@@ -458,13 +460,13 @@ public class ProgenMzquantmlConverter {
 
         ProcessingMethod processingMethod1 = new ProcessingMethod();
         processingMethod1.setOrder(BigInteger.ONE);
-        processingMethod1.getParamGroup().add(createCvParam(
+        processingMethod1.getParamGroup().add(Utils.createCvParam(
                 "Progenesis automatic alignment", "PSI-MS", "MS:1001865"));
         dataProcessing.getProcessingMethod().add(processingMethod1);
 
         ProcessingMethod processingMethod2 = new ProcessingMethod();
         processingMethod2.setOrder(BigInteger.valueOf(2));
-        processingMethod2.getParamGroup().add(createCvParam(
+        processingMethod2.getParamGroup().add(Utils.createCvParam(
                 "Progenesis normalization", "PSI-MS", "MS:1001867"));
         dataProcessing.getProcessingMethod().add(processingMethod2);
 
@@ -524,7 +526,7 @@ public class ProgenMzquantmlConverter {
             }
 
             //studyVariable.setCvParam(cvParam);
-            studyVariable.getParamGroup().add(createCvParam(
+            studyVariable.getParamGroup().add(Utils.createCvParam(
                     "technical replicate", "PSI-MS", "MS:1001808"));
 
             studyVariabs.add(studyVariable);
@@ -697,8 +699,8 @@ public class ProgenMzquantmlConverter {
             Column scoreCol = new Column();
             CvParamRef scoreCvRef = new CvParamRef();
             scoreCol.setIndex(BigInteger.ZERO);
-            CvParam scoreCv = createCvParam("confidence score", "PSI-MS",
-                                            "MS:1001193");
+            CvParam scoreCv = Utils.createCvParam("confidence score", "PSI-MS",
+                                                  "MS:1001193");
             scoreCvRef.setCvParam(scoreCv);
             scoreCol.setDataType(scoreCvRef);
             protGrpColumnIndex.getColumn().add(scoreCol);
@@ -713,8 +715,8 @@ public class ProgenMzquantmlConverter {
             } else {
                 anovaCol.setIndex(BigInteger.ZERO);
             }
-            CvParam anovaCv = createCvParam("ANOVA p-value", "PSI-MS",
-                                            "MS:1001854");
+            CvParam anovaCv = Utils.createCvParam("ANOVA p-value", "PSI-MS",
+                                                  "MS:1001854");
             anovaCvRef.setCvParam(anovaCv);
             anovaCol.setDataType(anovaCvRef);
             protGrpColumnIndex.getColumn().add(anovaCol);
@@ -732,8 +734,8 @@ public class ProgenMzquantmlConverter {
             } else {
                 mfcCol.setIndex(BigInteger.ZERO);
             }
-            CvParam mfcCv = createCvParam("max fold change", "PSI-MS",
-                                          "MS:1001853");
+            CvParam mfcCv = Utils.createCvParam("max fold change", "PSI-MS",
+                                                "MS:1001853");
             mfcCvRef.setCvParam(mfcCv);
             mfcCol.setDataType(mfcCvRef);
             protGrpColumnIndex.getColumn().add(mfcCol);
@@ -792,7 +794,7 @@ public class ProgenMzquantmlConverter {
             assayQlNab.setId("ProtGrp_AQL1");
             CvParamRef cvParamRefNab = new CvParamRef();
 
-            cvParamRefNab.setCvParam(createCvParam(
+            cvParamRefNab.setCvParam(Utils.createCvParam(
                     "Progenesis:protein group normalised abundance",
                     "PSI-MS", "MS:1002518"));
             assayQlNab.setDataType(cvParamRefNab);
@@ -840,7 +842,7 @@ public class ProgenMzquantmlConverter {
             assayQlNab.setDataMatrix(nabDM);
 
             if (rawPlusNorm == null || !rawPlusNorm.equalsIgnoreCase(
-                    this.RAW_ONLY)) {
+                    ProgenMzquantmlConverter.RAW_ONLY)) {
                 protGrpList.getAssayQuantLayer().add(assayQlNab);
             }
 
@@ -849,7 +851,7 @@ public class ProgenMzquantmlConverter {
             assayQlRab.setId("ProtGrp_AQL2");
             CvParamRef cvParamRefRab = new CvParamRef();
 
-            cvParamRefRab.setCvParam(createCvParam(
+            cvParamRefRab.setCvParam(Utils.createCvParam(
                     "Progenesis:protein group raw abundance",
                     "PSI-MS", "MS:1002519"));
             assayQlRab.setDataType(cvParamRefRab);
@@ -898,7 +900,7 @@ public class ProgenMzquantmlConverter {
             assayQlRab.setDataMatrix(rabDM);
 
             if (rawPlusNorm == null || !rawPlusNorm.equalsIgnoreCase(
-                    this.NORM_ONLY)) {
+                    ProgenMzquantmlConverter.NORM_ONLY)) {
                 protGrpList.getAssayQuantLayer().add(assayQlRab);
             }
         } // end of AssayQuantLayer to ProteinList
@@ -924,105 +926,13 @@ public class ProgenMzquantmlConverter {
                 public boolean execute(final int id, final TDoubleList nabValues) {
                     final MutableInt pos = new MutableInt(0);
                     //final int index = id;
-                    nabValues.forEach(new TDoubleProcedure() {
-
-                        @Override
-                        public boolean execute(final double value) {
-                            Feature feature = new Feature();
-                            //Double normAb = nabV;
-                            double mz = mzMap.get(id);
-                            int chr = chrMap.get(id);
-                            //Double rawAb = rabMap.get(key).get(pos);
-                            double reten;
-
-                            // If the file doen't contain 'Sample retention time (min)' column, use the master retention time instead 'Retention time (min)'.
-                            if (!retenMap.isEmpty()) {
-                                reten = retenMap.get(id).get(pos.intValue());
-                            } else {
-                                reten = masterRtMap.get(id);
-                            }
-                            double rtWin = rtWinMap.get(id);
-
-                            MassTrace mt = new MassTrace(mz, chr, reten, rtWin,
-                                                         format);
-
-                            feature.setMz(Double.valueOf(format.format(mz)));
-                            feature.setRt(format.format(reten));
-                            feature.setCharge(String.valueOf(chr));
-                            String ftId = "ft_" + keyId.toString();
-                            feature.setId(ftId);
-
-                            //add mass trace
-                            feature.getMassTrace().addAll(mt.
-                                    getMassTraceDoubleList());
-
-                            featureMap.put(ftId, feature);
-
-                            // create peptide id to feture HashMap: peptideFeaturesMap
-                            String pepSeq = peptideDupMap.get(id);
-
-                            String indexStr = flIndexMap.get(id);
-                            String pepId = "pep_" + pepSeq + "_" + chr + "_"
-                                    + indexStr;
-                            if (pepSeq != null) {
-
-                                List<Feature> fList = peptideFeaturesMap.get(
-                                        pepId);
-                                if (fList == null) {
-                                    fList = new ArrayList<>();
-                                    peptideFeaturesMap.put(pepId, fList);
-                                }
-                                fList.add(feature);
-                            }
-
-                            String assName = assayList.getAssay().get(pos.
-                                    intValue()).getName();
-                            String rgId = "rg_" + rawFileNameIdMap.get(assName
-                                    + ".raw").substring(4);
-
-                            // create peptide sequence to assay id HashMap: peptideAssayMap
-                            String assayId = assayNameIdMap.get(assName);
-                            if (pepSeq != null) {
-                                List<Assay> aList = peptideAssaysMap.get(pepSeq);
-                                if (aList == null) {
-                                    aList = new ArrayList<>();
-                                    peptideAssaysMap.put(pepSeq, aList);
-                                }
-
-                                List<String> assayIds = getAssayIdList(aList);
-                                if (!assayIds.contains(assayId)) {
-                                    Assay tempAssay = new Assay();
-                                    tempAssay.setId(assayId);
-                                    aList.add(tempAssay);
-                                }
-                            }
-
-                            FeatureList features = rgIdFeatureListMap.get(rgId);
-                            if (features == null) {
-                                features = new FeatureList();
-                                RawFilesGroup rawFilesGroup
-                                        = new RawFilesGroup();
-                                rawFilesGroup.setId(rgId);
-                                features.setRawFilesGroup(rawFilesGroup);
-                                String fListId = "Flist" + rgId.substring(3);
-                                features.setId(fListId);
-                                rgIdFeatureListMap.put(rgId, features);
-                                features.getParamGroup().add(createCvParam(
-                                        "mass trace reporting: rectangles",
-                                        "PSI-MS", "MS:1001826"));
-                                ftListList.add(features);
-                            }
-                            features.getFeature().add(feature);
-                            featureAssNameMap.put(feature.getId(), assName);
-                            pos.add(1);
-                            keyId.add(1);
-                            return true;
-                        }
-
-                    });
+                    TFeatureDoubleProcedure nabTFDP
+                            = new TFeatureDoubleProcedure();
+                    //set nabTFDP init values
+                    setInitialValue(nabTFDP, id, pos, keyId, rgIdFeatureListMap, peptideAssaysMap, featureMap);
+                    nabValues.forEach(nabTFDP);
                     return true;
                 }
-
             });
         } else if (!rabMap.isEmpty()) {
             rabMap.forEachEntry(new TIntObjectProcedure<TDoubleList>() {
@@ -1031,104 +941,10 @@ public class ProgenMzquantmlConverter {
                 public boolean execute(final int id, final TDoubleList rabValues) {
                     final MutableInt pos = new MutableInt(0);
 
-                    rabValues.forEach(new TDoubleProcedure() {
-
-                        @Override
-                        public boolean execute(final double value) {
-                            Feature feature = new Feature();
-                            //Double rawAb = rabV;
-                            double mz = mzMap.get(id);
-                            int chr = chrMap.get(id);
-                            //double normAb = nabMap.get(id).get(pos.intValue());
-                            double reten;
-
-                            // If the file doen't contain 'Sample retention time (min)' column, use the master retention time instead 'Retention time (min)'.
-                            if (!retenMap.isEmpty()) {
-                                reten = retenMap.get(id).get(pos.intValue());
-                            } else {
-                                reten = masterRtMap.get(id);
-                            }
-                            Double rtWin = rtWinMap.get(id);
-
-                            MassTrace mt = new MassTrace(mz, chr, reten, rtWin,
-                                                         format);
-
-                            feature.setMz(Double.valueOf(format.format(mz)));
-                            feature.setRt(format.format(reten));
-                            feature.setCharge(String.valueOf(chr));
-                            String ftId = "ft_" + keyId.toString();
-                            feature.setId(ftId);
-
-                            //add mass trace
-                            feature.getMassTrace().addAll(mt.
-                                    getMassTraceDoubleList());
-
-                            featureMap.put(ftId, feature);
-
-                            // create peptide id to feture HashMap: peptideFeaturesMap
-                            String pepSeq = peptideDupMap.get(id);
-
-                            String indexStr = flIndexMap.get(id);
-                            String pepId = "pep_" + pepSeq + "_" + chr + "_"
-                                    + indexStr;
-
-                            if (pepSeq != null) {
-
-                                List<Feature> fList = peptideFeaturesMap.get(
-                                        pepId);
-                                if (fList == null) {
-                                    fList = new ArrayList<>();
-                                    peptideFeaturesMap.put(pepId, fList);
-                                }
-                                fList.add(feature);
-                            }
-
-                            String assName = assayList.getAssay().get(pos.
-                                    intValue()).getName();
-                            String rgId = "rg_" + rawFileNameIdMap.get(assName
-                                    + ".raw").substring(4);
-
-                            // create peptide sequence to assay id HashMap: peptideAssayMap
-                            String assayId = assayNameIdMap.get(assName);
-                            if (pepSeq != null) {
-                                List<Assay> aList = peptideAssaysMap.get(pepSeq);
-                                if (aList == null) {
-                                    aList = new ArrayList<>();
-                                    peptideAssaysMap.put(pepSeq, aList);
-                                }
-
-                                List<String> assayIds = getAssayIdList(aList);
-                                if (!assayIds.contains(assayId)) {
-                                    Assay tempAssay = new Assay();
-                                    tempAssay.setId(assayId);
-                                    aList.add(tempAssay);
-                                }
-                            }
-
-                            FeatureList features = rgIdFeatureListMap.get(rgId);
-                            if (features == null) {
-                                features = new FeatureList();
-                                RawFilesGroup rawFilesGroup
-                                        = new RawFilesGroup();
-                                rawFilesGroup.setId(rgId);
-                                features.setRawFilesGroup(rawFilesGroup);
-                                String fListId = "Flist" + rgId.substring(3);
-                                features.setId(fListId);
-                                rgIdFeatureListMap.put(rgId, features);
-                                features.getParamGroup().add(createCvParam(
-                                        "mass trace reporting: rectangles",
-                                        "PSI-MS", "MS:1001826"));
-                                ftListList.add(features);
-                            }
-                            features.getFeature().add(feature);
-                            featureAssNameMap.put(feature.getId(), assName);
-                            pos.add(1);
-                            keyId.add(1);
-
-                            return true;
-                        }
-
-                    });
+                    TFeatureDoubleProcedure rabTFDP = new TFeatureDoubleProcedure();
+                    //set rabTFDP init values
+                    setInitialValue(rabTFDP, id, pos, keyId, rgIdFeatureListMap, peptideAssaysMap, featureMap);
+                    rabValues.forEach(rabTFDP);
                     return true;
                 }
 
@@ -1195,7 +1011,8 @@ public class ProgenMzquantmlConverter {
                                     peptideAssaysMap.put(pepSeq, aList);
                                 }
 
-                                List<String> assayIds = getAssayIdList(aList);
+                                List<String> assayIds = Utils.getAssayIdList(
+                                        aList);
                                 if (!assayIds.contains(assayId)) {
                                     Assay tempAssay = new Assay();
                                     tempAssay.setId(assayId);
@@ -1213,9 +1030,10 @@ public class ProgenMzquantmlConverter {
                                 String fListId = "Flist" + rgId.substring(3);
                                 features.setId(fListId);
                                 rgIdFeatureListMap.put(rgId, features);
-                                features.getParamGroup().add(createCvParam(
-                                        "mass trace reporting: rectangles",
-                                        "PSI-MS", "MS:1001826"));
+                                features.getParamGroup().add(Utils.
+                                        createCvParam(
+                                                "mass trace reporting: rectangles",
+                                                "PSI-MS", "MS:1001826"));
                                 ftListList.add(features);
 
                                 // create feature QuantLayer
@@ -1351,9 +1169,9 @@ public class ProgenMzquantmlConverter {
                                         modObj.setMonoisotopicMassDelta(
                                                 15.994915);
                                         modObj.setLocation(location);
-                                        modObj.getCvParam().add(createCvParam(
-                                                "Oxidation", "UNIMOD",
-                                                "UNIMOD:35"));
+                                        modObj.getCvParam().add(Utils.createCvParam(
+                                                        "Oxidation", "UNIMOD",
+                                                        "UNIMOD:35"));
                                         peptideConsensus.getModification().add(
                                                 modObj);
                                     }
@@ -1442,8 +1260,8 @@ public class ProgenMzquantmlConverter {
 
             column.setDataType(colDt);
 
-            colDt.setCvParam(createCvParam("Mascot:score", "PSI-MS",
-                                           "MS:1001171"));
+            colDt.setCvParam(Utils.createCvParam("Mascot:score", "PSI-MS",
+                                                 "MS:1001171"));
             pepGQLScore.setDataMatrix(pepScoreDM);
 
             peptideConsensusList.getGlobalQuantLayer()
@@ -1456,13 +1274,13 @@ public class ProgenMzquantmlConverter {
 
         // normalized abundance AssayQuantLayer  pepAQL_nab
         if (!nabMap.isEmpty() && (rawPlusNorm == null || !rawPlusNorm.
-                equalsIgnoreCase(this.RAW_ONLY))) {
+                equalsIgnoreCase(ProgenMzquantmlConverter.RAW_ONLY))) {
             QuantLayer pepAQLNab = new QuantLayer();
 
             pepAQLNab.setId("Pep_AQL1");
             CvParamRef cvParamRefPepAqlNab = new CvParamRef();
 
-            cvParamRefPepAqlNab.setCvParam(createCvParam(
+            cvParamRefPepAqlNab.setCvParam(Utils.createCvParam(
                     "Progenesis:peptide normalised abundance",
                     "PSI-MS", "MS:1001891"));
             pepAQLNab.setDataType(cvParamRefPepAqlNab);
@@ -1482,13 +1300,13 @@ public class ProgenMzquantmlConverter {
 
         // raw abundance AssayQuantLayer pepAQL_rab
         if (!rabMap.isEmpty() && (rawPlusNorm == null || !rawPlusNorm.
-                equalsIgnoreCase(this.NORM_ONLY))) {
+                equalsIgnoreCase(ProgenMzquantmlConverter.NORM_ONLY))) {
             QuantLayer pepAQLRab = new QuantLayer();
 
             pepAQLRab.setId("Pep_AQL2");
             CvParamRef cvParamRefPepAqlRab = new CvParamRef();
 
-            cvParamRefPepAqlRab.setCvParam(createCvParam(
+            cvParamRefPepAqlRab.setCvParam(Utils.createCvParam(
                     "Progenesis:peptide raw abundance",
                     "PSI-MS", "MS:1001893"));
             pepAQLRab.setDataType(cvParamRefPepAqlRab);
@@ -1533,7 +1351,7 @@ public class ProgenMzquantmlConverter {
      *                                        exceptions.
      */
     public final void convert(final String outFn, final boolean outPGL,
-                        final String rawPlusNorm)
+                              final String rawPlusNorm)
             throws IOException, DatatypeConfigurationException {
 
         assayListFrReader = new ArrayList<>();
@@ -1747,24 +1565,32 @@ public class ProgenMzquantmlConverter {
         }
     }
 
-    // create a CVParamType instance
-    private static CvParam createCvParam(final String name, final String cvRef,
-                                         final String accession) {
-        CvParam cp = new CvParam();
-        cp.setName(name);
-        Cv cv = new Cv();
-        cv.setId(cvRef);
-        cp.setCv(cv);
-        cp.setAccession(accession);
-        return cp;
-    }
-
-    private static List<String> getAssayIdList(final List<Assay> assays) {
-        List<String> assayIds = new ArrayList<>();
-        for (Assay assay : assays) {
-            assayIds.add(assay.getId());
-        }
-        return assayIds;
+private void setInitialValue(TFeatureDoubleProcedure fDoubleProcedure,
+                  int id, MutableInt pos,
+                  MutableInt keyId,
+                  Map<String, FeatureList> rgIdFeatureListMap,
+                  Map<String, List<Assay>> peptideAssaysMap,
+                  Map<String, Feature> featureMap) {
+        fDoubleProcedure.setFormat(format);
+        fDoubleProcedure.setId(id);
+        fDoubleProcedure.setFtListList(ftListList);
+        fDoubleProcedure.setAssayList(assayList);
+        fDoubleProcedure.setPos(pos);
+        fDoubleProcedure.setKeyId(keyId);
+        fDoubleProcedure.setPeptideFeaturesMap(peptideFeaturesMap);
+        fDoubleProcedure.setPeptideAssaysMap(peptideAssaysMap);
+        fDoubleProcedure.setRgIdFeatureListMap(rgIdFeatureListMap);
+        fDoubleProcedure.setFeatureAssNameMap(featureAssNameMap);
+        fDoubleProcedure.setAssayNameIdMap(assayNameIdMap);
+        fDoubleProcedure.setFeatureMap(featureMap);
+        fDoubleProcedure.setRawFileNameIdMap(rawFileNameIdMap);
+        fDoubleProcedure.setChrMap(chrMap);
+        fDoubleProcedure.setMzMap(mzMap);
+        fDoubleProcedure.setMasterRtMap(masterRtMap);
+        fDoubleProcedure.setRtWinMap(rtWinMap);
+        fDoubleProcedure.setPeptideDupMap(peptideDupMap);
+        fDoubleProcedure.setFlIndexMap(flIndexMap);
+        fDoubleProcedure.setRetenMap(retenMap);
     }
 
 }

@@ -106,7 +106,7 @@ public class MainApp extends Application {
 
     private final double DOWN_SCALE_FACTOR = 0.9;
     private final double UP_SCALE_FACTOR = 1.1;
-    
+
     private final int SCREEN_WIDTH = 800;
     private final int SCREEN_HEIGHT = 600;
 
@@ -560,76 +560,7 @@ public class MainApp extends Application {
                 // Load heatmap.2 library
                 re.eval("library(\"gplots\")");
 
-                re.eval("breaks <- seq(from = "
-                        + String.valueOf(rmTask.getValue().getLogMin() * DOWN_SCALE_FACTOR)
-                        + ", to = "
-                        + String.valueOf(rmTask.getValue().getLogMax() * UP_SCALE_FACTOR)
-                        + ", length = 51)");
-
-                // Set color palette
-                //re.eval("color.palette  <- colorRampPalette(c(\"#000000\", \"#DC2121\", \"#E9A915\"))");
-                // Set x matrix
-                String setMatrix = "X = matrix(c(" + rmTask.getValue().
-                        getLogMatrix() + "), nrow=" + rmTask.getValue().
-                        getRowNumber() + ",byrow = TRUE)";
-                re.eval(setMatrix);
-
-                //build row names from rowNames list
-                StringBuilder rowNames = new StringBuilder();
-                for (String rn : rmTask.getValue().getRowNames()) {
-                    rowNames.append("\"");
-                    rowNames.append(rn);
-                    rowNames.append("\", ");
-                }
-
-                // get column names
-                StringBuilder colNames = new StringBuilder();
-                ObservableList<TableColumn<MzqDataMatrixRow, ?>> colList
-                        = dataMatrixTable.getColumns();
-                Iterator<TableColumn<MzqDataMatrixRow, ?>> i = colList.
-                        iterator();
-                // skip the first column name --- "Id"
-                i.next();
-
-                while (i.hasNext()) {
-                    colNames.append("\"");
-                    colNames.append(i.next().getText());
-                    colNames.append("\"");
-                    if (i.hasNext()) {
-                        colNames.append(",");
-                    }
-                }
-
-                re.eval("rownames(X) <- c(" + rowNames.substring(0, rowNames.
-                                                                 length() - 2)
-                        + ")");
-                re.eval("colnames(X) <- c(" + colNames.toString() + ")");
-
-                // Set heatmap
-                String setHeatmap = "heatmap.2(X,\n"
-                        + "Rowv=TRUE,\n"
-                        + "Colv=TRUE,\n"
-                        + "na.rm=FALSE,\n"
-                        + "distfun = dist,\n"
-                        + "hclustfun = hclust,\n"
-                        + "key=TRUE,\n"
-                        + "keysize=1,\n"
-                        + "trace=\"none\",\n"
-                        + "scale=\"none\",\n"
-                        + "density.info=c(\"none\"),\n"
-                        + "#margins=c(18, 8),\n"
-                        //                    //+ "col=color.palette,\n"
-                        + "breaks = breaks,\n"
-                        //+ "breaks = seq(from = 1, to = 10, length = 51), \n"
-                        //                    + "lhei=c(0.4,4),\n"
-                        + "main=\"" + mzqInfoController.getQuantLayerTable().
-                        getSelectionModel().getSelectedItem().
-                        getQuantLayerType()
-                        + ": " + mzqInfoController.getQuantLayerTable().
-                        getSelectionModel().getSelectedItem().getQuantLayerId()
-                        + "\"\n"
-                        + ")";
-                re.eval(setHeatmap);
+                drawHeatMap(re, rmTask, dataMatrixTable);
                 re.eval("dev.off()");
 
                 newStage.close();
@@ -714,80 +645,7 @@ public class MainApp extends Application {
 //                        .title("Generating heat map by R")
 //                        .showWorkerProgress(rmTask);
                 rmTask.setOnSucceeded((WorkerStateEvent t) -> {
-                    re.eval("breaks <- seq(from = "
-                            + String.
-                            valueOf(rmTask.getValue().getLogMin() * 0.9)
-                            + ", to = "
-                            + String.
-                            valueOf(rmTask.getValue().getLogMax() * 1.1)
-                            + ", length = 51)");
-
-                    // Set color palette
-                    //re.eval("color.palette  <- colorRampPalette(c(\"#000000\", \"#DC2121\", \"#E9A915\"))");
-                    // Set x matrix
-                    String setMatrix = "X = matrix(c(" + rmTask.getValue().
-                            getLogMatrix() + "), nrow=" + rmTask.getValue().
-                            getRowNumber() + ",byrow = TRUE)";
-                    re.eval(setMatrix);
-
-                    //build row names from rowNames list
-                    StringBuilder rowNames = new StringBuilder();
-                    for (String rn : rmTask.getValue().getRowNames()) {
-                        rowNames.append("\"");
-                        rowNames.append(rn);
-                        rowNames.append("\", ");
-                    }
-
-                    // get column names
-                    StringBuilder colNames = new StringBuilder();
-                    ObservableList<TableColumn<MzqDataMatrixRow, ?>> colList
-                            = dataMatrixTable.getColumns();
-                    Iterator<TableColumn<MzqDataMatrixRow, ?>> i = colList.
-                            iterator();
-                    // skip the first column name --- "Id"
-                    i.next();
-
-                    while (i.hasNext()) {
-                        colNames.append("\"");
-                        colNames.append(i.next().getText());
-                        colNames.append("\"");
-                        if (i.hasNext()) {
-                            colNames.append(",");
-                        }
-                    }
-
-                    re.eval("rownames(X) <- c(" + rowNames.substring(0,
-                                                                     rowNames.
-                                                                     length()
-                                                                     - 2) + ")");
-                    re.eval("colnames(X) <- c(" + colNames.toString() + ")");
-
-                    // Set heatmap
-                    String setHeatmap = "heatmap.2(X,\n"
-                            + "Rowv=TRUE,\n"
-                            + "Colv=TRUE,\n"
-                            + "na.rm=FALSE,\n"
-                            + "distfun = dist,\n"
-                            + "hclustfun = hclust,\n"
-                            + "key=TRUE,\n"
-                            + "keysize=1,\n"
-                            + "trace=\"none\",\n"
-                            + "scale=\"none\",\n"
-                            + "density.info=c(\"none\"),\n"
-                            + "#margins=c(18, 8),\n"
-                            //+ "col=color.palette,\n"
-                            + "breaks = breaks,\n"
-                            //+ "breaks = seq(from = 1, to = 10, length = 51),\n"
-                            //                    + "lhei=c(0.4,4),\n"
-                            + "main=\""
-                            + mzqInfoController.getQuantLayerTable().
-                            getSelectionModel().getSelectedItem().
-                            getQuantLayerType()
-                            + ": " + mzqInfoController.getQuantLayerTable().
-                            getSelectionModel().getSelectedItem().
-                            getQuantLayerId() + "\"\n"
-                            + ")";
-                    re.eval(setHeatmap);
+                    drawHeatMap(re, rmTask, dataMatrixTable);
                 });
 
                 rmTask.setOnFailed((WorkerStateEvent t) -> {
@@ -1424,6 +1282,81 @@ public class MainApp extends Application {
         //Set expandable Exception into the dialog pane.
         alert.getDialogPane().setExpandableContent(expContent);
         return alert;
+    }
+
+    private void drawHeatMap(Rengine re, CreateRMatrixTask rmTask, TableView<MzqDataMatrixRow> dataMatrixTable) {
+        re.eval("breaks <- seq(from = "
+                + String.valueOf(rmTask.getValue().getLogMin()
+                        * DOWN_SCALE_FACTOR)
+                + ", to = "
+                + String.
+                valueOf(rmTask.getValue().getLogMax() * UP_SCALE_FACTOR)
+                + ", length = 51)");
+
+        // Set color palette
+        //re.eval("color.palette  <- colorRampPalette(c(\"#000000\", \"#DC2121\", \"#E9A915\"))");
+        // Set x matrix
+        String setMatrix = "X = matrix(c(" + rmTask.getValue().
+                getLogMatrix() + "), nrow=" + rmTask.getValue().
+                getRowNumber() + ",byrow = TRUE)";
+        re.eval(setMatrix);
+
+        //build row names from rowNames list
+        StringBuilder rowNames = new StringBuilder();
+        for (String rn : rmTask.getValue().getRowNames()) {
+            rowNames.append("\"");
+            rowNames.append(rn);
+            rowNames.append("\", ");
+        }
+
+        // get column names
+        StringBuilder colNames = new StringBuilder();
+        ObservableList<TableColumn<MzqDataMatrixRow, ?>> colList
+                = dataMatrixTable.getColumns();
+        Iterator<TableColumn<MzqDataMatrixRow, ?>> i = colList.
+                iterator();
+        // skip the first column name --- "Id"
+        i.next();
+
+        while (i.hasNext()) {
+            colNames.append("\"");
+            colNames.append(i.next().getText());
+            colNames.append("\"");
+            if (i.hasNext()) {
+                colNames.append(",");
+            }
+        }
+
+        re.eval("rownames(X) <- c(" + rowNames.substring(0, rowNames.
+                                                         length() - 2)
+                + ")");
+        re.eval("colnames(X) <- c(" + colNames.toString() + ")");
+
+        // Set heatmap
+        String setHeatmap = "heatmap.2(X,\n"
+                + "Rowv=TRUE,\n"
+                + "Colv=TRUE,\n"
+                + "na.rm=FALSE,\n"
+                + "distfun = dist,\n"
+                + "hclustfun = hclust,\n"
+                + "key=TRUE,\n"
+                + "keysize=1,\n"
+                + "trace=\"none\",\n"
+                + "scale=\"none\",\n"
+                + "density.info=c(\"none\"),\n"
+                + "#margins=c(18, 8),\n"
+                //                    //+ "col=color.palette,\n"
+                + "breaks = breaks,\n"
+                //+ "breaks = seq(from = 1, to = 10, length = 51), \n"
+                //                    + "lhei=c(0.4,4),\n"
+                + "main=\"" + mzqInfoController.getQuantLayerTable().
+                getSelectionModel().getSelectedItem().
+                getQuantLayerType()
+                + ": " + mzqInfoController.getQuantLayerTable().
+                getSelectionModel().getSelectedItem().getQuantLayerId()
+                + "\"\n"
+                + ")";
+        re.eval(setHeatmap);
     }
 
 }

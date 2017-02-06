@@ -30,7 +30,7 @@ public class FeatureSiiMatchManager {
     private final Map<String, Map<Feature, List<SIIData>>> featureListFeatureMatches        = new HashMap<>();
     private final Map<String, Map<SIIData, List<Feature>>> featureListIdentificationMatches = new HashMap<>();
 
-    public void registerFeature(final Feature feature, final String featureListName) {
+    public final void registerFeature(final Feature feature, final String featureListName) {
         Map<Feature, List<SIIData>> featureMatches = featureListFeatureMatches.get(featureListName);
 
         if (featureMatches == null) {
@@ -46,7 +46,7 @@ public class FeatureSiiMatchManager {
         }
     }
 
-    public void registerIdentification(final SIIData identification, final String featureListName) {
+    public final void registerIdentification(final SIIData identification, final String featureListName) {
         Map<SIIData, List<Feature>> identificationMatches = featureListIdentificationMatches.get(featureListName);
 
         if (identificationMatches == null) {
@@ -62,7 +62,7 @@ public class FeatureSiiMatchManager {
         }
     }
 
-    public void registerMatch(final Feature feature, final String featureListName, final SIIData data) {
+    public final void registerMatch(final Feature feature, final String featureListName, final SIIData data) {
         Map<Feature, List<SIIData>> featureMatches = featureListFeatureMatches.get(featureListName);
 
         if (featureMatches == null) {
@@ -96,7 +96,7 @@ public class FeatureSiiMatchManager {
         identificationMatch.add(feature);
     }
 
-    public long getFeatureCount() {
+    public final long getFeatureCount() {
         long featureCount = featureListFeatureMatches.entrySet()
                                                      .stream()
                                                      .flatMap(p -> p.getValue().keySet().stream())
@@ -106,7 +106,7 @@ public class FeatureSiiMatchManager {
         return featureCount;
     }
 
-    public long getFeatureCount(final String featureListName) {
+    public final long getFeatureCount(final String featureListName) {
         Map<Feature, List<SIIData>> featureMatches = featureListFeatureMatches.get(featureListName);
 
         if (featureMatches == null) {
@@ -130,31 +130,31 @@ public class FeatureSiiMatchManager {
         return getStreamOfMappingToN(featureMatches, minimumMappingNumber).count();
     }
 
-    public long getFeaturesMultimappingCount() {
+    public final long getFeaturesMultimappingCount() {
         return getFeaturesMappingToN(2);
     }
 
-    public long getFeaturesMultimappingCount(final String featureListName) {
+    public final long getFeaturesMultimappingCount(final String featureListName) {
         return getFeaturesMappingToN(featureListName, 2);
     }
 
-    public long getFeaturesWithMatchCount() {
+    public final long getFeaturesWithMatchCount() {
         return getFeaturesMappingToN(1);
     }
 
-    public long getFeaturesWithMatchCount(final String featureListName) {
+    public final long getFeaturesWithMatchCount(final String featureListName) {
         return getFeaturesMappingToN(featureListName, 1);
     }
 
-    public long getIdentificationsAssignedCount() {
+    public final long getIdentificationsAssignedCount() {
         return getIdentificationsMappingToN(1);
     }
 
-    public long getIdentificationsAssignedCount(final String featureListName) {
+    public final long getIdentificationsAssignedCount(final String featureListName) {
         return getIdentificationsMappingToN(featureListName, 1);
     }
 
-    public long getIdentificationsCount() {
+    public final long getIdentificationsCount() {
         long identificationCount = featureListIdentificationMatches.entrySet()
                                                                    .stream()
                                                                    .flatMap(p -> p.getValue().keySet().stream())
@@ -164,7 +164,7 @@ public class FeatureSiiMatchManager {
         return identificationCount;
     }
 
-    public long getIdentificationsCount(final String featureListName) {
+    public final long getIdentificationsCount(final String featureListName) {
         Map<SIIData, List<Feature>> identificationMatches = featureListIdentificationMatches.get(featureListName);
 
         if (identificationMatches == null) {
@@ -204,15 +204,15 @@ public class FeatureSiiMatchManager {
                                     .count();
     }
 
-    public long getIdentificationsMultimappingCount() {
+    public final long getIdentificationsMultimappingCount() {
         return getIdentificationsMappingToN(2);
     }
 
-    public long getIdentificationsMultimappingCount(final String featureListName) {
+    public final long getIdentificationsMultimappingCount(final String featureListName) {
         return getIdentificationsMappingToN(featureListName, 2);
     }
 
-    public Map<String, List<SIIData>> getMatchMap() {
+    public final Map<String, List<SIIData>> getMatchMap() {
         return featureListFeatureMatches.entrySet()
                                         .stream()
                                         .flatMap(p -> p.getValue().entrySet().stream())

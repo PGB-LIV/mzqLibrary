@@ -63,7 +63,7 @@ import uk.ac.liv.pgb.mzqlib.openms.jaxb.MapList;
  * @author Da Qi
  * @since 18-Mar-2014 15:17:53
  */
-public class ConsensusXMLProcessorFactory {
+public final class ConsensusXMLProcessorFactory {
 
     private static final ConsensusXMLProcessorFactory instance
             = new ConsensusXMLProcessorFactory();
@@ -107,15 +107,15 @@ public class ConsensusXMLProcessorFactory {
     private static class ConsensusXMLProcessorImpl implements
             ConsensusXMLProcessor {
 
-        protected Unmarshaller unmarsh;
-        protected Map<String, FeatureList> rgIdToFeatureListMap
+        private final Unmarshaller unmarsh;
+        private final Map<String, FeatureList> rgIdToFeatureListMap
                 = new HashMap<>();
-        protected PeptideConsensusList pepConList = new PeptideConsensusList();
-        protected AssayList assays = new AssayList();
-        protected Cv cv;
-        protected List<RawFilesGroup> rgList = new ArrayList();
-        protected Map<String, Assay> rgIdToAssayMap = new HashMap<>();
-        protected Map<String, RawFilesGroup> rgIdToRgObjectMap = new HashMap<>();
+        private final PeptideConsensusList pepConList = new PeptideConsensusList();
+        private final AssayList assays = new AssayList();
+        private final Cv cv;
+        private final List<RawFilesGroup> rgList = new ArrayList();
+        private final Map<String, Assay> rgIdToAssayMap = new HashMap<>();
+        private final Map<String, RawFilesGroup> rgIdToRgObjectMap = new HashMap<>();
         private final Map<Integer, Map<String, MzRtArea>> featureAreasPreAligned
                 = new HashMap<>();
         private final Map<Integer, Map<String, MzRtArea>> featureAreasPostAligned

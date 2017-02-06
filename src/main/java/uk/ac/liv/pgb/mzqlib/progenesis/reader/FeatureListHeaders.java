@@ -86,6 +86,9 @@ public class FeatureListHeaders {
      * The heading of "use in quantitation".
      */
     public static final String USE_IN_QUANT = "use in quantitation";
+
+    private FeatureListHeaders() {
+    }
 }
 
 

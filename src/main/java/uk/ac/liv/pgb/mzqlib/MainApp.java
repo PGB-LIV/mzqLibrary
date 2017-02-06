@@ -111,7 +111,7 @@ public class MainApp extends Application {
      *
      * @return the list of MzqAssayQuantLayer.
      */
-    public ObservableList<MzqAssayQuantLayer> getMzqAssayQuantLayerData() {
+    public final ObservableList<MzqAssayQuantLayer> getMzqAssayQuantLayerData() {
         return mzqData.getMzqAssayQuantLayerList();
     }
 
@@ -120,7 +120,7 @@ public class MainApp extends Application {
      *
      * @return the list of MzqFeatureQuantLayer.
      */
-    public ObservableList<MzqFeatureQuantLayer> getMzqFeatureQuantLayerData() {
+    public final ObservableList<MzqFeatureQuantLayer> getMzqFeatureQuantLayerData() {
         return mzqData.getMzqFeatureQuantLayerList();
     }
 
@@ -129,12 +129,12 @@ public class MainApp extends Application {
      *
      * @return MzQuantMLSummary.
      */
-    public MzQuantMLSummary getMzQuantMLSummary() {
+    public final MzQuantMLSummary getMzQuantMLSummary() {
         return mzqData.getMzQuantMLSummary();
     }
 
     @Override
-    public void start(final Stage primaryStage) {
+    public final void start(final Stage primaryStage) {
 
         //setUserAgentStylesheet(STYLESHEET_CASPIAN);
         setUserAgentStylesheet(STYLESHEET_MODENA);
@@ -239,7 +239,7 @@ public class MainApp extends Application {
      *
      * @return main stage
      */
-    public Stage getPrimaryStage() {
+    public final Stage getPrimaryStage() {
         return primaryStage;
     }
 
@@ -248,7 +248,7 @@ public class MainApp extends Application {
      *
      * @return new stage.
      */
-    public Stage getNewStage() {
+    public final Stage getNewStage() {
         return newStage;
     }
 
@@ -257,7 +257,7 @@ public class MainApp extends Application {
      *
      * @param mzqFile input mzq file.
      */
-    public void loadMzqFile(final File mzqFile) {
+    public final void loadMzqFile(final File mzqFile) {
 
         closeMzqInfo();
 
@@ -324,14 +324,14 @@ public class MainApp extends Application {
      *
      * @return MzQuantMLUnmarshaller.
      */
-    public MzQuantMLUnmarshaller getUnmarshaller() {
+    public final MzQuantMLUnmarshaller getUnmarshaller() {
         return mzqData.getMzQuantMLUnmarshaller();
     }
 
     /**
      * Close mzq information window.
      */
-    public void closeMzqInfo() {
+    public final void closeMzqInfo() {
         rootLayout.setCenter(null);
         rootLayoutController.disbbleMenus();
         primaryStage.setTitle(WINDOW_TITLE);
@@ -342,7 +342,7 @@ public class MainApp extends Application {
      *
      * @param file last opened file.
      */
-    public void setLastFilePath(final File file) {
+    public final void setLastFilePath(final File file) {
         Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
         if (file != null) {
             prefs.put("lastFilePath", file.getParent());
@@ -356,7 +356,7 @@ public class MainApp extends Application {
      *
      * @return parent path.
      */
-    public File getLastFilePath() {
+    public final File getLastFilePath() {
         Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
         String filePath = prefs.get("lastFilePath", null);
 
@@ -375,7 +375,7 @@ public class MainApp extends Application {
     /**
      * Utility method to show PCA plot.
      */
-    public void showPCAPlot() {
+    public final void showPCAPlot() {
 
         //TODO: PCA plot does not need gplots. The initialREngine() method include install gplots as required package
         //TODO: Here the code only need to initial Rengine successfully (check R.dll and jri.dll)
@@ -462,7 +462,7 @@ public class MainApp extends Application {
     /**
      * Utility method to show heat map pdf creation window.
      */
-    public void showHeatMapPdfWindow() {
+    public final void showHeatMapPdfWindow() {
         if (re == null) {
             initialREngine();
         }
@@ -500,8 +500,8 @@ public class MainApp extends Application {
      * @param pdfHValue pdf file height value.
      * @param pdfWValue pdf file width value.
      */
-    public void saveHeatMapPdf(final File pdfFile, final double pdfHValue,
-                               final double pdfWValue) {
+    public final void saveHeatMapPdf(final File pdfFile, final double pdfHValue,
+                                     final double pdfWValue) {
         newStage.hide();
 
         if (re == null) {
@@ -665,7 +665,7 @@ public class MainApp extends Application {
     /**
      * Utility method to show heat map in R window.
      */
-    public void showHeatMapinR() {
+    public final void showHeatMapinR() {
 
         if (re == null) {
             initialREngine();
@@ -810,7 +810,7 @@ public class MainApp extends Application {
      *
      * @throws JAXBException exceptions.
      */
-    public void showCurve()
+    public final void showCurve()
             throws JAXBException {
         Stage curveStage = new Stage();
         curveStage.setTitle("Quantitative measurement across assays");
@@ -1053,7 +1053,7 @@ public class MainApp extends Application {
     /**
      * Utility method to show GUI.
      */
-    public void showGui() {
+    public final void showGui() {
 
         SwingUtilities.invokeLater(() -> {
             try {
@@ -1063,8 +1063,9 @@ public class MainApp extends Application {
                 gui.setTitle("Mzq library command line GUI");
                 gui.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 gui.setVisible(true);
-            } catch (ClassNotFoundException | InstantiationException
-                    | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            } catch (ClassNotFoundException | InstantiationException |
+                    IllegalAccessException |
+                    javax.swing.UnsupportedLookAndFeelException ex) {
                 Logger.getLogger(MainApp.class.getName()).
                         log(Level.SEVERE, null, ex);
             }
@@ -1075,7 +1076,7 @@ public class MainApp extends Application {
     /**
      * Show about window.
      */
-    public void showAbout() {
+    public final void showAbout() {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("About");
         alert.setHeaderText("mzqViewer/mzqLibrary ver " + VERSION);
@@ -1299,7 +1300,7 @@ public class MainApp extends Application {
     /**
      * Utility method to install required R packages.
      */
-    public void installRequiredPackages() {
+    public final void installRequiredPackages() {
         if (re == null) {
             initialREngine();
         } else if (RUtils.installRequiredPackages(re)) {
@@ -1385,9 +1386,9 @@ public class MainApp extends Application {
      *
      * @return Alert dialog.
      */
-    protected Alert exceptionDialogCreate(final String title,
-                                          final String content,
-                                          final Throwable exception) {
+    protected final Alert exceptionDialogCreate(final String title,
+                                                final String content,
+                                                final Throwable exception) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(null);

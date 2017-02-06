@@ -64,7 +64,7 @@ public class PeptideData extends QuantitationLevel {
         modStr = Arrays.toString(arr);
     }
 
-    void addFeature(final FeatureData feature) {
+    public final void addFeature(final FeatureData feature) {
         features.add(feature);
     }
 
@@ -73,7 +73,7 @@ public class PeptideData extends QuantitationLevel {
      *
      * @param another the second PeptideData to be merged.
      */
-    public void mergeAnotherPeptideData(final PeptideData another) {
+    public final void mergeAnotherPeptideData(final PeptideData another) {
         this.features.addAll(another.getFeatures());
 
         if (!assignedByPeptideRef) {
@@ -90,7 +90,7 @@ public class PeptideData extends QuantitationLevel {
      *
      * @return assignedByPeptideRef.
      */
-    public boolean isAssignedByPeptideRef() {
+    public final boolean isAssignedByPeptideRef() {
         return assignedByPeptideRef;
     }
 
@@ -99,7 +99,7 @@ public class PeptideData extends QuantitationLevel {
      *
      * @param assignedByPeptideRef assignedByPeptideRef.
      */
-    public void setAssignedByPeptideRef(final boolean assignedByPeptideRef) {
+    public final void setAssignedByPeptideRef(final boolean assignedByPeptideRef) {
         this.assignedByPeptideRef = assignedByPeptideRef;
     }
 
@@ -108,7 +108,7 @@ public class PeptideData extends QuantitationLevel {
      *
      * @return array of charges.
      */
-    public int[] getCharges() {
+    public final int[] getCharges() {
         int[] charges = new int[peptide.getCharge().size()];
 
         for (int i = 0; i < peptide.getCharge().size(); i++) {
@@ -124,7 +124,7 @@ public class PeptideData extends QuantitationLevel {
      * @return size.
      */
     @Override
-    public int getCount() {
+    public final int getCount() {
 
 //      return getAllFeatures().size();
         return features.size();
@@ -135,7 +135,7 @@ public class PeptideData extends QuantitationLevel {
      *
      * @return list of FeatureData.
      */
-    public List<FeatureData> getFeatures() {
+    public final List<FeatureData> getFeatures() {
         return features;
     }
 
@@ -146,7 +146,7 @@ public class PeptideData extends QuantitationLevel {
      *
      * @return list of FeatureData.
      */
-    public List<FeatureData> getFeaturesWithCharge(final int charge) {
+    public final List<FeatureData> getFeaturesWithCharge(final int charge) {
         List<FeatureData> values = new ArrayList<>();
 
         for (FeatureData feature : features) {
@@ -165,7 +165,7 @@ public class PeptideData extends QuantitationLevel {
      *
      * @return peptide id.
      */
-    public String getId() {
+    public final String getId() {
         return peptide.getId();
     }
 
@@ -174,7 +174,7 @@ public class PeptideData extends QuantitationLevel {
      *
      * @return modification string.
      */
-    public String getModString() {
+    public final String getModString() {
         return modStr;
     }
 
@@ -183,7 +183,7 @@ public class PeptideData extends QuantitationLevel {
      *
      * @return modifications.
      */
-    public String getModifications() {
+    public final String getModifications() {
         return modifications;
     }
 
@@ -192,7 +192,7 @@ public class PeptideData extends QuantitationLevel {
      *
      * @return PeptideConsensus.
      */
-    public PeptideConsensus getPeptide() {
+    public final PeptideConsensus getPeptide() {
         return peptide;
     }
 
@@ -201,7 +201,7 @@ public class PeptideData extends QuantitationLevel {
      *
      * @return peptide sequence string.
      */
-    public String getSeq() {
+    public final String getSeq() {
         return peptide.getPeptideSequence();
     }
 }

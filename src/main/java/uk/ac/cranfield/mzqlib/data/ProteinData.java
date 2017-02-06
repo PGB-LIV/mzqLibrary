@@ -36,7 +36,7 @@ public class ProteinData extends QuantitationLevel {
         peptides = new HashMap<>();
     }
 
-    void addPeptide(final PeptideData peptide) {
+    public final void addPeptide(final PeptideData peptide) {
         String seq = peptide.getSeq();
 
         if (!peptides.containsKey(seq)) {
@@ -58,7 +58,7 @@ public class ProteinData extends QuantitationLevel {
      * @return true if two objects are equal.
      */
     @Override
-    public boolean equals(final Object obj) {
+    public final boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -82,7 +82,7 @@ public class ProteinData extends QuantitationLevel {
      * @return hash code.
      */
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         int hash = 7;
 
         hash = 17 * hash + (this.getAccession() != null
@@ -97,7 +97,7 @@ public class ProteinData extends QuantitationLevel {
      *
      * @return the accession.
      */
-    public String getAccession() {
+    public final String getAccession() {
         return protein.getAccession();
     }
 
@@ -107,7 +107,7 @@ public class ProteinData extends QuantitationLevel {
      * @return peptide size.
      */
     @Override
-    public int getCount() {
+    public final int getCount() {
         return peptides.size();
     }
 
@@ -116,7 +116,7 @@ public class ProteinData extends QuantitationLevel {
      *
      * @return protein id.
      */
-    public String getId() {
+    public final String getId() {
         return protein.getId();
     }
 
@@ -125,7 +125,7 @@ public class ProteinData extends QuantitationLevel {
      *
      * @return list of PeptideData.
      */
-    public List<PeptideData> getPeptides() {
+    public final List<PeptideData> getPeptides() {
         List<PeptideData> result = new ArrayList<>();
 
         for (PeptideSequenceData psData : peptides.values()) {
@@ -140,7 +140,7 @@ public class ProteinData extends QuantitationLevel {
      *
      * @return the protein mzQuantML element.
      */
-    public Protein getProtein() {
+    public final Protein getProtein() {
         return protein;
     }
 
@@ -149,7 +149,7 @@ public class ProteinData extends QuantitationLevel {
      *
      * @return searchDatabase.
      */
-    public String getSearchDatabase() {
+    public final String getSearchDatabase() {
 
 //      Param databaseName = ((SearchDatabase)protein.getSearchDatabaseRef()).getDatabaseName();
         Param databaseName = ((SearchDatabase) protein.getSearchDatabase()).getDatabaseName();
@@ -166,7 +166,7 @@ public class ProteinData extends QuantitationLevel {
      *
      * @return version.
      */
-    public String getSearchDatabaseVersion() {
+    public final String getSearchDatabaseVersion() {
         return ((SearchDatabase) protein.getSearchDatabase()).getVersion();
     }
 }

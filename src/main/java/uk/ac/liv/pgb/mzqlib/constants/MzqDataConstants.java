@@ -104,6 +104,9 @@ public class MzqDataConstants {
      * Constant.
      */
     public static final String SRM_ACCESSION = "MS:1001838";
+
+    private MzqDataConstants() {
+    }
 }
 
 

@@ -17,49 +17,49 @@ public class MzqQuantLayer {
     /**
      * The input MzQuantMLUnmarshaller.
      */
-    protected MzQuantMLUnmarshaller mzqUm;
+    private MzQuantMLUnmarshaller mzqUm;
 
     /**
      * The list id of the list which contains the QuantLayer.
      */
-    protected StringProperty listId;
+    private StringProperty listId;
 
     /**
      * The data type of the QuantLayer from CV param.
      */
-    protected StringProperty dataType;
+    private StringProperty dataType;
 
     /**
      * The id of the QuantLayer.
      */
-    protected StringProperty quantLayerId;
+    private StringProperty quantLayerId;
 
     /**
      * The type of QuantLayer, e.g AssayQuantLayer, GlobalQuantLayer, etc.
      */
-    protected StringProperty quantLayerType;
+    private StringProperty quantLayerType;
 
     /**
      * The type of the list, e.g ProteinList, PeptideConsensusList, etc.
      */
-    protected StringProperty listType;
+    private StringProperty listType;
 
     /**
      * The list of the names of QuantLayer columns.
      */
-    protected List<StringProperty> columnNames;
+    private List<StringProperty> columnNames;
 
     /**
      * The list of MzqDataMatrixRow of the QuantLayer.
      */
-    protected List<MzqDataMatrixRow> dmRows;
+    private List<MzqDataMatrixRow> dmRows;
 
     /**
      * Get data type of the QuantLayer as StringProperty.
      *
      * @return the dataType
      */
-    public StringProperty dataType() {
+    public final StringProperty dataType() {
         return dataType;
     }
 
@@ -68,7 +68,7 @@ public class MzqQuantLayer {
      *
      * @return the listId
      */
-    public StringProperty listId() {
+    public final StringProperty listId() {
         return listId;
     }
 
@@ -77,7 +77,7 @@ public class MzqQuantLayer {
      *
      * @return the listType
      */
-    public StringProperty listType() {
+    public final StringProperty listType() {
         return listType;
     }
 
@@ -86,7 +86,7 @@ public class MzqQuantLayer {
      *
      * @return the quantLayerId
      */
-    public StringProperty quantLayerId() {
+    public final StringProperty quantLayerId() {
         return quantLayerId;
     }
 
@@ -95,7 +95,7 @@ public class MzqQuantLayer {
      *
      * @return the quantLayerType
      */
-    public StringProperty quantLayerType() {
+    public final StringProperty quantLayerType() {
         return quantLayerType;
     }
 
@@ -104,9 +104,9 @@ public class MzqQuantLayer {
      *
      * @return the columnNames
      */
-    public List<StringProperty> getColumnNames() {
+    public final List<StringProperty> getColumnNames() {
         if (columnNames == null) {
-            columnNames = new ArrayList<>();
+            setColumnNames(new ArrayList<>());
         }
 
         return columnNames;
@@ -117,7 +117,7 @@ public class MzqQuantLayer {
      *
      * @param columnNames the columnNames to set
      */
-    public void setColumnNames(final List<StringProperty> columnNames) {
+    public final void setColumnNames(final List<StringProperty> columnNames) {
         this.columnNames = columnNames;
     }
 
@@ -126,8 +126,15 @@ public class MzqQuantLayer {
      *
      * @return the value of dataType
      */
-    public String getDataType() {
+    public final String getDataType() {
         return dataType.get();
+    }
+
+    /**
+     * @param dataType the dataType to set
+     */
+    public final void setDataType(StringProperty dataType) {
+        this.dataType = dataType;
     }
 
     /**
@@ -135,9 +142,9 @@ public class MzqQuantLayer {
      *
      * @return the dmRows
      */
-    public List<MzqDataMatrixRow> getDmRows() {
+    public final List<MzqDataMatrixRow> getDmRows() {
         if (dmRows == null) {
-            dmRows = new ArrayList<>();
+            setDmRows(new ArrayList<>());
         }
 
         return dmRows;
@@ -148,7 +155,7 @@ public class MzqQuantLayer {
      *
      * @param dmRows the dmRows to set
      */
-    public void setDmRows(final List<MzqDataMatrixRow> dmRows) {
+    public final void setDmRows(final List<MzqDataMatrixRow> dmRows) {
         this.dmRows = dmRows;
     }
 
@@ -157,8 +164,15 @@ public class MzqQuantLayer {
      *
      * @return the value of listId
      */
-    public String getListId() {
+    public final String getListId() {
         return listId.get();
+    }
+
+    /**
+     * @param listId the listId to set
+     */
+    public final void setListId(StringProperty listId) {
+        this.listId = listId;
     }
 
     /**
@@ -166,8 +180,15 @@ public class MzqQuantLayer {
      *
      * @return the value of listType
      */
-    public String getListType() {
+    public final String getListType() {
         return listType.get();
+    }
+
+    /**
+     * @param listType the listType to set
+     */
+    public final void setListType(StringProperty listType) {
+        this.listType = listType;
     }
 
     /**
@@ -175,8 +196,15 @@ public class MzqQuantLayer {
      *
      * @return the mzqUm
      */
-    public MzQuantMLUnmarshaller getMzqUm() {
+    public final MzQuantMLUnmarshaller getMzqUm() {
         return mzqUm;
+    }
+
+    /**
+     * @param mzqUm the mzqUm to set
+     */
+    public final void setMzqUm(MzQuantMLUnmarshaller mzqUm) {
+        this.mzqUm = mzqUm;
     }
 
     /**
@@ -184,8 +212,15 @@ public class MzqQuantLayer {
      *
      * @return the value of quantLayerId
      */
-    public String getQuantLayerId() {
+    public final String getQuantLayerId() {
         return quantLayerId.get();
+    }
+
+    /**
+     * @param quantLayerId the quantLayerId to set
+     */
+    public final void setQuantLayerId(StringProperty quantLayerId) {
+        this.quantLayerId = quantLayerId;
     }
 
     /**
@@ -193,8 +228,15 @@ public class MzqQuantLayer {
      *
      * @return the value of quantLayerType
      */
-    public String getQuantLayerType() {
+    public final String getQuantLayerType() {
         return quantLayerType.get();
+    }
+
+    /**
+     * @param quantLayerType the quantLayerType to set
+     */
+    public final void setQuantLayerType(StringProperty quantLayerType) {
+        this.quantLayerType = quantLayerType;
     }
 }
 

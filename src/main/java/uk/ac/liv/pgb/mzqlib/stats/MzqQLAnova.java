@@ -172,7 +172,7 @@ public class MzqQLAnova {
      *
      * @throws JAXBException jaxb exceptions.
      */
-    public void writeMzQuantMLFile(final String outputFileName)
+    public final void writeMzQuantMLFile(final String outputFileName)
             throws JAXBException {
         // retrieve every attributes and elements from the mzQuantML file
         String mzqId = mzqUm.getMzQuantMLId();
@@ -324,7 +324,7 @@ public class MzqQLAnova {
      *
      * @throws JAXBException jaxb exceptions.
      */
-    public GlobalQuantLayer getAnovaGlobalQuantLayer()
+    public final GlobalQuantLayer getAnovaGlobalQuantLayer()
             throws JAXBException {
 
         GlobalQuantLayer globalQL = new GlobalQuantLayer();
@@ -363,7 +363,7 @@ public class MzqQLAnova {
      *
      * @throws JAXBException jaxb exceptions.
      */
-    public TObjectDoubleMap<String> getAnovaPValueMap()
+    public final TObjectDoubleMap<String> getAnovaPValueMap()
             throws JAXBException {
         TObjectDoubleMap<String> anovaPValueMap = new TObjectDoubleHashMap<>();
         boolean dataTypeFound = false;

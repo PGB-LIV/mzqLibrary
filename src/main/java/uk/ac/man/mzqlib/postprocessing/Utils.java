@@ -21,6 +21,8 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.Row;
  * @author man-mqbsshz2
  */
 public class Utils {
+    private Utils() {
+    }
 
     /**
      * calculate the column sum in a two-dimensional array

@@ -26,22 +26,22 @@ public class MzqFeatureQuantLayer extends MzqQuantLayer {
      */
     public MzqFeatureQuantLayer(final MzQuantMLUnmarshaller um, final String listId,
                                 final GlobalQuantLayer ftQuantLayer) {
-        this.mzqUm          = um;
-        this.quantLayerType = new SimpleStringProperty("FeatureQuantLayer");
-        this.listId         = new SimpleStringProperty(listId);
-        this.quantLayerId   = new SimpleStringProperty(ftQuantLayer.getId());
-        this.listType       = new SimpleStringProperty(MzqDataConstants.FEATURE_LIST_TYPE);
-        this.dataType       = new SimpleStringProperty("List in column titles");
+        setMzqUm(um);
+        setQuantLayerType(new SimpleStringProperty("FeatureQuantLayer"));
+        setListId(new SimpleStringProperty(listId));
+        setQuantLayerId(new SimpleStringProperty(ftQuantLayer.getId()));
+        setListType(new SimpleStringProperty(MzqDataConstants.FEATURE_LIST_TYPE));
+        setDataType(new SimpleStringProperty("List in column titles"));
 
         // set column names
-        this.columnNames = new ArrayList<>();
+        setColumnNames(new ArrayList<>());
 
         List<Column> columns = ftQuantLayer.getColumnDefinition().getColumn();
 
         for (Column col : columns) {
             String name = col.getDataType().getCvParam().getName();
 
-            this.columnNames.add(new SimpleStringProperty(name));
+            getColumnNames().add(new SimpleStringProperty(name));
         }
     }
 }

@@ -18,6 +18,8 @@ import java.util.zip.GZIPOutputStream;
  * @since 06-Nov-2013 14:55:14
  */
 public class Gzipper {
+    private Gzipper() {
+    }
 
     /**
      * Utility method to compress a file.

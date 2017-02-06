@@ -17,7 +17,7 @@ import uk.ac.ebi.jmzidml.xml.io.MzIdentMLUnmarshaller;
  * @since 24-Jun-2013 14:07:02
  */
 public class Mzid {
-    MzIdentMLUnmarshaller um;
+    private MzIdentMLUnmarshaller um;
 
     /**
      * Constructor of Mzid class.
@@ -33,7 +33,7 @@ public class Mzid {
      *
      * @return Map&lt;String, SIIData&gt;
      */
-    public Map<String, SIIData> getPeptideSIIData() {
+    public final Map<String, SIIData> getPeptideSIIData() {
         Map<String, SIIData>                   retMap  = new HashMap();
         Iterator<SpectrumIdentificationResult> sirIter =
             um.unmarshalCollectionFromXpath(MzIdentMLElement.SpectrumIdentificationResult);
@@ -137,56 +137,56 @@ public class Mzid {
         /**
          * @return the charge
          */
-        public String getCharge() {
+        public final String getCharge() {
             return charge;
         }
 
         /**
          * @param charge the charge to set
          */
-        public void setCharge(final String charge) {
+        public final void setCharge(final String charge) {
             this.charge = charge;
         }
 
         /**
          * @return the mz
          */
-        public double getMz() {
+        public final double getMz() {
             return mz;
         }
 
         /**
          * @param mz the mz to set
          */
-        public void setMz(final double mz) {
+        public final void setMz(final double mz) {
             this.mz = mz;
         }
 
         /**
          * @return the rt
          */
-        public double getRt() {
+        public final double getRt() {
             return rt;
         }
 
         /**
          * @param rt the rt to set
          */
-        public void setRt(final double rt) {
+        public final void setRt(final double rt) {
             this.rt = rt;
         }
 
         /**
          * @return the siiID
          */
-        public String getSiiID() {
+        public final String getSiiID() {
             return siiID;
         }
 
         /**
          * @param siiID the siiID to set
          */
-        public void setSiiID(final String siiID) {
+        public final void setSiiID(final String siiID) {
             this.siiID = siiID;
         }
     }

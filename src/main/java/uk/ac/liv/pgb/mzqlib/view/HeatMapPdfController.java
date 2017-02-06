@@ -27,9 +27,9 @@ public class HeatMapPdfController {
     // private RootLayoutController rootController;
     @FXML
     @SuppressWarnings("unused")
-    TextField pdfH;
+    private TextField pdfH;
     @FXML
-    TextField pdfW;
+    private TextField pdfW;
 
 //  public void setCaller(RootLayoutController c) {
 //      this.rootController = c;
@@ -92,7 +92,7 @@ public class HeatMapPdfController {
      *
      * @param mainApp main app.
      */
-    public void setMainApp(final MainApp mainApp) {
+    public final void setMainApp(final MainApp mainApp) {
         this.mainApp = mainApp;
     }
 }

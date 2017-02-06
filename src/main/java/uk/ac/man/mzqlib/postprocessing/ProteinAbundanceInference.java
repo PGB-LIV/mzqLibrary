@@ -18,13 +18,13 @@ import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
  * @version 0.2
  */
 public final class ProteinAbundanceInference {
-    static final String path             = "./src/main/resources/";
-    static final String proteinGroupList = "ProteinGroupList11";
-    static final String searchDatabase   = "SD1";
-    static final String cvParamId        = "PSI-MS";
-    static final String cvRef            = "PSI-MS";
-    static boolean      conflictPeptideExcluded;
-    private String      in_file;
+    static final String    path             = "./src/main/resources/";
+    static final String    proteinGroupList = "ProteinGroupList11";
+    static final String    searchDatabase   = "SD1";
+    static final String    cvParamId        = "PSI-MS";
+    static final String    cvRef            = "PSI-MS";
+    private static boolean conflictPeptideExcluded;
+    private String         in_file;
 
     /**
      * constructor

@@ -69,7 +69,7 @@ import uk.ac.liv.pgb.jmzqml.xml.io.MzQuantMLUnmarshaller;
  * @author Da Qi
  * @since 24-Jun-2013 14:06:09
  */
-public class MzqMzIdMapperFactory {
+public final class MzqMzIdMapperFactory {
 
     private static final MzqMzIdMapperFactory instance
             = new MzqMzIdMapperFactory();
@@ -195,7 +195,7 @@ public class MzqMzIdMapperFactory {
         return new MzqMzIdMapperImpl(mzqUm, rawToMzidMap, msTolerance);
     }
 
-    private static class MzqMzIdMapperImpl implements MzqMzIdMapper {
+    private static final class MzqMzIdMapperImpl implements MzqMzIdMapper {
 
         private MzqProcessor mzqProc = null;
         //private File mzqFile = null;

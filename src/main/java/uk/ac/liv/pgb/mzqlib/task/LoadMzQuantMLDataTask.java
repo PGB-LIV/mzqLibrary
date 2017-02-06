@@ -60,7 +60,7 @@ public class LoadMzQuantMLDataTask extends Task<MzQuantMLData> {
     }
 
     @Override
-    protected MzQuantMLData call() throws Exception {
+    protected final MzQuantMLData call() throws Exception {
         MzQuantMLData mzqData = new MzQuantMLData();
 
         //

@@ -94,7 +94,7 @@ public class PepProtAbundanceNormalisation {
      *
      * @param maximumThreads - Number of maximum threads
      */
-    public void setMaximumThreads(final int maximumThreads) {
+    public final void setMaximumThreads(final int maximumThreads) {
         this.maximumThreads = maximumThreads;
     }
 
@@ -103,7 +103,7 @@ public class PepProtAbundanceNormalisation {
      *
      * @param normLev - normalised level
      */
-    public void setNormLevel(final String normLev) {
+    public final void setNormLevel(final String normLev) {
         normalisedLevel = normLev;
     }
 
@@ -112,7 +112,7 @@ public class PepProtAbundanceNormalisation {
      *
      * @param qlt - quant layer type
      */
-    public void setQuantLT(final String qlt) {
+    public final void setQuantLT(final String qlt) {
         quantLayerType = qlt;
     }
 
@@ -121,7 +121,7 @@ public class PepProtAbundanceNormalisation {
      *
      * @param inDTA - data type accession for input
      */
-    public void setInDTAcc(final String inDTA) {
+    public final void setInDTAcc(final String inDTA) {
         inputDataTypeAccession = inDTA;
     }
 
@@ -130,7 +130,7 @@ public class PepProtAbundanceNormalisation {
      *
      * @param outDTA - data type accession for output
      */
-    public void setOutDTAcc(final String outDTA) {
+    public final void setOutDTAcc(final String outDTA) {
         outputDataTypeAccession = outDTA;
     }
 
@@ -139,7 +139,7 @@ public class PepProtAbundanceNormalisation {
      *
      * @param td - decoy tag
      */
-    public void setTagDecoy(final String td) {
+    public final void setTagDecoy(final String td) {
         tagDecoy = td;
     }
 
@@ -148,7 +148,7 @@ public class PepProtAbundanceNormalisation {
      *
      * @param outDTCN - output data type CV name
      */
-    public void setOutputAssayDTCN(final String outDTCN) {
+    public final void setOutputAssayDTCN(final String outDTCN) {
         outputDataTypeName = outDTCN;
     }
 
@@ -165,7 +165,7 @@ public class PepProtAbundanceNormalisation {
      *
      * @param um - unmarshalling input file
      */
-    public void setUMInfile(final MzQuantMLUnmarshaller um) {
+    public final void setUMInfile(final MzQuantMLUnmarshaller um) {
         inFileUM = um;
     }
 
@@ -347,7 +347,7 @@ public class PepProtAbundanceNormalisation {
      * @throws FileNotFoundException file not found exceptions.
      * @throws InterruptedException  interrupted exceptions.
      */
-    public void multithreadingCalc()
+    public final void multithreadingCalc()
             throws FileNotFoundException, InterruptedException {
 
 //        Map<String, List<String>> assayVals = new HashMap<String, List<String>>();
@@ -457,7 +457,7 @@ public class PepProtAbundanceNormalisation {
      *
      * @return normalised assay values
      */
-    public Map<String, List<String>> getNormalisationValues(
+    public final Map<String, List<String>> getNormalisationValues(
             final String[] scalingFactors) {
         Map<String, List<String>> normalisedFeatureAssayVal
                 = normalisedFeatureAssayValue(scalingFactors);
@@ -613,7 +613,7 @@ public class PepProtAbundanceNormalisation {
      * @throws IllegalStateException illegal state exceptions.
      * @throws FileNotFoundException file not found exceptions.
      */
-    public MzQuantMLUnmarshaller mzqFileInput()
+    public final MzQuantMLUnmarshaller mzqFileInput()
             throws IllegalStateException,
             FileNotFoundException {
         File mzqFile = new File(inFile);
@@ -1281,7 +1281,7 @@ public class PepProtAbundanceNormalisation {
         }
 
         @Override
-        public ScaleFactorCalculationResult call()
+        public final ScaleFactorCalculationResult call()
                 throws Exception {
 
             Map<String, List<String>> scaleFactor = new HashMap<>();
@@ -1329,11 +1329,11 @@ public class PepProtAbundanceNormalisation {
             this.scalingFactors = scalingFactors;
         }
 
-        public int getReferenceNumber() {
+        public final int getReferenceNumber() {
             return this.referenceNumber;
         }
 
-        public List<String> getScalingFactors() {
+        public final List<String> getScalingFactors() {
             return this.scalingFactors;
         }
 

@@ -31,7 +31,7 @@ public class MzqDataMatrixRow {
      *
      * @return the objectId
      */
-    public StringProperty objectId() {
+    public final StringProperty objectId() {
         return objectId;
     }
 
@@ -42,7 +42,7 @@ public class MzqDataMatrixRow {
      *
      * @return the value of specific position in the list
      */
-    public StringProperty value(final int i) {
+    public final StringProperty value(final int i) {
         return values.get(i);
     }
 
@@ -51,7 +51,7 @@ public class MzqDataMatrixRow {
      *
      * @return the values
      */
-    public List<StringProperty> values() {
+    public final List<StringProperty> values() {
         return values;
     }
 
@@ -60,7 +60,7 @@ public class MzqDataMatrixRow {
      *
      * @return the value of objectId
      */
-    public String getObjectId() {
+    public final String getObjectId() {
         return objectId.get();
     }
 
@@ -69,7 +69,7 @@ public class MzqDataMatrixRow {
      *
      * @param objectId the objectId to set
      */
-    public void setObjectId(final StringProperty objectId) {
+    public final void setObjectId(final StringProperty objectId) {
         this.objectId = objectId;
     }
 
@@ -78,7 +78,7 @@ public class MzqDataMatrixRow {
      *
      * @return the objectValue
      */
-    public StringProperty getObjectValue() {
+    public final StringProperty getObjectValue() {
         return objectValue;
     }
 
@@ -87,7 +87,7 @@ public class MzqDataMatrixRow {
      *
      * @param objectValue the objectValue to set
      */
-    public void setObjectValue(final StringProperty objectValue) {
+    public final void setObjectValue(final StringProperty objectValue) {
         this.objectValue = objectValue;
     }
 
@@ -96,7 +96,7 @@ public class MzqDataMatrixRow {
      *
      * @param values the values to set
      */
-    public void setValues(final List<String> values) {
+    public final void setValues(final List<String> values) {
         for (String value : values) {
             this.values.add(new SimpleStringProperty(value));
         }

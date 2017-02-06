@@ -139,41 +139,42 @@ public class ProgenMzquantmlConverter {
 //    private SmallMoleculeList smallMolList;
 
     //
-    final DecimalFormat format = new DecimalFormat("#.###");
-    List<String> assayListFrReader;
-    Set<String> proteinList; //list of protein accessions from either feature list or protein list;
-    Software software;
-    Map<String, String> rawFileNameIdMap;
-    Label label;
-    Map<String, Set<String>> studyGroupMap;
-    Map<String, String> assayNameIdMap;
-    TIntObjectMap<String> proteinAccessionsMap = new TIntObjectHashMap<>();
-    Map<String, Set<String>> proteinPeptidesMap;
-    SearchDatabase db;
-    Map<String, TIntSet> peptideMap;
-    TIntObjectMap<Boolean> useInQuantMap;
-    TIntObjectMap<String> flIndexMap;
-    TIntIntMap chrMap;
-    Map<String, String> proteinGroupNameIdMap;
-    Map<String, String> proteinAccessionIdMap;
-    TIntDoubleMap confidenceMap;
-    TIntDoubleMap anovaMap;
-    TIntDoubleMap mfcMap;
-    TIntObjectMap<TDoubleList> normAbMap; // from protein list
-    TIntObjectMap<TDoubleList> rawAbMap; // from protein list
-    TIntObjectMap<TDoubleList> nabMap; // from feature list
-    TIntObjectMap<TDoubleList> rabMap; // from feature list
-    TIntObjectMap<TDoubleList> retenMap; // from feature list
-    TIntDoubleMap masterRtMap; // from feature list
-    TIntDoubleMap mzMap; // from feature list
-    TIntDoubleMap rtWinMap;
-    TIntDoubleMap scoreMap;
-    TIntObjectMap<String> modificationMap;
-    TIntObjectMap<String> peptideDupMap;
-    Map<String, List<Feature>> peptideFeaturesMap;
-    Map<String, String> featureAssNameMap;
-    Map<String, List<String>> seqPsmidMap;
-    Map<String, String> psmidAssMap;
+    private final DecimalFormat format = new DecimalFormat("#.###");
+    private List<String> assayListFrReader;
+    private Set<String> proteinList; //list of protein accessions from either feature list or protein list;
+    private Software software;
+    private Map<String, String> rawFileNameIdMap;
+    private Label label;
+    private Map<String, Set<String>> studyGroupMap;
+    private Map<String, String> assayNameIdMap;
+    private TIntObjectMap<String> proteinAccessionsMap
+            = new TIntObjectHashMap<>();
+    private Map<String, Set<String>> proteinPeptidesMap;
+    private SearchDatabase db;
+    private Map<String, TIntSet> peptideMap;
+    private TIntObjectMap<Boolean> useInQuantMap;
+    private TIntObjectMap<String> flIndexMap;
+    private TIntIntMap chrMap;
+    private Map<String, String> proteinGroupNameIdMap;
+    private Map<String, String> proteinAccessionIdMap;
+    private TIntDoubleMap confidenceMap;
+    private TIntDoubleMap anovaMap;
+    private TIntDoubleMap mfcMap;
+    private TIntObjectMap<TDoubleList> normAbMap; // from protein list
+    private TIntObjectMap<TDoubleList> rawAbMap; // from protein list
+    private TIntObjectMap<TDoubleList> nabMap; // from feature list
+    private TIntObjectMap<TDoubleList> rabMap; // from feature list
+    private TIntObjectMap<TDoubleList> retenMap; // from feature list
+    private TIntDoubleMap masterRtMap; // from feature list
+    private TIntDoubleMap mzMap; // from feature list
+    private TIntDoubleMap rtWinMap;
+    private TIntDoubleMap scoreMap;
+    private TIntObjectMap<String> modificationMap;
+    private TIntObjectMap<String> peptideDupMap;
+    private Map<String, List<Feature>> peptideFeaturesMap;
+    private Map<String, String> featureAssNameMap;
+    private Map<String, List<String>> seqPsmidMap;
+    private Map<String, String> psmidAssMap;
 
     //
     private String flFn;
@@ -380,7 +381,7 @@ public class ProgenMzquantmlConverter {
 
             FileInputStream fis = new FileInputStream(idFn);
             BufferedReader idBr = new BufferedReader(new InputStreamReader(fis,
-                                                                            "UTF-8"));
+                                                                           "UTF-8"));
             CSVReader reader = new CSVReader(idBr);
             String nextLine[];
             reader.readNext();
@@ -620,7 +621,7 @@ public class ProgenMzquantmlConverter {
 
         proteinAccessionsMap.forEachEntry(new TIntObjectProcedure<String>() {
 
-            int protGroupId = 0; // start counting the id of proteinGroup
+            private int protGroupId = 0; // start counting the id of proteinGroup
 
             @Override
             public boolean execute(final int index, final String accession) {
@@ -1442,7 +1443,7 @@ public class ProgenMzquantmlConverter {
             column.setDataType(colDt);
 
             colDt.setCvParam(createCvParam("Mascot:score", "PSI-MS",
-                                            "MS:1001171"));
+                                           "MS:1001171"));
             pepGQLScore.setDataMatrix(pepScoreDM);
 
             peptideConsensusList.getGlobalQuantLayer()
@@ -1523,7 +1524,7 @@ public class ProgenMzquantmlConverter {
      * are output.
      *
      * @param outFn       output file name
-     * @param outPGL flag indicates if output ProteinGroupList or not
+     * @param outPGL      flag indicates if output ProteinGroupList or not
      * @param rawPlusNorm flag indicates which type of abundance is in the
      *                    output file.
      *
@@ -1531,7 +1532,7 @@ public class ProgenMzquantmlConverter {
      * @throws DatatypeConfigurationException data type configuration
      *                                        exceptions.
      */
-    public void convert(final String outFn, final boolean outPGL,
+    public final void convert(final String outFn, final boolean outPGL,
                         final String rawPlusNorm)
             throws IOException, DatatypeConfigurationException {
 

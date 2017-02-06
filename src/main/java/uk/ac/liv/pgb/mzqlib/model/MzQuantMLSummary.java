@@ -39,7 +39,7 @@ public class MzQuantMLSummary {
      *
      * @return feature list number
      */
-    public IntegerProperty featureListNumber() {
+    public final IntegerProperty featureListNumber() {
         return featureListNumber;
     }
 
@@ -48,7 +48,7 @@ public class MzQuantMLSummary {
      *
      * @return peptide list number
      */
-    public IntegerProperty peptideListNumber() {
+    public final IntegerProperty peptideListNumber() {
         return peptideListNumber;
     }
 
@@ -57,7 +57,7 @@ public class MzQuantMLSummary {
      *
      * @return IntegerProperty
      */
-    public IntegerProperty proteinGroupListNumber() {
+    public final IntegerProperty proteinGroupListNumber() {
         return proteinGroupListNumber;
     }
 
@@ -66,7 +66,7 @@ public class MzQuantMLSummary {
      *
      * @return protein list number
      */
-    public IntegerProperty proteinListNumber() {
+    public final IntegerProperty proteinListNumber() {
         return proteinListNumber;
     }
 
@@ -75,7 +75,7 @@ public class MzQuantMLSummary {
      *
      * @return feature list number
      */
-    public int getFeatureListNumber() {
+    public final int getFeatureListNumber() {
         return featureListNumber.get();
     }
 
@@ -84,7 +84,7 @@ public class MzQuantMLSummary {
      *
      * @param num feature list number
      */
-    public void setFeatureListNumber(final int num) {
+    public final void setFeatureListNumber(final int num) {
         this.featureListNumber.set(num);
     }
 
@@ -93,7 +93,7 @@ public class MzQuantMLSummary {
      *
      * @return peptide list number
      */
-    public int getPeptideListNumber() {
+    public final int getPeptideListNumber() {
         return peptideListNumber.get();
     }
 
@@ -102,7 +102,7 @@ public class MzQuantMLSummary {
      *
      * @param num peptide list number
      */
-    public void setPeptideListNumber(final int num) {
+    public final void setPeptideListNumber(final int num) {
         this.peptideListNumber.set(num);
     }
 
@@ -111,7 +111,7 @@ public class MzQuantMLSummary {
      *
      * @return protein group list number
      */
-    public int getProteinGroupListNumber() {
+    public final int getProteinGroupListNumber() {
         return proteinGroupListNumber.get();
     }
 
@@ -120,7 +120,7 @@ public class MzQuantMLSummary {
      *
      * @param num protein group list number
      */
-    public void setProteinGroupListNumber(final int num) {
+    public final void setProteinGroupListNumber(final int num) {
         this.proteinGroupListNumber.set(num);
     }
 
@@ -129,7 +129,7 @@ public class MzQuantMLSummary {
      *
      * @return protein list number.
      */
-    public int getProteinListNumber() {
+    public final int getProteinListNumber() {
         return proteinListNumber.get();
     }
 
@@ -138,7 +138,7 @@ public class MzQuantMLSummary {
      *
      * @param num protein list number
      */
-    public void setProteinListNumber(final int num) {
+    public final void setProteinListNumber(final int num) {
         this.proteinListNumber.set(num);
     }
 
@@ -147,7 +147,7 @@ public class MzQuantMLSummary {
      *
      * @return the software
      */
-    public StringProperty getSoftware() {
+    public final StringProperty getSoftware() {
         return software;
     }
 
@@ -156,7 +156,7 @@ public class MzQuantMLSummary {
      *
      * @param software the software to set
      */
-    public void setSoftware(final StringProperty software) {
+    public final void setSoftware(final StringProperty software) {
         this.software = software;
     }
 
@@ -165,7 +165,7 @@ public class MzQuantMLSummary {
      *
      * @param techList list of techniques.
      */
-    public void setTechniquesUsed(final List<StringProperty> techList) {
+    public final void setTechniquesUsed(final List<StringProperty> techList) {
         this.techniquesUsed.clear();
         this.techniquesUsed.addAll(techList);
     }

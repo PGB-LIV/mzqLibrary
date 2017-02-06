@@ -52,7 +52,7 @@ public class HeatMapParam {
      *
      * @return the colNames
      */
-    public List<String> getColNames() {
+    public final List<String> getColNames() {
         return colNames;
     }
 
@@ -61,7 +61,7 @@ public class HeatMapParam {
      *
      * @param colNames the colNames to set
      */
-    public void setColNames(final List<String> colNames) {
+    public final void setColNames(final List<String> colNames) {
         this.colNames = colNames;
     }
 
@@ -70,7 +70,7 @@ public class HeatMapParam {
      *
      * @return the logMatrix
      */
-    public String getLogMatrix() {
+    public final String getLogMatrix() {
         return logMatrix;
     }
 
@@ -79,7 +79,7 @@ public class HeatMapParam {
      *
      * @param logMatrix the logMatrix to set
      */
-    public void setLogMatrix(final String logMatrix) {
+    public final void setLogMatrix(final String logMatrix) {
         this.logMatrix = logMatrix;
     }
 
@@ -88,7 +88,7 @@ public class HeatMapParam {
      *
      * @return the logMax
      */
-    public double getLogMax() {
+    public final double getLogMax() {
         return logMax;
     }
 
@@ -97,7 +97,7 @@ public class HeatMapParam {
      *
      * @param logMax the logMax to set
      */
-    public void setLogMax(final double logMax) {
+    public final void setLogMax(final double logMax) {
         this.logMax = logMax;
     }
 
@@ -106,7 +106,7 @@ public class HeatMapParam {
      *
      * @return the logMin
      */
-    public double getLogMin() {
+    public final double getLogMin() {
         return logMin;
     }
 
@@ -115,7 +115,7 @@ public class HeatMapParam {
      *
      * @param logMin the logMin to set
      */
-    public void setLogMin(final double logMin) {
+    public final void setLogMin(final double logMin) {
         this.logMin = logMin;
     }
 
@@ -124,7 +124,7 @@ public class HeatMapParam {
      *
      * @return the matrix string
      */
-    public String getMatrix() {
+    public final String getMatrix() {
         return matrix;
     }
 
@@ -133,7 +133,7 @@ public class HeatMapParam {
      *
      * @param matrix the matrix to set
      */
-    public void setMatrix(final String matrix) {
+    public final void setMatrix(final String matrix) {
         this.matrix = matrix;
     }
 
@@ -142,7 +142,7 @@ public class HeatMapParam {
      *
      * @return the max
      */
-    public double getMax() {
+    public final double getMax() {
         return max;
     }
 
@@ -151,7 +151,7 @@ public class HeatMapParam {
      *
      * @param max the max to set
      */
-    public void setMax(final double max) {
+    public final void setMax(final double max) {
         this.max = max;
     }
 
@@ -160,7 +160,7 @@ public class HeatMapParam {
      *
      * @return the min
      */
-    public double getMin() {
+    public final double getMin() {
         return min;
     }
 
@@ -169,7 +169,7 @@ public class HeatMapParam {
      *
      * @param min the min to set
      */
-    public void setMin(final double min) {
+    public final void setMin(final double min) {
         this.min = min;
     }
 
@@ -178,7 +178,7 @@ public class HeatMapParam {
      *
      * @return the rowNames
      */
-    public List<String> getRowNames() {
+    public final List<String> getRowNames() {
         return rowNames;
     }
 
@@ -187,7 +187,7 @@ public class HeatMapParam {
      *
      * @param rowNames the rowNames to set
      */
-    public void setRowNames(final List<String> rowNames) {
+    public final void setRowNames(final List<String> rowNames) {
         this.rowNames = rowNames;
     }
 
@@ -196,7 +196,7 @@ public class HeatMapParam {
      *
      * @return the rowNumber
      */
-    public int getRowNumber() {
+    public final int getRowNumber() {
         return rowNumber;
     }
 
@@ -205,7 +205,7 @@ public class HeatMapParam {
      *
      * @param rowNumber the rowNumber to set
      */
-    public void setRowNumber(final int rowNumber) {
+    public final void setRowNumber(final int rowNumber) {
         this.rowNumber = rowNumber;
     }
 }

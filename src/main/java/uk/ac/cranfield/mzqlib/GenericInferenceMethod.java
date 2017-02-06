@@ -10,6 +10,8 @@ import java.util.Map;
  * @author Jun Fan@cranfield
  */
 public class GenericInferenceMethod {
+    private GenericInferenceMethod() {
+    }
 
     /**
      * assign the middle data structure by the quantitation values from the

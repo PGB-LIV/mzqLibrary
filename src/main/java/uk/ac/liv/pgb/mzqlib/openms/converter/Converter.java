@@ -13,6 +13,8 @@ import javax.xml.bind.JAXBException;
  *
  */
 public class Converter {
+    private Converter() {
+    }
 
     /**
      * Main class.

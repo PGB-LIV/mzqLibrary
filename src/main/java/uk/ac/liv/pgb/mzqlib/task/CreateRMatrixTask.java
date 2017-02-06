@@ -34,7 +34,7 @@ public class CreateRMatrixTask extends Task<HeatMapParam> {
     }
 
     @Override
-    protected HeatMapParam call() throws Exception {
+    protected final HeatMapParam call() throws Exception {
         long         start     = System.currentTimeMillis();
         HeatMapParam hmParam   = new HeatMapParam();
         final int    rowNumber = rowList.size();

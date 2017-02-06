@@ -60,8 +60,8 @@ public class QuantitationLevel {
      * @param assayIDs          assay id.
      * @param type              type.
      */
-    public void calculateQuantitation(final Set<String> quantitationNames, final List<String> assayIDs,
-                                      final int type) {
+    public final void calculateQuantitation(final Set<String> quantitationNames, final List<String> assayIDs,
+                                            final int type) {
         try {
             Method                  m       = this.getClass()
                                                   .getDeclaredMethod(misc.getMethodName(this.getClass()), new Class[0]);
@@ -130,7 +130,7 @@ public class QuantitationLevel {
      *
      * @return global value.
      */
-    public Double getGlobal(final String name) {
+    public final Double getGlobal(final String name) {
         if (globals.containsKey(name)) {
             return globals.get(name);
         }
@@ -143,7 +143,7 @@ public class QuantitationLevel {
      *
      * @return true if global quantitation exists.
      */
-    public boolean hasGlobal() {
+    public final boolean hasGlobal() {
         return hasGlobal;
     }
 
@@ -153,7 +153,7 @@ public class QuantitationLevel {
      * @param name  name.
      * @param ratio global value.
      */
-    public void setGlobal(final String name, final Double ratio) {
+    public final void setGlobal(final String name, final Double ratio) {
         globals.put(name, ratio);
         hasGlobal = true;
     }
@@ -165,7 +165,7 @@ public class QuantitationLevel {
      *
      * @return true if specified quantitation exists.
      */
-    public boolean hasQuantitation(final String quantitationName) {
+    public final boolean hasQuantitation(final String quantitationName) {
         if (quantities.containsKey(quantitationName)) {
             return true;
         }
@@ -180,7 +180,7 @@ public class QuantitationLevel {
      *
      * @return quantity value map.
      */
-    public Map<String, Double> getQuantities(final String name) {
+    public final Map<String, Double> getQuantities(final String name) {
         return quantities.get(name);
     }
 
@@ -190,7 +190,7 @@ public class QuantitationLevel {
      * @param name        name.
      * @param quantitions quantity map.
      */
-    public void setQuantities(final String name, final Map<String, Double> quantitions) {
+    public final void setQuantities(final String name, final Map<String, Double> quantitions) {
         quantities.put(name, quantitions);
     }
 
@@ -202,7 +202,7 @@ public class QuantitationLevel {
      *
      * @return the quantity value.
      */
-    public Double getQuantity(final String name, final String assayID) {
+    public final Double getQuantity(final String name, final String assayID) {
         if (quantities.containsKey(name) && quantities.get(name).containsKey(assayID)) {
             return quantities.get(name).get(assayID);
         }
@@ -217,7 +217,7 @@ public class QuantitationLevel {
      *
      * @return ratio value.
      */
-    public Double getRatio(final String name) {
+    public final Double getRatio(final String name) {
         if (ratios.containsKey(name)) {
             return ratios.get(name);
         }
@@ -230,7 +230,7 @@ public class QuantitationLevel {
      *
      * @return true if ratio exists.
      */
-    public boolean hasRatio() {
+    public final boolean hasRatio() {
         return hasRatio;
     }
 
@@ -240,7 +240,7 @@ public class QuantitationLevel {
      * @param name  name.
      * @param ratio ratio value.
      */
-    public void setRatios(final String name, final Double ratio) {
+    public final void setRatios(final String name, final Double ratio) {
         ratios.put(name, ratio);
         hasRatio = true;
     }
@@ -252,7 +252,7 @@ public class QuantitationLevel {
      *
      * @return true if specified quantitation has study variables.
      */
-    public boolean hasSV(final String quantitationName) {
+    public final boolean hasSV(final String quantitationName) {
         if (studyVariables.containsKey(quantitationName)) {
             return true;
         }
@@ -267,7 +267,7 @@ public class QuantitationLevel {
      *
      * @return quantity value map.
      */
-    public Map<String, Double> getStudyVariableQuantities(final String name) {
+    public final Map<String, Double> getStudyVariableQuantities(final String name) {
         return studyVariables.get(name);
     }
 
@@ -279,7 +279,7 @@ public class QuantitationLevel {
      *
      * @return study variable value.
      */
-    public Double getStudyVariableQuantity(final String name, final String sv) {
+    public final Double getStudyVariableQuantity(final String name, final String sv) {
         if (studyVariables.containsKey(name) && studyVariables.get(name).containsKey(sv)) {
             return studyVariables.get(name).get(sv);
         }
@@ -293,7 +293,7 @@ public class QuantitationLevel {
      * @param name     name.
      * @param svValues study variable value map.
      */
-    public void setStudyVariables(final String name, final Map<String, Double> svValues) {
+    public final void setStudyVariables(final String name, final Map<String, Double> svValues) {
         studyVariables.put(name, svValues);
     }
 }

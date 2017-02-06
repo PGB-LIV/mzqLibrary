@@ -43,7 +43,7 @@ public class RootLayoutController {
     /**
      * Disable specified menus.
      */
-    public void disbbleMenus() {
+    public final void disbbleMenus() {
         statistics.setDisable(true);
         closeFile.setDisable(true);
     }
@@ -51,7 +51,7 @@ public class RootLayoutController {
     /**
      * Enable specified menus.
      */
-    public void enableMenus() {
+    public final void enableMenus() {
         statistics.setDisable(false);
         closeFile.setDisable(false);
     }
@@ -172,7 +172,7 @@ public class RootLayoutController {
      *
      * @param mainApp main app.
      */
-    public void setMainApp(final MainApp mainApp) {
+    public final void setMainApp(final MainApp mainApp) {
         this.mainApp = mainApp;
     }
 }

@@ -40,7 +40,7 @@ public class Mzq {
      *
      * @throws JAXBException jaxb exception
      */
-    public Map<String, List<SimpleFeature>> getPepIdFeature() throws JAXBException {
+    public final Map<String, List<SimpleFeature>> getPepIdFeature() throws JAXBException {
         Map<String, List<SimpleFeature>> retMap         = new HashMap();
         Iterator<PeptideConsensusList>   pepConListIter =
             this.um.unmarshalCollectionFromXpath(MzQuantMLElement.PeptideConsensusList);
@@ -128,56 +128,56 @@ public class Mzq {
         /**
          * @return the charge
          */
-        public String getCharge() {
+        public final String getCharge() {
             return charge;
         }
 
         /**
          * @param charge the charge to set
          */
-        public void setCharge(final String charge) {
+        public final void setCharge(final String charge) {
             this.charge = charge;
         }
 
         /**
          * @return the ftId
          */
-        public String getFtId() {
+        public final String getFtId() {
             return ftId;
         }
 
         /**
          * @param ftId the ftId to set
          */
-        public void setFtId(final String ftId) {
+        public final void setFtId(final String ftId) {
             this.ftId = ftId;
         }
 
         /**
          * @return the mz
          */
-        public double getMz() {
+        public final double getMz() {
             return mz;
         }
 
         /**
          * @param mz the mz to set
          */
-        public void setMz(final double mz) {
+        public final void setMz(final double mz) {
             this.mz = mz;
         }
 
         /**
          * @return the retWin
          */
-        public double getRetWin() {
+        public final double getRetWin() {
             return retWin;
         }
 
         /**
          * @param retWin the retWin to set
          */
-        public void setRetWin(final double retWin) {
+        public final void setRetWin(final double retWin) {
             this.retWin = retWin;
         }
     }

@@ -22,6 +22,9 @@ public class Mapper {
     private static Map<String, String>   rawToMzidMap;
     private static MzQuantMLUnmarshaller umarsh;
 
+    private Mapper() {
+    }
+
     /**
      * Main class.
      *

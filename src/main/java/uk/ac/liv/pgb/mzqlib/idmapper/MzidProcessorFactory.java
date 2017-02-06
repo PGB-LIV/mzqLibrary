@@ -42,7 +42,7 @@ public class MzidProcessorFactory {
      *
      * @return the MzidProcessor instance
      */
-    public MzidProcessor buildMzidProcessor(final File mzidFile) {
+    public final MzidProcessor buildMzidProcessor(final File mzidFile) {
         return new MzidProcessorImpl(mzidFile);
     }
 
@@ -99,7 +99,7 @@ public class MzidProcessorFactory {
         return rt;
     }
 
-    private static class MzidProcessorImpl implements MzidProcessor {
+    private static final class MzidProcessorImpl implements MzidProcessor {
         private File                               mzidFile              = null;
         private MzIdentMLUnmarshaller              umarsh                = null;
         private final Map<String, List<SIIData>>   pepModStringToSIIsMap = new HashMap<>();

@@ -17,7 +17,7 @@ public class InitialREngineTask extends Task<Rengine> {
     private Rengine re;
 
     @Override
-    protected Rengine call() throws Exception {
+    protected final Rengine call() throws Exception {
         re = new Rengine(new String[]{" ", " "}, false, null);
         Platform.runLater(
             () -> {

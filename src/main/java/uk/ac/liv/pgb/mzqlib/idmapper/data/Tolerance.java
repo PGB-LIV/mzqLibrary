@@ -41,7 +41,7 @@ public class Tolerance {
      *
      * @return value.
      */
-    public double getTolerance() {
+    public final double getTolerance() {
         return tolerance;
     }
 
@@ -50,7 +50,7 @@ public class Tolerance {
      *
      * @param tolerance value.
      */
-    public void setTolerance(final double tolerance) {
+    public final void setTolerance(final double tolerance) {
         this.tolerance = tolerance;
     }
 
@@ -59,7 +59,7 @@ public class Tolerance {
      *
      * @return tolerance unit.
      */
-    public ToleranceUnit getUnit() {
+    public final ToleranceUnit getUnit() {
         return unit;
     }
 
@@ -68,7 +68,7 @@ public class Tolerance {
      *
      * @param unit tolerance unit.
      */
-    public void setUnit(final ToleranceUnit unit) {
+    public final void setUnit(final ToleranceUnit unit) {
         this.unit = unit;
     }
 }

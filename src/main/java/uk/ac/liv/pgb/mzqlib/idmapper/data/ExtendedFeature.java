@@ -89,27 +89,27 @@ public class ExtendedFeature extends Feature {
      *
      * @return double value of retention time
      */
-    public double getBRT() {
+    public final double getBRT() {
         return brt;
     }
 
     @Override
-    public String getCharge() {
+    public final String getCharge() {
         return feature.getCharge();
     }
 
     @Override
-    public String getChromatogramRefs() {
+    public final String getChromatogramRefs() {
         return feature.getChromatogramRefs();
     }
 
     @Override
-    public List<CvParam> getCvParam() {
+    public final List<CvParam> getCvParam() {
         return feature.getCvParam();
     }
 
     @Override
-    public String getId() {
+    public final String getId() {
         return feature.getId();
     }
 
@@ -118,22 +118,22 @@ public class ExtendedFeature extends Feature {
      *
      * @return double value of m/z
      */
-    public double getLMZ() {
+    public final double getLMZ() {
         return lmz;
     }
 
     @Override
-    public List<Double> getMassTrace() {
+    public final List<Double> getMassTrace() {
         return feature.getMassTrace();
     }
 
     @Override
-    public double getMz() {
+    public final double getMz() {
         return feature.getMz();
     }
 
     @Override
-    public List<AbstractParam> getParamGroup() {
+    public final List<AbstractParam> getParamGroup() {
         return feature.getParamGroup();
     }
 
@@ -142,27 +142,27 @@ public class ExtendedFeature extends Feature {
      *
      * @return double value of m/z
      */
-    public double getRMZ() {
+    public final double getRMZ() {
         return rmz;
     }
 
     @Override
-    public RawFile getRawFile() {
+    public final RawFile getRawFile() {
         return feature.getRawFile();
     }
 
     @Override
-    public String getRawFileRef() {
+    public final String getRawFileRef() {
         return feature.getRawFileRef();
     }
 
     @Override
-    public String getRt() {
+    public final String getRt() {
         return feature.getRt();
     }
 
     @Override
-    public String getSpectrumRefs() {
+    public final String getSpectrumRefs() {
         return feature.getSpectrumRefs();
     }
 
@@ -171,12 +171,12 @@ public class ExtendedFeature extends Feature {
      *
      * @return double value of retention time
      */
-    public double getURT() {
+    public final double getURT() {
         return urt;
     }
 
     @Override
-    public List<UserParam> getUserParam() {
+    public final List<UserParam> getUserParam() {
         return feature.getUserParam();
     }
 }

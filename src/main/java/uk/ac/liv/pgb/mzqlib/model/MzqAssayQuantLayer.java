@@ -32,22 +32,22 @@ public class MzqAssayQuantLayer extends MzqQuantLayer {
     public MzqAssayQuantLayer(final MzQuantMLUnmarshaller um, final String listId, final QuantLayer quantLayer,
                               final String listType, final String dataType)
             throws JAXBException {
-        this.quantLayerType = new SimpleStringProperty("AssayQuantLayer");
-        this.mzqUm          = um;
-        this.listId         = new SimpleStringProperty(listId);
-        this.quantLayerId   = new SimpleStringProperty(quantLayer.getId());
-        this.listType       = new SimpleStringProperty(listType);
-        this.dataType       = new SimpleStringProperty(dataType);
+        setQuantLayerType(new SimpleStringProperty("AssayQuantLayer"));
+        setMzqUm(um);
+        setListId(new SimpleStringProperty(listId));
+        setQuantLayerId(new SimpleStringProperty(quantLayer.getId()));
+        setListType(new SimpleStringProperty(listType));
+        setDataType(new SimpleStringProperty(dataType));
 
         // set column names
-        this.columnNames = new ArrayList<>();
+        setColumnNames(new ArrayList<>());
 
         List<String> columnIndex = quantLayer.getColumnIndex();
 
         for (String colId : columnIndex) {
-            Assay assay = mzqUm.unmarshal(Assay.class, colId);
+            Assay assay = this.getMzqUm().unmarshal(Assay.class, colId);
 
-            this.columnNames.add(new SimpleStringProperty(assay.getName()));
+            getColumnNames().add(new SimpleStringProperty(assay.getName()));
         }
     }
 }

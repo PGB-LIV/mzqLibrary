@@ -144,7 +144,7 @@ public class MzqInfoController {
      *
      * @param sum mzq summary.
      */
-    public void showMzqSummary(final MzQuantMLSummary sum) {
+    public final void showMzqSummary(final MzQuantMLSummary sum) {
         numberProteinGroupList.textProperty().bind(Bindings.format("%d", sum.proteinGroupListNumber()));
         numberProteinList.textProperty().bind(Bindings.format("%d", sum.proteinListNumber()));
         numberPeptideList.textProperty().bind(Bindings.format("%d", sum.peptideListNumber()));
@@ -157,7 +157,7 @@ public class MzqInfoController {
      *
      * @return data matrix table view.
      */
-    public TableView<MzqDataMatrixRow> getDataMatrixTable() {
+    public final TableView<MzqDataMatrixRow> getDataMatrixTable() {
         return dataMatrixTable;
     }
 
@@ -166,7 +166,7 @@ public class MzqInfoController {
      *
      * @param mainApp main app.
      */
-    public void setMainApp(final MainApp mainApp) {
+    public final void setMainApp(final MainApp mainApp) {
         this.mainApp = mainApp;
         quantLayerTable.getItems().addAll(mainApp.getMzqAssayQuantLayerData());
         quantLayerTable.getItems().addAll(mainApp.getMzqFeatureQuantLayerData());
@@ -177,7 +177,7 @@ public class MzqInfoController {
      *
      * @return quant layer table view.
      */
-    public TableView<MzqQuantLayer> getQuantLayerTable() {
+    public final TableView<MzqQuantLayer> getQuantLayerTable() {
         return quantLayerTable;
     }
 }

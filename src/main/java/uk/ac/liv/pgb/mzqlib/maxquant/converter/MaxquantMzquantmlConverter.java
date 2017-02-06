@@ -416,7 +416,7 @@ public class MaxquantMzquantmlConverter {
             if (maxRd.isLabelFree()) {
                 assay.setLabel(label);
                 assays.add(assay);
-            } else {                  //non label free example            
+            } else {                  //non label free example
                 //TODO: this is fixed label modification just used for example file
                 //TODO: need to find a better way to form this later
                 //find out if it is light or heavy label assay
@@ -498,12 +498,12 @@ public class MaxquantMzquantmlConverter {
 
             CvParamRef denomRef = new CvParamRef();
             denomRef.setCvParam(createCvParam("MaxQuant:feature intensity",
-                                               "PSI-MS", "MS:1001903"));
+                                              "PSI-MS", "MS:1001903"));
             ratio.setDenominatorDataType(denomRef);
 
             CvParamRef numerRef = new CvParamRef();
             numerRef.setCvParam(createCvParam("MaxQuant:feature intensity",
-                                               "PSI-MS", "MS:1001903"));
+                                              "PSI-MS", "MS:1001903"));
             ratio.setNumeratorDataType(numerRef);
 
             // TODO: a not very smart way to map denominator_ref and numerator_ref
@@ -1275,7 +1275,7 @@ public class MaxquantMzquantmlConverter {
      *
      * @throws IOException io exception
      */
-    public void convert(final String outputFn)
+    public final void convert(final String outputFn)
             throws IOException {
 
         /**

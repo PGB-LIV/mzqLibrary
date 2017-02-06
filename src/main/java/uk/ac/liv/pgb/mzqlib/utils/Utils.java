@@ -22,6 +22,8 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.UserParam;
  *
  */
 public class Utils {
+    private Utils() {
+    }
 
     /**
      * Add a SearchDatabase to InputFiles.

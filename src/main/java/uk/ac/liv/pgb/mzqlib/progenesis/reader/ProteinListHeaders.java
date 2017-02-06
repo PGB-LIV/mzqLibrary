@@ -49,6 +49,9 @@ public class ProteinListHeaders {
      * Constant.
      */
     public static final String MAX_FOLD_CHANGE = "max fold change";
+
+    private ProteinListHeaders() {
+    }
 }
 
 

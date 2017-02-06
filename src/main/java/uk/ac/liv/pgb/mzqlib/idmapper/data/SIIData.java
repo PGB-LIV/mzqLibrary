@@ -81,7 +81,7 @@ public class SIIData implements Comparable<SIIData> {
      * @return compare result.
      */
     @Override
-    public int compareTo(final SIIData compareSIIData) {
+    public final int compareTo(final SIIData compareSIIData) {
         String compareModString = compareSIIData.getPeptideModString();
 
         // ascending order
@@ -148,7 +148,7 @@ public class SIIData implements Comparable<SIIData> {
      * @return true if both are equal.
      */
     @Override
-    public boolean equals(final Object obj) {
+    public final boolean equals(final Object obj) {
         if (obj == null) {
             return false;
         }
@@ -181,7 +181,7 @@ public class SIIData implements Comparable<SIIData> {
      * @return hash code.
      */
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         int hash = 59;
 
         return new HashCodeBuilder(hash, 37).append(this.getPeptideModString())
@@ -200,7 +200,7 @@ public class SIIData implements Comparable<SIIData> {
      *
      * @return calculated m/z double
      */
-    public double getCalculatedMassToCharge() {
+    public final double getCalculatedMassToCharge() {
         return mzCalculated;
     }
 
@@ -209,7 +209,7 @@ public class SIIData implements Comparable<SIIData> {
      *
      * @return charge value
      */
-    public int getCharge() {
+    public final int getCharge() {
         return charge;
     }
 
@@ -218,7 +218,7 @@ public class SIIData implements Comparable<SIIData> {
      *
      * @return experimental m/z double
      */
-    public double getExperimentalMassToCharge() {
+    public final double getExperimentalMassToCharge() {
         return mzExperimental;
     }
 
@@ -227,7 +227,7 @@ public class SIIData implements Comparable<SIIData> {
      *
      * @return id string
      */
-    public String getId() {
+    public final String getId() {
         return id;
     }
 
@@ -236,7 +236,7 @@ public class SIIData implements Comparable<SIIData> {
      *
      * @return the mzIdentML file name
      */
-    public String getMzidFn() {
+    public final String getMzidFn() {
         return mzidFn;
     }
 
@@ -245,7 +245,7 @@ public class SIIData implements Comparable<SIIData> {
      *
      * @param mzidFn the mzIdentML file name
      */
-    public void setMzidFn(final String mzidFn) {
+    public final void setMzidFn(final String mzidFn) {
         this.mzidFn = mzidFn;
     }
 
@@ -254,7 +254,7 @@ public class SIIData implements Comparable<SIIData> {
      *
      * @return boolean value of passthreshold
      */
-    public boolean isPassThreshold() {
+    public final boolean isPassThreshold() {
         return passTh;
     }
 
@@ -263,7 +263,7 @@ public class SIIData implements Comparable<SIIData> {
      *
      * @return list of reference string
      */
-    public List getPeptideEvidenceRef() {
+    public final List getPeptideEvidenceRef() {
         return peptideEvidenceRef;
     }
 
@@ -272,7 +272,7 @@ public class SIIData implements Comparable<SIIData> {
      *
      * @return peptide modification string
      */
-    public String getPeptideModString() {
+    public final String getPeptideModString() {
         return peptideModString;
     }
 
@@ -281,7 +281,7 @@ public class SIIData implements Comparable<SIIData> {
      *
      * @return peptide reference string
      */
-    public String getPeptideRef() {
+    public final String getPeptideRef() {
         return pepRef;
     }
 
@@ -290,7 +290,7 @@ public class SIIData implements Comparable<SIIData> {
      *
      * @return rank value
      */
-    public int getRank() {
+    public final int getRank() {
         return rank;
     }
 
@@ -299,7 +299,7 @@ public class SIIData implements Comparable<SIIData> {
      *
      * @return retention time
      */
-    public double getRetentionTime() {
+    public final double getRetentionTime() {
         return this.rt;
     }
 
@@ -308,7 +308,7 @@ public class SIIData implements Comparable<SIIData> {
      *
      * @param rt retention time in double value
      */
-    public void setRetentionTime(final double rt) {
+    public final void setRetentionTime(final double rt) {
         this.rt = rt;
     }
 
@@ -317,7 +317,7 @@ public class SIIData implements Comparable<SIIData> {
      *
      * @return sequence string
      */
-    public String getSequence() {
+    public final String getSequence() {
         return sequence;
     }
 
@@ -327,7 +327,7 @@ public class SIIData implements Comparable<SIIData> {
      *
      * @param sequence peptide sequence
      */
-    public void setSequence(final String sequence) {
+    public final void setSequence(final String sequence) {
         this.sequence = sequence;
     }
 
@@ -336,7 +336,7 @@ public class SIIData implements Comparable<SIIData> {
      *
      * @return MzIdentMLUnmarshaller
      */
-    public MzIdentMLUnmarshaller getUnmarshaller() {
+    public final MzIdentMLUnmarshaller getUnmarshaller() {
         return um;
     }
 }

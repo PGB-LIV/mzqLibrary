@@ -17,6 +17,8 @@ import org.rosuda.JRI.Rengine;
  * @since 21-Nov-2014 11:13:05
  */
 public class RUtils {
+    private RUtils() {
+    }
 
     /**
      * Install specified R package.

@@ -921,7 +921,7 @@ public class MaxquantFilesReader {
      *
      * @return assay list
      */
-    public List<String> getAssayList() {
+    public final List<String> getAssayList() {
         return this.assays;
     }
 
@@ -930,7 +930,7 @@ public class MaxquantFilesReader {
      *
      * @return Map
      */
-    public Map getRawFileExpMap() {
+    public final Map getRawFileExpMap() {
         return this.rawFileExpMap;
     }
 
@@ -939,7 +939,7 @@ public class MaxquantFilesReader {
      *
      * @return list
      */
-    public List<String> getPrimeStudyVariableList() {
+    public final List<String> getPrimeStudyVariableList() {
         return this.primeStudyVars;
     }
 
@@ -948,7 +948,7 @@ public class MaxquantFilesReader {
      *
      * @return list
      */
-    public List<String> getStudyVariableList() {
+    public final List<String> getStudyVariableList() {
         return this.studyVars;
     }
 
@@ -957,7 +957,7 @@ public class MaxquantFilesReader {
      *
      * @return Map
      */
-    public Map getPrimeStudyGroupMap() {
+    public final Map getPrimeStudyGroupMap() {
         return this.primeStudyGroupMap;
     }
 
@@ -966,7 +966,7 @@ public class MaxquantFilesReader {
      *
      * @return Map
      */
-    public Map getStudyGroupMap() {
+    public final Map getStudyGroupMap() {
         return this.studyGroupMap;
     }
 
@@ -975,7 +975,7 @@ public class MaxquantFilesReader {
      *
      * @return peptide list
      */
-    public List getPeptideList() {
+    public final List getPeptideList() {
         return this.peptides;
     }
 
@@ -984,7 +984,7 @@ public class MaxquantFilesReader {
      *
      * @return raw file name list
      */
-    public List getRawFileList() {
+    public final List getRawFileList() {
         return this.rawFiles;
     }
 
@@ -993,7 +993,7 @@ public class MaxquantFilesReader {
      *
      * @return Map
      */
-    public Map getAssayRawFileMap() {
+    public final Map getAssayRawFileMap() {
         return this.assayRawFileMap;
     }
 
@@ -1002,7 +1002,7 @@ public class MaxquantFilesReader {
      *
      * @return TIntObjectMap&lt;List&lt;String&gt;&gt;
      */
-    public TIntObjectMap<List<String>> getEvidenceMap() {
+    public final TIntObjectMap<List<String>> getEvidenceMap() {
         return this.evidenceMap;
     }
 
@@ -1011,7 +1011,7 @@ public class MaxquantFilesReader {
      *
      * @return Map
      */
-    public Map getPeptideEvidenceIdsMap() {
+    public final Map getPeptideEvidenceIdsMap() {
         return this.peptideToEvdIdsMap;
     }
 
@@ -1020,7 +1020,7 @@ public class MaxquantFilesReader {
      *
      * @return Map
      */
-    public Map getPeptideIntensityMap() {
+    public final Map getPeptideIntensityMap() {
         return this.peptideToIntMap;
     }
 
@@ -1029,7 +1029,7 @@ public class MaxquantFilesReader {
      *
      * @return Map
      */
-    public Map getPeptideRatioMap() {
+    public final Map getPeptideRatioMap() {
         return this.peptideToRatioMap;
     }
 
@@ -1038,7 +1038,7 @@ public class MaxquantFilesReader {
      *
      * @return TIntObjectMap&lt;TDoubleList&gt;
      */
-    public TIntObjectMap<TDoubleList> getProteinIntensityMap() {
+    public final TIntObjectMap<TDoubleList> getProteinIntensityMap() {
         return this.proteinIntMap;
     }
 
@@ -1047,7 +1047,7 @@ public class MaxquantFilesReader {
      *
      * @return TIntObjectMap&lt;TIntList&gt;
      */
-    public TIntObjectMap<TIntList> getProteinUniquePeptiedsMap() {
+    public final TIntObjectMap<TIntList> getProteinUniquePeptiedsMap() {
         return this.proteinUniqPepMap;
     }
 
@@ -1056,7 +1056,7 @@ public class MaxquantFilesReader {
      *
      * @return Map
      */
-    public Map getProteinPeptidesMap() {
+    public final Map getProteinPeptidesMap() {
         return this.proteinToPepMap;
     }
 
@@ -1065,7 +1065,7 @@ public class MaxquantFilesReader {
      *
      * @return boolean value
      */
-    public Boolean hasProteinGroupsFile() {
+    public final Boolean hasProteinGroupsFile() {
         return this.hasProteinGroupsFile;
     }
 
@@ -1074,7 +1074,7 @@ public class MaxquantFilesReader {
      *
      * @return boolean value
      */
-    public Boolean isLabelFree() {
+    public final Boolean isLabelFree() {
         return this.isLabelFree;
     }
 
@@ -1083,7 +1083,7 @@ public class MaxquantFilesReader {
      *
      * @return the number of label
      */
-    public int getLabelNumber() {
+    public final int getLabelNumber() {
         return this.multiplicity;
     }
 
@@ -1161,7 +1161,7 @@ public class MaxquantFilesReader {
      *
      * @return TIntObjectMap&lt;String&gt;
      */
-    public TIntObjectMap<String> getMajorityProteinIDMap() {
+    public final TIntObjectMap<String> getMajorityProteinIDMap() {
         return majorityProteinIDMap;
     }
 

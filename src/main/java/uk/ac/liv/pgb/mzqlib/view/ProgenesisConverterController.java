@@ -48,13 +48,13 @@ import uk.ac.liv.pgb.mzqlib.progenesis.converter.ProgenMzquantmlConverter;
 public class ProgenesisConverterController implements Initializable {
     private static File currentDirectory;
     @FXML
-    ComboBox            separatorBox;
+    private ComboBox    separatorBox;
     @FXML
-    TextField           flFileTextField;
+    private TextField   flFileTextField;
     @FXML
-    TextField           plFileTextField;
+    private TextField   plFileTextField;
     @FXML
-    TextField           idFileTextField;
+    private TextField   idFileTextField;
 
     @FXML
     @SuppressWarnings("unused")
@@ -219,7 +219,7 @@ public class ProgenesisConverterController implements Initializable {
      * @param rb  resource bundle
      */
     @Override
-    public void initialize(final URL url, final ResourceBundle rb) {
+    public final void initialize(final URL url, final ResourceBundle rb) {
         ObservableList<String> options = FXCollections.observableArrayList(",", ";", "Tab");
 
         separatorBox.setItems(options);

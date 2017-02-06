@@ -329,7 +329,7 @@ public class MzQuantMLLib implements Serializable {
     /**
      * Constant.
      */
-    public String userFeedback = "java -jar jar-location/mzqlib-version.jar ";
+    private String userFeedback = "java -jar jar-location/mzqlib-version.jar ";
 
     // Added by Fawaz Ghali to automatically update the MzidLib GUI
     private final Map<String, String> allFunctions;
@@ -388,7 +388,7 @@ public class MzQuantMLLib implements Serializable {
      *
      * @return all functions as hashmap
      */
-    public Map<String, String> getAllFunctions() {
+    public final Map<String, String> getAllFunctions() {
         return allFunctions;
     }
 
@@ -425,7 +425,7 @@ public class MzQuantMLLib implements Serializable {
      *                                        exceptions.
      * @throws InterruptedException           interrupted exceptions.
      */
-    public String init(final String[] args)
+    public final String init(final String[] args)
             throws IOException, JAXBException, FileNotFoundException,
             DatatypeConfigurationException, InterruptedException {
         String inputFileName = "";

@@ -31,7 +31,7 @@ public class FeatureData extends QuantitationLevel {
      * @return feature count.
      */
     @Override
-    public int getCount() {
+    public final int getCount() {
         return 1;
     }
 
@@ -40,7 +40,7 @@ public class FeatureData extends QuantitationLevel {
      *
      * @return Feature.
      */
-    public Feature getFeature() {
+    public final Feature getFeature() {
         return feature;
     }
 
@@ -57,7 +57,7 @@ public class FeatureData extends QuantitationLevel {
      *
      * @return feature id.
      */
-    public String getId() {
+    public final String getId() {
         return feature.getId();
     }
 
@@ -66,7 +66,7 @@ public class FeatureData extends QuantitationLevel {
      *
      * @return rawFilesGroupRef.
      */
-    public String getRawFilesGroupRef() {
+    public final String getRawFilesGroupRef() {
         return rawFilesGroupRef;
     }
 
@@ -75,7 +75,7 @@ public class FeatureData extends QuantitationLevel {
      *
      * @param rawFilesGroupRef rawFilesGroupRef.
      */
-    public void setRawFilesGroupRef(final String rawFilesGroupRef) {
+    public final void setRawFilesGroupRef(final String rawFilesGroupRef) {
         this.rawFilesGroupRef = rawFilesGroupRef;
     }
 }

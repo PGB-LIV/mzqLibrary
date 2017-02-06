@@ -89,7 +89,7 @@ public class MassTrace {
      *
      * @return List&lt;Double&gt;
      */
-    public List<Double> getMassTraceDoubleList() {
+    public final List<Double> getMassTraceDoubleList() {
         List<Double> mtDList = new ArrayList<>();
 
         mtDList.add(rt_start);

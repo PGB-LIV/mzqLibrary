@@ -196,7 +196,6 @@ public class ProgenesisProteinListReader implements Closeable {
 //          if (NumberUtils.isNumber(nextLine[pos_anova])) {
 //              anovaMap.put(currentK, Double.parseDouble(nextLine[pos_anova]));
 //          }
-
             double mfc = getDoubleOrNaN(nextLine[pos_mfc]);
 
             maxFoldChangeMap.put(currentK, mfc);
@@ -204,7 +203,6 @@ public class ProgenesisProteinListReader implements Closeable {
 //          if (NumberUtils.isNumber(nextLine[pos_mfc])) {
 //              maxFoldChangeMap.put(currentK, Double.parseDouble(nextLine[pos_mfc]));
 //          }
-
             // Build completeMap
             completeMap.put(currentK, nextLine);
 
@@ -246,7 +244,7 @@ public class ProgenesisProteinListReader implements Closeable {
      * @throws IOException io exception.
      */
     @Override
-    public void close() throws IOException {
+    public final void close() throws IOException {
         try {
             br.close();
         } catch (IOException ex) {
@@ -259,7 +257,7 @@ public class ProgenesisProteinListReader implements Closeable {
      *
      * @return ANOVA value map.
      */
-    public TIntDoubleMap getAnovaMap() {
+    public final TIntDoubleMap getAnovaMap() {
         return anovaMap;
     }
 
@@ -278,7 +276,7 @@ public class ProgenesisProteinListReader implements Closeable {
      *
      * @return assay list.
      */
-    public List<String> getAssayList() {
+    public final List<String> getAssayList() {
         return assayList;
     }
 
@@ -301,7 +299,7 @@ public class ProgenesisProteinListReader implements Closeable {
      *
      * @return confidence value map.
      */
-    public TIntDoubleMap getConfidenceMap() {
+    public final TIntDoubleMap getConfidenceMap() {
         return confidenceMap;
     }
 
@@ -334,7 +332,7 @@ public class ProgenesisProteinListReader implements Closeable {
      *
      * @return index map.
      */
-    public TIntObjectMap<String> getInexMap() {
+    public final TIntObjectMap<String> getInexMap() {
         return indexMap;
     }
 
@@ -343,7 +341,7 @@ public class ProgenesisProteinListReader implements Closeable {
      *
      * @return max fold change value map.
      */
-    public TIntDoubleMap getMaxFoldChangeMap() {
+    public final TIntDoubleMap getMaxFoldChangeMap() {
         return maxFoldChangeMap;
     }
 
@@ -355,7 +353,7 @@ public class ProgenesisProteinListReader implements Closeable {
      *
      * @return multiple column value map.
      */
-    public TIntObjectMap<List<String>> getMultipleColumn(final int startCol, final int endCol) {
+    public final TIntObjectMap<List<String>> getMultipleColumn(final int startCol, final int endCol) {
         final TIntObjectMap<List<String>> retMap = new TIntObjectHashMap<>();
 
         completeMap.forEachEntry(new TIntObjectProcedure<String[]>() {
@@ -377,7 +375,7 @@ public class ProgenesisProteinListReader implements Closeable {
      *
      * @return norm abundance value map.
      */
-    public TIntObjectMap<TDoubleList> getNormalizedAbundanceMap() {
+    public final TIntObjectMap<TDoubleList> getNormalizedAbundanceMap() {
         return normalizedAbundanceMap;
     }
 
@@ -386,7 +384,7 @@ public class ProgenesisProteinListReader implements Closeable {
      *
      * @return raw abundance value map.
      */
-    public TIntObjectMap<TDoubleList> getRawAbundanceMap() {
+    public final TIntObjectMap<TDoubleList> getRawAbundanceMap() {
         return rawAbundanceMap;
     }
 
@@ -397,7 +395,7 @@ public class ProgenesisProteinListReader implements Closeable {
      *
      * @return single column value map.
      */
-    public TIntObjectMap<String> getSingleColumn(final int col) {
+    public final TIntObjectMap<String> getSingleColumn(final int col) {
         final TIntObjectMap<String> retMap = new TIntObjectHashMap<>();
 
         completeMap.forEachEntry(new TIntObjectProcedure<String[]>() {
@@ -419,7 +417,7 @@ public class ProgenesisProteinListReader implements Closeable {
      *
      * @return study variable list.
      */
-    public List<String> getStuVarList() {
+    public final List<String> getStuVarList() {
         return stuVarList;
     }
 
@@ -428,7 +426,7 @@ public class ProgenesisProteinListReader implements Closeable {
      *
      * @return study grouping map.
      */
-    public Map<String, Set<String>> getStudyGroupMap() {
+    public final Map<String, Set<String>> getStudyGroupMap() {
         return studyGroupMap;
     }
 }

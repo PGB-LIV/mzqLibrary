@@ -160,14 +160,14 @@ public class MzqData {
     /**
      * MzqData control.
      */
-    public MzqDataControl control = new MzqDataControl();
+    private MzqDataControl control = new MzqDataControl();
 
     /**
      * Get mzq file name.
      *
      * @return mzq file name.
      */
-    public String getMzqName() {
+    public final String getMzqName() {
         return mzqName;
     }
 
@@ -176,7 +176,7 @@ public class MzqData {
      *
      * @param mzqName mzq file name.
      */
-    public void setMzqName(final String mzqName) {
+    public final void setMzqName(final String mzqName) {
         this.mzqName = mzqName;
     }
 
@@ -185,7 +185,7 @@ public class MzqData {
      *
      * @return mzq id.
      */
-    public String getMzqID() {
+    public final String getMzqID() {
         return mzqID;
     }
 
@@ -194,7 +194,7 @@ public class MzqData {
      *
      * @param mzqID mzq id.
      */
-    public void setMzqID(final String mzqID) {
+    public final void setMzqID(final String mzqID) {
         this.mzqID = mzqID;
     }
 
@@ -203,7 +203,7 @@ public class MzqData {
      *
      * @return InputFiles.
      */
-    public InputFiles getInputFiles() {
+    public final InputFiles getInputFiles() {
         return inputFiles;
     }
 
@@ -212,7 +212,7 @@ public class MzqData {
      *
      * @param inputFiles inputFiles.
      */
-    public void setInputFiles(final InputFiles inputFiles) {
+    public final void setInputFiles(final InputFiles inputFiles) {
         this.inputFiles = inputFiles;
     }
 
@@ -221,7 +221,7 @@ public class MzqData {
      *
      * @return AnalysisSummary.
      */
-    public AnalysisSummary getAnalysisSummary() {
+    public final AnalysisSummary getAnalysisSummary() {
         return analysisSummary;
     }
 
@@ -230,7 +230,7 @@ public class MzqData {
      *
      * @param analysisSummary analysisSummary.
      */
-    public void setAnalysisSummary(final AnalysisSummary analysisSummary) {
+    public final void setAnalysisSummary(final AnalysisSummary analysisSummary) {
         this.analysisSummary = analysisSummary;
     }
 
@@ -239,7 +239,7 @@ public class MzqData {
      *
      * @return SoftwareList
      */
-    public SoftwareList getSoftwareList() {
+    public final SoftwareList getSoftwareList() {
         return softwareList;
     }
 
@@ -248,7 +248,7 @@ public class MzqData {
      *
      * @param softwareList softwareList
      */
-    public void setSoftwareList(final SoftwareList softwareList) {
+    public final void setSoftwareList(final SoftwareList softwareList) {
         this.softwareList = softwareList;
     }
 
@@ -257,7 +257,7 @@ public class MzqData {
      *
      * @param featureLists a list of FeatureList.
      */
-    public void addFeatures(final List<FeatureList> featureLists) {
+    public final void addFeatures(final List<FeatureList> featureLists) {
         for (FeatureList featureList : featureLists) {
             String rfg = featureList.getRawFilesGroupRef();
             for (Feature feature : featureList.getFeature()) {
@@ -286,7 +286,7 @@ public class MzqData {
      *
      * @param pcList peptideConsensusList.
      */
-    public void addPeptides(final PeptideConsensusList pcList) {
+    public final void addPeptides(final PeptideConsensusList pcList) {
         for (PeptideConsensus pc : pcList.getPeptideConsensus()) {
             PeptideData peptide = new PeptideData(pc);
             peptides.put(pc.getId(), peptide);
@@ -311,7 +311,7 @@ public class MzqData {
      *
      * @param pgList proteinGroupList
      */
-    public void addProteinGroups(final ProteinGroupList pgList) {
+    public final void addProteinGroups(final ProteinGroupList pgList) {
         if (pgList == null) {
             return;
         }
@@ -340,7 +340,7 @@ public class MzqData {
      *
      * @param proteinList proteinList.
      */
-    public void addProteins(final ProteinList proteinList) {
+    public final void addProteins(final ProteinList proteinList) {
         //the data structure localMapping holds the relationship between the ids from the current proteinList (keys) and the ids from the existing protein list in the memory (values)
         //will be useful if merging multiple mzq files
         //this will be used to assign quantitation values etc.
@@ -380,6 +380,20 @@ public class MzqData {
         for (GlobalQuantLayer gql : proteinList.getGlobalQuantLayer()) {
             parseGlobalQuantLayer(gql, PROTEIN);
         }
+    }
+
+    /**
+     * @return the control
+     */
+    public MzqDataControl getControl() {
+        return control;
+    }
+
+    /**
+     * @param control the control to set
+     */
+    public void setControl(MzqDataControl control) {
+        this.control = control;
     }
 
     private QuantitationLevel determineQuantObj(final int level, final Row row) {
@@ -499,7 +513,7 @@ public class MzqData {
      *
      * @param assayList assayList.
      */
-    public void addAssays(final AssayList assayList) {
+    public final void addAssays(final AssayList assayList) {
         for (Assay assay : assayList.getAssay()) {
             assays.add(assay);
             assayIDs.add(assay.getId());
@@ -511,7 +525,8 @@ public class MzqData {
      *
      * @param studyVariableList studyVariableList.
      */
-    public void addStudyVariables(final StudyVariableList studyVariableList) {
+    public final void addStudyVariables(
+            final StudyVariableList studyVariableList) {
         if (studyVariableList == null) {
             return;
         }
@@ -523,7 +538,7 @@ public class MzqData {
      *
      * @param ratioList ratioList.
      */
-    public void addRatios(final RatioList ratioList) {
+    public final void addRatios(final RatioList ratioList) {
         if (ratioList == null) {
             return;
         }
@@ -539,7 +554,7 @@ public class MzqData {
      *
      * @return the index of modification.
      */
-    public int getModificationIndex(final Modification mod) {
+    public final int getModificationIndex(final Modification mod) {
         String modStr = getModificationString(mod);
         if (modifications.contains(modStr)) {
             return modifications.indexOf(modStr);
@@ -566,7 +581,7 @@ public class MzqData {
      *
      * @return list of ProteinGroupData.
      */
-    public List<ProteinGroupData> getProteinGroups() {
+    public final List<ProteinGroupData> getProteinGroups() {
         List<ProteinGroupData> values = new ArrayList<>();
         for (String id : pgIds) {
             values.add(pgs.get(id));
@@ -579,7 +594,7 @@ public class MzqData {
      *
      * @return list of ProteinData.
      */
-    public List<ProteinData> getProteins() {
+    public final List<ProteinData> getProteins() {
         List<ProteinData> values = new ArrayList<>();
         for (String id : proteinIds) {
             values.add(proteins.get(id));
@@ -592,7 +607,7 @@ public class MzqData {
      *
      * @return list of quantitation names.
      */
-    public List<String> getQuantitationNames() {
+    public final List<String> getQuantitationNames() {
         return quantitationNames;
     }
 
@@ -603,7 +618,7 @@ public class MzqData {
      *
      * @return quantitation CvParam.
      */
-    public CvParam getQuantitationCvParam(final String name) {
+    public final CvParam getQuantitationCvParam(final String name) {
         if (cvParams.containsKey(name)) {
             return cvParams.get(name);
         }
@@ -615,7 +630,7 @@ public class MzqData {
      *
      * @return list of assays.
      */
-    public List<Assay> getAssays() {
+    public final List<Assay> getAssays() {
         return assays;
     }
 
@@ -624,7 +639,7 @@ public class MzqData {
      *
      * @return list of assay ids.
      */
-    public List<String> getAssayIDs() {
+    public final List<String> getAssayIDs() {
         return assayIDs;
     }
 
@@ -633,7 +648,7 @@ public class MzqData {
      *
      * @return list of study variables.
      */
-    public List<StudyVariable> getSvs() {
+    public final List<StudyVariable> getSvs() {
         return svs;
     }
 
@@ -642,7 +657,7 @@ public class MzqData {
      *
      * @return list of ratios.
      */
-    public List<String> getRatios() {
+    public final List<String> getRatios() {
         return ratios;
     }
 
@@ -667,7 +682,7 @@ public class MzqData {
      *
      * @return list of PeptideData.
      */
-    public List<PeptideData> getPeptides() {
+    public final List<PeptideData> getPeptides() {
         List<PeptideData> values = new ArrayList<>();
         List<String> idList = new ArrayList<>();
         for (String id : peptides.keySet()) {
@@ -685,7 +700,7 @@ public class MzqData {
      *
      * @return list of FeatureData.
      */
-    public List<FeatureData> getFeatures() {
+    public final List<FeatureData> getFeatures() {
         List<FeatureData> values = new ArrayList<>();
         if (!needAutoAssignment) {
             List<String> idList = new ArrayList<>();
@@ -705,7 +720,7 @@ public class MzqData {
      *
      * @return ture if needs auto assignment.
      */
-    public boolean needAutoAssignment() {
+    public final boolean needAutoAssignment() {
         return needAutoAssignment;
     }
 
@@ -714,14 +729,14 @@ public class MzqData {
      *
      * @param needAutoAssignment needAutoAssignment.
      */
-    public void setNeedAutoAssignment(final boolean needAutoAssignment) {
+    public final void setNeedAutoAssignment(final boolean needAutoAssignment) {
         this.needAutoAssignment = needAutoAssignment;
     }
 
     /**
      * Do auto assign.
      */
-    public void autoAssign() {
+    public final void autoAssign() {
         if (!needAutoAssignment) {
             return;
         }
@@ -774,7 +789,7 @@ public class MzqData {
      *
      * @param cvList cvList.
      */
-    public void setCvList(final CvList cvList) {
+    public final void setCvList(final CvList cvList) {
         cvs = cvList.getCv();
     }
 
@@ -783,7 +798,7 @@ public class MzqData {
      *
      * @return list of Cvs.
      */
-    public List<Cv> getCvList() {
+    public final List<Cv> getCvList() {
         return cvs;
     }
 
@@ -794,7 +809,7 @@ public class MzqData {
      *
      * @return ProteinData.
      */
-    public ProteinData getProtein(final String anchorProteinStr) {
+    public final ProteinData getProtein(final String anchorProteinStr) {
         if (proteins.containsKey(anchorProteinStr)) {
             return proteins.get(anchorProteinStr);
         }

@@ -113,6 +113,9 @@ class GenericFileFilter extends javax.swing.filechooser.FileFilter {
 public class Utils {
     private static final String MZQ_XSD = "mzQuantML_1_0_0.xsd";
 
+    private Utils() {
+    }
+
     /**
      * Convert mzq CvParam to mzTab CvParam.
      *

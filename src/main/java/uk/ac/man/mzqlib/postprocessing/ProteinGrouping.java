@@ -17,6 +17,9 @@ public class ProteinGrouping {
     private static final Map<String, Set<String>> subSetGr  = new HashMap<>();
     private static final Map<String, Set<String>> uniSetGr  = new HashMap<>();
 
+    private ProteinGrouping() {
+    }
+
     /**
      * set the protein groups in order in terms of the grouping results
      *

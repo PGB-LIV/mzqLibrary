@@ -13,8 +13,8 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.StudyVariable;
  * @author Jun Fan@cranfield
  */
 public abstract class GenericConverter {
-    String filename;
-    String outfile;
+    private String filename;
+    private String outfile;
 
     /**
      * Constructor.
@@ -36,9 +36,9 @@ public abstract class GenericConverter {
      * @param prefix           prefix of the assay.
      * @param suffix           suffix of the assay.
      */
-    protected void addAssayHeader(final int level, final StringBuilder sb, final String quantitationName,
-                                  final String prefix, final String suffix) {
-        if (MzqLib.DATA.control.isRequired(level, MzqData.ASSAY, quantitationName)) {
+    protected final void addAssayHeader(final int level, final StringBuilder sb, final String quantitationName,
+                                        final String prefix, final String suffix) {
+        if (MzqLib.DATA.getControl().isRequired(level, MzqData.ASSAY, quantitationName)) {
             for (String assayID : MzqLib.DATA.getAssayIDs()) {
                 sb.append(prefix);
                 sb.append(quantitationName);
@@ -58,9 +58,9 @@ public abstract class GenericConverter {
      * @param seperator    file separator.
      * @param quantityName quantity name.
      */
-    protected void addAssayValue(final int level, final StringBuilder sb, final QuantitationLevel obj,
-                                 final String seperator, final String quantityName) {
-        if (MzqLib.DATA.control.isRequired(level, MzqData.ASSAY, quantityName)) {
+    protected final void addAssayValue(final int level, final StringBuilder sb, final QuantitationLevel obj,
+                                       final String seperator, final String quantityName) {
+        if (MzqLib.DATA.getControl().isRequired(level, MzqData.ASSAY, quantityName)) {
             for (String assayID : MzqLib.DATA.getAssayIDs()) {
                 sb.append(seperator);
 
@@ -79,8 +79,8 @@ public abstract class GenericConverter {
      * @param suffix suffix of global quantitation.
      * @param names  set of names.
      */
-    protected void addGlobalHeader(final StringBuilder sb, final String prefix, final String suffix,
-                                   final Set<String> names) {
+    protected final void addGlobalHeader(final StringBuilder sb, final String prefix, final String suffix,
+                                         final Set<String> names) {
         for (String columnID : names) {
             sb.append(prefix);
             sb.append(columnID);
@@ -97,8 +97,8 @@ public abstract class GenericConverter {
      * @param seperator file separator.
      * @param names     set of names.
      */
-    protected void addGlobalValue(final int level, final StringBuilder sb, final QuantitationLevel obj,
-                                  final String seperator, final Set<String> names) {
+    protected final void addGlobalValue(final int level, final StringBuilder sb, final QuantitationLevel obj,
+                                        final String seperator, final Set<String> names) {
         for (String columnID : names) {
             sb.append(seperator);
 
@@ -116,8 +116,9 @@ public abstract class GenericConverter {
      * @param prefix prefix of the ratio.
      * @param suffix suffix of the ratio.
      */
-    protected void addRatioHeader(final int level, final StringBuilder sb, final String prefix, final String suffix) {
-        if (MzqLib.DATA.control.isRequired(level, MzqData.RATIO, MzqData.RATIO_STRING)) {
+    protected final void addRatioHeader(final int level, final StringBuilder sb, final String prefix,
+                                        final String suffix) {
+        if (MzqLib.DATA.getControl().isRequired(level, MzqData.RATIO, MzqData.RATIO_STRING)) {
             for (String ratioID : MzqLib.DATA.getRatios()) {
                 sb.append(prefix);
                 sb.append(ratioID);
@@ -134,9 +135,9 @@ public abstract class GenericConverter {
      * @param obj       quantitation level.
      * @param seperator file separator.
      */
-    protected void addRatioValue(final int level, final StringBuilder sb, final QuantitationLevel obj,
-                                 final String seperator) {
-        if (MzqLib.DATA.control.isRequired(level, MzqData.RATIO, MzqData.RATIO_STRING)) {
+    protected final void addRatioValue(final int level, final StringBuilder sb, final QuantitationLevel obj,
+                                       final String seperator) {
+        if (MzqLib.DATA.getControl().isRequired(level, MzqData.RATIO, MzqData.RATIO_STRING)) {
             for (String ratioID : MzqLib.DATA.getRatios()) {
                 sb.append(seperator);
 
@@ -156,9 +157,9 @@ public abstract class GenericConverter {
      * @param prefix           prefix of the study variable.
      * @param suffix           suffix of the study variable.
      */
-    protected void addSvHeader(final int level, final StringBuilder sb, final String quantitationName,
-                               final String prefix, final String suffix) {
-        if (MzqLib.DATA.control.isRequired(level, MzqData.SV, quantitationName)) {
+    protected final void addSvHeader(final int level, final StringBuilder sb, final String quantitationName,
+                                     final String prefix, final String suffix) {
+        if (MzqLib.DATA.getControl().isRequired(level, MzqData.SV, quantitationName)) {
             for (StudyVariable sv : MzqLib.DATA.getSvs()) {
                 sb.append(prefix);
                 sb.append(quantitationName);
@@ -178,9 +179,9 @@ public abstract class GenericConverter {
      * @param seperator    file separator.
      * @param quantityName quantity name.
      */
-    protected void addSvValue(final int level, final StringBuilder sb, final QuantitationLevel obj,
-                              final String seperator, final String quantityName) {
-        if (MzqLib.DATA.control.isRequired(level, MzqData.SV, quantityName)) {
+    protected final void addSvValue(final int level, final StringBuilder sb, final QuantitationLevel obj,
+                                    final String seperator, final String quantityName) {
+        if (MzqLib.DATA.getControl().isRequired(level, MzqData.SV, quantityName)) {
             for (StudyVariable sv : MzqLib.DATA.getSvs()) {
                 sb.append(seperator);
 
@@ -210,10 +211,38 @@ public abstract class GenericConverter {
      */
     public abstract void convert();
 
-    String getBaseFilename() {
+    final String getBaseFilename() {
         int idx = filename.lastIndexOf('.');
 
         return filename.substring(0, idx);
+    }
+
+    /**
+     * @return the filename
+     */
+    public String getFilename() {
+        return filename;
+    }
+
+    /**
+     * @param filename the filename to set
+     */
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    /**
+     * @return the outfile
+     */
+    public String getOutfile() {
+        return outfile;
+    }
+
+    /**
+     * @param outfile the outfile to set
+     */
+    public void setOutfile(String outfile) {
+        this.outfile = outfile;
     }
 }
 

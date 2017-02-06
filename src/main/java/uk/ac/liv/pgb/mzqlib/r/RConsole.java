@@ -26,7 +26,7 @@ public class RConsole implements RMainLoopCallbacks {
      * @param which which.
      */
     @Override
-    public void rBusy(final Rengine re, final int which) {
+    public final void rBusy(final Rengine re, final int which) {
         System.out.println("rBusy(" + which + ")");
     }
 
@@ -39,7 +39,7 @@ public class RConsole implements RMainLoopCallbacks {
      * @return result message.
      */
     @Override
-    public String rChooseFile(final Rengine re, final int newFile) {
+    public final String rChooseFile(final Rengine re, final int newFile) {
         FileDialog fd = new FileDialog(new Frame(),
                                        (newFile == 0)
                                        ? "Select a file"
@@ -94,7 +94,7 @@ public class RConsole implements RMainLoopCallbacks {
      * @return result messages.
      */
     @Override
-    public String rReadConsole(final Rengine re, final String prompt, final int addToHistory) {
+    public final String rReadConsole(final Rengine re, final String prompt, final int addToHistory) {
         System.out.print(prompt);
 
         try {
@@ -129,7 +129,7 @@ public class RConsole implements RMainLoopCallbacks {
      * @param message message text.
      */
     @Override
-    public void rShowMessage(final Rengine re, final String message) {
+    public final void rShowMessage(final Rengine re, final String message) {
         System.out.println("rShowMessage \"" + message + "\"");
     }
 
@@ -141,7 +141,7 @@ public class RConsole implements RMainLoopCallbacks {
      * @param oType output type.
      */
     @Override
-    public void rWriteConsole(final Rengine re, final String text, final int oType) {
+    public final void rWriteConsole(final Rengine re, final String text, final int oType) {
         System.out.print(text);
     }
 }

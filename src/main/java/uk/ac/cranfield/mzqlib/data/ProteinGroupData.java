@@ -29,7 +29,7 @@ public class ProteinGroupData extends QuantitationLevel {
      *
      * @return ambiguity proteins.
      */
-    public String getAmbiguityMemberStr() {
+    public final String getAmbiguityMemberStr() {
         List<ProteinRef> proteinRefs = pg.getProteinRef();
 
         if (proteinRefs.size() == 1) {
@@ -56,7 +56,7 @@ public class ProteinGroupData extends QuantitationLevel {
      *
      * @return anchor protein string.
      */
-    public String getAnchorProteinStr() {
+    public final String getAnchorProteinStr() {
         ProteinRef lead = pg.getProteinRef().get(0);    // ProteinRef 1:n
 
         return lead.getProteinRef();
@@ -67,7 +67,7 @@ public class ProteinGroupData extends QuantitationLevel {
      *
      * @return id.
      */
-    public String getId() {
+    public final String getId() {
         return pg.getId();
     }
 }

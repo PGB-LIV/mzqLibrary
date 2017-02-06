@@ -47,7 +47,8 @@ public class MzqProcessorFactory {
      * @throws JAXBException jaxb exception
      * @throws IOException   io exception
      */
-    public MzqProcessor buildMzqProcessor(final MzQuantMLUnmarshaller mzqUm, final Map<String, String> rawToMzidMap)
+    public final MzqProcessor buildMzqProcessor(final MzQuantMLUnmarshaller mzqUm,
+                                                final Map<String, String> rawToMzidMap)
             throws JAXBException, IOException, JAXBException, JAXBException {
         return new MzqProcessorImpl(mzqUm, rawToMzidMap);
     }
@@ -65,8 +66,8 @@ public class MzqProcessorFactory {
      * @throws JAXBException jaxb exception
      * @throws IOException   io exception
      */
-    public MzqProcessor buildMzqProcessor(final MzQuantMLUnmarshaller mzqUm, final Map<String, String> rawToMzidMap,
-                                          final Tolerance msTolerance)
+    public final MzqProcessor buildMzqProcessor(final MzQuantMLUnmarshaller mzqUm,
+                                                final Map<String, String> rawToMzidMap, final Tolerance msTolerance)
             throws JAXBException, IOException {
         return new MzqProcessorImpl(mzqUm, rawToMzidMap, msTolerance);
     }
@@ -88,8 +89,9 @@ public class MzqProcessorFactory {
      * @throws JAXBException jaxb exception
      * @throws IOException   io exception
      */
-    public MzqProcessor buildMzqProcessor(final MzQuantMLUnmarshaller mzqUm, final Map<String, String> rawToMzidMap,
-                                          final double mzWin, final double rtWin)
+    public final MzqProcessor buildMzqProcessor(final MzQuantMLUnmarshaller mzqUm,
+                                                final Map<String, String> rawToMzidMap, final double mzWin,
+                                                final double rtWin)
             throws JAXBException, IOException {
         return new MzqProcessorImpl(mzqUm, rawToMzidMap, mzWin, rtWin);
     }
@@ -124,7 +126,7 @@ public class MzqProcessorFactory {
         return instance;
     }
 
-    private static class MzqProcessorImpl implements MzqProcessor {
+    private static final class MzqProcessorImpl implements MzqProcessor {
         private MzQuantMLUnmarshaller  mzqUm        = null;
         private FeatureSiiMatchManager matchManager = new FeatureSiiMatchManager();
         private SearchDatabase         searchDB;

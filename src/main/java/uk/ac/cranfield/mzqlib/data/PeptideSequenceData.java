@@ -28,7 +28,7 @@ public class PeptideSequenceData {
      *
      * @param peptide new PeptideData.
      */
-    public void addPeptideData(final PeptideData peptide) {
+    public final void addPeptideData(final PeptideData peptide) {
         String modStr = peptide.getModString();
 
         if (peptides.containsKey(modStr)) {
@@ -43,7 +43,7 @@ public class PeptideSequenceData {
      *
      * @return collection of PeptideData.
      */
-    public Collection<PeptideData> getPeptides() {
+    public final Collection<PeptideData> getPeptides() {
         return peptides.values();
     }
 
@@ -52,7 +52,7 @@ public class PeptideSequenceData {
      *
      * @return sequence.
      */
-    public String getSequence() {
+    public final String getSequence() {
         return sequence;
     }
 }

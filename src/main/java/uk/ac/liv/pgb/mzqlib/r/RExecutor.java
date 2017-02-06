@@ -34,7 +34,7 @@ public class RExecutor {
     /**
      * Run R scripts.
      */
-    public void run() {
+    public final void run() {
         StringBuilder runString = new StringBuilder();
 
         runString.append(command);
@@ -59,7 +59,7 @@ public class RExecutor {
      *
      * @return errors.
      */
-    public String getError() {
+    public final String getError() {
         if (error == null) {
             error = new StringBuilder();
         }

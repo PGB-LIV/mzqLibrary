@@ -17,6 +17,8 @@ import uk.ac.liv.pgb.jmzqml.model.mzqml.UserParam;
  * @since 18-Mar-2014 13:57:49
  */
 public class MzidToMzqElementConverter {
+    private MzidToMzqElementConverter() {
+    }
 
     /**
      * Utility method to convert mzIdentML CvParam to mzQuantML CvParam.
